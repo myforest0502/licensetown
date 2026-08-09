@@ -33,6 +33,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "start_quiz",
         "start_next_quiz",
         "reply_new_user_welcome",
+        "reply_gen_first_greeting",
         "handle_text_message",
     }
     function_nodes = []
@@ -67,6 +68,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_explanation_choice": lambda *args, **kwargs: None,
         "reply_next_explanation_choice": lambda *args, **kwargs: None,
         "reply_new_user_welcome": lambda *args, **kwargs: None,
+        "reply_gen_first_greeting": lambda *args, **kwargs: None,
         "push_to_line": lambda *args, **kwargs: None,
         "create_text_response": lambda *args, **kwargs: "unused",
         "prepare_and_send_quiz": lambda *args, **kwargs: None,
@@ -517,13 +519,13 @@ class QuizAnswerNumberingTest(unittest.TestCase):
                         make_text_event(user_id, "ふりだしにもどる")
                     )
 
-                    self.assertNotIn(user_id, app.user_states)
+                    self.assertEqual("waiting_gen_intro", app.user_states[user_id])
                     self.assertNotIn(user_id, app.study_sessions)
                     self.assertNotIn(user_id, app.user_modes)
                     self.assertNotIn(user_id, app.user_names)
                     self.assertNotIn(user_id, app.known_user_ids)
                     self.assertEqual(1, len(reply_messages))
-                    self.assertIn("ふりだしに戻した", reply_messages[0])
+                    self.assertIn("ようこそ、ライセンスタウンへ！", reply_messages[0])
         finally:
             function_globals["reply_to_line"] = original_reply
             function_globals["create_text_response"] = original_create_text_response
@@ -582,36 +584,53 @@ class NewUserWelcomeTest(unittest.TestCase):
         app.known_user_ids.clear()
         app.line_replies.clear()
 
-    def test_welcome_reply_contains_two_messages_in_the_required_order(self) -> None:
-        app.reply_new_user_welcome("reply-token")
+    def test_welcome_reply_contains_only_the_updated_welcome_message(self) -> None:
+        function_globals = app.reply_new_user_welcome.__globals__
+        original_reply = function_globals["reply_to_line"]
+        replies = []
+        function_globals["reply_to_line"] = (
+            lambda token, message: replies.append((token, message))
+        )
 
-        self.assertEqual(1, len(app.line_replies))
-        token, messages = app.line_replies[0]
+        try:
+            app.reply_new_user_welcome("reply-token")
+        finally:
+            function_globals["reply_to_line"] = original_reply
+
+        self.assertEqual(1, len(replies))
+        token, message = replies[0]
         self.assertEqual("reply-token", token)
-        self.assertEqual(2, len(messages))
-        self.assertTrue(messages[0].text.startswith("ようこそ、ライセンスタウンへ！"))
-        self.assertTrue(messages[1].text.startswith("おぉｗよくきたな！"))
-        self.assertIn("お前の名前も聞かせてくれよ＾＾", messages[1].text)
+        self.assertTrue(message.startswith("ようこそ、ライセンスタウンへ！"))
+        self.assertNotIn("おぉｗよくきたな！", message)
+        self.assertLess(message.index("源さんにバトンタッチ"), message.index("何か話しかけて"))
+        self.assertLess(message.index("何か話しかけて"), message.index("頑張ってくださいね＾＾"))
 
     def test_new_user_sees_welcome_then_existing_greeting_and_can_register_name(self) -> None:
         user_id = "brand-new-user"
         function_globals = app.handle_text_message.__globals__
         original_welcome = function_globals["reply_new_user_welcome"]
+        original_gen = function_globals["reply_gen_first_greeting"]
         original_mode_select = function_globals["reply_mode_select"]
         events = []
         function_globals["reply_new_user_welcome"] = (
-            lambda _token: events.extend(["welcome", "gen"])
+            lambda _token: events.append("welcome")
         )
+        function_globals["reply_gen_first_greeting"] = lambda _token: events.append("gen")
         function_globals["reply_mode_select"] = (
             lambda _token, intro_text=None: events.append(("registered", intro_text))
         )
 
         try:
             app.handle_text_message(make_text_event(user_id, "はじめまして"))
+            self.assertEqual("waiting_gen_intro", app.user_states[user_id])
+            app.handle_text_message(make_text_event(user_id, "勉強する"))
             self.assertEqual("waiting_name", app.user_states[user_id])
+            self.assertNotIn(user_id, app.user_names)
+            self.assertNotIn(user_id, app.user_modes)
             app.handle_text_message(make_text_event(user_id, "太郎"))
         finally:
             function_globals["reply_new_user_welcome"] = original_welcome
+            function_globals["reply_gen_first_greeting"] = original_gen
             function_globals["reply_mode_select"] = original_mode_select
 
         self.assertEqual("太郎", app.user_names[user_id])
@@ -643,12 +662,15 @@ class NewUserWelcomeTest(unittest.TestCase):
         app.known_user_ids.add(user_id)
         function_globals = app.handle_text_message.__globals__
         original_welcome = function_globals["reply_new_user_welcome"]
+        original_gen = function_globals["reply_gen_first_greeting"]
         original_reply = function_globals["reply_to_line"]
         original_mode_select = function_globals["reply_mode_select"]
         welcome_calls = []
+        gen_calls = []
         replies = []
         registered = []
         function_globals["reply_new_user_welcome"] = lambda *args: welcome_calls.append(args)
+        function_globals["reply_gen_first_greeting"] = lambda *args: gen_calls.append(args)
         function_globals["reply_to_line"] = lambda _token, message: replies.append(message)
         function_globals["reply_mode_select"] = (
             lambda _token, intro_text=None: registered.append(intro_text)
@@ -660,12 +682,14 @@ class NewUserWelcomeTest(unittest.TestCase):
             app.handle_text_message(make_text_event(user_id, "再登録ユーザー"))
         finally:
             function_globals["reply_new_user_welcome"] = original_welcome
+            function_globals["reply_gen_first_greeting"] = original_gen
             function_globals["reply_to_line"] = original_reply
             function_globals["reply_mode_select"] = original_mode_select
 
         self.assertEqual(1, len(welcome_calls))
+        self.assertEqual(1, len(gen_calls))
         self.assertNotIn(user_id, app.known_user_ids)
-        self.assertEqual(1, len(replies))
+        self.assertEqual(0, len(replies))
         self.assertEqual("再登録ユーザー", app.user_names[user_id])
         self.assertNotIn(user_id, app.user_states)
         self.assertIn("再登録ユーザー", registered[0])

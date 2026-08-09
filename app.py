@@ -1177,27 +1177,27 @@ def reply_to_line(reply_token, reply_message):
 
 
 def reply_new_user_welcome(reply_token):
-    """初回利用者へ、サービス案内と源さんの挨拶を順番に送る。"""
+    """初回利用者へ、ライセンスタウンの案内だけを送る。"""
     welcome_message = (
         "ようこそ、ライセンスタウンへ！\n\n"
         "ライセンスタウンは、理学療法士国家試験の合格を目指すあなたと一緒に、"
         "問題演習や復習を積み重ねながら、合格まで歩んでいく学習サービスです。\n\n"
         "大切なのは、一度に全部できるようになることではありません。\n"
         "一つずつ「できる」を増やして、国家試験合格を目指していきましょう。\n\n"
-        "それでは、ここからは源さんにバトンタッチします！\n\n"
+        "それでは、ここからは源さんにバトンタッチします！\n"
+        "何か話しかけてみてくださいねｗ\n"
         "頑張ってくださいね＾＾"
     )
-    gen_message = (
+    reply_to_line(reply_token, welcome_message)
+
+
+def reply_gen_first_greeting(reply_token):
+    """利用者から次の発言が届いた後、既存の源さんの挨拶を送る。"""
+    reply_to_line(
+        reply_token,
         "おぉｗよくきたな！\n"
         "俺は源ってんだ、みんなは源おじとか、源さんとかって呼んでるぜｗ\n"
-        "お前の名前も聞かせてくれよ＾＾"
-    )
-    line_bot_api.reply_message(
-        reply_token,
-        [
-            TextSendMessage(text=welcome_message),
-            TextSendMessage(text=gen_message),
-        ],
+        "お前の名前も聞かせてくれよ＾＾",
     )
 # =========================================================
 # 共通関数：準備確認のクイックリプライ付き返信
@@ -1868,12 +1868,31 @@ def handle_text_message(event):
             )
             return
 
-        reply_to_line(
+        user_states[user_id] = "waiting_gen_intro"
+        reply_new_user_welcome(event.reply_token)
+        return
+
+    current_state = user_states.get(user_id)
+
+    if current_state == "waiting_gen_intro":
+        user_states[user_id] = "waiting_name"
+        reply_gen_first_greeting(event.reply_token)
+        return
+
+    if current_state == "waiting_name":
+        user_names[user_id] = user_message
+        user_states.pop(user_id, None)
+
+        reply_mode_select(
             event.reply_token,
-            "おっと、全部ふりだしに戻したぞ（笑）\n"
-            "次のメッセージから、最初の出会いをやり直せるぜ＾＾"
+            intro_text=(
+                f"そっかわかった！\n"
+                f"じゃあ今後は俺と{user_message}の二人三脚でゴールを目指して頑張るぜ！\n"
+                f"よろしくな！{user_message}＾＾"
+            ),
         )
         return
+
     # モード切替
     if user_message in ["相談する", "相談モード"]:
         user_modes[user_id] = "chat"
@@ -1975,38 +1994,15 @@ def handle_text_message(event):
 
         quiz_thread.start()
         return
-    # 現在の会話状態を取得する
-    current_state = user_states.get(user_id)
     rest_words = ["休み", "休む", "今日は無理", "今日はできない", "休ませて"]
 
-    
-
-    if current_state == "waiting_name":
-        user_names[user_id] = user_message
-        user_states.pop(user_id, None)
-
-        reply_mode_select(
-            event.reply_token,
-            intro_text=(
-                f"そっかわかった！\n"
-                f"じゃあ今後は俺と{user_message}の二人三脚でゴールを目指して頑張るぜ！\n"
-                f"よろしくな！{user_message}＾＾"
-            ),
-        )
-        return
-
     if user_id not in user_names:
-        user_states[user_id] = "waiting_name"
-
         if not user_profile_exists(user_id):
+            user_states[user_id] = "waiting_gen_intro"
             reply_new_user_welcome(event.reply_token)
         else:
-            reply_to_line(
-                event.reply_token,
-                "おぉｗよくきたな！\n"
-                "俺は源ってんだ、みんなは源おじとか、源さんとかって呼んでるぜｗ\n"
-                "お前の名前も聞かせてくれよ＾＾"
-            )
+            user_states[user_id] = "waiting_name"
+            reply_gen_first_greeting(event.reply_token)
         return
 
     # 「休み」「休む」などが含まれていたら、問題を始めない
