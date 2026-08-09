@@ -1161,7 +1161,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertIn("だいたい理解できたか？＾＾\\n次はどうする？", review_source)
         self.assertIn("わかった！", review_source)
         self.assertIn("まだ質問がある！", review_source)
-        self.assertIn("正答へどう絞り込むか", source)
+        self.assertIn("源さん自身が着眼点から正答まで順番に説明し切って", source)
         self.assertIn("EXPLAIN_TEACHING_PROMPT", source)
         self.assertIn("use_teaching_intro=use_teaching_intro", source)
 
@@ -1302,6 +1302,83 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertEqual("image-base64", contexts[image_user]["image_base64"])
         self.assertEqual(3, len(pushed_reviews))
         self.assertTrue(all(call[2] is True for call in analysis_calls))
+
+    def test_attachment_generation_prompt_teaches_the_full_reasoning_to_the_answer(self) -> None:
+        source = APP_PATH.read_text(encoding="utf-8")
+        module = ast.parse(source)
+        required_constants = {
+            "GEN_OJI_PROMPT",
+            "EDUCATION_RULE_PROMPT",
+            "IMAGE_ANALYSIS_PROMPT",
+            "WORD_ANALYSIS_PROMPT",
+            "EXPLAIN_TEACHING_PROMPT",
+        }
+        namespace = {}
+        for node in module.body:
+            if not isinstance(node, ast.Assign) or len(node.targets) != 1:
+                continue
+            target = node.targets[0]
+            if isinstance(target, ast.Name) and target.id in required_constants:
+                namespace[target.id] = ast.literal_eval(node.value)
+
+        image_calls = []
+        word_calls = []
+        namespace["client"] = SimpleNamespace(
+            responses=SimpleNamespace(
+                create=lambda **kwargs: image_calls.append(kwargs)
+                or SimpleNamespace(output_text="画像解説")
+            ),
+            chat=SimpleNamespace(
+                completions=SimpleNamespace(
+                    create=lambda **kwargs: word_calls.append(kwargs)
+                    or SimpleNamespace(
+                        choices=[
+                            SimpleNamespace(
+                                message=SimpleNamespace(content="文書解説")
+                            )
+                        ]
+                    )
+                )
+            ),
+        )
+        function_nodes = [
+            node
+            for node in module.body
+            if isinstance(node, ast.FunctionDef)
+            and node.name in {"analyze_image", "analyze_word_document"}
+        ]
+        extracted = ast.Module(body=function_nodes, type_ignores=[])
+        ast.fix_missing_locations(extracted)
+        exec(compile(extracted, str(APP_PATH), "exec"), namespace)
+
+        namespace["analyze_image"]("image-data", use_teaching_intro=True)
+        namespace["analyze_image"]("image-data", use_teaching_intro=False)
+        namespace["analyze_word_document"](
+            "question.docx",
+            "国家試験問題の本文",
+            use_teaching_intro=True,
+        )
+        namespace["analyze_word_document"](
+            "general.docx",
+            "一般資料",
+            use_teaching_intro=False,
+        )
+
+        image_teaching_prompt = image_calls[0]["instructions"]
+        image_general_prompt = image_calls[1]["instructions"]
+        word_teaching_prompt = word_calls[0]["messages"][1]["content"]
+        word_general_prompt = word_calls[1]["messages"][1]["content"]
+
+        for prompt in (image_teaching_prompt, word_teaching_prompt):
+            self.assertIn("源さん自身が着眼点から正答まで順番に説明し切って", prompt)
+            self.assertIn("下腿三頭筋MMT2", prompt)
+            self.assertIn("その選択肢が正しい理由", prompt)
+            self.assertIn("問題作成者の立場で講評してはいけません", prompt)
+            self.assertIn("問題ではない資料にも「正答」", prompt)
+            self.assertIn("考えてみよう", prompt)
+
+        self.assertNotIn("これは「教えて源さん」における最優先", image_general_prompt)
+        self.assertNotIn("これは「教えて源さん」における最優先", word_general_prompt)
 
 
 if __name__ == "__main__":
