@@ -603,7 +603,10 @@ class NewUserWelcomeTest(unittest.TestCase):
         self.assertTrue(message.startswith("ようこそ、ライセンスタウンへ！"))
         self.assertNotIn("おぉｗよくきたな！", message)
         self.assertLess(message.index("源さんにバトンタッチ"), message.index("何か話しかけて"))
-        self.assertLess(message.index("何か話しかけて"), message.index("頑張ってくださいね＾＾"))
+        self.assertIn(
+            "何か話しかけてみてくださいねｗ\n\nそれではいってらっしゃい＾＾",
+            message,
+        )
 
     def test_new_user_sees_welcome_then_existing_greeting_and_can_register_name(self) -> None:
         user_id = "brand-new-user"
