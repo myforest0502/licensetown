@@ -1361,6 +1361,24 @@ class ConfigurableQuizTest(unittest.TestCase):
             procfile_path.read_text(encoding="utf-8").strip(),
         )
 
+    def test_q1_image_accuracy_contract_keeps_source_terms_without_hardcoding(self) -> None:
+        source = APP_PATH.read_text(encoding="utf-8")
+        q1_choices = {
+            "A": "股関節内転筋の痙縮による歩隔の減少",
+            "B": "下腿三頭筋筋力低下と腓腹筋の伸張性低下",
+            "C": "大腿四頭筋筋持久力低下による膝折れ",
+            "D": "動的バランス低下による立脚時間の延長",
+            "E": "股関節外転筋筋力低下による骨盤下制",
+        }
+        self.assertEqual(
+            "下腿三頭筋筋力低下と腓腹筋の伸張性低下",
+            q1_choices["B"],
+        )
+        self.assertNotIn("B．" + q1_choices["B"], source)
+        self.assertIn("歩幅／歩隔", source)
+        self.assertIn("痙縮／麻痺", source)
+        self.assertIn("選択肢は読み取った実際の文言のまま", source)
+
     def test_attachment_generation_prompt_teaches_the_full_reasoning_to_the_answer(self) -> None:
         source = APP_PATH.read_text(encoding="utf-8")
         module = ast.parse(source)
@@ -1447,8 +1465,6 @@ class ConfigurableQuizTest(unittest.TestCase):
 
         for prompt in (image_teaching_prompt, word_teaching_prompt):
             self.assertIn("源さん自身が着眼点から正答まで順番に説明し切って", prompt)
-            self.assertIn("下腿三頭筋MMT2", prompt)
-            self.assertIn("正答は「B．下腿三頭筋筋力低下と腓腹筋の伸張性低下」", prompt)
             self.assertIn("その選択肢が正しい理由", prompt)
             self.assertIn("問題作成者向けの評価をしてはいけません", prompt)
             self.assertIn("問題ではない資料にも「正答」", prompt)
@@ -1482,12 +1498,24 @@ class ConfigurableQuizTest(unittest.TestCase):
             self.assertNotIn(forbidden, image_teaching_prompt)
         self.assertIn("小さい文字、ぼやけた文字、見切れた部分を推測で補完しない", image_teaching_prompt)
         self.assertIn("読み取れない、または不明", image_teaching_prompt)
+        self.assertIn("正答の推論を始める前", image_teaching_prompt)
+        self.assertIn("選択肢A～Eの実際の文言", image_teaching_prompt)
+        self.assertIn("歩幅／歩隔", image_teaching_prompt)
+        self.assertIn("痙縮／麻痺", image_teaching_prompt)
+        self.assertIn("左右、数値、単位、屈曲・伸展", image_teaching_prompt)
+        self.assertIn("推測で正答を出さない", image_teaching_prompt)
+        self.assertIn("問いと選んだ正答が対応", image_teaching_prompt)
+        self.assertIn("選択肢の文言を改変していない", image_teaching_prompt)
         self.assertIn("回答の最初の方で【正答】と主要根拠", image_teaching_prompt)
         self.assertIn("原則600～1,000文字程度", image_teaching_prompt)
         self.assertIn("問題文の全文を再掲せず", image_teaching_prompt)
         self.assertIn("迷いやすい1～2個だけ", image_teaching_prompt)
         self.assertEqual(1600, image_calls[0]["max_output_tokens"])
         self.assertEqual(1200, image_calls[1]["max_output_tokens"])
+        self.assertNotIn(
+            "B．下腿三頭筋筋力低下と腓腹筋の伸張性低下",
+            image_teaching_prompt,
+        )
         self.assertEqual(
             {
                 "status": "completed",
