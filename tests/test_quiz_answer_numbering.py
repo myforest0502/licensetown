@@ -1295,13 +1295,28 @@ class ConfigurableQuizTest(unittest.TestCase):
             source=SimpleNamespace(user_id=image_user),
             reply_token="reply-token",
         )
-        namespace["handle_image_message"](image_event)
+        with self.assertLogs(level="INFO") as captured_logs:
+            namespace["handle_image_message"](image_event)
+
+            general_event = SimpleNamespace(
+                message=SimpleNamespace(id="general-image-message"),
+                source=SimpleNamespace(user_id="general-image-user"),
+                reply_token="reply-token",
+            )
+            namespace["handle_image_message"](general_event)
 
         self.assertEqual("explain_review", states[image_user])
         self.assertEqual("image", contexts[image_user]["kind"])
         self.assertEqual("image-base64", contexts[image_user]["image_base64"])
         self.assertEqual(3, len(pushed_reviews))
-        self.assertTrue(all(call[2] is True for call in analysis_calls))
+        self.assertTrue(all(call[2] is True for call in analysis_calls[:3]))
+        self.assertIs(False, analysis_calls[3][2])
+        logged = "\n".join(captured_logs.output)
+        self.assertIn(
+            "image_analysis_mode=teaching user_state=explain_attachment",
+            logged,
+        )
+        self.assertIn("image_analysis_mode=general user_state=none", logged)
 
     def test_attachment_generation_prompt_teaches_the_full_reasoning_to_the_answer(self) -> None:
         source = APP_PATH.read_text(encoding="utf-8")
@@ -1310,6 +1325,8 @@ class ConfigurableQuizTest(unittest.TestCase):
             "GEN_OJI_PROMPT",
             "EDUCATION_RULE_PROMPT",
             "IMAGE_ANALYSIS_PROMPT",
+            "TEACHING_IMAGE_CHARACTER_PROMPT",
+            "TEACHING_IMAGE_READING_PROMPT",
             "WORD_ANALYSIS_PROMPT",
             "EXPLAIN_TEACHING_PROMPT",
         }
@@ -1320,6 +1337,7 @@ class ConfigurableQuizTest(unittest.TestCase):
             target = node.targets[0]
             if isinstance(target, ast.Name) and target.id in required_constants:
                 namespace[target.id] = ast.literal_eval(node.value)
+        namespace["logging"] = logging
 
         image_calls = []
         word_calls = []
@@ -1374,14 +1392,41 @@ class ConfigurableQuizTest(unittest.TestCase):
             self.assertIn("下腿三頭筋MMT2", prompt)
             self.assertIn("正答は「B．下腿三頭筋筋力低下と腓腹筋の伸張性低下」", prompt)
             self.assertIn("その選択肢が正しい理由", prompt)
-            self.assertIn("問題作成者の立場で講評してはいけません", prompt)
+            self.assertIn("問題作成者向けの評価をしてはいけません", prompt)
             self.assertIn("問題ではない資料にも「正答」", prompt)
             self.assertIn("考えてみよう", prompt)
             self.assertIn("正答を明示せずに回答を終了することを原則禁止", prompt)
             self.assertIn("問題文の情報をすべて同じ重さで読み上げない", prompt)
             self.assertIn("今回の問いへの優先度が低い背景情報", prompt)
             self.assertIn("本来の説明をユーザーへ丸投げしていないか", prompt)
-            self.assertIn("汎用の画像・文書分析指示", prompt)
+
+        self.assertEqual(
+            namespace["GEN_OJI_PROMPT"]
+            + "\n\n"
+            + namespace["EDUCATION_RULE_PROMPT"]
+            + "\n\n"
+            + namespace["IMAGE_ANALYSIS_PROMPT"],
+            image_general_prompt,
+        )
+        self.assertNotIn(
+            "返信は原則として次の順番にしてください。",
+            image_teaching_prompt,
+        )
+        for forbidden in (
+            "良かった点",
+            "良い点",
+            "気になる点",
+            "一番良かった点",
+            "次に行うこと",
+            "次の行動を一つに絞る",
+            "問題そのものへの講評",
+        ):
+            self.assertNotIn(forbidden, image_teaching_prompt)
+        self.assertIn("小さい文字、ぼやけた文字、見切れた部分を推測で補完しない", image_teaching_prompt)
+        self.assertIn("読み取れない、または不明", image_teaching_prompt)
+        self.assertIn("良かった点や重要な点", image_general_prompt)
+        self.assertIn("気になる点", image_general_prompt)
+        self.assertIn("次に行うこと", image_general_prompt)
 
         self.assertNotIn("これは「教えて源さん」における最優先", image_general_prompt)
         self.assertNotIn("これは「教えて源さん」における最優先", word_general_prompt)

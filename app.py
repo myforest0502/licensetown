@@ -333,9 +333,24 @@ LINEで読みやすいように、
 通常は300文字から800文字程度を目安にしてください。
 """
 
+TEACHING_IMAGE_CHARACTER_PROMPT = """
+あなたは「ライセンスタウン」の伴走担当「源おじ」です。
+少しがさつだが相手を本気で考える、親しみやすい自然な日本語で説明してください。
+「おう！」「あぁ…これな…」「ここがポイントだぞ」などは、内容に合う場合だけ自然に使って構いません。
+人格を傷つける表現、成功を保証する表現、確認できない内容を確認したふりをすることは禁止です。
+医療情報は画像から確認できる範囲と一般的な学習上の説明に限定し、診断を断定しないでください。
+分からないことや根拠が不足することは、推測で断定せず不明だと伝えてください。
+"""
+
+TEACHING_IMAGE_READING_PROMPT = """
+画像を実際に確認してください。
+画像内で読める文字、表、図、問題文、選択肢を確認してください。
+小さい文字、ぼやけた文字、見切れた部分を推測で補完しないでください。
+読み取れない部分は、読み取れない、または不明であると明示してください。
+"""
+
 EXPLAIN_TEACHING_PROMPT = """
 これは「教えて源さん」における最優先の回答方針です。
-汎用の画像・文書分析指示にある「良かった点」「気になる点」「次に行うこと」と競合する場合は、この教師型解説方針を優先してください。
 国家試験問題や練習問題、選択問題を認識した場合、問題文の要約やオウム返しで終わらせないでください。
 学習者へ「復習してみよう」「整理してみよう」「考えてみよう」と課題を返して説明を終えてはいけません。
 資料から根拠を読み取れる場合は、源さん自身が着眼点から正答まで順番に説明し切ってください。
@@ -363,8 +378,8 @@ EXPLAIN_TEACHING_PROMPT = """
 例えば、立脚後期の前方推進力低下について、下腿三頭筋MMT2と、膝屈曲位では背屈可能だが膝伸展位では背屈制限がある所見を認識した場合は、次のように情報を結び付けます。
 立脚後期、踵離地の乏しさ、下腿三頭筋MMT2、膝屈曲位と膝伸展位での背屈ROM差を優先して拾います。立脚後期の推進には下腿三頭筋が重要で、MMT2は筋力低下の根拠になります。腓腹筋は膝と足関節をまたぐ二関節筋なので、膝伸展時に強くなる背屈制限は腓腹筋の伸張性低下を示します。この二つがそろうため、正答は「B．下腿三頭筋筋力低下と腓腹筋の伸張性低下」であると、理由とともに明示してください。
 
-ユーザーから明示的に問題の評価を頼まれていない限り、問題作成者の立場で講評してはいけません。
-「良い問題」「設定が臨床的で良い」「選択肢が専門用語多め」「良かったところ」「気になったところ」などの問題評価は不要です。
+ユーザーから明示的に設問品質の評価を頼まれていない限り、問題作成者向けの評価をしてはいけません。
+設問の出来や表現への評価は不要です。
 その文章量は、着眼点、所見の意味、所見同士の関連、正答へ至る理由の説明に使ってください。
 
 見出しを毎回固定表示する必要はありません。重要なのは、正答だけでなく到達する思考を教えることです。
@@ -377,7 +392,7 @@ EXPLAIN_TEACHING_PROMPT = """
 ・正答の根拠となる所見を具体的に拾ったか
 ・所見の意味と所見同士のつながりを説明したか
 ・「考えてみよう」などで本来の説明をユーザーへ丸投げしていないか
-・求められていない問題講評を入れていないか
+・求められていない設問品質の評価を入れていないか
 ・一般資料へ正答形式を無理に当てはめていないか
 """
 
@@ -1836,27 +1851,36 @@ def analyze_image(image_base64, use_teaching_intro=False):
     源おじとして内容を分析する。
     """
 
-    teaching_intro = ""
-    teaching_prompt = ""
     if use_teaching_intro:
-        teaching_prompt = "\n\n" + EXPLAIN_TEACHING_PROMPT
         teaching_intro = (
             "\n\nこれは『教えて源さん』で最初に受け取った資料です。"
             "内容に自然に合う場合は『あぁ…これな…』から解説へ入ってください。"
             "ただし機械的な固定表現にはせず、資料に合わなければ別の自然な導入にしてください。"
         )
+        final_instructions = (
+            TEACHING_IMAGE_CHARACTER_PROMPT
+            + "\n\n"
+            + EXPLAIN_TEACHING_PROMPT
+            + "\n\n"
+            + TEACHING_IMAGE_READING_PROMPT
+            + teaching_intro
+        )
+        image_analysis_mode = "teaching"
+    else:
+        final_instructions = (
+            GEN_OJI_PROMPT
+            + "\n\n"
+            + EDUCATION_RULE_PROMPT
+            + "\n\n"
+            + IMAGE_ANALYSIS_PROMPT
+        )
+        image_analysis_mode = "general"
+
+    logging.info("image_analysis_mode=%s", image_analysis_mode)
 
     response = client.responses.create(
         model="gpt-4.1-mini",
-       instructions=(
-    GEN_OJI_PROMPT
-    + "\n\n"
-    + EDUCATION_RULE_PROMPT
-    + "\n\n"
-    + IMAGE_ANALYSIS_PROMPT
-    + teaching_prompt
-    + teaching_intro
-),
+        instructions=final_instructions,
         input=[
             {
                 "role": "user",
@@ -2596,6 +2620,11 @@ def handle_image_message(event):
         None,
     )
     use_teaching_intro = user_states.get(user_id) == "explain_attachment"
+    logging.info(
+        "image_analysis_mode=%s user_state=%s",
+        "teaching" if use_teaching_intro else "general",
+        user_states.get(user_id, "none"),
+    )
 
     # まず源おじの相づちを即返信
     reply_to_line(
