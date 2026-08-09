@@ -70,6 +70,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_next_explanation_choice": lambda *args, **kwargs: None,
         "reply_new_user_welcome": lambda *args, **kwargs: None,
         "reply_gen_first_greeting": lambda *args, **kwargs: None,
+        "reply_explain_method_choice": lambda *args, **kwargs: None,
         "push_to_line": lambda *args, **kwargs: None,
         "create_text_response": lambda *args, **kwargs: "unused",
         "prepare_and_send_quiz": lambda *args, **kwargs: None,
@@ -987,13 +988,18 @@ class ConfigurableQuizTest(unittest.TestCase):
         function_globals = app.handle_text_message.__globals__
         original_reply = function_globals["reply_to_line"]
         original_study_ready = function_globals["reply_study_ready_choice"]
+        original_explain_choice = function_globals["reply_explain_method_choice"]
         replies = []
         study_replies = []
+        explain_choices = []
         function_globals["reply_to_line"] = (
             lambda _token, message: replies.append(message)
         )
         function_globals["reply_study_ready_choice"] = (
             lambda token: study_replies.append(token)
+        )
+        function_globals["reply_explain_method_choice"] = (
+            lambda token: explain_choices.append(token)
         )
 
         labels = [
@@ -1022,6 +1028,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         finally:
             function_globals["reply_to_line"] = original_reply
             function_globals["reply_study_ready_choice"] = original_study_ready
+            function_globals["reply_explain_method_choice"] = original_explain_choice
 
         self.assertEqual(4, mode_select_source.count("QuickReplyButton("))
         self.assertIn(
@@ -1037,8 +1044,76 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertEqual("explain", app.user_modes["explain-user"])
         self.assertNotIn("heat-user", app.user_modes)
         self.assertEqual(1, len(study_replies))
-        self.assertEqual(3, len(replies))
+        self.assertEqual(1, len(explain_choices))
+        self.assertEqual(2, len(replies))
         self.assertIn("熱血モードはこれから準備するぞ🔥", replies[-1])
+
+    def test_teach_gen_entry_supports_direct_question_and_attachment_choices(self) -> None:
+        function_globals = app.handle_text_message.__globals__
+        original_choice = function_globals["reply_explain_method_choice"]
+        original_reply = function_globals["reply_to_line"]
+        original_create = function_globals["create_text_response"]
+        choice_calls = []
+        replies = []
+        questions = []
+        function_globals["reply_explain_method_choice"] = (
+            lambda token: choice_calls.append(token)
+        )
+        function_globals["reply_to_line"] = (
+            lambda _token, message: replies.append(message)
+        )
+        function_globals["create_text_response"] = (
+            lambda message, mode: questions.append((message, mode)) or "質問への回答"
+        )
+
+        direct_user = "direct-explain-user"
+        attachment_user = "attachment-explain-user"
+        app.user_names[direct_user] = "直接質問者"
+        app.user_names[attachment_user] = "資料質問者"
+
+        try:
+            app.handle_text_message(make_text_event(direct_user, "教えて源さん"))
+            app.handle_text_message(make_text_event(direct_user, "源さんに直接質問する"))
+            app.handle_text_message(make_text_event(direct_user, "反射って何？"))
+
+            app.handle_text_message(make_text_event(attachment_user, "教えて源さん"))
+            app.handle_text_message(make_text_event(attachment_user, "文書・写真等を見せる"))
+            attachment_mode_before_switch = app.user_modes[attachment_user]
+            attachment_state_before_switch = app.user_states[attachment_user]
+            attachment_prompt = replies[-1]
+            app.handle_text_message(make_text_event(attachment_user, "相談したい"))
+        finally:
+            function_globals["reply_explain_method_choice"] = original_choice
+            function_globals["reply_to_line"] = original_reply
+            function_globals["create_text_response"] = original_create
+
+        self.assertEqual(2, len(choice_calls))
+        self.assertEqual("explain", app.user_modes[direct_user])
+        self.assertEqual("explain_direct", app.user_states[direct_user])
+        self.assertIn("そのまま書いて送ってくれればいいぞ！", replies[0])
+        self.assertEqual([("反射って何？", "explain")], questions)
+        self.assertIn("質問への回答", replies[1])
+        self.assertEqual("explain", attachment_mode_before_switch)
+        self.assertEqual("explain_attachment", attachment_state_before_switch)
+        self.assertIn("Word、PDF、写真なんかを送ってくれれば", attachment_prompt)
+        self.assertEqual("chat", app.user_modes[attachment_user])
+        self.assertNotIn(attachment_user, app.user_states)
+
+        source = APP_PATH.read_text(encoding="utf-8")
+        module = ast.parse(source)
+        choice_node = next(
+            node
+            for node in module.body
+            if isinstance(node, ast.FunctionDef)
+            and node.name == "reply_explain_method_choice"
+        )
+        choice_source = ast.get_source_segment(source, choice_node)
+        self.assertEqual(2, choice_source.count("QuickReplyButton("))
+        self.assertLess(
+            choice_source.index("源さんに直接質問する"),
+            choice_source.index("文書・写真等を見せる"),
+        )
+        self.assertIn("どうやって聞く？", choice_source)
 
 
 if __name__ == "__main__":

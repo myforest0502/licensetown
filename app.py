@@ -1264,6 +1264,38 @@ def reply_mode_select(reply_token, intro_text=None):
         logging.exception(
             "LINE mode select quick reply failed."
         )
+
+
+def reply_explain_method_choice(reply_token):
+    """「教えて源さん」で、直接質問か資料添付かを選んでもらう。"""
+    reply_message = TextSendMessage(
+        text=(
+            "おう！ここでは、分からないことを俺に聞いてくれればいいぞ＾＾\n"
+            "国家試験の問題でも、授業で分からなかったことでも大丈夫だ。\n\n"
+            "直接質問してもいいし、問題や資料を見せてくれてもいいぞ。\n"
+            "WordやPDF、写真なんかを見せながら「ここ教えて！」でもOKだ＾＾\n\n"
+            "どうやって聞く？"
+        ),
+        quick_reply=QuickReply(
+            items=[
+                QuickReplyButton(
+                    action=MessageAction(
+                        label="源さんに直接質問する",
+                        text="源さんに直接質問する",
+                    )
+                ),
+                QuickReplyButton(
+                    action=MessageAction(
+                        label="文書・写真等を見せる",
+                        text="文書・写真等を見せる",
+                    )
+                ),
+            ]
+        ),
+    )
+    line_bot_api.reply_message(reply_token, reply_message)
+
+
 def reply_study_continue_choice(reply_token):
     """
     5問分の回答を保存した後、
@@ -1612,11 +1644,19 @@ def image_buffer_to_base64(file_buffer):
 # 共通関数：画像をOpenAIで分析
 # =========================================================
 
-def analyze_image(image_base64):
+def analyze_image(image_base64, use_teaching_intro=False):
     """
     Base64形式の画像をOpenAIへ送り、
     源おじとして内容を分析する。
     """
+
+    teaching_intro = ""
+    if use_teaching_intro:
+        teaching_intro = (
+            "\n\nこれは『教えて源さん』で最初に受け取った資料です。"
+            "内容に自然に合う場合は『あぁ…これな…』から解説へ入ってください。"
+            "ただし機械的な固定表現にはせず、資料に合わなければ別の自然な導入にしてください。"
+        )
 
     response = client.responses.create(
         model="gpt-4.1-mini",
@@ -1626,6 +1666,7 @@ def analyze_image(image_base64):
     + EDUCATION_RULE_PROMPT
     + "\n\n"
     + IMAGE_ANALYSIS_PROMPT
+    + teaching_intro
 ),
         input=[
             {
@@ -1741,7 +1782,7 @@ def extract_text_from_docx(file_buffer):
 # 共通関数：Word文書を「柔」で分析
 # =========================================================
 
-def analyze_word_document(file_name, document_text):
+def analyze_word_document(file_name, document_text, use_teaching_intro=False):
     """
     抽出したWord文書を源おじが簡易分析する。
     """
@@ -1774,6 +1815,14 @@ def analyze_word_document(file_name, document_text):
 {truncation_note}
 """
 
+    teaching_intro = ""
+    if use_teaching_intro:
+        teaching_intro = (
+            "\n\nこれは『教えて源さん』で最初に受け取った資料です。"
+            "内容に自然に合う場合は『あぁ…これな…』から解説へ入ってください。"
+            "ただし機械的な固定表現にはせず、資料に合わなければ別の自然な導入にしてください。"
+        )
+
     response = client.chat.completions.create(
         model="gpt-4.1-mini",
         messages=[
@@ -1783,7 +1832,7 @@ def analyze_word_document(file_name, document_text):
             },
             {
                 "role": "system",
-                "content": WORD_ANALYSIS_PROMPT,
+                "content": WORD_ANALYSIS_PROMPT + teaching_intro,
             },
             {
                 "role": "user",
@@ -1905,14 +1954,38 @@ def handle_text_message(event):
         )
         return
 
+    if current_state == "waiting_explain_method":
+        if user_message == "源さんに直接質問する":
+            user_states[user_id] = "explain_direct"
+            reply_to_line(
+                event.reply_token,
+                "おう、何でも聞いてくれ＾＾\n"
+                "分からないことをそのまま書いて送ってくれればいいぞ！",
+            )
+            return
+
+        if user_message == "文書・写真等を見せる":
+            user_states[user_id] = "explain_attachment"
+            reply_to_line(
+                event.reply_token,
+                "おう、見せてくれ＾＾\n"
+                "Word、PDF、写真なんかを送ってくれれば、その内容を見ながら一緒に確認するぞ。\n"
+                "資料を送ったあとに「ここが分からない」「この問題を解説して」みたいに聞いてくれてもOKだ！",
+            )
+            return
+
     # モード切替
     if user_message == "熱血モード":
+        if str(user_states.get(user_id, "")).startswith("explain_"):
+            user_states.pop(user_id, None)
         reply_to_line(
             event.reply_token,
             "熱血モードはこれから準備するぞ🔥",
         )
         return
     if user_message in ["相談したい", "相談する", "相談モード"]:
+        if str(user_states.get(user_id, "")).startswith("explain_"):
+            user_states.pop(user_id, None)
         user_modes[user_id] = "chat"
         reply_to_line(
             event.reply_token,
@@ -1922,6 +1995,8 @@ def handle_text_message(event):
         )
         return
     if user_message in ["勉強する", "勉強モード"]:
+        if str(user_states.get(user_id, "")).startswith("explain_"):
+            user_states.pop(user_id, None)
         user_modes[user_id] = "study"
         reply_study_ready_choice(
         event.reply_token
@@ -1929,12 +2004,8 @@ def handle_text_message(event):
         return
     if user_message in ["教えて源さん", "質問する", "解説モード"]:
         user_modes[user_id] = "explain"
-        reply_to_line(
-            event.reply_token,
-            "📄解説モードへ切り替えたぞ！\n"
-            "分からないところがある資料を見せてみろ＾＾\n"
-            "WordでもPDFでも写真でも、一緒に整理していこうぜ。"
-        )
+        user_states[user_id] = "waiting_explain_method"
+        reply_explain_method_choice(event.reply_token)
         return
         
     if not user_message:
@@ -2163,6 +2234,7 @@ def handle_file_message(event):
         "user_id",
         None,
     )
+    use_teaching_intro = user_states.get(user_id) == "explain_attachment"
 
     # 対応外のファイルは、これまで通りその場で返信する
     if not (
@@ -2236,6 +2308,7 @@ def handle_file_message(event):
             analysis_message = analyze_word_document(
                 file_name=file_name,
                 document_text=document_text,
+                use_teaching_intro=use_teaching_intro,
             )
 
     except Exception:
@@ -2257,6 +2330,8 @@ def handle_file_message(event):
         user_id,
         analysis_message,
     )
+    if use_teaching_intro:
+        user_states[user_id] = "explain_attachment_received"
 
 # =========================================================
 # 画像メッセージ
@@ -2279,6 +2354,7 @@ def handle_image_message(event):
         "user_id",
         None,
     )
+    use_teaching_intro = user_states.get(user_id) == "explain_attachment"
 
     # まず源おじの相づちを即返信
     reply_to_line(
@@ -2301,7 +2377,8 @@ def handle_image_message(event):
         )
 
         analysis_message = analyze_image(
-            image_base64
+            image_base64,
+            use_teaching_intro=use_teaching_intro,
         )
 
     except Exception:
@@ -2321,6 +2398,8 @@ def handle_image_message(event):
         user_id,
         analysis_message,
     )
+    if use_teaching_intro:
+        user_states[user_id] = "explain_attachment_received"
 # =========================================================
 # アプリケーション実行
 # =========================================================
