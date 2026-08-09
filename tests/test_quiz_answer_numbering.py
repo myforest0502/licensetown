@@ -1363,6 +1363,11 @@ class ConfigurableQuizTest(unittest.TestCase):
 
     def test_q1_image_accuracy_contract_keeps_source_terms_without_hardcoding(self) -> None:
         source = APP_PATH.read_text(encoding="utf-8")
+        q1_question = (
+            "左立脚後期の踵離地が乏しく、右歩幅が短い。"
+            "足関節背屈ROMは膝屈曲位15°、膝伸展位0°。"
+            "膝過伸展は認めない。"
+        )
         q1_choices = {
             "A": "股関節内転筋の痙縮による歩隔の減少",
             "B": "下腿三頭筋筋力低下と腓腹筋の伸張性低下",
@@ -1374,6 +1379,18 @@ class ConfigurableQuizTest(unittest.TestCase):
             "下腿三頭筋筋力低下と腓腹筋の伸張性低下",
             q1_choices["B"],
         )
+        for exact_term in (
+            "踵離地",
+            "右歩幅",
+            "膝屈曲位15°",
+            "膝伸展位0°",
+            "膝過伸展は認めない",
+        ):
+            self.assertIn(exact_term, q1_question)
+        self.assertIn("痙縮", q1_choices["A"])
+        self.assertNotIn("麻痺", q1_choices["A"])
+        self.assertIn("歩隔", q1_choices["A"])
+        self.assertNotIn("歩幅", q1_choices["A"])
         self.assertNotIn("B．" + q1_choices["B"], source)
         self.assertIn("歩幅／歩隔", source)
         self.assertIn("痙縮／麻痺", source)
@@ -1502,10 +1519,17 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertIn("選択肢A～Eの実際の文言", image_teaching_prompt)
         self.assertIn("歩幅／歩隔", image_teaching_prompt)
         self.assertIn("痙縮／麻痺", image_teaching_prompt)
+        self.assertIn("「踵離地」を別表現へ変え", image_teaching_prompt)
+        self.assertIn("「歩隔」を「歩幅」へ変え", image_teaching_prompt)
+        self.assertIn("「膝過伸展は認めない」", image_teaching_prompt)
         self.assertIn("左右、数値、単位、屈曲・伸展", image_teaching_prompt)
         self.assertIn("推測で正答を出さない", image_teaching_prompt)
         self.assertIn("問いと選んだ正答が対応", image_teaching_prompt)
         self.assertIn("選択肢の文言を改変していない", image_teaching_prompt)
+        self.assertIn("複数の要素", image_teaching_prompt)
+        self.assertIn("全要素の根拠", image_teaching_prompt)
+        self.assertIn("膝屈曲位と膝伸展位", image_teaching_prompt)
+        self.assertIn("腓腹筋の伸張性", image_teaching_prompt)
         self.assertIn("回答の最初の方で【正答】と主要根拠", image_teaching_prompt)
         self.assertIn("原則600～1,000文字程度", image_teaching_prompt)
         self.assertIn("問題文の全文を再掲せず", image_teaching_prompt)
