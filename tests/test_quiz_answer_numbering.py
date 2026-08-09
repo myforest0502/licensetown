@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ast
+import json
 import logging
 import re
 import unicodedata
@@ -22,8 +23,12 @@ def load_current_app_functions() -> SimpleNamespace:
     )
     target_names = {
         "format_quiz_messages",
+        "load_question_master",
         "parse_quiz_answers",
         "calculate_quiz_result",
+        "create_quiz_result_messages",
+        "advance_quiz_explanations",
+        "start_quiz",
         "start_next_quiz",
         "handle_text_message",
     }
@@ -36,6 +41,8 @@ def load_current_app_functions() -> SimpleNamespace:
 
     namespace = {
         "re": re,
+        "json": json,
+        "Path": Path,
         "unicodedata": unicodedata,
         "logging": logging,
         "threading": SimpleNamespace(Thread=None),
@@ -47,10 +54,21 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_mode_select": lambda *args, **kwargs: None,
         "reply_study_continue_choice": lambda *args, **kwargs: None,
         "reply_study_ready_choice": lambda *args, **kwargs: None,
+        "reply_quiz_score": lambda *args, **kwargs: None,
+        "reply_explanation_choice": lambda *args, **kwargs: None,
+        "reply_next_explanation_choice": lambda *args, **kwargs: None,
+        "push_to_line": lambda *args, **kwargs: None,
         "create_text_response": lambda *args, **kwargs: "unused",
         "prepare_and_send_quiz": lambda *args, **kwargs: None,
         "prepare_and_send_next_quiz": lambda *args, **kwargs: None,
         "select_random_questions": lambda count: make_questions()[:count],
+        "QUIZ_QUESTION_COUNT": 30,
+        "QUESTIONS_PER_SET": 5,
+        "CONFIDENCE_LEVELS": {
+            "1": "自信あり",
+            "2": "少し迷った",
+            "3": "あてずっぽう",
+        },
     }
     namespace["reset_user_profile"] = lambda user_id: (
         namespace["user_names"].pop(user_id, None),
@@ -118,6 +136,8 @@ class QuizAnswerNumberingTest(unittest.TestCase):
             "status": "waiting_for_answers",
             "current_set": current_set,
             "total_sets": 6,
+            "question_count": 30,
+            "questions_per_set": 5,
             "questions": make_questions(),
             "all_questions": make_questions(),
             "all_answers": all_answers or {},
@@ -299,9 +319,15 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         continue_choice_calls = []
         function_globals = app.handle_text_message.__globals__
         original_reply = function_globals["reply_to_line"]
+        original_score_reply = function_globals["reply_quiz_score"]
         original_continue = function_globals["reply_study_continue_choice"]
         function_globals["reply_to_line"] = (
             lambda _token, message: reply_messages.append(message)
+        )
+        function_globals["reply_quiz_score"] = (
+            lambda _token, result: reply_messages.append(
+                f"【結果】{result['score']} / {result['total']}問正解"
+            )
         )
         function_globals["reply_study_continue_choice"] = (
             lambda token: continue_choice_calls.append(token)
@@ -315,10 +341,11 @@ class QuizAnswerNumberingTest(unittest.TestCase):
             app.handle_text_message(make_text_event(user_id, answer_text))
         finally:
             function_globals["reply_to_line"] = original_reply
+            function_globals["reply_quiz_score"] = original_score_reply
             function_globals["reply_study_continue_choice"] = original_continue
 
         result = session["quiz_result"]
-        self.assertEqual("quiz_completed", session["status"])
+        self.assertEqual("waiting_for_explanations", session["status"])
         self.assertEqual([], continue_choice_calls)
         self.assertEqual(30, result["total"])
         self.assertEqual(28, result["score"])
@@ -336,9 +363,14 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         )
         self.assertIn("【結果】28 / 30問正解", reply_messages[0])
 
-        app.handle_text_message(make_text_event(user_id, "続ける"))
+        for explanation_set in range(1, 7):
+            messages = app.advance_quiz_explanations(session)
+            joined = "\n".join(messages)
+            start = ((explanation_set - 1) * 5) + 1
+            self.assertIn(f"【第{start}問】", joined)
+            self.assertIn(f"【第{start + 4}問】", joined)
+
         self.assertEqual("quiz_completed", session["status"])
-        self.assertNotEqual("preparing_next", session["status"])
 
         with self.assertRaisesRegex(ValueError, "30問すべて出題済み"):
             app.start_next_quiz(user_id)
@@ -503,6 +535,157 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         self.assertEqual(1, len(reply_messages))
         self.assertNotIn("全部ふりだしに戻した", reply_messages[0])
         self.assertIn("最後まで確認できなかった", reply_messages[0])
+
+
+class ConfigurableQuizTest(unittest.TestCase):
+    def setUp(self) -> None:
+        app.study_sessions.clear()
+
+    def test_30_40_50_question_settings_select_once_without_duplicates(self) -> None:
+        function_globals = app.start_quiz.__globals__
+        original_count = function_globals["QUIZ_QUESTION_COUNT"]
+        original_selector = function_globals["select_random_questions"]
+        pool = [
+            {
+                "id": number,
+                "question": f"問題{number}",
+                "choices": {key: f"選択肢{key}" for key in "ABCDE"},
+                "answer": "A",
+                "explanation": f"解説{number}",
+            }
+            for number in range(1, 311)
+        ]
+        calls = []
+
+        try:
+            function_globals["select_random_questions"] = (
+                lambda count: calls.append(count) or pool[:count]
+            )
+
+            for question_count in (30, 40, 50):
+                with self.subTest(question_count=question_count):
+                    calls.clear()
+                    function_globals["QUIZ_QUESTION_COUNT"] = question_count
+                    app.start_quiz(f"user-{question_count}")
+                    session = app.study_sessions[f"user-{question_count}"]
+
+                    self.assertEqual([question_count], calls)
+                    self.assertEqual(question_count, len(session["all_questions"]))
+                    self.assertEqual(
+                        question_count,
+                        len({question["id"] for question in session["all_questions"]}),
+                    )
+                    self.assertEqual(question_count // 5, session["total_sets"])
+
+                    while session["current_set"] < session["total_sets"]:
+                        app.start_next_quiz(f"user-{question_count}")
+                        start = (session["current_set"] - 1) * 5
+                        self.assertEqual(
+                            session["all_questions"][start:start + 5],
+                            session["questions"],
+                        )
+        finally:
+            function_globals["QUIZ_QUESTION_COUNT"] = original_count
+            function_globals["select_random_questions"] = original_selector
+
+    def test_runtime_loader_supports_current_utf16_and_candidate_utf8(self) -> None:
+        app_dir = APP_PATH.parent
+        project_root = app_dir.parents[1]
+        current_questions = app.load_question_master(app_dir / "questions_master.json")
+        candidate_path = project_root / "data" / "questions_master_candidate_v2.json"
+        if not candidate_path.exists():
+            candidate_path = (
+                project_root / "data" / "questions_master_candidate_v2_q1_q100.json"
+            )
+        candidate_questions = app.load_question_master(candidate_path)
+
+        self.assertEqual(310, len(current_questions))
+        self.assertIn(len(candidate_questions), {100, 310})
+
+    def test_explanations_keep_question_answer_and_confidence_alignment(self) -> None:
+        questions = make_all_questions()
+        answers = {
+            number: {
+                "answer": questions[number - 1]["answer"],
+                "confidence": str(((number - 1) % 3) + 1),
+            }
+            for number in range(1, 31)
+        }
+        session = {
+            "status": "waiting_for_explanations",
+            "question_count": 30,
+            "questions_per_set": 5,
+            "all_questions": questions,
+            "all_answers": answers,
+            "explanation_set": 0,
+        }
+
+        for explanation_set in range(1, 7):
+            messages = app.advance_quiz_explanations(session)
+            text = "\n".join(messages)
+            start = ((explanation_set - 1) * 5) + 1
+
+            for number in range(start, start + 5):
+                question = questions[number - 1]
+                self.assertIn(f"【第{number}問】○", text)
+                self.assertIn(f"正解：{question['answer']}", text)
+                self.assertIn(f"解説：{question['explanation']}", text)
+
+        self.assertEqual("quiz_completed", session["status"])
+        with self.assertRaisesRegex(ValueError, "表示できる状態"):
+            app.advance_quiz_explanations(session)
+
+    def test_new_quiz_cannot_start_while_explanations_are_open(self) -> None:
+        user_id = "explanation-lock-user"
+        app.user_names[user_id] = "テストユーザー"
+        app.user_modes[user_id] = "study"
+        app.study_sessions[user_id] = {
+            "status": "waiting_for_next_explanation",
+            "question_count": 30,
+            "questions_per_set": 5,
+            "all_questions": make_all_questions(),
+            "all_answers": {},
+            "explanation_set": 1,
+        }
+        function_globals = app.handle_text_message.__globals__
+        original_reply = function_globals["reply_to_line"]
+        original_prepare = function_globals["prepare_and_send_quiz"]
+        replies = []
+        starts = []
+        function_globals["reply_to_line"] = (
+            lambda _token, message: replies.append(message)
+        )
+        function_globals["prepare_and_send_quiz"] = (
+            lambda _user_id: starts.append(_user_id)
+        )
+
+        try:
+            app.handle_text_message(make_text_event(user_id, "問題出して"))
+        finally:
+            function_globals["reply_to_line"] = original_reply
+            function_globals["prepare_and_send_quiz"] = original_prepare
+
+        self.assertEqual([], starts)
+        self.assertEqual("waiting_for_next_explanation", app.study_sessions[user_id]["status"])
+        self.assertIn("次の5問", replies[0])
+
+    def test_question_and_chat_mode_selection_still_work(self) -> None:
+        function_globals = app.handle_text_message.__globals__
+        original_reply = function_globals["reply_to_line"]
+        replies = []
+        function_globals["reply_to_line"] = (
+            lambda _token, message: replies.append(message)
+        )
+
+        try:
+            app.handle_text_message(make_text_event("chat-user", "相談する"))
+            app.handle_text_message(make_text_event("explain-user", "質問する"))
+        finally:
+            function_globals["reply_to_line"] = original_reply
+
+        self.assertEqual("chat", app.user_modes["chat-user"])
+        self.assertEqual("explain", app.user_modes["explain-user"])
+        self.assertEqual(2, len(replies))
 
 
 if __name__ == "__main__":

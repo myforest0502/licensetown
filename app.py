@@ -8,6 +8,7 @@ import urllib.request
 import re
 import random
 import unicodedata
+from pathlib import Path
 from flask import Flask, request, abort
 
 from linebot import LineBotApi, WebhookHandler
@@ -350,23 +351,29 @@ handler = WebhookHandler(
 
 # 1回の小テストで出題する問題数
 QUIZ_QUESTION_COUNT = 30
+# 1セットで出題・解説する問題数
+QUESTIONS_PER_SET = 5
 # 問題倉庫JSON
-QUESTIONS_FILE_PATH = "questions_master.json"
+QUESTIONS_FILE_PATH = Path(__file__).resolve().parent / "questions_master.json"
 
 
-def load_question_master():
+def load_question_master(path=None):
     """
     questions_master.json から問題一覧を読み込む
     """
 
-    with open(
-        QUESTIONS_FILE_PATH,
-        "r",
-        encoding="utf-16"
-    ) as file:
-        data = json.load(file)
+    question_path = Path(path or QUESTIONS_FILE_PATH)
+    raw_data = question_path.read_bytes()
+    encoding = "utf-16" if raw_data.startswith((b"\xff\xfe", b"\xfe\xff")) else "utf-8-sig"
+    data = json.loads(raw_data.decode(encoding))
 
-    return data["questions"]
+    questions = data.get("questions")
+    if not isinstance(questions, list):
+        raise ValueError("問題JSONにquestions配列がありません。")
+    if data.get("question_count") != len(questions):
+        raise ValueError("問題JSONのquestion_countと実件数が一致しません。")
+
+    return questions
 
 
 def select_random_questions(question_count):
@@ -375,6 +382,9 @@ def select_random_questions(question_count):
     """
 
     questions = load_question_master()
+
+    if question_count > len(questions):
+        raise ValueError("出題数が問題倉庫の件数を超えています。")
 
     return random.sample(
         questions,
@@ -657,14 +667,20 @@ def start_quiz(user_id):
             "小テストを開始するためのユーザーIDがありません。"
         )
 
-    questions = select_random_questions(5)
+    if QUIZ_QUESTION_COUNT % QUESTIONS_PER_SET != 0:
+        raise ValueError("出題数は1セットの問題数で割り切れる必要があります。")
+
+    all_questions = select_random_questions(QUIZ_QUESTION_COUNT)
+    questions = all_questions[:QUESTIONS_PER_SET]
 
     study_sessions[user_id] = {
         "status": "waiting_for_answers",
         "current_set": 1,
-        "total_sets": 6,
+        "question_count": QUIZ_QUESTION_COUNT,
+        "questions_per_set": QUESTIONS_PER_SET,
+        "total_sets": QUIZ_QUESTION_COUNT // QUESTIONS_PER_SET,
         "questions": questions,
-        "all_questions": list(questions),
+        "all_questions": all_questions,
         "all_answers": {},
     }
 
@@ -685,41 +701,27 @@ def start_next_quiz(user_id):
         )
 
     current_set = current_session.get("current_set", 1)
-    total_sets = current_session.get("total_sets", 6)
+    total_sets = current_session["total_sets"]
+    questions_per_set = current_session["questions_per_set"]
+    question_count = current_session["question_count"]
 
     if current_set >= total_sets:
         raise ValueError(
-            "すでに30問すべて出題済みです。"
-        )
-
-    used_ids = {
-        question.get("id")
-        for question in current_session.get("all_questions", [])
-    }
-
-    new_questions = []
-
-    for _ in range(20):
-        candidate_questions = select_random_questions(5)
-
-        if all(
-            question.get("id") not in used_ids
-            for question in candidate_questions
-        ):
-            new_questions = candidate_questions
-            break
-
-    if len(new_questions) != 5:
-        raise RuntimeError(
-            "重複しない次の5問を選べませんでした。"
+            f"すでに{question_count}問すべて出題済みです。"
         )
 
     current_session["current_set"] = current_set + 1
+    start_index = current_set * questions_per_set
+    end_index = start_index + questions_per_set
+    new_questions = current_session["all_questions"][start_index:end_index]
+
+    if len(new_questions) != questions_per_set:
+        raise RuntimeError("選出済み問題から次のセットを取得できませんでした。")
+
     current_session["questions"] = new_questions
-    current_session["all_questions"].extend(new_questions)
     current_session["status"] = "waiting_for_answers"
 
-    start_number = (current_session["current_set"] - 1) * 5 + 1
+    start_number = start_index + 1
 
     return format_quiz_messages(
         new_questions,
@@ -840,7 +842,8 @@ def parse_quiz_answers(user_message, expected_numbers=None):
                 "confidence": match.group(3),
             }
 
-        if len(parsed_answers) != 5:
+        expected_count = len(expected_numbers) if expected_numbers is not None else QUESTIONS_PER_SET
+        if len(parsed_answers) != expected_count:
             return {}
 
         if expected_numbers is not None and set(parsed_answers) != set(expected_numbers):
@@ -850,16 +853,18 @@ def parse_quiz_answers(user_message, expected_numbers=None):
 
     implicit_matches = re.findall(r"([A-E])([1-3])", compact_message)
 
+    expected_count = len(expected_numbers) if expected_numbers is not None else QUESTIONS_PER_SET
+
     if (
-        len(implicit_matches) != 5
+        len(implicit_matches) != expected_count
         or "".join("".join(match) for match in implicit_matches)
         != compact_message
     ):
         return {}
 
-    answer_numbers = sorted(expected_numbers or range(1, 6))
+    answer_numbers = sorted(expected_numbers or range(1, QUESTIONS_PER_SET + 1))
 
-    if len(answer_numbers) != 5:
+    if len(answer_numbers) != expected_count:
         return {}
 
     return {
@@ -909,18 +914,21 @@ def calculate_quiz_result(questions, answers):
 # 小テストの採点結果を作成
 # =========================================================
 
-def create_quiz_result_messages(questions, parsed_answers):
+def create_quiz_result_messages(
+    questions,
+    parsed_answers,
+    start_number=1,
+):
     """
     5問を採点し、
     点数・正誤・正解・解説をLINE用の文章にまとめる。
     """
 
-    score = 0
     result_parts = []
 
     for question_number, question_data in enumerate(
         questions,
-        start=1,
+        start=start_number,
     ):
         user_answer_data = parsed_answers.get(
             question_number,
@@ -961,7 +969,6 @@ def create_quiz_result_messages(questions, parsed_answers):
         )
 
         if is_correct:
-            score += 1
             result_mark = "○"
         else:
             result_mark = "×"
@@ -976,13 +983,8 @@ def create_quiz_result_messages(questions, parsed_answers):
             )
         )
 
-    score_message = (
-        f"おう、採点できたぞ＾＾\n\n"
-        f"【結果】{score} / {len(questions)}問正解\n\n"
-    )
-
     result_messages = []
-    current_message = score_message
+    current_message = ""
 
     for result_part in result_parts:
         additional_text = result_part + "\n\n"
@@ -1006,6 +1008,37 @@ def create_quiz_result_messages(questions, parsed_answers):
         )
 
     return result_messages
+
+
+def advance_quiz_explanations(session):
+    """次の5問分の解答解説を作り、閲覧状態を進める。"""
+    if session.get("status") not in {
+        "waiting_for_explanations",
+        "waiting_for_next_explanation",
+    }:
+        raise ValueError("現在は解答解説を表示できる状態ではありません。")
+
+    explanation_set = session.get("explanation_set", 0) + 1
+    questions_per_set = session["questions_per_set"]
+    start_index = (explanation_set - 1) * questions_per_set
+    end_index = min(start_index + questions_per_set, session["question_count"])
+    questions = session["all_questions"][start_index:end_index]
+
+    if not questions:
+        raise ValueError("表示する解答解説がありません。")
+
+    messages = create_quiz_result_messages(
+        questions,
+        session["all_answers"],
+        start_number=start_index + 1,
+    )
+    session["explanation_set"] = explanation_set
+    session["status"] = (
+        "quiz_completed"
+        if end_index >= session["question_count"]
+        else "waiting_for_next_explanation"
+    )
+    return messages
 # =========================================================
 # 共通関数：LINEへ返信
 # =========================================================
@@ -1127,6 +1160,72 @@ def reply_study_continue_choice(reply_token):
         logging.exception(
             "LINE study continue choice failed."
         )
+
+
+def reply_explanation_choice(reply_token, completed=False):
+    """解答解説の開始・続行、または完了を案内する。"""
+    if completed:
+        reply_to_line(
+            reply_token,
+            "これで全問の解答解説は終了だ＾＾\nおつかれさん！",
+        )
+        return
+
+    reply_message = TextSendMessage(
+        text="準備できたら解答解説を確認しよう＾＾",
+        quick_reply=QuickReply(
+            items=[
+                QuickReplyButton(
+                    action=MessageAction(
+                        label="📖 解答解説を見る",
+                        text="解答解説を見る",
+                    )
+                )
+            ]
+        ),
+    )
+    line_bot_api.reply_message(reply_token, reply_message)
+
+
+def reply_quiz_score(reply_token, quiz_result):
+    """合計点と解答解説開始ボタンを表示する。"""
+    reply_message = TextSendMessage(
+        text=(
+            f"おう、{quiz_result['total']}問すべて回答できたぞ＾＾\n\n"
+            f"【結果】{quiz_result['score']} / "
+            f"{quiz_result['total']}問正解\n\n"
+            "解答解説は5問ずつ一緒に確認していこう。"
+        ),
+        quick_reply=QuickReply(
+            items=[
+                QuickReplyButton(
+                    action=MessageAction(
+                        label="📖 解答解説を見る",
+                        text="解答解説を見る",
+                    )
+                )
+            ]
+        ),
+    )
+    line_bot_api.reply_message(reply_token, reply_message)
+
+
+def reply_next_explanation_choice(reply_token):
+    """次の5問分の解答解説へ進む操作を表示する。"""
+    reply_message = TextSendMessage(
+        text="ここまで確認できたら、次の5問へ進もう＾＾",
+        quick_reply=QuickReply(
+            items=[
+                QuickReplyButton(
+                    action=MessageAction(
+                        label="▶️ 次の5問",
+                        text="次の5問",
+                    )
+                )
+            ]
+        ),
+    )
+    line_bot_api.reply_message(reply_token, reply_message)
 def reply_study_ready_choice(reply_token):
     """
     勉強モード開始前の準備確認。
@@ -1136,7 +1235,7 @@ def reply_study_ready_choice(reply_token):
         text=(
             "📚勉強モードへ切り替えたぞ！\n\n"
             "問題演習、国試対策、苦手分野の確認、なんでも来い＾＾\n\n"
-            "まずは5問ずつ、全部で30問出すぞ！\n"
+            f"まずは{QUESTIONS_PER_SET}問ずつ、全部で{QUIZ_QUESTION_COUNT}問出すぞ！\n"
             "準備ができたら教えてくれ＾＾"
         ),
         quick_reply=QuickReply(
@@ -1675,6 +1774,33 @@ def handle_text_message(event):
 
     current_session = study_sessions.get(user_id)
 
+    if current_session and current_session.get("status") in {
+        "waiting_for_explanations",
+        "waiting_for_next_explanation",
+    }:
+        expected_message = (
+            "解答解説を見る"
+            if current_session["status"] == "waiting_for_explanations"
+            else "次の5問"
+        )
+
+        if user_message == expected_message:
+            explanation_messages = advance_quiz_explanations(current_session)
+            for explanation_message in explanation_messages:
+                push_to_line(user_id, explanation_message)
+
+            if current_session["status"] == "quiz_completed":
+                reply_explanation_choice(event.reply_token, completed=True)
+            else:
+                reply_next_explanation_choice(event.reply_token)
+            return
+
+        reply_to_line(
+            event.reply_token,
+            f"今は解答解説の確認中だ。『{expected_message}』で進んでくれ＾＾",
+        )
+        return
+
     if (
         current_session
         and current_session.get("status") == "waiting_for_continue"
@@ -1768,9 +1894,7 @@ def handle_text_message(event):
             event.reply_token,
             (
                 "おう、任せろ＾＾\n"
-                "まず10問作るから、ちょっと待ってな（笑）\n\n"
-                "ごめんな…俺も年だから、"
-                "10問ずつしか出せねぇわｗ\n"
+                f"まず{QUESTIONS_PER_SET}問出すから、ちょっと待ってな（笑）\n\n"
                 "それじゃいくぞ＾＾"
             ),
         )
@@ -1794,8 +1918,9 @@ def handle_text_message(event):
         == "waiting_for_answers"
     ):
         current_set = current_session["current_set"]
-        start_number = ((current_set - 1) * 5) + 1
-        expected_numbers = set(range(start_number, start_number + 5))
+        questions_per_set = current_session["questions_per_set"]
+        start_number = ((current_set - 1) * questions_per_set) + 1
+        expected_numbers = set(range(start_number, start_number + questions_per_set))
 
         parsed_answers = parse_quiz_answers(
             user_message,
@@ -1807,13 +1932,13 @@ def handle_text_message(event):
                 event.reply_token,
                 (
                     "おう、回答は受け取ったぞ。\n\n"
-                    "ただ、5問分を正しく読み取れなかったみてぇだ。\n"
-                    f"第{start_number}問から第{start_number + 4}問まで、"
+                    f"ただ、{questions_per_set}問分を正しく読み取れなかったみてぇだ。\n"
+                    f"第{start_number}問から第{start_number + questions_per_set - 1}問まで、"
                     "次の形で送ってくれ。\n\n"
                     + "\n".join(
                         f"{number}:{answer}"
                         for number, answer in zip(
-                            range(start_number, start_number + 5),
+                            range(start_number, start_number + questions_per_set),
                             ["A1", "B2", "C3", "D2", "E1"],
                         )
                     )
@@ -1830,17 +1955,10 @@ def handle_text_message(event):
                 current_session["all_answers"],
             )
             current_session["quiz_result"] = quiz_result
-            current_session["status"] = "quiz_completed"
+            current_session["explanation_set"] = 0
+            current_session["status"] = "waiting_for_explanations"
 
-            reply_to_line(
-                event.reply_token,
-                (
-                    "おう、30問すべて回答できたぞ＾＾\n\n"
-                    f"【結果】{quiz_result['score']} / "
-                    f"{quiz_result['total']}問正解\n\n"
-                    "詳しい解説は、これから5問ずつ一緒に見ていこう。"
-                ),
-            )
+            reply_quiz_score(event.reply_token, quiz_result)
             return
 
         current_session["status"] = "waiting_for_continue"
