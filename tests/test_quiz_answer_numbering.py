@@ -58,6 +58,7 @@ def load_current_app_functions() -> SimpleNamespace:
         ),
         "threading": SimpleNamespace(Thread=None),
         "study_sessions": {},
+        "explain_contexts": {},
         "user_states": {},
         "user_names": {},
         "user_modes": {},
@@ -71,6 +72,8 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_new_user_welcome": lambda *args, **kwargs: None,
         "reply_gen_first_greeting": lambda *args, **kwargs: None,
         "reply_explain_method_choice": lambda *args, **kwargs: None,
+        "reply_explain_answer_with_review": lambda *args, **kwargs: None,
+        "create_contextual_explain_response": lambda *args, **kwargs: "解説回答",
         "push_to_line": lambda *args, **kwargs: None,
         "create_text_response": lambda *args, **kwargs: "unused",
         "prepare_and_send_quiz": lambda *args, **kwargs: None,
@@ -161,6 +164,7 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         app.user_states.clear()
         app.user_names.clear()
         app.user_modes.clear()
+        app.explain_contexts.clear()
 
     def prepare_session(
         self,
@@ -630,6 +634,7 @@ class NewUserWelcomeTest(unittest.TestCase):
         app.user_states.clear()
         app.user_names.clear()
         app.user_modes.clear()
+        app.explain_contexts.clear()
         app.known_user_ids.clear()
         app.line_replies.clear()
 
@@ -855,6 +860,7 @@ class QuizCompletionSummaryTest(unittest.TestCase):
 class ConfigurableQuizTest(unittest.TestCase):
     def setUp(self) -> None:
         app.study_sessions.clear()
+        app.explain_contexts.clear()
 
     def test_30_40_50_question_settings_select_once_without_duplicates(self) -> None:
         function_globals = app.start_quiz.__globals__
@@ -1052,18 +1058,29 @@ class ConfigurableQuizTest(unittest.TestCase):
         function_globals = app.handle_text_message.__globals__
         original_choice = function_globals["reply_explain_method_choice"]
         original_reply = function_globals["reply_to_line"]
-        original_create = function_globals["create_text_response"]
+        original_contextual = function_globals["create_contextual_explain_response"]
+        original_answer_review = function_globals["reply_explain_answer_with_review"]
+        original_mode_select = function_globals["reply_mode_select"]
         choice_calls = []
         replies = []
         questions = []
+        reviewed_answers = []
+        mode_selects = []
         function_globals["reply_explain_method_choice"] = (
             lambda token: choice_calls.append(token)
         )
         function_globals["reply_to_line"] = (
             lambda _token, message: replies.append(message)
         )
-        function_globals["create_text_response"] = (
-            lambda message, mode: questions.append((message, mode)) or "質問への回答"
+        function_globals["create_contextual_explain_response"] = (
+            lambda user_id, message: questions.append((user_id, message))
+            or f"質問への回答{len(questions)}"
+        )
+        function_globals["reply_explain_answer_with_review"] = (
+            lambda _token, answer: reviewed_answers.append(answer)
+        )
+        function_globals["reply_mode_select"] = (
+            lambda _token, intro_text=None: mode_selects.append(intro_text)
         )
 
         direct_user = "direct-explain-user"
@@ -1075,6 +1092,12 @@ class ConfigurableQuizTest(unittest.TestCase):
             app.handle_text_message(make_text_event(direct_user, "教えて源さん"))
             app.handle_text_message(make_text_event(direct_user, "源さんに直接質問する"))
             app.handle_text_message(make_text_event(direct_user, "反射って何？"))
+            first_review_state = app.user_states[direct_user]
+            app.handle_text_message(make_text_event(direct_user, "まだ質問がある！"))
+            followup_state = app.user_states[direct_user]
+            app.handle_text_message(make_text_event(direct_user, "具体例も教えて"))
+            second_review_state = app.user_states[direct_user]
+            app.handle_text_message(make_text_event(direct_user, "わかった！"))
 
             app.handle_text_message(make_text_event(attachment_user, "教えて源さん"))
             app.handle_text_message(make_text_event(attachment_user, "文書・写真等を見せる"))
@@ -1085,14 +1108,27 @@ class ConfigurableQuizTest(unittest.TestCase):
         finally:
             function_globals["reply_explain_method_choice"] = original_choice
             function_globals["reply_to_line"] = original_reply
-            function_globals["create_text_response"] = original_create
+            function_globals["create_contextual_explain_response"] = original_contextual
+            function_globals["reply_explain_answer_with_review"] = original_answer_review
+            function_globals["reply_mode_select"] = original_mode_select
 
         self.assertEqual(2, len(choice_calls))
-        self.assertEqual("explain", app.user_modes[direct_user])
-        self.assertEqual("explain_direct", app.user_states[direct_user])
+        self.assertEqual("normal", app.user_modes[direct_user])
+        self.assertNotIn(direct_user, app.user_states)
         self.assertIn("そのまま書いて送ってくれればいいぞ！", replies[0])
-        self.assertEqual([("反射って何？", "explain")], questions)
-        self.assertIn("質問への回答", replies[1])
+        self.assertEqual("explain_review", first_review_state)
+        self.assertEqual("explain_followup", followup_state)
+        self.assertEqual("explain_review", second_review_state)
+        self.assertEqual(
+            [
+                (direct_user, "反射って何？"),
+                (direct_user, "具体例も教えて"),
+            ],
+            questions,
+        )
+        self.assertEqual(["質問への回答1", "質問への回答2"], reviewed_answers)
+        self.assertIn("どこがまだ分からないか、書いて送ってくれ！", replies[1])
+        self.assertIn("おう、それならよかった＾＾", mode_selects[0])
         self.assertEqual("explain", attachment_mode_before_switch)
         self.assertEqual("explain_attachment", attachment_state_before_switch)
         self.assertIn("Word、PDF、写真なんかを送ってくれれば", attachment_prompt)
@@ -1114,6 +1150,158 @@ class ConfigurableQuizTest(unittest.TestCase):
             choice_source.index("文書・写真等を見せる"),
         )
         self.assertIn("どうやって聞く？", choice_source)
+
+        review_node = next(
+            node
+            for node in module.body
+            if isinstance(node, ast.FunctionDef)
+            and node.name == "create_explain_review_message"
+        )
+        review_source = ast.get_source_segment(source, review_node)
+        self.assertIn("だいたい理解できたか？＾＾\\n次はどうする？", review_source)
+        self.assertIn("わかった！", review_source)
+        self.assertIn("まだ質問がある！", review_source)
+        self.assertIn("正答へどう絞り込むか", source)
+        self.assertIn("EXPLAIN_TEACHING_PROMPT", source)
+        self.assertIn("use_teaching_intro=use_teaching_intro", source)
+
+    def test_contextual_explain_reuses_direct_document_and_image_context(self) -> None:
+        source = APP_PATH.read_text(encoding="utf-8")
+        module = ast.parse(source)
+        function_node = next(
+            node
+            for node in module.body
+            if isinstance(node, ast.FunctionDef)
+            and node.name == "create_contextual_explain_response"
+        )
+        chat_calls = []
+        image_calls = []
+
+        def create_chat_response(**kwargs):
+            chat_calls.append(kwargs)
+            return SimpleNamespace(
+                choices=[SimpleNamespace(message=SimpleNamespace(content="文脈付き回答"))]
+            )
+
+        def create_image_response(**kwargs):
+            image_calls.append(kwargs)
+            return SimpleNamespace(output_text="画像を見直した回答")
+
+        namespace = {
+            "explain_contexts": {},
+            "GEN_OJI_PROMPT": "源さん",
+            "EDUCATION_RULE_PROMPT": "教育ルール",
+            "EXPLAIN_TEACHING_PROMPT": "解答思考を教える",
+            "client": SimpleNamespace(
+                chat=SimpleNamespace(
+                    completions=SimpleNamespace(create=create_chat_response)
+                ),
+                responses=SimpleNamespace(create=create_image_response),
+            ),
+        }
+        extracted = ast.Module(body=[function_node], type_ignores=[])
+        ast.fix_missing_locations(extracted)
+        exec(compile(extracted, str(APP_PATH), "exec"), namespace)
+        create_response = namespace["create_contextual_explain_response"]
+
+        create_response("direct", "最初の質問")
+        create_response("direct", "追加質問")
+        second_messages = chat_calls[1]["messages"]
+        self.assertTrue(any(message["content"] == "最初の質問" for message in second_messages))
+        self.assertTrue(any(message["content"] == "文脈付き回答" for message in second_messages))
+
+        namespace["explain_contexts"]["document"] = {
+            "kind": "document",
+            "source_text": "PDFの3ページ目の図表内容",
+            "turns": [("assistant", "最初の資料解説")],
+        }
+        create_response("document", "3ページ目はどういう意味？")
+        self.assertIn("PDFの3ページ目の図表内容", chat_calls[-1]["messages"][0]["content"])
+
+        namespace["explain_contexts"]["image"] = {
+            "kind": "image",
+            "image_base64": "base64-image-data",
+            "turns": [("assistant", "最初の画像解説")],
+        }
+        create_response("image", "なぜこの選択肢なの？")
+        image_content = image_calls[-1]["input"][0]["content"]
+        self.assertTrue(any("最初の画像解説" in item.get("text", "") for item in image_content))
+        self.assertTrue(any("base64-image-data" in item.get("image_url", "") for item in image_content))
+
+    def test_teach_gen_attachments_keep_existing_image_word_and_pdf_analysis(self) -> None:
+        source = APP_PATH.read_text(encoding="utf-8")
+        module = ast.parse(source)
+        handler_nodes = [
+            node
+            for node in module.body
+            if isinstance(node, ast.FunctionDef)
+            and node.name in {"handle_file_message", "handle_image_message"}
+        ]
+        for node in handler_nodes:
+            node.decorator_list = []
+
+        states = {}
+        contexts = {}
+        analysis_calls = []
+        pushed_reviews = []
+        namespace = {
+            "logging": logging,
+            "user_states": states,
+            "explain_contexts": contexts,
+            "reply_to_line": lambda *args: None,
+            "show_loading_animation": lambda *args: None,
+            "download_line_file": lambda _message_id: SimpleNamespace(),
+            "extract_text_from_docx": lambda _buffer: "Wordから抽出した問題文",
+            "extract_text_from_pdf": lambda _buffer: "PDFから抽出した問題文",
+            "image_buffer_to_base64": lambda _buffer: "image-base64",
+            "analyze_word_document": (
+                lambda file_name, document_text, use_teaching_intro=False:
+                analysis_calls.append((file_name, document_text, use_teaching_intro))
+                or "文書の教師型解説"
+            ),
+            "analyze_image": (
+                lambda image_base64, use_teaching_intro=False:
+                analysis_calls.append(("image", image_base64, use_teaching_intro))
+                or "画像の教師型解説"
+            ),
+            "push_explain_answer_with_review": (
+                lambda user_id, answer: pushed_reviews.append((user_id, answer))
+            ),
+            "push_to_line": lambda *args: None,
+        }
+        extracted = ast.Module(body=handler_nodes, type_ignores=[])
+        ast.fix_missing_locations(extracted)
+        exec(compile(extracted, str(APP_PATH), "exec"), namespace)
+
+        for user_id, file_name in (("word-user", "sample.docx"), ("pdf-user", "sample.pdf")):
+            states[user_id] = "explain_attachment"
+            event = SimpleNamespace(
+                message=SimpleNamespace(
+                    file_name=file_name,
+                    file_size=100,
+                    id=f"{user_id}-message",
+                ),
+                source=SimpleNamespace(user_id=user_id),
+                reply_token="reply-token",
+            )
+            namespace["handle_file_message"](event)
+            self.assertEqual("explain_review", states[user_id])
+            self.assertEqual("document", contexts[user_id]["kind"])
+
+        image_user = "image-user"
+        states[image_user] = "explain_attachment"
+        image_event = SimpleNamespace(
+            message=SimpleNamespace(id="image-message"),
+            source=SimpleNamespace(user_id=image_user),
+            reply_token="reply-token",
+        )
+        namespace["handle_image_message"](image_event)
+
+        self.assertEqual("explain_review", states[image_user])
+        self.assertEqual("image", contexts[image_user]["kind"])
+        self.assertEqual("image-base64", contexts[image_user]["image_base64"])
+        self.assertEqual(3, len(pushed_reviews))
+        self.assertTrue(all(call[2] is True for call in analysis_calls))
 
 
 if __name__ == "__main__":

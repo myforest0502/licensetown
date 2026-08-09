@@ -187,6 +187,8 @@ EDUCATION_RULE_PROMPT = """
 """
 # ユーザーごとの現在の会話状態を保存する
 user_states = {}
+# 「教えて源さん」の直前資料と会話を、セッション中だけ保持する
+explain_contexts = {}
 # ユーザーごとの名前を保存する
 # ユーザーごとの現在のモードを保存する
 # =========================================================
@@ -329,6 +331,23 @@ IMAGE_ANALYSIS_PROMPT = """
 
 LINEで読みやすいように、
 通常は300文字から800文字程度を目安にしてください。
+"""
+
+EXPLAIN_TEACHING_PROMPT = """
+国家試験問題や選択問題を認識した場合、問題文の要約やオウム返しで終わらせないでください。
+学習者が次に似た問題を自力で解けるよう、次の思考過程を自然な会話として教えてください。
+
+・何を問われている問題か
+・問題文のどの情報に注目するか
+・その所見が医学・理学療法上どんな意味を持つか
+・複数の所見をどう結び付けるか
+・正答へどう絞り込むか
+・必要な場合、主な誤答選択肢を選びにくい理由
+・次に同じタイプの問題を解くときの考え方
+
+見出しを毎回固定表示する必要はありません。重要なのは、正答だけでなく到達する思考を教えることです。
+問題ではない授業資料、教科書、ノート、図表の場合は無理に正答形式にせず、重要点、意味、関連知識、国家試験での問われ方を学習に役立つ形で説明してください。
+資料から読み取れない内容は推測で補完しないでください。
 """
 
 # =========================================================
@@ -1296,6 +1315,54 @@ def reply_explain_method_choice(reply_token):
     line_bot_api.reply_message(reply_token, reply_message)
 
 
+def create_explain_review_message():
+    """解説後の理解確認クイックリプライを作る。"""
+    return TextSendMessage(
+        text="だいたい理解できたか？＾＾\n次はどうする？",
+        quick_reply=QuickReply(
+            items=[
+                QuickReplyButton(
+                    action=MessageAction(label="わかった！", text="わかった！")
+                ),
+                QuickReplyButton(
+                    action=MessageAction(
+                        label="まだ質問がある！",
+                        text="まだ質問がある！",
+                    )
+                ),
+            ]
+        ),
+    )
+
+
+def reply_explain_answer_with_review(reply_token, answer_text):
+    """直接質問への回答と理解確認を同じReplyで順に送る。"""
+    safe_answer_text = answer_text[:4500]
+    if len(answer_text) > 4500:
+        safe_answer_text += "…"
+    line_bot_api.reply_message(
+        reply_token,
+        [
+            TextSendMessage(text=safe_answer_text),
+            create_explain_review_message(),
+        ],
+    )
+
+
+def push_explain_answer_with_review(user_id, answer_text):
+    """添付解析結果と理解確認をPushで順に送る。"""
+    safe_answer_text = answer_text[:4500]
+    if len(answer_text) > 4500:
+        safe_answer_text += "…"
+    line_bot_api.push_message(
+        user_id,
+        [
+            TextSendMessage(text=safe_answer_text),
+            create_explain_review_message(),
+        ],
+    )
+
+
 def reply_study_continue_choice(reply_token):
     """
     5問分の回答を保存した後、
@@ -1576,6 +1643,7 @@ def create_text_response(user_message, mode="normal"):
 分からないことや根拠が不十分なことは、推測で断定しないでください。
 資料をまだ受け取っていない場合は、資料を見たような発言をしないでください。
 """
+        system_prompt += EXPLAIN_TEACHING_PROMPT
     response = client.chat.completions.create(
         model="gpt-4.1-mini",
         messages=[
@@ -1601,6 +1669,93 @@ def create_text_response(user_message, mode="normal"):
         )
 
     return reply_message.strip()
+
+
+def create_contextual_explain_response(user_id, user_message):
+    """直前の質問または添付資料を実際に再投入して追加質問へ答える。"""
+    context = explain_contexts.setdefault(
+        user_id,
+        {"kind": "direct", "turns": []},
+    )
+    prior_turns = context.get("turns", [])[-6:]
+    transcript = "\n\n".join(
+        f"{role}：{text}"
+        for role, text in prior_turns
+    )
+    context_instruction = ""
+
+    if context.get("kind") == "document":
+        context_instruction = (
+            "\n\n【直前に受け取った資料】\n"
+            + context.get("source_text", "")[:40000]
+        )
+
+    if context.get("kind") == "image":
+        input_text = (
+            EXPLAIN_TEACHING_PROMPT
+            + "\n\n【これまでの会話】\n"
+            + transcript
+            + "\n\n【今回の追加質問】\n"
+            + user_message
+            + "\n直前の画像を実際に見直して回答してください。"
+        )
+        response = client.responses.create(
+            model="gpt-4.1-mini",
+            instructions=GEN_OJI_PROMPT + "\n\n" + EDUCATION_RULE_PROMPT,
+            input=[
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "input_text", "text": input_text},
+                        {
+                            "type": "input_image",
+                            "image_url": (
+                                "data:image/jpeg;base64,"
+                                + context.get("image_base64", "")
+                            ),
+                            "detail": "auto",
+                        },
+                    ],
+                }
+            ],
+            max_output_tokens=1200,
+        )
+        reply_message = response.output_text
+    else:
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    GEN_OJI_PROMPT
+                    + "\n\n"
+                    + EDUCATION_RULE_PROMPT
+                    + "\n\n"
+                    + EXPLAIN_TEACHING_PROMPT
+                    + context_instruction
+                ),
+            },
+        ]
+        for role, text in prior_turns:
+            messages.append({"role": role, "content": text})
+        messages.append({"role": "user", "content": user_message})
+        response = client.chat.completions.create(
+            model="gpt-4.1-mini",
+            messages=messages,
+            temperature=0.7,
+            max_tokens=1000,
+        )
+        reply_message = response.choices[0].message.content
+
+    if not reply_message:
+        reply_message = "おう、もう一回だけ聞かせてくれ。今度は別の角度から説明するぞ＾＾"
+
+    reply_message = reply_message.strip()
+    context.setdefault("turns", []).extend([
+        ("user", user_message),
+        ("assistant", reply_message),
+    ])
+    context["turns"] = context["turns"][-8:]
+    return reply_message
 
 
 # =========================================================
@@ -1666,6 +1821,8 @@ def analyze_image(image_base64, use_teaching_intro=False):
     + EDUCATION_RULE_PROMPT
     + "\n\n"
     + IMAGE_ANALYSIS_PROMPT
+    + "\n\n"
+    + EXPLAIN_TEACHING_PROMPT
     + teaching_intro
 ),
         input=[
@@ -1832,7 +1989,12 @@ def analyze_word_document(file_name, document_text, use_teaching_intro=False):
             },
             {
                 "role": "system",
-                "content": WORD_ANALYSIS_PROMPT + teaching_intro,
+                "content": (
+                    WORD_ANALYSIS_PROMPT
+                    + "\n\n"
+                    + EXPLAIN_TEACHING_PROMPT
+                    + teaching_intro
+                ),
             },
             {
                 "role": "user",
@@ -1910,6 +2072,7 @@ def handle_text_message(event):
     if raw_user_message.strip() == "ふりだしにもどる":
         user_states.pop(user_id, None)
         study_sessions.pop(user_id, None)
+        explain_contexts.pop(user_id, None)
 
         try:
             reset_user_profile(user_id)
@@ -1974,10 +2137,47 @@ def handle_text_message(event):
             )
             return
 
+    if current_state == "explain_review":
+        if user_message == "わかった！":
+            user_states.pop(user_id, None)
+            explain_contexts.pop(user_id, None)
+            user_modes[user_id] = "normal"
+            reply_mode_select(
+                event.reply_token,
+                intro_text=(
+                    "おう、それならよかった＾＾\n"
+                    "また分からないことがあったら、いつでも持ってこい！"
+                ),
+            )
+            return
+
+        if user_message == "まだ質問がある！":
+            user_states[user_id] = "explain_followup"
+            reply_to_line(
+                event.reply_token,
+                "おう、もちろんだ＾＾\n"
+                "どこがまだ分からないか、書いて送ってくれ！",
+            )
+            return
+
+    if current_state in {"explain_direct", "explain_followup"}:
+        try:
+            answer_text = create_contextual_explain_response(user_id, user_message)
+            user_states[user_id] = "explain_review"
+            reply_explain_answer_with_review(event.reply_token, answer_text)
+        except Exception:
+            logging.exception("Contextual explain response failed: user_id=%s", user_id)
+            reply_to_line(
+                event.reply_token,
+                "おう、悪い。今ちょっとうまく説明をまとめられなかった。もう一度聞いてくれ。",
+            )
+        return
+
     # モード切替
     if user_message == "熱血モード":
         if str(user_states.get(user_id, "")).startswith("explain_"):
             user_states.pop(user_id, None)
+            explain_contexts.pop(user_id, None)
         reply_to_line(
             event.reply_token,
             "熱血モードはこれから準備するぞ🔥",
@@ -1986,6 +2186,7 @@ def handle_text_message(event):
     if user_message in ["相談したい", "相談する", "相談モード"]:
         if str(user_states.get(user_id, "")).startswith("explain_"):
             user_states.pop(user_id, None)
+            explain_contexts.pop(user_id, None)
         user_modes[user_id] = "chat"
         reply_to_line(
             event.reply_token,
@@ -1997,6 +2198,7 @@ def handle_text_message(event):
     if user_message in ["勉強する", "勉強モード"]:
         if str(user_states.get(user_id, "")).startswith("explain_"):
             user_states.pop(user_id, None)
+            explain_contexts.pop(user_id, None)
         user_modes[user_id] = "study"
         reply_study_ready_choice(
         event.reply_token
@@ -2004,6 +2206,7 @@ def handle_text_message(event):
         return
     if user_message in ["教えて源さん", "質問する", "解説モード"]:
         user_modes[user_id] = "explain"
+        explain_contexts.pop(user_id, None)
         user_states[user_id] = "waiting_explain_method"
         reply_explain_method_choice(event.reply_token)
         return
@@ -2277,6 +2480,7 @@ def handle_file_message(event):
 
     show_loading_animation(user_id)
 
+    document_text = ""
     try:
         # LINEからファイル本体を取得
         file_buffer = download_line_file(
@@ -2325,13 +2529,17 @@ def handle_file_message(event):
             "それでもダメなら、源おじの工事ミスだ（笑）"
         )
 
-    # 分析結果は後からプッシュ送信
-    push_to_line(
-        user_id,
-        analysis_message,
-    )
     if use_teaching_intro:
-        user_states[user_id] = "explain_attachment_received"
+        if document_text:
+            explain_contexts[user_id] = {
+                "kind": "document",
+                "source_text": document_text[:40000],
+                "turns": [("assistant", analysis_message)],
+            }
+        user_states[user_id] = "explain_review"
+        push_explain_answer_with_review(user_id, analysis_message)
+    else:
+        push_to_line(user_id, analysis_message)
 
 # =========================================================
 # 画像メッセージ
@@ -2367,6 +2575,7 @@ def handle_image_message(event):
 
     show_loading_animation(user_id)
 
+    image_base64 = ""
     try:
         image_buffer = download_line_file(
             event.message.id
@@ -2394,12 +2603,17 @@ def handle_image_message(event):
             "それでもダメなら、源おじの工事ミスだ（笑）"
         )
 
-    push_to_line(
-        user_id,
-        analysis_message,
-    )
     if use_teaching_intro:
-        user_states[user_id] = "explain_attachment_received"
+        if image_base64:
+            explain_contexts[user_id] = {
+                "kind": "image",
+                "image_base64": image_base64,
+                "turns": [("assistant", analysis_message)],
+            }
+        user_states[user_id] = "explain_review"
+        push_explain_answer_with_review(user_id, analysis_message)
+    else:
+        push_to_line(user_id, analysis_message)
 # =========================================================
 # アプリケーション実行
 # =========================================================
