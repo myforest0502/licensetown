@@ -7,6 +7,8 @@ import psycopg
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+_known_user_ids: set[str] = set()
+
 logger = logging.getLogger(__name__)
 
 
@@ -104,6 +106,7 @@ class PersistentUserStore:
 
     def __setitem__(self, user_id: str, value: Any) -> None:
         """「保存箱[user_id] = 値」でNeonへ保存する。"""
+        _known_user_ids.add(user_id)
         if not database_is_available():
             self._local_store[user_id] = value
             return
@@ -154,6 +157,20 @@ init_database()
 
 user_names = PersistentUserStore("name")
 user_modes = PersistentUserStore("mode")
+
+
+def user_profile_exists(user_id: str) -> bool:
+    """名前が未登録でも、過去に作られた利用者行があるか確認する。"""
+    if not database_is_available():
+        return user_id in _known_user_ids
+
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT 1 FROM user_profiles WHERE user_id = %s",
+                (user_id,),
+            )
+            return cur.fetchone() is not None
 
 
 def reset_user_profile(user_id: str) -> None:

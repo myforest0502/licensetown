@@ -27,7 +27,7 @@ from linebot.models import (
 from openai import OpenAI
 from docx import Document
 from pypdf import PdfReader
-from database import reset_user_profile, user_names, user_modes
+from database import reset_user_profile, user_names, user_modes, user_profile_exists
 
 # =========================================================
 # ロギング設定
@@ -1174,6 +1174,31 @@ def reply_to_line(reply_token, reply_message):
 
     except Exception:
         logging.exception("LINE reply failed.")
+
+
+def reply_new_user_welcome(reply_token):
+    """初回利用者へ、サービス案内と源さんの挨拶を順番に送る。"""
+    welcome_message = (
+        "ようこそ、ライセンスタウンへ！\n\n"
+        "ライセンスタウンは、理学療法士国家試験の合格を目指すあなたと一緒に、"
+        "問題演習や復習を積み重ねながら、合格まで歩んでいく学習サービスです。\n\n"
+        "大切なのは、一度に全部できるようになることではありません。\n"
+        "一つずつ「できる」を増やして、国家試験合格を目指していきましょう。\n\n"
+        "それでは、ここからは源さんにバトンタッチします！\n\n"
+        "頑張ってくださいね＾＾"
+    )
+    gen_message = (
+        "おぉｗよくきたな！\n"
+        "俺は源ってんだ、みんなは源おじとか、源さんとかって呼んでるぜｗ\n"
+        "お前の名前も聞かせてくれよ＾＾"
+    )
+    line_bot_api.reply_message(
+        reply_token,
+        [
+            TextSendMessage(text=welcome_message),
+            TextSendMessage(text=gen_message),
+        ],
+    )
 # =========================================================
 # 共通関数：準備確認のクイックリプライ付き返信
 # =========================================================
@@ -1973,12 +1998,15 @@ def handle_text_message(event):
     if user_id not in user_names:
         user_states[user_id] = "waiting_name"
 
-        reply_to_line(
-            event.reply_token,
-            "おぉｗよくきたな！\n"
-            "俺は源ってんだ、みんなは源おじとか、源さんとかって呼んでるぜｗ\n"
-            "お前の名前も聞かせてくれよ＾＾"
-        )
+        if not user_profile_exists(user_id):
+            reply_new_user_welcome(event.reply_token)
+        else:
+            reply_to_line(
+                event.reply_token,
+                "おぉｗよくきたな！\n"
+                "俺は源ってんだ、みんなは源おじとか、源さんとかって呼んでるぜｗ\n"
+                "お前の名前も聞かせてくれよ＾＾"
+            )
         return
 
     # 「休み」「休む」などが含まれていたら、問題を始めない

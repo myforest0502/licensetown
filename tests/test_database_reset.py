@@ -16,7 +16,7 @@ def load_database_code(available, get_connection) -> dict:
         DATABASE_PATH.read_text(encoding="utf-8"),
         filename=str(DATABASE_PATH),
     )
-    targets = {"PersistentUserStore", "reset_user_profile"}
+    targets = {"PersistentUserStore", "reset_user_profile", "user_profile_exists"}
     nodes = [
         node
         for node in module.body
@@ -27,6 +27,7 @@ def load_database_code(available, get_connection) -> dict:
         "Any": Any,
         "database_is_available": available,
         "get_db_connection": get_connection,
+        "_known_user_ids": set(),
     }
     extracted = ast.Module(body=nodes, type_ignores=[])
     ast.fix_missing_locations(extracted)
@@ -85,6 +86,10 @@ class FakeCursor:
             self.selected_row = (self.database.profile["mode"],)
             return
 
+        if normalized.startswith("SELECT 1 FROM user_profiles"):
+            self.selected_row = (1,)
+            return
+
         if normalized.startswith("UPDATE user_profiles"):
             self.database.update_count += 1
             if self.database.fail_update:
@@ -112,6 +117,7 @@ class DatabaseResetTest(unittest.TestCase):
 
         self.assertIsNone(namespace["user_names"].get("user-1"))
         self.assertIsNone(namespace["user_modes"].get("user-1"))
+        self.assertTrue(namespace["user_profile_exists"]("user-1"))
 
     def test_neon_reset_clears_both_columns_in_one_update(self) -> None:
         database = FakeDatabase(name="利用者", mode="study")
@@ -128,6 +134,7 @@ class DatabaseResetTest(unittest.TestCase):
         # Render再起動後と同様にDBから再取得しても初期値になる。
         self.assertIsNone(namespace["user_names"].get("user-1"))
         self.assertIsNone(namespace["user_modes"].get("user-1"))
+        self.assertTrue(namespace["user_profile_exists"]("user-1"))
 
     def test_failed_neon_reset_does_not_leave_only_one_column_cleared(self) -> None:
         database = FakeDatabase(
