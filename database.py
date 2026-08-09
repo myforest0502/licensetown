@@ -174,22 +174,18 @@ def user_profile_exists(user_id: str) -> bool:
 
 
 def reset_user_profile(user_id: str) -> None:
-    """指定ユーザーの名前とモードを同時に初期化する。"""
+    """指定ユーザーのプロフィール行を削除し、完全な初回状態へ戻す。"""
     if not database_is_available():
         user_names._local_store.pop(user_id, None)
         user_modes._local_store.pop(user_id, None)
+        _known_user_ids.discard(user_id)
         return
 
     with get_db_connection() as conn:
         with conn.cursor() as cur:
             cur.execute(
-                """
-                UPDATE user_profiles
-                SET
-                    name = NULL,
-                    mode = NULL,
-                    updated_at = NOW()
-                WHERE user_id = %s
-                """,
+                "DELETE FROM user_profiles WHERE user_id = %s",
                 (user_id,),
             )
+
+    _known_user_ids.discard(user_id)

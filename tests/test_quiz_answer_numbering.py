@@ -86,6 +86,7 @@ def load_current_app_functions() -> SimpleNamespace:
     namespace["reset_user_profile"] = lambda user_id: (
         namespace["user_names"].pop(user_id, None),
         namespace["user_modes"].pop(user_id, None),
+        known_user_ids.discard(user_id),
     )
     extracted_module = ast.Module(body=function_nodes, type_ignores=[])
     ast.fix_missing_locations(extracted_module)
@@ -480,6 +481,7 @@ class QuizAnswerNumberingTest(unittest.TestCase):
                     app.user_states[user_id] = "waiting_name"
                     app.user_names[user_id] = "テストユーザー"
                     app.user_modes[user_id] = mode
+                    app.known_user_ids.add(user_id)
 
                     if status is None:
                         app.study_sessions.pop(user_id, None)
@@ -519,6 +521,7 @@ class QuizAnswerNumberingTest(unittest.TestCase):
                     self.assertNotIn(user_id, app.study_sessions)
                     self.assertNotIn(user_id, app.user_modes)
                     self.assertNotIn(user_id, app.user_names)
+                    self.assertNotIn(user_id, app.known_user_ids)
                     self.assertEqual(1, len(reply_messages))
                     self.assertIn("ふりだしに戻した", reply_messages[0])
         finally:
@@ -633,7 +636,7 @@ class NewUserWelcomeTest(unittest.TestCase):
 
         self.assertEqual([], welcome_calls)
 
-    def test_reset_user_gets_existing_gen_greeting_without_welcome(self) -> None:
+    def test_reset_user_returns_to_complete_first_use_flow(self) -> None:
         user_id = "reset-existing-user"
         app.user_names[user_id] = "次郎"
         app.user_modes[user_id] = "study"
@@ -641,21 +644,31 @@ class NewUserWelcomeTest(unittest.TestCase):
         function_globals = app.handle_text_message.__globals__
         original_welcome = function_globals["reply_new_user_welcome"]
         original_reply = function_globals["reply_to_line"]
+        original_mode_select = function_globals["reply_mode_select"]
         welcome_calls = []
         replies = []
+        registered = []
         function_globals["reply_new_user_welcome"] = lambda *args: welcome_calls.append(args)
         function_globals["reply_to_line"] = lambda _token, message: replies.append(message)
+        function_globals["reply_mode_select"] = (
+            lambda _token, intro_text=None: registered.append(intro_text)
+        )
 
         try:
             app.handle_text_message(make_text_event(user_id, "ふりだしにもどる"))
             app.handle_text_message(make_text_event(user_id, "もう一度はじめる"))
+            app.handle_text_message(make_text_event(user_id, "再登録ユーザー"))
         finally:
             function_globals["reply_new_user_welcome"] = original_welcome
             function_globals["reply_to_line"] = original_reply
+            function_globals["reply_mode_select"] = original_mode_select
 
-        self.assertEqual([], welcome_calls)
-        self.assertEqual("waiting_name", app.user_states[user_id])
-        self.assertIn("おぉｗよくきたな！", replies[1])
+        self.assertEqual(1, len(welcome_calls))
+        self.assertNotIn(user_id, app.known_user_ids)
+        self.assertEqual(1, len(replies))
+        self.assertEqual("再登録ユーザー", app.user_names[user_id])
+        self.assertNotIn(user_id, app.user_states)
+        self.assertIn("再登録ユーザー", registered[0])
 
 
 class QuizCompletionSummaryTest(unittest.TestCase):

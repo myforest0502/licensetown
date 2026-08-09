@@ -39,11 +39,14 @@ def load_database_code(available, get_connection) -> dict:
 
 
 class FakeDatabase:
-    def __init__(self, name: str, mode: str, fail_update: bool = False):
-        self.profile = {"name": name, "mode": mode}
-        self.fail_update = fail_update
+    def __init__(self, name: str, mode: str, fail_delete: bool = False):
+        self.profiles = {
+            "user-1": {"name": name, "mode": mode},
+            "user-2": {"name": "別ユーザー", "mode": "chat"},
+        }
+        self.fail_delete = fail_delete
         self.connection_count = 0
-        self.update_count = 0
+        self.delete_count = 0
 
     def connect(self):
         self.connection_count += 1
@@ -77,25 +80,26 @@ class FakeCursor:
 
     def execute(self, query, params):
         normalized = " ".join(query.split())
+        user_id = params[0]
+        profile = self.database.profiles.get(user_id)
 
         if normalized.startswith("SELECT name"):
-            self.selected_row = (self.database.profile["name"],)
+            self.selected_row = None if profile is None else (profile["name"],)
             return
 
         if normalized.startswith("SELECT mode"):
-            self.selected_row = (self.database.profile["mode"],)
+            self.selected_row = None if profile is None else (profile["mode"],)
             return
 
         if normalized.startswith("SELECT 1 FROM user_profiles"):
-            self.selected_row = (1,)
+            self.selected_row = None if profile is None else (1,)
             return
 
-        if normalized.startswith("UPDATE user_profiles"):
-            self.database.update_count += 1
-            if self.database.fail_update:
-                raise RuntimeError("database update failed")
-            self.database.profile["name"] = None
-            self.database.profile["mode"] = None
+        if normalized.startswith("DELETE FROM user_profiles"):
+            self.database.delete_count += 1
+            if self.database.fail_delete:
+                raise RuntimeError("database delete failed")
+            self.database.profiles.pop(user_id, None)
             return
 
         raise AssertionError(f"Unexpected SQL: {normalized}")
@@ -117,9 +121,9 @@ class DatabaseResetTest(unittest.TestCase):
 
         self.assertIsNone(namespace["user_names"].get("user-1"))
         self.assertIsNone(namespace["user_modes"].get("user-1"))
-        self.assertTrue(namespace["user_profile_exists"]("user-1"))
+        self.assertFalse(namespace["user_profile_exists"]("user-1"))
 
-    def test_neon_reset_clears_both_columns_in_one_update(self) -> None:
+    def test_neon_reset_deletes_only_the_target_user_profile(self) -> None:
         database = FakeDatabase(name="利用者", mode="study")
         namespace = load_database_code(
             available=lambda: True,
@@ -129,31 +133,35 @@ class DatabaseResetTest(unittest.TestCase):
         namespace["reset_user_profile"]("user-1")
 
         self.assertEqual(1, database.connection_count)
-        self.assertEqual(1, database.update_count)
-        self.assertEqual({"name": None, "mode": None}, database.profile)
-        # Render再起動後と同様にDBから再取得しても初期値になる。
+        self.assertEqual(1, database.delete_count)
+        self.assertNotIn("user-1", database.profiles)
+        self.assertEqual(
+            {"name": "別ユーザー", "mode": "chat"},
+            database.profiles["user-2"],
+        )
+        # Render再起動後もプロフィール行が存在せず、完全な初回扱いになる。
         self.assertIsNone(namespace["user_names"].get("user-1"))
         self.assertIsNone(namespace["user_modes"].get("user-1"))
-        self.assertTrue(namespace["user_profile_exists"]("user-1"))
+        self.assertFalse(namespace["user_profile_exists"]("user-1"))
 
-    def test_failed_neon_reset_does_not_leave_only_one_column_cleared(self) -> None:
+    def test_failed_neon_reset_keeps_the_profile_unchanged(self) -> None:
         database = FakeDatabase(
             name="利用者",
             mode="study",
-            fail_update=True,
+            fail_delete=True,
         )
         namespace = load_database_code(
             available=lambda: True,
             get_connection=database.connect,
         )
 
-        with self.assertRaisesRegex(RuntimeError, "database update failed"):
+        with self.assertRaisesRegex(RuntimeError, "database delete failed"):
             namespace["reset_user_profile"]("user-1")
 
-        self.assertEqual(1, database.update_count)
+        self.assertEqual(1, database.delete_count)
         self.assertEqual(
             {"name": "利用者", "mode": "study"},
-            database.profile,
+            database.profiles["user-1"],
         )
 
 
