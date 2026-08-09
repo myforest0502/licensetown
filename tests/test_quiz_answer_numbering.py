@@ -1372,13 +1372,25 @@ class ConfigurableQuizTest(unittest.TestCase):
         for prompt in (image_teaching_prompt, word_teaching_prompt):
             self.assertIn("源さん自身が着眼点から正答まで順番に説明し切って", prompt)
             self.assertIn("下腿三頭筋MMT2", prompt)
+            self.assertIn("正答は「B．下腿三頭筋筋力低下と腓腹筋の伸張性低下」", prompt)
             self.assertIn("その選択肢が正しい理由", prompt)
             self.assertIn("問題作成者の立場で講評してはいけません", prompt)
             self.assertIn("問題ではない資料にも「正答」", prompt)
             self.assertIn("考えてみよう", prompt)
+            self.assertIn("正答を明示せずに回答を終了することを原則禁止", prompt)
+            self.assertIn("問題文の情報をすべて同じ重さで読み上げない", prompt)
+            self.assertIn("今回の問いへの優先度が低い背景情報", prompt)
+            self.assertIn("本来の説明をユーザーへ丸投げしていないか", prompt)
+            self.assertIn("汎用の画像・文書分析指示", prompt)
 
         self.assertNotIn("これは「教えて源さん」における最優先", image_general_prompt)
         self.assertNotIn("これは「教えて源さん」における最優先", word_general_prompt)
+        self.assertIn(
+            'text="だいたい理解できたか？＾＾\\n次はどうする？"',
+            source,
+        )
+        self.assertIn('label="わかった！"', source)
+        self.assertIn('label="まだ質問がある！"', source)
 
 
 if __name__ == "__main__":
