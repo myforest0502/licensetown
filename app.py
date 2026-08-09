@@ -190,6 +190,12 @@ EDUCATION_RULE_PROMPT = """
 user_states = {}
 # 「教えて源さん」の直前資料と会話を、セッション中だけ保持する
 explain_contexts = {}
+# 教師型画像解析は、同一ユーザーの最新画像だけを有効にする。
+teaching_image_active_ids = {}
+teaching_image_recent_ids = {}
+teaching_image_tracking_lock = threading.Lock()
+TEACHING_IMAGE_MESSAGE_ID_TTL_SECONDS = 10 * 60
+TEACHING_IMAGE_MESSAGE_ID_MAX_COUNT = 1000
 # ユーザーごとの名前を保存する
 # ユーザーごとの現在のモードを保存する
 # =========================================================
@@ -376,14 +382,66 @@ TEACHING_IMAGE_RESPONSE_PROMPT = """
 固定テンプレートを機械的に使わず、問題内容に合わせて自然に構成してください。
 
 正答選択肢に複数の要素が「と」「および」などで含まれる場合は、一方だけでなく全要素の根拠を説明してください。
-筋力所見は筋力低下の根拠として、異なる関節肢位でのROM差は跨いでいる二関節筋の伸張性の根拠として、問題文の実際の数値を使って別々に結び付けてください。
-足関節背屈ROMを膝屈曲位と膝伸展位で比較する問題では、両方の実測値を正確に保持し、膝と足関節をまたぐ腓腹筋の二関節筋としての性質から、肢位によるROM差が腓腹筋の伸張性とどう関係するかを説明してください。
+複合選択肢の各要素は、問題文に実在する別々の所見と結び付け、根拠が不足する要素を無視しないでください。
 
 【正答】を出す直前に、内部的に次を再確認してください。
 ・問いと選んだ正答が対応しているか
 ・正答を支持する所見が問題文に実在するか
 ・問題文や選択肢の文言を改変していないか
 ・説明内の左右、数値、因果関係に矛盾がないか
+"""
+
+TEACHING_IMAGE_STAGE1_PROMPT = """
+あなたの役割は、画像内の文字・表・図を読み取って構造化することだけです。
+問題を解く、医学的に推論する、正答を選ぶ、解説・要約・講評をする、
+源さん口調を使う、原文を言い換える、文脈から推測補完することは禁止です。
+
+必ず次のJSONオブジェクトだけを出力してください。Markdownのフェンスは不要です。
+{
+  "read_confidence": "high",
+  "uncertain_fields": [],
+  "patient_info_raw": "",
+  "findings_raw": [],
+  "question_prompt_raw": "",
+  "choices_raw": {"A": "", "B": "", "C": "", "D": "", "E": ""},
+  "tables_or_figures_raw": null,
+  "unreadable_notes": null
+}
+
+・findings_rawは1所見を1項目にしてください。
+・選択肢数がA～Eと異なる場合は、実際にあるラベルと原文をchoices_rawに収めてください。
+・左右、数値、単位、肯定／否定、屈曲／伸展、増加／低下、歩幅／歩隔、
+  痙縮／麻痺、踵離地、立脚期などの歩行周期、MMT、ROM、Brunnstrom stage、
+  選択肢の文言を原文のまま保ってください。
+・出力確定前に画像と照合し、特に左右、数字、単位、肯定／否定、選択肢、
+  歩幅／歩隔、痙縮／麻痺を再確認してください。
+・正答に影響する内容を確実に読めない場合はread_confidenceをlowとし、
+  uncertain_fieldsとunreadable_notesに不確実な場所を記録し、推測で埋めないでください。
+"""
+
+TEACHING_IMAGE_STAGE2_PROMPT = """
+あなたは「教えて源さん」の第2段階を担当します。
+入力は第1段階が画像から抽出したJSONだけです。画像を見たと装わず、JSONにない原文を作らないでください。
+
+内部で必ず次の順序で処理してください。
+1. question_prompt_rawから何を問う問題かを確定する。
+2. findings_rawから問いに直接関係する所見を抽出する。
+3. choices_rawのすべての選択肢を所見と照合する。
+4. 最も整合する選択肢を候補にする。
+5. 候補が複数要素を含むときは必ず要素分解し、各要素を支持する所見を別々に確認する。
+6. 矛盾する所見と根拠不足がないか確認する。不足は隠さない。
+7. その後に正答を確定する。
+8. 必要な場合だけ、迷いやすい誤答を簡潔に説明する。
+
+所見→医学的意味→選択肢の因果関係を説明し、医学的推論の後に整合性を再確認し、
+最後の文章だけを源さんの自然な口調にしてください。口調のために内容を変えてはいけません。
+read_confidenceがlowで、不確実箇所が正答に影響する場合は正答を断定せず、
+「ここがちょっと読み切れねぇから、この部分をもう少し大きく撮って見せてくれ＾＾」など、
+自然に再撮影を依頼してください。
+
+十分に読めた選択式問題は、短い導入、【正答】、見るべき点、重要所見、医学的意味、
+選択肢へのつながり、必要な誤答説明、類題での見る順番を基本にしてください。
+原則1,200～1,800日本語文字を上限目安とし、必要なら短くても構いません。問題文全文や同じ説明を繰り返さないでください。
 """
 
 EXPLAIN_TEACHING_PROMPT = """
@@ -1770,6 +1828,18 @@ def create_contextual_explain_response(user_id, user_message):
             + context.get("source_text", "")[:40000]
         )
 
+    if context.get("kind") == "teaching_image":
+        context_instruction = (
+            "\n\n【直前の画像から読み取った構造化情報】\n"
+            + json.dumps(
+                context.get("structured_data", {}),
+                ensure_ascii=False,
+                separators=(",", ":"),
+            )
+            + "\n画像そのものは再入力されていません。"
+            "この構造化情報だけを根拠に答えてください。"
+        )
+
     if context.get("kind") == "image":
         input_text = (
             EXPLAIN_TEACHING_PROMPT
@@ -1875,6 +1945,154 @@ def image_buffer_to_base64(file_buffer):
     image_bytes = file_buffer.read()
 
     return base64.b64encode(image_bytes).decode("utf-8")
+
+
+def _record_responses_api_meta(response, response_meta, answer_text=""):
+    if response_meta is None:
+        return
+
+    incomplete_details = getattr(response, "incomplete_details", None)
+    usage = getattr(response, "usage", None)
+    response_meta.update(
+        {
+            "status": getattr(response, "status", "unknown") or "unknown",
+            "incomplete_reason": (
+                getattr(incomplete_details, "reason", None) or "none"
+            ),
+            "input_tokens": getattr(usage, "input_tokens", None),
+            "output_tokens": getattr(usage, "output_tokens", None),
+            "total_tokens": getattr(usage, "total_tokens", None),
+            "answer_chars": len(answer_text or ""),
+        }
+    )
+
+
+def _parse_teaching_image_stage1_json(raw_text):
+    """Stage 1の出力を、必要項目を持つJSONとして検証する。"""
+    text = (raw_text or "").strip()
+    if text.startswith("```"):
+        lines = text.splitlines()
+        if lines and lines[0].startswith("```"):
+            lines = lines[1:]
+        if lines and lines[-1].strip() == "```":
+            lines = lines[:-1]
+        text = "\n".join(lines).strip()
+
+    data = json.loads(text)
+    if not isinstance(data, dict):
+        raise ValueError("Stage 1 output is not a JSON object.")
+
+    required_fields = {
+        "read_confidence",
+        "uncertain_fields",
+        "patient_info_raw",
+        "findings_raw",
+        "question_prompt_raw",
+        "choices_raw",
+        "tables_or_figures_raw",
+        "unreadable_notes",
+    }
+    if not required_fields.issubset(data):
+        raise ValueError("Stage 1 output is missing required fields.")
+    if data["read_confidence"] not in {"high", "low"}:
+        raise ValueError("Stage 1 read_confidence is invalid.")
+    if not isinstance(data["uncertain_fields"], list) or not all(
+        isinstance(item, str) for item in data["uncertain_fields"]
+    ):
+        raise ValueError("Stage 1 uncertain_fields is invalid.")
+    if not isinstance(data["findings_raw"], list) or not all(
+        isinstance(item, str) for item in data["findings_raw"]
+    ):
+        raise ValueError("Stage 1 findings_raw is invalid.")
+    if not isinstance(data["choices_raw"], dict) or not all(
+        isinstance(key, str) and isinstance(value, str)
+        for key, value in data["choices_raw"].items()
+    ):
+        raise ValueError("Stage 1 choices_raw is invalid.")
+    for field_name in ("patient_info_raw", "question_prompt_raw"):
+        if not isinstance(data[field_name], str):
+            raise ValueError(f"Stage 1 {field_name} is invalid.")
+    for field_name in ("tables_or_figures_raw", "unreadable_notes"):
+        if data[field_name] is not None and not isinstance(data[field_name], str):
+            raise ValueError(f"Stage 1 {field_name} is invalid.")
+
+    return data
+
+
+def analyze_teaching_image_stage1(image_base64, response_meta=None):
+    """教師型画像を読み取り、推論せず構造化JSONを返す。"""
+    response = client.responses.create(
+        model="gpt-4.1-mini",
+        instructions=TEACHING_IMAGE_STAGE1_PROMPT,
+        input=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "input_text",
+                        "text": (
+                            "この画像を読み取り、指定のJSONだけを返してください。"
+                            "問題を解かず、不確実な内容は推測しないでください。"
+                        ),
+                    },
+                    {
+                        "type": "input_image",
+                        "image_url": "data:image/jpeg;base64," + image_base64,
+                        "detail": "auto",
+                    },
+                ],
+            }
+        ],
+        max_output_tokens=1800,
+    )
+    raw_text = response.output_text
+    _record_responses_api_meta(response, response_meta, raw_text)
+    structured_data = _parse_teaching_image_stage1_json(raw_text)
+    if response_meta is not None:
+        response_meta.update(
+            {
+                "json_parse_success": True,
+                "read_confidence": structured_data["read_confidence"],
+                "uncertain_field_count": len(structured_data["uncertain_fields"]),
+                "finding_count": len(structured_data["findings_raw"]),
+                "choice_count": len(structured_data["choices_raw"]),
+            }
+        )
+    return structured_data
+
+
+def solve_teaching_image_stage2(structured_data, response_meta=None):
+    """第1段階JSONだけを使い、医学的推論・検証・最終文章化を行う。"""
+    structured_json = json.dumps(
+        structured_data,
+        ensure_ascii=False,
+        separators=(",", ":"),
+    )
+    response = client.responses.create(
+        model="gpt-4.1-mini",
+        instructions=(
+            TEACHING_IMAGE_STAGE2_PROMPT
+            + "\n\n"
+            + TEACHING_IMAGE_CHARACTER_PROMPT
+        ),
+        input=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "input_text",
+                        "text": "第1段階の構造化JSON:\n" + structured_json,
+                    }
+                ],
+            }
+        ],
+        max_output_tokens=2200,
+    )
+    reply_message = (response.output_text or "").strip()
+    _record_responses_api_meta(response, response_meta, reply_message)
+    if not reply_message:
+        raise ValueError("Stage 2 returned an empty response.")
+    return reply_message
 # =========================================================
 # 共通関数：画像をOpenAIで分析
 # =========================================================
@@ -2181,6 +2399,7 @@ def handle_text_message(event):
         None,
     )
     if raw_user_message.strip() == "ふりだしにもどる":
+        invalidate_teaching_image_analysis(user_id)
         user_states.pop(user_id, None)
         study_sessions.pop(user_id, None)
         explain_contexts.pop(user_id, None)
@@ -2250,6 +2469,7 @@ def handle_text_message(event):
 
     if current_state == "explain_review":
         if user_message == "わかった！":
+            invalidate_teaching_image_analysis(user_id)
             user_states.pop(user_id, None)
             explain_contexts.pop(user_id, None)
             user_modes[user_id] = "normal"
@@ -2287,6 +2507,7 @@ def handle_text_message(event):
     # モード切替
     if user_message == "熱血モード":
         if str(user_states.get(user_id, "")).startswith("explain_"):
+            invalidate_teaching_image_analysis(user_id)
             user_states.pop(user_id, None)
             explain_contexts.pop(user_id, None)
         reply_to_line(
@@ -2296,6 +2517,7 @@ def handle_text_message(event):
         return
     if user_message in ["相談したい", "相談する", "相談モード"]:
         if str(user_states.get(user_id, "")).startswith("explain_"):
+            invalidate_teaching_image_analysis(user_id)
             user_states.pop(user_id, None)
             explain_contexts.pop(user_id, None)
         user_modes[user_id] = "chat"
@@ -2308,6 +2530,7 @@ def handle_text_message(event):
         return
     if user_message in ["勉強する", "勉強モード"]:
         if str(user_states.get(user_id, "")).startswith("explain_"):
+            invalidate_teaching_image_analysis(user_id)
             user_states.pop(user_id, None)
             explain_contexts.pop(user_id, None)
         user_modes[user_id] = "study"
@@ -2316,6 +2539,7 @@ def handle_text_message(event):
     )
         return
     if user_message in ["教えて源さん", "質問する", "解説モード"]:
+        invalidate_teaching_image_analysis(user_id)
         user_modes[user_id] = "explain"
         explain_contexts.pop(user_id, None)
         user_states[user_id] = "waiting_explain_method"
@@ -2656,6 +2880,151 @@ def handle_file_message(event):
 # 画像メッセージ
 # =========================================================
 
+def register_teaching_image_analysis(user_id, analysis_id, now=None):
+    """最新解析IDを登録し、同一message_idの再処理を防ぐ。"""
+    current_time = time.monotonic() if now is None else now
+    cutoff = current_time - TEACHING_IMAGE_MESSAGE_ID_TTL_SECONDS
+    with teaching_image_tracking_lock:
+        expired_ids = [
+            message_id
+            for message_id, received_at in teaching_image_recent_ids.items()
+            if received_at < cutoff
+        ]
+        for message_id in expired_ids:
+            teaching_image_recent_ids.pop(message_id, None)
+
+        if analysis_id in teaching_image_recent_ids:
+            return False
+
+        while len(teaching_image_recent_ids) >= TEACHING_IMAGE_MESSAGE_ID_MAX_COUNT:
+            oldest_id = next(iter(teaching_image_recent_ids))
+            teaching_image_recent_ids.pop(oldest_id, None)
+
+        teaching_image_recent_ids[analysis_id] = current_time
+        teaching_image_active_ids[user_id] = analysis_id
+        return True
+
+
+def invalidate_teaching_image_analysis(user_id):
+    """教師型画像状態を離れた時点で、実行中の結果を無効化する。"""
+    with teaching_image_tracking_lock:
+        teaching_image_active_ids.pop(user_id, None)
+
+
+def is_current_teaching_image_analysis(user_id, analysis_id):
+    """状態と解析IDの両方が現在も有効か確認する。"""
+    with teaching_image_tracking_lock:
+        return (
+            user_states.get(user_id) == "explain_attachment"
+            and teaching_image_active_ids.get(user_id) == analysis_id
+        )
+
+
+def process_teaching_image(user_id, analysis_id, image_base64, total_started_at):
+    """教師型画像の2段階処理を行い、完了後にPush送信する。"""
+    stage1_meta = {"json_parse_success": False}
+    stage2_meta = {}
+    stage1_started_at = time.perf_counter()
+    try:
+        structured_data = analyze_teaching_image_stage1(
+            image_base64,
+            response_meta=stage1_meta,
+        )
+    except Exception:
+        stage1_seconds = time.perf_counter() - stage1_started_at
+        logging.exception("teaching_image_stage1 failed")
+        logging.info(
+            "teaching_image_stage1 status=%s json_parse_success=%s "
+            "stage1_seconds=%.3f",
+            stage1_meta.get("status", "error"),
+            str(stage1_meta.get("json_parse_success", False)).lower(),
+            stage1_seconds,
+        )
+        if is_current_teaching_image_analysis(user_id, analysis_id):
+            push_to_line(
+                user_id,
+                (
+                    "おう、今回は画像の文字を正確に読み取れなかったみてぇだ。\n\n"
+                    "悪いが、できれば少し大きく、まっすぐ撮ってもう一度見せてくれ＾＾"
+                ),
+            )
+        return
+
+    stage1_seconds = time.perf_counter() - stage1_started_at
+    logging.info(
+        "teaching_image_stage1 status=%s json_parse_success=true "
+        "read_confidence=%s uncertain_field_count=%s finding_count=%s "
+        "choice_count=%s input_tokens=%s output_tokens=%s total_tokens=%s "
+        "stage1_seconds=%.3f",
+        stage1_meta.get("status", "unknown"),
+        stage1_meta.get("read_confidence", "unknown"),
+        stage1_meta.get("uncertain_field_count", 0),
+        stage1_meta.get("finding_count", 0),
+        stage1_meta.get("choice_count", 0),
+        stage1_meta.get("input_tokens", "unknown"),
+        stage1_meta.get("output_tokens", "unknown"),
+        stage1_meta.get("total_tokens", "unknown"),
+        stage1_seconds,
+    )
+
+    stage2_started_at = time.perf_counter()
+    try:
+        analysis_message = solve_teaching_image_stage2(
+            structured_data,
+            response_meta=stage2_meta,
+        )
+    except Exception:
+        stage2_seconds = time.perf_counter() - stage2_started_at
+        logging.exception("teaching_image_stage2 failed")
+        logging.info(
+            "teaching_image_stage2 status=%s stage2_seconds=%.3f "
+            "total_seconds=%.3f",
+            stage2_meta.get("status", "error"),
+            stage2_seconds,
+            time.perf_counter() - total_started_at,
+        )
+        if is_current_teaching_image_analysis(user_id, analysis_id):
+            push_to_line(
+                user_id,
+                (
+                    "おう、画像の内容までは読めたんだが、"
+                    "今回は解説をうまくまとめきれなかった。\n\n"
+                    "少し時間を空けて、もう一度送ってくれ。"
+                ),
+            )
+        return
+
+    stage2_seconds = time.perf_counter() - stage2_started_at
+    if not is_current_teaching_image_analysis(user_id, analysis_id):
+        logging.info("teaching_image_processing cancelled_before_push=true")
+        return
+
+    explain_contexts[user_id] = {
+        "kind": "teaching_image",
+        "structured_data": structured_data,
+        "turns": [("assistant", analysis_message)],
+    }
+    user_states[user_id] = "explain_review"
+    invalidate_teaching_image_analysis(user_id)
+
+    line_push_started_at = time.perf_counter()
+    push_explain_answer_with_review(user_id, analysis_message)
+    line_push_seconds = time.perf_counter() - line_push_started_at
+    logging.info(
+        "teaching_image_stage2 status=%s input_tokens=%s output_tokens=%s "
+        "total_tokens=%s answer_chars=%s line_truncated=%s "
+        "stage2_seconds=%.3f line_push_seconds=%.3f total_seconds=%.3f",
+        stage2_meta.get("status", "unknown"),
+        stage2_meta.get("input_tokens", "unknown"),
+        stage2_meta.get("output_tokens", "unknown"),
+        stage2_meta.get("total_tokens", "unknown"),
+        len(analysis_message),
+        str(len(analysis_message) > 4500).lower(),
+        stage2_seconds,
+        line_push_seconds,
+        time.perf_counter() - total_started_at,
+    )
+
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image_message(event):
     """
@@ -2675,6 +3044,14 @@ def handle_image_message(event):
         None,
     )
     use_teaching_intro = user_states.get(user_id) == "explain_attachment"
+    analysis_id = event.message.id
+    if use_teaching_intro and not register_teaching_image_analysis(
+        user_id,
+        analysis_id,
+    ):
+        logging.info("teaching_image_duplicate ignored=true")
+        return
+
     logging.info(
         "image_analysis_mode=%s user_state=%s",
         "teaching" if use_teaching_intro else "general",
@@ -2710,10 +3087,27 @@ def handle_image_message(event):
         )
         base64_seconds = time.perf_counter() - base64_started_at
 
+        if use_teaching_intro:
+            teaching_thread = threading.Thread(
+                target=process_teaching_image,
+                args=(user_id, analysis_id, image_base64, total_started_at),
+                daemon=True,
+            )
+            teaching_thread.start()
+            logging.info(
+                "image_analysis_timing mode=teaching "
+                "line_download_seconds=%.3f base64_seconds=%.3f "
+                "background_started=true webhook_seconds=%.3f",
+                line_download_seconds,
+                base64_seconds,
+                time.perf_counter() - total_started_at,
+            )
+            return
+
         openai_started_at = time.perf_counter()
         analysis_message = analyze_image(
             image_base64,
-            use_teaching_intro=use_teaching_intro,
+            use_teaching_intro=False,
             response_meta=image_response_meta,
         )
         openai_seconds = time.perf_counter() - openai_started_at
@@ -2734,17 +3128,7 @@ def handle_image_message(event):
         )
 
     line_push_started_at = time.perf_counter()
-    if use_teaching_intro:
-        if image_base64:
-            explain_contexts[user_id] = {
-                "kind": "image",
-                "image_base64": image_base64,
-                "turns": [("assistant", analysis_message)],
-            }
-        user_states[user_id] = "explain_review"
-        push_explain_answer_with_review(user_id, analysis_message)
-    else:
-        push_to_line(user_id, analysis_message)
+    push_to_line(user_id, analysis_message)
     line_push_seconds = time.perf_counter() - line_push_started_at
 
     logging.info(

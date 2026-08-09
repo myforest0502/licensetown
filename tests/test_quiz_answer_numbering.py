@@ -6,6 +6,8 @@ import ast
 import json
 import logging
 import re
+import threading
+import time
 import unicodedata
 import unittest
 from pathlib import Path
@@ -13,6 +15,65 @@ from types import SimpleNamespace
 
 
 APP_PATH = Path(__file__).resolve().parents[1] / "app.py"
+
+
+def load_teaching_tracking_functions():
+    module = ast.parse(APP_PATH.read_text(encoding="utf-8"), filename=str(APP_PATH))
+    names = {
+        "register_teaching_image_analysis",
+        "invalidate_teaching_image_analysis",
+        "is_current_teaching_image_analysis",
+        "process_teaching_image",
+    }
+    nodes = [
+        node for node in module.body
+        if isinstance(node, ast.FunctionDef) and node.name in names
+    ]
+    states = {}
+    contexts = {}
+    active_ids = {}
+    recent_ids = {}
+    pushes = []
+    reviews = []
+    namespace = {
+        "time": time,
+        "threading": threading,
+        "logging": logging,
+        "user_states": states,
+        "explain_contexts": contexts,
+        "teaching_image_active_ids": active_ids,
+        "teaching_image_recent_ids": recent_ids,
+        "teaching_image_tracking_lock": threading.Lock(),
+        "TEACHING_IMAGE_MESSAGE_ID_TTL_SECONDS": 600,
+        "TEACHING_IMAGE_MESSAGE_ID_MAX_COUNT": 3,
+        "push_to_line": lambda user_id, text: pushes.append((user_id, text)),
+        "push_explain_answer_with_review": (
+            lambda user_id, text: reviews.append((user_id, text))
+        ),
+        "analyze_teaching_image_stage1": lambda *_args, **_kwargs: {
+            "read_confidence": "high",
+            "uncertain_fields": [],
+            "patient_info_raw": "",
+            "findings_raw": ["所見"],
+            "question_prompt_raw": "問い",
+            "choices_raw": {"A": "選択肢"},
+            "tables_or_figures_raw": None,
+            "unreadable_notes": None,
+        },
+        "solve_teaching_image_stage2": lambda data, **_kwargs: data["question_prompt_raw"],
+    }
+    extracted = ast.Module(body=nodes, type_ignores=[])
+    ast.fix_missing_locations(extracted)
+    exec(compile(extracted, str(APP_PATH), "exec"), namespace)
+    return SimpleNamespace(
+        namespace=namespace,
+        states=states,
+        contexts=contexts,
+        active_ids=active_ids,
+        recent_ids=recent_ids,
+        pushes=pushes,
+        reviews=reviews,
+    )
 
 
 def load_current_app_functions() -> SimpleNamespace:
@@ -73,6 +134,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_gen_first_greeting": lambda *args, **kwargs: None,
         "reply_explain_method_choice": lambda *args, **kwargs: None,
         "reply_explain_answer_with_review": lambda *args, **kwargs: None,
+        "invalidate_teaching_image_analysis": lambda *args, **kwargs: None,
         "create_contextual_explain_response": lambda *args, **kwargs: "解説回答",
         "push_to_line": lambda *args, **kwargs: None,
         "create_text_response": lambda *args, **kwargs: "unused",
@@ -1265,9 +1327,28 @@ class ConfigurableQuizTest(unittest.TestCase):
                 )
             return answer
 
+        class ImmediateThread:
+            def __init__(self, target, args, daemon):
+                self.target = target
+                self.args = args
+
+            def start(self):
+                self.target(*self.args)
+
+        def process_teaching_image_stub(user_id, _analysis_id, image_base64, _started_at):
+            analysis_calls.append(("teaching_image", image_base64, True))
+            states[user_id] = "explain_review"
+            contexts[user_id] = {
+                "kind": "teaching_image",
+                "structured_data": {"question_prompt_raw": "問題"},
+                "turns": [("assistant", "画像の教師型解説")],
+            }
+            pushed_reviews.append((user_id, "画像の教師型解説"))
+
         namespace = {
             "logging": logging,
             "time": __import__("time"),
+            "threading": SimpleNamespace(Thread=ImmediateThread),
             "user_states": states,
             "explain_contexts": contexts,
             "reply_to_line": lambda *args: None,
@@ -1282,6 +1363,8 @@ class ConfigurableQuizTest(unittest.TestCase):
                 or "文書の教師型解説"
             ),
             "analyze_image": analyze_image_stub,
+            "register_teaching_image_analysis": lambda *_args, **_kwargs: True,
+            "process_teaching_image": process_teaching_image_stub,
             "push_explain_answer_with_review": (
                 lambda user_id, answer: pushed_reviews.append((user_id, answer))
             ),
@@ -1324,8 +1407,8 @@ class ConfigurableQuizTest(unittest.TestCase):
             namespace["handle_image_message"](general_event)
 
         self.assertEqual("explain_review", states[image_user])
-        self.assertEqual("image", contexts[image_user]["kind"])
-        self.assertEqual("image-base64", contexts[image_user]["image_base64"])
+        self.assertEqual("teaching_image", contexts[image_user]["kind"])
+        self.assertNotIn("image_base64", contexts[image_user])
         self.assertEqual(3, len(pushed_reviews))
         self.assertTrue(all(call[2] is True for call in analysis_calls[:3]))
         self.assertIs(False, analysis_calls[3][2])
@@ -1337,12 +1420,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertIn("image_analysis_mode=general user_state=none", logged)
         self.assertIn("image_analysis_timing mode=teaching", logged)
         self.assertIn("image_analysis_timing mode=general", logged)
-        self.assertIn(
-            "image_response_meta mode=teaching status=completed "
-            "incomplete_reason=none input_tokens=500 output_tokens=700 "
-            "total_tokens=1200 answer_chars=8 line_truncated=false",
-            logged,
-        )
+        self.assertIn("background_started=true", logged)
         self.assertIn("image_response_meta mode=general status=completed", logged)
         self.assertIn("answer_chars=4501 line_truncated=true", logged)
         for timing_name in (
@@ -1395,6 +1473,309 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertIn("歩幅／歩隔", source)
         self.assertIn("痙縮／麻痺", source)
         self.assertIn("選択肢は読み取った実際の文言のまま", source)
+
+    def test_teaching_image_uses_exactly_two_stages_and_stage2_gets_json_only(self) -> None:
+        source = APP_PATH.read_text(encoding="utf-8")
+        module = ast.parse(source)
+        wanted = {
+            "_record_responses_api_meta",
+            "_parse_teaching_image_stage1_json",
+            "analyze_teaching_image_stage1",
+            "solve_teaching_image_stage2",
+        }
+        nodes = [
+            node for node in module.body
+            if isinstance(node, ast.FunctionDef) and node.name in wanted
+        ]
+        constants = {}
+        for node in module.body:
+            if not isinstance(node, ast.Assign) or len(node.targets) != 1:
+                continue
+            target = node.targets[0]
+            if isinstance(target, ast.Name) and target.id in {
+                "TEACHING_IMAGE_CHARACTER_PROMPT",
+                "TEACHING_IMAGE_STAGE1_PROMPT",
+                "TEACHING_IMAGE_STAGE2_PROMPT",
+            }:
+                constants[target.id] = ast.literal_eval(node.value)
+
+        structured = {
+            "read_confidence": "high",
+            "uncertain_fields": [],
+            "patient_info_raw": "左麻痺なし",
+            "findings_raw": ["右歩幅が短い", "MMT4", "ROM 15°"],
+            "question_prompt_raw": "正しいのはどれか。",
+            "choices_raw": {"A": "歩隔の増加", "B": "痙縮なし"},
+            "tables_or_figures_raw": None,
+            "unreadable_notes": None,
+        }
+        calls = []
+        responses = [
+            SimpleNamespace(
+                output_text=json.dumps(structured, ensure_ascii=False),
+                status="completed",
+                incomplete_details=None,
+                usage=SimpleNamespace(input_tokens=100, output_tokens=200, total_tokens=300),
+            ),
+            SimpleNamespace(
+                output_text="おう、【正答】Bだ。",
+                status="completed",
+                incomplete_details=None,
+                usage=SimpleNamespace(input_tokens=200, output_tokens=300, total_tokens=500),
+            ),
+        ]
+
+        def create_response(**kwargs):
+            calls.append(kwargs)
+            return responses[len(calls) - 1]
+
+        namespace = {
+            **constants,
+            "json": json,
+            "client": SimpleNamespace(
+                responses=SimpleNamespace(create=create_response)
+            ),
+        }
+        extracted = ast.Module(body=nodes, type_ignores=[])
+        ast.fix_missing_locations(extracted)
+        exec(compile(extracted, str(APP_PATH), "exec"), namespace)
+
+        stage1_meta = {}
+        parsed = namespace["analyze_teaching_image_stage1"](
+            "secret-base64",
+            response_meta=stage1_meta,
+        )
+        answer = namespace["solve_teaching_image_stage2"](parsed, response_meta={})
+
+        self.assertEqual(2, len(calls))
+        self.assertIn("input_image", str(calls[0]["input"]))
+        self.assertIn("secret-base64", str(calls[0]["input"]))
+        self.assertNotIn("input_image", str(calls[1]["input"]))
+        self.assertNotIn("secret-base64", str(calls[1]["input"]))
+        self.assertIn("左麻痺なし", str(calls[1]["input"]))
+        self.assertEqual("おう、【正答】Bだ。", answer)
+        self.assertTrue(stage1_meta["json_parse_success"])
+        self.assertEqual(3, stage1_meta["finding_count"])
+
+    def test_teaching_image_prompts_preserve_raw_text_and_reject_guessing(self) -> None:
+        source = APP_PATH.read_text(encoding="utf-8")
+        for phrase in (
+            "医学的に推論する",
+            "推測補完",
+            "左右、数値、単位",
+            "歩幅／歩隔",
+            "痙縮／麻痺",
+            "read_confidence",
+            "uncertain_fields",
+            "1所見を1項目",
+        ):
+            self.assertIn(phrase, source)
+        for phrase in (
+            "question_prompt_rawから何を問う問題か",
+            "すべての選択肢",
+            "必ず要素分解",
+            "根拠不足",
+            "read_confidenceがlow",
+            "最後の文章だけを源さん",
+        ):
+            self.assertIn(phrase, source)
+        self.assertNotIn("正答B", source)
+
+    def test_stage1_invalid_json_or_schema_is_rejected(self) -> None:
+        source = APP_PATH.read_text(encoding="utf-8")
+        module = ast.parse(source)
+        node = next(
+            node for node in module.body
+            if isinstance(node, ast.FunctionDef)
+            and node.name == "_parse_teaching_image_stage1_json"
+        )
+        namespace = {"json": json}
+        exec(compile(ast.fix_missing_locations(ast.Module(body=[node], type_ignores=[])), str(APP_PATH), "exec"), namespace)
+        parse_stage1 = namespace["_parse_teaching_image_stage1_json"]
+
+        with self.assertRaises((json.JSONDecodeError, ValueError)):
+            parse_stage1("読み取り結果です")
+        with self.assertRaises(ValueError):
+            parse_stage1(json.dumps({"read_confidence": "maybe"}))
+
+    def test_teaching_image_stage_failures_stop_safely(self) -> None:
+        source = APP_PATH.read_text(encoding="utf-8")
+        module = ast.parse(source)
+        node = next(
+            node for node in module.body
+            if isinstance(node, ast.FunctionDef)
+            and node.name == "process_teaching_image"
+        )
+        states = {"stage1-user": "explain_attachment", "stage2-user": "explain_attachment"}
+        pushed = []
+        stage2_calls = []
+        namespace = {
+            "time": __import__("time"),
+            "logging": logging,
+            "user_states": states,
+            "explain_contexts": {},
+            "push_to_line": lambda user_id, text: pushed.append((user_id, text)),
+            "push_explain_answer_with_review": lambda *args: None,
+            "analyze_teaching_image_stage1": (
+                lambda *_args, **_kwargs: (_ for _ in ()).throw(ValueError("bad json"))
+            ),
+            "solve_teaching_image_stage2": (
+                lambda *_args, **_kwargs: stage2_calls.append(True) or "unused"
+            ),
+            "is_current_teaching_image_analysis": lambda *_args: True,
+            "invalidate_teaching_image_analysis": lambda *_args: None,
+        }
+        exec(compile(ast.fix_missing_locations(ast.Module(body=[node], type_ignores=[])), str(APP_PATH), "exec"), namespace)
+        namespace["process_teaching_image"]("stage1-user", "stage1-id", "image", 0.0)
+        self.assertEqual([], stage2_calls)
+        self.assertIn("画像の文字", pushed[-1][1])
+        self.assertEqual("explain_attachment", states["stage1-user"])
+
+        namespace["analyze_teaching_image_stage1"] = lambda *_args, **_kwargs: {
+            "read_confidence": "high",
+            "uncertain_fields": [],
+            "patient_info_raw": "",
+            "findings_raw": [],
+            "question_prompt_raw": "",
+            "choices_raw": {},
+            "tables_or_figures_raw": None,
+            "unreadable_notes": None,
+        }
+        namespace["solve_teaching_image_stage2"] = (
+            lambda *_args, **_kwargs: (_ for _ in ()).throw(RuntimeError("solve failed"))
+        )
+        namespace["process_teaching_image"]("stage2-user", "stage2-id", "image", 0.0)
+        self.assertIn("解説", pushed[-1][1])
+        self.assertEqual("explain_attachment", states["stage2-user"])
+        self.assertNotIn("stage2-user", namespace["explain_contexts"])
+
+    def test_latest_teaching_image_wins_regardless_of_completion_order(self) -> None:
+        for completion_order in (("image-1", "image-2"), ("image-2", "image-1")):
+            with self.subTest(completion_order=completion_order):
+                app = load_teaching_tracking_functions()
+                user_id = "same-user"
+                app.states[user_id] = "explain_attachment"
+                register = app.namespace["register_teaching_image_analysis"]
+                process = app.namespace["process_teaching_image"]
+                self.assertTrue(register(user_id, "image-1", now=1.0))
+                self.assertTrue(register(user_id, "image-2", now=2.0))
+
+                for analysis_id in completion_order:
+                    process(user_id, analysis_id, "base64", time.perf_counter())
+
+                self.assertEqual([(user_id, "問い")], app.reviews)
+                self.assertEqual("explain_review", app.states[user_id])
+                self.assertEqual("teaching_image", app.contexts[user_id]["kind"])
+
+    def test_teaching_image_duplicate_ids_use_ttl_and_count_limit(self) -> None:
+        app = load_teaching_tracking_functions()
+        register = app.namespace["register_teaching_image_analysis"]
+        self.assertTrue(register("user", "message-1", now=1.0))
+        self.assertFalse(register("user", "message-1", now=2.0))
+        self.assertTrue(register("user", "message-2", now=3.0))
+        self.assertTrue(register("user", "message-3", now=4.0))
+        self.assertTrue(register("user", "message-4", now=5.0))
+        self.assertEqual(3, len(app.recent_ids))
+        self.assertNotIn("message-1", app.recent_ids)
+
+        expired = load_teaching_tracking_functions()
+        register_expiring = expired.namespace["register_teaching_image_analysis"]
+        self.assertTrue(register_expiring("user", "same-id", now=1.0))
+        self.assertTrue(register_expiring("user", "same-id", now=602.0))
+
+    def test_duplicate_image_webhook_starts_openai_pipeline_only_once(self) -> None:
+        source = APP_PATH.read_text(encoding="utf-8")
+        module = ast.parse(source)
+        handler_node = next(
+            node for node in module.body
+            if isinstance(node, ast.FunctionDef) and node.name == "handle_image_message"
+        )
+        handler_node.decorator_list = []
+        seen_ids = set()
+        pipeline_calls = []
+
+        class ImmediateThread:
+            def __init__(self, target, args, daemon):
+                self.target = target
+                self.args = args
+
+            def start(self):
+                self.target(*self.args)
+
+        def register(_user_id, analysis_id):
+            if analysis_id in seen_ids:
+                return False
+            seen_ids.add(analysis_id)
+            return True
+
+        namespace = {
+            "time": time,
+            "logging": logging,
+            "threading": SimpleNamespace(Thread=ImmediateThread),
+            "user_states": {"user": "explain_attachment"},
+            "register_teaching_image_analysis": register,
+            "reply_to_line": lambda *_args: None,
+            "show_loading_animation": lambda *_args: None,
+            "download_line_file": lambda *_args: SimpleNamespace(),
+            "image_buffer_to_base64": lambda *_args: "base64",
+            "process_teaching_image": (
+                lambda *_args: pipeline_calls.append("openai-pipeline")
+            ),
+            "analyze_image": lambda *_args, **_kwargs: "general",
+            "push_to_line": lambda *_args: None,
+        }
+        exec(compile(ast.fix_missing_locations(ast.Module(body=[handler_node], type_ignores=[])), str(APP_PATH), "exec"), namespace)
+        event = SimpleNamespace(
+            message=SimpleNamespace(id="duplicate-message"),
+            source=SimpleNamespace(user_id="user"),
+            reply_token="reply-token",
+        )
+        namespace["handle_image_message"](event)
+        namespace["handle_image_message"](event)
+        self.assertEqual(["openai-pipeline"], pipeline_calls)
+
+    def test_stale_failures_and_mode_changes_never_push_or_restore_state(self) -> None:
+        for failure_stage in ("stage1", "stage2"):
+            with self.subTest(failure_stage=failure_stage):
+                app = load_teaching_tracking_functions()
+                user_id = "failure-user"
+                app.states[user_id] = "explain_attachment"
+                register = app.namespace["register_teaching_image_analysis"]
+                process = app.namespace["process_teaching_image"]
+                register(user_id, "old-image", now=1.0)
+                register(user_id, "new-image", now=2.0)
+                if failure_stage == "stage1":
+                    app.namespace["analyze_teaching_image_stage1"] = (
+                        lambda *_args, **_kwargs: (_ for _ in ()).throw(ValueError("fail"))
+                    )
+                else:
+                    app.namespace["solve_teaching_image_stage2"] = (
+                        lambda *_args, **_kwargs: (_ for _ in ()).throw(ValueError("fail"))
+                    )
+                process(user_id, "old-image", "base64", time.perf_counter())
+                self.assertEqual([], app.pushes)
+                self.assertEqual([], app.reviews)
+                self.assertEqual("explain_attachment", app.states[user_id])
+
+        for destination in ("reset", "chat", "study"):
+            with self.subTest(destination=destination):
+                app = load_teaching_tracking_functions()
+                user_id = "moving-user"
+                app.states[user_id] = "explain_attachment"
+                app.namespace["register_teaching_image_analysis"](
+                    user_id, "running-image", now=1.0
+                )
+                app.namespace["invalidate_teaching_image_analysis"](user_id)
+                if destination == "reset":
+                    app.states[user_id] = "waiting_gen_intro"
+                else:
+                    app.states.pop(user_id, None)
+                app.namespace["process_teaching_image"](
+                    user_id, "running-image", "base64", time.perf_counter()
+                )
+                self.assertEqual([], app.pushes)
+                self.assertEqual([], app.reviews)
+                self.assertNotEqual("explain_review", app.states.get(user_id))
 
     def test_attachment_generation_prompt_teaches_the_full_reasoning_to_the_answer(self) -> None:
         source = APP_PATH.read_text(encoding="utf-8")
@@ -1528,8 +1909,10 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertIn("選択肢の文言を改変していない", image_teaching_prompt)
         self.assertIn("複数の要素", image_teaching_prompt)
         self.assertIn("全要素の根拠", image_teaching_prompt)
-        self.assertIn("膝屈曲位と膝伸展位", image_teaching_prompt)
-        self.assertIn("腓腹筋の伸張性", image_teaching_prompt)
+        self.assertIn("複合選択肢の各要素", image_teaching_prompt)
+        self.assertIn("根拠が不足する要素", image_teaching_prompt)
+        self.assertNotIn("膝屈曲位と膝伸展位", image_teaching_prompt)
+        self.assertNotIn("腓腹筋の伸張性", image_teaching_prompt)
         self.assertIn("回答の最初の方で【正答】と主要根拠", image_teaching_prompt)
         self.assertIn("原則600～1,000文字程度", image_teaching_prompt)
         self.assertIn("問題文の全文を再掲せず", image_teaching_prompt)
