@@ -1211,7 +1211,7 @@ def is_complete_reset_command(message_text):
 def reply_mode_select(reply_token, intro_text=None):
     """
     「今日は何する？＾＾」と、
-    勉強・質問・相談の3つの選択肢を送る。
+    4つの入口をクイックリプライで送る。
     """
 
     reply_message = TextSendMessage(
@@ -1226,14 +1226,20 @@ def reply_mode_select(reply_token, intro_text=None):
                 ),
                 QuickReplyButton(
                     action=MessageAction(
-                        label="💡 質問する！",
-                        text="質問する",
+                        label="💡 教えて源さん",
+                        text="教えて源さん",
                     )
                 ),
                 QuickReplyButton(
                     action=MessageAction(
-                        label="😊 相談がある",
-                        text="相談する",
+                        label="😎 相談したい",
+                        text="相談したい",
+                    )
+                ),
+                QuickReplyButton(
+                    action=MessageAction(
+                        label="🔥 熱血モード",
+                        text="熱血モード",
                     )
                 ),
             ]
@@ -1900,7 +1906,13 @@ def handle_text_message(event):
         return
 
     # モード切替
-    if user_message in ["相談する", "相談モード"]:
+    if user_message == "熱血モード":
+        reply_to_line(
+            event.reply_token,
+            "熱血モードはこれから準備するぞ🔥",
+        )
+        return
+    if user_message in ["相談したい", "相談する", "相談モード"]:
         user_modes[user_id] = "chat"
         reply_to_line(
             event.reply_token,
@@ -1915,7 +1927,7 @@ def handle_text_message(event):
         event.reply_token
     )
         return
-    if user_message in ["質問する", "解説モード"]:
+    if user_message in ["教えて源さん", "質問する", "解説モード"]:
         user_modes[user_id] = "explain"
         reply_to_line(
             event.reply_token,

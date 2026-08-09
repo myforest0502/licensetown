@@ -986,20 +986,55 @@ class ConfigurableQuizTest(unittest.TestCase):
     def test_question_and_chat_mode_selection_still_work(self) -> None:
         function_globals = app.handle_text_message.__globals__
         original_reply = function_globals["reply_to_line"]
+        original_study_ready = function_globals["reply_study_ready_choice"]
         replies = []
+        study_replies = []
         function_globals["reply_to_line"] = (
             lambda _token, message: replies.append(message)
         )
+        function_globals["reply_study_ready_choice"] = (
+            lambda token: study_replies.append(token)
+        )
+
+        labels = [
+            "📖 勉強する！",
+            "💡 教えて源さん",
+            "😎 相談したい",
+            "🔥 熱血モード",
+        ]
+        source = APP_PATH.read_text(encoding="utf-8")
+        module = ast.parse(source)
+        mode_select_node = next(
+            node
+            for node in module.body
+            if isinstance(node, ast.FunctionDef) and node.name == "reply_mode_select"
+        )
+        mode_select_source = ast.get_source_segment(source, mode_select_node)
+
+        for user_id in ("study-user", "chat-user", "explain-user", "heat-user"):
+            app.user_names[user_id] = "登録済みユーザー"
 
         try:
-            app.handle_text_message(make_text_event("chat-user", "相談する"))
-            app.handle_text_message(make_text_event("explain-user", "質問する"))
+            app.handle_text_message(make_text_event("study-user", "勉強する"))
+            app.handle_text_message(make_text_event("chat-user", "相談したい"))
+            app.handle_text_message(make_text_event("explain-user", "教えて源さん"))
+            app.handle_text_message(make_text_event("heat-user", "熱血モード"))
         finally:
             function_globals["reply_to_line"] = original_reply
+            function_globals["reply_study_ready_choice"] = original_study_ready
 
+        self.assertEqual(4, mode_select_source.count("QuickReplyButton("))
+        self.assertEqual(
+            sorted(mode_select_source.index(label) for label in labels),
+            [mode_select_source.index(label) for label in labels],
+        )
+        self.assertEqual("study", app.user_modes["study-user"])
         self.assertEqual("chat", app.user_modes["chat-user"])
         self.assertEqual("explain", app.user_modes["explain-user"])
-        self.assertEqual(2, len(replies))
+        self.assertNotIn("heat-user", app.user_modes)
+        self.assertEqual(1, len(study_replies))
+        self.assertEqual(3, len(replies))
+        self.assertIn("熱血モードはこれから準備するぞ🔥", replies[-1])
 
 
 if __name__ == "__main__":
