@@ -910,6 +910,112 @@ def calculate_quiz_result(questions, answers):
         "total": len(questions),
         "details": details,
     }
+
+
+def create_quiz_completion_summary(quiz_result):
+    """Create a short review summary after every explanation has been read."""
+    score = quiz_result["score"]
+    total = quiz_result["total"]
+    details = quiz_result.get("details", [])
+    accuracy = (score / total * 100) if total else 0.0
+    accuracy_text = "100％" if total and score == total else f"{accuracy:.1f}％"
+
+    incorrect = [
+        detail["question_number"]
+        for detail in details
+        if not detail.get("is_correct")
+    ]
+
+    review_groups = [
+        (
+            "自信ありで間違えた",
+            False,
+            "1",
+        ),
+        (
+            "少し迷って間違えた",
+            False,
+            "2",
+        ),
+        (
+            "あてずっぽうで間違えた",
+            False,
+            "3",
+        ),
+        (
+            "少し迷って正解",
+            True,
+            "2",
+        ),
+        (
+            "あてずっぽうで正解",
+            True,
+            "3",
+        ),
+    ]
+
+    review_lines = []
+    for label, is_correct, confidence in review_groups:
+        numbers = [
+            detail["question_number"]
+            for detail in details
+            if detail.get("is_correct") is is_correct
+            and str(detail.get("confidence", "")) == confidence
+        ]
+        if numbers:
+            review_lines.append(f"{label}：{format_quiz_question_numbers(numbers)}")
+
+    lines = [
+        f"{total}問、本当におつかれさん！",
+        "解くだけじゃなく、最後まで解答解説を確認できたのも大事だぞ＾＾",
+        "",
+        "【今回の結果】",
+        f"正解：{score} / {total}問",
+        f"正答率：{accuracy_text}",
+        "",
+    ]
+
+    if incorrect:
+        lines.extend([
+            "【間違えた問題】",
+            format_quiz_question_numbers(incorrect),
+        ])
+    else:
+        lines.append("今回は間違えた問題はなかったぞ！")
+
+    if review_lines:
+        lines.extend(["", "【優先して復習】", *review_lines])
+
+    lines.extend(["", "【明日以降】"])
+    if accuracy >= 90:
+        lines.extend([
+            "全体としてよくできているぞ！",
+            "間違えた問題と、自信度2・3の問題を中心に復習しよう。",
+            "自信を持って正解できた問題は、そのまま先へ進んで大丈夫だ。",
+        ])
+    elif accuracy >= 70:
+        lines.extend([
+            "まずは間違えた問題を見直そう。",
+            "特に「自信あり」で間違えた問題は、覚え違いの可能性があるから最優先だ。",
+            "次のテスト前に、迷ったところも軽く見直しておくと定着しやすいぞ。",
+        ])
+    else:
+        lines.extend([
+            "今は問題数をこなすことより、解説を理解することを優先しよう。",
+            "間違えたところをもう一度復習してから、次のテストへ進むといいぞ。",
+        ])
+
+    lines.extend([
+        "",
+        f"今日の{total}問はこれで終了！",
+        "また次も積み重ねていこう＾＾",
+    ])
+    return "\n".join(lines)
+
+
+def format_quiz_question_numbers(question_numbers):
+    """Format session-local question numbers compactly for LINE messages."""
+    return "、".join(f"第{number}問" for number in question_numbers)
 # =========================================================
 # 小テストの採点結果を作成
 # =========================================================
@@ -1162,12 +1268,12 @@ def reply_study_continue_choice(reply_token):
         )
 
 
-def reply_explanation_choice(reply_token, completed=False):
+def reply_explanation_choice(reply_token, completed=False, quiz_result=None):
     """解答解説の開始・続行、または完了を案内する。"""
     if completed:
         reply_to_line(
             reply_token,
-            "これで全問の解答解説は終了だ＾＾\nおつかれさん！",
+            create_quiz_completion_summary(quiz_result),
         )
         return
 
@@ -1790,7 +1896,11 @@ def handle_text_message(event):
                 push_to_line(user_id, explanation_message)
 
             if current_session["status"] == "quiz_completed":
-                reply_explanation_choice(event.reply_token, completed=True)
+                reply_explanation_choice(
+                    event.reply_token,
+                    completed=True,
+                    quiz_result=current_session["quiz_result"],
+                )
             else:
                 reply_next_explanation_choice(event.reply_token)
             return

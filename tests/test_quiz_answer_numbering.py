@@ -26,6 +26,8 @@ def load_current_app_functions() -> SimpleNamespace:
         "load_question_master",
         "parse_quiz_answers",
         "calculate_quiz_result",
+        "create_quiz_completion_summary",
+        "format_quiz_question_numbers",
         "create_quiz_result_messages",
         "advance_quiz_explanations",
         "start_quiz",
@@ -81,6 +83,26 @@ def load_current_app_functions() -> SimpleNamespace:
 
 
 app = load_current_app_functions()
+
+
+def make_quiz_result(total: int, correct_numbers: set[int], confidences=None) -> dict:
+    confidences = confidences or {}
+    details = [
+        {
+            "question_number": number,
+            "question_id": 1000 + number,
+            "selected_answer": "A" if number in correct_numbers else "B",
+            "correct_answer": "A",
+            "confidence": str(confidences.get(number, "1")),
+            "is_correct": number in correct_numbers,
+        }
+        for number in range(1, total + 1)
+    ]
+    return {
+        "score": len(correct_numbers),
+        "total": total,
+        "details": details,
+    }
 
 
 def make_questions() -> list[dict]:
@@ -535,6 +557,108 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         self.assertEqual(1, len(reply_messages))
         self.assertNotIn("全部ふりだしに戻した", reply_messages[0])
         self.assertIn("最後まで確認できなかった", reply_messages[0])
+
+
+class QuizCompletionSummaryTest(unittest.TestCase):
+    def test_all_correct_shows_100_percent_and_only_uncertain_review_items(self) -> None:
+        result = make_quiz_result(
+            30,
+            set(range(1, 31)),
+            {5: "2", 11: "3"},
+        )
+
+        summary = app.create_quiz_completion_summary(result)
+
+        self.assertIn("正解：30 / 30問", summary)
+        self.assertIn("正答率：100％", summary)
+        self.assertIn("今回は間違えた問題はなかったぞ！", summary)
+        self.assertIn("少し迷って正解：第5問", summary)
+        self.assertIn("あてずっぽうで正解：第11問", summary)
+        self.assertNotIn("自信ありで間違えた", summary)
+
+    def test_partial_result_groups_priority_review_by_confidence(self) -> None:
+        incorrect = {4, 8, 12, 17, 22, 29}
+        result = make_quiz_result(
+            30,
+            set(range(1, 31)) - incorrect,
+            {8: "1", 17: "1", 4: "2", 12: "3", 15: "3"},
+        )
+
+        summary = app.create_quiz_completion_summary(result)
+
+        self.assertIn("正解：24 / 30問", summary)
+        self.assertIn("正答率：80.0％", summary)
+        self.assertIn(
+            "第4問、第8問、第12問、第17問、第22問、第29問",
+            summary,
+        )
+        self.assertIn("自信ありで間違えた：第8問、第17問、第22問、第29問", summary)
+        self.assertIn("少し迷って間違えた：第4問", summary)
+        self.assertIn("あてずっぽうで間違えた：第12問", summary)
+        self.assertIn("あてずっぽうで正解：第15問", summary)
+        self.assertIn("覚え違いの可能性", summary)
+
+    def test_under_70_percent_prioritizes_understanding_explanations(self) -> None:
+        result = make_quiz_result(30, set(range(1, 21)))
+
+        summary = app.create_quiz_completion_summary(result)
+
+        self.assertIn("正答率：66.7％", summary)
+        self.assertIn("解説を理解することを優先", summary)
+        self.assertIn("復習してから、次のテストへ進む", summary)
+
+    def test_summary_uses_configured_total_for_30_40_and_50_questions(self) -> None:
+        for total in (30, 40, 50):
+            with self.subTest(total=total):
+                result = make_quiz_result(total, set(range(1, total + 1)))
+                summary = app.create_quiz_completion_summary(result)
+                self.assertIn(f"{total}問、本当におつかれさん！", summary)
+                self.assertIn(f"正解：{total} / {total}問", summary)
+                self.assertIn(f"今日の{total}問はこれで終了！", summary)
+
+    def test_final_explanation_completes_quiz_and_requests_summary_once(self) -> None:
+        user_id = "summary-once-user"
+        questions = make_all_questions()
+        answers = {
+            number: {"answer": question["answer"], "confidence": "1"}
+            for number, question in enumerate(questions, start=1)
+        }
+        result = app.calculate_quiz_result(questions, answers)
+        app.study_sessions[user_id] = {
+            "status": "waiting_for_next_explanation",
+            "question_count": 30,
+            "questions_per_set": 5,
+            "all_questions": questions,
+            "all_answers": answers,
+            "quiz_result": result,
+            "explanation_set": 5,
+        }
+
+        function_globals = app.handle_text_message.__globals__
+        original_push = function_globals["push_to_line"]
+        original_completed = function_globals["reply_explanation_choice"]
+        original_reply = function_globals["reply_to_line"]
+        pushed = []
+        completion_calls = []
+        function_globals["push_to_line"] = lambda *args: pushed.append(args)
+        function_globals["reply_explanation_choice"] = (
+            lambda *args, **kwargs: completion_calls.append((args, kwargs))
+        )
+        function_globals["reply_to_line"] = lambda *args: None
+
+        try:
+            app.handle_text_message(make_text_event(user_id, "次の5問"))
+            app.handle_text_message(make_text_event(user_id, "次の5問"))
+        finally:
+            function_globals["push_to_line"] = original_push
+            function_globals["reply_explanation_choice"] = original_completed
+            function_globals["reply_to_line"] = original_reply
+
+        self.assertEqual("quiz_completed", app.study_sessions[user_id]["status"])
+        self.assertTrue(pushed)
+        self.assertEqual(1, len(completion_calls))
+        self.assertTrue(completion_calls[0][1]["completed"])
+        self.assertIs(result, completion_calls[0][1]["quiz_result"])
 
 
 class ConfigurableQuizTest(unittest.TestCase):
