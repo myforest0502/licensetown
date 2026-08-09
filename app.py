@@ -350,6 +350,17 @@ TEACHING_IMAGE_READING_PROMPT = """
 読み取れない部分は、読み取れない、または不明であると明示してください。
 """
 
+TEACHING_IMAGE_RESPONSE_PROMPT = """
+選択式問題の問題文と選択肢を十分読み取れた場合は、回答の最初の方で【正答】と主要根拠を必ず明示してください。
+正答を回答後半まで引っ張ってはいけません。その後で、着眼点、所見の意味、正答へのつながり、類題での見る順番を説明してください。
+
+回答全体は原則600～1,000文字程度を目安に、必要な情報だけで簡潔にまとめてください。
+問題文の全文を再掲せず、正答に必要な所見を3～4点に絞ってください。
+同じ所見を複数の見出しで繰り返さないでください。
+すべての選択肢を順番に長く説明せず、誤答選択肢の補足は必要な場合に迷いやすい1～2個だけを短く扱ってください。
+固定テンプレートを機械的に使わず、問題内容に合わせて自然に構成してください。
+"""
+
 EXPLAIN_TEACHING_PROMPT = """
 これは「教えて源さん」における最優先の回答方針です。
 国家試験問題や練習問題、選択問題を認識した場合、問題文の要約やオウム返しで終わらせないでください。
@@ -1846,7 +1857,7 @@ def image_buffer_to_base64(file_buffer):
 # 共通関数：画像をOpenAIで分析
 # =========================================================
 
-def analyze_image(image_base64, use_teaching_intro=False):
+def analyze_image(image_base64, use_teaching_intro=False, response_meta=None):
     """
     Base64形式の画像をOpenAIへ送り、
     源おじとして内容を分析する。
@@ -1864,9 +1875,12 @@ def analyze_image(image_base64, use_teaching_intro=False):
             + EXPLAIN_TEACHING_PROMPT
             + "\n\n"
             + TEACHING_IMAGE_READING_PROMPT
+            + "\n\n"
+            + TEACHING_IMAGE_RESPONSE_PROMPT
             + teaching_intro
         )
         image_analysis_mode = "teaching"
+        max_output_tokens = 1600
     else:
         final_instructions = (
             GEN_OJI_PROMPT
@@ -1876,6 +1890,7 @@ def analyze_image(image_base64, use_teaching_intro=False):
             + IMAGE_ANALYSIS_PROMPT
         )
         image_analysis_mode = "general"
+        max_output_tokens = 1200
 
     logging.info("image_analysis_mode=%s", image_analysis_mode)
 
@@ -1908,10 +1923,26 @@ def analyze_image(image_base64, use_teaching_intro=False):
                 ],
             }
         ],
-        max_output_tokens=1200,
+        max_output_tokens=max_output_tokens,
     )
 
     reply_message = response.output_text
+
+    if response_meta is not None:
+        incomplete_details = getattr(response, "incomplete_details", None)
+        usage = getattr(response, "usage", None)
+        response_meta.update(
+            {
+                "status": getattr(response, "status", "unknown") or "unknown",
+                "incomplete_reason": (
+                    getattr(incomplete_details, "reason", None) or "none"
+                ),
+                "input_tokens": getattr(usage, "input_tokens", None),
+                "output_tokens": getattr(usage, "output_tokens", None),
+                "total_tokens": getattr(usage, "total_tokens", None),
+                "answer_chars": len(reply_message or ""),
+            }
+        )
 
     if not reply_message:
         return (
@@ -2640,6 +2671,7 @@ def handle_image_message(event):
     show_loading_animation(user_id)
 
     image_base64 = ""
+    image_response_meta = {}
     line_download_seconds = 0.0
     base64_seconds = 0.0
     openai_seconds = 0.0
@@ -2660,6 +2692,7 @@ def handle_image_message(event):
         analysis_message = analyze_image(
             image_base64,
             use_teaching_intro=use_teaching_intro,
+            response_meta=image_response_meta,
         )
         openai_seconds = time.perf_counter() - openai_started_at
 
@@ -2691,6 +2724,20 @@ def handle_image_message(event):
     else:
         push_to_line(user_id, analysis_message)
     line_push_seconds = time.perf_counter() - line_push_started_at
+
+    logging.info(
+        "image_response_meta mode=%s status=%s incomplete_reason=%s "
+        "input_tokens=%s output_tokens=%s total_tokens=%s "
+        "answer_chars=%s line_truncated=%s",
+        "teaching" if use_teaching_intro else "general",
+        image_response_meta.get("status", "error"),
+        image_response_meta.get("incomplete_reason", "none"),
+        image_response_meta.get("input_tokens", "unknown"),
+        image_response_meta.get("output_tokens", "unknown"),
+        image_response_meta.get("total_tokens", "unknown"),
+        image_response_meta.get("answer_chars", len(analysis_message)),
+        str(len(analysis_message) > 4500).lower(),
+    )
 
     logging.info(
         "image_analysis_timing mode=%s "

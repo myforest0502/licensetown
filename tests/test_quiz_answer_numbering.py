@@ -1244,6 +1244,27 @@ class ConfigurableQuizTest(unittest.TestCase):
         contexts = {}
         analysis_calls = []
         pushed_reviews = []
+
+        def analyze_image_stub(
+            image_base64,
+            use_teaching_intro=False,
+            response_meta=None,
+        ):
+            analysis_calls.append(("image", image_base64, use_teaching_intro))
+            answer = "画像の教師型解説" if use_teaching_intro else "長" * 4501
+            if response_meta is not None:
+                response_meta.update(
+                    {
+                        "status": "completed",
+                        "incomplete_reason": "none",
+                        "input_tokens": 500,
+                        "output_tokens": 700,
+                        "total_tokens": 1200,
+                        "answer_chars": len(answer),
+                    }
+                )
+            return answer
+
         namespace = {
             "logging": logging,
             "time": __import__("time"),
@@ -1260,11 +1281,7 @@ class ConfigurableQuizTest(unittest.TestCase):
                 analysis_calls.append((file_name, document_text, use_teaching_intro))
                 or "文書の教師型解説"
             ),
-            "analyze_image": (
-                lambda image_base64, use_teaching_intro=False:
-                analysis_calls.append(("image", image_base64, use_teaching_intro))
-                or "画像の教師型解説"
-            ),
+            "analyze_image": analyze_image_stub,
             "push_explain_answer_with_review": (
                 lambda user_id, answer: pushed_reviews.append((user_id, answer))
             ),
@@ -1320,6 +1337,14 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertIn("image_analysis_mode=general user_state=none", logged)
         self.assertIn("image_analysis_timing mode=teaching", logged)
         self.assertIn("image_analysis_timing mode=general", logged)
+        self.assertIn(
+            "image_response_meta mode=teaching status=completed "
+            "incomplete_reason=none input_tokens=500 output_tokens=700 "
+            "total_tokens=1200 answer_chars=8 line_truncated=false",
+            logged,
+        )
+        self.assertIn("image_response_meta mode=general status=completed", logged)
+        self.assertIn("answer_chars=4501 line_truncated=true", logged)
         for timing_name in (
             "line_download_seconds=",
             "base64_seconds=",
@@ -1345,6 +1370,7 @@ class ConfigurableQuizTest(unittest.TestCase):
             "IMAGE_ANALYSIS_PROMPT",
             "TEACHING_IMAGE_CHARACTER_PROMPT",
             "TEACHING_IMAGE_READING_PROMPT",
+            "TEACHING_IMAGE_RESPONSE_PROMPT",
             "WORD_ANALYSIS_PROMPT",
             "EXPLAIN_TEACHING_PROMPT",
         }
@@ -1362,7 +1388,16 @@ class ConfigurableQuizTest(unittest.TestCase):
         namespace["client"] = SimpleNamespace(
             responses=SimpleNamespace(
                 create=lambda **kwargs: image_calls.append(kwargs)
-                or SimpleNamespace(output_text="画像解説")
+                or SimpleNamespace(
+                    output_text="画像解説",
+                    status="completed",
+                    incomplete_details=None,
+                    usage=SimpleNamespace(
+                        input_tokens=500,
+                        output_tokens=700,
+                        total_tokens=1200,
+                    ),
+                )
             ),
             chat=SimpleNamespace(
                 completions=SimpleNamespace(
@@ -1387,7 +1422,12 @@ class ConfigurableQuizTest(unittest.TestCase):
         ast.fix_missing_locations(extracted)
         exec(compile(extracted, str(APP_PATH), "exec"), namespace)
 
-        namespace["analyze_image"]("image-data", use_teaching_intro=True)
+        teaching_response_meta = {}
+        namespace["analyze_image"](
+            "image-data",
+            use_teaching_intro=True,
+            response_meta=teaching_response_meta,
+        )
         namespace["analyze_image"]("image-data", use_teaching_intro=False)
         namespace["analyze_word_document"](
             "question.docx",
@@ -1442,6 +1482,23 @@ class ConfigurableQuizTest(unittest.TestCase):
             self.assertNotIn(forbidden, image_teaching_prompt)
         self.assertIn("小さい文字、ぼやけた文字、見切れた部分を推測で補完しない", image_teaching_prompt)
         self.assertIn("読み取れない、または不明", image_teaching_prompt)
+        self.assertIn("回答の最初の方で【正答】と主要根拠", image_teaching_prompt)
+        self.assertIn("原則600～1,000文字程度", image_teaching_prompt)
+        self.assertIn("問題文の全文を再掲せず", image_teaching_prompt)
+        self.assertIn("迷いやすい1～2個だけ", image_teaching_prompt)
+        self.assertEqual(1600, image_calls[0]["max_output_tokens"])
+        self.assertEqual(1200, image_calls[1]["max_output_tokens"])
+        self.assertEqual(
+            {
+                "status": "completed",
+                "incomplete_reason": "none",
+                "input_tokens": 500,
+                "output_tokens": 700,
+                "total_tokens": 1200,
+                "answer_chars": 4,
+            },
+            teaching_response_meta,
+        )
         self.assertIn("良かった点や重要な点", image_general_prompt)
         self.assertIn("気になる点", image_general_prompt)
         self.assertIn("次に行うこと", image_general_prompt)
