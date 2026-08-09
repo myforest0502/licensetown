@@ -1185,7 +1185,7 @@ def reply_new_user_welcome(reply_token):
         "大切なのは、一度に全部できるようになることではありません。\n"
         "一つずつ「できる」を増やして、国家試験合格を目指していきましょう。\n\n"
         "それでは、ここからは源さんにバトンタッチします！\n"
-        "何か話しかけてみてくださいねｗ\n\n"
+        "何か源さんに話しかけてみてくださいねｗ\n\n"
         "それではいってらっしゃい＾＾"
     )
     reply_to_line(reply_token, welcome_message)
@@ -1199,6 +1199,11 @@ def reply_gen_first_greeting(reply_token):
         "俺は源ってんだ、みんなは源おじとか、源さんとかって呼んでるぜｗ\n"
         "お前の名前も聞かせてくれよ＾＾",
     )
+
+
+def is_complete_reset_command(message_text):
+    """前後の空白を除き、完全初期化コマンドとの完全一致だけを許可する。"""
+    return str(message_text).strip() == "ふりだしにもどる"
 # =========================================================
 # 共通関数：準備確認のクイックリプライ付き返信
 # =========================================================
@@ -1840,13 +1845,14 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
-    user_message = event.message.text.strip()
+    raw_user_message = event.message.text
+    user_message = raw_user_message.strip()
     user_id = getattr(
         event.source,
         "user_id",
         None,
     )
-    if user_message == "ふりだしにもどる":
+    if raw_user_message.strip() == "ふりだしにもどる":
         user_states.pop(user_id, None)
         study_sessions.pop(user_id, None)
 

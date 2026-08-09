@@ -34,6 +34,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "start_next_quiz",
         "reply_new_user_welcome",
         "reply_gen_first_greeting",
+        "is_complete_reset_command",
         "handle_text_message",
     }
     function_nodes = []
@@ -531,6 +532,53 @@ class QuizAnswerNumberingTest(unittest.TestCase):
             function_globals["create_text_response"] = original_create_text_response
             function_globals["reply_study_continue_choice"] = original_continue
 
+    def test_restart_command_requires_exact_match_after_trimming(self) -> None:
+        rejected = [
+            "ふ",
+            "ふり",
+            "ふりだし",
+            "ふりだしに",
+            "ふりだしにもど",
+            "ふりだしにもどるよ",
+            "ふりだしにもどりたい",
+        ]
+        for message in rejected:
+            with self.subTest(message=message):
+                self.assertFalse(app.is_complete_reset_command(message))
+
+        self.assertTrue(app.is_complete_reset_command("ふりだしにもどる"))
+        self.assertTrue(app.is_complete_reset_command(" ふりだしにもどる "))
+
+        function_globals = app.handle_text_message.__globals__
+        original_reset = function_globals["reset_user_profile"]
+        original_reply = function_globals["reply_to_line"]
+        original_create_text_response = function_globals["create_text_response"]
+        reset_calls = []
+        function_globals["reset_user_profile"] = lambda user_id: reset_calls.append(user_id)
+        function_globals["reply_to_line"] = lambda *args: None
+        function_globals["create_text_response"] = lambda *args, **kwargs: "通常応答"
+
+        try:
+            for index, message in enumerate(rejected):
+                user_id = f"non-reset-{index}"
+                app.user_names[user_id] = "既存ユーザー"
+                app.handle_text_message(make_text_event(user_id, message))
+                self.assertEqual("既存ユーザー", app.user_names[user_id])
+
+            for index, message in enumerate((
+                "ふりだしにもどる",
+                " ふりだしにもどる ",
+            )):
+                user_id = f"exact-reset-{index}"
+                app.user_names[user_id] = "初期化対象"
+                app.handle_text_message(make_text_event(user_id, message))
+        finally:
+            function_globals["reset_user_profile"] = original_reset
+            function_globals["reply_to_line"] = original_reply
+            function_globals["create_text_response"] = original_create_text_response
+
+        self.assertEqual(["exact-reset-0", "exact-reset-1"], reset_calls)
+
     def test_restart_command_reports_database_failure_without_ai_fallback(self) -> None:
         user_id = "reset-failure-test-user"
         app.user_states[user_id] = "waiting_name"
@@ -602,9 +650,12 @@ class NewUserWelcomeTest(unittest.TestCase):
         self.assertEqual("reply-token", token)
         self.assertTrue(message.startswith("ようこそ、ライセンスタウンへ！"))
         self.assertNotIn("おぉｗよくきたな！", message)
-        self.assertLess(message.index("源さんにバトンタッチ"), message.index("何か話しかけて"))
+        self.assertLess(
+            message.index("源さんにバトンタッチ"),
+            message.index("何か源さんに話しかけて"),
+        )
         self.assertIn(
-            "何か話しかけてみてくださいねｗ\n\nそれではいってらっしゃい＾＾",
+            "何か源さんに話しかけてみてくださいねｗ\n\nそれではいってらっしゃい＾＾",
             message,
         )
 
