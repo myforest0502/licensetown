@@ -1024,6 +1024,10 @@ class ConfigurableQuizTest(unittest.TestCase):
             function_globals["reply_study_ready_choice"] = original_study_ready
 
         self.assertEqual(4, mode_select_source.count("QuickReplyButton("))
+        self.assertIn(
+            'text="今日は何する？＾＾\\n下のボタンを押して教えてくれな＾＾"',
+            mode_select_source,
+        )
         self.assertEqual(
             sorted(mode_select_source.index(label) for label in labels),
             [mode_select_source.index(label) for label in labels],

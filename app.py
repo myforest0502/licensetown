@@ -1215,7 +1215,7 @@ def reply_mode_select(reply_token, intro_text=None):
     """
 
     reply_message = TextSendMessage(
-        text="今日は何する？＾＾",
+        text="今日は何する？＾＾\n下のボタンを押して教えてくれな＾＾",
         quick_reply=QuickReply(
             items=[
                 QuickReplyButton(
