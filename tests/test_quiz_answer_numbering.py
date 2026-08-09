@@ -1246,6 +1246,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         pushed_reviews = []
         namespace = {
             "logging": logging,
+            "time": __import__("time"),
             "user_states": states,
             "explain_contexts": contexts,
             "reply_to_line": lambda *args: None,
@@ -1317,6 +1318,23 @@ class ConfigurableQuizTest(unittest.TestCase):
             logged,
         )
         self.assertIn("image_analysis_mode=general user_state=none", logged)
+        self.assertIn("image_analysis_timing mode=teaching", logged)
+        self.assertIn("image_analysis_timing mode=general", logged)
+        for timing_name in (
+            "line_download_seconds=",
+            "base64_seconds=",
+            "openai_seconds=",
+            "line_push_seconds=",
+            "total_seconds=",
+        ):
+            self.assertIn(timing_name, logged)
+
+    def test_gunicorn_timeout_is_90_seconds(self) -> None:
+        procfile_path = APP_PATH.parent / "Procfile"
+        self.assertEqual(
+            "web: gunicorn --timeout 90 app:app",
+            procfile_path.read_text(encoding="utf-8").strip(),
+        )
 
     def test_attachment_generation_prompt_teaches_the_full_reasoning_to_the_answer(self) -> None:
         source = APP_PATH.read_text(encoding="utf-8")

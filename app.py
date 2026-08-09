@@ -8,6 +8,7 @@ import urllib.request
 import re
 import random
 import unicodedata
+import time
 from pathlib import Path
 from flask import Flask, request, abort
 
@@ -2609,6 +2610,7 @@ def handle_image_message(event):
     その後、分析結果をプッシュ送信する。
     """
 
+    total_started_at = time.perf_counter()
     logging.info(
         "Image received: message_id=%s",
         event.message.id,
@@ -2638,21 +2640,32 @@ def handle_image_message(event):
     show_loading_animation(user_id)
 
     image_base64 = ""
+    line_download_seconds = 0.0
+    base64_seconds = 0.0
+    openai_seconds = 0.0
     try:
+        line_download_started_at = time.perf_counter()
         image_buffer = download_line_file(
             event.message.id
         )
+        line_download_seconds = time.perf_counter() - line_download_started_at
 
+        base64_started_at = time.perf_counter()
         image_base64 = image_buffer_to_base64(
             image_buffer
         )
+        base64_seconds = time.perf_counter() - base64_started_at
 
+        openai_started_at = time.perf_counter()
         analysis_message = analyze_image(
             image_base64,
             use_teaching_intro=use_teaching_intro,
         )
+        openai_seconds = time.perf_counter() - openai_started_at
 
     except Exception:
+        if "openai_started_at" in locals():
+            openai_seconds = time.perf_counter() - openai_started_at
         logging.exception(
             "Image processing failed: message_id=%s",
             event.message.id,
@@ -2665,6 +2678,7 @@ def handle_image_message(event):
             "それでもダメなら、源おじの工事ミスだ（笑）"
         )
 
+    line_push_started_at = time.perf_counter()
     if use_teaching_intro:
         if image_base64:
             explain_contexts[user_id] = {
@@ -2676,6 +2690,19 @@ def handle_image_message(event):
         push_explain_answer_with_review(user_id, analysis_message)
     else:
         push_to_line(user_id, analysis_message)
+    line_push_seconds = time.perf_counter() - line_push_started_at
+
+    logging.info(
+        "image_analysis_timing mode=%s "
+        "line_download_seconds=%.3f base64_seconds=%.3f "
+        "openai_seconds=%.3f line_push_seconds=%.3f total_seconds=%.3f",
+        "teaching" if use_teaching_intro else "general",
+        line_download_seconds,
+        base64_seconds,
+        openai_seconds,
+        line_push_seconds,
+        time.perf_counter() - total_started_at,
+    )
 # =========================================================
 # アプリケーション実行
 # =========================================================
