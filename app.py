@@ -23,6 +23,7 @@ from linebot.models import (
     QuickReply,
     QuickReplyButton,
     MessageAction,
+    URIAction,
 )
 
 from openai import OpenAI
@@ -1382,21 +1383,27 @@ def reply_mode_select(reply_token, intro_text=None):
         quick_reply=QuickReply(
             items=[
                 QuickReplyButton(
+                    action=URIAction(
+                        label="📊 合格への道",
+                        uri=(
+                            os.getenv(
+                                "PUBLIC_BASE_URL",
+                                "https://line-bot-project-bxjq.onrender.com",
+                            ).rstrip("/")
+                            + "/goukaku-no-michi"
+                        ),
+                    )
+                ),
+                QuickReplyButton(
                     action=MessageAction(
-                        label="📖 勉強する！",
+                        label="📘 勉強する",
                         text="勉強する",
                     )
                 ),
                 QuickReplyButton(
                     action=MessageAction(
-                        label="💡 教えて源さん",
-                        text="教えて源さん",
-                    )
-                ),
-                QuickReplyButton(
-                    action=MessageAction(
-                        label="😎 相談したい",
-                        text="相談したい",
+                        label="💬 相談する",
+                        text="相談する",
                     )
                 ),
                 QuickReplyButton(

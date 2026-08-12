@@ -1074,9 +1074,9 @@ class ConfigurableQuizTest(unittest.TestCase):
         )
 
         labels = [
-            "📖 勉強する！",
-            "💡 教えて源さん",
-            "😎 相談したい",
+            "📊 合格への道",
+            "📘 勉強する",
+            "💬 相談する",
             "🔥 熱血モード",
         ]
         source = APP_PATH.read_text(encoding="utf-8")
@@ -1093,7 +1093,7 @@ class ConfigurableQuizTest(unittest.TestCase):
 
         try:
             app.handle_text_message(make_text_event("study-user", "勉強する"))
-            app.handle_text_message(make_text_event("chat-user", "相談したい"))
+            app.handle_text_message(make_text_event("chat-user", "相談する"))
             app.handle_text_message(make_text_event("explain-user", "教えて源さん"))
             app.handle_text_message(make_text_event("heat-user", "熱血モード"))
         finally:
@@ -1102,6 +1102,8 @@ class ConfigurableQuizTest(unittest.TestCase):
             function_globals["reply_explain_method_choice"] = original_explain_choice
 
         self.assertEqual(4, mode_select_source.count("QuickReplyButton("))
+        self.assertNotIn("教えて源さん", mode_select_source)
+        self.assertIn("/goukaku-no-michi", mode_select_source)
         self.assertIn(
             'text="今日は何する？＾＾\\n下のボタンを押して教えてくれな＾＾"',
             mode_select_source,
