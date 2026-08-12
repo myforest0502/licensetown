@@ -1,7 +1,7 @@
 {% extends "goukaku/base.html" %}
 {% block content %}
 <header class="app-header"><button aria-label="戻る" class="icon-btn" data-close>‹</button><h1>合格への道</h1><button aria-label="閉じる" class="icon-btn close" data-close>×</button></header>
-<div class="page-content">
+<div class="page-content dashboard-grid">
   <section class="date-card">
     <div class="date-list">
       <div><span class="line-icon">▣</span><p><b>今日</b><strong>{{ dashboard.current_date.strftime('%Y/%m/%d') }}</strong></p></div>

@@ -20,6 +20,9 @@ def test_goukaku_home_renders():
     assert "（暫定）" in text
     assert 'href="/goukaku-no-michi/learning?field=' in text
     assert "data-line-message=\"相談する\"" in text
+    assert 'class="app-shell"' in text
+    assert "20260812-pc1" in text
+    assert 'class="page-content dashboard-grid"' in text
 
 
 def test_goukaku_subjects_renders_official_tab_label():
@@ -33,6 +36,8 @@ def test_goukaku_subjects_renders_official_tab_label():
     assert 'data-metric="accuracy"' in text
     assert 'data-metric="questions"' in text
     assert 'data-metric="minutes"' in text
+    assert "/goukaku-no-michi/learning?field=" in text
+    assert "data-close" in text
 
 
 def test_footprints_use_registered_name_parameter():
