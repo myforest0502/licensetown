@@ -25,16 +25,16 @@
     <div class="legend"><span><i class="good"></i>得意（70%以上）</span><span><i class="warn"></i>要注意（50〜69%）</span><span><i class="weak"></i>要強化（50%未満）</span></div>
   </section>
 
-  <section class="card weak-card"><h2>☼ 苦手分野 TOP3</h2>{% for item in dashboard.weak_fields %}<div class="weak-row"><i class="rank rank-{{ loop.index }}">{{ loop.index }}</i><p><b>{{ item.name }}</b><span>正答率 {{ item.score }}% ／ 回答数 {{ item.answers }}問</span></p><span class="chevron">›</span></div>{% endfor %}</section>
+  <section class="card weak-card"><h2>☼ 苦手分野 TOP3</h2>{% for item in dashboard.weak_fields %}<a class="weak-row" href="{{ url_for('goukaku_ui.learning', field=item.name, count=10) }}"><i class="rank rank-{{ loop.index }}">{{ loop.index }}</i><p><b>{{ item.name }}</b><span>正答率 {{ item.score }}% ／ 回答数 {{ item.answers }}問</span></p><span class="chevron">›</span></a>{% endfor %}</section>
 
-  <section class="card recommendations"><h2>💡 今日のおすすめ学習</h2>{% for name, count in dashboard.recommended_study %}<div><span>✓</span><b>{{ name }}　{{ count }}問</b><button data-line-message="{{ name }}の問題を{{ count }}問">問題へ</button></div>{% endfor %}</section>
+  <section class="card recommendations"><h2>💡 今日のおすすめ学習</h2>{% for name, count in dashboard.recommended_study %}<div><span>✓</span><b>{{ name }}　{{ count }}問</b><a href="{{ url_for('goukaku_ui.learning', field=name, count=count) }}">選択する</a></div>{% endfor %}</section>
   <section class="goal-card"><h2>▣ 今日の目標</h2><p>1日{{ dashboard.today_goal }}問のペースがおすすめです！</p><div class="goal-progress"><div class="bar"><i style="width:{{ dashboard.today_progress / dashboard.today_goal * 100 }}%"></i></div><span>{{ dashboard.today_progress }} / {{ dashboard.today_goal }}問</span></div></section>
   <a class="footprints-link" href="{{ url_for('goukaku_ui.footprints') }}">👣 あなたの足跡を見る <span>›</span></a>
 
   <section class="actions"><h2>次にやること</h2><div class="action-grid">
-    <button class="action green" data-line-message="今日のおすすめ"><span>◎</span><b>おすすめ演習</b><small>弱点分野を重点学習</small></button>
-    <button class="action blue" data-line-message="勉強する"><span>▤</span><b>通常モード</b><small>通常の問題演習へ</small></button>
-    <button class="action purple" data-line-message="相談モード"><span>◌</span><b>相談モード</b><small>源さんと話す</small></button>
+    <a class="action green" href="{{ url_for('goukaku_ui.home') }}"><span>◎</span><b>合格への道</b><small>この画面のトップへ</small></a>
+    <button class="action blue" data-line-message="勉強する"><span>▤</span><b>勉強する</b><small>通常の問題演習へ</small></button>
+    <button class="action purple" data-line-message="相談する"><span>◌</span><b>相談する</b><small>源さんと話す</small></button>
     <button class="action red" data-line-message="熱血モード"><span>♨</span><b>熱血モード</b><small>まず5問やる</small></button>
   </div></section>
   <p class="daily-note">ⓘ データは毎日更新されます</p>

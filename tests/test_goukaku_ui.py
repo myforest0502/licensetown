@@ -18,6 +18,8 @@ def test_goukaku_home_renders():
     assert "今日のおすすめ学習" in text
     assert "今日の目標" in text
     assert "（暫定）" in text
+    assert 'href="/goukaku-no-michi/learning?field=' in text
+    assert "data-line-message=\"相談する\"" in text
 
 
 def test_goukaku_subjects_renders_official_tab_label():
@@ -36,6 +38,16 @@ def test_footprints_use_registered_name_parameter():
     text = response.get_data(as_text=True)
     assert "たろうの足跡" in text
     assert "相談内容は表示せず" in text
+
+
+def test_learning_selection_shows_selected_field():
+    response = app.test_client().get("/goukaku-no-michi/learning?field=精神医学&count=10")
+    assert response.status_code == 200
+    text = response.get_data(as_text=True)
+    assert "選択した分野" in text
+    assert "精神医学" in text
+    assert "10問" in text
+    assert "この分野の学習へ進む" in text
 
 
 def test_mode_intro_copy_is_kept_verbatim():

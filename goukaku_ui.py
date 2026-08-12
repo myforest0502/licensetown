@@ -77,3 +77,12 @@ def footprints():
         ("9月3日", "初めて30問完走！"),
     ]
     return render_template("goukaku/footprints.html", user_name=user_name, events=events)
+
+
+@goukaku_ui.route("/goukaku-no-michi/learning")
+def learning():
+    field_name = request.args.get("field", "おすすめ分野").strip()[:30] or "おすすめ分野"
+    question_count = request.args.get("count", "10").strip()[:3]
+    if not question_count.isdigit():
+        question_count = "10"
+    return render_template("goukaku/learning.html", field_name=field_name, question_count=question_count)

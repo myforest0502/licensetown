@@ -1,0 +1,11 @@
+{% extends "goukaku/base.html" %}
+{% block title %}{{ field_name }}の学習{% endblock %}
+{% block content %}
+<header class="app-header"><a href="{{ url_for('goukaku_ui.home') }}" aria-label="戻る" class="icon-btn">‹</a><h1>学習内容の確認</h1><button aria-label="閉じる" class="icon-btn close" data-close>×</button></header>
+<div class="page-content selection-page">
+  <section class="card selection-card"><span class="selection-icon">🎯</span><p>選択した分野</p><h2>{{ field_name }}</h2><strong>{{ question_count }}問</strong><p>この内容で学習へ進みます。</p></section>
+  <button class="primary-action" data-line-message="{{ field_name }}の問題を{{ question_count }}問">この分野の学習へ進む</button>
+  <a class="secondary-action" href="{{ url_for('goukaku_ui.home') }}">合格への道へ戻る</a>
+  <p class="connection-note">Ver.1では選択内容の確認まで利用できます。問題出題はLINEの既存学習モードへ接続します。</p>
+</div>
+{% endblock %}
