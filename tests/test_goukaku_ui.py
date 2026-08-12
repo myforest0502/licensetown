@@ -30,6 +30,9 @@ def test_goukaku_subjects_renders_official_tab_label():
     assert "1週間の推移" in text
     assert "経過の推移" not in text
     assert "理学療法治療各論" in text
+    assert 'data-metric="accuracy"' in text
+    assert 'data-metric="questions"' in text
+    assert 'data-metric="minutes"' in text
 
 
 def test_footprints_use_registered_name_parameter():
@@ -53,5 +56,5 @@ def test_learning_selection_shows_selected_field():
 def test_mode_intro_copy_is_kept_verbatim():
     from app import CONSULTATION_INTRO, NEKKETSU_INTRO
 
-    assert "1問できたら今日は勝ち、くらいの日があってもいいんだ。" in CONSULTATION_INTRO
+    assert "なんだ、今日は何があった？話してみな。" in CONSULTATION_INTRO
     assert "さぁ、今日はどれで暴れる？ｗ" in NEKKETSU_INTRO

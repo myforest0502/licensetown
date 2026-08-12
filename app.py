@@ -565,6 +565,7 @@ CONFIDENCE_LEVELS = {
 # ユーザーごとの現在の小テストを一時保存する。
 # Renderが再起動すると消えるため、これは試作版。
 study_sessions = {}
+consultation_contexts = {}
 
 
 # =========================================================
@@ -846,6 +847,9 @@ def start_quiz(user_id):
         "questions": questions,
         "all_questions": all_questions,
         "all_answers": {},
+        "mode": user_modes.get(user_id, "study"),
+        "started_at": time.time(),
+        "nekketsu_correct": 0,
     }
 
     quiz_messages = format_quiz_messages(questions)
@@ -1437,11 +1441,8 @@ def reply_mode_select(reply_token, intro_text=None):
 
 
 CONSULTATION_INTRO = (
-    "よし、ここは相談モードだ。\n"
-    "勉強のことでも、やる気出ねぇでも、今日はゲームしてぇでも何でも言ってくれｗ\n"
-    "いきなり『30問やれ！』なんて言わねぇから安心しろ。\n"
-    "何でしんどいのか一緒に考えて、今日は休むか、1問だけやるか、3問だけやるか決めようぜ。\n"
-    "1問できたら今日は勝ち、くらいの日があってもいいんだ。"
+    "おう！来てくれてありがとよ。\n"
+    "さあ、どんな話でも聞くぜ。なんだ、今日は何があった？話してみな。"
 )
 
 NEKKETSU_INTRO = (
@@ -1466,6 +1467,24 @@ def reply_consultation_start(reply_token):
                 QuickReplyButton(action=MessageAction(label="今日は休む", text="今日は休む")),
                 QuickReplyButton(action=MessageAction(label="通常モードへ", text="勉強する")),
                 QuickReplyButton(action=MessageAction(label="熱血モードへ", text="熱血モード")),
+                QuickReplyButton(action=MessageAction(label="モード選択に戻る", text="モード選択に戻る")),
+            ]),
+        ),
+    )
+
+
+def reply_consultation_response(reply_token, response_text):
+    line_bot_api.reply_message(
+        reply_token,
+        TextSendMessage(
+            text=response_text[:4500],
+            quick_reply=QuickReply(items=[
+                QuickReplyButton(action=MessageAction(label="1問だけやる", text="相談モードで1問")),
+                QuickReplyButton(action=MessageAction(label="3問だけやる", text="相談モードで3問")),
+                QuickReplyButton(action=MessageAction(label="今日は休む", text="今日は休む")),
+                QuickReplyButton(action=MessageAction(label="通常モードへ", text="勉強する")),
+                QuickReplyButton(action=MessageAction(label="熱血モードへ", text="熱血モード")),
+                QuickReplyButton(action=MessageAction(label="モード選択に戻る", text="モード選択に戻る")),
             ]),
         ),
     )
@@ -1487,14 +1506,29 @@ def reply_nekketsu_start(reply_token):
 
 
 def reply_nekketsu_continue_choice(reply_token, current_session):
-    answered = len(current_session.get("all_answers", {}))
+    current_set = current_session["current_set"]
+    questions_per_set = current_session["questions_per_set"]
+    start_number = ((current_set - 1) * questions_per_set) + 1
+    answer_lines = []
+    set_correct = 0
+    for offset, question in enumerate(current_session["questions"]):
+        question_number = start_number + offset
+        selected = current_session["all_answers"][question_number]["answer"]
+        correct = str(question.get("answer", "")).upper().strip()
+        is_correct = selected == correct
+        set_correct += int(is_correct)
+        answer_lines.append(
+            f"第{question_number}問：○" if is_correct
+            else f"第{question_number}問：× 正答{correct}"
+        )
+    current_session["nekketsu_correct"] = current_session.get("nekketsu_correct", 0) + set_correct
     line_bot_api.reply_message(
         reply_token,
         TextSendMessage(
-            text=f"🔥 5問終了！\nここまで {answered}問に挑戦したぞ。\nまだ暴れるか？ｗ",
+            text="🔥 5問終了！\n\n" + "\n".join(answer_lines),
             quick_reply=QuickReply(items=[
                 QuickReplyButton(action=MessageAction(label="🔥 続ける", text="続ける")),
-                QuickReplyButton(action=MessageAction(label="🏁 やめる", text="熱血をやめる")),
+                QuickReplyButton(action=MessageAction(label="🏁 終わる", text="熱血を終わる")),
             ]),
         ),
     )
@@ -1828,13 +1862,9 @@ def create_text_response(user_message, mode="normal"):
 
 現在は相談モードです。
 
-勉強の相談でも、
-実習の相談でも、
-雑談でも、
-恋愛相談でも構いません。
-
-ただし医学的・教育的な質問には、
-これまで通り丁寧に答えてください。
+これは入室後の継続会話です。ユーザーの直前の発言を受けて自然に会話を続けてください。
+「来てくれてありがとう」「相談モードへようこそ」「また来たな」など、入室時の挨拶を繰り返してはいけません。
+すぐ勉強を強制せず、なぜそう感じているかを一緒に整理してください。完全休養も正解として認めてください。
 """
     if mode == "explain":
         system_prompt += """
@@ -2595,7 +2625,13 @@ def handle_text_message(event):
             user_states.pop(user_id, None)
             explain_contexts.pop(user_id, None)
         user_modes[user_id] = "chat"
+        consultation_contexts[user_id] = []
         reply_consultation_start(event.reply_token)
+        return
+    if user_message == "モード選択に戻る":
+        consultation_contexts.pop(user_id, None)
+        user_modes[user_id] = "normal"
+        reply_mode_select(event.reply_token)
         return
     if user_message.startswith("相談モードで") and user_message.endswith("問"):
         count = 1 if "1問" in user_message else 3
@@ -2686,17 +2722,18 @@ def handle_text_message(event):
         quiz_thread.start()
         return
 
-    if user_message == "熱血をやめる" and current_session:
+    if user_message in {"熱血をやめる", "熱血を終わる"} and current_session:
         answered = len(current_session.get("all_answers", {}))
+        correct = current_session.get("nekketsu_correct", 0)
+        accuracy = round(correct / answered * 100) if answered else 0
+        elapsed_minutes = max(1, round((time.time() - current_session.get("started_at", time.time())) / 60))
         study_sessions.pop(user_id, None)
         user_modes[user_id] = "normal"
         reply_message = TextSendMessage(
-            text=f"🔥 熱血アタック終了！\n\n挑戦：{answered}問\n途中でやめても全然OKだ。よくやったぞ！",
+            text=(f"🔥 熱血アタック終了！\n\n挑戦：{answered}問\n"
+                  f"正解：{correct}問\n正答率：{accuracy}%\n学習時間：約{elapsed_minutes}分"),
             quick_reply=QuickReply(items=[
-                QuickReplyButton(action=MessageAction(label="📖 解説を見る", text="解答解説を見る")),
-                QuickReplyButton(action=MessageAction(label="🔁 間違いを復習", text="熱血：間違い復習")),
-                QuickReplyButton(action=MessageAction(label="💬 相談する", text="相談モード")),
-                QuickReplyButton(action=MessageAction(label="🏠 合格への道", text="合格への道")),
+                QuickReplyButton(action=MessageAction(label="モード選択に戻る", text="モード選択に戻る")),
             ]),
         )
         line_bot_api.reply_message(event.reply_token, reply_message)
@@ -2808,6 +2845,11 @@ def handle_text_message(event):
         for question_number, answer_data in parsed_answers.items():
             current_session["all_answers"][question_number] = answer_data
 
+        if current_session.get("mode") == "nekketsu":
+            current_session["status"] = "waiting_for_continue"
+            reply_nekketsu_continue_choice(event.reply_token, current_session)
+            return
+
         if current_set >= current_session["total_sets"]:
             quiz_result = calculate_quiz_result(
                 current_session["all_questions"],
@@ -2822,10 +2864,7 @@ def handle_text_message(event):
 
         current_session["status"] = "waiting_for_continue"
 
-        if user_modes.get(user_id) == "nekketsu":
-            reply_nekketsu_continue_choice(event.reply_token, current_session)
-        else:
-            reply_study_continue_choice(event.reply_token)
+        reply_study_continue_choice(event.reply_token)
         return
 
     # それ以外は、今までどおり普通に会話する
@@ -2844,10 +2883,11 @@ def handle_text_message(event):
             "少し待ってから、もう一度送ってくれ。"
         )
 
-    reply_to_line(
-        event.reply_token,
-        reply_message,
-    )
+    if current_mode == "chat":
+        consultation_contexts.setdefault(user_id, []).append(user_message)
+        reply_consultation_response(event.reply_token, reply_message)
+    else:
+        reply_to_line(event.reply_token, reply_message)
 
 
 # =========================================================

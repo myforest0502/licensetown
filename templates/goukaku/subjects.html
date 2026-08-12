@@ -11,7 +11,8 @@
     <section class="goal-card"><h2>▣ 今週の目標</h2><p>1日あたり30問のペースがおすすめです！</p><p>今週の目標：210問</p><div class="goal-progress"><div class="bar"><i style="width:43%"></i></div><span>現在 90問（43%）</span></div></section>
   </section>
   <section id="weekly" class="tab-panel">
-    <section class="card weekly-card"><h2>神経医学</h2><p class="weekly-score">今週平均 <strong>68%</strong></p><div class="week-bars">{% for day, score in weekly %}<div><span>{{ score }}%</span><i style="height:{{ score }}%"></i><b>{{ day }}</b></div>{% endfor %}</div><p class="up">先週より <strong>+6pt</strong></p></section>
+    <div class="metric-tabs" role="tablist"><button class="metric-tab active" data-metric="accuracy">正答率</button><button class="metric-tab" data-metric="questions">問題数</button><button class="metric-tab" data-metric="minutes">学習時間</button></div>
+    <section class="card weekly-card"><h2>神経医学</h2><p class="weekly-score">今週平均 <strong data-week-summary>68%</strong></p><div class="week-bars" data-week-chart>{% for day, score in weekly %}<div data-accuracy="{{ score }}" data-questions="{{ [12,18,15,20,24,16,19][loop.index0] }}" data-minutes="{{ [22,31,27,35,42,29,34][loop.index0] }}"><span>{{ score }}%</span><i style="height:{{ score }}%"></i><b>{{ day }}</b></div>{% endfor %}</div><p class="up">表示指標を切り替えて確認できます</p></section>
     <section class="goal-card gensan-comment"><h2>源さんコメント</h2><p>「今週は上向きだな。<br>特に神経医学の正答率が伸びてるぞ＾＾」</p></section>
   </section>
 </div>
