@@ -1,0 +1,45 @@
+import os
+
+os.environ.setdefault("OPENAI_API_KEY", "test-key")
+os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
+os.environ.setdefault("CHANNEL_SECRET", "test-secret")
+
+from app import app
+
+
+def test_goukaku_home_renders():
+    response = app.test_client().get("/goukaku-no-michi")
+    assert response.status_code == 200
+    text = response.get_data(as_text=True)
+    assert "合格への道" in text
+    assert "総合到達度" in text
+    assert "すべて見る" in text
+    assert "学習時間" in text
+    assert "今日のおすすめ学習" in text
+    assert "今日の目標" in text
+    assert "（暫定）" in text
+
+
+def test_goukaku_subjects_renders_official_tab_label():
+    response = app.test_client().get("/goukaku-no-michi/subjects")
+    assert response.status_code == 200
+    text = response.get_data(as_text=True)
+    assert "分野別 詳細" in text
+    assert "1週間の推移" in text
+    assert "経過の推移" not in text
+    assert "理学療法治療各論" in text
+
+
+def test_footprints_use_registered_name_parameter():
+    response = app.test_client().get("/goukaku-no-michi/footprints?name=たろう")
+    assert response.status_code == 200
+    text = response.get_data(as_text=True)
+    assert "たろうの足跡" in text
+    assert "相談内容は表示せず" in text
+
+
+def test_mode_intro_copy_is_kept_verbatim():
+    from app import CONSULTATION_INTRO, NEKKETSU_INTRO
+
+    assert "1問できたら今日は勝ち、くらいの日があってもいいんだ。" in CONSULTATION_INTRO
+    assert "さぁ、今日はどれで暴れる？ｗ" in NEKKETSU_INTRO

@@ -1,0 +1,18 @@
+{% extends "goukaku/base.html" %}
+{% block title %}分野別 詳細{% endblock %}
+{% block content %}
+<header class="app-header"><a href="{{ url_for('goukaku_ui.home') }}" aria-label="戻る" class="icon-btn">‹</a><h1>分野別 詳細</h1><button aria-label="閉じる" class="icon-btn close">×</button></header>
+<div class="page-content detail-page">
+  <div class="tabs" role="tablist"><button class="tab active" data-tab="overall" role="tab">全体</button><button class="tab" data-tab="weekly" role="tab">1週間の推移</button></div>
+  <section id="overall" class="tab-panel active">
+    <h2 class="list-heading">分野別 正答率（全期間）</h2>
+    <div class="card full-subject-list">{% for item in subjects %}<div class="detail-row"><div><b>{{ item.name }}</b><small>{{ item.answers }}問・{{ item.minutes // 60 }}時間{{ item.minutes % 60 }}分</small></div><div class="bar"><i class="score-{{ 'good' if item.score >= 70 else 'warn' if item.score >= 50 else 'weak' }}" style="width:{{ item.score }}%"></i></div><span>{{ item.score }}%</span><i class="chevron">›</i></div>{% endfor %}<div class="legend"><span><i class="good"></i>得意（70%以上）</span><span><i class="warn"></i>要注意（50〜69%）</span><span><i class="weak"></i>要強化（50%未満）</span></div></div>
+    <section class="card recommendations"><h2>💡 今週のおすすめ学習</h2>{% for text, label in [('精神医学の問題を30問解く','問題へ'),('運動器の問題を20問解く','問題へ'),('間違えた問題の復習を15問解く','復習へ')] %}<div><span>✓</span><b>{{ text }}</b><button>{{ label }}</button></div>{% endfor %}</section>
+    <section class="goal-card"><h2>▣ 今週の目標</h2><p>1日あたり30問のペースがおすすめです！</p><p>今週の目標：210問</p><div class="goal-progress"><div class="bar"><i style="width:43%"></i></div><span>現在 90問（43%）</span></div></section>
+  </section>
+  <section id="weekly" class="tab-panel">
+    <section class="card weekly-card"><h2>神経医学</h2><p class="weekly-score">今週平均 <strong>68%</strong></p><div class="week-bars">{% for day, score in weekly %}<div><span>{{ score }}%</span><i style="height:{{ score }}%"></i><b>{{ day }}</b></div>{% endfor %}</div><p class="up">先週より <strong>+6pt</strong></p></section>
+    <section class="goal-card gensan-comment"><h2>源さんコメント</h2><p>「今週は上向きだな。<br>特に神経医学の正答率が伸びてるぞ＾＾」</p></section>
+  </section>
+</div>
+{% endblock %}

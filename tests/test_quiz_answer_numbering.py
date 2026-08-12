@@ -134,6 +134,9 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_gen_first_greeting": lambda *args, **kwargs: None,
         "reply_explain_method_choice": lambda *args, **kwargs: None,
         "reply_explain_answer_with_review": lambda *args, **kwargs: None,
+        "reply_consultation_start": lambda token: line_replies.append((token, "consultation")),
+        "reply_nekketsu_start": lambda token: line_replies.append((token, "nekketsu")),
+        "reply_nekketsu_continue_choice": lambda *args, **kwargs: None,
         "invalidate_teaching_image_analysis": lambda *args, **kwargs: None,
         "create_contextual_explain_response": lambda *args, **kwargs: "解説回答",
         "push_to_line": lambda *args, **kwargs: None,
@@ -1110,11 +1113,12 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertEqual("study", app.user_modes["study-user"])
         self.assertEqual("chat", app.user_modes["chat-user"])
         self.assertEqual("explain", app.user_modes["explain-user"])
-        self.assertNotIn("heat-user", app.user_modes)
+        self.assertEqual("nekketsu", app.user_modes["heat-user"])
         self.assertEqual(1, len(study_replies))
         self.assertEqual(1, len(explain_choices))
-        self.assertEqual(2, len(replies))
-        self.assertIn("熱血モードはこれから準備するぞ🔥", replies[-1])
+        self.assertEqual(2, len(app.line_replies))
+        self.assertEqual("consultation", app.line_replies[0][1])
+        self.assertEqual("nekketsu", app.line_replies[1][1])
 
     def test_teach_gen_entry_supports_direct_question_and_attachment_choices(self) -> None:
         function_globals = app.handle_text_message.__globals__
@@ -1162,7 +1166,7 @@ class ConfigurableQuizTest(unittest.TestCase):
             app.handle_text_message(make_text_event(direct_user, "わかった！"))
 
             app.handle_text_message(make_text_event(attachment_user, "教えて源さん"))
-            app.handle_text_message(make_text_event(attachment_user, "文書・写真等を見せる"))
+            app.handle_text_message(make_text_event(attachment_user, "Word・PDFを見せる"))
             attachment_mode_before_switch = app.user_modes[attachment_user]
             attachment_state_before_switch = app.user_states[attachment_user]
             attachment_prompt = replies[-1]
@@ -1193,7 +1197,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertIn("おう、それならよかった＾＾", mode_selects[0])
         self.assertEqual("explain", attachment_mode_before_switch)
         self.assertEqual("explain_attachment", attachment_state_before_switch)
-        self.assertIn("Word、PDF、写真なんかを送ってくれれば", attachment_prompt)
+        self.assertIn("WordやPDFを送ってくれれば", attachment_prompt)
         self.assertEqual("chat", app.user_modes[attachment_user])
         self.assertNotIn(attachment_user, app.user_states)
 
@@ -1209,7 +1213,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertEqual(2, choice_source.count("QuickReplyButton("))
         self.assertLess(
             choice_source.index("源さんに直接質問する"),
-            choice_source.index("文書・写真等を見せる"),
+            choice_source.index("Word・PDFを見せる"),
         )
         self.assertIn("どうやって聞く？", choice_source)
 
@@ -1290,7 +1294,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertTrue(any("最初の画像解説" in item.get("text", "") for item in image_content))
         self.assertTrue(any("base64-image-data" in item.get("image_url", "") for item in image_content))
 
-    def test_teach_gen_attachments_keep_existing_image_word_and_pdf_analysis(self) -> None:
+    def test_teach_gen_attachments_keep_word_pdf_and_suspend_image_entry(self) -> None:
         source = APP_PATH.read_text(encoding="utf-8")
         module = ast.parse(source)
         handler_nodes = [
@@ -1306,6 +1310,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         contexts = {}
         analysis_calls = []
         pushed_reviews = []
+        replies = []
 
         def analyze_image_stub(
             image_base64,
@@ -1351,7 +1356,7 @@ class ConfigurableQuizTest(unittest.TestCase):
             "threading": SimpleNamespace(Thread=ImmediateThread),
             "user_states": states,
             "explain_contexts": contexts,
-            "reply_to_line": lambda *args: None,
+            "reply_to_line": lambda _token, text: replies.append(text),
             "show_loading_animation": lambda *args: None,
             "download_line_file": lambda _message_id: SimpleNamespace(),
             "extract_text_from_docx": lambda _buffer: "Wordから抽出した問題文",
@@ -1396,41 +1401,21 @@ class ConfigurableQuizTest(unittest.TestCase):
             source=SimpleNamespace(user_id=image_user),
             reply_token="reply-token",
         )
-        with self.assertLogs(level="INFO") as captured_logs:
-            namespace["handle_image_message"](image_event)
+        namespace["handle_image_message"](image_event)
 
-            general_event = SimpleNamespace(
-                message=SimpleNamespace(id="general-image-message"),
-                source=SimpleNamespace(user_id="general-image-user"),
-                reply_token="reply-token",
-            )
-            namespace["handle_image_message"](general_event)
-
-        self.assertEqual("explain_review", states[image_user])
-        self.assertEqual("teaching_image", contexts[image_user]["kind"])
-        self.assertNotIn("image_base64", contexts[image_user])
-        self.assertEqual(3, len(pushed_reviews))
-        self.assertTrue(all(call[2] is True for call in analysis_calls[:3]))
-        self.assertIs(False, analysis_calls[3][2])
-        logged = "\n".join(captured_logs.output)
-        self.assertIn(
-            "image_analysis_mode=teaching user_state=explain_attachment",
-            logged,
+        general_event = SimpleNamespace(
+            message=SimpleNamespace(id="general-image-message"),
+            source=SimpleNamespace(user_id="general-image-user"),
+            reply_token="reply-token",
         )
-        self.assertIn("image_analysis_mode=general user_state=none", logged)
-        self.assertIn("image_analysis_timing mode=teaching", logged)
-        self.assertIn("image_analysis_timing mode=general", logged)
-        self.assertIn("background_started=true", logged)
-        self.assertIn("image_response_meta mode=general status=completed", logged)
-        self.assertIn("answer_chars=4501 line_truncated=true", logged)
-        for timing_name in (
-            "line_download_seconds=",
-            "base64_seconds=",
-            "openai_seconds=",
-            "line_push_seconds=",
-            "total_seconds=",
-        ):
-            self.assertIn(timing_name, logged)
+        namespace["handle_image_message"](general_event)
+
+        self.assertEqual("explain_attachment", states[image_user])
+        self.assertNotIn(image_user, contexts)
+        self.assertEqual(2, len(pushed_reviews))
+        self.assertEqual(2, len(analysis_calls))
+        self.assertTrue(all(call[2] is True for call in analysis_calls))
+        self.assertTrue(all("対応を見合わせてる" in text for text in replies[-2:]))
 
     def test_gunicorn_timeout_is_90_seconds(self) -> None:
         procfile_path = APP_PATH.parent / "Procfile"
@@ -1628,7 +1613,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         exec(compile(ast.fix_missing_locations(ast.Module(body=[node], type_ignores=[])), str(APP_PATH), "exec"), namespace)
         namespace["process_teaching_image"]("stage1-user", "stage1-id", "image", 0.0)
         self.assertEqual([], stage2_calls)
-        self.assertIn("画像の文字", pushed[-1][1])
+        self.assertIn("対応を見合わせてる", pushed[-1][1])
         self.assertEqual("explain_attachment", states["stage1-user"])
 
         namespace["analyze_teaching_image_stage1"] = lambda *_args, **_kwargs: {
@@ -1645,7 +1630,7 @@ class ConfigurableQuizTest(unittest.TestCase):
             lambda *_args, **_kwargs: (_ for _ in ()).throw(RuntimeError("solve failed"))
         )
         namespace["process_teaching_image"]("stage2-user", "stage2-id", "image", 0.0)
-        self.assertIn("解説", pushed[-1][1])
+        self.assertIn("対応を見合わせてる", pushed[-1][1])
         self.assertEqual("explain_attachment", states["stage2-user"])
         self.assertNotIn("stage2-user", namespace["explain_contexts"])
 
@@ -1683,7 +1668,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertTrue(register_expiring("user", "same-id", now=1.0))
         self.assertTrue(register_expiring("user", "same-id", now=602.0))
 
-    def test_duplicate_image_webhook_starts_openai_pipeline_only_once(self) -> None:
+    def test_image_webhook_does_not_start_pipeline_while_entry_is_suspended(self) -> None:
         source = APP_PATH.read_text(encoding="utf-8")
         module = ast.parse(source)
         handler_node = next(
@@ -1693,6 +1678,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         handler_node.decorator_list = []
         seen_ids = set()
         pipeline_calls = []
+        replies = []
 
         class ImmediateThread:
             def __init__(self, target, args, daemon):
@@ -1714,7 +1700,7 @@ class ConfigurableQuizTest(unittest.TestCase):
             "threading": SimpleNamespace(Thread=ImmediateThread),
             "user_states": {"user": "explain_attachment"},
             "register_teaching_image_analysis": register,
-            "reply_to_line": lambda *_args: None,
+            "reply_to_line": lambda _token, text: replies.append(text),
             "show_loading_animation": lambda *_args: None,
             "download_line_file": lambda *_args: SimpleNamespace(),
             "image_buffer_to_base64": lambda *_args: "base64",
@@ -1732,7 +1718,10 @@ class ConfigurableQuizTest(unittest.TestCase):
         )
         namespace["handle_image_message"](event)
         namespace["handle_image_message"](event)
-        self.assertEqual(["openai-pipeline"], pipeline_calls)
+        self.assertEqual([], pipeline_calls)
+        self.assertEqual(set(), seen_ids)
+        self.assertEqual(2, len(replies))
+        self.assertTrue(all("対応を見合わせてる" in text for text in replies))
 
     def test_stale_failures_and_mode_changes_never_push_or_restore_state(self) -> None:
         for failure_stage in ("stage1", "stage2"):

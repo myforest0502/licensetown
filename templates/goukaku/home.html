@@ -1,0 +1,42 @@
+{% extends "goukaku/base.html" %}
+{% block content %}
+<header class="app-header"><button aria-label="戻る" class="icon-btn" data-close>‹</button><h1>合格への道</h1><button aria-label="閉じる" class="icon-btn close" data-close>×</button></header>
+<div class="page-content">
+  <section class="date-card">
+    <div class="date-list">
+      <div><span class="line-icon">▣</span><p><b>今日</b><strong>{{ dashboard.current_date.strftime('%Y/%m/%d') }}</strong></p></div>
+      <div><span class="line-icon target">◎</span><p><b>試験日</b><strong>{{ dashboard.exam_date.strftime('%Y/%m/%d') }}（暫定） <button class="help" data-dialog-open aria-label="試験日の説明">?</button></strong></p></div>
+    </div>
+    <div class="countdown"><span>試験まで</span><strong>{{ dashboard.days_until_exam }}<small>日</small></strong></div>
+  </section>
+  <dialog id="exam-dialog"><h2>試験日について</h2><p>現在表示している試験日は暫定です。<br>正式な試験日が発表され次第、正式日程へ更新されます。<br>それに伴い、試験日までの日数も自動的に修正されます。</p><button data-dialog-close>閉じる</button></dialog>
+
+  <section class="card achievement"><h2>総合到達度</h2><div class="achievement-body"><div class="ring" style="--value:{{ dashboard.overall_progress }}"><span>{{ dashboard.overall_progress }}<small>%</small></span></div><div class="achievement-copy"><strong>順調に力をつけています！</strong><p>このペースで続ければ<br>合格ラインに到達できます。</p></div></div></section>
+
+  <section class="summary-grid four">
+    <article class="mini-card"><span class="mini-icon">▤</span><b>総回答数</b><strong>{{ '{:,}'.format(dashboard.total_answers) }}<small>問</small></strong></article>
+    <article class="mini-card"><span class="mini-icon">◷</span><b>学習時間</b><strong>{{ dashboard.study_minutes // 60 }}<small>時間{{ dashboard.study_minutes % 60 }}分</small></strong></article>
+    <article class="mini-card"><span class="mini-icon">◎</span><b>直近7日間<br>正答率</b><strong>{{ dashboard.last_7_days_accuracy }}<small>%</small></strong></article>
+    <article class="mini-card"><span class="mini-icon">▥</span><b>平均正答率</b><strong>{{ dashboard.average_accuracy }}<small>%</small></strong></article>
+  </section>
+
+  <section class="card subject-card"><div class="section-title"><h2>分野別 到達度</h2><a href="{{ url_for('goukaku_ui.subjects') }}" class="pill-link">すべて見る</a></div>
+    <div class="subject-list">{% for item in dashboard.field_stats %}<a href="{{ url_for('goukaku_ui.subjects') }}" class="subject-row"><b>{{ item.name }}</b><div class="bar"><i class="score-{{ 'good' if item.score >= 70 else 'warn' if item.score >= 50 else 'weak' }}" style="width:{{ item.score }}%"></i></div><span>{{ item.score }}%</span></a>{% endfor %}</div>
+    <div class="legend"><span><i class="good"></i>得意（70%以上）</span><span><i class="warn"></i>要注意（50〜69%）</span><span><i class="weak"></i>要強化（50%未満）</span></div>
+  </section>
+
+  <section class="card weak-card"><h2>☼ 苦手分野 TOP3</h2>{% for item in dashboard.weak_fields %}<div class="weak-row"><i class="rank rank-{{ loop.index }}">{{ loop.index }}</i><p><b>{{ item.name }}</b><span>正答率 {{ item.score }}% ／ 回答数 {{ item.answers }}問</span></p><span class="chevron">›</span></div>{% endfor %}</section>
+
+  <section class="card recommendations"><h2>💡 今日のおすすめ学習</h2>{% for name, count in dashboard.recommended_study %}<div><span>✓</span><b>{{ name }}　{{ count }}問</b><button data-line-message="{{ name }}の問題を{{ count }}問">問題へ</button></div>{% endfor %}</section>
+  <section class="goal-card"><h2>▣ 今日の目標</h2><p>1日{{ dashboard.today_goal }}問のペースがおすすめです！</p><div class="goal-progress"><div class="bar"><i style="width:{{ dashboard.today_progress / dashboard.today_goal * 100 }}%"></i></div><span>{{ dashboard.today_progress }} / {{ dashboard.today_goal }}問</span></div></section>
+  <a class="footprints-link" href="{{ url_for('goukaku_ui.footprints') }}">👣 あなたの足跡を見る <span>›</span></a>
+
+  <section class="actions"><h2>次にやること</h2><div class="action-grid">
+    <button class="action green" data-line-message="今日のおすすめ"><span>◎</span><b>おすすめ演習</b><small>弱点分野を重点学習</small></button>
+    <button class="action blue" data-line-message="勉強する"><span>▤</span><b>通常モード</b><small>通常の問題演習へ</small></button>
+    <button class="action purple" data-line-message="相談モード"><span>◌</span><b>相談モード</b><small>源さんと話す</small></button>
+    <button class="action red" data-line-message="熱血モード"><span>♨</span><b>熱血モード</b><small>まず5問やる</small></button>
+  </div></section>
+  <p class="daily-note">ⓘ データは毎日更新されます</p>
+</div>
+{% endblock %}
