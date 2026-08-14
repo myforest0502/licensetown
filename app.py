@@ -1717,13 +1717,13 @@ def reply_study_continue_choice(reply_token):
             items=[
                 QuickReplyButton(
                     action=MessageAction(
-                        label="▶️ 続ける",
+                        label="続ける",
                         text="続ける",
                     )
                 ),
                 QuickReplyButton(
                     action=MessageAction(
-                        label="📥 源さんに預ける（一時停止）",
+                        label="源さんに預ける",
                         text="源さんに預ける",
                     )
                 ),
