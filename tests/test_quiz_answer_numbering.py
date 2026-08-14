@@ -567,6 +567,7 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         original_reply = function_globals["reply_to_line"]
         original_create_text_response = function_globals["create_text_response"]
         original_continue = function_globals["reply_study_continue_choice"]
+        original_welcome = function_globals["reply_new_user_welcome"]
 
         try:
             for status, mode in reset_cases:
@@ -605,21 +606,27 @@ class QuizAnswerNumberingTest(unittest.TestCase):
                             "リセット後に以前の学習状態が処理されました。"
                         )
                     )
+                    welcome_calls = []
+                    function_globals["reply_new_user_welcome"] = (
+                        lambda token: welcome_calls.append(token)
+                    )
 
                     app.handle_text_message(
                         make_text_event(user_id, "ふりだしにもどる")
                     )
 
-                    self.assertNotIn(user_id, app.user_states)
+                    self.assertEqual("waiting_gen_intro", app.user_states[user_id])
                     self.assertNotIn(user_id, app.study_sessions)
                     self.assertNotIn(user_id, app.user_modes)
                     self.assertNotIn(user_id, app.user_names)
                     self.assertNotIn(user_id, app.known_user_ids)
                     self.assertEqual(0, len(reply_messages))
+                    self.assertEqual(1, len(welcome_calls))
         finally:
             function_globals["reply_to_line"] = original_reply
             function_globals["create_text_response"] = original_create_text_response
             function_globals["reply_study_continue_choice"] = original_continue
+            function_globals["reply_new_user_welcome"] = original_welcome
 
     def test_restart_command_requires_exact_match_after_trimming(self) -> None:
         rejected = [
@@ -799,6 +806,16 @@ class NewUserWelcomeTest(unittest.TestCase):
 
         self.assertEqual([], welcome_calls)
 
+    def test_home_keeps_registered_name(self) -> None:
+        user_id = "home-keeps-name"
+        app.user_names[user_id] = "登録済みユーザー"
+        app.user_modes[user_id] = "chat"
+
+        app.handle_text_message(make_text_event(user_id, "ホームに戻る"))
+
+        self.assertEqual("登録済みユーザー", app.user_names[user_id])
+        self.assertEqual("normal", app.user_modes[user_id])
+
     def test_reset_user_returns_to_complete_first_use_flow(self) -> None:
         user_id = "reset-existing-user"
         app.user_names[user_id] = "次郎"
@@ -822,8 +839,8 @@ class NewUserWelcomeTest(unittest.TestCase):
 
         try:
             app.handle_text_message(make_text_event(user_id, "ふりだしにもどる"))
+            self.assertEqual("waiting_gen_intro", app.user_states[user_id])
             app.handle_text_message(make_text_event(user_id, "もう一度はじめる"))
-            app.handle_text_message(make_text_event(user_id, "再登録ユーザー"))
             app.handle_text_message(make_text_event(user_id, "再登録ユーザー"))
         finally:
             function_globals["reply_new_user_welcome"] = original_welcome
@@ -838,6 +855,52 @@ class NewUserWelcomeTest(unittest.TestCase):
         self.assertEqual("再登録ユーザー", app.user_names[user_id])
         self.assertNotIn(user_id, app.user_states)
         self.assertIn("再登録ユーザー", registered[-1])
+
+    def test_active_modes_do_not_fall_back_to_onboarding_when_name_is_missing(self) -> None:
+        globals_ = app.handle_text_message.__globals__
+        original_welcome = globals_["reply_new_user_welcome"]
+        original_gen = globals_["reply_gen_first_greeting"]
+        original_study_result = globals_["reply_study_set_result"]
+        original_heat_result = globals_["reply_nekketsu_continue_choice"]
+        original_create = globals_["create_text_response"]
+        welcome_calls, study_results, heat_results, consultations = [], [], [], []
+        globals_["reply_new_user_welcome"] = lambda *args: welcome_calls.append(args)
+        globals_["reply_gen_first_greeting"] = lambda *args: welcome_calls.append(args)
+        globals_["reply_study_set_result"] = lambda token, session: study_results.append(session["status"])
+        globals_["reply_nekketsu_continue_choice"] = lambda token, session: heat_results.append(session["status"])
+        globals_["create_text_response"] = lambda message, mode: consultations.append((message, mode)) or "相談返答"
+
+        def session(mode):
+            return {
+                "status": "waiting_for_answers", "current_set": 1,
+                "total_sets": 6, "question_count": 30, "questions_per_set": 5,
+                "questions": make_questions(), "all_questions": make_all_questions(),
+                "all_answers": {}, "mode": mode,
+            }
+
+        try:
+            app.user_modes["study-active"] = "study"
+            app.study_sessions["study-active"] = session("study")
+            app.handle_text_message(make_text_event("study-active", "1:A1 2:B2 3:C3 4:D1 5:E2"))
+
+            app.user_modes["heat-active"] = "nekketsu"
+            app.study_sessions["heat-active"] = session("nekketsu")
+            app.handle_text_message(make_text_event("heat-active", "1:A1 2:B2 3:C3 4:D1 5:E2"))
+
+            app.user_modes["chat-active"] = "chat"
+            app.user_states["chat-active"] = "consultation_input"
+            app.handle_text_message(make_text_event("chat-active", "相談内容です"))
+        finally:
+            globals_["reply_new_user_welcome"] = original_welcome
+            globals_["reply_gen_first_greeting"] = original_gen
+            globals_["reply_study_set_result"] = original_study_result
+            globals_["reply_nekketsu_continue_choice"] = original_heat_result
+            globals_["create_text_response"] = original_create
+
+        self.assertEqual([], welcome_calls)
+        self.assertEqual(["waiting_for_continue"], study_results)
+        self.assertEqual(["waiting_for_continue"], heat_results)
+        self.assertEqual([("相談内容です", "chat")], consultations)
 
 
 class QuizCompletionSummaryTest(unittest.TestCase):

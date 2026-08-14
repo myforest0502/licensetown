@@ -2638,6 +2638,7 @@ def handle_text_message(event):
         user_states.pop(user_id, None)
         study_sessions.pop(user_id, None)
         explain_contexts.pop(user_id, None)
+        consultation_contexts.pop(user_id, None)
         learning_answer_counts.pop(user_id, None)
 
         try:
@@ -2658,7 +2659,8 @@ def handle_text_message(event):
             )
             return
 
-        reply_mode_select(event.reply_token)
+        user_states[user_id] = "waiting_gen_intro"
+        reply_new_user_welcome(event.reply_token)
         return
 
     active_session = study_sessions.get(user_id)
@@ -2950,7 +2952,12 @@ def handle_text_message(event):
         return
     rest_words = ["休み", "休む", "今日は無理", "今日はできない", "休ませて"]
 
-    if user_id not in user_names:
+    has_active_flow = bool(
+        current_session
+        or current_state is not None
+        or user_modes.get(user_id, "normal") != "normal"
+    )
+    if user_id not in user_names and not has_active_flow:
         if not user_profile_exists(user_id):
             user_states[user_id] = "waiting_gen_intro"
             reply_new_user_welcome(event.reply_token)
