@@ -2854,6 +2854,21 @@ def handle_text_message(event):
         reply_current_quiz(event.reply_token, active_session)
         return
 
+    if (
+        user_message == "続ける"
+        and active_session
+        and active_session.get("mode") == "nekketsu"
+        and active_session.get("status") == "waiting_for_continue"
+    ):
+        active_session["status"] = "preparing_next"
+        reply_to_line(event.reply_token, "おう！次の5問を準備するぞ＾＾\nちょっと待ってな！")
+        threading.Thread(
+            target=prepare_and_send_next_quiz,
+            args=(user_id, active_session.get("session_id")),
+            daemon=True,
+        ).start()
+        return
+
     current_state = user_states.get(user_id)
 
     if current_state == "waiting_gen_intro":

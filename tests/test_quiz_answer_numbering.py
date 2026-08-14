@@ -495,6 +495,52 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         self.assertEqual(3, app.study_sessions[user_id]["current_set"])
         self.assertEqual("waiting_for_answers", app.study_sessions[user_id]["status"])
 
+    def test_heat_continue_after_results_starts_next_five_without_ai(self) -> None:
+        user_id = "heat-continue-user"
+        app.user_modes[user_id] = "nekketsu"
+        app.study_sessions[user_id] = {
+            "session_id": "heat-session", "status": "waiting_for_continue",
+            "mode": "nekketsu", "current_set": 1, "total_sets": 6,
+            "question_count": 30, "questions_per_set": 5,
+            "questions": make_all_questions()[:5],
+            "all_questions": make_all_questions(), "all_answers": {},
+        }
+        globals_ = app.handle_text_message.__globals__
+        original_threading = globals_["threading"]
+        original_prepare = globals_["prepare_and_send_next_quiz"]
+        original_ai = globals_["create_text_response"]
+
+        class ImmediateThread:
+            def __init__(self, target, args=(), daemon=None):
+                self.target, self.args = target, args
+
+            def start(self):
+                self.target(*self.args)
+
+        globals_["threading"] = SimpleNamespace(Thread=ImmediateThread)
+        globals_["prepare_and_send_next_quiz"] = (
+            lambda target_user, session_id=None: app.start_next_quiz(target_user)
+        )
+        globals_["create_text_response"] = lambda *args, **kwargs: self.fail(
+            "熱血の続けるが自由会話AIへ流れました。"
+        )
+        try:
+            app.handle_text_message(make_text_event(user_id, "続ける"))
+            self.assertEqual(2, app.study_sessions[user_id]["current_set"])
+            self.assertEqual(list(range(6, 11)), app.study_sessions[user_id]["expected_numbers"])
+            app.study_sessions[user_id]["status"] = "waiting_for_continue"
+            app.pause_quiz_session(user_id)
+            app.resume_quiz_session(user_id)
+            app.handle_text_message(make_text_event(user_id, "続ける"))
+        finally:
+            globals_["threading"] = original_threading
+            globals_["prepare_and_send_next_quiz"] = original_prepare
+            globals_["create_text_response"] = original_ai
+
+        self.assertEqual(3, app.study_sessions[user_id]["current_set"])
+        self.assertEqual(list(range(11, 16)), app.study_sessions[user_id]["expected_numbers"])
+        self.assertEqual("waiting_for_answers", app.study_sessions[user_id]["status"])
+
     def test_study_fixed_flow_completes_30_questions_and_all_explanations(self) -> None:
         user_id = "fixed-thirty-user"
         globals_ = app.handle_text_message.__globals__
