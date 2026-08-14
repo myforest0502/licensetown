@@ -1595,10 +1595,7 @@ def reply_current_quiz(reply_token, session):
     session["expected_numbers"] = list(
         range(start_number, start_number + session["questions_per_set"])
     )
-    quiz_text = (
-        format_quiz_messages(session["questions"], start_number=start_number)[0]
-        + "\n\nじゃあ、解答を入力してくれ＾＾"
-    )
+    quiz_text = format_quiz_messages(session["questions"], start_number=start_number)[0]
     if session.get("mode") == "nekketsu":
         quick_reply_items = [
             QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
@@ -1609,10 +1606,13 @@ def reply_current_quiz(reply_token, session):
             QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
             QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
         ]
-    line_bot_api.reply_message(reply_token, TextSendMessage(
-        text=quiz_text,
-        quick_reply=QuickReply(items=quick_reply_items),
-    ))
+    line_bot_api.reply_message(reply_token, [
+        TextSendMessage(text=quiz_text),
+        TextSendMessage(
+            text="じゃあ、解答を入力してくれ＾＾",
+            quick_reply=QuickReply(items=quick_reply_items),
+        ),
+    ])
 
 
 def reply_quiz_input_error(reply_token, start_number, questions_per_set):
@@ -1986,10 +1986,13 @@ def push_quiz_to_line(user_id, push_message):
                 QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
                 QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
             ]
-        line_bot_api.push_message(user_id, TextSendMessage(
-            text=push_message + "\n\nじゃあ、解答を入力してくれ＾＾",
-            quick_reply=QuickReply(items=quick_reply_items),
-        ))
+        line_bot_api.push_message(user_id, [
+            TextSendMessage(text=push_message),
+            TextSendMessage(
+                text="じゃあ、解答を入力してくれ＾＾",
+                quick_reply=QuickReply(items=quick_reply_items),
+            ),
+        ])
     except Exception:
         logging.exception("LINE quiz push failed.")
 # =========================================================
