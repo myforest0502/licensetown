@@ -1710,6 +1710,15 @@ def return_home(reply_token, user_id, interrupt=True):
     reply_mode_select(reply_token)
 
 
+def is_home_command(user_message):
+    """HOMEへ戻る意図が明確な短い入力だけを判定する。"""
+    normalized = unicodedata.normalize("NFKC", user_message).strip().lower()
+    normalized = normalized.replace("ほーむ", "ホーム")
+    normalized = re.sub(r"^home", "ホーム", normalized)
+    normalized = normalized.replace("もどる", "戻る")
+    return re.fullmatch(r"ホーム(?:(?:に|へ)?戻る)?", normalized) is not None
+
+
 def reply_explanation_choice(reply_token, completed=False, quiz_result=None):
     """解答解説の開始・続行、または完了を案内する。"""
     if completed:
@@ -2593,7 +2602,7 @@ def handle_text_message(event):
         reply_mode_select(event.reply_token)
         return
 
-    if user_message in {"ホーム", "ホームに戻る", "中断する"}:
+    if is_home_command(user_message) or user_message == "中断する":
         return_home(event.reply_token, user_id, interrupt=True)
         return
 

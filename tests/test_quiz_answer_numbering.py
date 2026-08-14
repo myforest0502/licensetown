@@ -97,6 +97,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_new_user_welcome",
         "reply_gen_first_greeting",
         "is_complete_reset_command",
+        "is_home_command",
         "handle_text_message",
     }
     function_nodes = []
@@ -1131,6 +1132,33 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertEqual(2, len(app.line_replies))
         self.assertEqual("consultation", app.line_replies[0][1])
         self.assertEqual("nekketsu", app.line_replies[1][1])
+
+    def test_home_command_variants_use_fixed_home_before_current_state(self) -> None:
+        function_globals = app.handle_text_message.__globals__
+        original_return_home = function_globals["return_home"]
+        home_calls = []
+        function_globals["return_home"] = (
+            lambda token, user_id, interrupt=True:
+            home_calls.append((token, user_id, interrupt))
+        )
+        variants = [
+            " ホームに戻る ", "ホームにもどる", "ホームへ戻る",
+            "ホームへもどる", "ほーむに戻る", "HOMEに戻る",
+            "Homeに戻る", "homeに戻る", "ＨＯＭＥに戻る",
+            "ホーム戻る", "ホーム",
+        ]
+        user_id = "home-command-user"
+        app.user_states[user_id] = "waiting_quiz_answer"
+
+        try:
+            for message in variants:
+                app.handle_text_message(make_text_event(user_id, message))
+        finally:
+            function_globals["return_home"] = original_return_home
+
+        self.assertEqual(len(variants), len(home_calls))
+        self.assertFalse(app.is_home_command("老人ホームについて教えて"))
+        self.assertFalse(app.is_home_command("ホームポジションって何？"))
 
     def test_teach_gen_entry_supports_direct_question_and_attachment_choices(self) -> None:
         function_globals = app.handle_text_message.__globals__
