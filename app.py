@@ -1550,6 +1550,17 @@ def reply_nekketsu_continue_choice(reply_token, current_session):
     )
 
 
+def reply_nekketsu_action_choice(reply_token):
+    line_bot_api.reply_message(reply_token, TextSendMessage(
+        text="次はどうする？",
+        quick_reply=QuickReply(items=[
+            QuickReplyButton(action=MessageAction(label="続ける", text="続ける")),
+            QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
+            QuickReplyButton(action=MessageAction(label="終了する", text="終了する")),
+        ]),
+    ))
+
+
 def reply_saved_session_choice(reply_token):
     line_bot_api.reply_message(reply_token, TextSendMessage(
         text="預かっている続きがあるぞ＾＾\nどうする？",
@@ -2792,6 +2803,43 @@ def process_study_flow_command(reply_token, user_id, user_message):
 
     return False
 
+
+def process_nekketsu_flow_command(reply_token, user_id, user_message):
+    """熱血モードの5問ループ操作を自由会話より先に処理する。"""
+    session = study_sessions.get(user_id)
+    if not session or session.get("mode") != "nekketsu":
+        return False
+
+    status = session.get("status")
+    if status == "waiting_for_answers" and user_message == "続ける":
+        reply_current_quiz(reply_token, session)
+        return True
+
+    if status == "waiting_for_continue":
+        if user_message == "続ける":
+            session["status"] = "preparing_next"
+            reply_to_line(reply_token, "おう！次の5問を準備するぞ＾＾\nちょっと待ってな！")
+            threading.Thread(
+                target=prepare_and_send_next_quiz,
+                args=(user_id, session.get("session_id")),
+                daemon=True,
+            ).start()
+        elif user_message == "源さんに預ける":
+            pause_quiz_session(user_id)
+            return_home(reply_token, user_id, interrupt=True)
+        elif user_message == "終了する":
+            study_sessions.pop(user_id, None)
+            return_home(reply_token, user_id, interrupt=True)
+        else:
+            reply_nekketsu_action_choice(reply_token)
+        return True
+
+    if status == "preparing_next":
+        reply_to_line(reply_token, "今、次の5問を準備してるぞ＾＾\nちょっと待ってな！")
+        return True
+
+    return False
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     raw_user_message = event.message.text
@@ -2845,30 +2893,6 @@ def handle_text_message(event):
         return_home(event.reply_token, user_id, interrupt=True)
         return
 
-    if (
-        user_message == "続ける"
-        and active_session
-        and active_session.get("mode") == "nekketsu"
-        and active_session.get("status") == "waiting_for_answers"
-    ):
-        reply_current_quiz(event.reply_token, active_session)
-        return
-
-    if (
-        user_message == "続ける"
-        and active_session
-        and active_session.get("mode") == "nekketsu"
-        and active_session.get("status") == "waiting_for_continue"
-    ):
-        active_session["status"] = "preparing_next"
-        reply_to_line(event.reply_token, "おう！次の5問を準備するぞ＾＾\nちょっと待ってな！")
-        threading.Thread(
-            target=prepare_and_send_next_quiz,
-            args=(user_id, active_session.get("session_id")),
-            daemon=True,
-        ).start()
-        return
-
     current_state = user_states.get(user_id)
 
     if current_state == "waiting_gen_intro":
@@ -2891,6 +2915,9 @@ def handle_text_message(event):
         return
 
     if process_study_flow_command(event.reply_token, user_id, user_message):
+        return
+
+    if process_nekketsu_flow_command(event.reply_token, user_id, user_message):
         return
 
     if process_study_answer_input(event.reply_token, user_id, user_message):

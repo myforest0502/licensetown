@@ -102,6 +102,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "resume_quiz_session",
         "process_study_answer_input",
         "process_study_flow_command",
+        "process_nekketsu_flow_command",
         "handle_text_message",
     }
     function_nodes = []
@@ -172,6 +173,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_consultation_response": lambda token, text: line_replies.append((token, text)),
         "reply_nekketsu_start": lambda token: line_replies.append((token, "nekketsu")),
         "reply_nekketsu_continue_choice": lambda *args, **kwargs: None,
+        "reply_nekketsu_action_choice": lambda *args, **kwargs: None,
         "invalidate_teaching_image_analysis": lambda *args, **kwargs: None,
         "create_contextual_explain_response": lambda *args, **kwargs: "解説回答",
         "push_to_line": lambda *args, **kwargs: None,
@@ -499,7 +501,7 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         user_id = "heat-continue-user"
         app.user_modes[user_id] = "nekketsu"
         app.study_sessions[user_id] = {
-            "session_id": "heat-session", "status": "waiting_for_continue",
+            "session_id": "heat-session", "status": "waiting_for_answers",
             "mode": "nekketsu", "current_set": 1, "total_sets": 6,
             "question_count": 30, "questions_per_set": 5,
             "questions": make_all_questions()[:5],
@@ -509,6 +511,8 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         original_threading = globals_["threading"]
         original_prepare = globals_["prepare_and_send_next_quiz"]
         original_ai = globals_["create_text_response"]
+        original_result = globals_["reply_nekketsu_continue_choice"]
+        result_counts = []
 
         class ImmediateThread:
             def __init__(self, target, args=(), daemon=None):
@@ -524,22 +528,32 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         globals_["create_text_response"] = lambda *args, **kwargs: self.fail(
             "熱血の続けるが自由会話AIへ流れました。"
         )
+        globals_["reply_nekketsu_continue_choice"] = (
+            lambda token, session: result_counts.append(len(session["all_answers"]))
+        )
         try:
-            app.handle_text_message(make_text_event(user_id, "続ける"))
-            self.assertEqual(2, app.study_sessions[user_id]["current_set"])
-            self.assertEqual(list(range(6, 11)), app.study_sessions[user_id]["expected_numbers"])
-            app.study_sessions[user_id]["status"] = "waiting_for_continue"
-            app.pause_quiz_session(user_id)
-            app.resume_quiz_session(user_id)
-            app.handle_text_message(make_text_event(user_id, "続ける"))
+            for current_set in range(1, 5):
+                start = ((current_set - 1) * 5) + 1
+                answers = " ".join(
+                    f"{number}:A1" for number in range(start, start + 5)
+                )
+                app.handle_text_message(make_text_event(user_id, answers))
+                self.assertEqual("waiting_for_continue", app.study_sessions[user_id]["status"])
+                if current_set == 2:
+                    app.pause_quiz_session(user_id)
+                    app.resume_quiz_session(user_id)
+                if current_set < 4:
+                    app.handle_text_message(make_text_event(user_id, "続ける"))
+                    self.assertEqual(current_set + 1, app.study_sessions[user_id]["current_set"])
         finally:
             globals_["threading"] = original_threading
             globals_["prepare_and_send_next_quiz"] = original_prepare
             globals_["create_text_response"] = original_ai
+            globals_["reply_nekketsu_continue_choice"] = original_result
 
-        self.assertEqual(3, app.study_sessions[user_id]["current_set"])
-        self.assertEqual(list(range(11, 16)), app.study_sessions[user_id]["expected_numbers"])
-        self.assertEqual("waiting_for_answers", app.study_sessions[user_id]["status"])
+        self.assertEqual([5, 10, 15, 20], result_counts)
+        self.assertEqual(4, app.study_sessions[user_id]["current_set"])
+        self.assertEqual("waiting_for_continue", app.study_sessions[user_id]["status"])
 
     def test_study_fixed_flow_completes_30_questions_and_all_explanations(self) -> None:
         user_id = "fixed-thirty-user"
