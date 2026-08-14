@@ -2674,6 +2674,53 @@ def callback():
 # 通常のテキストメッセージ
 # =========================================================
 
+def process_study_answer_input(reply_token, user_id, user_message):
+    """通常学習の5問回答を固定処理し、自由会話へ流さない。"""
+    session = study_sessions.get(user_id)
+    if not (
+        session
+        and session.get("mode", user_modes.get(user_id, "study")) == "study"
+        and session.get("status") == "waiting_for_answers"
+    ):
+        return False
+
+    current_set = session["current_set"]
+    questions_per_set = session["questions_per_set"]
+    start_number = ((current_set - 1) * questions_per_set) + 1
+    expected_numbers = set(session.get(
+        "expected_numbers",
+        range(start_number, start_number + questions_per_set),
+    ))
+    parsed_answers = parse_quiz_answers(
+        user_message,
+        expected_numbers=expected_numbers,
+    )
+
+    if set(parsed_answers) != expected_numbers:
+        reply_quiz_input_error(reply_token, start_number, questions_per_set)
+        return True
+
+    for question_number, answer_data in parsed_answers.items():
+        session["all_answers"][question_number] = answer_data
+    learning_answer_counts[user_id] = max(
+        learning_answer_counts.get(user_id, 0),
+        len(session["all_answers"]),
+    )
+
+    if current_set >= session["total_sets"]:
+        session["quiz_result"] = calculate_quiz_result(
+            session["all_questions"],
+            session["all_answers"],
+        )
+        session["explanation_set"] = 0
+        session["status"] = "waiting_for_explanations"
+        reply_quiz_ready_for_explanations(reply_token, session)
+        return True
+
+    session["status"] = "waiting_for_continue"
+    reply_study_set_result(reply_token, session)
+    return True
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     raw_user_message = event.message.text
@@ -2746,6 +2793,9 @@ def handle_text_message(event):
                 f"よろしくな！{user_message}＾＾"
             ),
         )
+        return
+
+    if process_study_answer_input(event.reply_token, user_id, user_message):
         return
 
     if current_state == "waiting_explain_method":
@@ -3055,6 +3105,7 @@ def handle_text_message(event):
         current_session
         and current_session.get("status")
         == "waiting_for_answers"
+        and current_session.get("mode") == "nekketsu"
     ):
         current_set = current_session["current_set"]
         questions_per_set = current_session["questions_per_set"]
@@ -3080,26 +3131,8 @@ def handle_text_message(event):
             len(current_session["all_answers"]),
         )
 
-        if current_session.get("mode") == "nekketsu":
-            current_session["status"] = "waiting_for_continue"
-            reply_nekketsu_continue_choice(event.reply_token, current_session)
-            return
-
-        if current_set >= current_session["total_sets"]:
-            quiz_result = calculate_quiz_result(
-                current_session["all_questions"],
-                current_session["all_answers"],
-            )
-            current_session["quiz_result"] = quiz_result
-            current_session["explanation_set"] = 0
-            current_session["status"] = "waiting_for_explanations"
-
-            reply_quiz_ready_for_explanations(event.reply_token, current_session)
-            return
-
         current_session["status"] = "waiting_for_continue"
-
-        reply_study_set_result(event.reply_token, current_session)
+        reply_nekketsu_continue_choice(event.reply_token, current_session)
         return
 
     # それ以外は、今までどおり普通に会話する

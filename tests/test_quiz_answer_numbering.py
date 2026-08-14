@@ -100,6 +100,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "is_home_command",
         "pause_quiz_session",
         "resume_quiz_session",
+        "process_study_answer_input",
         "handle_text_message",
     }
     function_nodes = []
