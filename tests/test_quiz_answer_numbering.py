@@ -98,6 +98,8 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_gen_first_greeting",
         "is_complete_reset_command",
         "is_home_command",
+        "pause_quiz_session",
+        "resume_quiz_session",
         "handle_text_message",
     }
     function_nodes = []
@@ -123,6 +125,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "threading": SimpleNamespace(Thread=None),
         "study_sessions": {},
         "consultation_contexts": {},
+        "learning_answer_counts": {},
         "explain_contexts": {},
         "user_states": {},
         "user_names": {},
@@ -133,6 +136,9 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_study_set_result": lambda token, session: namespace["reply_study_continue_choice"](token),
         "reply_quiz_ready_for_explanations": lambda token, session: namespace["reply_quiz_score"](token, session["quiz_result"]),
         "reply_question_type_choice": lambda *args, **kwargs: None,
+        "reply_saved_session_choice": lambda *args, **kwargs: None,
+        "reply_current_quiz": lambda *args, **kwargs: None,
+        "reply_recommended_intro": lambda *args, **kwargs: None,
         "return_home": lambda token, user_id, interrupt=True: (
             namespace["user_states"].pop(user_id, None),
             namespace["study_sessions"].pop(user_id, None),
@@ -1098,7 +1104,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         mode_select_node = next(
             node
             for node in module.body
-            if isinstance(node, ast.FunctionDef) and node.name == "reply_mode_select"
+            if isinstance(node, ast.FunctionDef) and node.name == "create_home_message"
         )
         mode_select_source = ast.get_source_segment(source, mode_select_node)
 
@@ -1159,6 +1165,44 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertEqual(len(variants), len(home_calls))
         self.assertFalse(app.is_home_command("老人ホームについて教えて"))
         self.assertFalse(app.is_home_command("ホームポジションって何？"))
+
+    def test_study_save_resume_and_new_start_flow(self) -> None:
+        globals_ = app.handle_text_message.__globals__
+        originals = {
+            name: globals_[name]
+            for name in ("return_home", "reply_saved_session_choice",
+                         "reply_current_quiz", "reply_question_type_choice")
+        }
+        home_calls, saved_choices, resumed, new_choices = [], [], [], []
+        globals_["return_home"] = lambda token, user_id, interrupt=True: home_calls.append(user_id)
+        globals_["reply_saved_session_choice"] = lambda token: saved_choices.append(token)
+        globals_["reply_current_quiz"] = lambda token, session: resumed.append(session["current_set"])
+        globals_["reply_question_type_choice"] = lambda token, mode: new_choices.append(mode)
+        user_id = "saved-study-user"
+        app.user_names[user_id] = "学習者"
+        app.user_modes[user_id] = "study"
+        app.study_sessions[user_id] = {
+            "status": "waiting_for_answers", "current_set": 2,
+            "questions_per_set": 5, "questions": make_questions(),
+            "all_answers": {number: {"answer": "A", "confidence": "1"} for number in range(1, 6)},
+            "mode": "study",
+        }
+        try:
+            app.handle_text_message(make_text_event(user_id, "中断する"))
+            self.assertEqual("paused", app.study_sessions[user_id]["status"])
+            app.handle_text_message(make_text_event(user_id, "勉強する"))
+            app.handle_text_message(make_text_event(user_id, "続きから始める"))
+            app.pause_quiz_session(user_id)
+            app.handle_text_message(make_text_event(user_id, "新しく始める"))
+        finally:
+            for name, original in originals.items():
+                globals_[name] = original
+
+        self.assertEqual([user_id], home_calls)
+        self.assertEqual(1, len(saved_choices))
+        self.assertEqual([2], resumed)
+        self.assertEqual(["学習"], new_choices)
+        self.assertNotIn(user_id, app.study_sessions)
 
     def test_teach_gen_entry_supports_direct_question_and_attachment_choices(self) -> None:
         function_globals = app.handle_text_message.__globals__
