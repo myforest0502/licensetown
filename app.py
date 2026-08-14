@@ -840,6 +840,7 @@ def start_quiz(user_id):
     questions = all_questions[:QUESTIONS_PER_SET]
 
     study_sessions[user_id] = {
+        "session_id": str(time.time_ns()),
         "status": "waiting_for_answers",
         "current_set": 1,
         "question_count": QUIZ_QUESTION_COUNT,
@@ -848,6 +849,7 @@ def start_quiz(user_id):
         "questions": questions,
         "all_questions": all_questions,
         "all_answers": {},
+        "expected_numbers": list(range(1, QUESTIONS_PER_SET + 1)),
         "mode": user_modes.get(user_id, "study"),
         "started_at": time.time(),
         "nekketsu_correct": 0,
@@ -891,6 +893,9 @@ def start_next_quiz(user_id):
     current_session["status"] = "waiting_for_answers"
 
     start_number = start_index + 1
+    current_session["expected_numbers"] = list(
+        range(start_number, start_number + questions_per_set)
+    )
 
     return format_quiz_messages(
         new_questions,
@@ -910,8 +915,12 @@ def prepare_and_send_quiz(user_id):
         show_loading_animation(user_id)
 
         quiz_messages = start_quiz(user_id)
+        created_session = study_sessions.get(user_id)
 
         for quiz_message in quiz_messages:
+            if study_sessions.get(user_id) is not created_session:
+                logging.info("Discarded stale initial quiz push: user_id=%s", user_id)
+                return
             push_quiz_to_line(user_id, quiz_message)
 
     except Exception:
@@ -935,7 +944,7 @@ def prepare_and_send_quiz(user_id):
                 "送ってくれ。"
             ),
         )
-def prepare_and_send_next_quiz(user_id):
+def prepare_and_send_next_quiz(user_id, expected_session_id=None):
     """
     学習セッションを維持したまま、
     次の5問をバックグラウンドで準備して送信する。
@@ -944,9 +953,27 @@ def prepare_and_send_next_quiz(user_id):
     try:
         show_loading_animation(user_id)
 
+        active_session = study_sessions.get(user_id)
+        if (
+            expected_session_id
+            and (not active_session or active_session.get("session_id") != expected_session_id)
+        ):
+            logging.info("Discarded stale next-quiz request: user_id=%s", user_id)
+            return
+
         quiz_messages = start_next_quiz(user_id)
+        advanced_session = study_sessions.get(user_id)
 
         for quiz_message in quiz_messages:
+            if (
+                study_sessions.get(user_id) is not advanced_session
+                or (
+                    expected_session_id
+                    and advanced_session.get("session_id") != expected_session_id
+                )
+            ):
+                logging.info("Discarded stale next quiz push: user_id=%s", user_id)
+                return
             push_quiz_to_line(user_id, quiz_message)
 
     except Exception:
@@ -1509,10 +1536,11 @@ def reply_nekketsu_continue_choice(reply_token, current_session):
             else f"第{question_number}問：× 正答{correct}"
         )
     current_session["nekketsu_correct"] = current_session.get("nekketsu_correct", 0) + set_correct
+    answered_count = len(current_session.get("all_answers", {}))
     line_bot_api.reply_message(
         reply_token,
         TextSendMessage(
-            text="🔥 5問終了！\n\n" + "\n".join(answer_lines),
+            text=f"🔥 {answered_count}問終了！\n\n" + "\n".join(answer_lines),
             quick_reply=QuickReply(items=[
                 QuickReplyButton(action=MessageAction(label="🔥 続ける", text="続ける")),
                 QuickReplyButton(action=MessageAction(label="📥 源さんに預ける", text="源さんに預ける")),
@@ -1553,9 +1581,31 @@ def resume_quiz_session(user_id):
 
 def reply_current_quiz(reply_token, session):
     start_number = ((session["current_set"] - 1) * session["questions_per_set"]) + 1
+    session["expected_numbers"] = list(
+        range(start_number, start_number + session["questions_per_set"])
+    )
     quiz_text = format_quiz_messages(session["questions"], start_number=start_number)[0]
     line_bot_api.reply_message(reply_token, TextSendMessage(
         text=quiz_text,
+        quick_reply=QuickReply(items=[
+            QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
+            QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
+        ]),
+    ))
+
+
+def reply_quiz_input_error(reply_token, start_number, questions_per_set):
+    line_bot_api.reply_message(reply_token, TextSendMessage(
+        text=("おう、回答は受け取ったぞ。\n\n"
+              f"ただ、{questions_per_set}問分を正しく読み取れなかったみてぇだ。\n"
+              f"第{start_number}問から第{start_number + questions_per_set - 1}問まで、次の形で送ってくれ。\n\n"
+              + "\n".join(
+                  f"{number}:{answer}"
+                  for number, answer in zip(
+                      range(start_number, start_number + questions_per_set),
+                      ["A1", "B2", "C3", "D2", "E1"],
+                  )
+              )),
         quick_reply=QuickReply(items=[
             QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
             QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
@@ -2864,7 +2914,11 @@ def handle_text_message(event):
         elif current_session["status"] == "waiting_for_continue":
             current_session["status"] = "preparing_next"
             reply_to_line(event.reply_token, "おう！続きの5問を準備するぞ＾＾\nちょっと待ってな！")
-            threading.Thread(target=prepare_and_send_next_quiz, args=(user_id,), daemon=True).start()
+            threading.Thread(
+                target=prepare_and_send_next_quiz,
+                args=(user_id, current_session.get("session_id")),
+                daemon=True,
+            ).start()
         elif current_session["status"] == "waiting_for_explanations":
             reply_quiz_ready_for_explanations(event.reply_token, current_session)
         else:
@@ -2924,7 +2978,7 @@ def handle_text_message(event):
 
         quiz_thread = threading.Thread(
             target=prepare_and_send_next_quiz,
-            args=(user_id,),
+            args=(user_id, current_session.get("session_id")),
             daemon=True,
         )
 
@@ -2932,18 +2986,8 @@ def handle_text_message(event):
         return
 
     if user_message in {"熱血をやめる", "熱血を終わる", "終了する"} and current_session:
-        answered = len(current_session.get("all_answers", {}))
-        correct = current_session.get("nekketsu_correct", 0)
-        accuracy = round(correct / answered * 100) if answered else 0
-        elapsed_minutes = max(1, round((time.time() - current_session.get("started_at", time.time())) / 60))
         study_sessions.pop(user_id, None)
-        user_modes[user_id] = "normal"
-        reply_message = TextSendMessage(
-            text=(f"🔥 熱血アタック終了！\n\n挑戦：{answered}問\n"
-                  f"正解：{correct}問\n正答率：{accuracy}%\n学習時間：約{elapsed_minutes}分"),
-            quick_reply=QuickReply(items=[QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る"))]),
-        )
-        line_bot_api.reply_message(event.reply_token, reply_message)
+        return_home(event.reply_token, user_id, interrupt=True)
         return
 
     if user_message == "源さんに預ける" and current_session:
@@ -3015,7 +3059,10 @@ def handle_text_message(event):
         current_set = current_session["current_set"]
         questions_per_set = current_session["questions_per_set"]
         start_number = ((current_set - 1) * questions_per_set) + 1
-        expected_numbers = set(range(start_number, start_number + questions_per_set))
+        expected_numbers = set(current_session.get(
+            "expected_numbers",
+            range(start_number, start_number + questions_per_set),
+        ))
 
         parsed_answers = parse_quiz_answers(
             user_message,
@@ -3023,22 +3070,7 @@ def handle_text_message(event):
         )
 
         if set(parsed_answers) != expected_numbers:
-            reply_to_line(
-                event.reply_token,
-                (
-                    "おう、回答は受け取ったぞ。\n\n"
-                    f"ただ、{questions_per_set}問分を正しく読み取れなかったみてぇだ。\n"
-                    f"第{start_number}問から第{start_number + questions_per_set - 1}問まで、"
-                    "次の形で送ってくれ。\n\n"
-                    + "\n".join(
-                        f"{number}:{answer}"
-                        for number, answer in zip(
-                            range(start_number, start_number + questions_per_set),
-                            ["A1", "B2", "C3", "D2", "E1"],
-                        )
-                    )
-                ),
-            )
+            reply_quiz_input_error(event.reply_token, start_number, questions_per_set)
             return
 
         for question_number, answer_data in parsed_answers.items():

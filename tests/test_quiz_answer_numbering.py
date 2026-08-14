@@ -138,6 +138,19 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_question_type_choice": lambda *args, **kwargs: None,
         "reply_saved_session_choice": lambda *args, **kwargs: None,
         "reply_current_quiz": lambda *args, **kwargs: None,
+        "reply_quiz_input_error": (
+            lambda token, start, count: namespace["reply_to_line"](
+                token,
+                f"第{start}問から第{start + count - 1}問まで\n"
+                + "\n".join(
+                    f"{number}:{answer}"
+                    for number, answer in zip(
+                        range(start, start + count),
+                        ["A1", "B2", "C3", "D2", "E1"],
+                    )
+                ),
+            )
+        ),
         "reply_recommended_intro": lambda *args, **kwargs: None,
         "return_home": lambda token, user_id, interrupt=True: (
             namespace["user_states"].pop(user_id, None),
@@ -344,6 +357,114 @@ class QuizAnswerNumberingTest(unittest.TestCase):
                             for data in parsed.values()
                         ],
                     )
+
+    def test_session_expected_numbers_follow_every_displayed_batch(self) -> None:
+        user_id = "expected-number-user"
+        globals_ = app.start_quiz.__globals__
+        original_select = globals_["select_random_questions"]
+        globals_["select_random_questions"] = lambda count: make_all_questions()[:count]
+        app.user_modes[user_id] = "study"
+        try:
+            app.start_quiz(user_id)
+            self.assertEqual(list(range(1, 6)), app.study_sessions[user_id]["expected_numbers"])
+            for current_set in range(2, 7):
+                app.start_next_quiz(user_id)
+                start = ((current_set - 1) * 5) + 1
+                self.assertEqual(
+                    list(range(start, start + 5)),
+                    app.study_sessions[user_id]["expected_numbers"],
+                )
+        finally:
+            globals_["select_random_questions"] = original_select
+
+    def test_quiz_ui_sources_keep_required_actions_and_heat_total(self) -> None:
+        source = APP_PATH.read_text(encoding="utf-8")
+        module = ast.parse(source)
+
+        def function_source(name):
+            node = next(
+                item for item in module.body
+                if isinstance(item, ast.FunctionDef) and item.name == name
+            )
+            return ast.get_source_segment(source, node)
+
+        study = function_source("reply_study_set_result")
+        heat = function_source("reply_nekketsu_continue_choice")
+        invalid = function_source("reply_quiz_input_error")
+        resumed = function_source("reply_current_quiz")
+        for label in ("続ける", "源さんに預ける", "ホームに戻る"):
+            self.assertIn(label, study)
+        for label in ("続ける", "源さんに預ける", "終了する"):
+            self.assertIn(label, heat)
+        self.assertIn('f"🔥 {answered_count}問終了！', heat)
+        for body in (invalid, resumed):
+            self.assertIn("源さんに預ける", body)
+            self.assertIn("ホームに戻る", body)
+
+    def test_heat_result_uses_cumulative_10_and_15_question_counts(self) -> None:
+        source = APP_PATH.read_text(encoding="utf-8")
+        module = ast.parse(source)
+        node = next(
+            item for item in module.body
+            if isinstance(item, ast.FunctionDef)
+            and item.name == "reply_nekketsu_continue_choice"
+        )
+        replies = []
+        namespace = {
+            "line_bot_api": SimpleNamespace(
+                reply_message=lambda token, message: replies.append(message)
+            ),
+            "TextSendMessage": lambda text, quick_reply=None: SimpleNamespace(
+                text=text, quick_reply=quick_reply
+            ),
+            "QuickReply": lambda items: SimpleNamespace(items=items),
+            "QuickReplyButton": lambda action: SimpleNamespace(action=action),
+            "MessageAction": lambda label, text: SimpleNamespace(label=label, text=text),
+        }
+        extracted = ast.Module(body=[node], type_ignores=[])
+        ast.fix_missing_locations(extracted)
+        exec(compile(extracted, str(APP_PATH), "exec"), namespace)
+
+        for current_set, answered in ((2, 10), (3, 15)):
+            session = {
+                "current_set": current_set,
+                "questions_per_set": 5,
+                "questions": make_questions(),
+                "all_answers": {
+                    number: {"answer": "A", "confidence": "1"}
+                    for number in range(1, answered + 1)
+                },
+                "nekketsu_correct": 0,
+            }
+            namespace["reply_nekketsu_continue_choice"]("token", session)
+
+        self.assertIn("🔥 10問終了！", replies[0].text)
+        self.assertIn("🔥 15問終了！", replies[1].text)
+        self.assertEqual(
+            ["🔥 続ける", "📥 源さんに預ける", "🏁 終了する"],
+            [item.action.label for item in replies[1].quick_reply.items],
+        )
+
+    def test_heat_end_discards_session_and_returns_home(self) -> None:
+        user_id = "heat-end-user"
+        app.user_modes[user_id] = "nekketsu"
+        app.study_sessions[user_id] = {
+            "status": "waiting_for_continue", "mode": "nekketsu"
+        }
+        globals_ = app.handle_text_message.__globals__
+        original_home = globals_["return_home"]
+        home_calls = []
+        globals_["return_home"] = (
+            lambda token, target_user, interrupt=True:
+            home_calls.append((target_user, interrupt))
+        )
+        try:
+            app.handle_text_message(make_text_event(user_id, "終了する"))
+        finally:
+            globals_["return_home"] = original_home
+
+        self.assertNotIn(user_id, app.study_sessions)
+        self.assertEqual([(user_id, True)], home_calls)
 
     def test_parser_rejects_invalid_or_incomplete_inputs(self) -> None:
         expected_numbers = list(range(6, 11))
