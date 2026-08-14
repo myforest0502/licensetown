@@ -1595,16 +1595,20 @@ def reply_current_quiz(reply_token, session):
     session["expected_numbers"] = list(
         range(start_number, start_number + session["questions_per_set"])
     )
-    quiz_text = format_quiz_messages(session["questions"], start_number=start_number)[0]
-    quick_reply_items = []
+    quiz_text = (
+        format_quiz_messages(session["questions"], start_number=start_number)[0]
+        + "\n\nじゃあ、解答を入力してくれ＾＾"
+    )
     if session.get("mode") == "nekketsu":
-        quick_reply_items.append(
-            QuickReplyButton(action=MessageAction(label="続ける", text="続ける"))
-        )
-    quick_reply_items.extend([
-        QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
-        QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
-    ])
+        quick_reply_items = [
+            QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
+            QuickReplyButton(action=MessageAction(label="終了する", text="終了する")),
+        ]
+    else:
+        quick_reply_items = [
+            QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
+            QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
+        ]
     line_bot_api.reply_message(reply_token, TextSendMessage(
         text=quiz_text,
         quick_reply=QuickReply(items=quick_reply_items),
@@ -1972,17 +1976,18 @@ def push_quiz_to_line(user_id, push_message):
         push_message = push_message[:1900] + "…"
     try:
         session = study_sessions.get(user_id, {})
-        quick_reply_items = []
         if session.get("mode") == "nekketsu":
-            quick_reply_items.append(
-                QuickReplyButton(action=MessageAction(label="続ける", text="続ける"))
-            )
-        quick_reply_items.extend([
-            QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
-            QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
-        ])
+            quick_reply_items = [
+                QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
+                QuickReplyButton(action=MessageAction(label="終了する", text="終了する")),
+            ]
+        else:
+            quick_reply_items = [
+                QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
+                QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
+            ]
         line_bot_api.push_message(user_id, TextSendMessage(
-            text=push_message,
+            text=push_message + "\n\nじゃあ、解答を入力してくれ＾＾",
             quick_reply=QuickReply(items=quick_reply_items),
         ))
     except Exception:
@@ -3087,13 +3092,10 @@ def handle_text_message(event):
         if current_session["status"] == "waiting_for_answers":
             reply_current_quiz(event.reply_token, current_session)
         elif current_session["status"] == "waiting_for_continue":
-            current_session["status"] = "preparing_next"
-            reply_to_line(event.reply_token, "おう！続きの5問を準備するぞ＾＾\nちょっと待ってな！")
-            threading.Thread(
-                target=prepare_and_send_next_quiz,
-                args=(user_id, current_session.get("session_id")),
-                daemon=True,
-            ).start()
+            if current_session.get("mode") == "nekketsu":
+                reply_nekketsu_action_choice(event.reply_token)
+            else:
+                reply_study_continue_choice(event.reply_token)
         elif current_session["status"] == "waiting_for_explanations":
             reply_quiz_ready_for_explanations(event.reply_token, current_session)
         else:

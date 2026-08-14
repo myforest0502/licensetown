@@ -407,7 +407,9 @@ class QuizAnswerNumberingTest(unittest.TestCase):
             self.assertIn("ホームに戻る", body)
         for body in (resumed, pushed):
             self.assertIn('session.get("mode") == "nekketsu"', body)
-            self.assertIn('label="続ける"', body)
+            self.assertIn("じゃあ、解答を入力してくれ＾＾", body)
+            self.assertIn('label="終了する"', body)
+            self.assertNotIn('label="続ける"', body)
 
     def test_heat_result_uses_cumulative_10_and_15_question_counts(self) -> None:
         source = APP_PATH.read_text(encoding="utf-8")
@@ -554,6 +556,38 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         self.assertEqual([5, 10, 15, 20], result_counts)
         self.assertEqual(4, app.study_sessions[user_id]["current_set"])
         self.assertEqual("waiting_for_continue", app.study_sessions[user_id]["status"])
+
+    def test_saved_post_answer_state_restores_matching_action_ui(self) -> None:
+        globals_ = app.handle_text_message.__globals__
+        original_heat = globals_["reply_nekketsu_action_choice"]
+        original_study = globals_["reply_study_continue_choice"]
+        heat_ui, study_ui = [], []
+        globals_["reply_nekketsu_action_choice"] = lambda token: heat_ui.append(token)
+        globals_["reply_study_continue_choice"] = lambda token: study_ui.append(token)
+
+        app.user_names["saved-heat-ui"] = "熱血ユーザー"
+        app.user_modes["saved-heat-ui"] = "nekketsu"
+        app.study_sessions["saved-heat-ui"] = {
+            "status": "paused", "resume_status": "waiting_for_continue",
+            "mode": "nekketsu",
+        }
+        app.user_names["saved-study-ui"] = "学習ユーザー"
+        app.user_modes["saved-study-ui"] = "study"
+        app.study_sessions["saved-study-ui"] = {
+            "status": "paused", "resume_status": "waiting_for_continue",
+            "mode": "study",
+        }
+        try:
+            app.handle_text_message(make_text_event("saved-heat-ui", "続きから始める"))
+            app.handle_text_message(make_text_event("saved-study-ui", "続きから始める"))
+        finally:
+            globals_["reply_nekketsu_action_choice"] = original_heat
+            globals_["reply_study_continue_choice"] = original_study
+
+        self.assertEqual(1, len(heat_ui))
+        self.assertEqual(1, len(study_ui))
+        self.assertEqual("waiting_for_continue", app.study_sessions["saved-heat-ui"]["status"])
+        self.assertEqual("waiting_for_continue", app.study_sessions["saved-study-ui"]["status"])
 
     def test_study_fixed_flow_completes_30_questions_and_all_explanations(self) -> None:
         user_id = "fixed-thirty-user"
