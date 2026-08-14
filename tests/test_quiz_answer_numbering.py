@@ -394,6 +394,7 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         heat = function_source("reply_nekketsu_continue_choice")
         invalid = function_source("reply_quiz_input_error")
         resumed = function_source("reply_current_quiz")
+        pushed = function_source("push_quiz_to_line")
         for label in ("続ける", "源さんに預ける", "ホームに戻る"):
             self.assertIn(label, study)
         for label in ("続ける", "源さんに預ける", "終了する"):
@@ -402,6 +403,9 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         for body in (invalid, resumed):
             self.assertIn("源さんに預ける", body)
             self.assertIn("ホームに戻る", body)
+        for body in (resumed, pushed):
+            self.assertIn('session.get("mode") == "nekketsu"', body)
+            self.assertIn('label="続ける"', body)
 
     def test_heat_result_uses_cumulative_10_and_15_question_counts(self) -> None:
         source = APP_PATH.read_text(encoding="utf-8")
@@ -467,6 +471,29 @@ class QuizAnswerNumberingTest(unittest.TestCase):
 
         self.assertNotIn(user_id, app.study_sessions)
         self.assertEqual([(user_id, True)], home_calls)
+
+    def test_heat_continue_while_unanswered_keeps_current_set(self) -> None:
+        user_id = "heat-unanswered-user"
+        app.user_modes[user_id] = "nekketsu"
+        app.study_sessions[user_id] = {
+            "status": "waiting_for_answers", "mode": "nekketsu",
+            "current_set": 3, "questions_per_set": 5,
+            "questions": make_questions(), "all_answers": {},
+        }
+        globals_ = app.handle_text_message.__globals__
+        original_current = globals_["reply_current_quiz"]
+        redisplayed = []
+        globals_["reply_current_quiz"] = (
+            lambda token, session: redisplayed.append(session["current_set"])
+        )
+        try:
+            app.handle_text_message(make_text_event(user_id, "続ける"))
+        finally:
+            globals_["reply_current_quiz"] = original_current
+
+        self.assertEqual([3], redisplayed)
+        self.assertEqual(3, app.study_sessions[user_id]["current_set"])
+        self.assertEqual("waiting_for_answers", app.study_sessions[user_id]["status"])
 
     def test_study_fixed_flow_completes_30_questions_and_all_explanations(self) -> None:
         user_id = "fixed-thirty-user"

@@ -1585,12 +1585,18 @@ def reply_current_quiz(reply_token, session):
         range(start_number, start_number + session["questions_per_set"])
     )
     quiz_text = format_quiz_messages(session["questions"], start_number=start_number)[0]
+    quick_reply_items = []
+    if session.get("mode") == "nekketsu":
+        quick_reply_items.append(
+            QuickReplyButton(action=MessageAction(label="続ける", text="続ける"))
+        )
+    quick_reply_items.extend([
+        QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
+        QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
+    ])
     line_bot_api.reply_message(reply_token, TextSendMessage(
         text=quiz_text,
-        quick_reply=QuickReply(items=[
-            QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
-            QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
-        ]),
+        quick_reply=QuickReply(items=quick_reply_items),
     ))
 
 
@@ -1954,12 +1960,19 @@ def push_quiz_to_line(user_id, push_message):
     if len(push_message) > 1900:
         push_message = push_message[:1900] + "…"
     try:
+        session = study_sessions.get(user_id, {})
+        quick_reply_items = []
+        if session.get("mode") == "nekketsu":
+            quick_reply_items.append(
+                QuickReplyButton(action=MessageAction(label="続ける", text="続ける"))
+            )
+        quick_reply_items.extend([
+            QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
+            QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
+        ])
         line_bot_api.push_message(user_id, TextSendMessage(
             text=push_message,
-            quick_reply=QuickReply(items=[
-                QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
-                QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
-            ]),
+            quick_reply=QuickReply(items=quick_reply_items),
         ))
     except Exception:
         logging.exception("LINE quiz push failed.")
@@ -2830,6 +2843,15 @@ def handle_text_message(event):
 
     if is_home_command(user_message) or user_message == "中断する":
         return_home(event.reply_token, user_id, interrupt=True)
+        return
+
+    if (
+        user_message == "続ける"
+        and active_session
+        and active_session.get("mode") == "nekketsu"
+        and active_session.get("status") == "waiting_for_answers"
+    ):
+        reply_current_quiz(event.reply_token, active_session)
         return
 
     current_state = user_states.get(user_id)
