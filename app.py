@@ -2721,6 +2721,64 @@ def process_study_answer_input(reply_token, user_id, user_message):
     reply_study_set_result(reply_token, session)
     return True
 
+
+def process_study_flow_command(reply_token, user_id, user_message):
+    """通常学習中の進行・保存・解説操作を固定フローで処理する。"""
+    session = study_sessions.get(user_id)
+    if not session or session.get("mode", user_modes.get(user_id, "study")) != "study":
+        return False
+
+    status = session.get("status")
+
+    if user_message == "源さんに預ける" and status != "paused":
+        pause_quiz_session(user_id)
+        return_home(reply_token, user_id, interrupt=True)
+        return True
+
+    if status == "waiting_for_continue":
+        if user_message == "続ける":
+            session["status"] = "preparing_next"
+            reply_to_line(reply_token, "おう！次の5問を準備するぞ＾＾\nちょっと待ってな！")
+            threading.Thread(
+                target=prepare_and_send_next_quiz,
+                args=(user_id, session.get("session_id")),
+                daemon=True,
+            ).start()
+        else:
+            reply_study_continue_choice(reply_token)
+        return True
+
+    if status == "preparing_next":
+        reply_to_line(reply_token, "今、次の5問を準備してるぞ＾＾\nちょっと待ってな！")
+        return True
+
+    if status in {"waiting_for_explanations", "waiting_for_next_explanation"}:
+        expected_message = (
+            "解答解説を見る"
+            if status == "waiting_for_explanations"
+            else "次の5問"
+        )
+        if user_message != expected_message:
+            reply_to_line(
+                reply_token,
+                f"今は解答解説の確認中だ。『{expected_message}』で進んでくれ＾＾",
+            )
+            return True
+
+        for explanation_message in advance_quiz_explanations(session):
+            push_to_line(user_id, explanation_message)
+        if session["status"] == "quiz_completed":
+            reply_explanation_choice(
+                reply_token,
+                completed=True,
+                quiz_result=session["quiz_result"],
+            )
+        else:
+            reply_next_explanation_choice(reply_token)
+        return True
+
+    return False
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     raw_user_message = event.message.text
@@ -2793,6 +2851,9 @@ def handle_text_message(event):
                 f"よろしくな！{user_message}＾＾"
             ),
         )
+        return
+
+    if process_study_flow_command(event.reply_token, user_id, user_message):
         return
 
     if process_study_answer_input(event.reply_token, user_id, user_message):
@@ -2980,59 +3041,6 @@ def handle_text_message(event):
         study_sessions.pop(user_id, None)
         user_modes[user_id] = mode
         reply_question_type_choice(event.reply_token, "熱血" if mode == "nekketsu" else "学習")
-        return
-
-    if current_session and current_session.get("status") in {
-        "waiting_for_explanations",
-        "waiting_for_next_explanation",
-    }:
-        expected_message = (
-            "解答解説を見る"
-            if current_session["status"] == "waiting_for_explanations"
-            else "次の5問"
-        )
-
-        if user_message == expected_message:
-            explanation_messages = advance_quiz_explanations(current_session)
-            for explanation_message in explanation_messages:
-                push_to_line(user_id, explanation_message)
-
-            if current_session["status"] == "quiz_completed":
-                reply_explanation_choice(
-                    event.reply_token,
-                    completed=True,
-                    quiz_result=current_session["quiz_result"],
-                )
-            else:
-                reply_next_explanation_choice(event.reply_token)
-            return
-
-        reply_to_line(
-            event.reply_token,
-            f"今は解答解説の確認中だ。『{expected_message}』で進んでくれ＾＾",
-        )
-        return
-
-    if (
-        current_session
-        and current_session.get("status") == "waiting_for_continue"
-        and user_message == "続ける"
-    ):
-        current_session["status"] = "preparing_next"
-
-        reply_to_line(
-            event.reply_token,
-            "おう！次の5問を準備するぞ＾＾\n"
-            "ちょっと待ってな！"
-        )
-
-        quiz_thread = threading.Thread(
-            target=prepare_and_send_next_quiz,
-            args=(user_id, current_session.get("session_id")),
-            daemon=True,
-        )
-
-        quiz_thread.start()
         return
 
     if user_message in {"熱血をやめる", "熱血を終わる", "終了する"} and current_session:

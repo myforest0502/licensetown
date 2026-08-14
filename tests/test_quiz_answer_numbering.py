@@ -101,6 +101,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "pause_quiz_session",
         "resume_quiz_session",
         "process_study_answer_input",
+        "process_study_flow_command",
         "handle_text_message",
     }
     function_nodes = []
@@ -466,6 +467,81 @@ class QuizAnswerNumberingTest(unittest.TestCase):
 
         self.assertNotIn(user_id, app.study_sessions)
         self.assertEqual([(user_id, True)], home_calls)
+
+    def test_study_fixed_flow_completes_30_questions_and_all_explanations(self) -> None:
+        user_id = "fixed-thirty-user"
+        globals_ = app.handle_text_message.__globals__
+        originals = {
+            name: globals_[name]
+            for name in (
+                "prepare_and_send_next_quiz", "create_text_response",
+                "push_to_line", "reply_next_explanation_choice",
+                "reply_explanation_choice",
+            )
+        }
+        original_threading = globals_["threading"]
+        pushed, next_choices, completion_calls = [], [], []
+
+        class ImmediateThread:
+            def __init__(self, target, args=(), daemon=None):
+                self.target, self.args = target, args
+
+            def start(self):
+                self.target(*self.args)
+
+        globals_["threading"] = SimpleNamespace(Thread=ImmediateThread)
+        globals_["prepare_and_send_next_quiz"] = (
+            lambda target_user, _session_id=None: app.start_next_quiz(target_user)
+        )
+        globals_["create_text_response"] = lambda *args, **kwargs: self.fail(
+            "通常学習の固定フローが自由会話AIへ流れました。"
+        )
+        globals_["push_to_line"] = lambda _user, message: pushed.append(message)
+        globals_["reply_next_explanation_choice"] = lambda token: next_choices.append(token)
+        def capture_completion(token, completed=False, quiz_result=None):
+            completion_calls.append(completed)
+
+        globals_["reply_explanation_choice"] = capture_completion
+        app.user_names[user_id] = "学習者"
+        app.user_modes[user_id] = "study"
+        questions = make_all_questions()
+        app.study_sessions[user_id] = {
+            "session_id": "fixed-session", "status": "waiting_for_answers",
+            "current_set": 1, "question_count": 30, "questions_per_set": 5,
+            "total_sets": 6, "questions": questions[:5],
+            "all_questions": questions, "all_answers": {},
+            "expected_numbers": list(range(1, 6)), "mode": "study",
+        }
+
+        try:
+            for current_set in range(1, 7):
+                start = ((current_set - 1) * 5) + 1
+                answers = " ".join(
+                    f"{number}:A1" for number in range(start, start + 5)
+                )
+                app.handle_text_message(make_text_event(user_id, answers))
+                if current_set < 6:
+                    self.assertEqual("waiting_for_continue", app.study_sessions[user_id]["status"])
+                    app.handle_text_message(make_text_event(user_id, "続ける"))
+                    self.assertEqual(current_set + 1, app.study_sessions[user_id]["current_set"])
+                    self.assertEqual(
+                        list(range(start + 5, start + 10)),
+                        app.study_sessions[user_id]["expected_numbers"],
+                    )
+
+            self.assertEqual("waiting_for_explanations", app.study_sessions[user_id]["status"])
+            app.handle_text_message(make_text_event(user_id, "解答解説を見る"))
+            for _ in range(5):
+                app.handle_text_message(make_text_event(user_id, "次の5問"))
+        finally:
+            for name, original in originals.items():
+                globals_[name] = original
+            globals_["threading"] = original_threading
+
+        self.assertEqual("quiz_completed", app.study_sessions[user_id]["status"])
+        self.assertEqual(6, len(pushed))
+        self.assertEqual(5, len(next_choices))
+        self.assertEqual([True], completion_calls)
 
     def test_parser_rejects_invalid_or_incomplete_inputs(self) -> None:
         expected_numbers = list(range(6, 11))
