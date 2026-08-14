@@ -1981,6 +1981,12 @@ def push_quiz_to_line(user_id, push_message):
                 QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
                 QuickReplyButton(action=MessageAction(label="終了する", text="終了する")),
             ]
+            line_bot_api.push_message(user_id, TextSendMessage(text=push_message))
+            line_bot_api.push_message(user_id, TextSendMessage(
+                text="じゃあ、解答を入力してくれ＾＾",
+                quick_reply=QuickReply(items=quick_reply_items),
+            ))
+            return
         else:
             quick_reply_items = [
                 QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
