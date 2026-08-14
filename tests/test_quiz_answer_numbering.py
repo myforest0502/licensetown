@@ -129,6 +129,15 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_to_line": lambda *args, **kwargs: None,
         "reply_mode_select": lambda *args, **kwargs: None,
         "reply_study_continue_choice": lambda *args, **kwargs: None,
+        "reply_study_set_result": lambda token, session: namespace["reply_study_continue_choice"](token),
+        "reply_quiz_ready_for_explanations": lambda token, session: namespace["reply_quiz_score"](token, session["quiz_result"]),
+        "reply_question_type_choice": lambda *args, **kwargs: None,
+        "return_home": lambda token, user_id, interrupt=True: (
+            namespace["user_states"].pop(user_id, None),
+            namespace["study_sessions"].pop(user_id, None),
+            namespace["user_modes"].__setitem__(user_id, "normal"),
+            namespace["reply_mode_select"](token),
+        ),
         "reply_study_ready_choice": lambda *args, **kwargs: None,
         "reply_quiz_score": lambda *args, **kwargs: None,
         "reply_explanation_choice": lambda *args, **kwargs: None,
@@ -594,13 +603,12 @@ class QuizAnswerNumberingTest(unittest.TestCase):
                         make_text_event(user_id, "ふりだしにもどる")
                     )
 
-                    self.assertEqual("waiting_gen_intro", app.user_states[user_id])
+                    self.assertNotIn(user_id, app.user_states)
                     self.assertNotIn(user_id, app.study_sessions)
                     self.assertNotIn(user_id, app.user_modes)
                     self.assertNotIn(user_id, app.user_names)
                     self.assertNotIn(user_id, app.known_user_ids)
-                    self.assertEqual(1, len(reply_messages))
-                    self.assertIn("ようこそ、ライセンスタウンへ！", reply_messages[0])
+                    self.assertEqual(0, len(reply_messages))
         finally:
             function_globals["reply_to_line"] = original_reply
             function_globals["create_text_response"] = original_create_text_response
@@ -809,6 +817,7 @@ class NewUserWelcomeTest(unittest.TestCase):
             app.handle_text_message(make_text_event(user_id, "ふりだしにもどる"))
             app.handle_text_message(make_text_event(user_id, "もう一度はじめる"))
             app.handle_text_message(make_text_event(user_id, "再登録ユーザー"))
+            app.handle_text_message(make_text_event(user_id, "再登録ユーザー"))
         finally:
             function_globals["reply_new_user_welcome"] = original_welcome
             function_globals["reply_gen_first_greeting"] = original_gen
@@ -821,7 +830,7 @@ class NewUserWelcomeTest(unittest.TestCase):
         self.assertEqual(0, len(replies))
         self.assertEqual("再登録ユーザー", app.user_names[user_id])
         self.assertNotIn(user_id, app.user_states)
-        self.assertIn("再登録ユーザー", registered[0])
+        self.assertIn("再登録ユーザー", registered[-1])
 
 
 class QuizCompletionSummaryTest(unittest.TestCase):
@@ -1108,10 +1117,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         self.assertEqual(4, mode_select_source.count("QuickReplyButton("))
         self.assertNotIn("教えて源さん", mode_select_source)
         self.assertIn("/goukaku-no-michi", mode_select_source)
-        self.assertIn(
-            'text="今日は何する？＾＾\\n下のボタンを押して教えてくれな＾＾"',
-            mode_select_source,
-        )
+        self.assertIn("ここはお前たちの〝家”だよ＾＾", mode_select_source)
         self.assertEqual(
             sorted(mode_select_source.index(label) for label in labels),
             [mode_select_source.index(label) for label in labels],

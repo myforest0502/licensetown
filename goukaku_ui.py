@@ -7,7 +7,7 @@ goukaku_ui = Blueprint("goukaku_ui", __name__)
 
 # Ver.1 presentation data. Keep it in one place so database-backed values can
 # replace it without changing the templates.
-EXAM_DATE = date(2027, 2, 23)
+EXAM_DATE = date(2027, 2, 20)
 TODAY_GOAL = 30
 
 SUBJECTS = [
@@ -42,17 +42,17 @@ def build_dashboard():
         "exam_date": EXAM_DATE,
         "days_until_exam": max((EXAM_DATE - today).days, 0),
         "exam_is_tentative": True,
-        "overall_progress": 68,
-        "total_answers": 1842,
-        "correct_answers": 1256,
-        "study_minutes": 2538,
-        "last_7_days_accuracy": 72,
-        "average_accuracy": 68,
-        "field_stats": [item for item in SUBJECTS if item["name"] in HOME_SUBJECT_NAMES],
-        "weak_fields": sorted((item for item in SUBJECTS if item["answers"] >= 10), key=lambda item: item["score"])[:3],
-        "recommended_study": [("精神医学", 10), ("運動器", 10), ("内科学", 10)],
+        "overall_progress": 0,
+        "total_answers": 0,
+        "correct_answers": 0,
+        "study_minutes": 0,
+        "last_7_days_accuracy": 0,
+        "average_accuracy": 0,
+        "field_stats": [],
+        "weak_fields": [],
+        "recommended_study": [],
         "today_goal": TODAY_GOAL,
-        "today_progress": 18,
+        "today_progress": 0,
     }
 
 

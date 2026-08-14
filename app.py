@@ -1383,7 +1383,9 @@ def reply_mode_select(reply_token, intro_text=None):
     """
 
     reply_message = TextSendMessage(
-        text="今日は何する？＾＾\n下のボタンを押して教えてくれな＾＾",
+        text=("お！きたなｗ\n初めて来た奴も、戻ってきた奴も、お疲れさん＾＾\n"
+              "ここはお前たちの〝家”だよ＾＾\nここから全てが始まる…\n"
+              "さあ！行き先はお前が決めるんだ！"),
         quick_reply=QuickReply(
             items=[
                 QuickReplyButton(
@@ -1400,7 +1402,7 @@ def reply_mode_select(reply_token, intro_text=None):
                 ),
                 QuickReplyButton(
                     action=MessageAction(
-                        label="📘 勉強する",
+                        label="📘 勉強する！",
                         text="勉強する",
                     )
                 ),
@@ -1459,15 +1461,11 @@ def reply_consultation_start(reply_token):
     line_bot_api.reply_message(
         reply_token,
         TextSendMessage(
-            text=CONSULTATION_INTRO,
+            text=("お！？何かあったんか？\nおっさんでよければ話してくれよ\n"
+                  "勉強の事、体調の事、恋バナだって、おっさんは何でも受け止めるぜ＾＾"),
             quick_reply=QuickReply(items=[
-                QuickReplyButton(action=MessageAction(label="💬 話を聞いて", text="話を聞いて")),
-                QuickReplyButton(action=MessageAction(label="1問だけやる", text="相談モードで1問")),
-                QuickReplyButton(action=MessageAction(label="3問だけやる", text="相談モードで3問")),
-                QuickReplyButton(action=MessageAction(label="今日は休む", text="今日は休む")),
-                QuickReplyButton(action=MessageAction(label="通常モードへ", text="勉強する")),
-                QuickReplyButton(action=MessageAction(label="熱血モードへ", text="熱血モード")),
-                QuickReplyButton(action=MessageAction(label="モード選択に戻る", text="モード選択に戻る")),
+                QuickReplyButton(action=MessageAction(label="続ける", text="相談を続ける")),
+                QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
             ]),
         ),
     )
@@ -1479,12 +1477,8 @@ def reply_consultation_response(reply_token, response_text):
         TextSendMessage(
             text=response_text[:4500],
             quick_reply=QuickReply(items=[
-                QuickReplyButton(action=MessageAction(label="1問だけやる", text="相談モードで1問")),
-                QuickReplyButton(action=MessageAction(label="3問だけやる", text="相談モードで3問")),
-                QuickReplyButton(action=MessageAction(label="今日は休む", text="今日は休む")),
-                QuickReplyButton(action=MessageAction(label="通常モードへ", text="勉強する")),
-                QuickReplyButton(action=MessageAction(label="熱血モードへ", text="熱血モード")),
-                QuickReplyButton(action=MessageAction(label="モード選択に戻る", text="モード選択に戻る")),
+                QuickReplyButton(action=MessageAction(label="続ける", text="相談を続ける")),
+                QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
             ]),
         ),
     )
@@ -1494,12 +1488,29 @@ def reply_nekketsu_start(reply_token):
     line_bot_api.reply_message(
         reply_token,
         TextSendMessage(
-            text=NEKKETSU_INTRO,
+            text=("おう！きたなｗ\nここは熱血モードって言ってな、まぁいわゆる…アレだｗわんこそばｗ\n"
+                  "あんな感じで５問ずつどんどん問題が出て来る\n"
+                  "それをばったばったとお前が無双して、問題を斬っていくｗ\n"
+                  "まぁそんな感じだｗ\nじゃあ、心の準備はいいか？"),
             quick_reply=QuickReply(items=[
-                QuickReplyButton(action=MessageAction(label="🔥 苦手克服！", text="熱血：苦手克服")),
-                QuickReplyButton(action=MessageAction(label="🎲 ランダム！", text="熱血：ランダム")),
-                QuickReplyButton(action=MessageAction(label="🔁 再挑戦！", text="熱血：間違い復習")),
-                QuickReplyButton(action=MessageAction(label="🎯 おすすめ！", text="熱血：今日のおすすめ")),
+                QuickReplyButton(action=MessageAction(label="OK", text="熱血OK")),
+                QuickReplyButton(action=MessageAction(label="ちょっと待って！", text="ちょっと待って！")),
+                QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
+            ]),
+        ),
+    )
+
+
+def reply_question_type_choice(reply_token, mode):
+    line_bot_api.reply_message(
+        reply_token,
+        TextSendMessage(
+            text="どれでいく？",
+            quick_reply=QuickReply(items=[
+                QuickReplyButton(action=MessageAction(label="おすすめ", text=f"{mode}：おすすめ")),
+                QuickReplyButton(action=MessageAction(label="基礎問題", text=f"{mode}：基礎問題")),
+                QuickReplyButton(action=MessageAction(label="分野問題", text=f"{mode}：分野問題")),
+                QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
             ]),
         ),
     )
@@ -1652,13 +1663,64 @@ def reply_study_continue_choice(reply_token):
         )
 
 
+def reply_study_set_result(reply_token, current_session):
+    current_set = current_session["current_set"]
+    per_set = current_session["questions_per_set"]
+    start_number = ((current_set - 1) * per_set) + 1
+    lines = [
+        f"第{start_number + offset}問：{str(question.get('answer', '')).upper()}"
+        for offset, question in enumerate(current_session["questions"])
+    ]
+    message = TextSendMessage(
+        text=("\n".join(lines) + "\n\n詳しい説明は全部終わって出すからな！\n"
+              "それもちゃんと見といてくれよ＾＾"),
+        quick_reply=QuickReply(items=[
+            QuickReplyButton(action=MessageAction(label="続ける", text="続ける")),
+            QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
+        ]),
+    )
+    line_bot_api.reply_message(reply_token, message)
+
+
+def reply_quiz_ready_for_explanations(reply_token, current_session):
+    current_set = current_session["current_set"]
+    per_set = current_session["questions_per_set"]
+    start_number = ((current_set - 1) * per_set) + 1
+    lines = [
+        f"第{start_number + offset}問：{str(question.get('answer', '')).upper()}"
+        for offset, question in enumerate(current_session["questions"])
+    ]
+    line_bot_api.reply_message(reply_token, TextSendMessage(
+        text="\n".join(lines) + "\n\nじゃあこれから、解説を見ていくぞ＾＾",
+        quick_reply=QuickReply(items=[
+            QuickReplyButton(action=MessageAction(label="解答解説を見る", text="解答解説を見る")),
+        ]),
+    ))
+
+
+def return_home(reply_token, user_id, interrupt=True):
+    invalidate_teaching_image_analysis(user_id)
+    user_states.pop(user_id, None)
+    explain_contexts.pop(user_id, None)
+    consultation_contexts.pop(user_id, None)
+    current_session = study_sessions.get(user_id)
+    if interrupt and not (current_session and current_session.get("status") == "paused"):
+        study_sessions.pop(user_id, None)
+    user_modes[user_id] = "normal"
+    reply_mode_select(reply_token)
+
+
 def reply_explanation_choice(reply_token, completed=False, quiz_result=None):
     """解答解説の開始・続行、または完了を案内する。"""
     if completed:
-        reply_to_line(
-            reply_token,
-            create_quiz_completion_summary(quiz_result),
-        )
+        line_bot_api.reply_message(reply_token, TextSendMessage(
+            text=("おー！今日もよく頑張ったなぁ＾＾\n"
+                  "もう、やれば出来る子なんて言わせねぇ！\n"
+                  "お前は、やったから出来た子なんだ！\nこれからも頑張ろうな＾＾"),
+            quick_reply=QuickReply(items=[
+                QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
+            ]),
+        ))
         return
 
     reply_message = TextSendMessage(
@@ -2528,8 +2590,11 @@ def handle_text_message(event):
             )
             return
 
-        user_states[user_id] = "waiting_gen_intro"
-        reply_new_user_welcome(event.reply_token)
+        reply_mode_select(event.reply_token)
+        return
+
+    if user_message in {"ホーム", "ホームに戻る", "中断する"}:
+        return_home(event.reply_token, user_id, interrupt=True)
         return
 
     current_state = user_states.get(user_id)
@@ -2633,6 +2698,9 @@ def handle_text_message(event):
         user_modes[user_id] = "normal"
         reply_mode_select(event.reply_token)
         return
+    if user_message == "相談を続ける":
+        reply_consultation_response(event.reply_token, "おう、続けよう。話してみな＾＾")
+        return
     if user_message.startswith("相談モードで") and user_message.endswith("問"):
         count = 1 if "1問" in user_message else 3
         reply_to_line(
@@ -2640,9 +2708,26 @@ def handle_text_message(event):
             f"よし、今日は{count}問だけで勝ちにしよう。\n少数出題への接続は外装Ver.1の次で仕上げるぞ。",
         )
         return
-    if user_message.startswith("熱血："):
-        user_modes[user_id] = "nekketsu"
-        reply_to_line(event.reply_token, "よぉし、まず5問を準備するぞ🔥\nちょっと待ってな！")
+    if user_message == "熱血OK":
+        reply_question_type_choice(event.reply_token, "熱血")
+        return
+    if user_message in {"準備OK！", "準備OK"}:
+        reply_question_type_choice(event.reply_token, "学習")
+        return
+    if user_message in {"学習：分野問題", "熱血：分野問題"}:
+        user_states[user_id] = "waiting_quiz_field"
+        user_modes[user_id] = "nekketsu" if user_message.startswith("熱血") else "study"
+        reply_to_line(event.reply_token, "希望する分野を入力してくれ＾＾")
+        return
+    if current_state == "waiting_quiz_field":
+        user_states.pop(user_id, None)
+        reply_to_line(event.reply_token, "おう、任せろ＾＾\nまず5問作るから、ちょっと待ってな（笑）\nただ問題解いてる最中に中断したくなったら\n入力欄に「中断する」って入れて教えてくれな＾＾")
+        quiz_thread = threading.Thread(target=prepare_and_send_quiz, args=(user_id,), daemon=True)
+        quiz_thread.start()
+        return
+    if user_message.startswith(("学習：", "熱血：")):
+        user_modes[user_id] = "nekketsu" if user_message.startswith("熱血") else "study"
+        reply_to_line(event.reply_token, "おう、任せろ＾＾\nまず5問作るから、ちょっと待ってな（笑）\nただ問題解いてる最中に中断したくなったら\n入力欄に「中断する」って入れて教えてくれな＾＾")
         quiz_thread = threading.Thread(target=prepare_and_send_quiz, args=(user_id,), daemon=True)
         quiz_thread.start()
         return
@@ -2652,6 +2737,11 @@ def handle_text_message(event):
             user_states.pop(user_id, None)
             explain_contexts.pop(user_id, None)
         user_modes[user_id] = "study"
+        saved_session = study_sessions.get(user_id)
+        if saved_session and saved_session.get("status") == "paused":
+            saved_session["status"] = "waiting_for_continue"
+            reply_study_continue_choice(event.reply_token)
+            return
         reply_study_ready_choice(
         event.reply_token
     )
@@ -2739,22 +2829,12 @@ def handle_text_message(event):
         line_bot_api.reply_message(event.reply_token, reply_message)
         return
 
-    if user_message == "準備OK！":
-        reply_to_line(
-            event.reply_token,
-            (
-                "おう、任せろ＾＾\n"
-                "まず5問作るから、ちょっと待ってな（笑）"
-            ),
-        )
-
-        quiz_thread = threading.Thread(
-            target=prepare_and_send_quiz,
-            args=(user_id,),
-            daemon=True,
-        )
-
-        quiz_thread.start()
+    if user_message == "源さんに預ける" and current_session:
+        current_session["status"] = "paused"
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(
+            text="おう！わかった！確かに預かったぜ＾＾\nじゃあ続きはこっからだな。\n待ってるぞ＾＾",
+            quick_reply=QuickReply(items=[QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る"))]),
+        ))
         return
     rest_words = ["休み", "休む", "今日は無理", "今日はできない", "休ませて"]
 
@@ -2859,12 +2939,12 @@ def handle_text_message(event):
             current_session["explanation_set"] = 0
             current_session["status"] = "waiting_for_explanations"
 
-            reply_quiz_score(event.reply_token, quiz_result)
+            reply_quiz_ready_for_explanations(event.reply_token, current_session)
             return
 
         current_session["status"] = "waiting_for_continue"
 
-        reply_study_continue_choice(event.reply_token)
+        reply_study_set_result(event.reply_token, current_session)
         return
 
     # それ以外は、今までどおり普通に会話する

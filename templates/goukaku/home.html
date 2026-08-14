@@ -21,13 +21,13 @@
   </section>
 
   <section class="card subject-card"><div class="section-title"><h2>分野別 到達度</h2><a href="{{ url_for('goukaku_ui.subjects') }}" class="pill-link">すべて見る</a></div>
-    <div class="subject-list">{% for item in dashboard.field_stats %}<a href="{{ url_for('goukaku_ui.subjects') }}" class="subject-row"><b>{{ item.name }}</b><div class="bar"><i class="score-{{ 'good' if item.score >= 70 else 'warn' if item.score >= 50 else 'weak' }}" style="width:{{ item.score }}%"></i></div><span>{{ item.score }}%</span></a>{% endfor %}</div>
+    <div class="subject-list">{% for item in dashboard.field_stats %}<a href="{{ url_for('goukaku_ui.subjects') }}" class="subject-row"><b>{{ item.name }}</b><div class="bar"><i class="score-{{ 'good' if item.score >= 70 else 'warn' if item.score >= 50 else 'weak' }}" style="width:{{ item.score }}%"></i></div><span>{{ item.score }}%</span></a>{% else %}<p class="empty-state">まだデータがありません。勉強するとここに表示されます＾＾</p>{% endfor %}</div>
     <div class="legend"><span><i class="good"></i>得意（70%以上）</span><span><i class="warn"></i>要注意（50〜69%）</span><span><i class="weak"></i>要強化（50%未満）</span></div>
   </section>
 
-  <section class="card weak-card"><h2>☼ 苦手分野 TOP3</h2>{% for item in dashboard.weak_fields %}<a class="weak-row" href="{{ url_for('goukaku_ui.learning', field=item.name, count=10) }}"><i class="rank rank-{{ loop.index }}">{{ loop.index }}</i><p><b>{{ item.name }}</b><span>正答率 {{ item.score }}% ／ 回答数 {{ item.answers }}問</span></p><span class="chevron">›</span></a>{% endfor %}</section>
+  <section class="card weak-card"><h2>☼ 苦手分野 TOP3</h2>{% for item in dashboard.weak_fields %}<a class="weak-row" href="{{ url_for('goukaku_ui.learning', field=item.name, count=10) }}"><i class="rank rank-{{ loop.index }}">{{ loop.index }}</i><p><b>{{ item.name }}</b><span>正答率 {{ item.score }}% ／ 回答数 {{ item.answers }}問</span></p><span class="chevron">›</span></a>{% else %}<p class="empty-state">まだデータがありません。勉強するとここに表示されます＾＾</p>{% endfor %}</section>
 
-  <section class="card recommendations"><h2>💡 今日のおすすめ学習</h2>{% for name, count in dashboard.recommended_study %}<div><span>✓</span><b>{{ name }}　{{ count }}問</b><a href="{{ url_for('goukaku_ui.learning', field=name, count=count) }}">選択する</a></div>{% endfor %}</section>
+  <section class="card recommendations"><h2>💡 今日のおすすめ学習</h2>{% for name, count in dashboard.recommended_study %}<div><span>✓</span><b>{{ name }}　{{ count }}問</b><a href="{{ url_for('goukaku_ui.learning', field=name, count=count) }}">選択する</a></div>{% else %}<p class="empty-state">まだデータがありません。勉強するとここに表示されます＾＾</p>{% endfor %}</section>
   <section class="goal-card"><h2>▣ 今日の目標</h2><p>1日{{ dashboard.today_goal }}問のペースがおすすめです！</p><div class="goal-progress"><div class="bar"><i style="width:{{ dashboard.today_progress / dashboard.today_goal * 100 }}%"></i></div><span>{{ dashboard.today_progress }} / {{ dashboard.today_goal }}問</span></div></section>
   <a class="footprints-link" href="{{ url_for('goukaku_ui.footprints') }}">👣 あなたの足跡を見る <span>›</span></a>
 

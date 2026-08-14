@@ -18,7 +18,9 @@ def test_goukaku_home_renders():
     assert "今日のおすすめ学習" in text
     assert "今日の目標" in text
     assert "（暫定）" in text
-    assert 'href="/goukaku-no-michi/learning?field=' in text
+    assert "まだデータがありません。勉強するとここに表示されます＾＾" in text
+    assert "2027/02/20" in text
+    assert ">0<small>問</small>" in text
     assert "data-line-message=\"相談する\"" in text
     assert 'class="app-shell"' in text
     assert "20260812-pc1" in text
