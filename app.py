@@ -29,8 +29,15 @@ from linebot.models import (
 from openai import OpenAI
 from docx import Document
 from pypdf import PdfReader
-from database import reset_user_profile, user_names, user_modes, user_profile_exists
-from goukaku_ui import goukaku_ui
+from database import (
+    add_learning_time,
+    record_learning_batch,
+    reset_user_profile,
+    user_names,
+    user_modes,
+    user_profile_exists,
+)
+from goukaku_ui import create_dashboard_token, goukaku_ui
 
 # =========================================================
 # ロギング設定
@@ -852,6 +859,7 @@ def start_quiz(user_id):
         "expected_numbers": list(range(1, QUESTIONS_PER_SET + 1)),
         "mode": user_modes.get(user_id, "study"),
         "started_at": time.time(),
+        "active_started_at": time.time(),
         "nekketsu_correct": 0,
     }
 
@@ -1398,7 +1406,13 @@ def is_complete_reset_command(message_text):
 # 共通関数：準備確認のクイックリプライ付き返信
 # =========================================================
 
-def create_home_message():
+def create_home_message(user_id=None):
+    dashboard_url = (
+        os.getenv("PUBLIC_BASE_URL", "https://line-bot-project-bxjq.onrender.com").rstrip("/")
+        + "/goukaku-no-michi"
+    )
+    if user_id:
+        dashboard_url += "?token=" + create_dashboard_token(user_id)
     return TextSendMessage(
         text=("お！きたなｗ\n初めて来た奴も、戻ってきた奴も、お疲れさん＾＾\n"
               "ここはお前たちの〝家”だよ＾＾\nここから全てが始まる…\n"
@@ -1406,7 +1420,7 @@ def create_home_message():
         quick_reply=QuickReply(items=[
             QuickReplyButton(action=URIAction(
                 label="📊 合格への道",
-                uri=(os.getenv("PUBLIC_BASE_URL", "https://line-bot-project-bxjq.onrender.com").rstrip("/") + "/goukaku-no-michi"),
+                uri=dashboard_url,
             )),
             QuickReplyButton(action=MessageAction(label="📘 勉強する！", text="勉強する")),
             QuickReplyButton(action=MessageAction(label="💬 相談する", text="相談する")),
@@ -1415,13 +1429,13 @@ def create_home_message():
     )
 
 
-def reply_mode_select(reply_token, intro_text=None):
+def reply_mode_select(reply_token, intro_text=None, user_id=None):
     """
     「今日は何する？＾＾」と、
     4つの入口をクイックリプライで送る。
     """
 
-    reply_message = create_home_message()
+    reply_message = create_home_message(user_id)
 
     try:
         if intro_text:
@@ -1578,6 +1592,7 @@ def pause_quiz_session(user_id):
         return False
     if session.get("status") != "paused":
         session["resume_status"] = session.get("status", "waiting_for_answers")
+        finish_active_learning_time(user_id)
     session["status"] = "paused"
     return True
 
@@ -1587,7 +1602,37 @@ def resume_quiz_session(user_id):
     if not session or session.get("status") != "paused":
         return None
     session["status"] = session.pop("resume_status", "waiting_for_answers")
+    session["active_started_at"] = time.time()
     return session
+
+
+def finish_active_learning_time(user_id):
+    session = study_sessions.get(user_id)
+    if not session:
+        return
+    active_started_at = session.pop("active_started_at", None)
+    if active_started_at is not None:
+        add_learning_time(user_id, time.time() - active_started_at)
+
+
+def record_confirmed_learning_batch(user_id, session):
+    """現在の5問を採点確定時に一度だけ永続化する。"""
+    current_set = session["current_set"]
+    questions_per_set = session["questions_per_set"]
+    start_number = ((current_set - 1) * questions_per_set) + 1
+    correct_count = 0
+    for offset, question in enumerate(session["questions"]):
+        answer = session["all_answers"][start_number + offset]["answer"]
+        correct_count += int(
+            answer == str(question.get("answer", "")).upper().strip()
+        )
+    return record_learning_batch(
+        user_id=user_id,
+        event_key=f'{session["session_id"]}:{current_set}',
+        mode=session.get("mode", "study"),
+        answered_count=questions_per_set,
+        correct_count=correct_count,
+    )
 
 
 def reply_current_quiz(reply_token, session):
@@ -1809,10 +1854,11 @@ def return_home(reply_token, user_id, interrupt=True):
     explain_contexts.pop(user_id, None)
     consultation_contexts.pop(user_id, None)
     current_session = study_sessions.get(user_id)
+    finish_active_learning_time(user_id)
     if interrupt and not (current_session and current_session.get("status") == "paused"):
         study_sessions.pop(user_id, None)
     user_modes[user_id] = "normal"
-    reply_mode_select(reply_token)
+    reply_mode_select(reply_token, user_id=user_id)
 
 
 def is_home_command(user_message):
@@ -2738,12 +2784,14 @@ def process_study_answer_input(reply_token, user_id, user_message):
 
     for question_number, answer_data in parsed_answers.items():
         session["all_answers"][question_number] = answer_data
+    record_confirmed_learning_batch(user_id, session)
     learning_answer_counts[user_id] = max(
         learning_answer_counts.get(user_id, 0),
         len(session["all_answers"]),
     )
 
     if current_set >= session["total_sets"]:
+        finish_active_learning_time(user_id)
         session["quiz_result"] = calculate_quiz_result(
             session["all_questions"],
             session["all_answers"],
@@ -2840,6 +2888,7 @@ def process_nekketsu_flow_command(reply_token, user_id, user_message):
             pause_quiz_session(user_id)
             return_home(reply_token, user_id, interrupt=True)
         elif user_message == "終了する":
+            finish_active_learning_time(user_id)
             study_sessions.pop(user_id, None)
             return_home(reply_token, user_id, interrupt=True)
         else:
@@ -2923,6 +2972,7 @@ def handle_text_message(event):
                 f"じゃあ今後は俺と{user_message}の二人三脚でゴールを目指して頑張るぜ！\n"
                 f"よろしくな！{user_message}＾＾"
             ),
+            user_id=user_id,
         )
         return
 
@@ -2967,6 +3017,7 @@ def handle_text_message(event):
                     "おう、それならよかった＾＾\n"
                     "また分からないことがあったら、いつでも持ってこい！"
                 ),
+                user_id=user_id,
             )
             return
 
@@ -3018,7 +3069,7 @@ def handle_text_message(event):
     if user_message == "モード選択に戻る":
         consultation_contexts.pop(user_id, None)
         user_modes[user_id] = "normal"
-        reply_mode_select(event.reply_token)
+        reply_mode_select(event.reply_token, user_id=user_id)
         return
     if user_message == "入力する" and user_modes.get(user_id) == "chat":
         user_states[user_id] = "consultation_input"
@@ -3027,7 +3078,7 @@ def handle_text_message(event):
     if user_message == "相談を終わる" and user_modes.get(user_id) == "chat":
         line_bot_api.reply_message(event.reply_token, [
             TextSendMessage(text="おう、わかった＾＾\nまた何かあったらいつでも話してくれよ。\n待ってるからな＾＾"),
-            create_home_message(),
+            create_home_message(user_id),
         ])
         user_states.pop(user_id, None)
         consultation_contexts.pop(user_id, None)
@@ -3117,6 +3168,7 @@ def handle_text_message(event):
         return
 
     if user_message in {"熱血をやめる", "熱血を終わる", "終了する"} and current_session:
+        finish_active_learning_time(user_id)
         study_sessions.pop(user_id, None)
         return_home(event.reply_token, user_id, interrupt=True)
         return
@@ -3155,7 +3207,8 @@ def handle_text_message(event):
 
 
         reply_mode_select(
-            event.reply_token
+            event.reply_token,
+            user_id=user_id,
         )
         return    
      # 「問題出して」と言われたら小テストを開始する
@@ -3207,6 +3260,7 @@ def handle_text_message(event):
 
         for question_number, answer_data in parsed_answers.items():
             current_session["all_answers"][question_number] = answer_data
+        record_confirmed_learning_batch(user_id, current_session)
         learning_answer_counts[user_id] = max(
             learning_answer_counts.get(user_id, 0),
             len(current_session["all_answers"]),

@@ -100,6 +100,8 @@ def load_current_app_functions() -> SimpleNamespace:
         "is_home_command",
         "pause_quiz_session",
         "resume_quiz_session",
+        "finish_active_learning_time",
+        "record_confirmed_learning_batch",
         "process_study_answer_input",
         "process_study_flow_command",
         "process_nekketsu_flow_command",
@@ -129,6 +131,8 @@ def load_current_app_functions() -> SimpleNamespace:
         "study_sessions": {},
         "consultation_contexts": {},
         "learning_answer_counts": {},
+        "record_learning_batch": lambda **kwargs: True,
+        "add_learning_time": lambda *args, **kwargs: None,
         "explain_contexts": {},
         "user_states": {},
         "user_names": {},
@@ -277,6 +281,7 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         app.user_names[user_id] = "テストユーザー"
         app.user_modes[user_id] = "study"
         app.study_sessions[user_id] = {
+            "session_id": f"{user_id}-session",
             "status": "waiting_for_answers",
             "current_set": current_set,
             "total_sets": 6,
@@ -1087,7 +1092,7 @@ class NewUserWelcomeTest(unittest.TestCase):
         )
         function_globals["reply_gen_first_greeting"] = lambda _token: events.append("gen")
         function_globals["reply_mode_select"] = (
-            lambda _token, intro_text=None: events.append(("registered", intro_text))
+            lambda _token, intro_text=None, user_id=None: events.append(("registered", intro_text))
         )
 
         try:
@@ -1153,7 +1158,7 @@ class NewUserWelcomeTest(unittest.TestCase):
         function_globals["reply_gen_first_greeting"] = lambda *args: gen_calls.append(args)
         function_globals["reply_to_line"] = lambda _token, message: replies.append(message)
         function_globals["reply_mode_select"] = (
-            lambda _token, intro_text=None: registered.append(intro_text)
+            lambda _token, intro_text=None, user_id=None: registered.append(intro_text)
         )
 
         try:
@@ -1191,6 +1196,7 @@ class NewUserWelcomeTest(unittest.TestCase):
 
         def session(mode):
             return {
+                "session_id": f"{mode}-active-session",
                 "status": "waiting_for_answers", "current_set": 1,
                 "total_sets": 6, "question_count": 30, "questions_per_set": 5,
                 "questions": make_questions(), "all_questions": make_all_questions(),
@@ -1612,7 +1618,7 @@ class ConfigurableQuizTest(unittest.TestCase):
             lambda _token, answer: reviewed_answers.append(answer)
         )
         function_globals["reply_mode_select"] = (
-            lambda _token, intro_text=None: mode_selects.append(intro_text)
+            lambda _token, intro_text=None, user_id=None: mode_selects.append(intro_text)
         )
 
         direct_user = "direct-explain-user"

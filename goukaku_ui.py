@@ -1,6 +1,10 @@
 from datetime import date
+import os
 
 from flask import Blueprint, render_template, request
+from itsdangerous import BadSignature, URLSafeSerializer
+
+from database import get_learning_summary
 
 
 goukaku_ui = Blueprint("goukaku_ui", __name__)
@@ -35,9 +39,30 @@ HOME_SUBJECT_NAMES = {"神経医学", "運動器", "内科学", "小児学", "�
 WEEKLY = [("月", 60), ("火", 75), ("水", 67), ("木", 70), ("金", 80), ("土", 65), ("日", 71)]
 
 
-def build_dashboard():
+def create_dashboard_token(user_id):
+    serializer = URLSafeSerializer(
+        os.getenv("CHANNEL_SECRET", "local-dashboard-secret"),
+        salt="goukaku-dashboard",
+    )
+    return serializer.dumps({"user_id": user_id})
+
+
+def dashboard_user_id(token):
+    if not token:
+        return None
+    serializer = URLSafeSerializer(
+        os.getenv("CHANNEL_SECRET", "local-dashboard-secret"),
+        salt="goukaku-dashboard",
+    )
+    try:
+        return serializer.loads(token).get("user_id")
+    except (BadSignature, AttributeError):
+        return None
+
+
+def build_dashboard(user_id=None):
     today = date.today()
-    return {
+    dashboard = {
         "current_date": today,
         "exam_date": EXAM_DATE,
         "days_until_exam": max((EXAM_DATE - today).days, 0),
@@ -54,11 +79,15 @@ def build_dashboard():
         "today_goal": TODAY_GOAL,
         "today_progress": 0,
     }
+    if user_id:
+        dashboard.update(get_learning_summary(user_id))
+    return dashboard
 
 
 @goukaku_ui.route("/goukaku-no-michi")
 def home():
-    return render_template("goukaku/home.html", dashboard=build_dashboard())
+    user_id = dashboard_user_id(request.args.get("token"))
+    return render_template("goukaku/home.html", dashboard=build_dashboard(user_id))
 
 
 @goukaku_ui.route("/goukaku-no-michi/subjects")
