@@ -1479,7 +1479,7 @@ def reply_consultation_response(reply_token, response_text):
         TextSendMessage(
             text=response_text[:4500],
             quick_reply=QuickReply(items=[
-                QuickReplyButton(action=MessageAction(label="入力する", text="入力する")),
+                QuickReplyButton(action=MessageAction(label="相談を続ける", text="入力する")),
                 QuickReplyButton(action=MessageAction(label="相談を終わる", text="相談を終わる")),
                 QuickReplyButton(action=MessageAction(label="ホームへ戻る", text="ホームへ戻る")),
             ]),
