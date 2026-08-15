@@ -1992,13 +1992,11 @@ def push_quiz_to_line(user_id, push_message):
                 QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
                 QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
             ]
-        line_bot_api.push_message(user_id, [
-            TextSendMessage(text=push_message),
-            TextSendMessage(
-                text="じゃあ、解答を入力してくれ＾＾",
-                quick_reply=QuickReply(items=quick_reply_items),
-            ),
-        ])
+        line_bot_api.push_message(user_id, TextSendMessage(text=push_message))
+        line_bot_api.push_message(user_id, TextSendMessage(
+            text="じゃあ、解答を入力してくれ＾＾",
+            quick_reply=QuickReply(items=quick_reply_items),
+        ))
     except Exception:
         logging.exception("LINE quiz push failed.")
 # =========================================================
