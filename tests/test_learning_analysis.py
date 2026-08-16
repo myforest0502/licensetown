@@ -21,6 +21,9 @@ def make_fields(values=None):
             "recent_7d_answered_count": 0,
             "recent_7d_correct_count": 0,
             "recent_7d_accuracy": None,
+            "today_answered_count": 0,
+            "today_correct_count": 0,
+            "today_accuracy": None,
             "learned": answered > 0,
         })
     return fields
@@ -48,11 +51,18 @@ def test_foundation_recommendation_balances_unlearned_then_low_volume():
     )
     assert guidance["recommended_study"] == [("生理学", 10)]
 
+    guidance = build_learning_guidance(
+        99,
+        make_fields({1: (5, 4), 2: (5, 1), 3: (5, 3), 4: (5, 4), 5: (5, 4), 6: (5, 4)}),
+    )
+    assert guidance["recommended_study"] == [("生理学", 10)]
+
 
 def test_exactly_100_starts_analysis_but_does_not_invent_three_fields():
     guidance = build_learning_guidance(100, make_fields({1: (1, 0)}))
     assert guidance["phase"] == "analysis"
     assert guidance["weak_fields"] == []
+    assert guidance["recommended_study"] == []
 
 
 def test_one_wrong_answer_is_not_overweighted():
@@ -82,6 +92,20 @@ def test_unlearned_is_one_candidate_only_after_broad_learning():
     assert unlearned[0]["name"] == "病理学"
 
 
+def test_low_engagement_is_a_candidate_after_broad_learning():
+    fields = make_fields({
+        1: (15, 13), 2: (15, 13), 3: (15, 13),
+        4: (15, 13), 5: (15, 13), 6: (1, 1),
+    })
+    guidance = build_learning_guidance(100, fields)
+    low_engagement = [
+        item for item in guidance["weak_fields"]
+        if item["reason"] == "取り組み不足"
+    ]
+    assert low_engagement
+    assert low_engagement[0]["name"] == "医学概論"
+
+
 def test_null_legacy_history_counts_for_100_but_not_field_analysis():
     database._local_learning_events.clear()
     user_id = "legacy-analysis-user"
@@ -102,3 +126,40 @@ def test_null_legacy_history_counts_for_100_but_not_field_analysis():
 def test_analysis_module_has_no_openai_dependency():
     source = Path(__import__("learning_analysis").__file__).read_text(encoding="utf-8").lower()
     assert "openai" not in source
+
+
+def test_dashboard_and_supporter_use_the_same_guidance(monkeypatch):
+    import goukaku_ui
+    import supporter_report
+
+    fields = make_fields({
+        1: (20, 16), 2: (20, 15), 7: (20, 5),
+        8: (20, 16), 9: (20, 17), 10: (20, 16),
+    })
+    summary = {
+        "total_answers": 120,
+        "correct_answers": 85,
+        "average_accuracy": 71,
+        "last_7_days_accuracy": 71,
+        "today_progress": 0,
+        "study_minutes": 0,
+    }
+    activity = {
+        "daily": [{"answered_count": 0, "correct_count": 0, "accuracy": 0, "study_minutes": 0}],
+        "streak_days": 0,
+        "weekly_study_minutes": 0,
+        "average_daily_study_minutes": 0,
+        "weekly_learning_days": 0,
+        "weekly_answers": 0,
+        "weekly_correct": 0,
+        "weekly_accuracy": 0,
+    }
+    for module in (goukaku_ui, supporter_report):
+        monkeypatch.setattr(module, "get_learning_summary", lambda _user_id: summary)
+        monkeypatch.setattr(module, "get_field_learning_summary", lambda _user_id: fields)
+        monkeypatch.setattr(module, "get_learning_activity", lambda _user_id: activity)
+
+    dashboard = goukaku_ui.build_dashboard("same-user")
+    supporter = supporter_report.build_supporter_report("same-user")
+    assert dashboard["weak_fields"] == supporter["weak_fields"]
+    assert dashboard["recommended_study"] == supporter["recommended_study"]

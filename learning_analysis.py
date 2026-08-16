@@ -119,16 +119,7 @@ def build_learning_guidance(
         }
 
     weak_fields = _weakness_candidates(fields)[:3]
-    if weak_fields:
-        recommended_name = weak_fields[0]["name"]
-    else:
-        learned = [item for item in fields if item["answered_count"] > 0]
-        fallback = min(
-            learned,
-            key=lambda item: (item["answered_count"], item["category_small"]),
-            default=None,
-        )
-        recommended_name = fallback["name"] if fallback else None
+    recommended_name = weak_fields[0]["name"] if weak_fields else None
     return {
         "phase": "analysis",
         "weak_fields": weak_fields,
