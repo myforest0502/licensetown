@@ -6,6 +6,9 @@ os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
 import app as bot_app
 from question_bank import (
+    CATEGORY_NAMES,
+    get_category_name,
+    get_category_small,
     get_answer,
     get_explanation,
     get_question,
@@ -14,6 +17,17 @@ from question_bank import (
     question_count,
     select_random_questions,
 )
+
+
+def test_formal_category_lookup_uses_all_official_names():
+    expected = [
+        "解剖学", "生理学", "心理学", "人間発達学", "教育学", "医学概論",
+        "病理学", "内科学", "神経医学", "精神医学", "小児学", "臨床心理学",
+        "基礎運動学", "臨床運動学", "動作分析学", "運動器", "理学療法評価各論", "理学療法治療各論",
+    ]
+    assert list(CATEGORY_NAMES) == list(range(1, 19))
+    assert [get_category_name(number) for number in range(1, 19)] == expected
+    assert get_category_small("Q1") == get_question("Q1")["category_small"]
 
 
 def test_formal_bank_has_all_questions_and_boundary_ids():

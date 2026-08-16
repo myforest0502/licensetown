@@ -1,19 +1,16 @@
 {% extends "goukaku/base.html" %}
 {% block title %}分野別 詳細{% endblock %}
 {% block content %}
-<header class="app-header"><a href="{{ url_for('goukaku_ui.home') }}" aria-label="戻る" class="icon-btn">‹</a><h1>分野別 詳細</h1><button aria-label="閉じる" class="icon-btn close" data-close>×</button></header>
+<header class="app-header"><a href="{{ url_for('goukaku_ui.home', token=dashboard_token) }}" aria-label="戻る" class="icon-btn">‹</a><h1>分野別 詳細</h1><button aria-label="閉じる" class="icon-btn close" data-close>×</button></header>
 <div class="page-content detail-page">
   <div class="tabs" role="tablist"><button class="tab active" data-tab="overall" role="tab">全体</button><button class="tab" data-tab="weekly" role="tab">1週間の推移</button></div>
   <section id="overall" class="tab-panel active">
     <h2 class="list-heading">分野別 正答率（全期間）</h2>
-    <div class="card full-subject-list">{% for item in subjects %}<div class="detail-row"><div><b>{{ item.name }}</b><small>{{ item.answers }}問・{{ item.minutes // 60 }}時間{{ item.minutes % 60 }}分</small></div><div class="bar"><i class="score-{{ 'good' if item.score >= 70 else 'warn' if item.score >= 50 else 'weak' }}" style="width:{{ item.score }}%"></i></div><span>{{ item.score }}%</span><i class="chevron">›</i></div>{% endfor %}<div class="legend"><span><i class="good"></i>得意（70%以上）</span><span><i class="warn"></i>要注意（50〜69%）</span><span><i class="weak"></i>要強化（50%未満）</span></div></div>
-    <section class="card recommendations"><h2>💡 今週のおすすめ学習</h2>{% for name, count, label in [('精神医学',30,'問題へ'),('運動器',20,'問題へ'),('間違えた問題',15,'復習へ')] %}<div><span>✓</span><b>{{ name }}の問題を{{ count }}問解く</b><a href="{{ url_for('goukaku_ui.learning', field=name, count=count) }}">{{ label }}</a></div>{% endfor %}</section>
-    <section class="goal-card"><h2>▣ 今週の目標</h2><p>1日あたり30問のペースがおすすめです！</p><p>今週の目標：210問</p><div class="goal-progress"><div class="bar"><i style="width:43%"></i></div><span>現在 90問（43%）</span></div></section>
+    <div class="card full-subject-list">{% for item in subjects %}<div class="detail-row"><div><b>{{ item.name }}</b><small>{{ item.answered_count }}問</small></div><div class="bar"><i{% if item.learned %} class="score-{{ 'good' if item.accuracy >= 70 else 'warn' if item.accuracy >= 50 else 'weak' }}" style="width:{{ item.accuracy }}%"{% else %} style="width:0"{% endif %}></i></div><span>{% if item.learned %}{{ item.accuracy }}%{% else %}未学習{% endif %}</span><i class="chevron">›</i></div>{% endfor %}<div class="legend"><span><i class="good"></i>得意（70%以上）</span><span><i class="warn"></i>要注意（50〜69%）</span><span><i class="weak"></i>弱点（50%未満）</span></div></div>
   </section>
   <section id="weekly" class="tab-panel">
-    <div class="metric-tabs" role="tablist"><button class="metric-tab active" data-metric="accuracy">正答率</button><button class="metric-tab" data-metric="questions">問題数</button><button class="metric-tab" data-metric="minutes">学習時間</button></div>
-    <section class="card weekly-card"><h2>神経医学</h2><p class="weekly-score">今週平均 <strong data-week-summary>68%</strong></p><div class="week-bars" data-week-chart>{% for day, score in weekly %}<div data-accuracy="{{ score }}" data-questions="{{ [12,18,15,20,24,16,19][loop.index0] }}" data-minutes="{{ [22,31,27,35,42,29,34][loop.index0] }}"><span>{{ score }}%</span><i style="height:{{ score }}%"></i><b>{{ day }}</b></div>{% endfor %}</div><p class="up">表示指標を切り替えて確認できます</p></section>
-    <section class="goal-card gensan-comment"><h2>源さんコメント</h2><p>「今週は上向きだな。<br>特に神経医学の正答率が伸びてるぞ＾＾」</p></section>
+    <h2 class="list-heading">分野別 正答率（直近7日）</h2>
+    <div class="card full-subject-list">{% for item in weekly_subjects %}<div class="detail-row"><div><b>{{ item.name }}</b><small>{{ item.recent_7d_answered_count }}問</small></div><div class="bar"><i class="score-{{ 'good' if item.recent_7d_accuracy >= 70 else 'warn' if item.recent_7d_accuracy >= 50 else 'weak' }}" style="width:{{ item.recent_7d_accuracy }}%"></i></div><span>{{ item.recent_7d_accuracy }}%</span><i class="chevron">›</i></div>{% else %}<p class="empty-state">データがありません</p>{% endfor %}</div>
   </section>
 </div>
 {% endblock %}

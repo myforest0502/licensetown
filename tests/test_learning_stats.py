@@ -7,9 +7,15 @@ os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
 import database
 from app import app, record_confirmed_learning_batch
-from database import add_learning_time, get_learning_summary, record_learning_batch, reset_user_profile
+from database import (
+    add_learning_time,
+    get_field_learning_summary,
+    get_learning_summary,
+    record_learning_batch,
+    reset_user_profile,
+)
 from goukaku_ui import create_dashboard_token
-from question_bank import get_quiz_question, is_answer_correct
+from question_bank import get_category_small, get_quiz_question, is_answer_correct
 
 
 def clear_local_stats():
@@ -178,3 +184,64 @@ def test_database_migration_adds_nullable_jsonb_without_recreating_table():
     source = (__import__("pathlib").Path(database.__file__)).read_text(encoding="utf-8")
     assert "ADD COLUMN IF NOT EXISTS question_results JSONB" in source
     assert "DROP TABLE" not in source
+
+
+def _question_ids_for_different_categories():
+    first_id = "Q1"
+    first_category = get_category_small(first_id)
+    second_id = next(
+        f"Q{number}" for number in range(2, 1565)
+        if get_category_small(f"Q{number}") != first_category
+    )
+    return first_id, second_id
+
+
+def test_field_summary_counts_repeats_categories_recent_and_legacy_rows():
+    clear_local_stats()
+    user_id = "field-summary-user"
+    now = datetime.now(timezone.utc)
+    q1, q2 = _question_ids_for_different_categories()
+    category1 = get_category_small(q1)
+    category2 = get_category_small(q2)
+    record_learning_batch(user_id, "legacy", "study", 5, 5, now, question_results=None)
+    record_learning_batch(
+        user_id, "old-detail", "study", 1, 0, now - timedelta(days=8),
+        question_results=[{"question_id": q1, "selected_answers": ["1"], "is_correct": False, "confidence": None}],
+    )
+    record_learning_batch(
+        user_id, "recent-detail", "nekketsu", 3, 2, now,
+        question_results=[
+            {"question_id": q1, "selected_answers": ["2"], "is_correct": True, "confidence": 2},
+            {"question_id": q1, "selected_answers": ["1"], "is_correct": False, "confidence": 1},
+            {"question_id": q2, "selected_answers": ["3"], "is_correct": True, "confidence": 3},
+        ],
+    )
+
+    fields = {item["category_small"]: item for item in get_field_learning_summary(user_id, now=now)}
+    assert len(fields) == 18
+    assert fields[category1]["answered_count"] == 3
+    assert fields[category1]["correct_count"] == 1
+    assert fields[category1]["accuracy"] == 33
+    assert fields[category1]["recent_7d_answered_count"] == 2
+    assert fields[category1]["recent_7d_correct_count"] == 1
+    assert fields[category1]["recent_7d_accuracy"] == 50
+    assert fields[category2]["answered_count"] == 1
+    assert fields[category2]["accuracy"] == 100
+    assert get_learning_summary(user_id, now=now)["total_answers"] == 9
+
+    unlearned = next(item for item in fields.values() if item["answered_count"] == 0)
+    assert unlearned["learned"] is False
+    assert unlearned["accuracy"] is None
+    assert unlearned["recent_7d_accuracy"] is None
+
+
+def test_field_summary_is_empty_after_complete_reset():
+    clear_local_stats()
+    user_id = "field-reset-user"
+    record_learning_batch(
+        user_id, "field-reset", "study", 1, 1,
+        question_results=[{"question_id": "Q1", "selected_answers": ["2"], "is_correct": True, "confidence": 1}],
+    )
+    assert any(item["learned"] for item in get_field_learning_summary(user_id))
+    reset_user_profile(user_id)
+    assert all(not item["learned"] for item in get_field_learning_summary(user_id))

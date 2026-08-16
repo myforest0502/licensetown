@@ -20,8 +20,8 @@
     <article class="mini-card"><span class="mini-icon">▥</span><b>平均正答率</b><strong>{{ dashboard.average_accuracy }}<small>%</small></strong></article>
   </section>
 
-  <section class="card subject-card"><div class="section-title"><h2>分野別 到達度</h2><a href="{{ url_for('goukaku_ui.subjects') }}" class="pill-link">すべて見る</a></div>
-    <div class="subject-list">{% for item in dashboard.field_stats %}<a href="{{ url_for('goukaku_ui.subjects') }}" class="subject-row"><b>{{ item.name }}</b><div class="bar"><i class="score-{{ 'good' if item.score >= 70 else 'warn' if item.score >= 50 else 'weak' }}" style="width:{{ item.score }}%"></i></div><span>{{ item.score }}%</span></a>{% else %}<p class="empty-state">まだデータがありません。勉強するとここに表示されます＾＾</p>{% endfor %}</div>
+  <section class="card subject-card"><div class="section-title"><h2>分野別 到達度</h2><a href="{{ url_for('goukaku_ui.subjects', token=dashboard_token) }}" class="pill-link">すべて見る</a></div>
+    <div class="subject-list">{% for item in dashboard.field_stats %}<a href="{{ url_for('goukaku_ui.subjects', token=dashboard_token) }}" class="subject-row"><b>{{ item.name }}<small>{{ item.answered_count }}問</small></b><div class="bar"><i class="score-{{ 'good' if item.accuracy >= 70 else 'warn' if item.accuracy >= 50 else 'weak' }}" style="width:{{ item.accuracy }}%"></i></div><span>{{ item.accuracy }}%</span></a>{% else %}<p class="empty-state">まだデータがありません。勉強するとここに表示されます＾＾</p>{% endfor %}</div>
     <div class="legend"><span><i class="good"></i>得意（70%以上）</span><span><i class="warn"></i>要注意（50〜69%）</span><span><i class="weak"></i>要強化（50%未満）</span></div>
   </section>
 

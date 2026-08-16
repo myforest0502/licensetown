@@ -6,6 +6,7 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 import psycopg
+from question_bank import CATEGORY_NAMES, QuestionBankError, get_category_small
 
 
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -357,3 +358,92 @@ def get_learning_summary(user_id: str, now: datetime | None = None) -> dict[str,
             )
             row = cur.fetchone()
     return _summary_values(*values, row[0] if row else 0)
+
+
+def _as_utc(timestamp: datetime) -> datetime:
+    if timestamp.tzinfo is None:
+        return timestamp.replace(tzinfo=timezone.utc)
+    return timestamp.astimezone(timezone.utc)
+
+
+def get_field_learning_summary(user_id: str, now: datetime | None = None) -> list[dict[str, Any]]:
+    """question_resultsを正式Q番号と18分野に結合し、全期間と直近7日を集計する。"""
+    current = _as_utc(now or datetime.now(timezone.utc))
+    seven_days_ago = current - timedelta(days=7)
+    summaries = {
+        number: {
+            "category_small": number,
+            "name": name,
+            "answered_count": 0,
+            "correct_count": 0,
+            "accuracy": None,
+            "recent_7d_answered_count": 0,
+            "recent_7d_correct_count": 0,
+            "recent_7d_accuracy": None,
+            "learned": False,
+        }
+        for number, name in CATEGORY_NAMES.items()
+    }
+
+    if not database_is_available():
+        rows = [
+            (event.get("question_results"), event["answered_at"])
+            for event in _local_learning_events.values()
+            if event["user_id"] == user_id and event.get("question_results") is not None
+        ]
+    else:
+        with get_db_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT question_results, answered_at
+                    FROM learning_events
+                    WHERE user_id = %s AND question_results IS NOT NULL
+                    ORDER BY answered_at
+                    """,
+                    (user_id,),
+                )
+                rows = cur.fetchall()
+
+    for question_results, answered_at in rows:
+        if isinstance(question_results, str):
+            try:
+                question_results = json.loads(question_results)
+            except json.JSONDecodeError:
+                logger.warning("Invalid question_results JSON for user %s", user_id)
+                continue
+        if not isinstance(question_results, list):
+            continue
+        is_recent = _as_utc(answered_at) >= seven_days_ago
+        for result in question_results:
+            if not isinstance(result, dict):
+                continue
+            try:
+                category_small = get_category_small(result.get("question_id"))
+            except QuestionBankError:
+                logger.warning(
+                    "Question result has an unknown question_id: %r",
+                    result.get("question_id"),
+                )
+                continue
+            summary = summaries[category_small]
+            summary["answered_count"] += 1
+            if result.get("is_correct") is True:
+                summary["correct_count"] += 1
+            if is_recent:
+                summary["recent_7d_answered_count"] += 1
+                if result.get("is_correct") is True:
+                    summary["recent_7d_correct_count"] += 1
+
+    for summary in summaries.values():
+        answered = summary["answered_count"]
+        recent_answered = summary["recent_7d_answered_count"]
+        summary["learned"] = answered > 0
+        summary["accuracy"] = (
+            round(summary["correct_count"] / answered * 100) if answered else None
+        )
+        summary["recent_7d_accuracy"] = (
+            round(summary["recent_7d_correct_count"] / recent_answered * 100)
+            if recent_answered else None
+        )
+    return list(summaries.values())

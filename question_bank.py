@@ -17,6 +17,12 @@ QUESTION_BANK_ERROR_MESSAGE = (
     "おう、悪い。今は正式問題バンクを読み込めない状態だ。\n"
     "自由会話の問題には切り替えず、ここで止めておくぞ。少し待ってからもう一度試してくれ。"
 )
+CATEGORY_NAMES = {
+    1: "解剖学", 2: "生理学", 3: "心理学", 4: "人間発達学", 5: "教育学", 6: "医学概論",
+    7: "病理学", 8: "内科学", 9: "神経医学", 10: "精神医学", 11: "小児学", 12: "臨床心理学",
+    13: "基礎運動学", 14: "臨床運動学", 15: "動作分析学", 16: "運動器",
+    17: "理学療法評価各論", 18: "理学療法治療各論",
+}
 
 
 class QuestionBankError(RuntimeError):
@@ -82,6 +88,26 @@ def get_question(q_id) -> dict:
         return copy.deepcopy(_QUESTIONS[key])
     except KeyError as exc:
         raise QuestionBankError(f"Question not found: {key}") from exc
+
+
+def get_category_small(q_id) -> int:
+    """正式問題バンクのQ番号から小カテゴリ番号を取得する。"""
+    value = get_question(q_id).get("category_small")
+    try:
+        category_small = int(value)
+    except (TypeError, ValueError) as exc:
+        raise QuestionBankError(f"Invalid category_small for {q_id}: {value!r}") from exc
+    if category_small not in CATEGORY_NAMES:
+        raise QuestionBankError(f"Unknown category_small for {q_id}: {category_small}")
+    return category_small
+
+
+def get_category_name(category_small) -> str:
+    """小カテゴリ番号を正式な18分野名に変換する。"""
+    try:
+        return CATEGORY_NAMES[int(category_small)]
+    except (KeyError, TypeError, ValueError) as exc:
+        raise QuestionBankError(f"Unknown category_small: {category_small!r}") from exc
 
 
 def get_answer(q_id) -> dict:
