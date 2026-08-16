@@ -14,6 +14,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 _known_user_ids: set[str] = set()
 _local_learning_events: dict[str, dict[str, Any]] = {}
 _local_learning_seconds: dict[str, float] = {}
+_local_learning_time_events: list[dict[str, Any]] = []
 
 logger = logging.getLogger(__name__)
 
@@ -85,6 +86,35 @@ def init_database() -> None:
                     user_id TEXT PRIMARY KEY,
                     total_seconds DOUBLE PRECISION NOT NULL DEFAULT 0
                 )
+                """
+            )
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS learning_time_events (
+                    id BIGSERIAL PRIMARY KEY,
+                    event_key TEXT,
+                    user_id TEXT NOT NULL,
+                    elapsed_seconds DOUBLE PRECISION NOT NULL,
+                    recorded_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+                )
+                """
+            )
+            cur.execute(
+                """
+                ALTER TABLE learning_time_events
+                ADD COLUMN IF NOT EXISTS event_key TEXT
+                """
+            )
+            cur.execute(
+                """
+                CREATE UNIQUE INDEX IF NOT EXISTS learning_time_events_event_key_idx
+                ON learning_time_events (event_key) WHERE event_key IS NOT NULL
+                """
+            )
+            cur.execute(
+                """
+                CREATE INDEX IF NOT EXISTS learning_time_events_user_date_idx
+                ON learning_time_events (user_id, recorded_at)
                 """
             )
 
@@ -223,6 +253,9 @@ def reset_user_profile(user_id: str) -> None:
         ]:
             _local_learning_events.pop(event_key, None)
         _local_learning_seconds.pop(user_id, None)
+        _local_learning_time_events[:] = [
+            event for event in _local_learning_time_events if event["user_id"] != user_id
+        ]
         _known_user_ids.discard(user_id)
         return
 
@@ -230,6 +263,7 @@ def reset_user_profile(user_id: str) -> None:
         with conn.cursor() as cur:
             cur.execute("DELETE FROM learning_events WHERE user_id = %s", (user_id,))
             cur.execute("DELETE FROM learning_time_totals WHERE user_id = %s", (user_id,))
+            cur.execute("DELETE FROM learning_time_events WHERE user_id = %s", (user_id,))
             cur.execute(
                 "DELETE FROM user_profiles WHERE user_id = %s",
                 (user_id,),
@@ -284,14 +318,44 @@ def record_learning_batch(
             return cur.rowcount == 1
 
 
-def add_learning_time(user_id: str, elapsed_seconds: float) -> None:
+def add_learning_time(
+    user_id: str,
+    elapsed_seconds: float,
+    recorded_at: datetime | None = None,
+    event_key: str | None = None,
+) -> bool:
     """終了または保存までの学習時間を累積する。"""
     seconds = max(float(elapsed_seconds), 0.0)
+    timestamp = recorded_at or datetime.now(timezone.utc)
+    interval_key = event_key or f"{user_id}:{timestamp.isoformat()}:{seconds}"
     if not database_is_available():
+        if any(
+            event.get("event_key") == interval_key
+            for event in _local_learning_time_events
+        ):
+            return False
         _local_learning_seconds[user_id] = _local_learning_seconds.get(user_id, 0.0) + seconds
-        return
+        _local_learning_time_events.append({
+            "event_key": interval_key,
+            "user_id": user_id,
+            "elapsed_seconds": seconds,
+            "recorded_at": timestamp,
+        })
+        return True
     with get_db_connection() as conn:
         with conn.cursor() as cur:
+            cur.execute(
+                """
+                INSERT INTO learning_time_events (
+                    event_key, user_id, elapsed_seconds, recorded_at
+                ) VALUES (%s, %s, %s, %s)
+                ON CONFLICT (event_key) WHERE event_key IS NOT NULL DO NOTHING
+                RETURNING event_key
+                """,
+                (interval_key, user_id, seconds, timestamp),
+            )
+            if cur.fetchone() is None:
+                return False
             cur.execute(
                 """
                 INSERT INTO learning_time_totals (user_id, total_seconds)
@@ -301,6 +365,7 @@ def add_learning_time(user_id: str, elapsed_seconds: float) -> None:
                 """,
                 (user_id, seconds),
             )
+            return True
 
 
 def _summary_values(total_answers, total_correct, recent_answers, recent_correct, today_answers, total_seconds):
@@ -447,3 +512,73 @@ def get_field_learning_summary(user_id: str, now: datetime | None = None) -> lis
             if recent_answered else None
         )
     return list(summaries.values())
+
+
+def get_learning_activity(user_id: str, now: datetime | None = None) -> dict[str, Any]:
+    """直近7日の回答数・学習時間と連続学習日数を実履歴から返す。"""
+    current = _as_utc(now or datetime.now(timezone.utc))
+    jst = ZoneInfo("Asia/Tokyo")
+    today = current.astimezone(jst).date()
+    dates = [today - timedelta(days=offset) for offset in range(6, -1, -1)]
+    answers_by_date = {day: 0 for day in dates}
+    seconds_by_date = {day: 0.0 for day in dates}
+
+    if not database_is_available():
+        learning_rows = [
+            (event["answered_count"], event["answered_at"])
+            for event in _local_learning_events.values()
+            if event["user_id"] == user_id
+        ]
+        time_rows = [
+            (event["elapsed_seconds"], event["recorded_at"])
+            for event in _local_learning_time_events
+            if event["user_id"] == user_id
+        ]
+    else:
+        with get_db_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT answered_count, answered_at FROM learning_events WHERE user_id = %s",
+                    (user_id,),
+                )
+                learning_rows = cur.fetchall()
+                cur.execute(
+                    "SELECT elapsed_seconds, recorded_at FROM learning_time_events WHERE user_id = %s",
+                    (user_id,),
+                )
+                time_rows = cur.fetchall()
+
+    active_dates = set()
+    for answered_count, answered_at in learning_rows:
+        day = _as_utc(answered_at).astimezone(jst).date()
+        if int(answered_count) > 0:
+            active_dates.add(day)
+        if day in answers_by_date:
+            answers_by_date[day] += int(answered_count)
+    for elapsed_seconds, recorded_at in time_rows:
+        day = _as_utc(recorded_at).astimezone(jst).date()
+        if day in seconds_by_date:
+            seconds_by_date[day] += float(elapsed_seconds)
+
+    streak_days = 0
+    cursor = today
+    while cursor in active_dates:
+        streak_days += 1
+        cursor -= timedelta(days=1)
+
+    daily = [
+        {
+            "date": day.isoformat(),
+            "label": f"{day.month}/{day.day}",
+            "answered_count": answers_by_date[day],
+            "study_minutes": round(seconds_by_date[day] / 60),
+        }
+        for day in dates
+    ]
+    weekly_minutes = round(sum(seconds_by_date.values()) / 60)
+    return {
+        "daily": daily,
+        "streak_days": streak_days,
+        "weekly_study_minutes": weekly_minutes,
+        "average_daily_study_minutes": round(weekly_minutes / 7),
+    }

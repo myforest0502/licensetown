@@ -4,7 +4,7 @@ import os
 from flask import Blueprint, render_template, request
 from itsdangerous import BadSignature, URLSafeSerializer
 
-from database import get_field_learning_summary, get_learning_summary
+from database import get_field_learning_summary, get_learning_activity, get_learning_summary
 
 
 goukaku_ui = Blueprint("goukaku_ui", __name__)
@@ -52,12 +52,24 @@ def build_dashboard(user_id=None):
         "recommended_study": [],
         "today_goal": TODAY_GOAL,
         "today_progress": 0,
+        "streak_days": 0,
+        "next_reward_answers": 100,
+        "reward_progress": 0,
+        "gensan_comment": "今日はまだ来てねぇな。5問だけやるか？＾＾",
     }
     if user_id:
         dashboard.update(get_learning_summary(user_id))
+        dashboard.update(get_learning_activity(user_id))
         dashboard["field_stats"] = [
             item for item in get_field_learning_summary(user_id) if item["learned"]
         ]
+        remainder = dashboard["total_answers"] % 100
+        dashboard["next_reward_answers"] = 100 - remainder if remainder else 100
+        dashboard["reward_progress"] = remainder
+        if dashboard["today_progress"] >= dashboard["today_goal"]:
+            dashboard["gensan_comment"] = "今日は頑張ったな。胸張っていいぞ＾＾"
+        elif dashboard["today_progress"]:
+            dashboard["gensan_comment"] = "ちゃんと続いてるじゃねぇか＾＾"
     return dashboard
 
 
@@ -75,10 +87,16 @@ def subjects():
     token = request.args.get("token")
     user_id = dashboard_user_id(token)
     subjects = get_field_learning_summary(user_id) if user_id else get_field_learning_summary("")
+    activity = get_learning_activity(user_id) if user_id else get_learning_activity("")
+    recent_fields = [item for item in subjects if item["recent_7d_answered_count"]]
+    top_recent_field = max(
+        recent_fields, key=lambda item: item["recent_7d_answered_count"], default=None
+    )
     return render_template(
         "goukaku/subjects.html",
         subjects=subjects,
-        weekly_subjects=[item for item in subjects if item["recent_7d_answered_count"]],
+        activity=activity,
+        top_recent_field=top_recent_field,
         dashboard_token=token,
     )
 

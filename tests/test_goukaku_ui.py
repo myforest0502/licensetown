@@ -19,16 +19,37 @@ def test_goukaku_home_renders():
     assert "総合到達度" in text
     assert "すべて見る" in text
     assert "学習時間" in text
+    assert "累計学習時間" in text
+    assert "源さんの一言" in text
+    assert "images/characters/gensan_main.png" in text
+    assert 'class="app-header title-only"' in text
+    assert "data-close" not in text
     assert "今日のおすすめ学習" in text
-    assert "今日の目標" in text
     assert "（暫定）" in text
     assert "まだデータがありません。勉強するとここに表示されます＾＾" in text
     assert "2027/02/20" in text
     assert ">0<small>問</small>" in text
     assert "data-line-message=\"相談する\"" in text
     assert 'class="app-shell"' in text
-    assert "20260812-pc1" in text
+    assert "20260817-ui3" in text
     assert 'class="page-content dashboard-grid"' in text
+    assert app.test_client().get("/static/images/characters/gensan_main.png").status_code == 200
+    assert 'class="summary-grid five"' in text
+    assert "連続学習日数" in text
+    assert 'class="motivation-grid"' in text
+    bottom_labels = ["今日のおすすめ学習", "次の報酬まで", "源さんの一言", "あなたの足跡を見る"]
+    assert [text.index(label) for label in bottom_labels] == sorted(text.index(label) for label in bottom_labels)
+
+
+def test_dashboard_responsive_css_hides_actions_only_on_pc():
+    css = (__import__("pathlib").Path(__file__).resolve().parents[1] / "static" / "goukaku" / "goukaku.css").read_text(encoding="utf-8")
+    assert "@media(min-width:701px){.mobile-actions{display:none!important}" in css
+    assert "@media(max-width:700px)" in css
+    assert ".motivation-grid{display:grid;grid-template-columns:repeat(4" in css
+    assert ".dashboard-grid .summary-grid .mini-card strong{font-size:35px}" in css
+    assert ".countdown strong{display:flex;align-items:baseline;white-space:nowrap}" in css
+    assert ".gensan-card img{width:120px;height:120px}" in css
+    assert ".subject-card>.subject-list>.empty-state{display:flex;min-height:150px" in css
 
 
 def test_goukaku_subjects_renders_official_tab_label():
@@ -36,15 +57,19 @@ def test_goukaku_subjects_renders_official_tab_label():
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert "分野別 詳細" in text
-    assert "1週間の推移" in text
+    assert ">グラフ<" in text
+    assert "1週間の推移" not in text
     assert "経過の推移" not in text
     assert "理学療法治療各論" in text
     assert 'data-metric=' not in text
     assert "現在 90問" not in text
     assert "今週のおすすめ学習" not in text
-    assert "学習時間" not in text
+    assert "31分/日" not in text
     assert text.count("未学習") == 18
-    assert "data-close" in text
+    assert "分野別比較" in text
+    assert "直近7日の推移" in text
+    assert "TOP画面へ戻る" in text
+    assert "data-close" not in text
 
 
 def test_dashboard_and_subjects_render_real_field_history_without_demo_values():

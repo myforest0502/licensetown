@@ -1,16 +1,18 @@
 {% extends "goukaku/base.html" %}
 {% block title %}分野別 詳細{% endblock %}
 {% block content %}
-<header class="app-header"><a href="{{ url_for('goukaku_ui.home', token=dashboard_token) }}" aria-label="戻る" class="icon-btn">‹</a><h1>分野別 詳細</h1><button aria-label="閉じる" class="icon-btn close" data-close>×</button></header>
+<header class="app-header title-only"><h1>分野別 詳細</h1></header>
 <div class="page-content detail-page">
-  <div class="tabs" role="tablist"><button class="tab active" data-tab="overall" role="tab">全体</button><button class="tab" data-tab="weekly" role="tab">1週間の推移</button></div>
+  <div class="tabs" role="tablist"><button class="tab active" data-tab="overall" role="tab">全体</button><button class="tab" data-tab="graphs" role="tab">グラフ</button></div>
   <section id="overall" class="tab-panel active">
     <h2 class="list-heading">分野別 正答率（全期間）</h2>
     <div class="card full-subject-list">{% for item in subjects %}<div class="detail-row"><div><b>{{ item.name }}</b><small>{{ item.answered_count }}問</small></div><div class="bar"><i{% if item.learned %} class="score-{{ 'good' if item.accuracy >= 70 else 'warn' if item.accuracy >= 50 else 'weak' }}" style="width:{{ item.accuracy }}%"{% else %} style="width:0"{% endif %}></i></div><span>{% if item.learned %}{{ item.accuracy }}%{% else %}未学習{% endif %}</span><i class="chevron">›</i></div>{% endfor %}<div class="legend"><span><i class="good"></i>得意（70%以上）</span><span><i class="warn"></i>要注意（50〜69%）</span><span><i class="weak"></i>弱点（50%未満）</span></div></div>
   </section>
-  <section id="weekly" class="tab-panel">
-    <h2 class="list-heading">分野別 正答率（直近7日）</h2>
-    <div class="card full-subject-list">{% for item in weekly_subjects %}<div class="detail-row"><div><b>{{ item.name }}</b><small>{{ item.recent_7d_answered_count }}問</small></div><div class="bar"><i class="score-{{ 'good' if item.recent_7d_accuracy >= 70 else 'warn' if item.recent_7d_accuracy >= 50 else 'weak' }}" style="width:{{ item.recent_7d_accuracy }}%"></i></div><span>{{ item.recent_7d_accuracy }}%</span><i class="chevron">›</i></div>{% else %}<p class="empty-state">データがありません</p>{% endfor %}</div>
+  <section id="graphs" class="tab-panel graph-panel">
+    <div class="insight-grid"><article><span>今週の学習時間</span><strong>{{ activity.weekly_study_minutes }}分</strong></article><article><span>1日平均学習時間</span><strong>{{ activity.average_daily_study_minutes }}分</strong></article><article><span>今週一番取り組んだ分野</span><strong>{{ top_recent_field.name if top_recent_field else '--' }}</strong></article></div>
+    <section class="card chart-card"><div class="chart-heading"><div><h2>分野別比較</h2><p>棒：回答数　線：正答率</p></div><div class="chart-legend"><i class="bar-key"></i>回答数 <i class="line-key"></i>正答率</div></div><div class="combo-chart subject-chart" data-combo-chart>{% for item in subjects %}<div class="chart-item" data-bar="{{ item.answered_count }}" data-line="{{ item.accuracy if item.learned else '' }}"><span class="chart-value">{{ item.answered_count }}</span><i class="chart-bar"></i><b>{{ item.category_small }}</b><small>{{ item.name }}</small></div>{% endfor %}<svg class="chart-line" aria-hidden="true"></svg></div></section>
+    <section class="card chart-card"><div class="chart-heading"><div><h2>直近7日の推移</h2><p>棒：1日の回答数　線：学習時間</p></div><div class="chart-legend"><i class="bar-key"></i>回答数 <i class="line-key time"></i>学習時間</div></div><div class="combo-chart daily-chart" data-combo-chart>{% for item in activity.daily %}<div class="chart-item" data-bar="{{ item.answered_count }}" data-line="{{ item.study_minutes }}"><span class="chart-value">{{ item.answered_count }}</span><i class="chart-bar"></i><b>{{ item.label }}</b><small>{{ item.study_minutes }}分</small></div>{% endfor %}<svg class="chart-line" aria-hidden="true"></svg></div></section>
   </section>
+  <a class="back-to-top" href="{{ url_for('goukaku_ui.home', token=dashboard_token) }}">合格への道 TOP画面へ戻る</a>
 </div>
 {% endblock %}

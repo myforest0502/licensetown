@@ -10,6 +10,7 @@ from app import app, record_confirmed_learning_batch
 from database import (
     add_learning_time,
     get_field_learning_summary,
+    get_learning_activity,
     get_learning_summary,
     record_learning_batch,
     reset_user_profile,
@@ -21,6 +22,7 @@ from question_bank import get_category_small, get_quiz_question, is_answer_corre
 def clear_local_stats():
     database._local_learning_events.clear()
     database._local_learning_seconds.clear()
+    database._local_learning_time_events.clear()
 
 
 def test_learning_summary_combines_study_and_heat_without_duplicates():
@@ -245,3 +247,98 @@ def test_field_summary_is_empty_after_complete_reset():
     assert any(item["learned"] for item in get_field_learning_summary(user_id))
     reset_user_profile(user_id)
     assert all(not item["learned"] for item in get_field_learning_summary(user_id))
+
+
+def test_learning_activity_uses_real_daily_answers_time_and_streak():
+    clear_local_stats()
+    user_id = "activity-user"
+    now = datetime(2026, 8, 17, 12, tzinfo=timezone.utc)
+    record_learning_batch(user_id, "activity-yesterday", "study", 5, 3, now - timedelta(days=1))
+    record_learning_batch(user_id, "activity-today", "study", 10, 7, now)
+    add_learning_time(user_id, 600, recorded_at=now - timedelta(days=1))
+    add_learning_time(user_id, 900, recorded_at=now)
+
+    activity = get_learning_activity(user_id, now=now)
+    assert activity["streak_days"] == 2
+    assert activity["weekly_study_minutes"] == 25
+    assert activity["average_daily_study_minutes"] == 4
+    assert [item["answered_count"] for item in activity["daily"]][-2:] == [5, 10]
+    assert [item["study_minutes"] for item in activity["daily"]][-2:] == [10, 15]
+
+    reset_user_profile(user_id)
+    assert get_learning_activity(user_id, now=now)["weekly_study_minutes"] == 0
+
+
+def test_learning_time_updates_total_and_daily_event_once_per_finished_interval(monkeypatch):
+    clear_local_stats()
+    app_module = __import__("app")
+    user_id = "time-interval-user"
+    session = {"active_started_at": 100.0}
+    app_module.study_sessions[user_id] = session
+    monkeypatch.setattr(app_module.time, "time", lambda: 220.0)
+
+    app_module.finish_active_learning_time(user_id)
+    app_module.finish_active_learning_time(user_id)
+
+    assert get_learning_summary(user_id)["study_minutes"] == 2
+    events = [
+        event for event in database._local_learning_time_events
+        if event["user_id"] == user_id
+    ]
+    assert len(events) == 1
+    assert events[0]["elapsed_seconds"] == 120
+    assert "active_started_at" not in session
+    app_module.study_sessions.pop(user_id, None)
+
+    assert not add_learning_time(
+        user_id,
+        120,
+        recorded_at=events[0]["recorded_at"],
+        event_key=events[0]["event_key"],
+    )
+    assert get_learning_summary(user_id)["study_minutes"] == 2
+    assert len(database._local_learning_time_events) == 1
+
+
+def test_learning_time_table_initialization_is_idempotent_and_non_destructive(monkeypatch):
+    source = (__import__("pathlib").Path(database.__file__)).read_text(encoding="utf-8")
+    assert "CREATE TABLE IF NOT EXISTS learning_time_events" in source
+    assert "CREATE INDEX IF NOT EXISTS learning_time_events_user_date_idx" in source
+    assert "CREATE UNIQUE INDEX IF NOT EXISTS learning_time_events_event_key_idx" in source
+    assert "ADD COLUMN IF NOT EXISTS event_key TEXT" in source
+    assert "DROP TABLE" not in source
+    assert "TRUNCATE" not in source
+
+    executed = []
+
+    class FakeCursor:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def execute(self, query, _params=None):
+            executed.append(" ".join(query.split()))
+
+    class FakeConnection:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def cursor(self):
+            return FakeCursor()
+
+    monkeypatch.setattr(database, "database_is_available", lambda: True)
+    monkeypatch.setattr(database, "get_db_connection", lambda: FakeConnection())
+    database.init_database()
+    database.init_database()
+
+    create_time_table = [
+        query for query in executed
+        if "CREATE TABLE IF NOT EXISTS learning_time_events" in query
+    ]
+    assert len(create_time_table) == 2
+    assert all("DROP " not in query and "TRUNCATE " not in query for query in executed)

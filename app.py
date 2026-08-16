@@ -1621,7 +1621,12 @@ def finish_active_learning_time(user_id):
         return
     active_started_at = session.pop("active_started_at", None)
     if active_started_at is not None:
-        add_learning_time(user_id, time.time() - active_started_at)
+        interval_key = f"{session.get('session_id', user_id)}:{active_started_at}"
+        add_learning_time(
+            user_id,
+            time.time() - active_started_at,
+            event_key=interval_key,
+        )
 
 
 def record_confirmed_learning_batch(user_id, session):
