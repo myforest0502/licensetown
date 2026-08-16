@@ -1,16 +1,25 @@
 from datetime import date
 import os
 
-from flask import Blueprint, render_template, request
-from itsdangerous import BadSignature, URLSafeSerializer
+from flask import Blueprint, abort, render_template, request
+from itsdangerous import BadSignature, URLSafeSerializer, URLSafeTimedSerializer
 
-from database import get_field_learning_summary, get_learning_activity, get_learning_summary
+from database import (
+    get_field_learning_summary,
+    get_learning_activity,
+    get_learning_summary,
+    get_supported_learner_ids,
+    user_names,
+)
+from learning_analysis import build_learning_guidance
+from supporter_report import build_supporter_report
 
 
 goukaku_ui = Blueprint("goukaku_ui", __name__)
 
 EXAM_DATE = date(2027, 2, 20)
 TODAY_GOAL = 30
+SUPPORTER_TOKEN_MAX_AGE_SECONDS = 30 * 24 * 60 * 60
 
 
 def create_dashboard_token(user_id):
@@ -34,6 +43,30 @@ def dashboard_user_id(token):
         return None
 
 
+def create_supporter_token(supporter_user_id):
+    serializer = URLSafeTimedSerializer(
+        os.getenv("CHANNEL_SECRET", "local-dashboard-secret"),
+        salt="supporter-dashboard",
+    )
+    return serializer.dumps({"supporter_user_id": supporter_user_id})
+
+
+def supporter_user_id(token):
+    if not token:
+        return None
+    serializer = URLSafeTimedSerializer(
+        os.getenv("CHANNEL_SECRET", "local-dashboard-secret"),
+        salt="supporter-dashboard",
+    )
+    try:
+        return serializer.loads(
+            token,
+            max_age=SUPPORTER_TOKEN_MAX_AGE_SECONDS,
+        ).get("supporter_user_id")
+    except (BadSignature, AttributeError):
+        return None
+
+
 def build_dashboard(user_id=None):
     today = date.today()
     dashboard = {
@@ -49,6 +82,7 @@ def build_dashboard(user_id=None):
         "average_accuracy": 0,
         "field_stats": [],
         "weak_fields": [],
+        "weak_analysis_message": "まずは100問を目標に基礎を固めましょう。",
         "recommended_study": [],
         "today_goal": TODAY_GOAL,
         "today_progress": 0,
@@ -60,9 +94,9 @@ def build_dashboard(user_id=None):
     if user_id:
         dashboard.update(get_learning_summary(user_id))
         dashboard.update(get_learning_activity(user_id))
-        dashboard["field_stats"] = [
-            item for item in get_field_learning_summary(user_id) if item["learned"]
-        ]
+        fields = get_field_learning_summary(user_id)
+        dashboard["field_stats"] = [item for item in fields if item["learned"]]
+        dashboard.update(build_learning_guidance(dashboard["total_answers"], fields))
         remainder = dashboard["total_answers"] % 100
         dashboard["next_reward_answers"] = 100 - remainder if remainder else 100
         dashboard["reward_progress"] = remainder
@@ -121,3 +155,21 @@ def learning():
     if not question_count.isdigit():
         question_count = "10"
     return render_template("goukaku/learning.html", field_name=field_name, question_count=question_count)
+
+
+@goukaku_ui.route("/supporter")
+def supporter_dashboard():
+    supporter_id = supporter_user_id(request.args.get("token"))
+    if not supporter_id:
+        abort(403)
+    learner_ids = get_supported_learner_ids(supporter_id)
+    if not learner_ids:
+        abort(403)
+    learner_id = learner_ids[0]
+    report = build_supporter_report(learner_id)
+    learner_name = user_names.get(learner_id, "学習者") or "学習者"
+    return render_template(
+        "goukaku/supporter.html",
+        learner_name=learner_name,
+        report=report,
+    )

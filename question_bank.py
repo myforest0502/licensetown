@@ -23,6 +23,15 @@ CATEGORY_NAMES = {
     13: "基礎運動学", 14: "臨床運動学", 15: "動作分析学", 16: "運動器",
     17: "理学療法評価各論", 18: "理学療法治療各論",
 }
+CATEGORY_LARGE_BY_SMALL = {
+    **{number: "A" for number in range(1, 7)},
+    **{number: "B" for number in range(7, 13)},
+    **{number: "C" for number in range(13, 19)},
+}
+BASIC_CATEGORY_SMALLS = frozenset(
+    number for number, category_large in CATEGORY_LARGE_BY_SMALL.items()
+    if category_large == "A"
+)
 
 
 class QuestionBankError(RuntimeError):

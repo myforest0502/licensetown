@@ -1,0 +1,15 @@
+{% extends "goukaku/base.html" %}
+{% block title %}学習見守り{% endblock %}
+{% block content %}
+<header class="app-header title-only"><h1>学習見守り</h1></header>
+<div class="page-content supporter-page">
+  <p class="supporter-lead"><b>{{ learner_name }}</b>さんの学習レポート</p>
+  <section class="supporter-today {{ 'studied' if report.today_studied else 'resting' }}"><div><span>今日の学習</span><strong>{% if report.today_studied %}取り組み済み{% else %}まだ学習なし{% endif %}</strong></div><div class="supporter-today-kpis"><p><b>{{ report.today.answered_count }}</b><small>回答</small></p><p><b>{{ report.today.correct_count }}</b><small>正解</small></p><p><b>{{ report.today.study_minutes }}</b><small>分</small></p><p><b>{{ report.today.accuracy }}</b><small>%</small></p></div></section>
+  <section class="card supporter-comment"><h2>見守りメモ</h2><p>{{ report.comment }}</p></section>
+  <section class="card today-fields"><h2>今日取り組んだ分野</h2>{% for item in report.today_fields %}<div><b>{{ item.name }}</b><span>{{ item.answered_count }}問</span><span>正答率 {{ item.accuracy }}%</span></div>{% else %}<p class="empty-state">今日の分野別学習データはまだありません。</p>{% endfor %}</section>
+  <section class="supporter-grid"><article class="card"><h2>直近7日</h2><div class="supporter-stats"><p><span>学習日数</span><strong>{{ report.weekly_learning_days }}<small>日</small></strong></p><p><span>回答数</span><strong>{{ report.weekly_answers }}<small>問</small></strong></p><p><span>学習時間</span><strong>{{ report.weekly_study_minutes }}<small>分</small></strong></p><p><span>正答率</span><strong>{{ report.weekly_accuracy }}<small>%</small></strong></p></div></article><article class="card streak-support"><h2>継続</h2><strong>{{ report.streak_days }}<small>日</small></strong><p>連続学習日数</p></article></section>
+  <section class="card supporter-fields"><h2>取り組んだ分野（全期間）</h2>{% for item in report.fields %}<div><b>{{ item.name }}</b><span>{{ item.answered_count }}問</span><div class="bar"><i class="score-{{ 'good' if item.accuracy >= 70 else 'warn' if item.accuracy >= 50 else 'weak' }}" style="width:{{ item.accuracy }}%"></i></div><strong>{{ item.accuracy }}%</strong></div>{% else %}<p class="empty-state">分野別データはまだありません。</p>{% endfor %}</section>
+  <section class="supporter-grid analysis-grid"><article class="card"><h2>苦手分野 TOP3</h2>{% for item in report.weak_fields %}<div class="supporter-weak"><i>{{ loop.index }}</i><b>{{ item.name }}</b><span>{{ item.reason }}</span></div>{% else %}<p class="empty-state">{{ report.weak_analysis_message }}</p>{% endfor %}</article><article class="card supporter-recommend"><h2>今日のおすすめ</h2>{% for name, count in report.recommended_study %}<strong>{{ name }}</strong><p>{{ count }}問の学習がおすすめです。</p>{% else %}<p class="empty-state">おすすめの分析に必要なデータがまだありません。</p>{% endfor %}</article></section>
+  <p class="supporter-privacy">学習量・学習時間・成績だけを共有しています。相談内容や私的な会話は表示されません。</p>
+</div>
+{% endblock %}

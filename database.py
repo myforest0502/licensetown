@@ -15,6 +15,7 @@ _known_user_ids: set[str] = set()
 _local_learning_events: dict[str, dict[str, Any]] = {}
 _local_learning_seconds: dict[str, float] = {}
 _local_learning_time_events: list[dict[str, Any]] = []
+_local_supporter_links: dict[tuple[str, str], bool] = {}
 
 logger = logging.getLogger(__name__)
 
@@ -115,6 +116,26 @@ def init_database() -> None:
                 """
                 CREATE INDEX IF NOT EXISTS learning_time_events_user_date_idx
                 ON learning_time_events (user_id, recorded_at)
+                """
+            )
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS supporter_links (
+                    id BIGSERIAL PRIMARY KEY,
+                    supporter_user_id TEXT NOT NULL,
+                    learner_user_id TEXT NOT NULL,
+                    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                    UNIQUE (supporter_user_id, learner_user_id),
+                    CHECK (supporter_user_id <> learner_user_id)
+                )
+                """
+            )
+            cur.execute(
+                """
+                CREATE INDEX IF NOT EXISTS supporter_links_supporter_active_idx
+                ON supporter_links (supporter_user_id, is_active)
                 """
             )
 
@@ -256,6 +277,8 @@ def reset_user_profile(user_id: str) -> None:
         _local_learning_time_events[:] = [
             event for event in _local_learning_time_events if event["user_id"] != user_id
         ]
+        for link_key in [key for key in _local_supporter_links if user_id in key]:
+            _local_supporter_links.pop(link_key, None)
         _known_user_ids.discard(user_id)
         return
 
@@ -264,6 +287,10 @@ def reset_user_profile(user_id: str) -> None:
             cur.execute("DELETE FROM learning_events WHERE user_id = %s", (user_id,))
             cur.execute("DELETE FROM learning_time_totals WHERE user_id = %s", (user_id,))
             cur.execute("DELETE FROM learning_time_events WHERE user_id = %s", (user_id,))
+            cur.execute(
+                "DELETE FROM supporter_links WHERE supporter_user_id = %s OR learner_user_id = %s",
+                (user_id, user_id),
+            )
             cur.execute(
                 "DELETE FROM user_profiles WHERE user_id = %s",
                 (user_id,),
@@ -435,6 +462,7 @@ def get_field_learning_summary(user_id: str, now: datetime | None = None) -> lis
     """question_resultsを正式Q番号と18分野に結合し、全期間と直近7日を集計する。"""
     current = _as_utc(now or datetime.now(timezone.utc))
     seven_days_ago = current - timedelta(days=7)
+    today = current.astimezone(ZoneInfo("Asia/Tokyo")).date()
     summaries = {
         number: {
             "category_small": number,
@@ -445,6 +473,9 @@ def get_field_learning_summary(user_id: str, now: datetime | None = None) -> lis
             "recent_7d_answered_count": 0,
             "recent_7d_correct_count": 0,
             "recent_7d_accuracy": None,
+            "today_answered_count": 0,
+            "today_correct_count": 0,
+            "today_accuracy": None,
             "learned": False,
         }
         for number, name in CATEGORY_NAMES.items()
@@ -480,6 +511,7 @@ def get_field_learning_summary(user_id: str, now: datetime | None = None) -> lis
         if not isinstance(question_results, list):
             continue
         is_recent = _as_utc(answered_at) >= seven_days_ago
+        is_today = _as_utc(answered_at).astimezone(ZoneInfo("Asia/Tokyo")).date() == today
         for result in question_results:
             if not isinstance(result, dict):
                 continue
@@ -499,6 +531,10 @@ def get_field_learning_summary(user_id: str, now: datetime | None = None) -> lis
                 summary["recent_7d_answered_count"] += 1
                 if result.get("is_correct") is True:
                     summary["recent_7d_correct_count"] += 1
+            if is_today:
+                summary["today_answered_count"] += 1
+                if result.get("is_correct") is True:
+                    summary["today_correct_count"] += 1
 
     for summary in summaries.values():
         answered = summary["answered_count"]
@@ -510,6 +546,11 @@ def get_field_learning_summary(user_id: str, now: datetime | None = None) -> lis
         summary["recent_7d_accuracy"] = (
             round(summary["recent_7d_correct_count"] / recent_answered * 100)
             if recent_answered else None
+        )
+        today_answered = summary["today_answered_count"]
+        summary["today_accuracy"] = (
+            round(summary["today_correct_count"] / today_answered * 100)
+            if today_answered else None
         )
     return list(summaries.values())
 
@@ -525,7 +566,7 @@ def get_learning_activity(user_id: str, now: datetime | None = None) -> dict[str
 
     if not database_is_available():
         learning_rows = [
-            (event["answered_count"], event["answered_at"])
+            (event["answered_count"], event["correct_count"], event["answered_at"])
             for event in _local_learning_events.values()
             if event["user_id"] == user_id
         ]
@@ -538,7 +579,7 @@ def get_learning_activity(user_id: str, now: datetime | None = None) -> dict[str
         with get_db_connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
-                    "SELECT answered_count, answered_at FROM learning_events WHERE user_id = %s",
+                    "SELECT answered_count, correct_count, answered_at FROM learning_events WHERE user_id = %s",
                     (user_id,),
                 )
                 learning_rows = cur.fetchall()
@@ -549,12 +590,14 @@ def get_learning_activity(user_id: str, now: datetime | None = None) -> dict[str
                 time_rows = cur.fetchall()
 
     active_dates = set()
-    for answered_count, answered_at in learning_rows:
+    correct_by_date = {day: 0 for day in dates}
+    for answered_count, correct_count, answered_at in learning_rows:
         day = _as_utc(answered_at).astimezone(jst).date()
         if int(answered_count) > 0:
             active_dates.add(day)
         if day in answers_by_date:
             answers_by_date[day] += int(answered_count)
+            correct_by_date[day] += int(correct_count)
     for elapsed_seconds, recorded_at in time_rows:
         day = _as_utc(recorded_at).astimezone(jst).date()
         if day in seconds_by_date:
@@ -571,14 +614,93 @@ def get_learning_activity(user_id: str, now: datetime | None = None) -> dict[str
             "date": day.isoformat(),
             "label": f"{day.month}/{day.day}",
             "answered_count": answers_by_date[day],
+            "correct_count": correct_by_date[day],
+            "accuracy": (
+                round(correct_by_date[day] / answers_by_date[day] * 100)
+                if answers_by_date[day] else 0
+            ),
             "study_minutes": round(seconds_by_date[day] / 60),
         }
         for day in dates
     ]
     weekly_minutes = round(sum(seconds_by_date.values()) / 60)
+    weekly_answers = sum(answers_by_date.values())
+    weekly_correct = sum(correct_by_date.values())
     return {
         "daily": daily,
         "streak_days": streak_days,
         "weekly_study_minutes": weekly_minutes,
         "average_daily_study_minutes": round(weekly_minutes / 7),
+        "weekly_learning_days": sum(1 for value in answers_by_date.values() if value > 0),
+        "weekly_answers": weekly_answers,
+        "weekly_correct": weekly_correct,
+        "weekly_accuracy": (
+            round(weekly_correct / weekly_answers * 100) if weekly_answers else 0
+        ),
     }
+
+
+def set_supporter_link(supporter_user_id: str, learner_user_id: str) -> bool:
+    """管理者設定用。同一組み合わせは1行に保ち、再登録時は有効化する。"""
+    if not supporter_user_id or not learner_user_id or supporter_user_id == learner_user_id:
+        raise ValueError("supporter and learner must be different non-empty users")
+    key = (supporter_user_id, learner_user_id)
+    if not database_is_available():
+        was_active = _local_supporter_links.get(key) is True
+        _local_supporter_links[key] = True
+        return not was_active
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                INSERT INTO supporter_links (
+                    supporter_user_id, learner_user_id, is_active
+                ) VALUES (%s, %s, TRUE)
+                ON CONFLICT (supporter_user_id, learner_user_id)
+                DO UPDATE SET is_active = TRUE, updated_at = NOW()
+                RETURNING is_active
+                """,
+                (supporter_user_id, learner_user_id),
+            )
+            return cur.fetchone() is not None
+
+
+def deactivate_supporter_link(supporter_user_id: str, learner_user_id: str) -> bool:
+    """見守り関係を削除せず無効化する。"""
+    key = (supporter_user_id, learner_user_id)
+    if not database_is_available():
+        if _local_supporter_links.get(key) is not True:
+            return False
+        _local_supporter_links[key] = False
+        return True
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                UPDATE supporter_links SET is_active = FALSE, updated_at = NOW()
+                WHERE supporter_user_id = %s AND learner_user_id = %s AND is_active = TRUE
+                """,
+                (supporter_user_id, learner_user_id),
+            )
+            return cur.rowcount == 1
+
+
+def get_supported_learner_ids(supporter_user_id: str) -> list[str]:
+    """有効なリンク先だけを返す。"""
+    if not database_is_available():
+        return sorted(
+            learner_id
+            for (supporter_id, learner_id), active in _local_supporter_links.items()
+            if supporter_id == supporter_user_id and active
+        )
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT learner_user_id FROM supporter_links
+                WHERE supporter_user_id = %s AND is_active = TRUE
+                ORDER BY created_at, id
+                """,
+                (supporter_user_id,),
+            )
+            return [row[0] for row in cur.fetchall()]

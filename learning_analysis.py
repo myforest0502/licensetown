@@ -1,0 +1,140 @@
+"""学習履歴から苦手分野と今日のおすすめを決定論的に選ぶ。"""
+
+from __future__ import annotations
+
+from typing import Any
+
+from question_bank import BASIC_CATEGORY_SMALLS
+
+
+FOUNDATION_ANSWER_THRESHOLD = 100
+MIN_RELIABLE_ANSWERS = 5
+
+
+def _foundation_recommendation(fields: list[dict[str, Any]]) -> dict[str, Any] | None:
+    basics = [item for item in fields if item["category_small"] in BASIC_CATEGORY_SMALLS]
+    if not basics:
+        return None
+
+    def priority(item):
+        answered = item["answered_count"]
+        # 未学習→回答数が少ない→信頼度を補正した正答率の順。
+        smoothed_accuracy = (
+            (item["correct_count"] + 3) / (answered + 5) * 100
+            if answered else 50
+        )
+        return (answered > 0, answered, smoothed_accuracy, item["category_small"])
+
+    return min(basics, key=priority)
+
+
+def _weakness_candidates(fields: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    detailed_answers = sum(item["answered_count"] for item in fields)
+    learned_fields = [item for item in fields if item["answered_count"] > 0]
+    reliable_fields = [
+        item for item in fields if item["answered_count"] >= MIN_RELIABLE_ANSWERS
+    ]
+    reliable_answers = sum(item["answered_count"] for item in reliable_fields)
+    user_accuracy = (
+        sum(item["correct_count"] for item in reliable_fields) / reliable_answers * 100
+        if reliable_answers else None
+    )
+    expected_answers = detailed_answers / len(fields) if fields else 0
+    broad_enough = detailed_answers >= 60 and len(learned_fields) >= 6
+    candidates = []
+
+    for item in fields:
+        answered = item["answered_count"]
+        accuracy = item["accuracy"]
+        if answered == 0 or answered < MIN_RELIABLE_ANSWERS:
+            continue
+        confidence = min(answered / 15, 1.0)
+        absolute_deficit = max(70 - accuracy, 0)
+        relative_deficit = max((user_accuracy or accuracy) - accuracy, 0)
+        shortage = (
+            max(expected_answers - answered, 0) / expected_answers
+            if expected_answers else 0
+        )
+        if absolute_deficit < 10 and relative_deficit < 10 and shortage < 0.65:
+            continue
+        score = confidence * (absolute_deficit * 0.55 + relative_deficit * 0.65)
+        score += shortage * 20
+        if relative_deficit >= 10:
+            reason = "他分野より正答率が低い"
+        elif absolute_deficit >= 10:
+            reason = "正答率が低い"
+        else:
+            reason = "取り組み不足"
+        candidates.append(_weak_item(item, score, reason))
+
+    if broad_enough:
+        low_engagement = [
+            item for item in fields
+            if 0 < item["answered_count"] < MIN_RELIABLE_ANSWERS
+            and item["answered_count"] < max(expected_answers * 0.4, 2)
+        ]
+        for item in low_engagement:
+            shortage = 1 - (item["answered_count"] / max(expected_answers, 1))
+            candidates.append(_weak_item(item, 22 + shortage * 18, "取り組み不足"))
+
+        # 未学習だけでTOP3を占有しないよう、代表の1分野だけ候補にする。
+        unlearned = [item for item in fields if item["answered_count"] == 0]
+        if unlearned:
+            candidates.append(_weak_item(unlearned[0], 28, "未学習"))
+
+    return sorted(
+        candidates,
+        key=lambda item: (-item["priority_score"], item["category_small"]),
+    )
+
+
+def _weak_item(item: dict[str, Any], priority_score: float, reason: str) -> dict[str, Any]:
+    return {
+        "category_small": item["category_small"],
+        "name": item["name"],
+        "score": item["accuracy"] if item["accuracy"] is not None else 0,
+        "answers": item["answered_count"],
+        "reason": reason,
+        "priority_score": round(priority_score, 3),
+    }
+
+
+def build_learning_guidance(
+    total_answers: int,
+    fields: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """TOP用の苦手TOP3・おすすめ分野・分析段階を返す。"""
+    if total_answers < FOUNDATION_ANSWER_THRESHOLD:
+        recommended = _foundation_recommendation(fields)
+        return {
+            "phase": "foundation",
+            "weak_fields": [],
+            "weak_analysis_message": (
+                "まずは100問を目標に基礎を固めましょう。"
+                "100問を超えると、あなたの苦手傾向を詳しく分析します。"
+            ),
+            "recommended_study": (
+                [(recommended["name"], 10)] if recommended else []
+            ),
+        }
+
+    weak_fields = _weakness_candidates(fields)[:3]
+    if weak_fields:
+        recommended_name = weak_fields[0]["name"]
+    else:
+        learned = [item for item in fields if item["answered_count"] > 0]
+        fallback = min(
+            learned,
+            key=lambda item: (item["answered_count"], item["category_small"]),
+            default=None,
+        )
+        recommended_name = fallback["name"] if fallback else None
+    return {
+        "phase": "analysis",
+        "weak_fields": weak_fields,
+        "weak_analysis_message": (
+            "分野別の分析に必要な履歴がまだ足りません。"
+            if not weak_fields else ""
+        ),
+        "recommended_study": [(recommended_name, 10)] if recommended_name else [],
+    }

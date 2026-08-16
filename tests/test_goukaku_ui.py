@@ -31,7 +31,7 @@ def test_goukaku_home_renders():
     assert ">0<small>問</small>" in text
     assert "data-line-message=\"相談する\"" in text
     assert 'class="app-shell"' in text
-    assert "20260817-ui4" in text
+    assert "20260817-ui5" in text
     assert 'class="page-content dashboard-grid"' in text
     assert app.test_client().get("/static/images/characters/gensan_main.png").status_code == 200
     assert 'class="summary-grid five"' in text
@@ -95,6 +95,8 @@ def test_dashboard_and_subjects_render_real_field_history_without_demo_values():
     assert category_name in home_text
     assert "2問" in home_text
     assert "50%" in home_text
+    assert "100問を目標に基礎を固めましょう" in home_text
+    assert "今日は解剖学を10問解こう" in home_text
     assert f"/goukaku-no-michi/subjects?token={token}" in home_text
 
     detail_text = client.get(f"/goukaku-no-michi/subjects?token={token}").get_data(as_text=True)
