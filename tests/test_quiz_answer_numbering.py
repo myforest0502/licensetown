@@ -133,6 +133,10 @@ def load_current_app_functions() -> SimpleNamespace:
         "learning_answer_counts": {},
         "record_learning_batch": lambda **kwargs: True,
         "add_learning_time": lambda *args, **kwargs: None,
+        "get_display_answer": lambda question: str(question.get("answer", "")).upper().strip(),
+        "is_answer_correct": lambda question, selected: (
+            str(selected).upper().strip() == str(question.get("answer", "")).upper().strip()
+        ),
         "explain_contexts": {},
         "user_states": {},
         "user_names": {},
@@ -435,6 +439,8 @@ class QuizAnswerNumberingTest(unittest.TestCase):
             "QuickReply": lambda items: SimpleNamespace(items=items),
             "QuickReplyButton": lambda action: SimpleNamespace(action=action),
             "MessageAction": lambda label, text: SimpleNamespace(label=label, text=text),
+            "get_display_answer": lambda question: question.get("answer", ""),
+            "is_answer_correct": lambda question, selected: selected == question.get("answer", ""),
         }
         extracted = ast.Module(body=[node], type_ignores=[])
         ast.fix_missing_locations(extracted)

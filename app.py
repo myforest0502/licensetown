@@ -38,6 +38,13 @@ from database import (
     user_profile_exists,
 )
 from goukaku_ui import create_dashboard_token, goukaku_ui
+from question_bank import (
+    QUESTION_BANK_ERROR_MESSAGE,
+    QuestionBankError,
+    display_answer as get_display_answer,
+    is_answer_correct,
+    select_random_questions as select_formal_questions,
+)
 
 # =========================================================
 # ロギング設定
@@ -549,18 +556,9 @@ def load_question_master(path=None):
 
 def select_random_questions(question_count):
     """
-    問題倉庫からランダムに取得
+    起動時ロード済みの正式問題バンクからランダムに取得する。
     """
-
-    questions = load_question_master()
-
-    if question_count > len(questions):
-        raise ValueError("出題数が問題倉庫の件数を超えています。")
-
-    return random.sample(
-        questions,
-        question_count
-    )
+    return select_formal_questions(question_count)
 
 # 回答時に使用する自信度
 CONFIDENCE_LEVELS = {
@@ -814,6 +812,7 @@ def format_quiz_messages(questions, start_number=1):
         "3＝あてずっぽう\n\n"
         "つまり「A1」なら、\n"
         "答えはA、自信ありって意味だ。\n\n"
+        "複数選択の問題は「BD1」のように、答えを続けて入力してくれ。\n\n"
         f"{len(questions)}問分をまとめて送ってくれ（笑）"
     )
 
@@ -931,6 +930,11 @@ def prepare_and_send_quiz(user_id):
                 return
             push_quiz_to_line(user_id, quiz_message)
 
+    except QuestionBankError:
+        logging.exception("Formal question bank quiz preparation failed: user_id=%s", user_id)
+        study_sessions.pop(user_id, None)
+        push_to_line(user_id, QUESTION_BANK_ERROR_MESSAGE)
+
     except Exception:
         logging.exception(
             "Quiz background processing failed."
@@ -984,6 +988,10 @@ def prepare_and_send_next_quiz(user_id, expected_session_id=None):
                 return
             push_quiz_to_line(user_id, quiz_message)
 
+    except QuestionBankError:
+        logging.exception("Formal question bank next batch failed: user_id=%s", user_id)
+        push_to_line(user_id, QUESTION_BANK_ERROR_MESSAGE)
+
     except Exception:
         logging.exception(
             "Next quiz background processing failed."
@@ -1019,7 +1027,7 @@ def parse_quiz_answers(user_message, expected_numbers=None):
     if not compact_message:
         return {}
 
-    explicit_pattern = re.compile(r"(\d+):?([A-E])([1-3])")
+    explicit_pattern = re.compile(r"(\d+):?([A-E]{1,5})([1-3])")
 
     if compact_message[0].isdigit():
         explicit_matches = list(explicit_pattern.finditer(compact_message))
@@ -1049,7 +1057,7 @@ def parse_quiz_answers(user_message, expected_numbers=None):
 
         return parsed_answers
 
-    implicit_matches = re.findall(r"([A-E])([1-3])", compact_message)
+    implicit_matches = re.findall(r"([A-E]{1,5}?)([1-3])", compact_message)
 
     expected_count = len(expected_numbers) if expected_numbers is not None else QUESTIONS_PER_SET
 
@@ -1086,8 +1094,8 @@ def calculate_quiz_result(questions, answers):
         answer_data = answers.get(question_number, {})
         selected_answer = str(answer_data.get("answer", "")).upper().strip()
         confidence = str(answer_data.get("confidence", "")).strip()
-        correct_answer = str(question_data.get("answer", "")).upper().strip()
-        is_correct = selected_answer == correct_answer
+        correct_answer = get_display_answer(question_data)
+        is_correct = is_answer_correct(question_data, selected_answer)
 
         if is_correct:
             score += 1
@@ -1249,12 +1257,7 @@ def create_quiz_result_messages(
             "",
         )
 
-        correct_answer = str(
-            question_data.get(
-                "answer",
-                "",
-            )
-        ).upper().strip()
+        correct_answer = get_display_answer(question_data)
 
         explanation = str(
             question_data.get(
@@ -1262,15 +1265,20 @@ def create_quiz_result_messages(
                 "解説はありません。",
             )
         ).strip()
+        choice_explanations = question_data.get("choice_explanations", {})
+        choice_explanation_text = ""
+        if choice_explanations:
+            choice_explanation_text = "\n" + "\n".join(
+                f"{label}：{text}"
+                for label, text in choice_explanations.items()
+            )
 
         confidence_text = CONFIDENCE_LEVELS.get(
             confidence,
             "不明",
         )
 
-        is_correct = (
-            selected_answer == correct_answer
-        )
+        is_correct = is_answer_correct(question_data, selected_answer)
 
         if is_correct:
             result_mark = "○"
@@ -1283,7 +1291,7 @@ def create_quiz_result_messages(
                 f"あなたの回答：{selected_answer}\n"
                 f"正解：{correct_answer}\n"
                 f"自信度：{confidence_text}\n"
-                f"解説：{explanation}"
+                f"解説：{explanation}{choice_explanation_text}"
             )
         )
 
@@ -1542,8 +1550,8 @@ def reply_nekketsu_continue_choice(reply_token, current_session):
     for offset, question in enumerate(current_session["questions"]):
         question_number = start_number + offset
         selected = current_session["all_answers"][question_number]["answer"]
-        correct = str(question.get("answer", "")).upper().strip()
-        is_correct = selected == correct
+        correct = get_display_answer(question)
+        is_correct = is_answer_correct(question, selected)
         set_correct += int(is_correct)
         answer_lines.append(
             f"第{question_number}問：○" if is_correct
@@ -1623,9 +1631,7 @@ def record_confirmed_learning_batch(user_id, session):
     correct_count = 0
     for offset, question in enumerate(session["questions"]):
         answer = session["all_answers"][start_number + offset]["answer"]
-        correct_count += int(
-            answer == str(question.get("answer", "")).upper().strip()
-        )
+        correct_count += int(is_answer_correct(question, answer))
     return record_learning_batch(
         user_id=user_id,
         event_key=f'{session["session_id"]}:{current_set}',
@@ -1816,7 +1822,7 @@ def reply_study_set_result(reply_token, current_session):
     per_set = current_session["questions_per_set"]
     start_number = ((current_set - 1) * per_set) + 1
     lines = [
-        f"第{start_number + offset}問：{str(question.get('answer', '')).upper()}"
+        f"第{start_number + offset}問：{get_display_answer(question)}"
         for offset, question in enumerate(current_session["questions"])
     ]
     message = TextSendMessage(
@@ -1836,7 +1842,7 @@ def reply_quiz_ready_for_explanations(reply_token, current_session):
     per_set = current_session["questions_per_set"]
     start_number = ((current_set - 1) * per_set) + 1
     lines = [
-        f"第{start_number + offset}問：{str(question.get('answer', '')).upper()}"
+        f"第{start_number + offset}問：{get_display_answer(question)}"
         for offset, question in enumerate(current_session["questions"])
     ]
     line_bot_api.reply_message(reply_token, TextSendMessage(
@@ -2018,8 +2024,8 @@ def push_quiz_to_line(user_id, push_message):
     """問題出題中の保存・HOME導線を付けて送信する。"""
     if not user_id or not push_message:
         return
-    if len(push_message) > 1900:
-        push_message = push_message[:1900] + "…"
+    if len(push_message) > 4500:
+        push_message = push_message[:4500] + "…"
     try:
         session = study_sessions.get(user_id, {})
         if session.get("mode") == "nekketsu":
