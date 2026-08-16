@@ -31,7 +31,7 @@ def test_goukaku_home_renders():
     assert ">0<small>問</small>" in text
     assert "data-line-message=\"相談する\"" in text
     assert 'class="app-shell"' in text
-    assert "20260817-ui3" in text
+    assert "20260817-ui4" in text
     assert 'class="page-content dashboard-grid"' in text
     assert app.test_client().get("/static/images/characters/gensan_main.png").status_code == 200
     assert 'class="summary-grid five"' in text
@@ -50,6 +50,10 @@ def test_dashboard_responsive_css_hides_actions_only_on_pc():
     assert ".countdown strong{display:flex;align-items:baseline;white-space:nowrap}" in css
     assert ".gensan-card img{width:120px;height:120px}" in css
     assert ".subject-card>.subject-list>.empty-state{display:flex;min-height:150px" in css
+    assert ".detail-page .detail-row{grid-template-columns:198px 1fr 62px 16px;height:66px" in css
+    assert ".detail-page .detail-row .bar{height:12px}" in css
+    assert ".combo-chart{height:295px" in css
+    assert ".chart-item small{width:58px;min-height:32px;font-size:10px" in css
 
 
 def test_goukaku_subjects_renders_official_tab_label():
