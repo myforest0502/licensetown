@@ -28,6 +28,8 @@ def load_database_code(available, get_connection) -> dict:
         "database_is_available": available,
         "get_db_connection": get_connection,
         "_known_user_ids": set(),
+        "_local_learning_events": {},
+        "_local_learning_seconds": {},
     }
     extracted = ast.Module(body=nodes, type_ignores=[])
     ast.fix_missing_locations(extracted)
@@ -100,6 +102,12 @@ class FakeCursor:
             if self.database.fail_delete:
                 raise RuntimeError("database delete failed")
             self.database.profiles.pop(user_id, None)
+            return
+
+        if normalized.startswith("DELETE FROM learning_events"):
+            return
+
+        if normalized.startswith("DELETE FROM learning_time_totals"):
             return
 
         raise AssertionError(f"Unexpected SQL: {normalized}")

@@ -43,6 +43,7 @@ from question_bank import (
     QuestionBankError,
     display_answer as get_display_answer,
     is_answer_correct,
+    selected_answers_for_history,
     select_random_questions as select_formal_questions,
 )
 
@@ -1629,15 +1630,26 @@ def record_confirmed_learning_batch(user_id, session):
     questions_per_set = session["questions_per_set"]
     start_number = ((current_set - 1) * questions_per_set) + 1
     correct_count = 0
+    question_results = []
     for offset, question in enumerate(session["questions"]):
-        answer = session["all_answers"][start_number + offset]["answer"]
-        correct_count += int(is_answer_correct(question, answer))
+        answer_data = session["all_answers"][start_number + offset]
+        answer = answer_data["answer"]
+        is_correct = is_answer_correct(question, answer)
+        correct_count += int(is_correct)
+        confidence = answer_data.get("confidence")
+        question_results.append({
+            "question_id": str(question.get("id")),
+            "selected_answers": selected_answers_for_history(question, answer),
+            "is_correct": is_correct,
+            "confidence": int(confidence) if str(confidence) in {"1", "2", "3"} else None,
+        })
     return record_learning_batch(
         user_id=user_id,
         event_key=f'{session["session_id"]}:{current_set}',
         mode=session.get("mode", "study"),
         answered_count=questions_per_set,
         correct_count=correct_count,
+        question_results=question_results,
     )
 
 

@@ -136,6 +136,13 @@ def display_answer(question_or_answer: dict) -> str:
     return value
 
 
+def selected_answers_for_history(question: dict, selected_answer) -> list[str]:
+    """画面用A～E回答を正式JSON本来の選択肢キーへ戻す。"""
+    choice_key_map = question.get("choice_key_map", {})
+    selected = sorted(_answer_tokens(selected_answer))
+    return [str(choice_key_map.get(label, label)) for label in selected]
+
+
 def get_quiz_question(q_id) -> dict:
     question = get_question(q_id)
     answer = get_answer(q_id)
@@ -143,6 +150,10 @@ def get_quiz_question(q_id) -> dict:
     choices = {
         _choice_label(key): str(value).strip()
         for key, value in question["choices"].items()
+    }
+    choice_key_map = {
+        _choice_label(key): str(key)
+        for key in question["choices"]
     }
     choice_explanations = {
         _choice_label(key): str(value).strip()
@@ -158,6 +169,7 @@ def get_quiz_question(q_id) -> dict:
         **question,
         "question": str(question["question_text"]).strip(),
         "choices": choices,
+        "choice_key_map": choice_key_map,
         "answer": display_answer(answer),
         "display_answer": display_answer(answer),
         "accepted_answer_sets": accepted,

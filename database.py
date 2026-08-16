@@ -1,5 +1,6 @@
 import logging
 import os
+import json
 from datetime import datetime, timedelta, timezone
 from typing import Any
 from zoneinfo import ZoneInfo
@@ -60,8 +61,15 @@ def init_database() -> None:
                     mode TEXT NOT NULL,
                     answered_count INTEGER NOT NULL,
                     correct_count INTEGER NOT NULL,
-                    answered_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+                    answered_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                    question_results JSONB
                 )
+                """
+            )
+            cur.execute(
+                """
+                ALTER TABLE learning_events
+                ADD COLUMN IF NOT EXISTS question_results JSONB
                 """
             )
             cur.execute(
@@ -236,6 +244,7 @@ def record_learning_batch(
     answered_count: int,
     correct_count: int,
     answered_at: datetime | None = None,
+    question_results: list[dict[str, Any]] | None = None,
 ) -> bool:
     """確定済みの回答バッチを重複なしで保存する。"""
     timestamp = answered_at or datetime.now(timezone.utc)
@@ -248,6 +257,10 @@ def record_learning_batch(
             "answered_count": answered_count,
             "correct_count": correct_count,
             "answered_at": timestamp,
+            "question_results": (
+                json.loads(json.dumps(question_results, ensure_ascii=False))
+                if question_results is not None else None
+            ),
         }
         return True
 
@@ -256,11 +269,16 @@ def record_learning_batch(
             cur.execute(
                 """
                 INSERT INTO learning_events (
-                    event_key, user_id, mode, answered_count, correct_count, answered_at
-                ) VALUES (%s, %s, %s, %s, %s, %s)
+                    event_key, user_id, mode, answered_count, correct_count,
+                    answered_at, question_results
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s::jsonb)
                 ON CONFLICT (event_key) DO NOTHING
                 """,
-                (event_key, user_id, mode, answered_count, correct_count, timestamp),
+                (
+                    event_key, user_id, mode, answered_count, correct_count, timestamp,
+                    json.dumps(question_results, ensure_ascii=False)
+                    if question_results is not None else None,
+                ),
             )
             return cur.rowcount == 1
 

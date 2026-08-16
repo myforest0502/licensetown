@@ -137,6 +137,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "is_answer_correct": lambda question, selected: (
             str(selected).upper().strip() == str(question.get("answer", "")).upper().strip()
         ),
+        "selected_answers_for_history": lambda question, selected: list(str(selected)),
         "explain_contexts": {},
         "user_states": {},
         "user_names": {},
