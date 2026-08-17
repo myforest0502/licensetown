@@ -56,9 +56,7 @@ document.querySelectorAll('[data-close]').forEach((button) => button.addEventLis
 
 document.querySelectorAll('[data-line-message]').forEach((button) => button.addEventListener('click', () => {
   const message = button.dataset.lineMessage;
-  if (window.liff?.isInClient()) {
-    window.liff.sendMessages([{ type: 'text', text: message }]).then(() => window.liff.closeWindow());
-    return;
-  }
-  window.location.href = `https://line.me/R/msg/text/?${encodeURIComponent(message)}`;
+  const accountId = button.closest('[data-line-account-id]')?.dataset.lineAccountId;
+  if (!accountId) return;
+  window.location.href = `https://line.me/R/oaMessage/${encodeURIComponent(accountId)}/?${encodeURIComponent(message)}`;
 }));

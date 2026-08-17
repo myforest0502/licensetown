@@ -112,7 +112,10 @@ def home():
     token = request.args.get("token")
     user_id = dashboard_user_id(token)
     return render_template(
-        "goukaku/home.html", dashboard=build_dashboard(user_id), dashboard_token=token
+        "goukaku/home.html",
+        dashboard=build_dashboard(user_id),
+        dashboard_token=token,
+        line_official_account_id=os.getenv("LINE_OFFICIAL_ACCOUNT_ID", "").strip(),
     )
 
 
