@@ -6,7 +6,10 @@ os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
 import app as bot_app
 from question_bank import (
+    CATEGORY_GROUPS,
     CATEGORY_NAMES,
+    get_category_group_names,
+    get_category_names_for_group,
     get_category_name,
     get_category_small,
     get_answer,
@@ -15,7 +18,9 @@ from question_bank import (
     get_quiz_question,
     is_answer_correct,
     question_count,
+    resolve_category_small,
     select_random_questions,
+    select_questions_by_category,
 )
 
 
@@ -28,6 +33,54 @@ def test_formal_category_lookup_uses_all_official_names():
     assert list(CATEGORY_NAMES) == list(range(1, 19))
     assert [get_category_name(number) for number in range(1, 19)] == expected
     assert get_category_small("Q1") == get_question("Q1")["category_small"]
+
+
+def test_formal_category_hierarchy_has_three_groups_and_six_fields_each():
+    assert get_category_group_names() == ("基礎", "専門基礎", "専門")
+    assert all(len(numbers) == 6 for numbers in CATEGORY_GROUPS.values())
+    assert get_category_names_for_group("基礎") == (
+        "解剖学", "生理学", "心理学", "人間発達学", "教育学", "医学概論",
+    )
+    assert get_category_names_for_group("専門基礎") == (
+        "病理学", "内科学", "神経医学", "精神医学", "小児学", "臨床心理学",
+    )
+    assert get_category_names_for_group("専門") == (
+        "基礎運動学", "臨床運動学", "動作分析学", "運動器", "理学療法評価各論", "理学療法治療各論",
+    )
+    assert resolve_category_small("解剖学", "基礎") == 1
+    assert resolve_category_small("理学療法治療各論", "専門") == 18
+
+
+def test_category_quick_replies_use_the_shared_formal_hierarchy(monkeypatch):
+    replies = []
+    monkeypatch.setattr(
+        bot_app,
+        "line_bot_api",
+        type("LineApi", (), {"reply_message": lambda self, token, message: replies.append(message)})(),
+    )
+
+    bot_app.reply_quiz_category_group_choice("token")
+    assert [item.action.label for item in replies.pop().quick_reply.items] == [
+        "基礎", "専門基礎", "専門",
+    ]
+
+    for group_name in get_category_group_names():
+        bot_app.reply_quiz_category_choice("token", group_name)
+        assert [item.action.label for item in replies.pop().quick_reply.items] == list(
+            get_category_names_for_group(group_name)
+        )
+
+
+def test_category_selection_returns_only_the_selected_formal_field():
+    selected = select_questions_by_category(10, 30)
+    assert len(selected) == 30
+    assert all(int(question["category_small"]) == 10 for question in selected)
+
+
+def test_small_category_still_keeps_thirty_question_study_flow():
+    selected = select_questions_by_category(14, 30)
+    assert len(selected) == 30
+    assert all(int(question["category_small"]) == 14 for question in selected)
 
 
 def test_formal_bank_has_all_questions_and_boundary_ids():
@@ -90,6 +143,41 @@ def test_formal_questions_flow_through_existing_thirty_question_session(monkeypa
     resumed = bot_app.resume_quiz_session("formal-thirty-user")
     assert resumed["status"] == "waiting_for_answers"
     assert resumed["all_questions"][29]["id"] == "Q30"
+
+
+def test_selected_category_flows_into_existing_session(monkeypatch):
+    user_id = "formal-category-user"
+    questions = [get_quiz_question("Q14")] * 30
+    monkeypatch.setattr(
+        bot_app,
+        "select_formal_questions_by_category",
+        lambda category_small, count: questions[:count],
+    )
+    bot_app.quiz_category_selections[user_id] = {
+        "mode": "study", "group_name": "基礎", "category_small": 1,
+    }
+    bot_app.user_modes[user_id] = "study"
+
+    bot_app.start_quiz(user_id)
+    session = bot_app.study_sessions[user_id]
+
+    assert session["category_small"] == 1
+    assert len(session["all_questions"]) == 30
+    assert user_id not in bot_app.quiz_category_selections
+
+
+def test_return_home_clears_pending_category_selection(monkeypatch):
+    user_id = "pending-category-user"
+    bot_app.quiz_category_selections[user_id] = {
+        "mode": "nekketsu", "group_name": "専門",
+    }
+    bot_app.user_states[user_id] = "waiting_quiz_category_small"
+    monkeypatch.setattr(bot_app, "reply_mode_select", lambda *args, **kwargs: None)
+
+    bot_app.return_home("reply-token", user_id)
+
+    assert user_id not in bot_app.quiz_category_selections
+    assert user_id not in bot_app.user_states
 
 
 def test_formal_thirty_questions_grade_and_complete_all_explanations():

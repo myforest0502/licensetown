@@ -39,12 +39,16 @@ from database import (
 )
 from goukaku_ui import create_dashboard_token, goukaku_ui
 from question_bank import (
+    get_category_group_names,
+    get_category_names_for_group,
+    resolve_category_small,
     QUESTION_BANK_ERROR_MESSAGE,
     QuestionBankError,
     display_answer as get_display_answer,
     is_answer_correct,
     selected_answers_for_history,
     select_random_questions as select_formal_questions,
+    select_questions_by_category as select_formal_questions_by_category,
 )
 
 # =========================================================
@@ -561,6 +565,11 @@ def select_random_questions(question_count):
     """
     return select_formal_questions(question_count)
 
+
+def select_category_questions(category_small, question_count):
+    """正式問題バンクから指定分野の問題だけを取得する。"""
+    return select_formal_questions_by_category(category_small, question_count)
+
 # 回答時に使用する自信度
 CONFIDENCE_LEVELS = {
     "1": "自信あり",
@@ -573,6 +582,7 @@ CONFIDENCE_LEVELS = {
 study_sessions = {}
 consultation_contexts = {}
 learning_answer_counts = {}
+quiz_category_selections = {}
 
 
 # =========================================================
@@ -843,7 +853,15 @@ def start_quiz(user_id):
     if QUIZ_QUESTION_COUNT % QUESTIONS_PER_SET != 0:
         raise ValueError("出題数は1セットの問題数で割り切れる必要があります。")
 
-    all_questions = select_random_questions(QUIZ_QUESTION_COUNT)
+    category_selection = quiz_category_selections.pop(user_id, None)
+    category_small = (
+        category_selection.get("category_small")
+        if category_selection else None
+    )
+    if category_small is None:
+        all_questions = select_random_questions(QUIZ_QUESTION_COUNT)
+    else:
+        all_questions = select_category_questions(category_small, QUIZ_QUESTION_COUNT)
     questions = all_questions[:QUESTIONS_PER_SET]
 
     study_sessions[user_id] = {
@@ -861,6 +879,7 @@ def start_quiz(user_id):
         "started_at": time.time(),
         "active_started_at": time.time(),
         "nekketsu_correct": 0,
+        "category_small": category_small,
     }
 
     quiz_messages = format_quiz_messages(questions)
@@ -1559,6 +1578,32 @@ def reply_question_type_choice(reply_token, mode):
     )
 
 
+def reply_quiz_category_group_choice(reply_token):
+    line_bot_api.reply_message(
+        reply_token,
+        TextSendMessage(
+            text="まず大きな分野を選んでくれ＾＾",
+            quick_reply=QuickReply(items=[
+                QuickReplyButton(action=MessageAction(label=name, text=name))
+                for name in get_category_group_names()
+            ]),
+        ),
+    )
+
+
+def reply_quiz_category_choice(reply_token, group_name):
+    line_bot_api.reply_message(
+        reply_token,
+        TextSendMessage(
+            text=f"{group_name}の中から分野を選んでくれ＾＾",
+            quick_reply=QuickReply(items=[
+                QuickReplyButton(action=MessageAction(label=name, text=name))
+                for name in get_category_names_for_group(group_name)
+            ]),
+        ),
+    )
+
+
 def reply_nekketsu_continue_choice(reply_token, current_session):
     current_set = current_session["current_set"]
     questions_per_set = current_session["questions_per_set"]
@@ -1893,6 +1938,7 @@ def return_home(reply_token, user_id, interrupt=True):
     user_states.pop(user_id, None)
     explain_contexts.pop(user_id, None)
     consultation_contexts.pop(user_id, None)
+    quiz_category_selections.pop(user_id, None)
     current_session = study_sessions.get(user_id)
     finish_active_learning_time(user_id)
     if interrupt and not (current_session and current_session.get("status") == "paused"):
@@ -3166,17 +3212,40 @@ def handle_text_message(event):
         reply_question_type_choice(event.reply_token, "学習")
         return
     if user_message in {"学習：分野問題", "熱血：分野問題"}:
-        user_states[user_id] = "waiting_quiz_field"
-        user_modes[user_id] = "nekketsu" if user_message.startswith("熱血") else "study"
-        reply_to_line(event.reply_token, "希望する分野を入力してくれ＾＾")
+        mode = "nekketsu" if user_message.startswith("熱血") else "study"
+        user_modes[user_id] = mode
+        user_states[user_id] = "waiting_quiz_category_group"
+        quiz_category_selections[user_id] = {"mode": mode}
+        reply_quiz_category_group_choice(event.reply_token)
         return
-    if current_state == "waiting_quiz_field":
+    if current_state == "waiting_quiz_category_group":
+        if user_message not in get_category_group_names():
+            reply_quiz_category_group_choice(event.reply_token)
+            return
+        quiz_category_selections.setdefault(user_id, {})["group_name"] = user_message
+        user_states[user_id] = "waiting_quiz_category_small"
+        reply_quiz_category_choice(event.reply_token, user_message)
+        return
+    if current_state == "waiting_quiz_category_small":
+        category_selection = quiz_category_selections.get(user_id, {})
+        group_name = category_selection.get("group_name")
+        try:
+            category_small = resolve_category_small(user_message, group_name)
+        except QuestionBankError:
+            if group_name:
+                reply_quiz_category_choice(event.reply_token, group_name)
+            else:
+                user_states[user_id] = "waiting_quiz_category_group"
+                reply_quiz_category_group_choice(event.reply_token)
+            return
+        category_selection["category_small"] = category_small
         user_states.pop(user_id, None)
         reply_to_line(event.reply_token, "おう、任せろ＾＾\nまず5問作るから、ちょっと待ってな（笑）\nただ問題解いてる最中に中断したくなったら\n入力欄に「中断する」って入れて教えてくれな＾＾")
         quiz_thread = threading.Thread(target=prepare_and_send_quiz, args=(user_id,), daemon=True)
         quiz_thread.start()
         return
     if user_message.startswith(("学習：", "熱血：")):
+        quiz_category_selections.pop(user_id, None)
         user_modes[user_id] = "nekketsu" if user_message.startswith("熱血") else "study"
         if user_message.endswith("：おすすめ"):
             reply_recommended_intro(event.reply_token, learning_answer_counts.get(user_id, 0) >= 5)

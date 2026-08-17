@@ -132,6 +132,7 @@ def load_current_app_functions() -> SimpleNamespace:
         ),
         "threading": SimpleNamespace(Thread=None),
         "study_sessions": {},
+        "quiz_category_selections": {},
         "consultation_contexts": {},
         "learning_answer_counts": {},
         "record_learning_batch": lambda **kwargs: True,
@@ -151,6 +152,8 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_study_set_result": lambda token, session: namespace["reply_study_continue_choice"](token),
         "reply_quiz_ready_for_explanations": lambda token, session: namespace["reply_quiz_score"](token, session["quiz_result"]),
         "reply_question_type_choice": lambda *args, **kwargs: None,
+        "reply_quiz_category_group_choice": lambda *args, **kwargs: None,
+        "reply_quiz_category_choice": lambda *args, **kwargs: None,
         "reply_saved_session_choice": lambda *args, **kwargs: None,
         "reply_current_quiz": lambda *args, **kwargs: None,
         "reply_quiz_input_error": (
@@ -194,6 +197,17 @@ def load_current_app_functions() -> SimpleNamespace:
         "prepare_and_send_quiz": lambda *args, **kwargs: None,
         "prepare_and_send_next_quiz": lambda *args, **kwargs: None,
         "select_random_questions": lambda count: make_questions()[:count],
+        "select_category_questions": lambda category_small, count: make_questions()[:count],
+        "get_category_group_names": lambda: ("基礎", "専門基礎", "専門"),
+        "get_category_names_for_group": lambda group_name: {
+            "基礎": ("解剖学", "生理学", "心理学", "人間発達学", "教育学", "医学概論"),
+            "専門基礎": ("病理学", "内科学", "神経医学", "精神医学", "小児学", "臨床心理学"),
+            "専門": ("基礎運動学", "臨床運動学", "動作分析学", "運動器", "理学療法評価各論", "理学療法治療各論"),
+        }[group_name],
+        "resolve_category_small": lambda category_name, group_name=None: {
+            "解剖学": 1, "内科学": 8, "運動器": 16,
+        }[category_name],
+        "QuestionBankError": ValueError,
         "QUIZ_QUESTION_COUNT": 30,
         "QUESTIONS_PER_SET": 5,
         "CONFIDENCE_LEVELS": {
@@ -1426,6 +1440,59 @@ class ConfigurableQuizTest(unittest.TestCase):
     def setUp(self) -> None:
         app.study_sessions.clear()
         app.explain_contexts.clear()
+        app.quiz_category_selections.clear()
+
+    def test_study_and_nekketsu_share_hierarchical_category_selection(self) -> None:
+        function_globals = app.handle_text_message.__globals__
+        original_group_reply = function_globals["reply_quiz_category_group_choice"]
+        original_category_reply = function_globals["reply_quiz_category_choice"]
+        original_thread = function_globals["threading"].Thread
+        group_replies = []
+        category_replies = []
+        started = []
+
+        class ImmediateThread:
+            def __init__(self, target, args, daemon):
+                self.target = target
+                self.args = args
+
+            def start(self):
+                started.append(self.args[0])
+
+        function_globals["reply_quiz_category_group_choice"] = (
+            lambda token: group_replies.append(token)
+        )
+        function_globals["reply_quiz_category_choice"] = (
+            lambda token, group_name: category_replies.append((token, group_name))
+        )
+        function_globals["threading"].Thread = ImmediateThread
+
+        try:
+            for mode_label, expected_mode, group_name, category_name, category_small in (
+                ("学習", "study", "基礎", "解剖学", 1),
+                ("熱血", "nekketsu", "専門基礎", "内科学", 8),
+            ):
+                user_id = f"category-{expected_mode}"
+                app.handle_text_message(make_text_event(user_id, f"{mode_label}：分野問題"))
+                self.assertEqual("waiting_quiz_category_group", app.user_states[user_id])
+                app.handle_text_message(make_text_event(user_id, group_name))
+                self.assertEqual("waiting_quiz_category_small", app.user_states[user_id])
+                app.handle_text_message(make_text_event(user_id, category_name))
+
+                self.assertNotIn(user_id, app.user_states)
+                self.assertEqual(expected_mode, app.user_modes[user_id])
+                self.assertEqual(
+                    category_small,
+                    app.quiz_category_selections[user_id]["category_small"],
+                )
+        finally:
+            function_globals["reply_quiz_category_group_choice"] = original_group_reply
+            function_globals["reply_quiz_category_choice"] = original_category_reply
+            function_globals["threading"].Thread = original_thread
+
+        self.assertEqual(2, len(group_replies))
+        self.assertEqual(["基礎", "専門基礎"], [group for _, group in category_replies])
+        self.assertEqual(2, len(started))
 
     def test_30_40_50_question_settings_select_once_without_duplicates(self) -> None:
         function_globals = app.start_quiz.__globals__

@@ -28,6 +28,18 @@ CATEGORY_LARGE_BY_SMALL = {
     **{number: "B" for number in range(7, 13)},
     **{number: "C" for number in range(13, 19)},
 }
+CATEGORY_GROUP_CODES = {
+    "基礎": "A",
+    "専門基礎": "B",
+    "専門": "C",
+}
+CATEGORY_GROUPS = {
+    group_name: tuple(
+        number for number, category_code in CATEGORY_LARGE_BY_SMALL.items()
+        if category_code == group_code
+    )
+    for group_name, group_code in CATEGORY_GROUP_CODES.items()
+}
 BASIC_CATEGORY_SMALLS = frozenset(
     number for number, category_large in CATEGORY_LARGE_BY_SMALL.items()
     if category_large == "A"
@@ -117,6 +129,36 @@ def get_category_name(category_small) -> str:
         return CATEGORY_NAMES[int(category_small)]
     except (KeyError, TypeError, ValueError) as exc:
         raise QuestionBankError(f"Unknown category_small: {category_small!r}") from exc
+
+
+def get_category_group_names() -> tuple[str, ...]:
+    """学習画面で表示する正式な大分類名を順番どおり返す。"""
+    return tuple(CATEGORY_GROUPS)
+
+
+def get_category_names_for_group(group_name: str) -> tuple[str, ...]:
+    """大分類に属する正式な6分野名を返す。"""
+    try:
+        category_numbers = CATEGORY_GROUPS[str(group_name).strip()]
+    except KeyError as exc:
+        raise QuestionBankError(f"Unknown category group: {group_name!r}") from exc
+    return tuple(CATEGORY_NAMES[number] for number in category_numbers)
+
+
+def resolve_category_small(category_name: str, group_name: str | None = None) -> int:
+    """正式分野名を小カテゴリ番号へ変換し、必要なら大分類との整合も確認する。"""
+    normalized_name = str(category_name).strip()
+    category_small = next(
+        (number for number, name in CATEGORY_NAMES.items() if name == normalized_name),
+        None,
+    )
+    if category_small is None:
+        raise QuestionBankError(f"Unknown category name: {category_name!r}")
+    if group_name is not None and category_small not in CATEGORY_GROUPS.get(str(group_name).strip(), ()):
+        raise QuestionBankError(
+            f"Category {category_name!r} does not belong to group {group_name!r}"
+        )
+    return category_small
 
 
 def get_answer(q_id) -> dict:
@@ -221,6 +263,32 @@ def select_random_questions(question_count: int) -> list[dict]:
         raise QuestionBankError("Requested question count exceeds formal bank")
     ids = random.sample(list(_QUESTIONS), question_count)
     return [get_quiz_question(q_id) for q_id in ids]
+
+
+def select_questions_by_category(category_small: int, question_count: int) -> list[dict]:
+    """正式JSONから指定分野だけを抽出する。少数分野は一巡後に再抽出する。"""
+    _require_loaded()
+    try:
+        category_number = int(category_small)
+    except (TypeError, ValueError) as exc:
+        raise QuestionBankError(f"Unknown category_small: {category_small!r}") from exc
+    if category_number not in CATEGORY_NAMES:
+        raise QuestionBankError(f"Unknown category_small: {category_small!r}")
+    if question_count < 1:
+        raise QuestionBankError("Requested question count must be positive")
+
+    matching_ids = [
+        q_id for q_id, question in _QUESTIONS.items()
+        if int(question.get("category_small", 0)) == category_number
+    ]
+    if not matching_ids:
+        raise QuestionBankError(f"No questions found for category_small={category_number}")
+
+    selected_ids = []
+    while len(selected_ids) < question_count:
+        shuffled_ids = random.sample(matching_ids, len(matching_ids))
+        selected_ids.extend(shuffled_ids[: question_count - len(selected_ids)])
+    return [get_quiz_question(q_id) for q_id in selected_ids]
 
 
 def question_count() -> int:
