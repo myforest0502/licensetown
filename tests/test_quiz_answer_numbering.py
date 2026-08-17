@@ -96,6 +96,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "start_next_quiz",
         "reply_new_user_welcome",
         "reply_gen_first_greeting",
+        "reply_dashboard_link",
         "is_complete_reset_command",
         "is_home_command",
         "pause_quiz_session",
@@ -123,6 +124,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "Path": Path,
         "unicodedata": unicodedata,
         "logging": logging,
+        "os": __import__("os"),
         "TextSendMessage": lambda text: SimpleNamespace(text=text),
         "line_bot_api": SimpleNamespace(
             reply_message=lambda token, messages: line_replies.append((token, messages))
@@ -176,6 +178,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "reply_next_explanation_choice": lambda *args, **kwargs: None,
         "reply_new_user_welcome": lambda *args, **kwargs: None,
         "reply_gen_first_greeting": lambda *args, **kwargs: None,
+        "create_dashboard_token": lambda user_id: f"token-{user_id}",
         "reply_explain_method_choice": lambda *args, **kwargs: None,
         "reply_explain_answer_with_review": lambda *args, **kwargs: None,
         "reply_consultation_start": lambda token: line_replies.append((token, "consultation")),
@@ -1147,6 +1150,74 @@ class NewUserWelcomeTest(unittest.TestCase):
         self.assertEqual("登録済みユーザー", app.user_names[user_id])
         self.assertEqual("normal", app.user_modes[user_id])
 
+    def test_rich_menu_dashboard_command_uses_personalized_link_handler(self) -> None:
+        user_id = "rich-menu-dashboard-user"
+        calls = []
+        function_globals = app.handle_text_message.__globals__
+        original = function_globals["reply_dashboard_link"]
+        function_globals["reply_dashboard_link"] = (
+            lambda reply_token, target_user_id: calls.append(
+                (reply_token, target_user_id)
+            )
+        )
+        try:
+            app.handle_text_message(make_text_event(user_id, "合格への道"))
+        finally:
+            function_globals["reply_dashboard_link"] = original
+
+        self.assertEqual([("test-reply-token", user_id)], calls)
+
+    def test_teach_me_gensan_enters_dedicated_term_explanation_mode(self) -> None:
+        user_id = "gensan-term-user"
+        app.user_names[user_id] = "登録済みユーザー"
+        replies = []
+        function_globals = app.handle_text_message.__globals__
+        original_reply = function_globals["reply_to_line"]
+        function_globals["reply_to_line"] = (
+            lambda _token, message: replies.append(message)
+        )
+        try:
+            app.handle_text_message(make_text_event(user_id, "教えて源さん"))
+        finally:
+            function_globals["reply_to_line"] = original_reply
+
+        self.assertEqual("gensan_explain", app.user_modes[user_id])
+        self.assertEqual("explain_gensan", app.user_states[user_id])
+        self.assertEqual([
+            "おう！＾＾\n"
+            "ここでは、わかんねぇ言葉とか、横文字とか、そういうのを俺が解説していくぜ！\n"
+            "なんでも聞いてくれ＾＾"
+        ], replies)
+
+    def test_gensan_term_mode_explains_terms_and_other_menu_can_leave(self) -> None:
+        user_id = "gensan-term-followup-user"
+        app.user_names[user_id] = "登録済みユーザー"
+        app.user_modes[user_id] = "gensan_explain"
+        app.user_states[user_id] = "explain_gensan"
+        replies = []
+        study_calls = []
+        function_globals = app.handle_text_message.__globals__
+        original_reply = function_globals["reply_to_line"]
+        original_create = function_globals["create_text_response"]
+        original_study = function_globals["reply_study_ready_choice"]
+        function_globals["reply_to_line"] = lambda _token, message: replies.append(message)
+        function_globals["create_text_response"] = (
+            lambda message, mode="normal": f"{mode}:{message}"
+        )
+        function_globals["reply_study_ready_choice"] = lambda token: study_calls.append(token)
+        try:
+            app.handle_text_message(make_text_event(user_id, "ADLって何？"))
+            app.handle_text_message(make_text_event(user_id, "勉強する"))
+        finally:
+            function_globals["reply_to_line"] = original_reply
+            function_globals["create_text_response"] = original_create
+            function_globals["reply_study_ready_choice"] = original_study
+
+        self.assertEqual(["gensan_explain:ADLって何？"], replies)
+        self.assertEqual(["test-reply-token"], study_calls)
+        self.assertEqual("study", app.user_modes[user_id])
+        self.assertNotIn(user_id, app.user_states)
+
     def test_reset_user_returns_to_complete_first_use_flow(self) -> None:
         user_id = "reset-existing-user"
         app.user_names[user_id] = "次郎"
@@ -1526,10 +1597,10 @@ class ConfigurableQuizTest(unittest.TestCase):
         )
         self.assertEqual("study", app.user_modes["study-user"])
         self.assertEqual("chat", app.user_modes["chat-user"])
-        self.assertEqual("explain", app.user_modes["explain-user"])
+        self.assertEqual("gensan_explain", app.user_modes["explain-user"])
         self.assertEqual("nekketsu", app.user_modes["heat-user"])
         self.assertEqual(1, len(study_replies))
-        self.assertEqual(1, len(explain_choices))
+        self.assertEqual(0, len(explain_choices))
         self.assertEqual(2, len(app.line_replies))
         self.assertEqual("consultation", app.line_replies[0][1])
         self.assertEqual("nekketsu", app.line_replies[1][1])
@@ -1634,7 +1705,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         app.user_names[attachment_user] = "資料質問者"
 
         try:
-            app.handle_text_message(make_text_event(direct_user, "教えて源さん"))
+            app.handle_text_message(make_text_event(direct_user, "解説モード"))
             app.handle_text_message(make_text_event(direct_user, "源さんに直接質問する"))
             app.handle_text_message(make_text_event(direct_user, "反射って何？"))
             first_review_state = app.user_states[direct_user]
@@ -1644,7 +1715,7 @@ class ConfigurableQuizTest(unittest.TestCase):
             second_review_state = app.user_states[direct_user]
             app.handle_text_message(make_text_event(direct_user, "わかった！"))
 
-            app.handle_text_message(make_text_event(attachment_user, "教えて源さん"))
+            app.handle_text_message(make_text_event(attachment_user, "解説モード"))
             app.handle_text_message(make_text_event(attachment_user, "Word・PDFを見せる"))
             attachment_mode_before_switch = app.user_modes[attachment_user]
             attachment_state_before_switch = app.user_states[attachment_user]

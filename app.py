@@ -1438,6 +1438,16 @@ def create_home_message(user_id=None):
     )
 
 
+def reply_dashboard_link(reply_token, user_id):
+    """Rich Menuの文字列操作から、ユーザー別の合格への道URLを返す。"""
+    dashboard_url = (
+        os.getenv("PUBLIC_BASE_URL", "https://line-bot-project-bxjq.onrender.com").rstrip("/")
+        + "/goukaku-no-michi?token="
+        + create_dashboard_token(user_id)
+    )
+    reply_to_line(reply_token, f"合格への道はこちらだ＾＾\n{dashboard_url}")
+
+
 def reply_mode_select(reply_token, intro_text=None, user_id=None):
     """
     「今日は何する？＾＾」と、
@@ -2171,6 +2181,14 @@ def create_text_response(user_message, mode="normal"):
 ただし、毎回まったく同じ言い回しや構成にはしないでください。
 分からないことや根拠が不十分なことは、推測で断定しないでください。
 資料をまだ受け取っていない場合は、資料を見たような発言をしないでください。
+"""
+    if mode == "gensan_explain":
+        system_prompt += """
+
+現在は「教えて源さん」の用語解説モードです。
+悩み相談ではなく、用語・カタカナ語・横文字・医療・福祉・学習関係の言葉を、
+初学者にも分かる短く平易な日本語で説明してください。
+最初に一言で意味を示し、その後に具体例や国試学習でのポイントを補ってください。
 """
         system_prompt += EXPLAIN_TEACHING_PROMPT
     response = client.chat.completions.create(
@@ -2977,6 +2995,10 @@ def handle_text_message(event):
         return_home(event.reply_token, user_id, interrupt=True)
         return
 
+    if user_message == "合格への道":
+        reply_dashboard_link(event.reply_token, user_id)
+        return
+
     current_state = user_states.get(user_id)
 
     if current_state == "waiting_gen_intro":
@@ -3080,6 +3102,22 @@ def handle_text_message(event):
             return
         reply_nekketsu_start(event.reply_token)
         return
+
+    if current_state == "explain_gensan" and user_message not in {
+        "勉強する", "相談する", "熱血モード", "教えて源さん"
+    }:
+        try:
+            reply_to_line(
+                event.reply_token,
+                create_text_response(user_message, mode="gensan_explain"),
+            )
+        except Exception:
+            logging.exception("Gensan term explanation failed: user_id=%s", user_id)
+            reply_to_line(
+                event.reply_token,
+                "おう、悪い。今ちょっとうまく説明できなかった。もう一度聞いてくれ。",
+            )
+        return
     if user_message in ["相談したい", "相談する", "相談モード"]:
         if str(user_states.get(user_id, "")).startswith("explain_"):
             invalidate_teaching_image_analysis(user_id)
@@ -3155,7 +3193,20 @@ def handle_text_message(event):
         event.reply_token
     )
         return
-    if user_message in ["教えて源さん", "質問する", "解説モード"]:
+    if user_message == "教えて源さん":
+        invalidate_teaching_image_analysis(user_id)
+        explain_contexts.pop(user_id, None)
+        consultation_contexts.pop(user_id, None)
+        user_modes[user_id] = "gensan_explain"
+        user_states[user_id] = "explain_gensan"
+        reply_to_line(
+            event.reply_token,
+            "おう！＾＾\n"
+            "ここでは、わかんねぇ言葉とか、横文字とか、そういうのを俺が解説していくぜ！\n"
+            "なんでも聞いてくれ＾＾",
+        )
+        return
+    if user_message in ["質問する", "解説モード"]:
         invalidate_teaching_image_analysis(user_id)
         user_modes[user_id] = "explain"
         explain_contexts.pop(user_id, None)
