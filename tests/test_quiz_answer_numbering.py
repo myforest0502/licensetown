@@ -196,6 +196,11 @@ def load_current_app_functions() -> SimpleNamespace:
         "create_text_response": lambda *args, **kwargs: "unused",
         "prepare_and_send_quiz": lambda *args, **kwargs: None,
         "prepare_and_send_next_quiz": lambda *args, **kwargs: None,
+        "start_and_reply_quiz": lambda token, user_id: None,
+        "advance_and_reply_quiz": (
+            lambda token, user_id, expected_session_id=None:
+            namespace["start_next_quiz"](user_id)
+        ),
         "select_random_questions": lambda count: make_questions()[:count],
         "select_category_questions": lambda category_small, count: make_questions()[:count],
         "get_category_group_names": lambda: ("基礎", "専門基礎", "専門"),
@@ -1446,18 +1451,10 @@ class ConfigurableQuizTest(unittest.TestCase):
         function_globals = app.handle_text_message.__globals__
         original_group_reply = function_globals["reply_quiz_category_group_choice"]
         original_category_reply = function_globals["reply_quiz_category_choice"]
-        original_thread = function_globals["threading"].Thread
+        original_start_reply = function_globals["start_and_reply_quiz"]
         group_replies = []
         category_replies = []
         started = []
-
-        class ImmediateThread:
-            def __init__(self, target, args, daemon):
-                self.target = target
-                self.args = args
-
-            def start(self):
-                started.append(self.args[0])
 
         function_globals["reply_quiz_category_group_choice"] = (
             lambda token: group_replies.append(token)
@@ -1465,7 +1462,9 @@ class ConfigurableQuizTest(unittest.TestCase):
         function_globals["reply_quiz_category_choice"] = (
             lambda token, group_name: category_replies.append((token, group_name))
         )
-        function_globals["threading"].Thread = ImmediateThread
+        function_globals["start_and_reply_quiz"] = (
+            lambda token, user_id: started.append((token, user_id))
+        )
 
         try:
             for mode_label, expected_mode, group_name, category_name, category_small in (
@@ -1488,7 +1487,7 @@ class ConfigurableQuizTest(unittest.TestCase):
         finally:
             function_globals["reply_quiz_category_group_choice"] = original_group_reply
             function_globals["reply_quiz_category_choice"] = original_category_reply
-            function_globals["threading"].Thread = original_thread
+            function_globals["start_and_reply_quiz"] = original_start_reply
 
         self.assertEqual(2, len(group_replies))
         self.assertEqual(["基礎", "専門基礎"], [group for _, group in category_replies])

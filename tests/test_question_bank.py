@@ -180,6 +180,61 @@ def test_return_home_clears_pending_category_selection(monkeypatch):
     assert user_id not in bot_app.user_states
 
 
+def test_all_eighteen_categories_reply_with_first_five_without_extra_input(monkeypatch):
+    replies = []
+    monkeypatch.setattr(
+        bot_app,
+        "line_bot_api",
+        type("LineApi", (), {"reply_message": lambda self, token, messages: replies.append((token, messages))})(),
+    )
+
+    for mode in ("study", "nekketsu"):
+        for category_small in range(1, 19):
+            user_id = f"first-batch-{mode}-{category_small}"
+            bot_app.user_modes[user_id] = mode
+            bot_app.quiz_category_selections[user_id] = {
+                "mode": mode,
+                "category_small": category_small,
+            }
+
+            assert bot_app.start_and_reply_quiz("reply-token", user_id)
+            session = bot_app.study_sessions[user_id]
+            assert session["status"] == "waiting_for_answers"
+            assert len(session["questions"]) == 5
+            assert all(
+                int(question["category_small"]) == category_small
+                for question in session["all_questions"]
+            )
+            assert len(replies[-1][1]) == 3
+            assert "第1問" in replies[-1][1][1].text
+            assert replies[-1][1][2].text == "じゃあ、解答を入力してくれ＾＾"
+
+
+def test_next_batch_is_replied_immediately_for_study_and_nekketsu(monkeypatch):
+    replies = []
+    monkeypatch.setattr(
+        bot_app,
+        "line_bot_api",
+        type("LineApi", (), {"reply_message": lambda self, token, messages: replies.append(messages)})(),
+    )
+
+    for mode in ("study", "nekketsu"):
+        user_id = f"next-batch-{mode}"
+        bot_app.user_modes[user_id] = mode
+        bot_app.quiz_category_selections[user_id] = {"mode": mode, "category_small": 16}
+        bot_app.start_quiz(user_id)
+        session = bot_app.study_sessions[user_id]
+        session["status"] = "waiting_for_continue"
+
+        assert bot_app.advance_and_reply_quiz(
+            "reply-token", user_id, expected_session_id=session["session_id"]
+        )
+        assert session["current_set"] == 2
+        assert session["status"] == "waiting_for_answers"
+        assert session["expected_numbers"] == list(range(6, 11))
+        assert "第6問" in replies[-1][1].text
+
+
 def test_formal_thirty_questions_grade_and_complete_all_explanations():
     questions = [get_quiz_question(f"Q{number}") for number in range(501, 531)]
     answers = {

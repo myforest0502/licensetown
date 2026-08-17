@@ -1720,7 +1720,7 @@ def record_confirmed_learning_batch(user_id, session):
     )
 
 
-def reply_current_quiz(reply_token, session):
+def reply_current_quiz(reply_token, session, intro_text=None):
     start_number = ((session["current_set"] - 1) * session["questions_per_set"]) + 1
     session["expected_numbers"] = list(
         range(start_number, start_number + session["questions_per_set"])
@@ -1736,13 +1736,74 @@ def reply_current_quiz(reply_token, session):
             QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
             QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
         ]
-    line_bot_api.reply_message(reply_token, [
+    reply_messages = []
+    if intro_text:
+        reply_messages.append(TextSendMessage(text=intro_text))
+    reply_messages.extend([
         TextSendMessage(text=quiz_text),
         TextSendMessage(
             text="じゃあ、解答を入力してくれ＾＾",
             quick_reply=QuickReply(items=quick_reply_items),
         ),
     ])
+    line_bot_api.reply_message(reply_token, reply_messages)
+
+
+def start_and_reply_quiz(reply_token, user_id):
+    """正式問題バンクから初回5問を準備し、同じ返信内で直ちに表示する。"""
+    try:
+        start_quiz(user_id)
+        reply_current_quiz(
+            reply_token,
+            study_sessions[user_id],
+            intro_text=(
+                "おう、任せろ＾＾\n"
+                "まず5問いくぞ（笑）\n"
+                "問題を解いてる最中に中断したくなったら、"
+                "入力欄に『中断する』って入れて教えてくれな＾＾"
+            ),
+        )
+        return True
+    except QuestionBankError:
+        logging.exception("Formal question bank initial reply failed: user_id=%s", user_id)
+        study_sessions.pop(user_id, None)
+        reply_to_line(reply_token, QUESTION_BANK_ERROR_MESSAGE)
+    except Exception:
+        logging.exception("Initial quiz reply failed: user_id=%s", user_id)
+        study_sessions.pop(user_id, None)
+        reply_to_line(
+            reply_token,
+            "おう、悪い。問題の準備でズッコケた（笑）\n少し待ってから、もう一度試してくれ。",
+        )
+    return False
+
+
+def advance_and_reply_quiz(reply_token, user_id, expected_session_id=None):
+    """既存セッションの次の5問を準備し、同じ返信内で直ちに表示する。"""
+    try:
+        active_session = study_sessions.get(user_id)
+        if (
+            expected_session_id
+            and (not active_session or active_session.get("session_id") != expected_session_id)
+        ):
+            return False
+        start_next_quiz(user_id)
+        reply_current_quiz(
+            reply_token,
+            study_sessions[user_id],
+            intro_text="おう！次の5問いくぞ＾＾",
+        )
+        return True
+    except QuestionBankError:
+        logging.exception("Formal question bank next reply failed: user_id=%s", user_id)
+        reply_to_line(reply_token, QUESTION_BANK_ERROR_MESSAGE)
+    except Exception:
+        logging.exception("Next quiz reply failed: user_id=%s", user_id)
+        reply_to_line(
+            reply_token,
+            "おう、悪い。次の5問を準備できなかった。もう一度『続ける』を押してくれ。",
+        )
+    return False
 
 
 def reply_quiz_input_error(reply_token, start_number, questions_per_set):
@@ -2915,13 +2976,11 @@ def process_study_flow_command(reply_token, user_id, user_message):
 
     if status == "waiting_for_continue":
         if user_message == "続ける":
-            session["status"] = "preparing_next"
-            reply_to_line(reply_token, "おう！次の5問を準備するぞ＾＾\nちょっと待ってな！")
-            threading.Thread(
-                target=prepare_and_send_next_quiz,
-                args=(user_id, session.get("session_id")),
-                daemon=True,
-            ).start()
+            advance_and_reply_quiz(
+                reply_token,
+                user_id,
+                expected_session_id=session.get("session_id"),
+            )
         else:
             reply_study_continue_choice(reply_token)
         return True
@@ -2971,13 +3030,11 @@ def process_nekketsu_flow_command(reply_token, user_id, user_message):
 
     if status == "waiting_for_continue":
         if user_message == "続ける":
-            session["status"] = "preparing_next"
-            reply_to_line(reply_token, "おう！次の5問を準備するぞ＾＾\nちょっと待ってな！")
-            threading.Thread(
-                target=prepare_and_send_next_quiz,
-                args=(user_id, session.get("session_id")),
-                daemon=True,
-            ).start()
+            advance_and_reply_quiz(
+                reply_token,
+                user_id,
+                expected_session_id=session.get("session_id"),
+            )
         elif user_message == "源さんに預ける":
             pause_quiz_session(user_id)
             return_home(reply_token, user_id, interrupt=True)
@@ -3240,9 +3297,7 @@ def handle_text_message(event):
             return
         category_selection["category_small"] = category_small
         user_states.pop(user_id, None)
-        reply_to_line(event.reply_token, "おう、任せろ＾＾\nまず5問作るから、ちょっと待ってな（笑）\nただ問題解いてる最中に中断したくなったら\n入力欄に「中断する」って入れて教えてくれな＾＾")
-        quiz_thread = threading.Thread(target=prepare_and_send_quiz, args=(user_id,), daemon=True)
-        quiz_thread.start()
+        start_and_reply_quiz(event.reply_token, user_id)
         return
     if user_message.startswith(("学習：", "熱血：")):
         quiz_category_selections.pop(user_id, None)
