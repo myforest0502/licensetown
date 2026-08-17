@@ -9,6 +9,7 @@
 </head>
 <body>
   <main class="app-shell">{% block content %}{% endblock %}</main>
-  <script src="{{ url_for('static', filename='goukaku/goukaku.js', v='20260817-mobile1') }}" defer></script>
+  {% if liff_id %}<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>{% endif %}
+  <script src="{{ url_for('static', filename='goukaku/goukaku.js', v='20260817-liff1') }}" defer></script>
 </body>
 </html>

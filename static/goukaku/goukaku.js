@@ -54,9 +54,36 @@ document.querySelectorAll('[data-close]').forEach((button) => button.addEventLis
   else if (history.length > 1) history.back();
 }));
 
-document.querySelectorAll('[data-line-message]').forEach((button) => button.addEventListener('click', () => {
+const lineActions = document.querySelector('[data-line-account-id][data-liff-id]');
+const liffId = lineActions?.dataset.liffId;
+const liffReady = liffId && window.liff
+  ? window.liff.init({ liffId }).then(() => window.liff.isInClient()).catch(() => false)
+  : Promise.resolve(false);
+
+function openOfficialAccountChat(accountId, message) {
+  if (!accountId) return false;
+  window.location.href = `https://line.me/R/oaMessage/${encodeURIComponent(accountId)}/?${encodeURIComponent(message)}`;
+  return true;
+}
+
+document.querySelectorAll('[data-line-message]').forEach((button) => button.addEventListener('click', async () => {
   const message = button.dataset.lineMessage;
   const accountId = button.closest('[data-line-account-id]')?.dataset.lineAccountId;
-  if (!accountId) return;
-  window.location.href = `https://line.me/R/oaMessage/${encodeURIComponent(accountId)}/?${encodeURIComponent(message)}`;
+  const status = button.closest('.mobile-actions')?.querySelector('[data-line-action-status]');
+  button.disabled = true;
+  if (status) status.textContent = '';
+  try {
+    if (await liffReady) {
+      await window.liff.sendMessages([{ type: 'text', text: message }]);
+      window.liff.closeWindow();
+      return;
+    }
+  } catch (error) {
+    console.error('LIFF message send failed', error);
+  } finally {
+    button.disabled = false;
+  }
+  if (!openOfficialAccountChat(accountId, message) && status) {
+    status.textContent = 'LINEアプリ内から開いてください。';
+  }
 }));

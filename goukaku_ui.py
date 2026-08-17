@@ -116,6 +116,7 @@ def home():
         dashboard=build_dashboard(user_id),
         dashboard_token=token,
         line_official_account_id=os.getenv("LINE_OFFICIAL_ACCOUNT_ID", "").strip(),
+        liff_id=os.getenv("LIFF_ID", "").strip(),
     )
 
 

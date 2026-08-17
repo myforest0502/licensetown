@@ -96,6 +96,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "start_next_quiz",
         "reply_new_user_welcome",
         "reply_gen_first_greeting",
+        "build_dashboard_url",
         "reply_dashboard_link",
         "is_complete_reset_command",
         "is_home_command",
@@ -1167,6 +1168,19 @@ class NewUserWelcomeTest(unittest.TestCase):
 
         self.assertEqual([("test-reply-token", user_id)], calls)
 
+    def test_dashboard_link_uses_liff_url_when_liff_id_is_configured(self) -> None:
+        function_globals = app.build_dashboard_url.__globals__
+        original_getenv = function_globals["os"].getenv
+        function_globals["os"].getenv = lambda key, default="": (
+            "1234567890-test" if key == "LIFF_ID" else original_getenv(key, default)
+        )
+        try:
+            url = app.build_dashboard_url("liff-dashboard-user")
+        finally:
+            function_globals["os"].getenv = original_getenv
+
+        self.assertTrue(url.startswith("https://liff.line.me/1234567890-test?token="))
+
     def test_teach_me_gensan_enters_dedicated_term_explanation_mode(self) -> None:
         user_id = "gensan-term-user"
         app.user_names[user_id] = "登録済みユーザー"
@@ -1589,7 +1603,7 @@ class ConfigurableQuizTest(unittest.TestCase):
 
         self.assertEqual(4, mode_select_source.count("QuickReplyButton("))
         self.assertNotIn("教えて源さん", mode_select_source)
-        self.assertIn("/goukaku-no-michi", mode_select_source)
+        self.assertIn("build_dashboard_url(user_id)", mode_select_source)
         self.assertIn("ここはお前たちの〝家”だよ＾＾", mode_select_source)
         self.assertEqual(
             sorted(mode_select_source.index(label) for label in labels),

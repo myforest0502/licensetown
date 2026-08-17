@@ -35,12 +35,12 @@
     <a class="motivation-card footprint-card" href="{{ url_for('goukaku_ui.footprints') }}"><div><h2>👣 あなたの足跡を見る</h2><p>これまでの学習の軌跡を<br>タイムラインで確認できます。</p><span>足跡を見る ›</span></div><b class="footprint-chart">↗</b></a>
   </section>
 
-  <section class="actions mobile-actions" data-line-account-id="{{ line_official_account_id }}"><h2>次にやること</h2><div class="action-grid">
+  <section class="actions mobile-actions" data-line-account-id="{{ line_official_account_id }}" data-liff-id="{{ liff_id }}"><h2>次にやること</h2><div class="action-grid">
     <button class="action green" data-line-message="ホームに戻る"><span>⌂</span><b>ホームに戻る</b><small>LINEのHOMEへ</small></button>
     <button class="action blue" data-line-message="勉強する"><span>▤</span><b>勉強する</b><small>通常の問題演習へ</small></button>
     <button class="action purple" data-line-message="相談する"><span>◌</span><b>相談する</b><small>源さんと話す</small></button>
     <button class="action red" data-line-message="熱血モード"><span>♨</span><b>熱血モード</b><small>まず5問やる</small></button>
-  </div></section>
+  </div><p class="line-action-status" data-line-action-status role="status" aria-live="polite"></p></section>
   <p class="daily-note">ⓘ データは毎日更新されます</p>
 </div>
 {% endblock %}

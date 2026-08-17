@@ -13,6 +13,7 @@ from question_bank import CATEGORY_NAMES, get_category_small
 
 def test_goukaku_home_renders(monkeypatch):
     monkeypatch.setenv("LINE_OFFICIAL_ACCOUNT_ID", "@licensetown-test")
+    monkeypatch.setenv("LIFF_ID", "1234567890-test")
     response = app.test_client().get("/goukaku-no-michi")
     assert response.status_code == 200
     text = response.get_data(as_text=True)
@@ -32,8 +33,10 @@ def test_goukaku_home_renders(monkeypatch):
     assert ">0<small>問</small>" in text
     assert "data-line-message=\"相談する\"" in text
     assert 'class="app-shell"' in text
-    assert "20260817-mobile1" in text
+    assert "20260817-liff1" in text
     assert 'data-line-account-id="@licensetown-test"' in text
+    assert 'data-liff-id="1234567890-test"' in text
+    assert "https://static.line-scdn.net/liff/edge/2/sdk.js" in text
     assert 'class="page-content dashboard-grid"' in text
     assert app.test_client().get("/static/images/characters/gensan_main.png").status_code == 200
     assert 'class="summary-grid five"' in text
@@ -67,6 +70,11 @@ def test_mobile_actions_use_official_account_chat_not_line_share():
     assert "line.me/R/msg/text" not in js
     assert "line.me/R/share" not in js
     assert "shareTargetPicker" not in js
+    assert "window.liff.init({ liffId })" in js
+    assert "window.liff.sendMessages([{ type: 'text', text: message }])" in js
+    assert "window.liff.closeWindow()" in js
+    for command in ("ホームに戻る", "勉強する", "相談する", "熱血モード"):
+        assert f'data-line-message="{command}"' in app.test_client().get("/goukaku-no-michi").get_data(as_text=True)
 
 
 def test_goukaku_subjects_renders_official_tab_label():
