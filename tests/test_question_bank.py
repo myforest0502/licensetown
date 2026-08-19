@@ -1,4 +1,5 @@
 import os
+from types import SimpleNamespace
 
 os.environ.setdefault("OPENAI_API_KEY", "test-key")
 os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
@@ -261,3 +262,64 @@ def test_formal_thirty_questions_grade_and_complete_all_explanations():
     assert session["status"] == "quiz_completed"
     assert any("解説：" in message for message in messages)
     assert any("A：" in message for message in messages)
+
+
+def test_recommended_study_replies_with_first_five_and_advances_in_same_requests(monkeypatch):
+    """実機のHOME→準備OK→おすすめ→回答→続けるを再現する。"""
+    replies = []
+
+    class LineApi:
+        def reply_message(self, token, messages):
+            replies.append((token, messages))
+
+        def push_message(self, *_args, **_kwargs):
+            raise AssertionError("おすすめ学習はPush APIに依存しない")
+
+    monkeypatch.setattr(bot_app, "line_bot_api", LineApi())
+    monkeypatch.setattr(bot_app, "return_home", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(bot_app, "record_confirmed_learning_batch", lambda *_args: True)
+
+    user_id = "recommended-first-batch-user"
+    bot_app.study_sessions.pop(user_id, None)
+    bot_app.user_states.pop(user_id, None)
+    bot_app.user_modes.pop(user_id, None)
+    bot_app.quiz_category_selections.pop(user_id, None)
+    bot_app.learning_answer_counts.pop(user_id, None)
+
+    def send(text):
+        bot_app.handle_text_message(SimpleNamespace(
+            message=SimpleNamespace(text=text),
+            source=SimpleNamespace(user_id=user_id),
+            reply_token=f"token-{len(replies)}",
+        ))
+
+    send("ホームに戻る")
+    send("勉強する")
+    send("準備OK！")
+    send("学習：おすすめ")
+
+    session = bot_app.study_sessions[user_id]
+    assert session["status"] == "waiting_for_answers"
+    assert session["current_set"] == 1
+    assert session["expected_numbers"] == list(range(1, 6))
+    assert len(session["questions"]) == 5
+    first_reply = replies[-1][1]
+    assert len(first_reply) == 3
+    assert "おっさんのおすすめ" in first_reply[0].text
+    assert "【第1問】" in first_reply[1].text
+    assert "【第5問】" in first_reply[1].text
+
+    answers = []
+    for number, question in enumerate(session["questions"], 1):
+        answers.append(f"{number}:{''.join(question['accepted_answer_sets'][0])}1")
+    send("\n".join(answers))
+    assert session["status"] == "waiting_for_continue"
+
+    send("続ける")
+    assert session["status"] == "waiting_for_answers"
+    assert session["current_set"] == 2
+    assert session["expected_numbers"] == list(range(6, 11))
+    second_reply = replies[-1][1]
+    assert len(second_reply) == 3
+    assert "【第6問】" in second_reply[1].text
+    assert "【第10問】" in second_reply[1].text

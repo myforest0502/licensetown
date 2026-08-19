@@ -1749,14 +1749,14 @@ def reply_current_quiz(reply_token, session, intro_text=None):
     line_bot_api.reply_message(reply_token, reply_messages)
 
 
-def start_and_reply_quiz(reply_token, user_id):
+def start_and_reply_quiz(reply_token, user_id, intro_text=None):
     """正式問題バンクから初回5問を準備し、同じ返信内で直ちに表示する。"""
     try:
         start_quiz(user_id)
         reply_current_quiz(
             reply_token,
             study_sessions[user_id],
-            intro_text=(
+            intro_text=intro_text or (
                 "おう、任せろ＾＾\n"
                 "まず5問いくぞ（笑）\n"
                 "問題を解いてる最中に中断したくなったら、"
@@ -1825,15 +1825,17 @@ def reply_quiz_input_error(reply_token, start_number, questions_per_set):
     ))
 
 
-def reply_recommended_intro(reply_token, has_learning_data):
+def build_recommended_intro_text(has_learning_data):
     if has_learning_data:
-        text = ("お！おっさんのおすすめか！？ｗ\n"
+        return ("お！おっさんのおすすめか！？ｗ\n"
                 "ここはな、これまでのお前のデータを検証して、弱点を克服する事を目的とした「弱点克服モード」だ！\n"
                 "（まんまやんっていうなよｗ）\nさぁ行くぞ！＾＾")
-    else:
-        text = ("お！おっさんのおすすめか！？ｗ\nまだデータが少ないからな。\n"
-                "まずは基礎を中心に、お前の弱点を探しながら出していくぞ＾＾\nさぁ行くぞ！＾＾")
-    reply_to_line(reply_token, text)
+    return ("お！おっさんのおすすめか！？ｗ\nまだデータが少ないからな。\n"
+            "まずは基礎を中心に、お前の弱点を探しながら出していくぞ＾＾\nさぁ行くぞ！＾＾")
+
+
+def reply_recommended_intro(reply_token, has_learning_data):
+    reply_to_line(reply_token, build_recommended_intro_text(has_learning_data))
 
 
 def reply_explain_method_choice(reply_token):
@@ -3303,7 +3305,14 @@ def handle_text_message(event):
         quiz_category_selections.pop(user_id, None)
         user_modes[user_id] = "nekketsu" if user_message.startswith("熱血") else "study"
         if user_message.endswith("：おすすめ"):
-            reply_recommended_intro(event.reply_token, learning_answer_counts.get(user_id, 0) >= 5)
+            start_and_reply_quiz(
+                event.reply_token,
+                user_id,
+                intro_text=build_recommended_intro_text(
+                    learning_answer_counts.get(user_id, 0) >= 5
+                ),
+            )
+            return
         else:
             reply_to_line(event.reply_token, "おう、任せろ＾＾\nまず5問作るから、ちょっと待ってな（笑）\nただ問題解いてる最中に中断したくなったら\n入力欄に「中断する」って入れて教えてくれな＾＾")
         quiz_thread = threading.Thread(target=prepare_and_send_quiz, args=(user_id,), daemon=True)
