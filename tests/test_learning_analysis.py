@@ -154,10 +154,18 @@ def test_dashboard_and_supporter_use_the_same_guidance(monkeypatch):
         "weekly_correct": 0,
         "weekly_accuracy": 0,
     }
+    learning_data = {
+        "summary": summary,
+        "fields": fields,
+        "activity": activity,
+        "unique_question_count": 0,
+    }
     for module in (goukaku_ui, supporter_report):
-        monkeypatch.setattr(module, "get_learning_summary", lambda _user_id: summary)
-        monkeypatch.setattr(module, "get_field_learning_summary", lambda _user_id: fields)
-        monkeypatch.setattr(module, "get_learning_activity", lambda _user_id: activity)
+        monkeypatch.setattr(
+            module,
+            "get_dashboard_learning_data",
+            lambda _user_id: learning_data,
+        )
 
     dashboard = goukaku_ui.build_dashboard("same-user")
     supporter = supporter_report.build_supporter_report("same-user")

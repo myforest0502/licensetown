@@ -126,3 +126,58 @@ def test_personal_and_readonly_dashboards_show_same_progress_and_safe_copy(monke
         assert "LTで記録された学習時間と問題演習量から算出" in text
         assert "合格を保証する数値ではありません" in text
     assert "閲覧専用" in readonly
+
+
+def test_dashboard_data_reuses_one_connection_and_question_result_fetch(monkeypatch):
+    connection = object()
+    opened = []
+    question_rows = [([result("Q1")], datetime.now(timezone.utc))]
+
+    class ConnectionContext:
+        def __enter__(self):
+            opened.append(connection)
+            return connection
+
+        def __exit__(self, *_args):
+            return False
+
+    monkeypatch.setattr(database, "database_is_available", lambda: True)
+    monkeypatch.setattr(database, "get_db_connection", lambda: ConnectionContext())
+    monkeypatch.setattr(
+        database,
+        "_get_question_result_rows",
+        lambda user_id, received: question_rows if received is connection else None,
+    )
+    monkeypatch.setattr(
+        database,
+        "get_learning_summary",
+        lambda user_id, _connection=None: {"total_answers": 1}
+        if _connection is connection else None,
+    )
+    monkeypatch.setattr(
+        database,
+        "get_learning_activity",
+        lambda user_id, _connection=None: {"streak_days": 1}
+        if _connection is connection else None,
+    )
+    monkeypatch.setattr(
+        database,
+        "get_field_learning_summary",
+        lambda user_id, _connection=None, _question_result_rows=None: ["fields"]
+        if _connection is connection and _question_result_rows is question_rows else None,
+    )
+    monkeypatch.setattr(
+        database,
+        "get_unique_answered_question_count",
+        lambda user_id, _connection=None, _question_result_rows=None: 1
+        if _connection is connection and _question_result_rows is question_rows else None,
+    )
+
+    data = database.get_dashboard_learning_data("one-connection-user")
+    assert len(opened) == 1
+    assert data == {
+        "summary": {"total_answers": 1},
+        "activity": {"streak_days": 1},
+        "fields": ["fields"],
+        "unique_question_count": 1,
+    }

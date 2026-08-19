@@ -262,9 +262,7 @@ def test_supporter_implementation_does_not_access_consultation_data():
     source = Path(__import__("supporter_report").__file__).read_text(encoding="utf-8")
     assert "consultation_contexts" not in source
     assert "conversation" not in source
-    assert "get_learning_summary" in source
-    assert "get_learning_activity" in source
-    assert "get_field_learning_summary" in source
+    assert "get_dashboard_learning_data" in source
 
 
 def test_supporter_page_displays_weak_top3_and_recommendation(monkeypatch):

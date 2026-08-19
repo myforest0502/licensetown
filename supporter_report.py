@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from database import get_field_learning_summary, get_learning_activity, get_learning_summary
+from database import get_dashboard_learning_data
 from learning_analysis import build_learning_guidance
 
 
@@ -18,9 +18,10 @@ def _supporter_comment(today_answers: int, streak_days: int) -> str:
 
 def build_supporter_report(learner_user_id: str) -> dict:
     """相談データを参照せず、学習履歴だけからレポートを作る。"""
-    summary = get_learning_summary(learner_user_id)
-    activity = get_learning_activity(learner_user_id)
-    fields = get_field_learning_summary(learner_user_id)
+    learning_data = get_dashboard_learning_data(learner_user_id)
+    summary = learning_data["summary"]
+    activity = learning_data["activity"]
+    fields = learning_data["fields"]
     guidance = build_learning_guidance(summary["total_answers"], fields)
     today = activity["daily"][-1]
     today_fields = [

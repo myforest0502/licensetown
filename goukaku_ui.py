@@ -6,11 +6,10 @@ from itsdangerous import BadSignature, URLSafeSerializer, URLSafeTimedSerializer
 
 from database import (
     calculate_overall_progress,
+    get_dashboard_learning_data,
     get_field_learning_summary,
     get_learning_activity,
-    get_learning_summary,
     get_supported_learner_ids,
-    get_unique_answered_question_count,
     user_names,
 )
 from learning_analysis import build_learning_guidance
@@ -110,15 +109,16 @@ def build_dashboard(user_id=None):
         "gensan_comment": "今日はまだ来てねぇな。5問だけやるか？＾＾",
     }
     if user_id:
-        dashboard.update(get_learning_summary(user_id))
-        dashboard.update(get_learning_activity(user_id))
-        dashboard["unique_answered_questions"] = get_unique_answered_question_count(user_id)
+        learning_data = get_dashboard_learning_data(user_id)
+        dashboard.update(learning_data["summary"])
+        dashboard.update(learning_data["activity"])
+        dashboard["unique_answered_questions"] = learning_data["unique_question_count"]
         dashboard["overall_progress"] = calculate_overall_progress(
             dashboard["study_minutes"],
             dashboard["total_answers"],
             dashboard["unique_answered_questions"],
         )
-        fields = get_field_learning_summary(user_id)
+        fields = learning_data["fields"]
         dashboard["field_stats"] = [item for item in fields if item["learned"]]
         dashboard.update(build_learning_guidance(dashboard["total_answers"], fields))
         remainder = dashboard["total_answers"] % 100

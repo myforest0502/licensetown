@@ -2,6 +2,7 @@ import logging
 import math
 import os
 import json
+from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from typing import Any
 from zoneinfo import ZoneInfo
@@ -39,6 +40,16 @@ def get_db_connection():
         )
 
     return psycopg.connect(DATABASE_URL)
+
+
+@contextmanager
+def _connection_or_existing(connection=None):
+    """同一処理内で渡されたDB接続を再利用し、単独呼び出しでは従来どおり接続する。"""
+    if connection is not None:
+        yield connection
+        return
+    with get_db_connection() as created_connection:
+        yield created_connection
 
 
 def init_database() -> None:
@@ -433,29 +444,41 @@ def calculate_overall_progress(
     return min(round(math.sqrt(time_progress * question_progress) * 100), 100)
 
 
-def get_unique_answered_question_count(user_id: str) -> int:
-    """回答確定済みquestion_resultsから、重複を除いた正式Q番号数を返す。"""
+def _get_question_result_rows(user_id: str, _connection=None):
     if not database_is_available():
-        rows = [
-            event.get("question_results")
+        return [
+            (event.get("question_results"), event["answered_at"])
             for event in _local_learning_events.values()
             if event["user_id"] == user_id and event.get("question_results") is not None
         ]
-    else:
-        with get_db_connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    SELECT question_results
-                    FROM learning_events
-                    WHERE user_id = %s AND question_results IS NOT NULL
-                    """,
-                    (user_id,),
-                )
-                rows = [row[0] for row in cur.fetchall()]
+    with _connection_or_existing(_connection) as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT question_results, answered_at
+                FROM learning_events
+                WHERE user_id = %s AND question_results IS NOT NULL
+                ORDER BY answered_at
+                """,
+                (user_id,),
+            )
+            return cur.fetchall()
+
+
+def get_unique_answered_question_count(
+    user_id: str,
+    _connection=None,
+    _question_result_rows=None,
+) -> int:
+    """回答確定済みquestion_resultsから、重複を除いた正式Q番号数を返す。"""
+    rows = (
+        _question_result_rows
+        if _question_result_rows is not None
+        else _get_question_result_rows(user_id, _connection)
+    )
 
     question_ids = set()
-    for question_results in rows:
+    for question_results, _answered_at in rows:
         if isinstance(question_results, str):
             try:
                 question_results = json.loads(question_results)
@@ -477,7 +500,11 @@ def get_unique_answered_question_count(user_id: str) -> int:
     return len(question_ids)
 
 
-def get_learning_summary(user_id: str, now: datetime | None = None) -> dict[str, int]:
+def get_learning_summary(
+    user_id: str,
+    now: datetime | None = None,
+    _connection=None,
+) -> dict[str, int]:
     """合格への道の基本成績を学習履歴から集計する。"""
     current = now or datetime.now(timezone.utc)
     today = current.astimezone(ZoneInfo("Asia/Tokyo")).date()
@@ -498,7 +525,7 @@ def get_learning_summary(user_id: str, now: datetime | None = None) -> dict[str,
             _local_learning_seconds.get(user_id, 0.0),
         )
 
-    with get_db_connection() as conn:
+    with _connection_or_existing(_connection) as conn:
         with conn.cursor() as cur:
             cur.execute(
                 """
@@ -549,7 +576,12 @@ def calculate_learning_streak(active_dates, today) -> int:
     return streak_days
 
 
-def get_field_learning_summary(user_id: str, now: datetime | None = None) -> list[dict[str, Any]]:
+def get_field_learning_summary(
+    user_id: str,
+    now: datetime | None = None,
+    _connection=None,
+    _question_result_rows=None,
+) -> list[dict[str, Any]]:
     """question_resultsを正式Q番号と18分野に結合し、全期間と直近7日を集計する。"""
     current = _as_utc(now or datetime.now(timezone.utc))
     seven_days_ago = current - timedelta(days=7)
@@ -572,25 +604,11 @@ def get_field_learning_summary(user_id: str, now: datetime | None = None) -> lis
         for number, name in CATEGORY_NAMES.items()
     }
 
-    if not database_is_available():
-        rows = [
-            (event.get("question_results"), event["answered_at"])
-            for event in _local_learning_events.values()
-            if event["user_id"] == user_id and event.get("question_results") is not None
-        ]
-    else:
-        with get_db_connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    SELECT question_results, answered_at
-                    FROM learning_events
-                    WHERE user_id = %s AND question_results IS NOT NULL
-                    ORDER BY answered_at
-                    """,
-                    (user_id,),
-                )
-                rows = cur.fetchall()
+    rows = (
+        _question_result_rows
+        if _question_result_rows is not None
+        else _get_question_result_rows(user_id, _connection)
+    )
 
     for question_results, answered_at in rows:
         if isinstance(question_results, str):
@@ -646,7 +664,11 @@ def get_field_learning_summary(user_id: str, now: datetime | None = None) -> lis
     return list(summaries.values())
 
 
-def get_learning_activity(user_id: str, now: datetime | None = None) -> dict[str, Any]:
+def get_learning_activity(
+    user_id: str,
+    now: datetime | None = None,
+    _connection=None,
+) -> dict[str, Any]:
     """直近7日の回答数・学習時間と連続学習日数を実履歴から返す。"""
     current = _as_utc(now or datetime.now(timezone.utc))
     jst = ZoneInfo("Asia/Tokyo")
@@ -667,7 +689,7 @@ def get_learning_activity(user_id: str, now: datetime | None = None) -> dict[str
             if event["user_id"] == user_id
         ]
     else:
-        with get_db_connection() as conn:
+        with _connection_or_existing(_connection) as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     "SELECT answered_count, correct_count, answered_at FROM learning_events WHERE user_id = %s",
@@ -725,6 +747,39 @@ def get_learning_activity(user_id: str, now: datetime | None = None) -> dict[str
             round(weekly_correct / weekly_answers * 100) if weekly_answers else 0
         ),
     }
+
+
+def get_dashboard_learning_data(user_id: str) -> dict[str, Any]:
+    """dashboard用の集計を、1DB接続と1回のquestion_results取得で組み立てる。"""
+    if not database_is_available():
+        question_rows = _get_question_result_rows(user_id)
+        return {
+            "summary": get_learning_summary(user_id),
+            "activity": get_learning_activity(user_id),
+            "fields": get_field_learning_summary(
+                user_id, _question_result_rows=question_rows
+            ),
+            "unique_question_count": get_unique_answered_question_count(
+                user_id, _question_result_rows=question_rows
+            ),
+        }
+
+    with get_db_connection() as conn:
+        question_rows = _get_question_result_rows(user_id, conn)
+        return {
+            "summary": get_learning_summary(user_id, _connection=conn),
+            "activity": get_learning_activity(user_id, _connection=conn),
+            "fields": get_field_learning_summary(
+                user_id,
+                _connection=conn,
+                _question_result_rows=question_rows,
+            ),
+            "unique_question_count": get_unique_answered_question_count(
+                user_id,
+                _connection=conn,
+                _question_result_rows=question_rows,
+            ),
+        }
 
 
 def set_supporter_link(supporter_user_id: str, learner_user_id: str) -> bool:
