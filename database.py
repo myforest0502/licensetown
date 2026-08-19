@@ -277,8 +277,6 @@ def reset_user_profile(user_id: str) -> None:
         _local_learning_time_events[:] = [
             event for event in _local_learning_time_events if event["user_id"] != user_id
         ]
-        for link_key in [key for key in _local_supporter_links if user_id in key]:
-            _local_supporter_links.pop(link_key, None)
         _known_user_ids.discard(user_id)
         return
 
@@ -287,10 +285,6 @@ def reset_user_profile(user_id: str) -> None:
             cur.execute("DELETE FROM learning_events WHERE user_id = %s", (user_id,))
             cur.execute("DELETE FROM learning_time_totals WHERE user_id = %s", (user_id,))
             cur.execute("DELETE FROM learning_time_events WHERE user_id = %s", (user_id,))
-            cur.execute(
-                "DELETE FROM supporter_links WHERE supporter_user_id = %s OR learner_user_id = %s",
-                (user_id, user_id),
-            )
             cur.execute(
                 "DELETE FROM user_profiles WHERE user_id = %s",
                 (user_id,),

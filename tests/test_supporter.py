@@ -12,6 +12,7 @@ from app import app
 from database import (
     add_learning_time,
     deactivate_supporter_link,
+    get_learning_summary,
     get_supported_learner_ids,
     record_learning_batch,
     reset_user_profile,
@@ -43,7 +44,7 @@ def result(question_id, correct):
     }
 
 
-def test_supporter_link_is_unique_revocable_and_reset_with_learner():
+def test_supporter_link_is_unique_revocable_and_preserved_when_learner_resets():
     clear_local_data()
     assert set_supporter_link("supporter-user", "learner-user")
     assert not set_supporter_link("supporter-user", "learner-user")
@@ -53,7 +54,43 @@ def test_supporter_link_is_unique_revocable_and_reset_with_learner():
 
     set_supporter_link("supporter-user", "learner-user")
     reset_user_profile("learner-user")
-    assert get_supported_learner_ids("supporter-user") == []
+    assert get_supported_learner_ids("supporter-user") == ["learner-user"]
+
+
+def test_supporter_reset_preserves_link_and_learner_learning_history():
+    clear_local_data()
+    now = datetime.now(timezone.utc)
+    set_supporter_link("supporter-user", "learner-user")
+    record_learning_batch(
+        "learner-user", "learner-history", "study", 5, 3, now,
+        [result("Q1", True)] * 5,
+    )
+    add_learning_time("learner-user", 600, now, "learner-time")
+
+    reset_user_profile("supporter-user")
+
+    assert get_supported_learner_ids("supporter-user") == ["learner-user"]
+    learner_summary = get_learning_summary("learner-user", now=now)
+    assert learner_summary["total_answers"] == 5
+    assert learner_summary["study_minutes"] == 10
+
+
+def test_learner_reset_clears_own_learning_data_but_preserves_supporter_link():
+    clear_local_data()
+    now = datetime.now(timezone.utc)
+    set_supporter_link("supporter-user", "learner-user")
+    record_learning_batch(
+        "learner-user", "learner-reset-history", "study", 5, 3, now,
+        [result("Q1", True)] * 5,
+    )
+    add_learning_time("learner-user", 600, now, "learner-reset-time")
+
+    reset_user_profile("learner-user")
+
+    assert get_supported_learner_ids("supporter-user") == ["learner-user"]
+    learner_summary = get_learning_summary("learner-user", now=now)
+    assert learner_summary["total_answers"] == 0
+    assert learner_summary["study_minutes"] == 0
 
 
 def test_supporter_report_aggregates_only_learning_metrics():

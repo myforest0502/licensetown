@@ -156,9 +156,10 @@ class DatabaseResetTest(unittest.TestCase):
         self.assertEqual(1, database.connection_count)
         self.assertEqual(1, database.delete_count)
         self.assertEqual(
-            ["learning_events", "learning_time_totals", "learning_time_events", "supporter_links"],
+            ["learning_events", "learning_time_totals", "learning_time_events"],
             database.deleted_learning_tables,
         )
+        self.assertNotIn("supporter_links", database.deleted_learning_tables)
         self.assertNotIn("user-1", database.profiles)
         self.assertEqual(
             {"name": "別ユーザー", "mode": "chat"},
