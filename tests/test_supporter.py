@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+import copy
 import os
 from pathlib import Path
 import time
@@ -8,6 +9,7 @@ os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
 os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
 import database
+import app as app_module
 from app import app
 from database import (
     add_learning_time,
@@ -19,7 +21,7 @@ from database import (
     set_supporter_link,
     user_names,
 )
-from goukaku_ui import create_supporter_token
+from goukaku_ui import create_dashboard_token, create_supporter_token
 from question_bank import get_category_small
 from supporter_report import build_supporter_report
 import goukaku_ui as goukaku_module
@@ -144,14 +146,103 @@ def test_supporter_route_requires_signed_active_link_and_cannot_switch_learner()
     response = client.get(
         f"/supporter?token={token}&learner_user_id=other-learner"
     )
-    text = response.get_data(as_text=True)
-    assert response.status_code == 200
-    assert "対象学習者" in text
-    assert "閲覧禁止学習者" not in text
-    assert "相談内容や私的な会話は表示されません" in text
+    assert response.status_code == 403
 
     deactivate_supporter_link("supporter-user", "learner-user")
     assert client.get(f"/supporter?token={token}").status_code == 403
+
+
+def test_supporter_can_open_linked_learner_dashboard_read_only_without_state_changes():
+    clear_local_data()
+    now = datetime.now(timezone.utc)
+    user_names["learner-user"] = "対象学習者"
+    set_supporter_link("supporter-user", "learner-user")
+    record_learning_batch(
+        "learner-user", "readonly-learning", "study", 5, 3, now,
+        [result("Q1", True)] * 3 + [result("Q1", False)] * 2,
+    )
+    add_learning_time("learner-user", 600, now, "readonly-time")
+    app_module.user_modes["learner-user"] = "study"
+    app_module.user_states["learner-user"] = "answering-five"
+    app_module.study_sessions["learner-user"] = {
+        "status": "waiting_for_answers", "current_set": 2,
+    }
+    app_module.consultation_contexts["learner-user"] = ["PRIVATE-CONSULTATION"]
+    token = create_supporter_token("supporter-user")
+    client = app.test_client()
+
+    supporter_page = client.get(f"/supporter?token={token}")
+    supporter_text = supporter_page.get_data(as_text=True)
+    assert supporter_page.status_code == 200
+    assert "本人の合格への道を見る" in supporter_text
+    assert "learner_user_id=learner-user" in supporter_text
+
+    database_before = (
+        copy.deepcopy(database._local_learning_events),
+        copy.deepcopy(database._local_learning_seconds),
+        copy.deepcopy(database._local_learning_time_events),
+        copy.deepcopy(database._local_supporter_links),
+    )
+    state_before = (
+        app_module.user_modes.get("learner-user"),
+        copy.deepcopy(app_module.user_states.get("learner-user")),
+        copy.deepcopy(app_module.study_sessions.get("learner-user")),
+    )
+    dashboard_url = (
+        f"/supporter/goukaku-no-michi?token={token}"
+        "&learner_user_id=learner-user"
+    )
+    first = client.get(dashboard_url)
+    second = client.get(dashboard_url)
+    text = first.get_data(as_text=True)
+
+    assert first.status_code == second.status_code == 200
+    assert "対象学習者さんの合格への道" in text
+    assert "閲覧専用" in text
+    assert "5<small>問</small>" in text
+    assert "60<small>%</small>" in text
+    assert "data-line-message" not in text
+    assert "/goukaku-no-michi/learning" not in text
+    assert "PRIVATE-CONSULTATION" not in text
+    assert database_before == (
+        database._local_learning_events,
+        database._local_learning_seconds,
+        database._local_learning_time_events,
+        database._local_supporter_links,
+    )
+    assert state_before == (
+        app_module.user_modes.get("learner-user"),
+        app_module.user_states.get("learner-user"),
+        app_module.study_sessions.get("learner-user"),
+    )
+
+    personal_text = client.get(
+        f"/goukaku-no-michi?token={create_dashboard_token('learner-user')}"
+    ).get_data(as_text=True)
+    assert "5<small>問</small>" in personal_text
+    assert "60<small>%</small>" in personal_text
+    app_module.consultation_contexts.pop("learner-user", None)
+    app_module.user_states.pop("learner-user", None)
+    app_module.study_sessions.pop("learner-user", None)
+
+
+def test_supporter_readonly_dashboard_rejects_unlinked_and_inactive_learners():
+    clear_local_data()
+    set_supporter_link("supporter-user", "learner-user")
+    token = create_supporter_token("supporter-user")
+    client = app.test_client()
+
+    assert client.get(
+        f"/supporter/goukaku-no-michi?token={token}&learner_user_id=other-learner"
+    ).status_code == 403
+    assert client.get(
+        f"/supporter/goukaku-no-michi/subjects?token={token}&learner_user_id=other-learner"
+    ).status_code == 403
+
+    deactivate_supporter_link("supporter-user", "learner-user")
+    assert client.get(
+        f"/supporter/goukaku-no-michi?token={token}&learner_user_id=learner-user"
+    ).status_code == 403
 
 
 def test_expired_supporter_token_is_rejected(monkeypatch):

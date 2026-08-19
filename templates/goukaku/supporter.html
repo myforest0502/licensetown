@@ -4,6 +4,7 @@
 <header class="app-header title-only"><h1>学習見守り</h1></header>
 <div class="page-content supporter-page">
   <p class="supporter-lead"><b>{{ learner_name }}</b>さんの学習レポート</p>
+  <a class="supporter-dashboard-link" href="{{ url_for('goukaku_ui.supporter_goukaku_home', token=supporter_token, learner_user_id=learner_id) }}">本人の合格への道を見る <span>閲覧専用 ›</span></a>
   <section class="supporter-today {{ 'studied' if report.today_studied else 'resting' }}"><div><span>今日の学習</span><strong>{% if report.today_studied %}取り組み済み{% else %}まだ学習なし{% endif %}</strong></div><div class="supporter-today-kpis"><p><b>{{ report.today.answered_count }}</b><small>回答</small></p><p><b>{{ report.today.correct_count }}</b><small>正解</small></p><p><b>{{ report.today.study_minutes }}</b><small>分</small></p><p><b>{{ report.today.accuracy }}</b><small>%</small></p></div></section>
   <section class="card supporter-comment"><h2>見守りメモ</h2><p>{{ report.comment }}</p></section>
   <section class="card today-fields"><h2>今日取り組んだ分野</h2>{% for item in report.today_fields %}<div><b>{{ item.name }}</b><span>{{ item.answered_count }}問</span><span>正答率 {{ item.accuracy }}%</span></div>{% else %}<p class="empty-state">今日の分野別学習データはまだありません。</p>{% endfor %}</section>

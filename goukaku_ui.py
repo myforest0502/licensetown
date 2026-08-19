@@ -1,7 +1,7 @@
 from datetime import date
 import os
 
-from flask import Blueprint, abort, render_template, request
+from flask import Blueprint, abort, render_template, request, url_for
 from itsdangerous import BadSignature, URLSafeSerializer, URLSafeTimedSerializer
 
 from database import (
@@ -67,6 +67,21 @@ def supporter_user_id(token):
         return None
 
 
+def authorized_supporter_learner(token, requested_learner_id=None):
+    """署名済みsupporterとactiveなリンクの両方から閲覧対象を確定する。"""
+    supporter_id = supporter_user_id(token)
+    if not supporter_id:
+        abort(403)
+    learner_ids = get_supported_learner_ids(supporter_id)
+    if not learner_ids:
+        abort(403)
+    if requested_learner_id:
+        if requested_learner_id not in learner_ids:
+            abort(403)
+        return supporter_id, requested_learner_id
+    return supporter_id, learner_ids[0]
+
+
 def build_dashboard(user_id=None):
     today = date.today()
     dashboard = {
@@ -115,6 +130,9 @@ def home():
         "goukaku/home.html",
         dashboard=build_dashboard(user_id),
         dashboard_token=token,
+        dashboard_title="合格への道",
+        read_only=False,
+        subjects_url=url_for("goukaku_ui.subjects", token=token),
         line_official_account_id=os.getenv("LINE_OFFICIAL_ACCOUNT_ID", "").strip(),
         liff_id=os.getenv("LIFF_ID", "").strip(),
     )
@@ -136,6 +154,8 @@ def subjects():
         activity=activity,
         top_recent_field=top_recent_field,
         dashboard_token=token,
+        read_only=False,
+        return_url=url_for("goukaku_ui.home", token=token),
     )
 
 
@@ -163,17 +183,75 @@ def learning():
 
 @goukaku_ui.route("/supporter")
 def supporter_dashboard():
-    supporter_id = supporter_user_id(request.args.get("token"))
-    if not supporter_id:
-        abort(403)
-    learner_ids = get_supported_learner_ids(supporter_id)
-    if not learner_ids:
-        abort(403)
-    learner_id = learner_ids[0]
+    token = request.args.get("token")
+    _, learner_id = authorized_supporter_learner(
+        token,
+        request.args.get("learner_user_id"),
+    )
     report = build_supporter_report(learner_id)
     learner_name = user_names.get(learner_id, "学習者") or "学習者"
     return render_template(
         "goukaku/supporter.html",
         learner_name=learner_name,
+        learner_id=learner_id,
+        supporter_token=token,
         report=report,
+    )
+
+
+@goukaku_ui.route("/supporter/goukaku-no-michi")
+def supporter_goukaku_home():
+    token = request.args.get("token")
+    _, learner_id = authorized_supporter_learner(
+        token,
+        request.args.get("learner_user_id"),
+    )
+    learner_name = user_names.get(learner_id, "学習者") or "学習者"
+    return render_template(
+        "goukaku/home.html",
+        dashboard=build_dashboard(learner_id),
+        dashboard_token=None,
+        dashboard_title=f"{learner_name}さんの合格への道",
+        learner_name=learner_name,
+        read_only=True,
+        subjects_url=url_for(
+            "goukaku_ui.supporter_goukaku_subjects",
+            token=token,
+            learner_user_id=learner_id,
+        ),
+        supporter_return_url=url_for(
+            "goukaku_ui.supporter_dashboard",
+            token=token,
+            learner_user_id=learner_id,
+        ),
+        line_official_account_id="",
+        liff_id="",
+    )
+
+
+@goukaku_ui.route("/supporter/goukaku-no-michi/subjects")
+def supporter_goukaku_subjects():
+    token = request.args.get("token")
+    _, learner_id = authorized_supporter_learner(
+        token,
+        request.args.get("learner_user_id"),
+    )
+    subjects = get_field_learning_summary(learner_id)
+    activity = get_learning_activity(learner_id)
+    recent_fields = [item for item in subjects if item["recent_7d_answered_count"]]
+    top_recent_field = max(
+        recent_fields, key=lambda item: item["recent_7d_answered_count"], default=None
+    )
+    return render_template(
+        "goukaku/subjects.html",
+        subjects=subjects,
+        activity=activity,
+        top_recent_field=top_recent_field,
+        dashboard_token=None,
+        read_only=True,
+        return_url=url_for(
+            "goukaku_ui.supporter_goukaku_home",
+            token=token,
+            learner_user_id=learner_id,
+        ),
     )
