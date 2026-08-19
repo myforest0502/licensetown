@@ -452,6 +452,26 @@ def _as_utc(timestamp: datetime) -> datetime:
     return timestamp.astimezone(timezone.utc)
 
 
+def calculate_learning_streak(active_dates, today) -> int:
+    """日本時間の学習日集合から、現在継続中の連続日数を返す。
+
+    今日が未学習でも昨日が学習日なら、昨日までの記録は継続中とする。
+    """
+    learned_dates = set(active_dates)
+    if today in learned_dates:
+        cursor = today
+    elif today - timedelta(days=1) in learned_dates:
+        cursor = today - timedelta(days=1)
+    else:
+        return 0
+
+    streak_days = 0
+    while cursor in learned_dates:
+        streak_days += 1
+        cursor -= timedelta(days=1)
+    return streak_days
+
+
 def get_field_learning_summary(user_id: str, now: datetime | None = None) -> list[dict[str, Any]]:
     """question_resultsを正式Q番号と18分野に結合し、全期間と直近7日を集計する。"""
     current = _as_utc(now or datetime.now(timezone.utc))
@@ -597,11 +617,7 @@ def get_learning_activity(user_id: str, now: datetime | None = None) -> dict[str
         if day in seconds_by_date:
             seconds_by_date[day] += float(elapsed_seconds)
 
-    streak_days = 0
-    cursor = today
-    while cursor in active_dates:
-        streak_days += 1
-        cursor -= timedelta(days=1)
+    streak_days = calculate_learning_streak(active_dates, today)
 
     daily = [
         {
