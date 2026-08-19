@@ -1,0 +1,128 @@
+from datetime import datetime, timezone
+import os
+
+import pytest
+
+os.environ.setdefault("OPENAI_API_KEY", "test-key")
+os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
+os.environ.setdefault("CHANNEL_SECRET", "test-secret")
+
+from app import app
+import database
+from database import (
+    add_learning_time,
+    calculate_overall_progress,
+    get_learning_summary,
+    get_unique_answered_question_count,
+    record_learning_batch,
+    set_supporter_link,
+)
+from goukaku_ui import build_dashboard, create_dashboard_token, create_supporter_token
+
+
+def clear_local_data():
+    database._local_learning_events.clear()
+    database._local_learning_seconds.clear()
+    database._local_learning_time_events.clear()
+    database._local_supporter_links.clear()
+
+
+def result(question_id):
+    return {
+        "question_id": question_id,
+        "selected_answers": ["1"],
+        "is_correct": True,
+        "confidence": 1,
+    }
+
+
+@pytest.mark.parametrize(
+    ("study_minutes", "total_answers", "unique_questions", "expected"),
+    [
+        (0, 0, 0, 0),
+        (5 * 60, 60, 60, 1),
+        (250 * 60, 1500, 800, 50),
+        (500 * 60, 3000, 300, 55),
+        (500 * 60, 3000, 1000, 100),
+        (1000 * 60, 6000, 1564, 100),
+        (500 * 60, 0, 0, 0),
+        (0, 3000, 1000, 0),
+    ],
+)
+def test_overall_progress_v1_formula(
+    study_minutes, total_answers, unique_questions, expected
+):
+    assert calculate_overall_progress(
+        study_minutes, total_answers, unique_questions
+    ) == expected
+
+
+def test_unique_question_count_deduplicates_repeated_answers(monkeypatch):
+    clear_local_data()
+    monkeypatch.setattr(database, "database_is_available", lambda: False)
+    user_id = "repeat-question-user"
+    repeated = [result("Q1") for _ in range(100)]
+    record_learning_batch(
+        user_id, "repeat-100", "study", 100, 100,
+        datetime.now(timezone.utc), repeated,
+    )
+
+    assert get_learning_summary(user_id)["total_answers"] == 100
+    assert get_unique_answered_question_count(user_id) == 1
+
+    record_learning_batch(
+        user_id, "repeat-and-new", "nekketsu", 3, 3,
+        datetime.now(timezone.utc), [result("Q1"), result("Q2"), result("Q2")],
+    )
+    assert get_learning_summary(user_id)["total_answers"] == 103
+    assert get_unique_answered_question_count(user_id) == 2
+
+
+def seed_sixty_question_progress(user_id):
+    now = datetime.now(timezone.utc)
+    record_learning_batch(
+        user_id, "sixty-unique", "study", 60, 44, now,
+        [result(f"Q{number}") for number in range(1, 61)],
+    )
+    add_learning_time(user_id, 5 * 60 * 60, now, "five-hours")
+
+
+def test_dashboard_calculates_progress_below_one_hundred_answers(monkeypatch):
+    clear_local_data()
+    monkeypatch.setattr(database, "database_is_available", lambda: False)
+    user_id = "overall-dashboard-user"
+    seed_sixty_question_progress(user_id)
+
+    dashboard = build_dashboard(user_id)
+    assert dashboard["total_answers"] == 60
+    assert dashboard["study_minutes"] == 300
+    assert dashboard["unique_answered_questions"] == 60
+    assert dashboard["overall_progress"] == 1
+    assert dashboard["phase"] == "foundation"
+
+
+def test_personal_and_readonly_dashboards_show_same_progress_and_safe_copy(monkeypatch):
+    clear_local_data()
+    monkeypatch.setattr(database, "database_is_available", lambda: False)
+    learner_id = "overall-learner"
+    supporter_id = "overall-supporter"
+    seed_sixty_question_progress(learner_id)
+    set_supporter_link(supporter_id, learner_id)
+    client = app.test_client()
+
+    personal = client.get(
+        f"/goukaku-no-michi?token={create_dashboard_token(learner_id)}"
+    ).get_data(as_text=True)
+    readonly = client.get(
+        "/supporter/goukaku-no-michi"
+        f"?token={create_supporter_token(supporter_id)}"
+        f"&learner_user_id={learner_id}"
+    ).get_data(as_text=True)
+
+    for text in (personal, readonly):
+        assert 'class="ring" style="--value:1"' in text
+        assert "目標学習量まで あと 99%" in text
+        assert "合格ラインまで" not in text
+        assert "LTで記録された学習時間と問題演習量から算出" in text
+        assert "合格を保証する数値ではありません" in text
+    assert "閲覧専用" in readonly

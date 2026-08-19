@@ -12,7 +12,7 @@
   </section>
   <dialog id="exam-dialog"><h2>試験日について</h2><p>現在表示している試験日は暫定です。<br>正式な試験日が発表され次第、正式日程へ更新されます。<br>それに伴い、試験日までの日数も自動的に修正されます。</p><button data-dialog-close>閉じる</button></dialog>
 
-  <section class="card achievement"><h2>総合到達度</h2><div class="achievement-body"><div class="ring" style="--value:{{ dashboard.overall_progress }}"><span>{{ dashboard.overall_progress }}<small>%</small></span></div><div class="achievement-copy"><strong>順調に力をつけています！</strong><p>このペースで続ければ<br>合格ラインに到達できます。</p><span class="line-remaining">合格ラインまで あと {{ 100 - dashboard.overall_progress }}%</span></div></div></section>
+  <section class="card achievement"><h2>総合到達度</h2><div class="achievement-body"><div class="ring" style="--value:{{ dashboard.overall_progress }}"><span>{{ dashboard.overall_progress }}<small>%</small></span></div><div class="achievement-copy"><strong>学習を積み重ねて、目標学習量に近づいていこう</strong><p>LTで記録された学習時間と問題演習量から算出した学習進捗の目安です。合格を保証する数値ではありません。</p><span class="line-remaining">目標学習量まで あと {{ 100 - dashboard.overall_progress }}%</span></div></div></section>
 
   <section class="summary-grid five">
     <article class="mini-card"><span class="mini-icon">▤</span><b>総回答数</b><strong>{{ '{:,}'.format(dashboard.total_answers) }}<small>問</small></strong></article>

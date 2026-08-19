@@ -1,4 +1,5 @@
 import logging
+import math
 import os
 import json
 from datetime import datetime, timedelta, timezone
@@ -18,6 +19,10 @@ _local_learning_time_events: list[dict[str, Any]] = []
 _local_supporter_links: dict[tuple[str, str], bool] = {}
 
 logger = logging.getLogger(__name__)
+
+STANDARD_STUDY_MINUTES = 500 * 60
+STANDARD_TOTAL_ANSWERS = 3000
+STANDARD_UNIQUE_QUESTIONS = 1000
 
 
 def database_is_available() -> bool:
@@ -398,6 +403,78 @@ def _summary_values(total_answers, total_correct, recent_answers, recent_correct
         "today_progress": int(today_answers),
         "study_minutes": int(float(total_seconds) // 60),
     }
+
+
+def calculate_overall_progress(
+    study_minutes,
+    total_answers,
+    unique_question_count,
+) -> int:
+    """LT内の学習時間と問題演習量から標準学習量への進捗を返す。"""
+    def nonnegative_number(value) -> float:
+        try:
+            return max(float(value), 0.0)
+        except (TypeError, ValueError):
+            return 0.0
+
+    time_progress = min(
+        nonnegative_number(study_minutes) / STANDARD_STUDY_MINUTES,
+        1.0,
+    )
+    answer_progress = min(
+        nonnegative_number(total_answers) / STANDARD_TOTAL_ANSWERS,
+        1.0,
+    )
+    unique_progress = min(
+        nonnegative_number(unique_question_count) / STANDARD_UNIQUE_QUESTIONS,
+        1.0,
+    )
+    question_progress = min(answer_progress, unique_progress)
+    return min(round(math.sqrt(time_progress * question_progress) * 100), 100)
+
+
+def get_unique_answered_question_count(user_id: str) -> int:
+    """回答確定済みquestion_resultsから、重複を除いた正式Q番号数を返す。"""
+    if not database_is_available():
+        rows = [
+            event.get("question_results")
+            for event in _local_learning_events.values()
+            if event["user_id"] == user_id and event.get("question_results") is not None
+        ]
+    else:
+        with get_db_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT question_results
+                    FROM learning_events
+                    WHERE user_id = %s AND question_results IS NOT NULL
+                    """,
+                    (user_id,),
+                )
+                rows = [row[0] for row in cur.fetchall()]
+
+    question_ids = set()
+    for question_results in rows:
+        if isinstance(question_results, str):
+            try:
+                question_results = json.loads(question_results)
+            except json.JSONDecodeError:
+                logger.warning("Invalid question_results JSON for user %s", user_id)
+                continue
+        if not isinstance(question_results, list):
+            continue
+        for result in question_results:
+            if not isinstance(result, dict):
+                continue
+            question_id = str(result.get("question_id", "")).upper().strip()
+            try:
+                get_category_small(question_id)
+            except QuestionBankError:
+                logger.warning("Question result has an unknown question_id: %r", question_id)
+                continue
+            question_ids.add(question_id)
+    return len(question_ids)
 
 
 def get_learning_summary(user_id: str, now: datetime | None = None) -> dict[str, int]:

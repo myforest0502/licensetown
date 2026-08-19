@@ -5,10 +5,12 @@ from flask import Blueprint, abort, render_template, request, url_for
 from itsdangerous import BadSignature, URLSafeSerializer, URLSafeTimedSerializer
 
 from database import (
+    calculate_overall_progress,
     get_field_learning_summary,
     get_learning_activity,
     get_learning_summary,
     get_supported_learner_ids,
+    get_unique_answered_question_count,
     user_names,
 )
 from learning_analysis import build_learning_guidance
@@ -91,6 +93,7 @@ def build_dashboard(user_id=None):
         "exam_is_tentative": True,
         "overall_progress": 0,
         "total_answers": 0,
+        "unique_answered_questions": 0,
         "correct_answers": 0,
         "study_minutes": 0,
         "last_7_days_accuracy": 0,
@@ -109,6 +112,12 @@ def build_dashboard(user_id=None):
     if user_id:
         dashboard.update(get_learning_summary(user_id))
         dashboard.update(get_learning_activity(user_id))
+        dashboard["unique_answered_questions"] = get_unique_answered_question_count(user_id)
+        dashboard["overall_progress"] = calculate_overall_progress(
+            dashboard["study_minutes"],
+            dashboard["total_answers"],
+            dashboard["unique_answered_questions"],
+        )
         fields = get_field_learning_summary(user_id)
         dashboard["field_stats"] = [item for item in fields if item["learned"]]
         dashboard.update(build_learning_guidance(dashboard["total_answers"], fields))
