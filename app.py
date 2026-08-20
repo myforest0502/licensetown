@@ -38,6 +38,7 @@ from database import (
     user_profile_exists,
 )
 from goukaku_ui import create_dashboard_token, goukaku_ui
+from site_ui import site_ui
 from question_bank import (
     get_category_group_names,
     get_category_names_for_group,
@@ -519,6 +520,7 @@ EXPLAIN_TEACHING_PROMPT = """
 
 app = Flask(__name__)
 app.register_blueprint(goukaku_ui)
+app.register_blueprint(site_ui)
 
 line_bot_api = LineBotApi(
     os.environ["CHANNEL_ACCESS_TOKEN"],
