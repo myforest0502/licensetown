@@ -31,6 +31,15 @@ def test_site_contains_core_copy_metadata_and_assets():
     assert "/static/site/site.css" in html
     assert "/static/site/site.js" in html
     assert "/static/images/characters/gensan_main.png" in html
+    assert 'class="section-number"' in html
+    assert "01" in html and "08" in html
+    assert 'class="phone"' in html
+    assert "30秒でわかる" in html
+    assert 'class="dashboard-preview"' in html
+    assert 'class="steps"' in html
+    assert "寺子屋のような場所へ" in html
+    assert "AIが毎回問題を作っているのですか？" in html
+    assert "20260821-v2" in html
 
 
 def test_site_static_assets_are_served():

@@ -1,80 +1,20 @@
-<!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LicenseTown | 資格取得までの努力を、結果につなげる</title>
-  <meta name="description" content="LicenseTownは、問題演習・弱点分析・学習提案で資格取得まで伴走する学習サービスです。第一弾は理学療法士国家試験対策。">
-  <meta property="og:title" content="LicenseTown / ライセンスタウン">
-  <meta property="og:description" content="やれば出来る子を、やったから出来た子へ。">
-  <meta property="og:type" content="website">
-  <link rel="stylesheet" href="{{ url_for('static', filename='site/site.css', v='20260820-v1') }}">
-  <script src="{{ url_for('static', filename='site/site.js', v='20260820-v1') }}" defer></script>
-</head>
-<body>
-  <a class="skip-link" href="#main">本文へ移動</a>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="{{ url_for('site_ui.home') }}" aria-label="LicenseTown トップ"><span class="brand-mark">LT</span><span><b>LicenseTown</b><small>ライセンスタウン</small></span></a>
-      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">メニュー</span></button>
-      <nav id="site-nav" class="site-nav" aria-label="メインナビゲーション">
-        <a href="#features">特徴</a><a href="#road">合格への道</a><a href="#gensan">教えて源さん</a><a href="#supporter">親御さんへ</a><a href="#faq">FAQ</a><a href="#contact">お問い合わせ</a>
-      </nav>
-      <a class="button header-cta" href="#try">まずは使ってみる</a>
-    </div>
-  </header>
-
-  <main id="main">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">努力の次を、一緒に考える。</p>
-          <h1>やれば出来る子を、<br><em>やったから出来た子へ。</em></h1>
-          <p class="hero-lead">問題演習・弱点分析・学習提案を通して、<br class="desktop">「じゃあ、今何をやるべきか」を一緒に考える。<br class="desktop">資格取得までの努力を、結果につなげる伴走型学習サービス。</p>
-          <div class="button-row"><a class="button" href="#try">まずは使ってみる</a><a class="text-link" href="#road">合格への道を見る <span aria-hidden="true">→</span></a></div>
-          <p class="hero-note"><span></span>現在は理学療法士国家試験対策を提供中</p>
-        </div>
-        <div class="hero-visual" aria-label="LicenseTownの学習サービスイメージ" role="img">
-          <div class="visual-card card-a"><i>今日のおすすめ</i><b>運動学を5問解こう</b><span><strong>3</strong> / 5問</span></div>
-          <div class="visual-card card-b"><i>総合到達度</i><div class="mini-ring"><b>68<small>%</small></b></div><span>継続して学習中</span></div>
-          <div class="visual-card card-c"><i>学習の記録</i><b>12日連続</b><span>今日も一歩前へ</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="trust" aria-label="サービスの特徴"><div class="container trust-grid"><p><b>LINE</b><span>LINEで使える</span></p><p><b>{{ question_count_label }}</b><span>厳選した問題演習</span></p><p><b>国試対策</b><span>理学療法士からスタート</span></p><p><b>学習記録</b><span>取り組みを見える化</span></p></div></section>
-
-    <section class="section concerns"><div class="container narrow"><p class="section-kicker">DOES THIS SOUND FAMILIAR?</p><h2>こんな悩み、ありませんか？</h2><div class="concern-grid"><article><span>01</span><p>何から勉強すればいいか<br>わからない</p></article><article><span>02</span><p>勉強しているのに<br>結果につながらない</p></article><article><span>03</span><p>自分の苦手が見えず<br>対策できない</p></article><article><span>04</span><p>今日何をやればいいか<br>毎日迷ってしまう</p></article><article class="parent-concern"><span>05</span><p>頑張っている子どもを<br>どう応援すればいいかわからない</p></article></div><p class="bridge-copy">がんばり方を考えることに、がんばりすぎないために。<br><b>LicenseTownが、次の一歩を一緒に整理します。</b></p></div></section>
-
-    <section id="features" class="section features"><div class="container"><p class="section-kicker">WHAT YOU CAN DO</p><h2>LicenseTownでできること</h2><p class="section-lead">複雑な操作は必要ありません。LINEで選んで、押して、進める。<br>その日の学習に、自然と入っていけます。</p><div class="feature-grid">
-      <article><span class="feature-icon">▤</span><small>01</small><h3>LINE問題演習</h3><p>いつものLINEから、すぐに問題演習。選択肢をポチポチ選ぶだけで学習を進められます。</p><b>通常学習・熱血モードに対応</b></article>
-      <article class="featured"><span class="feature-icon">◎</span><small>02</small><h3>合格への道</h3><p>努力の軌跡と、今の学習状況を見える化。苦手とおすすめの学習がわかります。</p><a href="#road">詳しく見る →</a></article>
-      <article><span class="feature-icon">◌</span><small>03</small><h3>親御さん向け見守り</h3><p>学習日数や回答数など、がんばっている事実をそっと確認できます。</p><a href="#supporter">詳しく見る →</a></article>
-      <article><span class="feature-icon">？</span><small>04</small><h3>教えて源さん</h3><p>わからない言葉や、学習中のつまずきをその場で聞けます。</p><a href="#gensan">詳しく見る →</a></article>
-    </div></div></section>
-
-    <section id="road" class="section product-section"><div class="container split"><div class="product-copy"><p class="section-kicker">重要なのは、「次」がわかること</p><h2>学習を見渡せる<br><em>「合格への道」</em></h2><p>問題を解きっぱなしにせず、積み上げた学習を一つの画面に。今の状況と、次に取り組むことを確かめられます。</p><ul class="check-list"><li>総合到達度と学習時間</li><li>連続学習日数と毎日の進捗</li><li>分野別の状況と苦手分析</li><li>今日のおすすめ学習</li></ul></div><div class="screen-shell" aria-label="合格への道の画面イメージ"><div class="screen-bar"><i></i><i></i><i></i><b>合格への道</b></div><div class="dashboard-mock"><div class="dash-ring"><b>68%</b><span>総合到達度</span></div><div class="dash-stat"><span>累計学習時間<b>42<small>時間</small></b></span><span>連続学習<b>12<small>日</small></b></span></div><div class="dash-bars"><b>分野別 到達度</b><p><span>運動学</span><i style="--w:82%"></i><em>82%</em></p><p><span>解剖学</span><i style="--w:64%"></i><em>64%</em></p><p><span>生理学</span><i style="--w:48%"></i><em>48%</em></p></div><div class="replace-note">実画面素材に差し替え可能</div></div></div></div></section>
-
-    <section id="gensan" class="section gensan-section"><div class="container gensan-grid"><div class="gensan-image"><img src="{{ url_for('static', filename='images/characters/gensan_main.png') }}" alt="LicenseTownの学習サポーター、源さん"></div><div><p class="section-kicker">WHEN YOU GET STUCK</p><h2>わからないを、<br>そのままにしない。</h2><h3>「教えて源さん」</h3><p>学習中に出てきたわからない言葉を聞いたり、つまずいたときに相談したり。LINEで話しかけるように、学びを前へ進められます。</p><div class="quote">「わからない」は、止まる理由ではなく、<br>理解を深めるきっかけに。</div></div></div></section>
-
-    <section id="supporter" class="section supporter-section"><div class="container supporter-card"><div><p class="section-kicker">FOR FAMILIES</p><h2>勉強を教えられなくても、<br><em>応援はできます。</em></h2><p>口を出しすぎず、でも無関心にならず。その日の学習と積み重ねを確かめて、頑張りをそっと見守れます。</p><div class="supporter-points"><span>学習日数</span><span>回答数</span><span>学習時間</span><span>取り組んだ分野</span><span>本人の合格への道</span></div><p class="privacy"><b>安心して話せるために</b>相談内容や個人的な会話は、親御さんには共有されません。</p></div><div class="supporter-mock"><div class="report-head"><span>今日の学習</span><b>取り組み済み</b></div><div class="report-numbers"><p><b>5</b><span>回答</span></p><p><b>32</b><span>分</span></p><p><b>80</b><span>正答率 %</span></p></div><div class="report-week"><b>直近7日の学習</b><div><i style="--h:35%"></i><i style="--h:62%"></i><i style="--h:45%"></i><i style="--h:82%"></i><i style="--h:55%"></i><i style="--h:90%"></i><i style="--h:72%"></i></div></div></div></div></section>
-
-    <section class="section philosophy"><div class="container narrow"><p class="section-kicker">OUR PHILOSOPHY</p><h2>学習塾ではなく、<br><em>寺子屋のような場所</em>をつくりたかった。</h2><div class="prose two-col"><p>LicenseTownは、もともと一人の息子のために作り始めたサービスです。<br><br>勉強が得意な人をさらに上へ伸ばすだけでなく、頑張っているのに結果につながらない人、何から手をつければいいかわからない人、その人をどう応援すればいいか迷う家族。そんな人たちが入ってこられる場所を作りたいと考えています。</p><p>問題を解く。わからなければ聞く。迷ったら、次に何をするか一緒に考える。そして、頑張っていることを誰かがちゃんと見ている。<br><br>得意な人だけの場所ではありません。「ここからもう一度やってみよう」と思った人が、自分のペースで入ってこられる学びの場所を目指しています。</p></div></div></section>
-
-    <section class="section story"><div class="container story-grid"><div class="story-title"><p class="section-kicker">OUR STORY</p><h2>はじまりは、<br><em>息子一人のため</em>でした。</h2></div><div class="prose"><p>理学療法士を目指す息子は、勉強をしている。でも、その努力がうまく結果につながらない。その姿を見て、単に「もっと勉強しろ」と言うのではなく、「今日は何をやればいい？」「どこが苦手？」「次は何をやる？」を一緒に考えられるものを作ろうと思いました。</p><blockquote>自分の子どもに使わせたくないものは、<br>他の人にも勧めない。</blockquote><p>その考えを、今もサービスの基準にしています。そして将来は、学生だけでなく、昔「やれば出来る子」と言われたまま大人になり、もう一度資格に挑戦する人にも使ってもらえる場所にしたいと考えています。</p></div></div></section>
-
-    <section id="faq" class="section faq"><div class="container narrow"><p class="section-kicker">FREQUENTLY ASKED QUESTIONS</p><h2>よくあるご質問</h2><div class="faq-list">
-      <details><summary>料金はかかりますか？</summary><p>現在は無料期間実施中で、すべての機能を無料で体験できます。将来的にサービス内容や料金を変更する場合は、事前にご案内します。</p></details>
-      <details><summary>LINEだけで使えますか？</summary><p>問題演習や用語解説、相談はLINEを中心にご利用いただけます。「合格への道」などはLINEからリンクしたWeb画面で開きます。</p></details>
-      <details><summary>どんな人に向いていますか？</summary><p>何から手をつければいいか迷う方、問題演習を習慣にしたい方、苦手を整理して次の学習を決めたい方に向いています。現在は理学療法士国家試験対策を提供しています。</p></details>
-      <details><summary>AIが毎回問題を作っているのですか？</summary><p>いいえ。正式な問題バンクに収録した問題から出題しており、AIが毎回その場で問題を作る仕組みではありません。</p></details>
-      <details><summary>見守り機能では何が見えますか？</summary><p>学習日数、回答数、学習時間、正答率、取り組んだ分野などの学習状況と、本人の「合格への道」を閲覧できます。</p></details>
-      <details><summary>相談内容は家族にも見えますか？</summary><p>いいえ。相談内容や個人的な会話は、見守り画面には表示されず、家族にも共有されません。</p></details>
-    </div></div></section>
-
-    <section id="try" class="final-cta"><div class="container"><p>無料期間実施中！</p><h2>まずは、今日の5問から。</h2><span>すべての機能を無料で体験できます。</span>{% if line_url %}<a class="button button-light" href="{{ line_url }}" rel="noopener">まずは使ってみる</a>{% else %}<a class="button button-light" href="#contact">まずは使ってみる</a>{% endif %}<small>LINEからすぐに始められます</small></div></section>
-  </main>
-
-  <footer id="contact" class="site-footer"><div class="container footer-grid"><div><a class="brand footer-brand" href="{{ url_for('site_ui.home') }}"><span class="brand-mark">LT</span><span><b>LicenseTown</b><small>ライセンスタウン</small></span></a><p>資格取得までの努力を、結果につなげる。</p></div><div class="footer-links"><div><b>サービス</b><a href="#features">特徴</a><a href="#road">合格への道</a><a href="#supporter">親御さんへ</a></div><div><b>サポート</b><a href="#faq">FAQ</a><a href="mailto:contact@licensetown.jp">お問い合わせ</a></div><div><b>運営情報</b><span>利用規約（準備中）</span><span>プライバシーポリシー（準備中）</span><span>運営情報（準備中）</span></div></div></div><div class="container copyright"><span>© 2026 LicenseTown</span><span>PT から、さまざまな資格へ。</span></div></footer>
-</body>
-</html>
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LicenseTown | 資格取得までの努力を、結果につなげる</title>
+<meta name="description" content="LicenseTownは、問題演習・弱点分析・学習提案で資格取得まで伴走する学習サービスです。第一弾は理学療法士国家試験対策。">
+<meta property="og:title" content="LicenseTown / ライセンスタウン"><meta property="og:description" content="やれば出来る子を、やったから出来た子へ。"><meta property="og:type" content="website">
+<link rel="stylesheet" href="{{ url_for('static', filename='site/site.css', v='20260821-v2') }}"><script src="{{ url_for('static', filename='site/site.js', v='20260821-v2') }}" defer></script></head><body>
+<a class="skip-link" href="#main">本文へ移動</a><header class="site-header"><div class="container header-inner"><a class="brand" href="{{ url_for('site_ui.home') }}" aria-label="LicenseTown トップ"><span class="brand-mark" aria-hidden="true">♜</span><span><b>LicenseTown</b><small>合格への最短ルートを、いっしょに。</small></span></a><button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">メニュー</span></button><nav id="site-nav" class="site-nav" aria-label="メインナビゲーション"><a href="#features">特徴</a><a href="#howto">使い方</a><a href="#supporter">親御さんへ</a><a href="#faq">FAQ</a><a href="#contact">お問い合わせ</a></nav><a class="button header-cta" href="#try">まずは使ってみる</a></div></header>
+<main id="main">
+<section class="hero numbered-section" aria-labelledby="hero-title"><span class="section-number" aria-hidden="true">01</span><div class="container hero-grid"><div class="hero-copy"><h1 id="hero-title">やれば出来る子を、<br>やったから<span>出来た子</span>へ。</h1><p class="hero-lead">問題演習・弱点分析・学習提案を通して、<br>「じゃあ、今何をやるべきか」を一緒に考える。<br>資格取得までの努力を、結果につなげる伴走型学習サービス。</p><div class="chips"><span>✓ 現在無料</span><span>✓ LINEで使える</span><span>✓ {{ question_count_label }}</span><span>✓ 理学療法士国家試験対策</span></div><div class="hero-actions"><a class="button" href="#try">まずは使ってみる ›</a><a class="button button-outline" href="#road">合格への道を見る ›</a></div><button class="video-card" type="button" data-video-placeholder><span><b>30秒でわかる</b><strong>LicenseTown</strong></span><i aria-hidden="true">▶</i><small>デモ動画は準備中です</small></button></div>
+<div class="phone-stage" aria-label="LINE学習画面のプレビュー"><div class="phone"><div class="phone-speaker"></div><div class="phone-screen"><div class="line-top"><span>‹</span><b>LicenseTown</b><i>•••</i></div><div class="quiz-head"><b>第3問 / 全5問</b><span>Pt 50</span></div><p>運動学のうち、深腱反射に含まれるのはどれか。</p><ol><li>1　爪先</li><li>2　足踵</li><li>3　膝</li><li>4　肩</li></ol><small>選択肢をタップしてください。</small><div class="quiz-nav"><button type="button">‹ 戻る</button><b>2 / 5</b><button type="button">次へ ›</button></div><div class="line-input">メッセージを入力　　☺</div></div></div><span class="swap-note">実画面素材に差し替え可能</span></div></div></section>
+<section class="compact-section concerns numbered-section" aria-labelledby="concerns-title"><span class="section-number" aria-hidden="true">02</span><div class="container"><h2 id="concerns-title">こんな悩みありませんか？</h2><div class="concern-grid"><article><b>1</b><i>？</i><p>何から勉強すれば<br>いいかわからない</p></article><article><b>2</b><i>↘</i><p>勉強しているのに<br>結果につながらない</p></article><article><b>3</b><i>○</i><p>自分の苦手が<br>見えない</p></article><article><b>4</b><i>♡</i><p>親もどう応援すれば<br>いいかわからない</p></article></div></div></section>
+<section id="features" class="compact-section features numbered-section" aria-labelledby="features-title"><span class="section-number" aria-hidden="true">03</span><div class="container"><h2 id="features-title">LicenseTownでできること</h2><div class="feature-grid"><article><span class="round-icon">≡</span><h3>問題演習</h3><p>LINEでテンポよく学べる</p></article><article><span class="round-icon">↗</span><h3>合格への道</h3><p>進捗・分野別到達度を見える化</p></article><article><span class="round-icon">♣</span><h3>見守り機能</h3><p>親御さんも学習状況を把握できる</p></article><article><span class="round-icon">？</span><h3>教えて源さん</h3><p>わからない言葉をすぐ確認</p></article></div></div></section>
+<section id="road" class="dashboard-section numbered-section" aria-labelledby="road-title"><span class="section-number" aria-hidden="true">04</span><div class="container"><h2 id="road-title">合格への道</h2><div class="dashboard-preview"><aside><strong>LicenseTown</strong><span>⌂　ダッシュボード</span><span>▤　問題演習</span><span class="active">↗　合格への道</span><span>？　教えて源さん</span><span>◇　設定</span></aside><div class="dash-main"><div class="dash-top"><article><small>総合到達度</small><div class="progress-ring"><b>68<em>%</em></b></div><span>順調 ↗</span></article><article><small>連続学習日数</small><strong>12<em>日</em> 🔥</strong><span>自己ベスト更新中！</span></article><article><small>累計学習時間</small><strong>42<em>時間</em>18<em>分</em></strong><span>今週 +6時間35分</span></article></div><div class="dash-bottom"><article><h3>苦手TOP3</h3><p><b>1</b>神経筋疾患 <span>42%</span></p><p><b>2</b>循環器疾患 <span>48%</span></p><p><b>3</b>運動制御 <span>50%</span></p></article><article><h3>今日のおすすめ</h3><p>○ 神経筋疾患の復習 10問</p><p>○ 循環器疾患の演習 10問</p><p>○ 用語の復習</p></article></div></div><div class="field-panel"><h3>分野別到達度</h3><p><span>基礎医学</span><i style="--value:72%"></i><b>72%</b></p><p><span>臨床医学</span><i style="--value:68%"></i><b>68%</b></p><p><span>運動学</span><i style="--value:74%"></i><b>74%</b></p><p><span>生理学</span><i style="--value:62%"></i><b>62%</b></p><p><span>公衆衛生</span><i style="--value:59%"></i><b>59%</b></p><div class="mini-comment">今日も一緒に<br>頑張りましょう！</div></div><span class="swap-note">実画面スクリーンショットに差し替え可能</span></div></div></section>
+<section id="howto" class="compact-section howto numbered-section" aria-labelledby="howto-title"><span class="section-number" aria-hidden="true">05</span><div class="container"><h2 id="howto-title">使い方はかんたん</h2><div class="steps"><article><b>1</b><i>LINE</i><h3>LINEで始める</h3><p>友だち追加するだけ</p></article><span>→</span><article><b>2</b><i>✓</i><h3>5問解く</h3><p>1セット5問ですぐ学習</p></article><span>→</span><article><b>3</b><i>⌕</i><h3>苦手を知る</h3><p>結果を自動で分析</p></article><span>→</span><article><b>4</b><i>◉</i><h3>次にやることがわかる</h3><p>あなたに合った学習を提案</p></article></div></div></section>
+<section class="concept-section numbered-section" aria-labelledby="concept-title"><span class="section-number" aria-hidden="true">06</span><div class="container concept-grid"><div><h2 id="concept-title">学習塾ではなく、<br>寺子屋のような場所へ。</h2><p>LicenseTownは、頑張っているのに結果につながらない人、何から手をつければいいかわからない人にそっと寄り添う、一緒に「今やること」を見つける場所です。</p><blockquote>得意な人だけの場所ではなく、<br><b>ここからもう一度やってみようと思った人が入ってこられる場所。</b></blockquote></div><div class="terakoya-art" role="img" aria-label="寺子屋のように一緒に学ぶイメージ"><div class="window">☀</div><div class="teacher">☺</div><div class="student">○</div><div class="desk"></div><span>寺子屋イラストに差し替え可能</span></div></div></section>
+<section id="gensan" class="compact-section gensan-section"><div class="container gensan-card"><img src="{{ url_for('static', filename='images/characters/gensan_main.png') }}" alt="LicenseTownの学習サポーター、源さん"><div><h2>教えて源さん</h2><p>わからない言葉や、学習中のつまずきをその場で聞けます。</p></div><ul><li>苦手な分野をどう勉強する？</li><li>勉強が続かないときは？</li><li>試験直前はどうする？</li></ul></div></section>
+<section id="supporter" class="supporter-section numbered-section" aria-labelledby="supporter-title"><span class="section-number" aria-hidden="true">07</span><div class="container"><div class="supporter-heading"><h2 id="supporter-title">勉強を教えられなくても、応援はできます。</h2><p>学習の積み重ねを見える化し、口を出しすぎず、そっと見守れます。</p></div><div class="supporter-grid"><div class="supporter-preview"><h3>見守り画面（保護者様）</h3><div class="supporter-stats"><article><small>学習日数</small><b>18<em>日</em></b><span>今週 +4日</span></article><article><small>回答数</small><b>236<em>問</em></b><span>今週 +56問</span></article><article><small>学習時間</small><b>15<em>時間</em>42<em>分</em></b><span>今週 +4時間10分</span></article></div><div class="supporter-fields"><h3>分野別の取り組み状況</h3><p><span>基礎医学</span><i style="--value:72%"></i><b>72%</b></p><p><span>臨床医学</span><i style="--value:68%"></i><b>68%</b></p><p><span>運動学</span><i style="--value:74%"></i><b>74%</b></p></div><div class="supporter-message">🌿　毎日の積み重ねがしっかり見えています。この調子で一緒に頑張りましょう！</div></div><div class="supporter-list"><h3>見えること</h3><p>◷ <b>学習日数</b><span>継続の様子を確認</span></p><p>✓ <b>回答数</b><span>取り組んだ問題数</span></p><p>◴ <b>学習時間</b><span>勉強に使った時間</span></p><p>♧ <b>分野別の取り組み</b><span>得意・苦手の傾向</span></p><a href="#road">本人の「合格への道」も閲覧できます →</a><div class="privacy">🔒 相談内容や個人的な会話は、親御さんには共有されません。</div></div></div></div></section>
+<section id="faq" class="story-faq numbered-section"><span class="section-number" aria-hidden="true">08</span><div class="container story-faq-grid"><article class="story-card"><h2>はじまりは、息子一人のためでした。</h2><p>理学療法士を目指す息子は勉強をしている。でも、努力が結果につながらない。単に「もっと勉強しろ」ではなく、「今日は何をやる？」「どこが苦手？」を一緒に考えられるものを作ろうと思いました。</p><blockquote>「自分の子どもに使わせたくないものは、他の人にも勧めない」</blockquote><p>将来は、もう一度資格に挑戦する大人にも使ってもらえる場所を目指します。</p></article><div class="faq-card"><h2>よくあるご質問</h2><details><summary>料金はかかりますか？</summary><p>現在は無料期間実施中で、すべての機能を無料で体験できます。変更時は事前にご案内します。</p></details><details><summary>LINEだけで使えますか？</summary><p>問題演習・用語解説・相談はLINE中心です。合格への道などはLINEからWeb画面を開きます。</p></details><details><summary>どんな人に向いていますか？</summary><p>何から始めるか迷う方、苦手を整理して次の学習を決めたい方に向いています。</p></details><details><summary>AIが毎回問題を作っているのですか？</summary><p>いいえ。正式な問題バンクの収録問題から出題し、AIが毎回その場で問題を作る仕組みではありません。</p></details><details><summary>見守り機能では何が見えますか？</summary><p>学習日数、回答数、学習時間、取り組んだ分野と本人の合格への道を閲覧できます。</p></details><details><summary>相談内容は家族にも見えますか？</summary><p>いいえ。相談内容や個人的な会話は家族にも共有されません。</p></details></div></div></section>
+<section id="try" class="final-cta"><div class="container"><div><strong>無料期間実施中！</strong><h2>まずは使ってみる</h2><p>すべての機能を無料で体験できます。</p></div>{% if line_url %}<a class="cta-circle" href="{{ line_url }}" rel="noopener" aria-label="LINEでLicenseTownを使ってみる">→</a>{% else %}<a class="cta-circle" href="#contact" aria-label="お問い合わせへ">→</a>{% endif %}<div class="cta-phone" aria-hidden="true">LINE</div></div></section></main>
+<footer id="contact" class="site-footer"><div class="container"><nav aria-label="フッターナビゲーション"><span>利用規約（準備中）</span><span>プライバシーポリシー（準備中）</span><a href="mailto:contact@licensetown.jp">お問い合わせ</a><span>運営情報（準備中）</span></nav><small>© 2026 LicenseTown</small></div></footer></body></html>
