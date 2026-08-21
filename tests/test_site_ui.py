@@ -40,6 +40,10 @@ def test_site_contains_core_copy_metadata_and_assets():
     assert "寺子屋のような場所へ" in html
     assert "AIが毎回問題を作っているのですか？" in html
     assert "20260821-v2" in html
+    assert "/static/site/illustrations.svg" in html
+    assert "/static/site/terakoya.svg" in html
+    assert "/static/site/founding.svg" in html
+    assert "源さんから一言" in html
 
 
 def test_site_static_assets_are_served():
@@ -48,3 +52,7 @@ def test_site_static_assets_are_served():
     assert client.get("/static/site/site.css").status_code == 200
     assert client.get("/static/site/site.js").status_code == 200
     assert client.get("/static/images/characters/gensan_main.png").status_code == 200
+    assert client.get("/static/site/illustrations.svg").status_code == 200
+    assert client.get("/static/site/hero-room.svg").status_code == 200
+    assert client.get("/static/site/terakoya.svg").status_code == 200
+    assert client.get("/static/site/founding.svg").status_code == 200
