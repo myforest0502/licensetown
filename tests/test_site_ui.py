@@ -39,7 +39,7 @@ def test_site_contains_core_copy_metadata_and_assets():
     assert 'class="steps"' in html
     assert "寺子屋のような場所へ" in html
     assert "AIが毎回問題を作っているのですか？" in html
-    assert "20260821-blueprint1" in html
+    assert "20260821-hero2" in html
     assert "/static/site/illustrations.svg" in html
     assert "/static/site/terakoya.svg" in html
     assert "/static/site/founding.svg" in html
@@ -55,6 +55,25 @@ def test_site_static_assets_are_served():
     assert client.get("/static/images/characters/gensan_main.png").status_code == 200
     assert client.get("/static/site/illustrations.svg").status_code == 200
     assert client.get("/static/site/hero-room.svg").status_code == 200
+    assert client.get("/static/site/hero-video-landscape.svg").status_code == 200
     assert client.get("/static/site/terakoya.svg").status_code == 200
     assert client.get("/static/site/founding.svg").status_code == 200
     assert client.get("/static/site/cta-phone.svg").status_code == 200
+
+
+def test_site_hero_uses_reference_visual_contract():
+    client = app.test_client()
+    html = client.get("/site").get_data(as_text=True)
+    css = client.get("/static/site/site.css").get_data(as_text=True)
+
+    assert 'class="hero numbered-section"' in html
+    assert 'class="hero-line"' in html
+    assert "やったから<em>出来た子</em>へ。" in html
+    assert 'class="phone"' in html
+    assert 'class="video-card"' in html
+    assert 'href="#try"' in html
+    assert 'href="#road"' in html
+    assert 'url("hero-room.svg")' in css
+    assert 'url("hero-video-landscape.svg")' in css
+    assert "grid-template-columns:55fr 45fr" in css
+    assert "@media(max-width:390px)" in css
