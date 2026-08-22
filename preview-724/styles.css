@@ -67,3 +67,4 @@ a{color:inherit;text-decoration:none}.section{position:relative;width:724px;bord
 .howto .steps article:nth-of-type(4) h3{font-family:"Noto Sans JP","Yu Gothic","Yu Gothic UI",Meiryo,sans-serif;font-size:11px;line-height:18px;letter-spacing:-.02em;white-space:nowrap}
 .howto .steps img{top:12px;width:auto;height:50px;object-fit:contain;object-position:center center}
 .story-card .story-copy-final{font-size:7px;line-height:10.5px}
+.howto>h2{white-space:nowrap}
