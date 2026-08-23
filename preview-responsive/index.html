@@ -1,0 +1,8 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>LicenseTown Responsive Preview</title><link rel="stylesheet" href="styles.css"></head><body>
+<iframe id="pc-view" class="preview-frame pc-view" title="LicenseTown PC完成版" scrolling="no"></iframe><div id="mobile-stage" class="mobile-stage"><iframe id="mobile-view" class="preview-frame mobile-view" title="LicenseTown 724px完成版" scrolling="no"></iframe></div>
+<script>
+const frames=[{id:'pc-view',source:'../preview-pc/index.html',base:'../preview-pc/',extra:'/preview-responsive/middle.css'},{id:'mobile-view',source:'../preview-724/index.html',base:'../preview-724/',extra:'/preview-responsive/mobile.css'}];
+const fitFrame=frame=>{const doc=frame.contentDocument;if(!doc)return;const contentHeight=doc.documentElement.scrollHeight;if(frame.id==='mobile-view'){const stage=document.getElementById('mobile-stage');const scale=Math.min(1,document.documentElement.clientWidth/724);frame.style.width='724px';frame.style.height=`${contentHeight}px`;frame.style.transform=`scale(${scale})`;stage.style.height=`${contentHeight*scale}px`}else{frame.style.height=`${contentHeight}px`}};
+frames.forEach(async({id,source,base,extra})=>{const frame=document.getElementById(id);let html=await fetch(source,{cache:'no-store'}).then(r=>r.text());html=html.replace('<head>',`<head><base href="${base}">`).replace('</head>',`<link rel="stylesheet" href="${extra}"></head>`);frame.srcdoc=html;frame.addEventListener('load',()=>{fitFrame(frame);frame.contentWindow.addEventListener('resize',()=>fitFrame(frame))})});
+window.addEventListener('resize',()=>document.querySelectorAll('.preview-frame').forEach(fitFrame));
+</script></body></html>
