@@ -3,7 +3,12 @@ from pathlib import Path
 
 import database
 from database import get_field_learning_summary, get_learning_summary, record_learning_batch
-from learning_analysis import build_learning_guidance
+from learning_analysis import (
+    GENSAN_FEEDBACK_TEMPLATES,
+    MIN_RELIABLE_ANSWERS,
+    build_gensan_comment,
+    build_learning_guidance,
+)
 from question_bank import CATEGORY_NAMES
 
 
@@ -104,6 +109,53 @@ def test_low_engagement_is_a_candidate_after_broad_learning():
     ]
     assert low_engagement
     assert low_engagement[0]["name"] == "医学概論"
+
+
+def test_insufficient_engagement_means_fewer_than_ten_answers():
+    fields = make_fields({
+        1: (15, 13), 2: (15, 13), 3: (15, 13),
+        4: (15, 13), 5: (15, 13), 6: (9, 9),
+    })
+    guidance = build_learning_guidance(100, fields)
+    assert MIN_RELIABLE_ANSWERS == 10
+    assert any(
+        item["name"] == "医学概論" and item["reason"] == "取り組み不足"
+        for item in guidance["weak_fields"]
+    )
+
+    fields[5] = {
+        **fields[5],
+        "answered_count": 10,
+        "correct_count": 10,
+        "accuracy": 100,
+        "learned": True,
+    }
+    guidance = build_learning_guidance(100, fields)
+    assert all(
+        not (item["name"] == "医学概論" and item["reason"] == "取り組み不足")
+        for item in guidance["weak_fields"]
+    )
+
+
+def test_gensan_feedback_praises_strength_and_names_next_field():
+    fields = make_fields({1: (20, 19), 7: (20, 5)})
+    comment = build_gensan_comment(
+        120,
+        fields,
+        [{"name": "病理学"}],
+        [("病理学", 10)],
+        streak_days=3,
+        today_progress=5,
+    )
+    assert "解剖学" in comment
+    assert "病理学" in comment
+    assert "\n" in comment
+    assert len(GENSAN_FEEDBACK_TEMPLATES) == 5
+
+
+def test_gensan_feedback_uses_safe_fallback_without_field_history():
+    comment = build_gensan_comment(100, make_fields(), [], [])
+    assert comment == "まだ始まったばかりだな＾＾\nまずは5問だけやってみるか？"
 
 
 def test_null_legacy_history_counts_for_100_but_not_field_analysis():

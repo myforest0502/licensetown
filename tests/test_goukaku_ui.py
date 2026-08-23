@@ -53,6 +53,8 @@ def test_goukaku_home_renders(monkeypatch):
     assert "あと <b>100</b>%" in text
     assert 'class="target-progress"' in text
     assert "あと 96%" not in (__import__("pathlib").Path(__file__).resolve().parents[1] / "templates" / "goukaku" / "home.html").read_text(encoding="utf-8")
+    template = (__import__("pathlib").Path(__file__).resolve().parents[1] / "templates" / "goukaku" / "home.html").read_text(encoding="utf-8")
+    assert "回答数が少ないため、まだ実力判定できません" in template
 
 
 def test_dashboard_responsive_css_hides_actions_only_on_pc():
@@ -76,6 +78,9 @@ def test_dashboard_responsive_css_hides_actions_only_on_pc():
     assert ".dashboard-grid>.dashboard-footer-cards{grid-column:1/-1;grid-template-columns:repeat(2" in css
     assert ".target-progress-card{border-color:#b8e1c8}" in css
     assert ".target-progress i{display:block;height:100%" in css
+    assert ".recommend-card p{font-size:15px}" in css
+    assert ".daily-target,.gensan-card small{font-size:13px}" in css
+    assert ".gensan-card p{white-space:pre-line}" in css
 
 
 def test_mobile_actions_use_official_account_chat_not_line_share():

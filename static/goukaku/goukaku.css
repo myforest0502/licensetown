@@ -24,3 +24,4 @@
 @media(max-width:900px){.learning-overview{grid-template-columns:1fr}.guidance-stack{grid-template-rows:none}}
 @media(max-width:700px){.learning-overview,.guidance-stack{gap:10px}.learning-overview .subject-card,.learning-overview .weak-card{padding:14px}.dashboard-grid>.dashboard-footer-cards{grid-template-columns:1fr}}
 .target-progress-card{border-color:#b8e1c8}.target-progress-card h2,.target-progress-card>strong b{color:var(--green2)}.target-progress-card>strong b{font-size:36px}.target-progress{height:10px;margin-top:18px;border-radius:99px;background:#e9edef;overflow:hidden}.target-progress i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--green2))}
+.recommend-card p{font-size:15px}.daily-target,.gensan-card small{font-size:13px}.gensan-card p{white-space:pre-line}.status-label{font-size:11px}

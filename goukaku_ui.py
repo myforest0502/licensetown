@@ -12,7 +12,7 @@ from database import (
     get_supported_learner_ids,
     user_names,
 )
-from learning_analysis import build_learning_guidance
+from learning_analysis import build_gensan_comment, build_learning_guidance
 from supporter_report import build_supporter_report
 
 
@@ -124,10 +124,14 @@ def build_dashboard(user_id=None):
         remainder = dashboard["total_answers"] % 100
         dashboard["next_reward_answers"] = 100 - remainder if remainder else 100
         dashboard["reward_progress"] = remainder
-        if dashboard["today_progress"] >= dashboard["today_goal"]:
-            dashboard["gensan_comment"] = "今日は頑張ったな。胸張っていいぞ＾＾"
-        elif dashboard["today_progress"]:
-            dashboard["gensan_comment"] = "ちゃんと続いてるじゃねぇか＾＾"
+        dashboard["gensan_comment"] = build_gensan_comment(
+            dashboard["total_answers"],
+            fields,
+            dashboard["weak_fields"],
+            dashboard["recommended_study"],
+            dashboard["streak_days"],
+            dashboard["today_progress"],
+        )
     return dashboard
 
 
