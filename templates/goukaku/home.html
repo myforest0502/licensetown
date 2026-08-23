@@ -1,5 +1,6 @@
 {% extends "goukaku/base.html" %}
 {% block content %}
+{% set remaining_progress = 100 - dashboard.overall_progress %}
 <header class="app-header title-only"><h1>{{ dashboard_title|default('合格への道') }}</h1></header>
 <div class="page-content dashboard-grid">
   {% if read_only %}<div class="readonly-banner"><b>閲覧専用</b><span>保存済みの学習データを表示しています</span></div>{% endif %}
@@ -12,7 +13,7 @@
   </section>
   <dialog id="exam-dialog"><h2>試験日について</h2><p>現在表示している試験日は暫定です。<br>正式な試験日が発表され次第、正式日程へ更新されます。<br>それに伴い、試験日までの日数も自動的に修正されます。</p><button data-dialog-close>閉じる</button></dialog>
 
-  <section class="card achievement"><h2>総合到達度</h2><div class="achievement-body"><div class="ring" style="--value:{{ dashboard.overall_progress }}"><span>{{ dashboard.overall_progress }}<small>%</small></span></div><div class="achievement-copy"><strong>学習を積み重ねて、目標学習量に近づいていこう</strong><p>LTで記録された学習時間と問題演習量から算出した学習進捗の目安です。合格を保証する数値ではありません。</p><span class="line-remaining">目標学習量まで あと {{ 100 - dashboard.overall_progress }}%</span></div></div></section>
+  <section class="card achievement"><h2>総合到達度</h2><div class="achievement-body"><div class="ring" style="--value:{{ dashboard.overall_progress }}"><span>{{ dashboard.overall_progress }}<small>%</small></span></div><div class="achievement-copy"><strong>学習を積み重ねて、目標学習量に近づいていこう</strong><p>LTで記録された学習時間と問題演習量から算出した学習進捗の目安です。合格を保証する数値ではありません。</p><span class="line-remaining">目標学習量まで あと {{ remaining_progress }}%</span></div></div></section>
 
   <section class="summary-grid five">
     <article class="mini-card"><span class="mini-icon">▤</span><b>総回答数</b><strong>{{ '{:,}'.format(dashboard.total_answers) }}<small>問</small></strong></article>
@@ -37,6 +38,7 @@
 
   <section class="motivation-grid dashboard-footer-cards">
     <article class="motivation-card reward-card"><h2>🎁 次の報酬まで</h2><strong>あと <b>{{ dashboard.next_reward_answers }}</b> 問</strong><p>100問ごとに学習マイルストーン！</p><div class="reward-progress"><i style="width:{{ dashboard.reward_progress }}%"></i></div><small>{{ dashboard.reward_progress }} / 100問</small><span class="reward-icon">LT</span></article>
+    <article class="motivation-card target-progress-card"><h2>🎯 目標学習量まで</h2><strong>あと <b>{{ remaining_progress }}</b>%</strong><p>毎日コツコツ積み重ねよう！<br>目標達成まで、もう一息！</p><div class="target-progress"><i style="width:{{ dashboard.overall_progress }}%"></i></div></article>
     {% if not read_only %}<a class="motivation-card footprint-card" href="{{ url_for('goukaku_ui.footprints') }}"><div><h2>👣 あなたの足跡を見る</h2><p>これまでの学習の軌跡を<br>タイムラインで確認できます。</p><span>足跡を見る ›</span></div><b class="footprint-chart">↗</b></a>{% endif %}
   </section>
 

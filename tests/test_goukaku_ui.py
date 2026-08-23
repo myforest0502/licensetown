@@ -48,6 +48,11 @@ def test_goukaku_home_renders(monkeypatch):
     assert [text.index(label) for label in guidance_labels] == sorted(text.index(label) for label in guidance_labels)
     assert text.index("分野別 到達度") < text.index("次の報酬まで")
     assert text.index("源さんの一言") < text.index("次の報酬まで")
+    assert 'class="motivation-card target-progress-card"' in text
+    assert text.count("目標学習量まで") >= 2
+    assert "あと <b>100</b>%" in text
+    assert 'class="target-progress"' in text
+    assert "あと 96%" not in (__import__("pathlib").Path(__file__).resolve().parents[1] / "templates" / "goukaku" / "home.html").read_text(encoding="utf-8")
 
 
 def test_dashboard_responsive_css_hides_actions_only_on_pc():
@@ -69,6 +74,8 @@ def test_dashboard_responsive_css_hides_actions_only_on_pc():
     assert ".learning-overview{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)" in css
     assert ".guidance-stack{display:grid;grid-template-rows:auto 1fr 1fr" in css
     assert ".dashboard-grid>.dashboard-footer-cards{grid-column:1/-1;grid-template-columns:repeat(2" in css
+    assert ".target-progress-card{border-color:#b8e1c8}" in css
+    assert ".target-progress i{display:block;height:100%" in css
 
 
 def test_mobile_actions_use_official_account_chat_not_line_share():
