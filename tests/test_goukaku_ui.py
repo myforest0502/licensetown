@@ -41,9 +41,13 @@ def test_goukaku_home_renders(monkeypatch):
     assert app.test_client().get("/static/images/characters/gensan_main.png").status_code == 200
     assert 'class="summary-grid five"' in text
     assert "連続学習日数" in text
-    assert 'class="motivation-grid"' in text
-    bottom_labels = ["今日のおすすめ学習", "次の報酬まで", "源さんの一言", "あなたの足跡を見る"]
-    assert [text.index(label) for label in bottom_labels] == sorted(text.index(label) for label in bottom_labels)
+    assert 'class="learning-overview"' in text
+    assert 'class="guidance-stack"' in text
+    assert 'class="motivation-grid dashboard-footer-cards"' in text
+    guidance_labels = ["苦手分野 TOP3", "今日のおすすめ学習", "源さんの一言"]
+    assert [text.index(label) for label in guidance_labels] == sorted(text.index(label) for label in guidance_labels)
+    assert text.index("分野別 到達度") < text.index("次の報酬まで")
+    assert text.index("源さんの一言") < text.index("次の報酬まで")
 
 
 def test_dashboard_responsive_css_hides_actions_only_on_pc():
@@ -62,6 +66,9 @@ def test_dashboard_responsive_css_hides_actions_only_on_pc():
     assert ".subject-chart{height:300px" in css
     assert ".daily-chart{height:280px" in css
     assert ".chart-empty{min-height:150px" in css
+    assert ".learning-overview{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)" in css
+    assert ".guidance-stack{display:grid;grid-template-rows:auto 1fr 1fr" in css
+    assert ".dashboard-grid>.dashboard-footer-cards{grid-column:1/-1;grid-template-columns:repeat(2" in css
 
 
 def test_mobile_actions_use_official_account_chat_not_line_share():

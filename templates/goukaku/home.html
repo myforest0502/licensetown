@@ -22,17 +22,21 @@
     <article class="mini-card streak-card"><span class="mini-icon">◯</span><b>連続学習日数</b><strong>{{ dashboard.streak_days }}<small>日</small></strong>{% if dashboard.streak_days %}<em>継続中！</em>{% endif %}</article>
   </section>
 
+  <section class="learning-overview">
   <section class="card subject-card"><div class="section-title"><h2>分野別 到達度</h2><a href="{{ subjects_url }}" class="pill-link">すべて見る</a></div>
     <div class="subject-list">{% for item in dashboard.field_stats %}<a href="{{ subjects_url }}" class="subject-row"><b>{{ item.name }}<small>{{ item.answered_count }}問</small></b><div class="bar"><i class="score-{{ 'good' if item.accuracy >= 70 else 'warn' if item.accuracy >= 50 else 'weak' }}" style="width:{{ item.accuracy }}%"></i></div><span>{{ item.accuracy }}%</span></a>{% else %}<p class="empty-state">まだデータがありません。勉強するとここに表示されます＾＾</p>{% endfor %}</div>
     <div class="legend"><span><i class="good"></i>得意（70%以上）</span><span><i class="warn"></i>要注意（50〜69%）</span><span><i class="weak"></i>要強化（50%未満）</span></div>
   </section>
 
-  <section class="card weak-card"><h2>◎ 苦手分野 TOP3</h2>{% for item in dashboard.weak_fields %}<div class="weak-row"><i class="rank rank-{{ loop.index }}">{{ loop.index }}</i><p><b>{{ item.name }}</b><span class="status-label">{{ item.reason }}</span></p><strong>正答率 {% if item.reason == '未学習' %}--{% else %}{{ item.score }}%{% endif %}</strong>{% if read_only %}<span class="readonly-action">閲覧のみ</span>{% else %}<a href="{{ url_for('goukaku_ui.learning', field=item.name, count=10) }}">取り組む</a>{% endif %}</div>{% else %}<div class="empty-state rich-empty"><b>まだ苦手分析の途中です</b><span>{{ dashboard.weak_analysis_message }}</span></div>{% endfor %}</section>
-
-  <section class="motivation-grid">
+  <div class="guidance-stack">
+    <section class="card weak-card"><h2>◎ 苦手分野 TOP3</h2>{% for item in dashboard.weak_fields %}<div class="weak-row"><i class="rank rank-{{ loop.index }}">{{ loop.index }}</i><p><b>{{ item.name }}</b><span class="status-label">{{ item.reason }}</span></p><strong>正答率 {% if item.reason == '未学習' %}--{% else %}{{ item.score }}%{% endif %}</strong>{% if read_only %}<span class="readonly-action">閲覧のみ</span>{% else %}<a href="{{ url_for('goukaku_ui.learning', field=item.name, count=10) }}">取り組む</a>{% endif %}</div>{% else %}<div class="empty-state rich-empty"><b>まだ苦手分析の途中です</b><span>{{ dashboard.weak_analysis_message }}</span></div>{% endfor %}</section>
     <article class="motivation-card recommend-card"><h2>💡 今日のおすすめ学習</h2>{% for name, count in dashboard.recommended_study %}<strong>今日は{{ name }}を{{ count }}問解こう</strong><p>今の実力に合わせた学習です。</p>{% if read_only %}<span class="readonly-action">閲覧のみ</span>{% else %}<a href="{{ url_for('goukaku_ui.learning', field=name, count=count) }}">{{ count }}問解く ›</a>{% endif %}{% else %}<strong>学習データをためよう</strong><p>5問解くと、おすすめを提案できます。</p>{% if not read_only %}<button data-line-message="勉強する">5問から始める ›</button>{% endif %}{% endfor %}<small class="daily-target">今日の進捗 {{ dashboard.today_progress }} / {{ dashboard.today_goal }}問</small></article>
-    <article class="motivation-card reward-card"><h2>🎁 次の報酬まで</h2><strong>あと <b>{{ dashboard.next_reward_answers }}</b> 問</strong><p>100問ごとに学習マイルストーン！</p><div class="reward-progress"><i style="width:{{ dashboard.reward_progress }}%"></i></div><small>{{ dashboard.reward_progress }} / 100問</small><span class="reward-icon">LT</span></article>
     <article class="motivation-card gensan-card"><div><h2>💬 源さんの一言</h2><p>{{ dashboard.gensan_comment }}</p><small>連続学習 {{ dashboard.streak_days }}日</small></div><img src="{{ url_for('static', filename='images/characters/gensan_main.png') }}" alt="源さん"></article>
+  </div>
+  </section>
+
+  <section class="motivation-grid dashboard-footer-cards">
+    <article class="motivation-card reward-card"><h2>🎁 次の報酬まで</h2><strong>あと <b>{{ dashboard.next_reward_answers }}</b> 問</strong><p>100問ごとに学習マイルストーン！</p><div class="reward-progress"><i style="width:{{ dashboard.reward_progress }}%"></i></div><small>{{ dashboard.reward_progress }} / 100問</small><span class="reward-icon">LT</span></article>
     {% if not read_only %}<a class="motivation-card footprint-card" href="{{ url_for('goukaku_ui.footprints') }}"><div><h2>👣 あなたの足跡を見る</h2><p>これまでの学習の軌跡を<br>タイムラインで確認できます。</p><span>足跡を見る ›</span></div><b class="footprint-chart">↗</b></a>{% endif %}
   </section>
 
