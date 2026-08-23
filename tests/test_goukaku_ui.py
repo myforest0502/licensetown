@@ -55,6 +55,7 @@ def test_goukaku_home_renders(monkeypatch):
     assert "あと 96%" not in (__import__("pathlib").Path(__file__).resolve().parents[1] / "templates" / "goukaku" / "home.html").read_text(encoding="utf-8")
     template = (__import__("pathlib").Path(__file__).resolve().parents[1] / "templates" / "goukaku" / "home.html").read_text(encoding="utf-8")
     assert "回答数が少ないため、まだ実力判定できません" in template
+    assert "{{ dashboard.recommendation_reason }}" in template
 
 
 def test_dashboard_responsive_css_hides_actions_only_on_pc():
@@ -81,6 +82,11 @@ def test_dashboard_responsive_css_hides_actions_only_on_pc():
     assert ".recommend-card p{font-size:15px}" in css
     assert ".daily-target,.gensan-card small{font-size:13px}" in css
     assert ".gensan-card p{white-space:pre-line}" in css
+    assert ".recommend-card>strong{font-size:17px;font-weight:700}" in css
+    assert ".recommend-card p{line-height:1.65}" in css
+    assert ".daily-target{font-size:14px}" in css
+    assert ".gensan-card p{font-size:17px;font-weight:700;line-height:1.6}" in css
+    assert ".gensan-card small{font-size:14px}" in css
 
 
 def test_mobile_actions_use_official_account_chat_not_line_share():

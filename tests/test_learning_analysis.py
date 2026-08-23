@@ -8,6 +8,7 @@ from learning_analysis import (
     MIN_RELIABLE_ANSWERS,
     build_gensan_comment,
     build_learning_guidance,
+    build_recommendation_reason,
 )
 from question_bank import CATEGORY_NAMES
 
@@ -156,6 +157,36 @@ def test_gensan_feedback_praises_strength_and_names_next_field():
 def test_gensan_feedback_uses_safe_fallback_without_field_history():
     comment = build_gensan_comment(100, make_fields(), [], [])
     assert comment == "まだ始まったばかりだな＾＾\nまずは5問だけやってみるか？"
+
+
+def test_recommendation_reasons_follow_existing_weakness_reason():
+    cases = {
+        "取り組み不足": "実力判定のデータが足りません",
+        "正答率が低い": "優先して復習したい分野",
+        "他分野より正答率が低い": "他の分野と比べて",
+        "未学習": "まだ取り組んでいない分野",
+        None: "次に取り組む優先度が高い分野",
+    }
+    for reason, expected in cases.items():
+        text = build_recommendation_reason("病理学", 10, reason)
+        assert "病理学" in text or reason == "取り組み不足"
+        assert "10問" in text
+        assert expected in text
+
+
+def test_guidance_exposes_reason_for_selected_recommendation():
+    foundation = build_learning_guidance(0, make_fields())
+    assert "まだ取り組んでいない" in foundation["recommendation_reason"]
+
+    analysis = build_learning_guidance(
+        100,
+        make_fields({
+            1: (15, 13), 2: (15, 13), 3: (15, 13),
+            4: (15, 13), 5: (15, 13), 7: (20, 4),
+        }),
+    )
+    assert analysis["recommended_study"] == [("病理学", 10)]
+    assert "病理学" in analysis["recommendation_reason"]
 
 
 def test_null_legacy_history_counts_for_100_but_not_field_analysis():

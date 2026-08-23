@@ -101,6 +101,7 @@ def build_dashboard(user_id=None):
         "weak_fields": [],
         "weak_analysis_message": "まずは100問を目標に基礎を固めましょう。",
         "recommended_study": [],
+        "recommendation_reason": None,
         "today_goal": TODAY_GOAL,
         "today_progress": 0,
         "streak_days": 0,

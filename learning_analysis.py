@@ -19,6 +19,38 @@ GENSAN_FEEDBACK_TEMPLATES = (
 )
 
 
+def build_recommendation_reason(
+    field_name: str,
+    question_count: int,
+    reason: str | None,
+) -> str:
+    """既存の苦手判定理由を、おすすめ学習用の短い説明に変換する。"""
+    if reason == "取り組み不足":
+        return (
+            "まだ回答数が少なく、実力判定のデータが足りません。"
+            f"まず{question_count}問取り組んで傾向を確認してみよう。"
+        )
+    if reason == "正答率が低い":
+        return (
+            f"{field_name}は現在の正答率が低く、優先して復習したい分野です。"
+            f"{question_count}問取り組んで苦手なポイントを確認してみよう。"
+        )
+    if reason == "他分野より正答率が低い":
+        return (
+            f"{field_name}は他の分野と比べて正答率が低くなっています。"
+            f"今のうちに{question_count}問取り組んで理解を固めておこう。"
+        )
+    if reason == "未学習":
+        return (
+            f"{field_name}はまだ取り組んでいない分野です。"
+            f"まず{question_count}問解いて、現在の理解度を確認してみよう。"
+        )
+    return (
+        f"{field_name}は今の学習状況から、次に取り組む優先度が高い分野です。"
+        f"{question_count}問解いて理解をさらに深めてみよう。"
+    )
+
+
 def _foundation_recommendation(fields: list[dict[str, Any]]) -> dict[str, Any] | None:
     basics = [item for item in fields if item["category_small"] in BASIC_CATEGORY_SMALLS]
     if not basics:
@@ -113,6 +145,18 @@ def build_learning_guidance(
     """TOP用の苦手TOP3・おすすめ分野・分析段階を返す。"""
     if total_answers < FOUNDATION_ANSWER_THRESHOLD:
         recommended = _foundation_recommendation(fields)
+        recommended_study = [(recommended["name"], 10)] if recommended else []
+        recommended_reason = None
+        if recommended:
+            reason = (
+                "未学習" if recommended["answered_count"] == 0
+                else "取り組み不足"
+                if recommended["answered_count"] < MIN_RELIABLE_ANSWERS
+                else None
+            )
+            recommended_reason = build_recommendation_reason(
+                recommended["name"], 10, reason,
+            )
         return {
             "phase": "foundation",
             "weak_fields": [],
@@ -120,13 +164,13 @@ def build_learning_guidance(
                 "まずは100問を目標に基礎を固めましょう。"
                 "100問を超えると、あなたの苦手傾向を詳しく分析します。"
             ),
-            "recommended_study": (
-                [(recommended["name"], 10)] if recommended else []
-            ),
+            "recommended_study": recommended_study,
+            "recommendation_reason": recommended_reason,
         }
 
     weak_fields = _weakness_candidates(fields)[:3]
     recommended_name = weak_fields[0]["name"] if weak_fields else None
+    recommended_study = [(recommended_name, 10)] if recommended_name else []
     return {
         "phase": "analysis",
         "weak_fields": weak_fields,
@@ -134,7 +178,15 @@ def build_learning_guidance(
             "分野別の分析に必要な履歴がまだ足りません。"
             if not weak_fields else ""
         ),
-        "recommended_study": [(recommended_name, 10)] if recommended_name else [],
+        "recommended_study": recommended_study,
+        "recommendation_reason": (
+            build_recommendation_reason(
+                recommended_name,
+                10,
+                weak_fields[0]["reason"],
+            )
+            if recommended_name else None
+        ),
     }
 
 
