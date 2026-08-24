@@ -4,8 +4,8 @@
 <meta name="description" content="LicenseTownは、問題演習・弱点分析・学習提案で資格取得まで伴走する学習サービスです。">
 <meta property="og:title" content="LicenseTown / ライセンスタウン"><meta property="og:description" content="やれば出来る子を、やったから出来た子へ。"><meta property="og:type" content="website">
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="{{ url_for('static', filename='site/site.css', v='20260824-responsive1') }}"><script src="{{ url_for('static', filename='site/site.js', v='20260824-responsive1') }}" defer></script></head><body>
-<iframe id="pc-view" class="preview-frame pc-view" title="LicenseTown PC完成版" scrolling="no" data-source="{{ pc_source_url }}" data-base="{{ pc_base_url }}" data-extra="{{ middle_css_url }}"></iframe>
-<div id="mobile-stage" class="mobile-stage"><iframe id="mobile-view" class="preview-frame mobile-view" title="LicenseTown 724px完成版" scrolling="no" data-source="{{ mobile_source_url }}" data-base="{{ mobile_base_url }}" data-extra="{{ mobile_css_url }}"></iframe></div>
+<link rel="stylesheet" href="{{ url_for('static', filename='site/site.css', v='20260824-source1') }}"><script src="{{ url_for('static', filename='site/site.js', v='20260824-source1') }}" defer></script></head><body>
+<iframe id="pc-view" class="preview-frame pc-view" title="LicenseTown PC完成版" scrolling="no" src="{{ pc_view_url }}"></iframe>
+<div id="mobile-stage" class="mobile-stage"><iframe id="mobile-view" class="preview-frame mobile-view" title="LicenseTown 724px完成版" scrolling="no" src="{{ mobile_view_url }}"></iframe></div>
 <noscript><p class="noscript-message">LicenseTown公式ホームページの表示にはJavaScriptが必要です。</p></noscript>
 </body></html>

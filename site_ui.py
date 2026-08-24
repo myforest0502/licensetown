@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from flask import Blueprint, render_template, send_from_directory
+from flask import Blueprint, Response, render_template, send_from_directory, url_for
 
 
 site_ui = Blueprint("site_ui", __name__)
@@ -20,12 +20,37 @@ QUESTION_COUNT_LABEL = os.getenv("SITE_QUESTION_COUNT_LABEL", "1,500問以上収
 def home():
     return render_template(
         "site/home.html",
-        pc_source_url="/site/source/pc",
-        mobile_source_url="/site/source/mobile",
-        pc_base_url="/site/preview-pc/",
-        mobile_base_url="/site/preview-724/",
-        middle_css_url="/site/preview-responsive/middle.css",
-        mobile_css_url="/site/preview-responsive/mobile.css",
+        pc_view_url=url_for("site_ui.pc_view"),
+        mobile_view_url=url_for("site_ui.mobile_view"),
+    )
+
+
+def _preview_document(source_path, base_url, extra_stylesheet_url):
+    html = source_path.read_text(encoding="utf-8")
+    html = html.replace("<head>", f'<head><base href="{base_url}">', 1)
+    html = html.replace(
+        "</head>",
+        f'<link rel="stylesheet" href="{extra_stylesheet_url}"></head>',
+        1,
+    )
+    return Response(html, mimetype="text/html")
+
+
+@site_ui.get("/site/view/pc")
+def pc_view():
+    return _preview_document(
+        PREVIEW_PC_DIR / "index.html",
+        "/site/preview-pc/",
+        "/site/preview-responsive/middle.css",
+    )
+
+
+@site_ui.get("/site/view/mobile")
+def mobile_view():
+    return _preview_document(
+        PREVIEW_724_DIR / "index.html",
+        "/site/preview-724/",
+        "/site/preview-responsive/mobile.css",
     )
 
 

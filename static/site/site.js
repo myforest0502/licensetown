@@ -52,47 +52,19 @@ const wireFrameScroll=frame=>{
   doc.addEventListener('touchend',()=>{previousTouchY=null},{passive:true});
 };
 
-const prepareFrameHtml=(frame,html)=>{
-  const sourceDoc=new DOMParser().parseFromString(html,'text/html');
-  const baseUrl=new URL(frame.dataset.base,window.location.origin);
-  sourceDoc.querySelectorAll('[src]').forEach(element=>{
-    const value=element.getAttribute('src');
-    if(!value||/^(?:[a-z]+:|\/|#)/i.test(value))return;
-    const resolved=new URL(value,baseUrl);
-    element.setAttribute('src',`${resolved.pathname}${resolved.search}${resolved.hash}`);
-  });
-  sourceDoc.querySelectorAll('link[href]').forEach(element=>{
-    const value=element.getAttribute('href');
-    if(!value||/^(?:[a-z]+:|\/|#)/i.test(value))return;
-    const resolved=new URL(value,baseUrl);
-    element.setAttribute('href',`${resolved.pathname}${resolved.search}${resolved.hash}`);
-  });
-  const base=sourceDoc.createElement('base');
-  base.href=frame.dataset.base;
-  sourceDoc.head.prepend(base);
-  const extraStylesheet=sourceDoc.createElement('link');
-  extraStylesheet.rel='stylesheet';
-  extraStylesheet.href=frame.dataset.extra;
-  sourceDoc.head.append(extraStylesheet);
-  return `<!doctype html>${sourceDoc.documentElement.outerHTML}`;
+const initializeFrame=frame=>{
+  const syncFrame=()=>{
+    fitFrame(frame);
+    const doc=frame.contentDocument;
+    if(!doc||doc.documentElement.dataset.siteFrameWired==='true')return;
+    doc.documentElement.dataset.siteFrameWired='true';
+    wireFrameLinks(frame);
+    wireFrameScroll(frame);
+    frame.contentWindow.addEventListener('resize',()=>fitFrame(frame));
+  };
+  frame.addEventListener('load',syncFrame);
+  if(frame.contentDocument?.readyState==='complete'&&frame.contentDocument.location.href!=='about:blank')syncFrame();
 };
 
-const loadFrame=async frame=>{
-  try{
-    const response=await fetch(frame.dataset.source,{cache:'no-store'});
-    if(!response.ok)throw new Error(`source ${response.status}`);
-    const html=prepareFrameHtml(frame,await response.text());
-    frame.srcdoc=html;
-    frame.addEventListener('load',()=>{
-      fitFrame(frame);
-      wireFrameLinks(frame);
-      wireFrameScroll(frame);
-      frame.contentWindow.addEventListener('resize',()=>fitFrame(frame));
-    },{once:true});
-  }catch(error){
-    console.error('LicenseTown page load failed',error);
-  }
-};
-
-frames.forEach(loadFrame);
+frames.forEach(initializeFrame);
 window.addEventListener('resize',()=>frames.forEach(fitFrame));
