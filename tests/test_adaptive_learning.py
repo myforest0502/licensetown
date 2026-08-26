@@ -96,9 +96,11 @@ def test_new_user_ready_starts_location_check_and_existing_user_starts_daily(mon
 
     monkeypatch.setattr(bot_app, "is_initial_assessment_completed", lambda user_id: False)
     send("new-adaptive-user", "準備OK！")
-    assert starts[-1][1]["session_kind"] == "initial_assessment"
-    assert starts[-1][1]["question_count"] == 10
-    assert starts[-1][1]["intro_text"] == (
+    assert not starts
+    assert "new-adaptive-user" not in bot_app.study_sessions
+    assert bot_app.user_states["new-adaptive-user"] == "awaiting_initial_assessment_start"
+    intro_message = replies[-1][1]
+    assert intro_message.text == (
         "「敵を知り、己を知れば百戦危うからず」ってな。\n\n"
         "国家試験を突破する。\n"
         "まず“敵”のことはこっちで見てある。\n\n"
@@ -107,8 +109,17 @@ def test_new_user_ready_starts_location_check_and_existing_user_starts_daily(mon
         "まずは小手調べに10問いくぞ。\n"
         "点数をつけたいわけじゃない。\n"
         "これから無駄なく進めるための現在地確認だ＾＾\n\n"
-        "気楽にやってみてくれ。"
+        "気楽にやってみてくれ。\n\n"
+        "では、いくぞ！"
     )
+    assert [item.action.text for item in intro_message.quick_reply.items] == [
+        "現在地チェックを始める"
+    ]
+
+    send("new-adaptive-user", "現在地チェックを始める")
+    assert starts[-1][1]["session_kind"] == "initial_assessment"
+    assert starts[-1][1]["question_count"] == 10
+    assert "intro_text" not in starts[-1][1]
 
     monkeypatch.setattr(bot_app, "is_initial_assessment_completed", lambda user_id: True)
     send("existing-adaptive-user", "準備OK！")

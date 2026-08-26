@@ -2155,6 +2155,32 @@ def reply_next_explanation_choice(reply_token, explanation_messages=None):
     ]
     messages.append(reply_message)
     line_bot_api.reply_message(reply_token, messages)
+
+
+def reply_initial_assessment_intro(reply_token):
+    """初回現在地チェックの説明だけを表示し、開始操作を待つ。"""
+    line_bot_api.reply_message(reply_token, TextSendMessage(
+        text=(
+            "「敵を知り、己を知れば百戦危うからず」ってな。\n\n"
+            "国家試験を突破する。\n"
+            "まず“敵”のことはこっちで見てある。\n\n"
+            "じゃあ次は、お前のことを少し知りたい。\n"
+            "どこまでできてて、どこから手を入れると一番伸びるのか。\n\n"
+            "まずは小手調べに10問いくぞ。\n"
+            "点数をつけたいわけじゃない。\n"
+            "これから無駄なく進めるための現在地確認だ＾＾\n\n"
+            "気楽にやってみてくれ。\n\n"
+            "では、いくぞ！"
+        ),
+        quick_reply=QuickReply(items=[
+            QuickReplyButton(action=MessageAction(
+                label="現在地チェックを始める",
+                text="現在地チェックを始める",
+            )),
+        ]),
+    ))
+
+
 def reply_study_ready_choice(reply_token):
     """
     勉強モード開始前の準備確認。
@@ -3263,6 +3289,22 @@ def handle_text_message(event):
     if process_study_answer_input(event.reply_token, user_id, user_message):
         return
 
+    if current_state == "awaiting_initial_assessment_start":
+        if user_message == "現在地チェックを始める":
+            user_states.pop(user_id, None)
+            start_and_reply_quiz(
+                event.reply_token,
+                user_id,
+                session_kind="initial_assessment",
+                question_count=10,
+            )
+        else:
+            reply_to_line(
+                event.reply_token,
+                "準備できたら『現在地チェックを始める』を押してくれ＾＾",
+            )
+        return
+
     if current_state == "waiting_explain_method":
         if user_message == "源さんに直接質問する":
             user_states[user_id] = "explain_direct"
@@ -3397,23 +3439,8 @@ def handle_text_message(event):
                 session_kind="adaptive_daily",
             )
         else:
-            start_and_reply_quiz(
-                event.reply_token,
-                user_id,
-                intro_text=(
-                    "「敵を知り、己を知れば百戦危うからず」ってな。\n\n"
-                    "国家試験を突破する。\n"
-                    "まず“敵”のことはこっちで見てある。\n\n"
-                    "じゃあ次は、お前のことを少し知りたい。\n"
-                    "どこまでできてて、どこから手を入れると一番伸びるのか。\n\n"
-                    "まずは小手調べに10問いくぞ。\n"
-                    "点数をつけたいわけじゃない。\n"
-                    "これから無駄なく進めるための現在地確認だ＾＾\n\n"
-                    "気楽にやってみてくれ。"
-                ),
-                session_kind="initial_assessment",
-                question_count=10,
-            )
+            user_states[user_id] = "awaiting_initial_assessment_start"
+            reply_initial_assessment_intro(event.reply_token)
         return
     if user_message == "自分で選ぶ":
         reply_question_type_choice(event.reply_token, "学習")
