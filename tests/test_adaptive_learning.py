@@ -75,6 +75,7 @@ def test_assessment_state_is_saved_existing_history_counts_and_reset_clears_it()
 def test_new_user_ready_starts_location_check_and_existing_user_starts_daily(monkeypatch):
     replies = []
     starts = []
+    ready_replies = []
 
     class LineApi:
         def reply_message(self, token, messages):
@@ -86,6 +87,11 @@ def test_new_user_ready_starts_location_check_and_existing_user_starts_daily(mon
         "start_and_reply_quiz",
         lambda token, user_id, **kwargs: starts.append((user_id, kwargs)) or True,
     )
+    monkeypatch.setattr(
+        bot_app,
+        "reply_study_ready_choice",
+        lambda token: ready_replies.append(token),
+    )
 
     def send(user_id, text):
         bot_app.handle_text_message(SimpleNamespace(
@@ -95,8 +101,9 @@ def test_new_user_ready_starts_location_check_and_existing_user_starts_daily(mon
         ))
 
     monkeypatch.setattr(bot_app, "is_initial_assessment_completed", lambda user_id: False)
-    send("new-adaptive-user", "準備OK！")
+    send("new-adaptive-user", "勉強する")
     assert not starts
+    assert not ready_replies
     assert "new-adaptive-user" not in bot_app.study_sessions
     assert bot_app.user_states["new-adaptive-user"] == "awaiting_initial_assessment_start"
     intro_message = replies[-1][1]
@@ -122,6 +129,8 @@ def test_new_user_ready_starts_location_check_and_existing_user_starts_daily(mon
     assert "intro_text" not in starts[-1][1]
 
     monkeypatch.setattr(bot_app, "is_initial_assessment_completed", lambda user_id: True)
+    send("existing-adaptive-user", "勉強する")
+    assert ready_replies == ["token"]
     send("existing-adaptive-user", "準備OK！")
     assert starts[-1][1]["session_kind"] == "adaptive_daily"
     assert starts[-1][1]["intro_text"] == "今のお前に必要な30問を組んだぞ。さあ始めよう＾＾"

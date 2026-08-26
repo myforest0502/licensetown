@@ -229,6 +229,7 @@ def load_current_app_functions() -> SimpleNamespace:
         namespace["user_modes"].pop(user_id, None),
         known_user_ids.discard(user_id),
     )
+    namespace["is_initial_assessment_completed"] = lambda _user_id: True
     extracted_module = ast.Module(body=function_nodes, type_ignores=[])
     ast.fix_missing_locations(extracted_module)
     exec(compile(extracted_module, str(APP_PATH), "exec"), namespace)

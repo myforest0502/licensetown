@@ -3505,6 +3505,10 @@ def handle_text_message(event):
                 and saved_session.get("mode") == "study"):
             reply_saved_session_choice(event.reply_token)
             return
+        if not is_initial_assessment_completed(user_id):
+            user_states[user_id] = "awaiting_initial_assessment_start"
+            reply_initial_assessment_intro(event.reply_token)
+            return
         reply_study_ready_choice(
         event.reply_token
     )
