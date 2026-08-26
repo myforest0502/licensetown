@@ -81,13 +81,18 @@
         }
       },
       "tag_version": {
-        "const": "0.3"
+        "type": "string",
+        "enum": [
+          "0.3",
+          "1.0"
+        ]
       },
       "tag_status": {
         "type": "string",
         "enum": [
           "reviewed_sample",
-          "provisional_bulk"
+          "provisional_bulk",
+          "reviewed"
         ]
       },
       "source": {

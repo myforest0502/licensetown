@@ -86,9 +86,11 @@ def _validate_tags(tags: dict[str, dict]) -> None:
             raise ValueError(f"question_tags.json {q_id} has invalid level")
         if tag["safety"] not in {"none", "moderate", "critical"}:
             raise ValueError(f"question_tags.json {q_id} has invalid safety")
-        if tag["tag_version"] != "0.3":
+        if tag["tag_version"] not in {"0.3", "1.0"}:
             raise ValueError(f"question_tags.json {q_id} has invalid tag_version")
-        if tag["tag_status"] not in {"reviewed_sample", "provisional_bulk"}:
+        if tag["tag_status"] not in {
+            "reviewed_sample", "provisional_bulk", "reviewed",
+        }:
             raise ValueError(f"question_tags.json {q_id} has invalid tag_status")
         if tag["source"] not in {"original", "past_exam"}:
             raise ValueError(f"question_tags.json {q_id} has invalid source")

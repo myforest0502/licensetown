@@ -1,5 +1,7 @@
 import os
+import json
 from collections import Counter
+from pathlib import Path
 from types import SimpleNamespace
 
 os.environ.setdefault("OPENAI_API_KEY", "test-key")
@@ -21,9 +23,28 @@ from question_bank import get_question_tag, get_quiz_question, question_count
 def test_all_formal_question_tags_load_and_match_ids():
     assert question_count() == 1564
     assert get_question_tag("Q1")["tag_status"] == "reviewed_sample"
+    assert get_question_tag("Q1")["tag_version"] == "0.3"
     assert get_question_tag("Q200")["tag_status"] == "reviewed_sample"
-    assert get_question_tag("Q201")["tag_status"] == "provisional_bulk"
+    assert get_question_tag("Q201")["tag_status"] == "reviewed"
+    assert get_question_tag("Q201")["tag_version"] == "1.0"
+    assert any(
+        get_question_tag(f"Q{number}")["secondary_ability"] is None
+        for number in range(201, 231)
+    )
     assert get_question_tag("Q1564")["tag_status"] == "provisional_bulk"
+
+
+def test_formal_tag_schema_keeps_v03_and_accepts_v10_reviewed():
+    schema = json.loads(
+        (Path(__file__).parents[1] / "data" / "question_bank" /
+         "question_tags.schema.json").read_text(encoding="utf-8")
+    )
+    properties = schema["items"]["properties"]
+    assert properties["tag_version"]["enum"] == ["0.3", "1.0"]
+    assert properties["tag_status"]["enum"] == [
+        "reviewed_sample", "provisional_bulk", "reviewed",
+    ]
+    assert None in properties["secondary_ability"]["enum"]
 
 
 def test_initial_assessment_is_ten_balanced_questions_and_never_exceeds_fifteen():

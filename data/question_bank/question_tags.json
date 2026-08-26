@@ -3504,541 +3504,541 @@
   {
     "id": "Q201",
     "theme": "脳血管障害・半側身体失認",
-    "knowledge_node": "脳血管障害・半側身体失認：理学療法士として最も考えられる障害",
+    "knowledge_node": "半側身体失認の特徴と他の高次脳機能障害との識別",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": "KNOW",
     "level": 2,
     "safety": "none",
     "prerequisite_nodes": [
-      "神経解剖/病態",
-      "主要症候",
-      "動作・機能評価"
+      "半側身体失認の特徴",
+      "半側空間無視との違い",
+      "失行との違い"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q202",
     "theme": "変形性膝関節症・歩行分析",
-    "knowledge_node": "変形性膝関節症・歩行分析：この歩容の改善を目的として最も優先すべき介入",
+    "knowledge_node": "股関節外転筋低下による立脚側体幹傾斜と介入選択",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
     "level": 3,
     "safety": "none",
     "prerequisite_nodes": [
-      "基礎知識",
-      "主要所見",
-      "評価/介入原則"
+      "股関節外転筋の役割",
+      "片脚支持期の骨盤制御",
+      "Duchenne型体幹傾斜"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q203",
     "theme": "慢性心不全・運動中止判断",
-    "knowledge_node": "慢性心不全・運動中止判断：理学療法士として最も適切な対応",
+    "knowledge_node": "心リハ中の胸部症状と血圧低下に対する運動中止判断",
     "task": "safety_priority",
     "primary_ability": "DECIDE",
     "secondary_ability": "INTERPRET",
     "level": 4,
     "safety": "critical",
     "prerequisite_nodes": [
-      "病態生理",
-      "バイタル/検査値",
-      "中止基準・リスク管理"
+      "心筋虚血を疑う症状",
+      "運動時血圧反応",
+      "心臓リハビリテーションの運動中止基準"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q204",
     "theme": "義肢装具・KAFO",
-    "knowledge_node": "義肢装具・KAFO：76歳の男性。脳卒中後6週である。重度の大腿四頭筋筋力低下があり、立脚初期で膝折れを繰り返す。短下肢装具では",
+    "knowledge_node": "大腿四頭筋低下による膝折れに対するKAFO適応",
     "task": "device_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
     "level": 3,
-    "safety": "none",
+    "safety": "moderate",
     "prerequisite_nodes": [
-      "解剖・運動学",
-      "装具/義肢機能",
-      "機器特性・適応"
+      "大腿四頭筋と立脚期膝安定性",
+      "膝折れの機序",
+      "AFOとKAFOの適応差"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q205",
     "theme": "地域リハビリテーション・生活空間",
-    "knowledge_node": "地域リハビリテーション・生活空間：今後の介入方針を立てるため、最も優先して把握すべき内容",
-    "task": "intervention_selection",
-    "primary_ability": "PRESCRIBE",
+    "knowledge_node": "身体機能が保たれた高齢者における生活空間縮小の評価",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
     "level": 3,
     "safety": "none",
     "prerequisite_nodes": [
-      "ICF/生活機能",
-      "リスク・環境評価",
-      "本人目標/参加"
+      "生活空間の概念",
+      "ICFの活動と参加",
+      "外出状況の評価"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q206",
     "theme": "神経・Parkinson病",
-    "knowledge_node": "神経・Parkinson病：71歳の男性。Parkinson病（Hoehn & Yahr分類Ⅲ）。歩行開始時や方向転換時にすくみ",
-    "task": "fact_recall",
-    "primary_ability": "KNOW",
-    "secondary_ability": "INTERPRET",
-    "level": 1,
+    "knowledge_node": "Parkinson病のすくみ足に対する外的キューの活用",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 2,
     "safety": "none",
     "prerequisite_nodes": [
-      "神経解剖/病態",
-      "主要症候",
-      "動作・機能評価"
+      "Freezing of Gaitの特徴",
+      "外的キューの種類",
+      "すくみ足が生じやすい場面"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q207",
-    "theme": "COPD・呼吸困難の原因分析",
-    "knowledge_node": "COPD・呼吸困難の原因分析：呼吸困難軽減を目的として最も優先すべき理学療法",
+    "theme": "COPD・呼吸困難",
+    "knowledge_node": "COPDの呼吸困難に対する呼吸ペーシングを用いた歩行指導",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
-    "secondary_ability": "DECIDE",
+    "secondary_ability": "INTERPRET",
     "level": 3,
-    "safety": "none",
+    "safety": "moderate",
     "prerequisite_nodes": [
-      "病態生理",
-      "バイタル/検査値",
-      "運動療法・安全基準"
+      "Borg Scaleの解釈",
+      "SpO2と呼吸困難の関係",
+      "呼吸ペーシングと口すぼめ呼吸"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q208",
     "theme": "スポーツ・足関節外側靱帯損傷",
-    "knowledge_node": "スポーツ・足関節外側靱帯損傷：20歳の男性。バスケットボール競技中に右足関節を内反して受傷した。保存療法開始から8週である。歩行",
+    "knowledge_node": "足関節捻挫後の競技復帰に必要な動的機能評価",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "DECIDE",
-    "level": 4,
+    "level": 3,
     "safety": "moderate",
     "prerequisite_nodes": [
-      "解剖・運動学",
-      "ROM/MMT等の基本評価",
-      "動作・荷重分析"
+      "足関節外側靱帯損傷後の不安定性",
+      "動的バランス評価",
+      "競技復帰評価"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q209",
     "theme": "脳血管障害・消去現象",
-    "knowledge_node": "脳血管障害・消去現象：74歳の男性。右頭頂葉梗塞後4週である。左片麻痺は軽度である。左手だけを触れると正しく答えられるが、左右同",
+    "knowledge_node": "両側同時刺激で出現する消去現象の識別",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": "KNOW",
     "level": 2,
     "safety": "none",
     "prerequisite_nodes": [
-      "神経解剖/病態",
-      "主要症候",
-      "動作・機能評価"
+      "消去現象の定義",
+      "単独刺激と両側同時刺激",
+      "半側空間無視との違い"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q210",
     "theme": "フレイル・介入優先順位",
-    "knowledge_node": "フレイル・介入優先順位：フレイルの進行を予防するため、最も適切な対応",
+    "knowledge_node": "フレイル進行予防における運動・栄養・社会参加の包括的介入",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
     "level": 3,
     "safety": "none",
     "prerequisite_nodes": [
-      "ICF/生活機能",
-      "リスク・環境評価",
-      "本人目標/参加"
+      "フレイルの構成要素",
+      "運動と栄養の重要性",
+      "社会参加と生活機能"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q211",
     "theme": "運動器・腱板断裂術後",
-    "knowledge_node": "運動器・腱板断裂術後：67歳の女性。右腱板断裂に対する鏡視下腱板修復術後8週である。疼痛は安静時には認めないが、肩関節挙上時に肩",
+    "knowledge_node": "自動挙上と他動挙上の差から肩甲上腕リズムを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
     "level": 3,
     "safety": "none",
     "prerequisite_nodes": [
-      "解剖・運動学",
-      "ROM/MMT等の基本評価",
-      "動作・荷重分析"
+      "自動ROMと他動ROMの意味",
+      "肩甲上腕リズム",
+      "腱板修復術後の肩機能評価"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q212",
     "theme": "脳血管障害・Pusher現象",
-    "knowledge_node": "脳血管障害・Pusher現象：理学療法として最も適切なの",
+    "knowledge_node": "Pusher現象に対する視覚的垂直を利用した姿勢学習",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
     "level": 3,
-    "safety": "none",
+    "safety": "moderate",
     "prerequisite_nodes": [
-      "神経解剖/病態",
-      "主要症候",
-      "動作・機能評価"
+      "Pusher現象の特徴",
+      "身体垂直認知",
+      "視覚的垂直基準の利用"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q213",
     "theme": "循環器・心臓リハビリテーション",
-    "knowledge_node": "循環器・心臓リハビリテーション：70歳の男性。心筋梗塞後4週である。心肺運動負荷試験（CPX）を実施したところ、ATは12mL/",
-    "task": "fact_recall",
-    "primary_ability": "KNOW",
-    "secondary_ability": "INTERPRET",
-    "level": 1,
+    "knowledge_node": "VE/VCO2 slopeを用いた換気効率と予後評価",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
     "safety": "none",
     "prerequisite_nodes": [
-      "病態生理",
-      "バイタル/検査値",
-      "運動療法・安全基準"
+      "CPXの基本指標",
+      "VE/VCO2 slopeの意味",
+      "心疾患における予後評価"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q214",
     "theme": "多発性硬化症・感覚障害",
-    "knowledge_node": "多発性硬化症・感覚障害：歩行安定性を改善するため最も適切な介入",
+    "knowledge_node": "深部感覚低下に対する視覚代償を利用したバランス練習",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
     "level": 3,
-    "safety": "none",
+    "safety": "moderate",
     "prerequisite_nodes": [
-      "基礎知識",
-      "主要所見",
-      "評価/介入原則"
+      "位置覚と振動覚",
+      "Romberg現象",
+      "感覚代償を利用したバランス練習"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q215",
     "theme": "地域・転倒予防",
-    "knowledge_node": "地域・転倒予防：79歳の女性。屋外歩行中に後方から軽く肩へ触れられた際にバランスを崩して転倒した。通常歩行や筋力には大きな問題を",
+    "knowledge_node": "外乱刺激に対する反応性姿勢制御の評価",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "DECIDE",
     "level": 3,
     "safety": "moderate",
     "prerequisite_nodes": [
-      "ICF/生活機能",
-      "リスク・環境評価",
-      "本人目標/参加"
+      "反応性姿勢制御",
+      "外乱刺激への姿勢反応",
+      "転倒リスク評価"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q216",
     "theme": "脳血管障害・観念失行",
-    "knowledge_node": "脳血管障害・観念失行：70歳の男性。左中大脳動脈領域脳梗塞後6週である。歯ブラシを渡されると歯磨き動作ができず、櫛も正しく使用で",
+    "knowledge_node": "道具使用障害を示す観念失行の識別",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": "KNOW",
     "level": 2,
     "safety": "none",
     "prerequisite_nodes": [
-      "神経解剖/病態",
-      "主要症候",
-      "動作・機能評価"
+      "観念失行の特徴",
+      "観念運動失行との違い",
+      "失認との違い"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q217",
     "theme": "人工股関節全置換術",
-    "knowledge_node": "人工股関節全置換術：69歳の女性。右人工股関節全置換術後3週である。退院指導を行うこととなった。後方アプローチで手術が施行されて",
-    "task": "functional_goal_decision",
+    "knowledge_node": "後方アプローチTHA後の脱臼危険肢位",
+    "task": "safety_priority",
     "primary_ability": "DECIDE",
-    "secondary_ability": "PRESCRIBE",
-    "level": 4,
+    "secondary_ability": "KNOW",
+    "level": 3,
     "safety": "moderate",
     "prerequisite_nodes": [
-      "基礎知識",
-      "主要所見",
-      "評価/介入原則"
+      "THA後方アプローチ",
+      "股関節屈曲・内転・内旋",
+      "術後ADLでの脱臼予防"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q218",
     "theme": "慢性心不全・レジスタンストレーニング",
-    "knowledge_node": "慢性心不全・レジスタンストレーニング：この患者に対する理学療法として最も適切なの",
+    "knowledge_node": "安定期心不全に対する低〜中等度負荷レジスタンストレーニング",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "DECIDE",
     "level": 3,
     "safety": "moderate",
     "prerequisite_nodes": [
-      "病態生理",
-      "バイタル/検査値",
-      "運動療法・安全基準"
+      "心不全に対する運動療法",
+      "レジスタンストレーニングの負荷設定",
+      "Valsalvaを避ける呼吸指導"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q219",
     "theme": "神経疾患・ギラン・バレー症候群",
-    "knowledge_node": "神経疾患・ギラン・バレー症候群：52歳の男性。ギラン・バレー症候群回復期である。100m程度歩行すると疲労感を訴えるが、翌朝には",
-    "task": "finding_interpretation",
-    "primary_ability": "INTERPRET",
-    "secondary_ability": "KNOW",
-    "level": 2,
-    "safety": "none",
+    "knowledge_node": "GBS回復期における過用を避けた段階的運動量調整",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "DECIDE",
+    "level": 3,
+    "safety": "moderate",
     "prerequisite_nodes": [
-      "神経解剖/病態",
-      "主要症候",
-      "動作・機能評価"
+      "GBS回復期の易疲労性",
+      "過用による機能低下",
+      "運動後回復を用いた負荷調整"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q220",
     "theme": "地域・退院支援",
-    "knowledge_node": "地域・退院支援：81歳の男性。左大腿骨転子部骨折術後で自宅退院予定である。屋内歩行はT字杖で自立しているが、自宅玄関には18cm",
-    "task": "device_selection",
+    "knowledge_node": "自宅環境を想定した退院前の段差昇降練習",
+    "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "DECIDE",
     "level": 3,
     "safety": "moderate",
     "prerequisite_nodes": [
-      "ICF/生活機能",
-      "リスク・環境評価",
-      "機器特性・適応"
+      "住環境評価",
+      "段差昇降能力",
+      "退院前実用動作練習"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q221",
     "theme": "脳血管障害・Lateropulsion",
-    "knowledge_node": "脳血管障害・Lateropulsion：この患者の姿勢制御障害を説明するものとして最も適切なの",
+    "knowledge_node": "Lateropulsionにおける身体垂直認識障害",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": "KNOW",
     "level": 2,
     "safety": "none",
     "prerequisite_nodes": [
-      "神経解剖/病態",
-      "主要症候",
-      "動作・機能評価"
+      "Lateropulsionの特徴",
+      "身体垂直認知",
+      "筋力低下との鑑別"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q222",
     "theme": "運動器・Scapular Dyskinesis",
-    "knowledge_node": "運動器・Scapular Dyskinesis：22歳の男性。野球投手である。投球後半になると肩の疲労感と疼痛を訴える。肩関節可",
+    "knowledge_node": "Scapular dyskinesisに対する動的肩甲骨運動の評価",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
     "level": 3,
     "safety": "none",
     "prerequisite_nodes": [
-      "解剖・運動学",
-      "ROM/MMT等の基本評価",
-      "動作・荷重分析"
+      "肩甲骨の正常運動",
+      "Scapular dyskinesis",
+      "動的肩甲骨評価"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q223",
     "theme": "呼吸器・気道クリアランス",
-    "knowledge_node": "呼吸器・気道クリアランス：74歳の男性。気管支拡張症である。朝方に多量の喀痰を認め、自力での排痰が困難となっている。SpO₂は9",
+    "knowledge_node": "気管支拡張症の排痰困難に対するACBT",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
-    "secondary_ability": "INTERPRET",
-    "level": 3,
+    "secondary_ability": null,
+    "level": 2,
     "safety": "none",
     "prerequisite_nodes": [
-      "病態生理",
-      "バイタル/検査値",
-      "運動療法・安全基準"
+      "気道分泌物貯留",
+      "気道クリアランス",
+      "ACBTの構成"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q224",
     "theme": "神経・Parkinson病",
-    "knowledge_node": "神経・Parkinson病：71歳の男性。Parkinson病（Hoehn & Yahr分類Ⅲ）である。歩行中、狭い場所や方向転",
+    "knowledge_node": "Parkinson病におけるFreezing of Gaitの識別",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": "KNOW",
     "level": 2,
     "safety": "none",
     "prerequisite_nodes": [
-      "神経解剖/病態",
-      "主要症候",
-      "動作・機能評価"
+      "Freezing of Gaitの特徴",
+      "すくみ足が起こりやすい場面",
+      "運動失調・失行との鑑別"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q225",
     "theme": "地域リハビリテーション・転倒恐怖",
-    "knowledge_node": "地域リハビリテーション・転倒恐怖：理学療法士として最も優先すべき対応",
+    "knowledge_node": "転倒恐怖による活動制限に対する段階的な屋外活動再開支援",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "DECIDE",
     "level": 3,
     "safety": "moderate",
     "prerequisite_nodes": [
-      "ICF/生活機能",
-      "リスク・環境評価",
-      "本人目標/参加"
+      "転倒恐怖",
+      "活動制限と自己効力感",
+      "段階的な活動再開"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q226",
     "theme": "高次脳機能障害・失行",
-    "knowledge_node": "高次脳機能障害・失行：理学療法士として最も適切な対応",
+    "knowledge_node": "失行に対する実物品と視覚的手掛かりを用いた課題練習",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
     "level": 3,
     "safety": "none",
     "prerequisite_nodes": [
-      "基礎知識",
-      "主要所見",
-      "評価/介入原則"
+      "失行の特徴",
+      "実物品を用いた課題指向型練習",
+      "視覚的手掛かり"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q227",
     "theme": "人工膝関節全置換術",
-    "knowledge_node": "人工膝関節全置換術：72歳の女性。右人工膝関節全置換術後5週である。歩行時の疼痛は軽減したが、膝蓋骨周囲の可動性低下が認められる",
+    "knowledge_node": "TKA後の膝蓋骨可動性低下に対する評価",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
-    "secondary_ability": "INTERPRET",
-    "level": 3,
+    "secondary_ability": null,
+    "level": 2,
     "safety": "none",
     "prerequisite_nodes": [
-      "基礎知識",
-      "主要所見",
-      "評価/介入原則"
+      "膝蓋大腿関節の可動性",
+      "TKA後の膝関節評価",
+      "膝蓋骨可動性とROM"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q228",
     "theme": "循環器・心臓リハビリテーション",
-    "knowledge_node": "循環器・心臓リハビリテーション：76歳の男性。慢性心不全に対して外来心臓リハビリテーションを実施している。運動中に胸部圧迫感を訴",
+    "knowledge_node": "心リハ中の胸部圧迫感・顔面蒼白に対する運動中止判断",
     "task": "safety_priority",
     "primary_ability": "DECIDE",
     "secondary_ability": "INTERPRET",
     "level": 4,
     "safety": "critical",
     "prerequisite_nodes": [
-      "病態生理",
-      "バイタル/検査値",
-      "中止基準・リスク管理"
+      "心筋虚血を疑う症状",
+      "運動中の全身状態観察",
+      "心臓リハビリテーションの運動中止基準"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
     "id": "Q229",
     "theme": "末梢神経疾患・Charcot-Marie-Tooth病",
-    "knowledge_node": "末梢神経疾患・Charcot-Marie-Tooth病：歩行の安全性向上を目的として最も適切な対応",
+    "knowledge_node": "CMTによる下垂足・足尖クリアランス低下に対するAFO適応",
+    "task": "device_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "DECIDE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "CMTの遠位筋力低下",
+      "足尖クリアランス",
+      "AFOの適応"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q230",
+    "theme": "地域リハビリテーション・地域参加",
+    "knowledge_node": "社会参加再開に向けた公共交通・人混みを想定した実環境移動練習",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "DECIDE",
     "level": 3,
     "safety": "moderate",
     "prerequisite_nodes": [
-      "神経解剖/病態",
-      "主要症候",
-      "動作・機能評価"
+      "ICFの参加",
+      "community mobility",
+      "実環境を想定した段階的練習"
     ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
-    "source": "original"
-  },
-  {
-    "id": "Q230",
-    "theme": "地域リハビリテーション・地域参加",
-    "knowledge_node": "地域リハビリテーション・地域参加：社会参加を再開するため最も適切な理学療法",
-    "task": "functional_goal_decision",
-    "primary_ability": "DECIDE",
-    "secondary_ability": "PRESCRIBE",
-    "level": 4,
-    "safety": "moderate",
-    "prerequisite_nodes": [
-      "ICF/生活機能",
-      "リスク・環境評価",
-      "本人目標/参加"
-    ],
-    "tag_version": "0.3",
-    "tag_status": "provisional_bulk",
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
     "source": "original"
   },
   {
