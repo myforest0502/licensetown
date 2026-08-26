@@ -45,6 +45,7 @@ from learning_engine import (
     build_initial_assessment,
     initial_assessment_needs_extension,
     summarize_initial_assessment,
+    summarize_daily_session,
 )
 from goukaku_ui import create_dashboard_token, goukaku_ui
 from site_ui import site_ui
@@ -850,7 +851,7 @@ def format_quiz_messages(questions, start_number=1):
 # 小テスト開始
 # =========================================================
 
-def start_quiz(user_id, session_kind=None, question_count=None):
+def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None):
     """
     最初の5問だけ生成し、
     ユーザーごとのセッションへ保存する。
@@ -874,7 +875,7 @@ def start_quiz(user_id, session_kind=None, question_count=None):
         all_questions = build_initial_assessment(total_question_count)
     elif session_kind == "adaptive_daily":
         all_questions = build_daily_session(
-            get_question_history(user_id), total_question_count
+            get_question_history(user_id), total_question_count, exclude_ids=exclude_ids
         )
     elif category_small is None:
         all_questions = select_random_questions(total_question_count)
@@ -1785,11 +1786,17 @@ def reply_current_quiz(reply_token, session, intro_text=None):
 
 
 def start_and_reply_quiz(
-    reply_token, user_id, intro_text=None, session_kind=None, question_count=None
+    reply_token, user_id, intro_text=None, session_kind=None, question_count=None,
+    exclude_ids=None,
 ):
     """正式問題バンクから初回5問を準備し、同じ返信内で直ちに表示する。"""
     try:
-        start_quiz(user_id, session_kind=session_kind, question_count=question_count)
+        start_quiz(
+            user_id,
+            session_kind=session_kind,
+            question_count=question_count,
+            exclude_ids=exclude_ids,
+        )
         reply_current_quiz(
             reply_token,
             study_sessions[user_id],
@@ -2024,8 +2031,14 @@ def reply_quiz_ready_for_explanations(reply_token, current_session):
         f"第{start_number + offset}問：{get_display_answer(question)}"
         for offset, question in enumerate(current_session["questions"])
     ]
+    result_summary = summarize_daily_session(get_session_question_results(current_session))
     line_bot_api.reply_message(reply_token, TextSendMessage(
-        text="\n".join(lines) + "\n\nじゃあこれから、解説を見ていくぞ＾＾",
+        text=(
+            result_summary
+            + "\n\n"
+            + "\n".join(lines)
+            + "\n\nじゃあこれから、解説を見ていくぞ＾＾"
+        ),
         quick_reply=QuickReply(items=[
             QuickReplyButton(action=MessageAction(label="解答解説を見る", text="解答解説を見る")),
             QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
@@ -2056,17 +2069,28 @@ def is_home_command(user_message):
     return re.fullmatch(r"ホーム(?:(?:に|へ)?戻る)?", normalized) is not None
 
 
-def reply_explanation_choice(reply_token, completed=False, quiz_result=None):
+def reply_explanation_choice(
+    reply_token,
+    completed=False,
+    quiz_result=None,
+    explanation_messages=None,
+):
     """解答解説の開始・続行、または完了を案内する。"""
     if completed:
-        line_bot_api.reply_message(reply_token, TextSendMessage(
+        completion_message = TextSendMessage(
             text=("おー！今日もよく頑張ったなぁ＾＾\n"
                   "もう、やれば出来る子なんて言わせねぇ！\n"
                   "お前は、やったから出来た子なんだ！\nこれからも頑張ろうな＾＾"),
             quick_reply=QuickReply(items=[
+                QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
                 QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
             ]),
-        ))
+        )
+        messages = [
+            TextSendMessage(text=text) for text in (explanation_messages or [])
+        ]
+        messages.append(completion_message)
+        line_bot_api.reply_message(reply_token, messages)
         return
 
     reply_message = TextSendMessage(
@@ -2110,7 +2134,7 @@ def reply_quiz_score(reply_token, quiz_result):
     line_bot_api.reply_message(reply_token, reply_message)
 
 
-def reply_next_explanation_choice(reply_token):
+def reply_next_explanation_choice(reply_token, explanation_messages=None):
     """次の5問分の解答解説へ進む操作を表示する。"""
     reply_message = TextSendMessage(
         text="ここまで確認できたら、次の5問へ進もう＾＾",
@@ -2126,7 +2150,11 @@ def reply_next_explanation_choice(reply_token):
             ]
         ),
     )
-    line_bot_api.reply_message(reply_token, reply_message)
+    messages = [
+        TextSendMessage(text=text) for text in (explanation_messages or [])
+    ]
+    messages.append(reply_message)
+    line_bot_api.reply_message(reply_token, messages)
 def reply_study_ready_choice(reply_token):
     """
     勉強モード開始前の準備確認。
@@ -3046,12 +3074,16 @@ def process_study_flow_command(reply_token, user_id, user_message):
 
     if status == "assessment_completed":
         if user_message == "勉強を始める":
+            assessment_question_ids = [
+                question["id"] for question in session.get("all_questions", ())
+            ]
             study_sessions.pop(user_id, None)
             start_and_reply_quiz(
                 reply_token,
                 user_id,
                 intro_text="今のお前に必要な30問を組んだぞ。さあ始めよう＾＾",
                 session_kind="adaptive_daily",
+                exclude_ids=assessment_question_ids,
             )
         else:
             reply_to_line(reply_token, "準備できたら『勉強を始める』で進もう＾＾")
@@ -3090,16 +3122,19 @@ def process_study_flow_command(reply_token, user_id, user_message):
             )
             return True
 
-        for explanation_message in advance_quiz_explanations(session):
-            push_to_line(user_id, explanation_message)
+        explanation_messages = advance_quiz_explanations(session)
         if session["status"] == "quiz_completed":
             reply_explanation_choice(
                 reply_token,
                 completed=True,
-                quiz_result=session["quiz_result"],
+                quiz_result=session.get("quiz_result"),
+                explanation_messages=explanation_messages,
             )
         else:
-            reply_next_explanation_choice(reply_token)
+            reply_next_explanation_choice(
+                reply_token,
+                explanation_messages=explanation_messages,
+            )
         return True
 
     return False

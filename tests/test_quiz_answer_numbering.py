@@ -653,8 +653,14 @@ class QuizAnswerNumberingTest(unittest.TestCase):
             "通常学習の固定フローが自由会話AIへ流れました。"
         )
         globals_["push_to_line"] = lambda _user, message: pushed.append(message)
-        globals_["reply_next_explanation_choice"] = lambda token: next_choices.append(token)
-        def capture_completion(token, completed=False, quiz_result=None):
+        globals_["reply_next_explanation_choice"] = (
+            lambda token, **kwargs: next_choices.append(
+                kwargs.get("explanation_messages")
+            )
+        )
+        def capture_completion(
+            token, completed=False, quiz_result=None, explanation_messages=None
+        ):
             completion_calls.append(completed)
 
         globals_["reply_explanation_choice"] = capture_completion
@@ -695,8 +701,9 @@ class QuizAnswerNumberingTest(unittest.TestCase):
             globals_["threading"] = original_threading
 
         self.assertEqual("quiz_completed", app.study_sessions[user_id]["status"])
-        self.assertEqual(6, len(pushed))
+        self.assertEqual([], pushed)
         self.assertEqual(5, len(next_choices))
+        self.assertTrue(all(next_choices))
         self.assertEqual([True], completion_calls)
 
     def test_parser_rejects_invalid_or_incomplete_inputs(self) -> None:
@@ -1435,10 +1442,11 @@ class QuizCompletionSummaryTest(unittest.TestCase):
             function_globals["reply_to_line"] = original_reply
 
         self.assertEqual("quiz_completed", app.study_sessions[user_id]["status"])
-        self.assertTrue(pushed)
+        self.assertEqual([], pushed)
         self.assertEqual(1, len(completion_calls))
         self.assertTrue(completion_calls[0][1]["completed"])
         self.assertIs(result, completion_calls[0][1]["quiz_result"])
+        self.assertTrue(completion_calls[0][1]["explanation_messages"])
 
 
 class ConfigurableQuizTest(unittest.TestCase):

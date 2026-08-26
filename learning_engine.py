@@ -161,7 +161,9 @@ def summarize_initial_assessment(question_results):
     return "\n".join(lines)
 
 
-def build_daily_session(history, question_count=30, category_small=None, rng=None):
+def build_daily_session(
+    history, question_count=30, category_small=None, exclude_ids=None, rng=None
+):
     """誤概念候補・未習得候補・新規領域を優先した30問を返す。"""
     randomizer = rng or random
     latest = {}
@@ -174,8 +176,11 @@ def build_daily_session(history, question_count=30, category_small=None, rng=Non
         node = get_question_tag(q_id).get("knowledge_node")
         node_results[node].append(bool(result.get("is_correct")))
 
+    excluded = set(exclude_ids or ())
     scored = []
     for q_id in _candidate_ids(category_small):
+        if q_id in excluded:
+            continue
         tag = get_question_tag(q_id)
         result = latest.get(q_id)
         if result is None:
@@ -201,8 +206,64 @@ def build_daily_session(history, question_count=30, category_small=None, rng=Non
     return [get_quiz_question(q_id) for q_id in selected]
 
 
-def select_questions_for_session(kind, history=None, question_count=30, category_small=None):
+def summarize_daily_session(question_results):
+    """30問の正誤と自信度を、非断定的な短い結果表示へまとめる。"""
+    results = list(question_results or ())
+    grouped = defaultdict(list)
+    for result in results:
+        q_id = result.get("question_id")
+        if q_id:
+            grouped[get_question_tag(q_id).get("primary_ability")].append(result)
+
+    stable = []
+    checking = []
+    revisit = []
+    for ability, ability_results in grouped.items():
+        if len(ability_results) < 2:
+            continue
+        confident_correct = sum(
+            int(result.get("is_correct") and result.get("confidence") == 1)
+            for result in ability_results
+        )
+        high_priority = sum(
+            int(not result.get("is_correct") and result.get("confidence") == 1)
+            for result in ability_results
+        )
+        uncertain = sum(
+            int(not result.get("is_correct") or result.get("confidence") in {2, 3})
+            for result in ability_results
+        )
+        label = ABILITY_LABELS[ability]
+        if confident_correct / len(ability_results) >= 0.67:
+            stable.append((confident_correct, label))
+        if high_priority >= 2:
+            revisit.append((high_priority, label))
+        elif uncertain / len(ability_results) >= 0.5:
+            checking.append((uncertain, label))
+
+    score = sum(int(result.get("is_correct")) for result in results)
+    lines = ["おう、今日の30問お疲れさん＾＾", "", f"今日の結果　{score} / {len(results)}"]
+    if stable:
+        lines.extend(["", "今日できていたところ", f"・{sorted(stable, reverse=True)[0][1]}"])
+    if checking:
+        lines.extend(["", "確認中", f"・{sorted(checking, reverse=True)[0][1]}"])
+    if revisit:
+        lines.extend(["", "次回もう一度", f"・{sorted(revisit, reverse=True)[0][1]}"])
+    if not (stable or checking or revisit):
+        lines.extend(["", "まだ判断材料が少ない所は、次回も別の問題で見ていくぞ。"])
+    lines.extend([
+        "", "1回の間違いだけで決めつけないから安心しろｗ",
+        "まだ確認したい所は、次回こっちで混ぜておくぞ。",
+    ])
+    return "\n".join(lines)
+
+
+def select_questions_for_session(
+    kind, history=None, question_count=30, category_small=None, exclude_ids=None
+):
     """UIから利用する共通入口。"""
     if kind == "initial_assessment":
         return build_initial_assessment(question_count)
-    return build_daily_session(history or (), question_count, category_small)
+    return build_daily_session(
+        history or (), question_count, category_small, exclude_ids=exclude_ids
+    )

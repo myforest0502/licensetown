@@ -13,6 +13,7 @@ from learning_engine import (
     build_initial_assessment,
     initial_assessment_needs_extension,
     summarize_initial_assessment,
+    summarize_daily_session,
 )
 from question_bank import get_question_tag, get_quiz_question, question_count
 
@@ -194,3 +195,99 @@ def test_initial_feedback_supports_fifteen_question_completion():
     message = summarize_initial_assessment(_assessment_results(question_ids))
     assert "現在地" in message
     assert "ここからが勝負" in message
+
+
+def test_assessment_questions_are_excluded_from_following_daily_session():
+    for assessment_count in (10, 15):
+        assessment = build_initial_assessment(assessment_count)
+        assessment_ids = {question["id"] for question in assessment}
+        daily = build_daily_session(
+            [], question_count=30, exclude_ids=assessment_ids
+        )
+        assert assessment_ids.isdisjoint({question["id"] for question in daily})
+
+
+def test_assessment_handoff_passes_one_time_question_exclusions(monkeypatch):
+    user_id = "assessment-handoff-user"
+    questions = [get_quiz_question(f"Q{number}") for number in range(1, 11)]
+    captured = []
+    bot_app.study_sessions[user_id] = {
+        "status": "assessment_completed",
+        "mode": "study",
+        "all_questions": questions,
+    }
+    monkeypatch.setattr(
+        bot_app,
+        "start_and_reply_quiz",
+        lambda *args, **kwargs: captured.append(kwargs) or True,
+    )
+    assert bot_app.process_study_flow_command("token", user_id, "勉強を始める")
+    assert captured[0]["session_kind"] == "adaptive_daily"
+    assert captured[0]["exclude_ids"] == [question["id"] for question in questions]
+
+
+def test_daily_summary_uses_natural_labels_without_declaring_weakness():
+    questions = [get_quiz_question(f"Q{number}") for number in range(1, 31)]
+    results = [
+        {
+            "question_id": question["id"],
+            "is_correct": index % 3 != 0,
+            "confidence": 1 if index % 4 else 3,
+        }
+        for index, question in enumerate(questions, 1)
+    ]
+    message = summarize_daily_session(results)
+    assert "今日の結果" in message
+    assert "/ 30" in message
+    assert "弱点" not in message
+    for internal_name in (
+        "Knowledge Node", "Primary Ability", "KNOW", "MEASURE", "INTERPRET",
+        "PREDICT", "PRESCRIBE", "DECIDE", "Level", "Safety", "tag_status",
+    ):
+        assert internal_name not in message
+
+
+def test_explanations_are_replied_synchronously_from_first_to_last_batch(monkeypatch):
+    user_id = "adaptive-explanations-user"
+    replies = []
+
+    class LineApi:
+        def reply_message(self, token, messages):
+            replies.append(messages)
+
+    questions = [get_quiz_question(f"Q{number}") for number in range(501, 531)]
+    answers = {
+        number: {"answer": "".join(question["accepted_answer_sets"][0]), "confidence": "1"}
+        for number, question in enumerate(questions, 1)
+    }
+    bot_app.study_sessions[user_id] = {
+        "status": "waiting_for_explanations",
+        "mode": "study",
+        "explanation_set": 0,
+        "questions_per_set": 5,
+        "question_count": 30,
+        "all_questions": questions,
+        "all_answers": answers,
+        "quiz_result": bot_app.calculate_quiz_result(questions, answers),
+    }
+    monkeypatch.setattr(bot_app, "line_bot_api", LineApi())
+    monkeypatch.setattr(
+        bot_app, "push_to_line", lambda *_args: (_ for _ in ()).throw(
+            AssertionError("解説本文をPush APIへ分離しない")
+        )
+    )
+
+    assert bot_app.process_study_flow_command("token", user_id, "解答解説を見る")
+    first_text = "\n".join(message.text for message in replies[-1])
+    assert "【第1問】" in first_text and "解説：" in first_text
+    assert bot_app.study_sessions[user_id]["status"] == "waiting_for_next_explanation"
+
+    for expected_start in (6, 11, 16, 21, 26):
+        assert bot_app.process_study_flow_command("token", user_id, "次の5問")
+        text = "\n".join(message.text for message in replies[-1])
+        assert f"【第{expected_start}問】" in text
+    assert bot_app.study_sessions[user_id]["status"] == "quiz_completed"
+    final_quick_replies = replies[-1][-1].quick_reply.items
+    assert [item.action.text for item in final_quick_replies] == [
+        "源さんに預ける", "ホームに戻る",
+    ]
