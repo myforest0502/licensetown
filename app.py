@@ -44,6 +44,7 @@ from learning_engine import (
     build_daily_session,
     build_initial_assessment,
     initial_assessment_needs_extension,
+    summarize_initial_assessment,
 )
 from goukaku_ui import create_dashboard_token, goukaku_ui
 from site_ui import site_ui
@@ -3008,7 +3009,7 @@ def process_study_answer_input(reply_token, user_id, user_message):
             line_bot_api.reply_message(
                 reply_token,
                 TextSendMessage(
-                    text="だいたい今の位置は分かった。\nここからはこっちで順番を組むぞ。",
+                    text=summarize_initial_assessment(assessment_results),
                     quick_reply=QuickReply(items=[
                         QuickReplyButton(action=MessageAction(
                             label="勉強を始める", text="勉強を始める"

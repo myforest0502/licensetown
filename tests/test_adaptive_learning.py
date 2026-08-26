@@ -12,6 +12,7 @@ from learning_engine import (
     build_daily_session,
     build_initial_assessment,
     initial_assessment_needs_extension,
+    summarize_initial_assessment,
 )
 from question_bank import get_question_tag, get_quiz_question, question_count
 
@@ -151,4 +152,45 @@ def test_location_check_completes_after_ten_and_marks_profile(monkeypatch):
     answer_current_batch()
     assert session["status"] == "assessment_completed"
     assert completed == [user_id]
-    assert "だいたい今の位置は分かった" in replies[-1].text
+    assert "お前の現在地はだいたい分かった" in replies[-1].text
+
+
+def _assessment_results(question_ids, correct=True, confidence=1):
+    return [
+        {"question_id": q_id, "is_correct": correct, "confidence": confidence}
+        for q_id in question_ids
+    ]
+
+
+def test_initial_feedback_handles_good_partial_guess_and_confident_error_results():
+    question_ids = [question["id"] for question in build_initial_assessment(10)]
+    good = summarize_initial_assessment(_assessment_results(question_ids))
+    partial_results = _assessment_results(question_ids)
+    partial_results[0]["is_correct"] = False
+    partial_results[1]["is_correct"] = False
+    partial = summarize_initial_assessment(partial_results)
+    guessed = summarize_initial_assessment(_assessment_results(question_ids, confidence=3))
+    confident_errors = summarize_initial_assessment(
+        _assessment_results(question_ids, correct=False, confidence=1)
+    )
+
+    for message in (good, partial, guessed, confident_errors):
+        assert message.startswith("おう！お前の現在地はだいたい分かったぞ。")
+        assert message.endswith("ここからが勝負だぜ＾＾")
+        assert "弱点" not in message
+        assert "苦手" not in message
+        for internal_name in (
+            "Knowledge Node", "Primary Ability", "KNOW", "MEASURE", "INTERPRET",
+            "PREDICT", "PRESCRIBE", "DECIDE", "Level", "Safety", "tag_status",
+        ):
+            assert internal_name not in message
+    assert "迷いながら" in guessed
+    assert "確認" in partial
+    assert "確認" in confident_errors or "確かめ" in confident_errors
+
+
+def test_initial_feedback_supports_fifteen_question_completion():
+    question_ids = [question["id"] for question in build_initial_assessment(15)]
+    message = summarize_initial_assessment(_assessment_results(question_ids))
+    assert "現在地" in message
+    assert "ここからが勝負" in message

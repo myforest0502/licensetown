@@ -8,6 +8,16 @@ from collections import defaultdict
 from question_bank import get_question, get_question_tag, get_quiz_question, question_ids
 
 
+ABILITY_LABELS = {
+    "KNOW": "基礎知識",
+    "MEASURE": "評価や測定を選ぶ力",
+    "INTERPRET": "所見から状態を読み取る力",
+    "PREDICT": "経過や今後を考える力",
+    "PRESCRIBE": "治療や介入を選ぶ力",
+    "DECIDE": "安全性や優先順位を判断する力",
+}
+
+
 def _candidate_ids(category_small=None):
     ids = list(question_ids())
     if category_small is not None:
@@ -72,6 +82,83 @@ def initial_assessment_needs_extension(question_results):
         for result in results if result.get("question_id")
     }
     return len(abilities) < 3 or len(levels) < 2
+
+
+def summarize_initial_assessment(question_results):
+    """10〜15問の結果から、断定を避けた源さんの短い現在地コメントを作る。"""
+    grouped = defaultdict(list)
+    safety_results = []
+    for result in question_results or ():
+        q_id = result.get("question_id")
+        if not q_id:
+            continue
+        tag = get_question_tag(q_id)
+        grouped[tag.get("primary_ability")].append(result)
+        if tag.get("safety") in {"moderate", "critical"}:
+            safety_results.append(result)
+
+    strong = []
+    review = []
+    guessed_count = 0
+    confident_error_count = 0
+    for ability, results in grouped.items():
+        guessed_count += sum(int(result.get("confidence") == 3) for result in results)
+        confident_error_count += sum(
+            int(not result.get("is_correct") and result.get("confidence") == 1)
+            for result in results
+        )
+        if len(results) < 2:
+            continue
+        strong_count = sum(
+            int(result.get("is_correct") and result.get("confidence") == 1)
+            for result in results
+        )
+        check_count = sum(
+            int(not result.get("is_correct") or result.get("confidence") == 3)
+            for result in results
+        )
+        if strong_count / len(results) >= 0.67:
+            strong.append((strong_count / len(results), ABILITY_LABELS[ability]))
+        elif check_count / len(results) >= 0.5:
+            review.append((check_count / len(results), ABILITY_LABELS[ability]))
+
+    strong_labels = [label for _score, label in sorted(strong, reverse=True)[:2]]
+    review_labels = [label for _score, label in sorted(review, reverse=True)[:2]]
+    lines = ["おう！お前の現在地はだいたい分かったぞ。", ""]
+
+    if strong_labels:
+        lines.append(f"今のところ、{strong_labels[0]}はかなり安定してそうだ。")
+        if len(strong_labels) > 1:
+            lines.append(f"{strong_labels[1]}もいい感じだ。")
+    else:
+        lines.append("今はまだ、知識や考え方を確認したい所がいくつかある。")
+
+    if review_labels:
+        lines.append(f"ただ、{review_labels[0]}はもう少し別の問題でも確認したいな。")
+        if len(review_labels) > 1:
+            lines.append(f"{review_labels[1]}も、まだ様子を見ていこう。")
+        if guessed_count >= 2:
+            lines.append("自信度を見ると、迷いながら答えた所も少しある。")
+        elif confident_error_count:
+            lines.append("自信を持って選んだ所も、考え方をもう一度確かめよう。")
+    elif guessed_count >= 2:
+        lines.append("正解できていても、迷いながら答えた所はもう一度確認していこう。")
+    elif confident_error_count:
+        lines.append("自信を持って選んだ所も、別の問題で考え方を確かめていこう。")
+    else:
+        lines.append("まだ問題数は少ないから、別の問題でも安定してるか見ていくぞ。")
+
+    if len(safety_results) >= 2 and all(result.get("is_correct") for result in safety_results):
+        lines.append("安全に関わる判断もしっかりできてる。")
+
+    if not strong_labels:
+        lines.append("いきなり難しい問題ばかりにはせず、解ける所から土台を作ろう。")
+    else:
+        lines.append("できてる所を無駄に繰り返さず、確認したい所と新しい問題を混ぜていくぞ。")
+    lines.extend([
+        "", "心配するなｗ", "これはあくまでも現在位置だ。", "ここからが勝負だぜ＾＾",
+    ])
+    return "\n".join(lines)
 
 
 def build_daily_session(history, question_count=30, category_small=None, rng=None):
