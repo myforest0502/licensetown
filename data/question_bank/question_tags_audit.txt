@@ -1,0 +1,47 @@
+LicenseTown question_tags.json audit
+source: LicenseTown_LT問題Q1-Q1564_Ver0.3タグ差替え_フォント統一版.docx
+records: 1564
+Q range: Q1-Q1564
+errors: 0
+
+tag_status:
+  provisional_bulk: 1364
+  reviewed_sample: 200
+
+task:
+  assessment_selection: 145
+  cause_identification: 17
+  device_selection: 30
+  fact_recall: 1025
+  finding_interpretation: 100
+  functional_goal_decision: 22
+  intervention_selection: 181
+  prognosis_prediction: 3
+  safety_priority: 41
+
+primary:
+  DECIDE: 66
+  INTERPRET: 117
+  KNOW: 1025
+  MEASURE: 145
+  PREDICT: 3
+  PRESCRIBE: 208
+
+secondary:
+  DECIDE: 75
+  INTERPRET: 1318
+  KNOW: 126
+  MEASURE: 18
+  PREDICT: 1
+  PRESCRIBE: 26
+
+level:
+  1: 1014
+  2: 110
+  3: 366
+  4: 74
+
+safety:
+  critical: 43
+  moderate: 121
+  none: 1400

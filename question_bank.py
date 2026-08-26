@@ -68,23 +68,57 @@ def _index(records: list[dict], name: str) -> dict[str, dict]:
     return indexed
 
 
+def _validate_tags(tags: dict[str, dict]) -> None:
+    required = {
+        "id", "knowledge_node", "task", "primary_ability", "level", "safety",
+        "prerequisite_nodes", "tag_version", "tag_status", "source",
+    }
+    abilities = {"KNOW", "MEASURE", "INTERPRET", "PREDICT", "PRESCRIBE", "DECIDE"}
+    for q_id, tag in tags.items():
+        missing = required - set(tag)
+        if missing:
+            raise ValueError(f"question_tags.json {q_id} missing: {sorted(missing)}")
+        if tag["primary_ability"] not in abilities:
+            raise ValueError(f"question_tags.json {q_id} has invalid primary_ability")
+        if tag.get("secondary_ability") not in abilities | {None}:
+            raise ValueError(f"question_tags.json {q_id} has invalid secondary_ability")
+        if tag["level"] not in {1, 2, 3, 4}:
+            raise ValueError(f"question_tags.json {q_id} has invalid level")
+        if tag["safety"] not in {"none", "moderate", "critical"}:
+            raise ValueError(f"question_tags.json {q_id} has invalid safety")
+        if tag["tag_version"] != "0.3":
+            raise ValueError(f"question_tags.json {q_id} has invalid tag_version")
+        if tag["tag_status"] not in {"reviewed_sample", "provisional_bulk"}:
+            raise ValueError(f"question_tags.json {q_id} has invalid tag_status")
+        if tag["source"] not in {"original", "past_exam"}:
+            raise ValueError(f"question_tags.json {q_id} has invalid source")
+        if not isinstance(tag["prerequisite_nodes"], list):
+            raise ValueError(f"question_tags.json {q_id} has invalid prerequisite_nodes")
+
+
 def _load_question_bank():
     questions = _index(_read_json("questions.json"), "questions.json")
     answers = _index(_read_json("answers.json"), "answers.json")
     explanations = _index(_read_json("explanations.json"), "explanations.json")
+    tags = _index(_read_json("question_tags.json"), "question_tags.json")
+    _validate_tags(tags)
     if set(questions) != EXPECTED_QUESTION_IDS:
         raise ValueError("Formal question bank must contain exactly Q1-Q1564")
-    if set(questions) != set(answers) or set(questions) != set(explanations):
-        raise ValueError("questions/answers/explanations ids do not match")
-    return questions, answers, explanations
+    if (
+        set(questions) != set(answers)
+        or set(questions) != set(explanations)
+        or set(questions) != set(tags)
+    ):
+        raise ValueError("questions/answers/explanations/tags ids do not match")
+    return questions, answers, explanations, tags
 
 
 try:
-    _QUESTIONS, _ANSWERS, _EXPLANATIONS = _load_question_bank()
+    _QUESTIONS, _ANSWERS, _EXPLANATIONS, _QUESTION_TAGS = _load_question_bank()
     _LOAD_ERROR = None
 except Exception as exc:  # 起動は継続し、学習開始時に固定エラーを返す。
     logger.exception("Failed to load formal question bank")
-    _QUESTIONS, _ANSWERS, _EXPLANATIONS = {}, {}, {}
+    _QUESTIONS, _ANSWERS, _EXPLANATIONS, _QUESTION_TAGS = {}, {}, {}, {}
     _LOAD_ERROR = exc
 
 
@@ -109,6 +143,22 @@ def get_question(q_id) -> dict:
         return copy.deepcopy(_QUESTIONS[key])
     except KeyError as exc:
         raise QuestionBankError(f"Question not found: {key}") from exc
+
+
+def get_question_tag(q_id) -> dict:
+    """正式タグを内部学習ロジック向けに返す。画面表示には使用しない。"""
+    _require_loaded()
+    key = _canonical_id(q_id)
+    try:
+        return copy.deepcopy(_QUESTION_TAGS[key])
+    except KeyError as exc:
+        raise QuestionBankError(f"Question tag not found: {key}") from exc
+
+
+def question_ids() -> tuple[str, ...]:
+    """正式Q番号を数値順で返す。"""
+    _require_loaded()
+    return tuple(sorted(_QUESTIONS, key=lambda value: int(value[1:])))
 
 
 def get_category_small(q_id) -> int:

@@ -264,8 +264,8 @@ def test_formal_thirty_questions_grade_and_complete_all_explanations():
     assert any("A：" in message for message in messages)
 
 
-def test_recommended_study_replies_with_first_five_and_advances_in_same_requests(monkeypatch):
-    """実機のHOME→準備OK→おすすめ→回答→続けるを再現する。"""
+def test_adaptive_study_replies_with_first_five_and_advances_in_same_requests(monkeypatch):
+    """実機のHOME→準備OK→自動選択→回答→続けるを再現する。"""
     replies = []
 
     class LineApi:
@@ -278,6 +278,7 @@ def test_recommended_study_replies_with_first_five_and_advances_in_same_requests
     monkeypatch.setattr(bot_app, "line_bot_api", LineApi())
     monkeypatch.setattr(bot_app, "return_home", lambda *_args, **_kwargs: None)
     monkeypatch.setattr(bot_app, "record_confirmed_learning_batch", lambda *_args: True)
+    monkeypatch.setattr(bot_app, "is_initial_assessment_completed", lambda _user_id: True)
 
     user_id = "recommended-first-batch-user"
     bot_app.study_sessions.pop(user_id, None)
@@ -296,7 +297,6 @@ def test_recommended_study_replies_with_first_five_and_advances_in_same_requests
     send("ホームに戻る")
     send("勉強する")
     send("準備OK！")
-    send("学習：おすすめ")
 
     session = bot_app.study_sessions[user_id]
     assert session["status"] == "waiting_for_answers"
@@ -305,7 +305,7 @@ def test_recommended_study_replies_with_first_five_and_advances_in_same_requests
     assert len(session["questions"]) == 5
     first_reply = replies[-1][1]
     assert len(first_reply) == 3
-    assert "おっさんのおすすめ" in first_reply[0].text
+    assert "今のお前に必要な30問" in first_reply[0].text
     assert "【第1問】" in first_reply[1].text
     assert "【第5問】" in first_reply[1].text
 

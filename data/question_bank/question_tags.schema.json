@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LicenseTown Question Tags",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "knowledge_node",
+      "task",
+      "primary_ability",
+      "level",
+      "safety",
+      "prerequisite_nodes",
+      "tag_version",
+      "tag_status",
+      "source"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^Q[1-9][0-9]*$"
+      },
+      "theme": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "knowledge_node": {
+        "type": "string",
+        "minLength": 1
+      },
+      "task": {
+        "type": "string",
+        "minLength": 1
+      },
+      "primary_ability": {
+        "type": "string",
+        "enum": [
+          "KNOW",
+          "MEASURE",
+          "INTERPRET",
+          "PREDICT",
+          "PRESCRIBE",
+          "DECIDE"
+        ]
+      },
+      "secondary_ability": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "enum": [
+          "KNOW",
+          "MEASURE",
+          "INTERPRET",
+          "PREDICT",
+          "PRESCRIBE",
+          "DECIDE",
+          null
+        ]
+      },
+      "level": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 4
+      },
+      "safety": {
+        "type": "string",
+        "enum": [
+          "none",
+          "moderate",
+          "critical"
+        ]
+      },
+      "prerequisite_nodes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "tag_version": {
+        "const": "0.3"
+      },
+      "tag_status": {
+        "type": "string",
+        "enum": [
+          "reviewed_sample",
+          "provisional_bulk"
+        ]
+      },
+      "source": {
+        "type": "string",
+        "enum": [
+          "original",
+          "past_exam"
+        ]
+      }
+    },
+    "additionalProperties": false
+  }
+}

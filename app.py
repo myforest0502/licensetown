@@ -31,11 +31,19 @@ from docx import Document
 from pypdf import PdfReader
 from database import (
     add_learning_time,
+    get_question_history,
+    is_initial_assessment_completed,
+    mark_initial_assessment_completed,
     record_learning_batch,
     reset_user_profile,
     user_names,
     user_modes,
     user_profile_exists,
+)
+from learning_engine import (
+    build_daily_session,
+    build_initial_assessment,
+    initial_assessment_needs_extension,
 )
 from goukaku_ui import create_dashboard_token, goukaku_ui
 from site_ui import site_ui
@@ -841,7 +849,7 @@ def format_quiz_messages(questions, start_number=1):
 # 小テスト開始
 # =========================================================
 
-def start_quiz(user_id):
+def start_quiz(user_id, session_kind=None, question_count=None):
     """
     最初の5問だけ生成し、
     ユーザーごとのセッションへ保存する。
@@ -852,7 +860,8 @@ def start_quiz(user_id):
             "小テストを開始するためのユーザーIDがありません。"
         )
 
-    if QUIZ_QUESTION_COUNT % QUESTIONS_PER_SET != 0:
+    total_question_count = int(question_count or QUIZ_QUESTION_COUNT)
+    if total_question_count % QUESTIONS_PER_SET != 0:
         raise ValueError("出題数は1セットの問題数で割り切れる必要があります。")
 
     category_selection = quiz_category_selections.pop(user_id, None)
@@ -860,19 +869,25 @@ def start_quiz(user_id):
         category_selection.get("category_small")
         if category_selection else None
     )
-    if category_small is None:
-        all_questions = select_random_questions(QUIZ_QUESTION_COUNT)
+    if session_kind == "initial_assessment":
+        all_questions = build_initial_assessment(total_question_count)
+    elif session_kind == "adaptive_daily":
+        all_questions = build_daily_session(
+            get_question_history(user_id), total_question_count
+        )
+    elif category_small is None:
+        all_questions = select_random_questions(total_question_count)
     else:
-        all_questions = select_category_questions(category_small, QUIZ_QUESTION_COUNT)
+        all_questions = select_category_questions(category_small, total_question_count)
     questions = all_questions[:QUESTIONS_PER_SET]
 
     study_sessions[user_id] = {
         "session_id": str(time.time_ns()),
         "status": "waiting_for_answers",
         "current_set": 1,
-        "question_count": QUIZ_QUESTION_COUNT,
+        "question_count": total_question_count,
         "questions_per_set": QUESTIONS_PER_SET,
-        "total_sets": QUIZ_QUESTION_COUNT // QUESTIONS_PER_SET,
+        "total_sets": total_question_count // QUESTIONS_PER_SET,
         "questions": questions,
         "all_questions": all_questions,
         "all_answers": {},
@@ -882,6 +897,7 @@ def start_quiz(user_id):
         "active_started_at": time.time(),
         "nekketsu_correct": 0,
         "category_small": category_small,
+        "session_kind": session_kind or ("manual" if category_small is not None else "random"),
     }
 
     quiz_messages = format_quiz_messages(questions)
@@ -1722,6 +1738,22 @@ def record_confirmed_learning_batch(user_id, session):
     )
 
 
+def get_session_question_results(session):
+    """現在地チェック判定用に、確定済み回答を内部形式へまとめる。"""
+    results = []
+    for number, question in enumerate(session.get("all_questions", ()), start=1):
+        answer_data = session.get("all_answers", {}).get(number)
+        if not answer_data:
+            continue
+        confidence = answer_data.get("confidence")
+        results.append({
+            "question_id": str(question.get("id")),
+            "is_correct": is_answer_correct(question, answer_data.get("answer")),
+            "confidence": int(confidence) if str(confidence) in {"1", "2", "3"} else None,
+        })
+    return results
+
+
 def reply_current_quiz(reply_token, session, intro_text=None):
     start_number = ((session["current_set"] - 1) * session["questions_per_set"]) + 1
     session["expected_numbers"] = list(
@@ -1751,10 +1783,12 @@ def reply_current_quiz(reply_token, session, intro_text=None):
     line_bot_api.reply_message(reply_token, reply_messages)
 
 
-def start_and_reply_quiz(reply_token, user_id, intro_text=None):
+def start_and_reply_quiz(
+    reply_token, user_id, intro_text=None, session_kind=None, question_count=None
+):
     """正式問題バンクから初回5問を準備し、同じ返信内で直ちに表示する。"""
     try:
-        start_quiz(user_id)
+        start_quiz(user_id, session_kind=session_kind, question_count=question_count)
         reply_current_quiz(
             reply_token,
             study_sessions[user_id],
@@ -2111,6 +2145,9 @@ def reply_study_ready_choice(reply_token):
                         label="✅ 準備OK！",
                         text="準備OK！",
                     )
+                ),
+                QuickReplyButton(
+                    action=MessageAction(label="自分で選ぶ", text="自分で選ぶ")
                 ),
                 QuickReplyButton(
                     action=MessageAction(
@@ -2950,6 +2987,39 @@ def process_study_answer_input(reply_token, user_id, user_message):
     )
 
     if current_set >= session["total_sets"]:
+        if session.get("session_kind") == "initial_assessment":
+            assessment_results = get_session_question_results(session)
+            if (
+                session["question_count"] == 10
+                and initial_assessment_needs_extension(assessment_results)
+            ):
+                session["all_questions"].extend(build_initial_assessment(
+                    5,
+                    exclude_ids=[question["id"] for question in session["all_questions"]],
+                ))
+                session["question_count"] = 15
+                session["total_sets"] = 3
+                session["status"] = "waiting_for_continue"
+                reply_study_set_result(reply_token, session)
+                return True
+            mark_initial_assessment_completed(user_id)
+            finish_active_learning_time(user_id)
+            session["status"] = "assessment_completed"
+            line_bot_api.reply_message(
+                reply_token,
+                TextSendMessage(
+                    text="だいたい今の位置は分かった。\nここからはこっちで順番を組むぞ。",
+                    quick_reply=QuickReply(items=[
+                        QuickReplyButton(action=MessageAction(
+                            label="勉強を始める", text="勉強を始める"
+                        )),
+                        QuickReplyButton(action=MessageAction(
+                            label="ホームに戻る", text="ホームに戻る"
+                        )),
+                    ]),
+                ),
+            )
+            return True
         finish_active_learning_time(user_id)
         session["quiz_result"] = calculate_quiz_result(
             session["all_questions"],
@@ -2972,6 +3042,19 @@ def process_study_flow_command(reply_token, user_id, user_message):
         return False
 
     status = session.get("status")
+
+    if status == "assessment_completed":
+        if user_message == "勉強を始める":
+            study_sessions.pop(user_id, None)
+            start_and_reply_quiz(
+                reply_token,
+                user_id,
+                intro_text="今のお前に必要な30問を組んだぞ。さあ始めよう＾＾",
+                session_kind="adaptive_daily",
+            )
+        else:
+            reply_to_line(reply_token, "準備できたら『勉強を始める』で進もう＾＾")
+        return True
 
     if user_message == "源さんに預ける" and status != "paused":
         pause_quiz_session(user_id)
@@ -3270,6 +3353,27 @@ def handle_text_message(event):
         reply_question_type_choice(event.reply_token, "熱血")
         return
     if user_message in {"準備OK！", "準備OK"}:
+        if is_initial_assessment_completed(user_id):
+            start_and_reply_quiz(
+                event.reply_token,
+                user_id,
+                intro_text="今のお前に必要な30問を組んだぞ。さあ始めよう＾＾",
+                session_kind="adaptive_daily",
+            )
+        else:
+            start_and_reply_quiz(
+                event.reply_token,
+                user_id,
+                intro_text=(
+                    "最初だけ、今の状態を見せてもらうぞ。\n"
+                    "合否を決めるテストじゃない。\n"
+                    "これから無駄なく進めるための現在地確認だ。"
+                ),
+                session_kind="initial_assessment",
+                question_count=10,
+            )
+        return
+    if user_message == "自分で選ぶ":
         reply_question_type_choice(event.reply_token, "学習")
         return
     if user_message in {"学習：分野問題", "熱血：分野問題"}:
@@ -3313,6 +3417,7 @@ def handle_text_message(event):
                 intro_text=build_recommended_intro_text(
                     learning_answer_counts.get(user_id, 0) >= 5
                 ),
+                session_kind="adaptive_daily",
             )
             return
         else:

@@ -18,6 +18,7 @@ _local_learning_events: dict[str, dict[str, Any]] = {}
 _local_learning_seconds: dict[str, float] = {}
 _local_learning_time_events: list[dict[str, Any]] = []
 _local_supporter_links: dict[tuple[str, str], bool] = {}
+_local_initial_assessment_completed: set[str] = set()
 
 logger = logging.getLogger(__name__)
 
@@ -68,8 +69,15 @@ def init_database() -> None:
                     user_id TEXT PRIMARY KEY,
                     name TEXT,
                     mode TEXT,
+                    initial_assessment_completed BOOLEAN NOT NULL DEFAULT FALSE,
                     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
                 )
+                """
+            )
+            cur.execute(
+                """
+                ALTER TABLE user_profiles
+                ADD COLUMN IF NOT EXISTS initial_assessment_completed BOOLEAN NOT NULL DEFAULT FALSE
                 """
             )
             cur.execute(
@@ -279,6 +287,60 @@ def user_profile_exists(user_id: str) -> bool:
             return cur.fetchone() is not None
 
 
+def is_initial_assessment_completed(user_id: str) -> bool:
+    """明示済み、または既存学習履歴がある利用者を現在地チェック済みとする。"""
+    if not database_is_available():
+        if user_id in _local_initial_assessment_completed:
+            return True
+        return any(
+            event["user_id"] == user_id and int(event.get("answered_count", 0)) > 0
+            for event in _local_learning_events.values()
+        )
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT
+                    COALESCE(initial_assessment_completed, FALSE)
+                    OR EXISTS (
+                        SELECT 1 FROM learning_events
+                        WHERE learning_events.user_id = user_profiles.user_id
+                          AND answered_count > 0
+                    )
+                FROM user_profiles WHERE user_id = %s
+                """,
+                (user_id,),
+            )
+            row = cur.fetchone()
+            if row:
+                return bool(row[0])
+            cur.execute(
+                "SELECT 1 FROM learning_events WHERE user_id = %s AND answered_count > 0 LIMIT 1",
+                (user_id,),
+            )
+            return cur.fetchone() is not None
+
+
+def mark_initial_assessment_completed(user_id: str) -> None:
+    """現在地チェック完了を後方互換なプロフィール列へ保存する。"""
+    _known_user_ids.add(user_id)
+    if not database_is_available():
+        _local_initial_assessment_completed.add(user_id)
+        return
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                INSERT INTO user_profiles (user_id, initial_assessment_completed, updated_at)
+                VALUES (%s, TRUE, NOW())
+                ON CONFLICT (user_id) DO UPDATE SET
+                    initial_assessment_completed = TRUE,
+                    updated_at = NOW()
+                """,
+                (user_id,),
+            )
+
+
 def reset_user_profile(user_id: str) -> None:
     """指定ユーザーのプロフィール行を削除し、完全な初回状態へ戻す。"""
     if not database_is_available():
@@ -293,6 +355,7 @@ def reset_user_profile(user_id: str) -> None:
         _local_learning_time_events[:] = [
             event for event in _local_learning_time_events if event["user_id"] != user_id
         ]
+        globals().get("_local_initial_assessment_completed", set()).discard(user_id)
         _known_user_ids.discard(user_id)
         return
 
@@ -307,6 +370,23 @@ def reset_user_profile(user_id: str) -> None:
             )
 
     _known_user_ids.discard(user_id)
+
+
+def get_question_history(user_id: str) -> list[dict[str, Any]]:
+    """適応出題用に、保存済み問題別結果だけを時系列で返す。"""
+    history = []
+    for question_results, answered_at in _get_question_result_rows(user_id):
+        if isinstance(question_results, str):
+            try:
+                question_results = json.loads(question_results)
+            except json.JSONDecodeError:
+                continue
+        if not isinstance(question_results, list):
+            continue
+        for result in question_results:
+            if isinstance(result, dict) and result.get("question_id"):
+                history.append({**result, "timestamp": answered_at})
+    return history
 
 
 def record_learning_batch(
