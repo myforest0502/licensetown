@@ -98,10 +98,22 @@ def test_new_user_ready_starts_location_check_and_existing_user_starts_daily(mon
     send("new-adaptive-user", "準備OK！")
     assert starts[-1][1]["session_kind"] == "initial_assessment"
     assert starts[-1][1]["question_count"] == 10
+    assert starts[-1][1]["intro_text"] == (
+        "「敵を知り、己を知れば百戦危うからず」ってな。\n\n"
+        "国家試験を突破する。\n"
+        "まず“敵”のことはこっちで見てある。\n\n"
+        "じゃあ次は、お前のことを少し知りたい。\n"
+        "どこまでできてて、どこから手を入れると一番伸びるのか。\n\n"
+        "まずは小手調べに10問いくぞ。\n"
+        "点数をつけたいわけじゃない。\n"
+        "これから無駄なく進めるための現在地確認だ＾＾\n\n"
+        "気楽にやってみてくれ。"
+    )
 
     monkeypatch.setattr(bot_app, "is_initial_assessment_completed", lambda user_id: True)
     send("existing-adaptive-user", "準備OK！")
     assert starts[-1][1]["session_kind"] == "adaptive_daily"
+    assert starts[-1][1]["intro_text"] == "今のお前に必要な30問を組んだぞ。さあ始めよう＾＾"
 
 
 def test_manual_selection_route_remains_available(monkeypatch):
