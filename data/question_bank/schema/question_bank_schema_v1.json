@@ -1,0 +1,261 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LicenseTown Question Bank Schemas v1.0",
+  "type": "object",
+  "$defs": {
+    "qid": {
+      "type": "string",
+      "pattern": "^Q(?:[1-9]|[1-9][0-9]{1,2}|1[0-4][0-9]{2}|15[0-5][0-9]|156[0-4])$"
+    },
+    "ability": {
+      "enum": [
+        "KNOW",
+        "MEASURE",
+        "INTERPRET",
+        "PREDICT",
+        "PRESCRIBE",
+        "DECIDE"
+      ]
+    },
+    "task": {
+      "enum": [
+        "fact_recall",
+        "finding_interpretation",
+        "assessment_selection",
+        "intervention_selection",
+        "device_selection",
+        "functional_goal_decision",
+        "prognosis_prediction",
+        "safety_priority"
+      ]
+    },
+    "safety": {
+      "enum": [
+        "none",
+        "moderate",
+        "critical"
+      ]
+    }
+  },
+  "properties": {
+    "questions": {
+      "type": "array",
+      "minItems": 1564,
+      "maxItems": 1564,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "management_code",
+          "category_large",
+          "category_small",
+          "source",
+          "title",
+          "question_text",
+          "choices",
+          "exam"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/qid"
+          },
+          "management_code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category_large": {
+            "enum": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          "category_small": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "question_text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "choices": {
+            "type": "object",
+            "minProperties": 2,
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "exam": {
+            "type": [
+              "object",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "answers": {
+      "type": "array",
+      "minItems": 1564,
+      "maxItems": 1564,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "display_answer",
+          "accepted_answer_sets",
+          "answer_basis"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/qid"
+          },
+          "display_answer": {
+            "type": "string",
+            "minLength": 1
+          },
+          "accepted_answer_sets": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "answer_basis": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "explanations": {
+      "type": "array",
+      "minItems": 1564,
+      "maxItems": 1564,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "explanation",
+          "choice_explanations"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/qid"
+          },
+          "explanation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "choice_explanations": {
+            "type": "object",
+            "minProperties": 2,
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "question_tags": {
+      "type": "array",
+      "minItems": 1564,
+      "maxItems": 1564,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "theme",
+          "knowledge_node",
+          "task",
+          "primary_ability",
+          "secondary_ability",
+          "level",
+          "safety",
+          "prerequisite_nodes",
+          "tag_version",
+          "tag_status",
+          "source"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/qid"
+          },
+          "theme": {
+            "type": "string",
+            "minLength": 1
+          },
+          "knowledge_node": {
+            "type": "string",
+            "minLength": 1
+          },
+          "task": {
+            "$ref": "#/$defs/task"
+          },
+          "primary_ability": {
+            "$ref": "#/$defs/ability"
+          },
+          "secondary_ability": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/ability"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          },
+          "safety": {
+            "$ref": "#/$defs/safety"
+          },
+          "prerequisite_nodes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "tag_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tag_status": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}
