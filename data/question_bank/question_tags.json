@@ -2,7 +2,7 @@
   {
     "id": "Q1",
     "theme": "脳血管障害・歩行分析",
-    "knowledge_node": "立脚後期の前方推進力",
+    "knowledge_node": "左立脚後期では下腿三頭筋による底屈モーメントが前方推進力を生み、反対側下肢の歩幅確保に重要な役割を果たすを識別する",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": "KNOW",
@@ -91,7 +91,7 @@
   {
     "id": "Q6",
     "theme": "小児・脳性麻痺",
-    "knowledge_node": "遊脚期背屈不足の追加評価",
+    "knowledge_node": "立脚中期の足関節背屈角度は正常範囲内である一方、遊脚期に背屈不足とつま先接触を認めているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -199,7 +199,7 @@
   {
     "id": "Q12",
     "theme": "スポーツ・足関節",
-    "knowledge_node": "競技復帰の動的バランス評価",
+    "knowledge_node": "歩行時痛は消失し、ジョギングも可能であるが、切り返し動作で不安感を認めているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "DECIDE",
@@ -235,7 +235,7 @@
   {
     "id": "Q14",
     "theme": "切断・上肢義手",
-    "knowledge_node": "把持力の調節訓練",
+    "knowledge_node": "視覚的に物品の変形や動きを確認しながら、物体の硬さや重さに応じた把持力調節を反復するへの介入選択",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
@@ -252,7 +252,7 @@
   {
     "id": "Q15",
     "theme": "がんリハビリテーション",
-    "knowledge_node": "排痰・呼吸合併症予防",
+    "knowledge_node": "創部を支持して疼痛を軽減しながら深呼吸と有効な咳嗽を練習し、病棟内歩行などの離床を継続して肺合併症を予防する",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "DECIDE",
@@ -270,7 +270,7 @@
   {
     "id": "Q16",
     "theme": "運動器・腰椎疾患",
-    "knowledge_node": "歩行耐容能の反復評価",
+    "knowledge_node": "約300mの歩行で右殿部から下腿後面に疼痛としびれが出現し、前屈休息で軽快することから、神経性間欠性跛行が主な活動制限であるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -288,7 +288,7 @@
   {
     "id": "Q17",
     "theme": "呼吸器・ICU",
-    "knowledge_node": "段階的早期離床",
+    "knowledge_node": "バイタルサインと人工呼吸器条件を監視しながら、端座位から立位へ段階的に離床を進めるへの介入選択",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "DECIDE",
@@ -306,7 +306,7 @@
   {
     "id": "Q18",
     "theme": "リウマチ",
-    "knowledge_node": "関節保護とADL指導",
+    "knowledge_node": "関節へ過度な負担をかけない把持方法や道具の使用を指導し、変形を助長しない範囲で手指機能練習を行うことで、家事を含む生活機能の維持を図る",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
@@ -395,7 +395,7 @@
   {
     "id": "Q23",
     "theme": "小脳疾患",
-    "knowledge_node": "協調運動練習",
+    "knowledge_node": "視覚や体性感覚を利用して動きを確認しながら、反復的な協調運動と歩行練習を行う",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
@@ -412,7 +412,7 @@
   {
     "id": "Q24",
     "theme": "がん・化学療法性末梢神経障害",
-    "knowledge_node": "転倒リスクの動的バランス評価",
+    "knowledge_node": "足底のしびれ、振動覚低下、モノフィラメントでの感覚低下があり、暗所歩行に不安を訴えているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -430,7 +430,7 @@
   {
     "id": "Q25",
     "theme": "頸椎疾患",
-    "knowledge_node": "進行把握の包括的機能評価",
+    "knowledge_node": "箸操作の不器用さ、階段での手すり使用、上下肢腱反射亢進、両側Babinski反射陽性から、頸髄症による上肢巧緻運動と歩行機能の障害がみられるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -466,7 +466,7 @@
   {
     "id": "Q27",
     "theme": "運動器・手根管症候群",
-    "knowledge_node": "進行時の母指対立低下",
+    "knowledge_node": "母指・示指・中指の夜間しびれ、Phalen試験・Tinel徴候陽性、母指球筋萎縮から正中神経障害による手根管症候群が考えられるから予後を予測する",
     "task": "prognosis_prediction",
     "primary_ability": "PREDICT",
     "secondary_ability": "KNOW",
@@ -537,7 +537,7 @@
   {
     "id": "Q31",
     "theme": "脳血管障害・半側空間無視",
-    "knowledge_node": "ADL上のUSN評価",
+    "knowledge_node": "病棟では左側のブレーキのかけ忘れや左側の副菜の食べ残しがみられ、日常生活場面で左側への注意低下が認められるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -555,7 +555,7 @@
   {
     "id": "Q32",
     "theme": "運動器・腱板断裂",
-    "knowledge_node": "肩甲胸郭運動の評価",
+    "knowledge_node": "術後14週で他動屈曲170°まで可能である一方、自動屈曲は140°にとどまり、終末域では肩甲骨挙上が目立つを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -590,7 +590,7 @@
   {
     "id": "Q34",
     "theme": "内部障害・肝硬変",
-    "knowledge_node": "サルコペニア評価",
+    "knowledge_node": "非代償性肝硬変でAlb3.0g/dL、握力低下、下腿周径減少を認め、心肺機能には明らかな異常がないを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -643,7 +643,7 @@
   {
     "id": "Q37",
     "theme": "運動器・橈骨頭骨折",
-    "knowledge_node": "ADL制限と前腕回外",
+    "knowledge_node": "日常生活ではドアノブ操作や瓶のふた開けが困難であり、回外55°と可動域制限を認めるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -660,7 +660,7 @@
   {
     "id": "Q38",
     "theme": "内部障害・糖尿病",
-    "knowledge_node": "末梢感覚低下時のバランス評価",
+    "knowledge_node": "足底感覚低下があり、「つまずきやすい」と訴えている一方で、筋力や足関節ROMは保たれているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -678,7 +678,7 @@
   {
     "id": "Q39",
     "theme": "小児・デュシェンヌ型筋ジストロフィー",
-    "knowledge_node": "拘縮予防とROM管理",
+    "knowledge_node": "デュシェンヌ型筋ジストロフィーでは下腿三頭筋短縮による尖足や拘縮が歩行能力低下を促進するため、歩行能力維持には関節拘縮予防と継続的な可動域管理を優先する",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "PREDICT",
@@ -696,7 +696,7 @@
   {
     "id": "Q40",
     "theme": "地域・フレイル",
-    "knowledge_node": "身体・栄養・社会参加の多面的介入",
+    "knowledge_node": "生活機能低下を防ぐには運動療法のみでは不十分であり、栄養管理や社会参加支援を含め、多職種と連携した包括的介入を行うことが重要である",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "DECIDE",
@@ -714,7 +714,7 @@
   {
     "id": "Q41",
     "theme": "スポーツ・前十字靱帯再建術",
-    "knowledge_node": "切り返し動作の復帰評価",
+    "knowledge_node": "術後8か月で直線走行は可能だが、カッティング時に不安感があり、Single Leg Hop Testは健側比89％、着地時に軽度膝外反を認めるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "DECIDE",
@@ -732,7 +732,7 @@
   {
     "id": "Q42",
     "theme": "神経疾患・頸部ジストニア",
-    "knowledge_node": "感覚トリックを含む姿勢評価",
+    "knowledge_node": "歩行時や会話中に頸部が右回旋し、自力で正中位を保持できない一方、左頬へ触れると姿勢が改善する感覚トリックを認めるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -749,7 +749,7 @@
   {
     "id": "Q43",
     "theme": "内部障害・肺高血圧症",
-    "knowledge_node": "運動中モニタリング",
+    "knowledge_node": "本症例は6分間歩行後にSpO₂91％、Borg指数5まで変化しているため、運動中は酸素飽和度、呼吸困難などの自覚症状、心拍数や血圧を含む循環動態を継続的に監視し、安全な運動強度へ調",
     "task": "safety_priority",
     "primary_ability": "DECIDE",
     "secondary_ability": "MEASURE",
@@ -768,7 +768,7 @@
   {
     "id": "Q44",
     "theme": "運動器・母指CM関節症",
-    "knowledge_node": "関節保護と装具活用",
+    "knowledge_node": "母指MP関節の軽度過伸展もあるため、関節へ集中する負荷を減らす把持方法を指導し、必要に応じて装具でCM関節を支持して日常生活動作を改善する",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
@@ -804,7 +804,7 @@
   {
     "id": "Q46",
     "theme": "脳血管障害・Lateropulsion",
-    "knowledge_node": "主観的身体垂直の評価",
+    "knowledge_node": "左深部感覚が著しく低下し、座位・立位で左側へ能動的に押し返しながら、本人は正中位と認識しているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -822,7 +822,7 @@
   {
     "id": "Q47",
     "theme": "運動器・肘部管症候群",
-    "knowledge_node": "巧緻動作評価",
+    "knowledge_node": "環指・小指のしびれ、肘屈曲での症状増悪、肘部Tinel徴候陽性に加え、骨間筋萎縮とFroment徴候陽性を認めるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -858,7 +858,7 @@
   {
     "id": "Q49",
     "theme": "小児・腕神経叢麻痺",
-    "knowledge_node": "肩外旋制限の評価",
+    "knowledge_node": "右手を頭の後ろへ回す動作や更衣で困難があり、肩関節外旋は10°と著しく制限されているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -876,7 +876,7 @@
   {
     "id": "Q50",
     "theme": "地域・介護予防",
-    "knowledge_node": "屋外二重課題・障害物回避評価",
+    "knowledge_node": "通常歩行速度、立ち上がり能力、Functional Reach Testは概ね保たれているが、過去1年間に屋外段差で2回転倒し、外出時に足元へ注意が集中しているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -965,7 +965,7 @@
   {
     "id": "Q55",
     "theme": "義肢装具・下腿義足",
-    "knowledge_node": "傾斜路歩行の動作分析",
+    "knowledge_node": "平地歩行には大きな異常がないが、坂道下降時に義足側荷重が不足し、健側へ早期に荷重しているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -983,7 +983,7 @@
   {
     "id": "Q56",
     "theme": "運動器・股関節",
-    "knowledge_node": "股外転筋持久力評価",
+    "knowledge_node": "左立脚中期に体幹を左へ傾けるが、骨盤の著明な下降はなく、片脚立位も15秒可能であるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -1107,7 +1107,7 @@
   {
     "id": "Q63",
     "theme": "内部障害・末梢動脈疾患",
-    "knowledge_node": "間欠的歩行運動",
+    "knowledge_node": "症状と足部状態を確認しながら反復し、歩行耐容能の改善を図る",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "DECIDE",
@@ -1125,7 +1125,7 @@
   {
     "id": "Q64",
     "theme": "神経疾患・脳卒中上肢",
-    "knowledge_node": "課題遂行を含む上肢機能評価",
+    "knowledge_node": "上肢Brunnstrom stageⅤ、手指Ⅳで物品把持は可能だが、持ち替えやボタン掛けで手指運動がぎこちなく、時間を要しているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -1178,7 +1178,7 @@
   {
     "id": "Q67",
     "theme": "運動器・股関節",
-    "knowledge_node": "立脚終期の運動連鎖評価",
+    "knowledge_node": "Trendelenburg徴候は陰性で外転筋MMT5だが、股関節伸展ROMは0°で、立脚終期の骨盤回旋が乏しく歩幅が短いを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -1266,7 +1266,7 @@
   {
     "id": "Q72",
     "theme": "運動器・アキレス腱断裂",
-    "knowledge_node": "片脚踵上げ評価",
+    "knowledge_node": "術後14週で歩行は自立しているが、小走りでは立脚終期の蹴り出しが弱く、片脚つま先立ちは5回で疲労するを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -1283,7 +1283,7 @@
   {
     "id": "Q73",
     "theme": "内部障害・末梢動脈疾患",
-    "knowledge_node": "自宅間欠的歩行指導",
+    "knowledge_node": "末梢動脈疾患の歩行療法では、軽度から中等度の跛行が出現するまで歩き、疼痛が消失するまで休息して再開する方法を反復することで、歩行耐容能の改善を図る",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "DECIDE",
@@ -1300,7 +1300,7 @@
   {
     "id": "Q74",
     "theme": "神経疾患・正常圧水頭症",
-    "knowledge_node": "歩幅・歩行速度の経時評価",
+    "knowledge_node": "歩幅減少と足が床に貼り付いたような歩行に加え、軽度の認知機能低下と尿意切迫を認めており、正常圧水頭症に特徴的な歩行障害が疑われるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -1334,7 +1334,7 @@
   {
     "id": "Q76",
     "theme": "神経筋疾患・封入体筋炎",
-    "knowledge_node": "立ち上がり＋把持課題評価",
+    "knowledge_node": "大腿四頭筋と手指深指屈筋がMMT3まで低下し、立ち上がりでは上肢支持を要し、蓋を開ける動作も困難であるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -1370,7 +1370,7 @@
   {
     "id": "Q78",
     "theme": "内部障害・肝性脳症既往",
-    "knowledge_node": "二重課題歩行",
+    "knowledge_node": "安静時の意識やアンモニア値は安定しているが、買い物中に注意が散り、立ち止まることが増えているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -1405,7 +1405,7 @@
   {
     "id": "Q80",
     "theme": "地域・慢性疼痛",
-    "knowledge_node": "段階的活動＋疼痛教育",
+    "knowledge_node": "慢性腰痛では完全な疼痛消失を待つのではなく、痛みに関する適切な理解を促し、達成可能な活動から段階的に拡大して、自己管理能力と生活機能を改善する",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
@@ -1423,7 +1423,7 @@
   {
     "id": "Q81",
     "theme": "神経疾患・脊髄小脳変性症",
-    "knowledge_node": "方向転換を含む動的歩行評価",
+    "knowledge_node": "脊髄小脳変性症では筋力が保たれていても、失調により歩行速度の変化、方向転換、人混みなど複雑な歩行場面で不安定性が増すを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -1493,7 +1493,7 @@
   {
     "id": "Q85",
     "theme": "小児・発達性協調運動症",
-    "knowledge_node": "標準化協調性＋ADL評価",
+    "knowledge_node": "筋力、ROM、感覚に異常はない一方、縄跳びやボール運動、着替え、箸操作など粗大運動と微細運動の両方に時間を要しているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -1511,7 +1511,7 @@
   {
     "id": "Q86",
     "theme": "脳血管障害・延髄外側症候群",
-    "knowledge_node": "体幹協調・動的バランス評価",
+    "knowledge_node": "四肢筋力は正常だが、体幹失調と左側への歩行偏倚があり、特に方向転換時にふらつきが増強しているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -1528,7 +1528,7 @@
   {
     "id": "Q87",
     "theme": "運動器・反復性肩関節脱臼",
-    "knowledge_node": "接触場面を想定した動作制御評価",
+    "knowledge_node": "肩関節ROMと腱板筋力は保たれ、Apprehension testも陰性だが、タックル姿勢や接触場面では不安感が残っているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "DECIDE",
@@ -1636,7 +1636,7 @@
   {
     "id": "Q93",
     "theme": "内部障害・左室補助人工心臓",
-    "knowledge_node": "機器自己管理能力",
+    "knowledge_node": "退院後はバッテリー残量の確認・交換、ケーブルの引っ掛かり防止、機器携行などを自ら安全に行う必要があるため、実際の外出場面を想定して自己管理能力を確認する",
     "task": "safety_priority",
     "primary_ability": "DECIDE",
     "secondary_ability": "MEASURE",
@@ -1654,7 +1654,7 @@
   {
     "id": "Q94",
     "theme": "小児・腕神経叢損傷後",
-    "knowledge_node": "肩甲上腕リズムの評価",
+    "knowledge_node": "頭上動作で右肩甲骨内側縁が浮き上がり、肩挙上終末域に代償を認めるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -1761,7 +1761,7 @@
   {
     "id": "Q100",
     "theme": "制度・就労支援",
-    "knowledge_node": "作業環境を想定した安全動作評価",
+    "knowledge_node": "模擬作業で緊急停止反応と安全確認能力を評価する",
     "task": "safety_priority",
     "primary_ability": "DECIDE",
     "secondary_ability": "MEASURE",
@@ -1815,7 +1815,7 @@
   {
     "id": "Q103",
     "theme": "スポーツ・脳振盪",
-    "knowledge_node": "段階的競技復帰",
+    "knowledge_node": "段階的競技復帰では、症状が出た場合は無症状で実施できていた前段階へ戻し、十分な無症状期間を確認してから再び負荷を段階的に上げる時の優先対応",
     "task": "safety_priority",
     "primary_ability": "DECIDE",
     "secondary_ability": "PRESCRIBE",
@@ -1833,7 +1833,7 @@
   {
     "id": "Q104",
     "theme": "脳血管障害・注意障害",
-    "knowledge_node": "二重課題歩行評価",
+    "knowledge_node": "静かな廊下では障害物を避けられるが、話しかけられながら歩くと物品を見落とし、方向転換も遅れているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -1851,7 +1851,7 @@
   {
     "id": "Q105",
     "theme": "糖尿病・フットケア",
-    "knowledge_node": "無痛性発赤の再発予防",
+    "knowledge_node": "疼痛を皮膚損傷の警告として利用できないため、毎日の足部観察、靴内の異物や縫い目の確認、足幅や圧迫部位に配慮した靴選びを習慣化し、潰瘍への進行を防ぐことが重要である時の優先対応",
     "task": "safety_priority",
     "primary_ability": "DECIDE",
     "secondary_ability": "PRESCRIBE",
@@ -1869,7 +1869,7 @@
   {
     "id": "Q106",
     "theme": "脳血管障害・失行",
-    "knowledge_node": "観念運動失行",
+    "knowledge_node": "運動麻痺や感覚障害、理解力低下では説明できず、学習された動作を指示に応じて意図的に表出する過程の障害である観念運動失行が最も考えられるを識別する",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": "KNOW",
@@ -1905,7 +1905,7 @@
   {
     "id": "Q108",
     "theme": "運動器・アキレス腱断裂",
-    "knowledge_node": "下腿三頭筋筋持久力",
+    "knowledge_node": "アキレス腱修復後の蹴り出しには下腿三頭筋の反復収縮能力が必要であるため、現時点では最大筋力だけでなく筋持久力の改善を優先する",
     "task": "functional_goal_decision",
     "primary_ability": "DECIDE",
     "secondary_ability": "INTERPRET",
@@ -1993,7 +1993,7 @@
   {
     "id": "Q113",
     "theme": "呼吸器・誤嚥性肺炎",
-    "knowledge_node": "多職種連携下の離床",
+    "knowledge_node": "同時に廃用を防ぐため、医師、看護師、言語聴覚士などと連携し、安全な摂食条件を確認しながら離床と身体活動を進める",
     "task": "functional_goal_decision",
     "primary_ability": "DECIDE",
     "secondary_ability": "PRESCRIBE",
@@ -2029,7 +2029,7 @@
   {
     "id": "Q115",
     "theme": "地域・脳卒中後の自動車運転",
-    "knowledge_node": "運転再開前の高次脳機能評価",
+    "knowledge_node": "歩行とADLは自立しているが、複数課題を同時に行うと反応が遅れるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "DECIDE",
@@ -2065,7 +2065,7 @@
   {
     "id": "Q117",
     "theme": "神経疾患・正常圧水頭症",
-    "knowledge_node": "NPHの病態認識",
+    "knowledge_node": "歩行障害、認知機能低下、排尿障害の組合せから正常圧水頭症が最も考えられるを識別する",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": "KNOW",
@@ -2083,7 +2083,7 @@
   {
     "id": "Q118",
     "theme": "運動器・肩関節拘縮",
-    "knowledge_node": "ROM改善と伸張",
+    "knowledge_node": "現在の主な機能障害は骨折後の肩関節拘縮であるため、組織の反応と疼痛を確認しながら関節運動と伸張を行い、屈曲・外旋可動域の改善を優先する",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
@@ -2100,7 +2100,7 @@
   {
     "id": "Q119",
     "theme": "小児・発達性協調運動症",
-    "knowledge_node": "課題練習＋参加支援",
+    "knowledge_node": "理学療法では実際に困っている運動課題を段階的に反復し、学校や家庭と方法を共有して、体育・学習・日常生活への参加を支援することが適切である",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "DECIDE",
@@ -2136,7 +2136,7 @@
   {
     "id": "Q121",
     "theme": "頸椎症性脊髄症",
-    "knowledge_node": "深部感覚と視覚依存の評価",
+    "knowledge_node": "頸椎症性脊髄症では後索障害による深部感覚低下を伴うことがあり、視覚情報が減る暗所でふらつきが増えるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -2154,7 +2154,7 @@
   {
     "id": "Q122",
     "theme": "運動器・変形性膝関節症",
-    "knowledge_node": "動的膝外反への介入",
+    "knowledge_node": "股関節外転・外旋筋を含む近位部の制御と下肢アライメントを改善する練習が、膝への内側ストレス低減と機能改善に最もつながる",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
@@ -2171,7 +2171,7 @@
   {
     "id": "Q123",
     "theme": "呼吸器・COPD急性増悪後",
-    "knowledge_node": "身体活動の段階的再開",
+    "knowledge_node": "息切れや酸素化を確認しながら日常生活での身体活動を段階的に増やし、活動回避による廃用を防ぐことが退院後の身体活動維持に適切であるへの介入選択",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "DECIDE",
@@ -2189,7 +2189,7 @@
   {
     "id": "Q124",
     "theme": "スポーツ・野球肘",
-    "knowledge_node": "全身運動連鎖評価",
+    "knowledge_node": "投球時の肘内側痛とMoving Valgus Stress Test陽性は、投球時の外反ストレスとの関連を示すを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -2293,7 +2293,7 @@
   {
     "id": "Q130",
     "theme": "地域・サルコペニア",
-    "knowledge_node": "運動＋栄養連携",
+    "knowledge_node": "生活機能維持には筋力訓練だけでなく、栄養管理を含めた多職種による包括的介入が重要である",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "DECIDE",
@@ -2329,7 +2329,7 @@
   {
     "id": "Q132",
     "theme": "物理療法・リスク管理",
-    "knowledge_node": "感覚低下時の温熱回避",
+    "knowledge_node": "足部痛の原因と皮膚・循環・運動機能を評価し、安全な運動療法を検討する",
     "task": "safety_priority",
     "primary_ability": "DECIDE",
     "secondary_ability": "KNOW",
@@ -2381,7 +2381,7 @@
   {
     "id": "Q135",
     "theme": "小児・発育性股関節形成不全",
-    "knowledge_node": "Pavlik harnessの安全管理",
+    "knowledge_node": "Pavlik harness装着中の皮膚圧迫・ずれを確認し自己調整を避ける",
     "task": "safety_priority",
     "primary_ability": "DECIDE",
     "secondary_ability": "KNOW",
@@ -2416,7 +2416,7 @@
   {
     "id": "Q137",
     "theme": "運動器・アキレス腱断裂",
-    "knowledge_node": "反復踵上げ能力の評価",
+    "knowledge_node": "患側の片脚踵上げは3回で高さが低下し、健側25回との差が大きいを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -2448,7 +2448,7 @@
   {
     "id": "Q139",
     "theme": "小児・発達性協調運動症",
-    "knowledge_node": "課題分解と段階練習",
+    "knowledge_node": "課題を構成要素に分け、成功可能な難易度から段階的に練習することで運動学習を促し、失敗経験を減らして体育参加への自信を高める",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
@@ -2532,7 +2532,7 @@
   {
     "id": "Q144",
     "theme": "神経疾患・正常圧水頭症",
-    "knowledge_node": "歩行開始・足部挙上・方向転換の包括評価",
+    "knowledge_node": "小刻みですり足となり、歩行開始と方向転換に時間を要しているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -2565,7 +2565,7 @@
   {
     "id": "Q146",
     "theme": "神経疾患・脳卒中後の歩行分析",
-    "knowledge_node": "荷重応答期の膝伸展制御評価",
+    "knowledge_node": "左荷重応答期に膝屈曲が増大し、そのまま膝折れを認めているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -2824,7 +2824,7 @@
   {
     "id": "Q161",
     "theme": "研究法・相対危険度",
-    "knowledge_node": "相対危険度計算",
+    "knowledge_node": "相対危険度は、曝露群の疾患発生割合を非曝露群の疾患発生割合で除して求める",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": "MEASURE",
@@ -2841,7 +2841,7 @@
   {
     "id": "Q162",
     "theme": "物理療法・寒冷療法",
-    "knowledge_node": "神経伝導速度低下",
+    "knowledge_node": "受傷直後で腫脹と疼痛がある急性期に寒冷療法を行うと、組織温度の低下に伴って神経伝導速度が低下し、疼痛の軽減が期待できる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": "INTERPRET",
@@ -2909,7 +2909,7 @@
   {
     "id": "Q166",
     "theme": "神経・脳卒中・半側空間無視",
-    "knowledge_node": "線分二等分試験",
+    "knowledge_node": "左上下肢麻痺は軽度で歩行可能だが、左側のドア枠や車椅子へ繰り返し接触しており、左半側空間への注意障害が疑われるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "KNOW",
@@ -2960,7 +2960,7 @@
   {
     "id": "Q169",
     "theme": "義肢装具・大腿義足",
-    "knowledge_node": "義足側立脚の荷重移動",
+    "knowledge_node": "まず平行棒内で義足側への側方荷重移動と立脚保持を練習し、義足側で安全に身体を支持する感覚と能力を獲得する",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
@@ -2977,7 +2977,7 @@
   {
     "id": "Q170",
     "theme": "制度・介護保険",
-    "knowledge_node": "通所リハの目的",
+    "knowledge_node": "通所リハビリテーションは、要介護認定者などが施設へ通い、医師の指示に基づいてリハビリテーションを受ける介護保険サービスである",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": "DECIDE",
@@ -3011,7 +3011,7 @@
   {
     "id": "Q172",
     "theme": "スポーツ・ACL再建術後",
-    "knowledge_node": "片脚ホップテスト",
+    "knowledge_node": "術後8か月で疼痛・腫脹・可動域制限はなくジョギング可能だが、方向転換時に患側への不安感が残るを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "DECIDE",
@@ -3063,7 +3063,7 @@
   {
     "id": "Q175",
     "theme": "研究法・EBM",
-    "knowledge_node": "無作為化比較試験",
+    "knowledge_node": "介入群と対照群を設け、対象者を無作為に各群へ割り付けて新しい運動療法の効果を比較する研究は無作為化比較試験である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": "MEASURE",
@@ -3130,7 +3130,7 @@
   {
     "id": "Q179",
     "theme": "地域・福祉用具・入浴動作",
-    "knowledge_node": "浴槽用手すり",
+    "knowledge_node": "屋内はT字杖で自立しているが、浴槽縁をまたぐ片脚支持でふらつきがある",
     "task": "device_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "MEASURE",
@@ -3298,7 +3298,7 @@
   {
     "id": "Q189",
     "theme": "義肢装具・短下肢装具",
-    "knowledge_node": "初期接地後の底屈制動",
+    "knowledge_node": "遊脚期の足尖接触は改善しているが、初期接地後に足関節が急速に底屈し、足底全体が強く接地しているに対する機器選択",
     "task": "device_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
@@ -3349,7 +3349,7 @@
   {
     "id": "Q192",
     "theme": "運動器・変形性股関節症・歩行補助具",
-    "knowledge_node": "反対側手での杖使用",
+    "knowledge_node": "右片脚立位で疼痛が増えることから、右股関節への荷重が疼痛増悪に関係しているに対する機器選択",
     "task": "device_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
@@ -3469,7 +3469,7 @@
   {
     "id": "Q199",
     "theme": "義肢装具・足底装具",
-    "knowledge_node": "中足骨頭荷重分散",
+    "knowledge_node": "第2・3中足骨頭部に胼胝があり、長時間歩行で同部の前足部痛が増強していることから、中足骨頭へ荷重が集中しているに対する機器選択",
     "task": "device_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
@@ -3486,7 +3486,7 @@
   {
     "id": "Q200",
     "theme": "地域・転倒予防・住環境",
-    "knowledge_node": "足元灯＋障害物除去",
+    "knowledge_node": "日中はつまずかず、下肢筋力、TUG、認知機能も大きく低下していない一方、夜間の消灯した廊下で3回つまずき、床には延長コードと敷物があるに対する機器選択",
     "task": "device_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "MEASURE",
@@ -3576,7 +3576,7 @@
   {
     "id": "Q205",
     "theme": "地域リハビリテーション・生活空間",
-    "knowledge_node": "身体機能が保たれた高齢者における生活空間縮小の評価",
+    "knowledge_node": "屋内歩行能力や筋力に大きな変化はない一方、夫の死後に買い物や地域サロン参加をやめ、自宅周囲以外へ外出しなくなっているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -3630,7 +3630,7 @@
   {
     "id": "Q208",
     "theme": "スポーツ・足関節外側靱帯損傷",
-    "knowledge_node": "足関節捻挫後の競技復帰に必要な動的機能評価",
+    "knowledge_node": "保存療法開始8週で通常歩行は可能だが、片脚着地時に足関節の不安定感が残っているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "DECIDE",
@@ -3666,7 +3666,7 @@
   {
     "id": "Q210",
     "theme": "フレイル・介入優先順位",
-    "knowledge_node": "フレイル進行予防における運動・栄養・社会参加の包括的介入",
+    "knowledge_node": "運動だけに限定せず、栄養状態や社会参加も含めて包括的に介入することが重要である",
     "task": "intervention_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": "INTERPRET",
@@ -3720,7 +3720,7 @@
   {
     "id": "Q213",
     "theme": "循環器・心臓リハビリテーション",
-    "knowledge_node": "VE/VCO2 slopeを用いた換気効率と予後評価",
+    "knowledge_node": "CPXでVE/VCO₂ slopeが著明に高値であるを識別する",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": "KNOW",
@@ -3756,7 +3756,7 @@
   {
     "id": "Q215",
     "theme": "地域・転倒予防",
-    "knowledge_node": "外乱刺激に対する反応性姿勢制御の評価",
+    "knowledge_node": "通常歩行や筋力には大きな問題がないにもかかわらず、後方から軽く肩へ触れられるという予期しない外乱でバランスを崩して転倒しているを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "DECIDE",
@@ -3882,7 +3882,7 @@
   {
     "id": "Q222",
     "theme": "運動器・Scapular Dyskinesis",
-    "knowledge_node": "Scapular dyskinesisに対する動的肩甲骨運動の評価",
+    "knowledge_node": "肩甲骨内側縁の浮き上がりはScapular Dyskinesisを疑う所見であり、まず肩甲骨の動的な運動パターンを評価する必要がある",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -3972,7 +3972,7 @@
   {
     "id": "Q227",
     "theme": "人工膝関節全置換術",
-    "knowledge_node": "TKA後の膝蓋骨可動性低下に対する評価",
+    "knowledge_node": "人工膝関節全置換術後では膝蓋骨の可動性低下が膝関節屈曲制限や疼痛に影響するため、まず膝蓋骨可動性を評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -4474,7 +4474,7 @@
   {
     "id": "Q255",
     "theme": "浮腫・臨床評価",
-    "knowledge_node": "Stemmer徴候によるリンパ浮腫評価",
+    "knowledge_node": "Stemmer徴候は第2趾または第2指基部背側の皮膚をつまめない所見で、皮膚・皮下組織の肥厚を伴うリンパ浮腫を示唆する",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": null,
@@ -4636,7 +4636,7 @@
   {
     "id": "Q264",
     "theme": "集中治療・せん妄評価",
-    "knowledge_node": "ICUせん妄評価におけるCAM-ICUの選択",
+    "knowledge_node": "CAM-ICUはICU患者のせん妄を、急性発症・変動、注意障害、意識水準、思考のまとまりなどから評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -4744,7 +4744,7 @@
   {
     "id": "Q270",
     "theme": "研究法・測定一致度",
-    "knowledge_node": "Bland–Altman分析による測定方法間一致度の評価",
+    "knowledge_node": "Bland–Altman分析は2方法の測定値の差を縦軸、平均を横軸に示し、平均差による系統誤差と一致限界を評価する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -5440,7 +5440,7 @@
   {
     "id": "Q309",
     "theme": "電気生理・F波",
-    "knowledge_node": "F波による運動神経近位部を含む伝導評価",
+    "knowledge_node": "F波は運動神経を最大上刺激した際に興奮が脊髄前角細胞付近まで逆行し、再び末梢へ戻って生じる遅発反応で、神経根を含む近位運動神経伝導の評価に役…",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -5457,7 +5457,7 @@
   {
     "id": "Q310",
     "theme": "統計・メタアナリシス",
-    "knowledge_node": "I²統計量によるメタアナリシス異質性評価",
+    "knowledge_node": "I²統計量は、観察された効果量のばらつきのうち標本誤差ではなく研究間異質性による割合を示す",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -5995,7 +5995,7 @@
   {
     "id": "Q340",
     "theme": "義肢装具・神経生理",
-    "knowledge_node": "断端の発赤・熱感・腫脹・安静時痛に対する義足装着中止と感染評価",
+    "knowledge_node": "皮膚所見と安静時症状の組合せを重視する時の優先対応",
     "task": "safety_priority",
     "primary_ability": "DECIDE",
     "secondary_ability": "INTERPRET",
@@ -6247,7 +6247,7 @@
   {
     "id": "Q354",
     "theme": "臨床評価・安全管理",
-    "knowledge_node": "気管切開患者で吸引を必要とする分泌物貯留所見の評価",
+    "knowledge_node": "気管吸引は時間で一律に行う処置ではなく、気道分泌物の貯留を示す所見に基づいて実施するを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -6535,7 +6535,7 @@
   {
     "id": "Q370",
     "theme": "術後管理・内部障害・前庭",
-    "knowledge_node": "運動中の著明な低酸素血症・症状出現時の即時中止と評価",
+    "knowledge_node": "運動中の著明なSpO₂低下と症状出現時に運動を中止する",
     "task": "safety_priority",
     "primary_ability": "DECIDE",
     "secondary_ability": "INTERPRET",
@@ -7075,7 +7075,7 @@
   {
     "id": "Q400",
     "theme": "透析・骨転移・運動療法・評価",
-    "knowledge_node": "Cronbach αによる内的一貫性の評価",
+    "knowledge_node": "複数項目からなる質問票で、各項目が同一概念をどの程度一貫して測定しているかは内的一貫性で評価する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -7183,7 +7183,7 @@
   {
     "id": "Q406",
     "theme": "呼吸安全・術後・脳卒中・小児",
-    "knowledge_node": "GBSで呼吸不全進行を捉える肺活量・呼吸筋力評価",
+    "knowledge_node": "Guillain-Barré症候群で筋力低下が上行し、咳が弱くなっているため呼吸筋麻痺の進行に注意するを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -7291,7 +7291,7 @@
   {
     "id": "Q412",
     "theme": "神経生理・スポーツ・骨粗鬆症・車椅子",
-    "knowledge_node": "ハムストリング肉離れの競技復帰に必要な全力走・筋力・機能評価",
+    "knowledge_node": "全力疾走を伴う競技復帰では、安静時や低速運動で痛みがないだけでは不十分であるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "DECIDE",
@@ -7488,7 +7488,7 @@
   {
     "id": "Q423",
     "theme": "呼吸・脊髄・運動器・統計",
-    "knowledge_node": "座位から仰臥位でのVC低下による横隔膜筋力低下評価",
+    "knowledge_node": "横隔膜が弱いと仰臥位で腹腔内容が横隔膜を頭側へ押し上げ、吸気時の横隔膜下降がさらに制限されるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -7631,7 +7631,7 @@
   {
     "id": "Q431",
     "theme": "連続流型左室補助人工心臓〈LVAD〉装着患者では末梢動脈の拍動を触知",
-    "knowledge_node": "連続流型LVAD装着患者の非拍動性を踏まえた循環評価",
+    "knowledge_node": "連続流型LVADでは拍動が弱く、末梢動脈の触診や通常の自動血圧計だけでは循環状態を正確に把握しにくいを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -7906,7 +7906,7 @@
   {
     "id": "Q447",
     "theme": "強直性脊椎炎患者の腰椎前屈可動性を評価する検査はどれか",
-    "knowledge_node": "Schober testによる腰椎前屈可動性評価",
+    "knowledge_node": "修正Schoberテストは腰仙部に基準点を設定し、体幹前屈による腰椎部の皮膚間距離の増加を測定する検査である",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -8244,7 +8244,7 @@
   {
     "id": "Q467",
     "theme": "手をついて転倒後、嗅ぎタバコ入れに圧痛があるが初回単純X線で骨折線を",
-    "knowledge_node": "初回X線陰性でも舟状骨骨折を疑う固定・再評価",
+    "knowledge_node": "舟状骨骨折疑いでは初回X線陰性でも固定し再評価する",
     "task": "safety_priority",
     "primary_ability": "DECIDE",
     "secondary_ability": "INTERPRET",
@@ -8363,7 +8363,7 @@
   {
     "id": "Q474",
     "theme": "気管挿管患者の抜管前にカフリークテストを行ったところ、カフ脱気後も吸",
-    "knowledge_node": "カフリーク欠如から喉頭浮腫・上気道狭窄リスクを評価",
+    "knowledge_node": "カフリークテストではカフ脱気後に気管チューブ周囲を通る空気漏れを確認するを識別する",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": null,
@@ -8499,7 +8499,7 @@
   {
     "id": "Q482",
     "theme": "肩甲下筋の機能を評価する徒手検査はどれか",
-    "knowledge_node": "lift-off / belly-press系検査による肩甲下筋評価",
+    "knowledge_node": "lift-offテストは手背を腰部に置き、手を背中から離す動作で肩甲下筋の機能を評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -8516,7 +8516,7 @@
   {
     "id": "Q483",
     "theme": "投球選手が肩深部のクリックを訴える",
-    "knowledge_node": "O'Brien active compression testによる上方関節唇病変評価",
+    "knowledge_node": "肩関節屈曲90度・軽度内転位で内旋させて抵抗を加えると疼痛が再現し、外旋位で軽減するのはO'Brienテストの方法であるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -8652,7 +8652,7 @@
   {
     "id": "Q491",
     "theme": "在胎32週で出生した乳児が、生後6か月で発達評価を受けた",
-    "knowledge_node": "早産児の修正月齢計算",
+    "knowledge_node": "在胎32週で出生しており、満期40週より8週早い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -8686,7 +8686,7 @@
   {
     "id": "Q493",
     "theme": "学童が着替え、書字、球技など複数の運動課題で不器用さを示すが、筋力や",
-    "knowledge_node": "発達性協調運動症を疑う児のMABC等による運動協調評価",
+    "knowledge_node": "着替え、書字、球技など複数の日常・学校活動で不器用さを示す一方、筋力や知的発達に明らかな異常がないを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -8996,7 +8996,7 @@
   {
     "id": "Q511",
     "theme": "嫌気的代謝の過程で生成される物質はどれか",
-    "knowledge_node": "嫌気的代謝の過程で生成される物質",
+    "knowledge_node": "グルコースが解糖系を通ってピルビン酸となり、酸素供給が不十分な条件では乳酸へ変換される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9045,7 +9045,7 @@
   {
     "id": "Q514",
     "theme": "延髄の障害でみられやすい症状はどれか",
-    "knowledge_node": "延髄の障害でみられやすい症状",
+    "knowledge_node": "延髄には舌下神経核があり、舌の運動を担う舌下神経機能が障害されやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9146,7 +9146,7 @@
   {
     "id": "Q520",
     "theme": "脳血管障害の評価として用いられる評価法について正しいのはどれか",
-    "knowledge_node": "脳血管障害の評価として用いられる評価法の特徴",
+    "knowledge_node": "Fugl-Meyer Assessmentは脳卒中後の運動機能だけでなく、感覚、関節可動域、疼痛なども含む包括的評価である",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -9164,7 +9164,7 @@
   {
     "id": "Q521",
     "theme": "Parkinson病で主にみられる徴候はどれか",
-    "knowledge_node": "Parkinson病で主にみられる徴候はどれか。2つ選べ",
+    "knowledge_node": "Parkinson病の主要徴候には安静時振戦、筋強剛、無動・寡動、姿勢反射障害があり、突進現象や歯車様固縮がみられる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9180,7 +9180,7 @@
   {
     "id": "Q522",
     "theme": "Duchenne 型筋ジストロフィーにみられる症状はどれか",
-    "knowledge_node": "Duchenne 型筋ジストロフィーにみられる症状",
+    "knowledge_node": "近位筋優位の進行性筋力低下と、脂肪・結合組織増生による下腿三頭筋の仮性肥大が特徴的である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9398,7 +9398,7 @@
   {
     "id": "Q535",
     "theme": "体表から触知できるのはどれか",
-    "knowledge_node": "体表から触知できるのはどれか。2つ選べ",
+    "knowledge_node": "体表から触知しやすい骨指標として胸骨角と舟状骨粗面がある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9414,7 +9414,7 @@
   {
     "id": "Q536",
     "theme": "回旋筋腱板を構成する筋はどれか",
-    "knowledge_node": "回旋筋腱板の構成筋",
+    "knowledge_node": "回旋筋腱板は棘上筋、棘下筋、小円筋、肩甲下筋の4筋で構成され、上腕骨頭を関節窩へ安定させる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9430,7 +9430,7 @@
   {
     "id": "Q537",
     "theme": "胸椎に付着する筋はどれか",
-    "knowledge_node": "胸椎の付着筋",
+    "knowledge_node": "僧帽筋は後頭骨・項靱帯に加え、第7頸椎から第12胸椎の棘突起などから起こるため胸椎に付着する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9446,7 +9446,7 @@
   {
     "id": "Q538",
     "theme": "二重神経支配の筋はどれか",
-    "knowledge_node": "二重神経支配の筋",
+    "knowledge_node": "大内転筋は内転部とハムストリング部で神経支配が異なり、前者は閉鎖神経、後者は坐骨神経脛骨部から支配を受ける",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9510,7 +9510,7 @@
   {
     "id": "Q542",
     "theme": "視覚器で正しいのはどれか",
-    "knowledge_node": "視覚器の基本事項",
+    "knowledge_node": "虹彩には瞳孔を拡大させる瞳孔散大筋と、縮小させる瞳孔括約筋がある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9574,7 +9574,7 @@
   {
     "id": "Q546",
     "theme": "血液凝固因子はどれか",
-    "knowledge_node": "血液凝固因子",
+    "knowledge_node": "トロンビンは凝固カスケードでプロトロンビンから生成され、フィブリノゲンをフィブリンへ変換する中心的凝固酵素である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9590,7 +9590,7 @@
   {
     "id": "Q547",
     "theme": "胃液の分泌を促進するのはどれか",
-    "knowledge_node": "胃液の分泌を促進するのはどれか。2つ選べ",
+    "knowledge_node": "胃液分泌は胃壁伸展による局所・迷走神経反射や、G細胞から分泌されるガストリンによって促進される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9606,7 +9606,7 @@
   {
     "id": "Q548",
     "theme": "尿の生成について正しいのはどれか",
-    "knowledge_node": "尿の生成の特徴",
+    "knowledge_node": "腎小体の糸球体で血液が濾過され、尿細管で再吸収・分泌が行われる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9702,7 +9702,7 @@
   {
     "id": "Q554",
     "theme": "足部アーチについて正しいのはどれか",
-    "knowledge_node": "足部アーチの特徴",
+    "knowledge_node": "内側縦アーチは中足指節関節を伸展すると足底腱膜が巻き上げられるwindlass機構によって高くなる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9750,7 +9750,7 @@
   {
     "id": "Q557",
     "theme": "急性炎症と比較した場合の慢性炎症の特徴はどれか",
-    "knowledge_node": "急性炎症と比較した場合の慢性炎症の特徴",
+    "knowledge_node": "炎症が長期化し、単核球浸潤と組織破壊に加えて修復反応が並行するため線維化が特徴となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9766,7 +9766,7 @@
   {
     "id": "Q558",
     "theme": "自分自身が受け入れることができない衝動・観念を、他の人が持っていると",
-    "knowledge_node": "自分自身が受け入れることができない衝動・観念を、他の人が持っているとする防衛機制",
+    "knowledge_node": "自分が受け入れ難い感情や衝動を他者が持っているとみなす防衛機制は投影である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9782,7 +9782,7 @@
   {
     "id": "Q559",
     "theme": "老年期における精神保健上の問題として適切なのはどれか",
-    "knowledge_node": "老年期における精神保健上の問題として",
+    "knowledge_node": "退職、死別、身体機能低下などにより社会的つながりが減少し、社会的孤立が精神保健上の重要な問題となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9798,7 +9798,7 @@
   {
     "id": "Q560",
     "theme": "語の流暢性課題を含む検査はどれか",
-    "knowledge_node": "語の流暢性課題を含む検査はどれかの適切な評価選択",
+    "knowledge_node": "HDS-Rには「知っている野菜の名前をできるだけ多く言う」語想起課題が含まれ、語の流暢性をみるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -9815,7 +9815,7 @@
   {
     "id": "Q561",
     "theme": "中心性脊髄損傷について正しいのはどれか",
-    "knowledge_node": "中心性脊髄損傷の特徴",
+    "knowledge_node": "中心性脊髄損傷は高齢者の頸椎過伸展外傷などで生じやすく、脊髄中心部の障害により下肢より上肢の麻痺が強いことが特徴である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9849,7 +9849,7 @@
   {
     "id": "Q563",
     "theme": "観念運動失行の検査はどれか",
-    "knowledge_node": "観念運動失行の検査法",
+    "knowledge_node": "観念運動失行は運動麻痺がないのに、命令された習慣的動作やパントマイムを正しく行えない状態であるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -9883,7 +9883,7 @@
   {
     "id": "Q565",
     "theme": "平均的な発症年齢が最も低いのはどれか",
-    "knowledge_node": "平均的な発症年齢が",
+    "knowledge_node": "福山型筋ジストロフィーは先天性筋ジストロフィーで乳児期早期から症状がみられ、選択肢中で平均発症年齢が最も低い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9899,7 +9899,7 @@
   {
     "id": "Q566",
     "theme": "多発性硬化症について正しいのはどれか",
-    "knowledge_node": "多発性硬化症の特徴",
+    "knowledge_node": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9963,7 +9963,7 @@
   {
     "id": "Q570",
     "theme": "小児自閉症について正しいのはどれか",
-    "knowledge_node": "小児自閉症の特徴",
+    "knowledge_node": "自閉スペクトラム症は幼児期から特徴が現れ、男児に多い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9979,7 +9979,7 @@
   {
     "id": "Q571",
     "theme": "アルコールの離脱症候群はどれか",
-    "knowledge_node": "アルコールの離脱症候群はどれか。2つ選べ",
+    "knowledge_node": "断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -9995,7 +9995,7 @@
   {
     "id": "Q572",
     "theme": "神経性大食症について正しいのはどれか",
-    "knowledge_node": "神経性大食症の特徴",
+    "knowledge_node": "反復する過食と、体重増加を防ぐ自己誘発性嘔吐や下剤乱用などの代償行動がみられる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10028,7 +10028,7 @@
   {
     "id": "Q574",
     "theme": "10 歳の男児",
-    "knowledge_node": "10 歳の男児の適切な評価選択",
+    "knowledge_node": "Duchenne型筋ジストロフィーで独歩不能となる時期は呼吸筋力低下や拘束性換気障害が進行しやすく、呼吸不全予防のため呼吸機能評価の優先度が高い",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -10079,7 +10079,7 @@
   {
     "id": "Q577",
     "theme": "立位で外乱による体の前方への傾きを足関節の運動で制御する際、外乱直後",
-    "knowledge_node": "立位で外乱による体の前方への傾きを足関節の運動で制御する際、外乱直後に最 も活動する筋",
+    "knowledge_node": "重心が前方へ移り、足関節戦略で後方へ戻すため腓腹筋など足関節底屈筋が早期に活動する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10095,7 +10095,7 @@
   {
     "id": "Q578",
     "theme": "運動による疲労時に筋内で増えるのはどれか",
-    "knowledge_node": "運動による疲労時に筋内で増えるのはどれか。2つ選べ",
+    "knowledge_node": "高強度運動で疲労が進むと解糖系への依存が高まり、乳酸と水素イオンが増加する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10111,7 +10111,7 @@
   {
     "id": "Q579",
     "theme": "非圧痕性浮腫を生じる疾患はどれか",
-    "knowledge_node": "非圧痕性浮腫を生じる疾患",
+    "knowledge_node": "ムコ多糖類が皮下に蓄積する粘液水腫を生じ、圧迫しても圧痕を残しにくい非圧痕性浮腫となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10143,7 +10143,7 @@
   {
     "id": "Q581",
     "theme": "腰椎椎間板ヘルニアで陽性となるテストはどれか",
-    "knowledge_node": "腰椎椎間板ヘルニアで陽性となるテストはどれかの適切な評価選択",
+    "knowledge_node": "大腿神経伸張テストは腹臥位などで膝を屈曲し、L2〜L4神経根や上位腰椎椎間板ヘルニアによる神経根症状を誘発する検査である",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -10160,7 +10160,7 @@
   {
     "id": "Q582",
     "theme": "筋萎縮性側索硬化症で生じにくい症状はどれか",
-    "knowledge_node": "筋萎縮性側索硬化症で",
+    "knowledge_node": "上位・下位運動ニューロン障害により四肢麻痺、舌萎縮、構音・嚥下障害が進行するが、眼球運動は比較的末期まで保たれやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10275,7 +10275,7 @@
   {
     "id": "Q589",
     "theme": "生活習慣病に含まれないのはどれか",
-    "knowledge_node": "生活習慣病に",
+    "knowledge_node": "生活習慣病には高血圧、脂質異常症、糖尿病、脳卒中など生活習慣と発症・進行が関連する疾患が含まれる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10291,7 +10291,7 @@
   {
     "id": "Q590",
     "theme": "ICFの脳卒中Brief core setに含まれるのはどれか",
-    "knowledge_node": "ICFの脳卒中Brief core setに含まれるのはどれかの適切な評価選択",
+    "knowledge_node": "ICFの脳卒中Brief Core Setには活動・参加領域として歩行が含まれるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -10325,7 +10325,7 @@
   {
     "id": "Q592",
     "theme": "栄養状態の評価として有用性が低いのはどれか",
-    "knowledge_node": "栄養状態の評価として有用性が低いのはどれかの適切な評価選択",
+    "knowledge_node": "栄養評価ではBMI、体重減少率、血清アルブミン、下腿周囲径などが用いられる",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -10343,7 +10343,7 @@
   {
     "id": "Q593",
     "theme": "上腕骨小結節に付着する筋はどれか",
-    "knowledge_node": "上腕骨小結節の付着筋",
+    "knowledge_node": "上腕骨小結節には肩甲下筋腱が付着する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10359,7 +10359,7 @@
   {
     "id": "Q594",
     "theme": "皮下組織の直下に筋腹を触知する筋はどれか",
-    "knowledge_node": "皮下組織の直下に筋腹を触知する筋",
+    "knowledge_node": "長腓骨筋は下腿外側の比較的浅層にあり、皮下直下で筋腹を触知しやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10375,7 +10375,7 @@
   {
     "id": "Q595",
     "theme": "腕神経叢の後神経束から分岐する神経はどれか",
-    "knowledge_node": "腕神経叢の後神経束から分岐する神経",
+    "knowledge_node": "腕神経叢の後神経束からは腋窩神経と橈骨神経などが分岐する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10391,7 +10391,7 @@
   {
     "id": "Q596",
     "theme": "舌下神経について正しいのはどれか",
-    "knowledge_node": "舌下神経の特徴",
+    "knowledge_node": "舌下神経は第12脳神経で、舌筋の運動を支配する純運動性脳神経である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10455,7 +10455,7 @@
   {
     "id": "Q600",
     "theme": "胃の解剖について正しいのはどれか",
-    "knowledge_node": "胃の解剖の特徴",
+    "knowledge_node": "食道と胃の境界部には噴門が位置する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10471,7 +10471,7 @@
   {
     "id": "Q601",
     "theme": "腎臓の解剖について正しいのはどれか",
-    "knowledge_node": "腎臓の解剖の特徴",
+    "knowledge_node": "ネフロンは腎小体と尿細管からなり、腎小体は糸球体とBowman嚢で構成される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10551,7 +10551,7 @@
   {
     "id": "Q606",
     "theme": "心不全の症候として正しいのはどれか",
-    "knowledge_node": "右心不全の症候として正しいのはどれか。2つ選べ",
+    "knowledge_node": "体静脈系うっ血により頸静脈怒張、肝脾腫、末梢浮腫などがみられる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10567,7 +10567,7 @@
   {
     "id": "Q607",
     "theme": "消化酵素について正しいのはどれか",
-    "knowledge_node": "消化酵素の特徴",
+    "knowledge_node": "ペプシンは胃内で蛋白質をポリペプチドへ分解し、リパーゼは脂肪を脂肪酸とグリセリンへ分解する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10583,7 +10583,7 @@
   {
     "id": "Q608",
     "theme": "排便機構について正しいのはどれか",
-    "knowledge_node": "排便機構の特徴",
+    "knowledge_node": "排便中枢は仙髄にあり、大脳皮質から随意的な抑制・促通を受ける",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10599,7 +10599,7 @@
   {
     "id": "Q609",
     "theme": "分娩後の乳汁分泌に作用するホルモンはどれか",
-    "knowledge_node": "分娩後の乳汁分泌に作用するホルモン",
+    "knowledge_node": "分娩後の乳汁産生を促進するのは下垂体前葉から分泌されるプロラクチンである",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10663,7 +10663,7 @@
   {
     "id": "Q613",
     "theme": "膝関節半月板について正しいのはどれか",
-    "knowledge_node": "膝関節半月板の特徴",
+    "knowledge_node": "外側半月板は外側側副靱帯と膝窩筋腱で隔てられ直接付着しないため可動性が大きい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10679,7 +10679,7 @@
   {
     "id": "Q614",
     "theme": "足部の内がえしに作用する筋はどれか",
-    "knowledge_node": "足部の内がえしに作用する筋",
+    "knowledge_node": "足部内がえしは内反と内転を伴い、後脛骨筋と前脛骨筋が作用する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10743,7 +10743,7 @@
   {
     "id": "Q618",
     "theme": "正常な肉芽の特徴はどれか",
-    "knowledge_node": "正常な肉芽の特徴",
+    "knowledge_node": "正常な肉芽組織は赤〜鮮紅色で湿潤し、新生毛細血管が豊富なため軽い刺激でも出血しやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10759,7 +10759,7 @@
   {
     "id": "Q619",
     "theme": "意識することなく再生される記憶はどれか",
-    "knowledge_node": "意識することなく再生される記憶",
+    "knowledge_node": "意識せずに技能や習慣として再生される記憶は手続き記憶で、非陳述記憶に分類される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10775,7 +10775,7 @@
   {
     "id": "Q620",
     "theme": "Eriksonによる発達段階で老年期に獲得すべき課題はどれか",
-    "knowledge_node": "Eriksonによる発達段階で老年期に獲得すべき課題",
+    "knowledge_node": "老年期の課題は「自我の統合 対 絶望」である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10873,7 +10873,7 @@
   {
     "id": "Q626",
     "theme": "重症筋無力症について正しいのはどれか",
-    "knowledge_node": "重症筋無力症の特徴",
+    "knowledge_node": "重症筋無力症は神経筋接合部のアセチルコリン受容体などに対する自己抗体による自己免疫疾患で、易疲労性と日内変動を示す",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10937,7 +10937,7 @@
   {
     "id": "Q630",
     "theme": "血友病について正しいのはどれか",
-    "knowledge_node": "血友病の特徴",
+    "knowledge_node": "血友病は凝固因子欠乏により関節内出血を反復し、膝・足・肘などに血友病性関節症を生じる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -10988,7 +10988,7 @@
   {
     "id": "Q633",
     "theme": "疾患と病変の組合せで正しいのはどれか",
-    "knowledge_node": "疾患と病変の組合せ",
+    "knowledge_node": "脳内βアミロイド沈着による老人斑と、リン酸化tauによる神経原線維変化が代表的病理所見である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11006,7 +11006,7 @@
   {
     "id": "Q634",
     "theme": "境界性パーソナリティ障害にみられないのはどれか",
-    "knowledge_node": "境界性パーソナリティ障害に",
+    "knowledge_node": "感情や対人関係、自己像の不安定さ、空虚感、衝動性、自傷行為などがみられる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11112,7 +11112,7 @@
   {
     "id": "Q640",
     "theme": "認知症の原因になりにくい疾患はどれか",
-    "knowledge_node": "認知症の原因になりにくい疾患",
+    "knowledge_node": "正常圧水頭症、慢性硬膜下血腫、葉酸・B12欠乏などは可逆性認知症の原因となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11147,7 +11147,7 @@
   {
     "id": "Q642",
     "theme": "関節リウマチにおいて、余暇、仕事、身の回りのことの3つの要素から機能状態の程度を示す",
-    "knowledge_node": "関節リウマチにおいて、余暇、仕事、身の回りのことの3つの要素から機能状態の程度を示す指標",
+    "knowledge_node": "Steinbrockerのclass分類は関節リウマチ患者の機能障害を、身の回り動作・職業活動・余暇活動の可否から4段階に分類する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11215,7 +11215,7 @@
   {
     "id": "Q646",
     "theme": "脳卒中片麻痺患者に用いられる評価法で正しいのはどれか",
-    "knowledge_node": "脳卒中片麻痺患者に用いられる評価法",
+    "knowledge_node": "NIHSSには意識水準・質問・命令など意識状態の評価が含まれる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11267,7 +11267,7 @@
   {
     "id": "Q649",
     "theme": "NYHA分類で正しいのはどれか",
-    "knowledge_node": "NYHA分類",
+    "knowledge_node": "NYHA心機能分類は心疾患患者の自覚症状と身体活動制限の程度をⅠ〜Ⅳの4段階で分類する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11284,7 +11284,7 @@
   {
     "id": "Q650",
     "theme": "筋力増強トレーニングの効果で正しいのはどれか",
-    "knowledge_node": "筋力増強トレーニングの効果",
+    "knowledge_node": "、設定した運動速度に近い速度域で筋力増強効果が最も大きくなる「速度特異性」がある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11319,7 +11319,7 @@
   {
     "id": "Q652",
     "theme": "軽い運動から激しい運動へと運動強度を徐々に増加させるときの正常な循環応答で正しいのは",
-    "knowledge_node": "軽い運動から激しい運動へと運動強度を徐々に増加させるときの正常な循環応答",
+    "knowledge_node": "動脈血酸素飽和度がほぼ保たれるため、動脈血酸素含量は大きく変化しない",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11409,7 +11409,7 @@
   {
     "id": "Q657",
     "theme": "アテトーゼ型脳性麻痺に残存しやすい原始反射はどれか",
-    "knowledge_node": "アテトーゼ型脳性麻痺に残存しやすい原始反射",
+    "knowledge_node": "姿勢反射の成熟が遅れ、対称性緊張性頸反射などの原始反射が長く残存して随意運動を妨げることがある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11427,7 +11427,7 @@
   {
     "id": "Q658",
     "theme": "閉塞性動脈硬化症で正しいのはどれか",
-    "knowledge_node": "閉塞性動脈硬化症",
+    "knowledge_node": "下肢動脈狭窄により冷感、しびれ、間欠性跛行、重症例では安静時痛を生じる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11461,7 +11461,7 @@
   {
     "id": "Q660",
     "theme": "身体的フレイルの特徴で正しいのはどれか",
-    "knowledge_node": "身体的フレイルの特徴",
+    "knowledge_node": "体重減少、疲労感、筋力低下、歩行速度低下、身体活動量低下が代表的である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11550,7 +11550,7 @@
   {
     "id": "Q665",
     "theme": "消化器の解剖で正しいのはどれか",
-    "knowledge_node": "消化器の解剖",
+    "knowledge_node": "食道には咽頭食道移行部、大動脈弓・左主気管支交差部、横隔膜食道裂孔付近の生理的狭窄があり、3が正しい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11585,7 +11585,7 @@
   {
     "id": "Q667",
     "theme": "ホルモンの産生で正しいのはどれか",
-    "knowledge_node": "ホルモンの産生",
+    "knowledge_node": "バソプレシン（ADH）は視床下部の視索上核・室傍核で合成され、下垂体後葉から放出される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11602,7 +11602,7 @@
   {
     "id": "Q668",
     "theme": "末梢神経と体表からの触知部位との組合せで正しいのはどれか",
-    "knowledge_node": "末梢神経と体表からの触知部位との組合せ",
+    "knowledge_node": "尺骨神経は肘後内側で上腕骨内側上顆と肘頭の間を通り、体表から触知しやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11619,7 +11619,7 @@
   {
     "id": "Q669",
     "theme": "遺伝情報伝達で正しいのはどれか",
-    "knowledge_node": "遺伝情報伝達",
+    "knowledge_node": "核DNAの全塩基配列を含む概念として扱う",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11637,7 +11637,7 @@
   {
     "id": "Q670",
     "theme": "骨格筋の筋収縮で正しいのはどれか",
-    "knowledge_node": "骨格筋の筋収縮",
+    "knowledge_node": "ATPがミオシン頭部で加水分解され、そのエネルギーで頭部が起き上がり、アクチンとの結合・パワーストロークを行う",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11655,7 +11655,7 @@
   {
     "id": "Q671",
     "theme": "左上肢の感覚と伝導路が通る部位との組合せで正しいのはどれか",
-    "knowledge_node": "左上肢の感覚と伝導路が通る部位との組合せ",
+    "knowledge_node": "痛覚は脊髄後角で二次ニューロンに交代し、対側へ交叉して脊髄側索の外側脊髄視床路を上行する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11673,7 +11673,7 @@
   {
     "id": "Q672",
     "theme": "交感神経の機能で正しいのはどれか",
-    "knowledge_node": "交感神経の機能",
+    "knowledge_node": "毛様体筋が弛緩して水晶体が薄くなり、遠方視に適した状態となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11726,7 +11726,7 @@
   {
     "id": "Q675",
     "theme": "摂食嚥下の咽頭期に生じる現象で正しいのはどれか",
-    "knowledge_node": "摂食嚥下の咽頭期に生じる現象",
+    "knowledge_node": "嚥下反射により軟口蓋挙上、喉頭挙上、声門閉鎖、喉頭蓋反転が起こり、食塊を食道へ送る",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11744,7 +11744,7 @@
   {
     "id": "Q676",
     "theme": "集合管における尿の濃縮に関わるホルモンはどれか",
-    "knowledge_node": "集合管における尿の濃縮に関わるホルモン",
+    "knowledge_node": "アルドステロンは遠位尿細管から集合管でNa+再吸収を促進し、水分保持に関与する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11779,7 +11779,7 @@
   {
     "id": "Q678",
     "theme": "肩甲骨を胸郭に押し付ける作用のある筋はどれか",
-    "knowledge_node": "肩甲骨を胸郭に押し付ける作用のある筋",
+    "knowledge_node": "前鋸筋は肩甲骨内側縁から胸郭へ作用し、肩甲骨を胸壁へ固定する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11814,7 +11814,7 @@
   {
     "id": "Q680",
     "theme": "膝関節の運動で正しいのはどれか",
-    "knowledge_node": "膝関節の運動",
+    "knowledge_node": "大腿骨外側顆の後方移動量が内側顆より大きく、終末伸展時のスクリューホーム運動につながる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11850,7 +11850,7 @@
   {
     "id": "Q682",
     "theme": "努力性呼気時に働く筋はどれか",
-    "knowledge_node": "努力性呼気時に働く筋",
+    "knowledge_node": "腹筋群が腹圧を高めて横隔膜を押し上げ、内肋間筋が肋骨を下制する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11867,7 +11867,7 @@
   {
     "id": "Q683",
     "theme": "病原体と腫瘍発生との組合せで誤っているのはどれか",
-    "knowledge_node": "病原体と腫瘍発生との組合せ",
+    "knowledge_node": "A型肝炎ウイルスは慢性肝炎へ移行しにくく、肝細胞癌の主要原因とはならない",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11954,7 +11954,7 @@
   {
     "id": "Q688",
     "theme": "ASIAの評価法における脊髄の髄節とそのkey muscleの組合せで正しいのはどれ",
-    "knowledge_node": "ASIAの評価法における脊髄の髄節とそのkey muscleの組合せ",
+    "knowledge_node": "T1が小指外転筋に対応する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -11989,7 +11989,7 @@
   {
     "id": "Q690",
     "theme": "失行の検査でないのはどれか",
-    "knowledge_node": "失行を評価する課題と失認・失語評価との識別",
+    "knowledge_node": "失行は運動麻痺などでは説明できない学習された目的動作の障害であるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -12060,7 +12060,7 @@
   {
     "id": "Q694",
     "theme": "骨折の名称と部位との組合せで正しいのはどれか",
-    "knowledge_node": "骨折の名称と部位との組合せ",
+    "knowledge_node": "Malgaigne骨折は骨盤輪の垂直不安定性を伴う骨盤骨折である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12077,7 +12077,7 @@
   {
     "id": "Q695",
     "theme": "Parkinson病でみられないのはどれか",
-    "knowledge_node": "Parkinson病",
+    "knowledge_node": "動作緩慢、安静時振戦、自律神経症状として便秘、前駆症状としてREM睡眠行動障害などがみられる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12148,7 +12148,7 @@
   {
     "id": "Q699",
     "theme": "うつ病に起こりやすい思考障害はどれか",
-    "knowledge_node": "うつ病に起こりやすい思考障害",
+    "knowledge_node": "思考の進行が遅くなり、考えが浮かびにくい「思考制止」がみられる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12166,7 +12166,7 @@
   {
     "id": "Q700",
     "theme": "アルコール離脱せん妄で正しいのはどれか",
-    "knowledge_node": "アルコール離脱せん妄",
+    "knowledge_node": "アルコール離脱せん妄は断酒後48〜96時間頃に出現しやすく、意識障害、幻視、振戦、自律神経亢進を伴い重症では生命に関わる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12201,7 +12201,7 @@
   {
     "id": "Q702",
     "theme": "神経性無食欲症で正しいのはどれか",
-    "knowledge_node": "神経性無食欲症",
+    "knowledge_node": "著しいやせがあっても病識に乏しく、肥満への恐怖とボディイメージの歪みを認める",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12340,7 +12340,7 @@
   {
     "id": "Q710",
     "theme": "病的反射と刺激方法の組合せで正しいのはどれか",
-    "knowledge_node": "病的反射と刺激方法の組合せ",
+    "knowledge_node": "Gonda反射は第4趾を下方へ強く牽引し、Oppenheim反射は脛骨内縁を上から下へ擦る",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12358,7 +12358,7 @@
   {
     "id": "Q711",
     "theme": "身体計測で正しいのはどれか",
-    "knowledge_node": "身体計測で正しいのはどれかに対する適切な評価・検査を選択する",
+    "knowledge_node": "胸囲は安静呼吸の呼気終末に測定するのが基本である",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -12375,7 +12375,7 @@
   {
     "id": "Q712",
     "theme": "Danielsらの徒手筋力テストにおいて座位で筋力3を判定できるのはどれか",
-    "knowledge_node": "Danielsらの徒手筋力テストにおいて座位で筋力3を判定できるのはどれかに対する適切な評価・検査を選択する",
+    "knowledge_node": "Daniels法で重力に抗して全可動域を動かせる筋力を段階3と判定する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -12392,7 +12392,7 @@
   {
     "id": "Q713",
     "theme": "NRS〈numerical rating scale〉で正しいのはどれか",
-    "knowledge_node": "NRS〈numerical rating scale〉",
+    "knowledge_node": "NRSは痛みの強さを数値で自己評価する順序尺度で、通常0〜10の11段階を用いる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12410,7 +12410,7 @@
   {
     "id": "Q714",
     "theme": "若年者と比較した高齢者の歩行で正しいのはどれか",
-    "knowledge_node": "若年者と比較した高齢者の歩行",
+    "knowledge_node": "歩行速度・歩幅が低下し、両脚支持期が延長、腕振りも減少する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12515,7 +12515,7 @@
   {
     "id": "Q720",
     "theme": "発育性股関節形成不全で正しいのはどれか",
-    "knowledge_node": "発育性股関節形成不全",
+    "knowledge_node": "股関節外転位を保持するPavlik harness（リーメンビューゲル装具）が用いられる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12533,7 +12533,7 @@
   {
     "id": "Q721",
     "theme": "前頭葉と側頭葉に限局性の大脳皮質の萎縮を認める疾患はどれか",
-    "knowledge_node": "前頭葉と側頭葉に限局性の大脳皮質の萎縮を認める疾患",
+    "knowledge_node": "前頭葉・側頭葉優位の限局性萎縮が特徴で、人格変化や脱抑制、言語症状などが目立つ",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12551,7 +12551,7 @@
   {
     "id": "Q722",
     "theme": "痛の評価に用いられるのはどれか",
-    "knowledge_node": "疼痛強度・性質を評価する尺度の選択",
+    "knowledge_node": "疼痛強度の評価には表情図から選ぶface scaleと、線上の位置で強度を示すVASが用いられる",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -12605,7 +12605,7 @@
   {
     "id": "Q725",
     "theme": "Perthes病で正しいのはどれか",
-    "knowledge_node": "Perthes病",
+    "knowledge_node": "Perthes病は小児の大腿骨頭骨端に生じる阻血性壊死で、治療では骨頭を臼蓋内に保ちつつ免荷する装具療法が行われる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12834,7 +12834,7 @@
   {
     "id": "Q738",
     "theme": "頸動脈洞反射で正しいのはどれか",
-    "knowledge_node": "頸動脈洞反射",
+    "knowledge_node": "血圧上昇を舌咽神経求心路で感知し、延髄を介して迷走神経遠心路が亢進し心拍数を低下させる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12852,7 +12852,7 @@
   {
     "id": "Q739",
     "theme": "皮膚の侵害受容器はどれか",
-    "knowledge_node": "皮膚の侵害受容器",
+    "knowledge_node": "皮膚の痛覚・温度覚など侵害刺激は自由神経終末で受容される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12957,7 +12957,7 @@
   {
     "id": "Q745",
     "theme": "血糖を上昇させる作用のあるホルモンはどれか",
-    "knowledge_node": "血糖を上昇させる作用のあるホルモン",
+    "knowledge_node": "アドレナリンは肝・筋のグリコーゲン分解や糖新生を促進し、血糖を上昇させる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12974,7 +12974,7 @@
   {
     "id": "Q746",
     "theme": "通常歩行〈4km/h〉の代謝当量〈METs〉はどれか",
-    "knowledge_node": "通常歩行〈4km/h〉の代謝当量〈METs〉",
+    "knowledge_node": "通常速度約4km/hの歩行はおよそ3METs前後で、3〜4METs程度の中等度未満の活動に相当する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -12992,7 +12992,7 @@
   {
     "id": "Q747",
     "theme": "眼球運動を行う筋はどれか",
-    "knowledge_node": "眼球運動を行う筋",
+    "knowledge_node": "内側直筋は眼球を内転させる外眼筋で、動眼神経支配である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13010,7 +13010,7 @@
   {
     "id": "Q748",
     "theme": "肩関節外転90°の時の肩甲骨上方回旋角度で正しいのはどれか",
-    "knowledge_node": "肩関節外転90°の時の肩甲骨上方回旋角度",
+    "knowledge_node": "肩甲上腕リズムにより上腕骨約60°、肩甲骨上方回旋約30°が目安となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13028,7 +13028,7 @@
   {
     "id": "Q749",
     "theme": "成人の正常立位姿勢で正しいのはどれか",
-    "knowledge_node": "成人の正常立位姿勢",
+    "knowledge_node": "骨盤前面の両上前腸骨棘と恥骨結合を結ぶ面がほぼ前額面と一致する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13045,7 +13045,7 @@
   {
     "id": "Q750",
     "theme": "疾患と病理学的変化の組合せで正しいのはどれか",
-    "knowledge_node": "疾患と病理学的変化の組合せ",
+    "knowledge_node": "多発性硬化症は中枢神経系の炎症性脱髄疾患で、脳・脊髄・視神経などに時間的・空間的に多発する脱髄病変を形成する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13063,7 +13063,7 @@
   {
     "id": "Q751",
     "theme": "アレルギーの分類と組織傷害の機序との組合せで正しいのはどれか",
-    "knowledge_node": "アレルギーの分類と組織傷害の機序との組合せ",
+    "knowledge_node": "Ⅰ型アレルギーはIgEを介する即時型過敏反応で、肥満細胞からヒスタミンなどが放出される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13168,7 +13168,7 @@
   {
     "id": "Q757",
     "theme": "高齢者の長期の安静臥床の影響で正しいのはどれか",
-    "knowledge_node": "高齢者の長期の安静臥床の影響",
+    "knowledge_node": "感覚刺激低下などから記銘力低下を生じうる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13203,7 +13203,7 @@
   {
     "id": "Q759",
     "theme": "乳児の水頭症でみられる症状はどれか",
-    "knowledge_node": "乳児の水頭症でみられる症状",
+    "knowledge_node": "頭囲拡大、頭皮静脈怒張、大泉門膨隆とともに、眼球が下方へ偏位して上方に強膜が見える落陽現象がみられる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13254,7 +13254,7 @@
   {
     "id": "Q762",
     "theme": "続発性骨粗鬆症発症の危険因子はどれか",
-    "knowledge_node": "続発性骨粗鬆症発症の危険因子",
+    "knowledge_node": "慢性炎症、活動性低下、ステロイド治療などにより続発性骨粗鬆症のリスクが高くなる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13271,7 +13271,7 @@
   {
     "id": "Q763",
     "theme": "神経系の感染症と病原体の組合せで正しいのはどれか",
-    "knowledge_node": "神経系の感染症と病原体の組合せ",
+    "knowledge_node": "急性灰白髄炎（ポリオ）はポリオウイルス感染で脊髄前角細胞を障害する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13289,7 +13289,7 @@
   {
     "id": "Q764",
     "theme": "脳腫瘍とその症状の組合せで正しいのはどれか",
-    "knowledge_node": "脳腫瘍とその症状の組合せ",
+    "knowledge_node": "下垂体腺腫が視交叉を圧迫すると、交叉する鼻側網膜線維が障害され両耳側半盲を生じる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13323,7 +13323,7 @@
   {
     "id": "Q766",
     "theme": "統合失調症の患者が「不気味な何かが起こりそうだ」と不安緊迫感を訴えた",
-    "knowledge_node": "統合失調症の患者が「不気味な何かが起こりそうだ」と不安緊迫感を訴えた。この症状",
+    "knowledge_node": "「何か不吉なことが起こりそうだ」という、周囲全体に特別な意味が感じられる不気味な気分は妄想気分であるを識別する",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": "KNOW",
@@ -13555,7 +13555,7 @@
   {
     "id": "Q779",
     "theme": "ICFの評価点とその内容の組合せで正しいのはどれか",
-    "knowledge_node": "ICF評価点の意味と心身機能・活動・参加の評価を対応づける",
+    "knowledge_node": "ICF身体構造の評価点が構造障害の程度・性質・部位を表すこと",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": null,
@@ -13607,7 +13607,7 @@
   {
     "id": "Q782",
     "theme": "関節可動域測定法（日本整形外科学会、日本リハビリテーション医学会基準による）における",
-    "knowledge_node": "関節可動域測定法（日本整形外科学会、日本リハビリテーション医学会基準による）における股関節の参考可動域角度",
+    "knowledge_node": "日本整形外科学会・日本リハビリテーション医学会の参考可動域では股関節伸展15°が基準値である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13660,7 +13660,7 @@
   {
     "id": "Q785",
     "theme": "胸腰仙椎装具で正しいのはどれか",
-    "knowledge_node": "胸腰仙椎装具",
+    "knowledge_node": "胸腰仙椎装具の骨盤帯は腸骨稜と大転子の間に位置させ、骨盤を安定して支持する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13677,7 +13677,7 @@
   {
     "id": "Q786",
     "theme": "変形性膝関節症で正しいのはどれか",
-    "knowledge_node": "変形性膝関節症",
+    "knowledge_node": "荷重開始時の疼痛や動作開始時痛がみられ、進行すると大腿四頭筋萎縮を伴う",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13695,7 +13695,7 @@
   {
     "id": "Q787",
     "theme": "Froment徴候が陽性のとき、麻痺を疑うべき神経はどれか",
-    "knowledge_node": "Froment徴候が陽性のとき、麻痺を疑うべき神経",
+    "knowledge_node": "Froment徴候は尺骨神経麻痺で母指内転筋が弱く、紙をつまむ際に長母指屈筋で代償して母指IP関節が屈曲する徴候である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13730,7 +13730,7 @@
   {
     "id": "Q789",
     "theme": "筋萎縮性側索硬化症で下位運動ニューロン障害の徴候はどれか",
-    "knowledge_node": "筋萎縮性側索硬化症で下位運動ニューロン障害の徴候",
+    "knowledge_node": "筋萎縮、筋力低下、線維束性収縮、腱反射低下などがみられる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13854,7 +13854,7 @@
   {
     "id": "Q796",
     "theme": "慢性心不全患者に対する運動療法の効果で正しいのはどれか",
-    "knowledge_node": "慢性心不全患者に対する運動療法の効果",
+    "knowledge_node": "慢性心不全に対する適切な運動療法は、運動耐容能とQOLを改善し、交感神経過活動を抑える方向に働く",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13961,7 +13961,7 @@
   {
     "id": "Q802",
     "theme": "廃用症候群の症状と予防法の組合せで誤っているのはどれか",
-    "knowledge_node": "廃用症候群の各症状に対応した予防的介入",
+    "knowledge_node": "廃用による骨萎縮の予防には荷重刺激が重要で、FESだけを骨萎縮予防の代表手段とするのは不適切",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -13979,7 +13979,7 @@
   {
     "id": "Q803",
     "theme": "ノーマライゼーションで正しいのはどれか",
-    "knowledge_node": "ノーマライゼーション",
+    "knowledge_node": "ノーマライゼーションは障害の有無にかかわらず、地域で通常の生活を営める社会を目指す理念である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14155,7 +14155,7 @@
   {
     "id": "Q813",
     "theme": "副腎髄質から分泌されるホルモンはどれか",
-    "knowledge_node": "副腎髄質から分泌されるホルモン",
+    "knowledge_node": "副腎髄質はカテコールアミンであるアドレナリンとノルアドレナリンを分泌する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14206,7 +14206,7 @@
   {
     "id": "Q816",
     "theme": "呼吸生理の説明で正しいのはどれか",
-    "knowledge_node": "呼吸生理の説明",
+    "knowledge_node": "Bohr効果により酸素解離曲線が右方移動し、ヘモグロビンから酸素が解離しやすくなる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14223,7 +14223,7 @@
   {
     "id": "Q817",
     "theme": "血液凝固因子はどれか",
-    "knowledge_node": "血液凝固因子",
+    "knowledge_node": "トロンビンとフィブリノゲンは凝固系に直接関与する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14258,7 +14258,7 @@
   {
     "id": "Q819",
     "theme": "腎臓の排尿機構で正しいのはどれか",
-    "knowledge_node": "腎臓の排尿機構",
+    "knowledge_node": "Na+、水、ブドウ糖、アミノ酸など多くの物質が再吸収される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14275,7 +14275,7 @@
   {
     "id": "Q820",
     "theme": "体温調節の中枢で正しいのはどれか",
-    "knowledge_node": "体温調節の中枢",
+    "knowledge_node": "体温調節中枢は視床下部にあり、皮膚や中枢の温度情報を統合して発汗・血管反応・ふるえなどを調節する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14292,7 +14292,7 @@
   {
     "id": "Q821",
     "theme": "肩甲上腕関節の運動とそれに作用する筋の組合せで正しいのはどれか",
-    "knowledge_node": "肩甲上腕関節の運動とそれに作用する筋の組合せ",
+    "knowledge_node": "広背筋は肩関節の伸展・内転・内旋に作用するため、内転との組合せ3が正しい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14309,7 +14309,7 @@
   {
     "id": "Q822",
     "theme": "手の内在筋プラス肢位の組合せで正しいのはどれか",
-    "knowledge_node": "手の内在筋プラス肢位の組合せ",
+    "knowledge_node": "内在筋プラス肢位はMP関節屈曲、PIP・DIP関節伸展である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14344,7 +14344,7 @@
   {
     "id": "Q824",
     "theme": "快適歩行から速度を速めた際の変化で正しいのはどれか",
-    "knowledge_node": "快適歩行から速度を速めた際の変化",
+    "knowledge_node": "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14416,7 +14416,7 @@
   {
     "id": "Q828",
     "theme": "小脳橋角部に最も多い脳腫瘍はどれか",
-    "knowledge_node": "小脳橋角部に最も多い脳腫瘍",
+    "knowledge_node": "小脳橋角部腫瘍で最も多いのは前庭神経鞘腫（聴神経腫瘍）であるため、5が正しい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14451,7 +14451,7 @@
   {
     "id": "Q830",
     "theme": "加齢によっても保たれる精神機能はどれか",
-    "knowledge_node": "加齢によっても保たれる精神機能",
+    "knowledge_node": "処理速度、記銘、注意などは低下しやすいが、語彙や言語理解など結晶性知能は比較的保たれる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14468,7 +14468,7 @@
   {
     "id": "Q831",
     "theme": "脳の病変部位と出現しやすい症候との組合せで正しいのはどれか",
-    "knowledge_node": "脳の病変部位と出現しやすい症候との組合せ",
+    "knowledge_node": "線条体は大脳基底核の一部で、障害により不随意運動や運動調節障害を生じる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14554,7 +14554,7 @@
   {
     "id": "Q836",
     "theme": "集中治療室での急性期リハビリテーションに関して正しいのはどれか",
-    "knowledge_node": "集中治療室での急性期リハビリテーションに関して",
+    "knowledge_node": "squeezingは呼気に合わせて胸郭を圧迫し、呼気流速を高めて排痰を促す手技である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14623,7 +14623,7 @@
   {
     "id": "Q840",
     "theme": "統合失調症に特徴的な思考の障害はどれか",
-    "knowledge_node": "統合失調症に特徴的な思考の障害",
+    "knowledge_node": "思考途絶が特徴的で、思考の流れが突然遮断され会話が止まる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14658,7 +14658,7 @@
   {
     "id": "Q842",
     "theme": "概日リズムの障害による疾患はどれか",
-    "knowledge_node": "概日リズムの障害による疾患",
+    "knowledge_node": "睡眠相後退症候群は体内時計の位相が遅れ、入眠・覚醒時刻が社会的時刻より後方へずれる概日リズム睡眠障害である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14709,7 +14709,7 @@
   {
     "id": "Q845",
     "theme": "62 歳の女性",
-    "knowledge_node": "小脳性運動失調の評価に適した指標と不適切な指標の識別",
+    "knowledge_node": "小脳・脳幹萎縮と協調運動障害から脊髄小脳変性症などを想定するを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -14778,7 +14778,7 @@
   {
     "id": "Q849",
     "theme": "四肢長と測定部位の組合せで正しいのはどれか",
-    "knowledge_node": "四肢長と測定部位の組合せ",
+    "knowledge_node": "棘果長は上前腸骨棘から内果までを測定する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14813,7 +14813,7 @@
   {
     "id": "Q851",
     "theme": "腱反射が亢進する疾患はどれか",
-    "knowledge_node": "腱反射が亢進する疾患",
+    "knowledge_node": "多発性硬化症は中枢神経の錐体路障害を起こし、上位運動ニューロン徴候として腱反射亢進や病的反射を示す",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14830,7 +14830,7 @@
   {
     "id": "Q852",
     "theme": "Danielsらの徒手筋力テストで、検査する筋の段階と開始肢位の組合せで正しいのはどれか",
-    "knowledge_node": "Danielsらの徒手筋力テストで、検査する筋の段階と開始肢位の組合せ",
+    "knowledge_node": "、後脛骨筋の段階2は重力の影響を除いた条件で足部の内反・底屈方向の運動を評価する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14847,7 +14847,7 @@
   {
     "id": "Q853",
     "theme": "Timed Up and Go Test（TUG）で正しいのはどれか",
-    "knowledge_node": "Timed Up and Go Test（TUG）",
+    "knowledge_node": "TUGは椅子座位から立ち上がり3m歩行し方向転換して戻り、再び背もたれに座るまでの時間を測る",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14865,7 +14865,7 @@
   {
     "id": "Q854",
     "theme": "遂行機能障害の診断に用いる検査はどれか",
-    "knowledge_node": "遂行機能障害の診断に用いる検査はどれかに対して適切な評価・検査を選択する",
+    "knowledge_node": "WCSTで方略転換を含む遂行機能を評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -14916,7 +14916,7 @@
   {
     "id": "Q857",
     "theme": "Spurling テストが陽性のとき、疑うべき疾患はどれか",
-    "knowledge_node": "Spurling テストが陽性のとき、疑うべき疾患",
+    "knowledge_node": "Spurlingテストは頸部を伸展・側屈し軸圧を加えて上肢放散痛を誘発し、頸椎神経根障害を評価する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -14933,7 +14933,7 @@
   {
     "id": "Q858",
     "theme": "Brunnstrom法ステージの検査において、ステージと可能な随意運動の組合せで正しいのはどれか",
-    "knowledge_node": "Brunnstrom法ステージの検査において、ステージと可能な随意運動の組合せ",
+    "knowledge_node": "共同運動パターンが随意的に可能となり、肩関節内転・肘関節伸展・前腕回内は伸展共同運動に含まれる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15036,7 +15036,7 @@
   {
     "id": "Q864",
     "theme": "PTB式免荷装具の除圧部位はどれか",
-    "knowledge_node": "PTB式免荷装具の除圧部位はどれかに対して適切な装具・機器設定を選択する",
+    "knowledge_node": "PTB式装具は膝蓋腱部など耐圧性の高い部位で荷重し、脛骨粗面や腓骨頭など骨突出部は除圧する",
     "task": "device_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": null,
@@ -15123,7 +15123,7 @@
   {
     "id": "Q869",
     "theme": "頸髄損傷の呼吸障害で正しいのはどれか",
-    "knowledge_node": "頸髄損傷の呼吸障害",
+    "knowledge_node": "呼吸筋麻痺により肺活量や予備呼気量が低下し、咳嗽力も弱くなる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15140,7 +15140,7 @@
   {
     "id": "Q870",
     "theme": "8歳の脳性麻痺児が階段昇降時に手すりを必要とし、長距離の歩行や狭い場所を歩くときに介助が必要な場",
-    "knowledge_node": "8歳の脳性麻痺児が階段昇降時に手すりを必要とし、長距離の歩行や狭い場所を歩くときに介助が必要な場合、GMFCS-Expanded & Revised（E&R）のレベル",
+    "knowledge_node": "GMFCS-E&Rの6〜12歳では、レベルⅡは手すりを使って階段昇降し、長距離や不整地・狭い場所で制限や介助を要することがあるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": "INTERPRET",
@@ -15157,7 +15157,7 @@
   {
     "id": "Q871",
     "theme": "人工呼吸器装着患者の理学療法で適切でないのはどれか",
-    "knowledge_node": "人工呼吸器装着患者の離床・排痰・吸引における安全管理",
+    "knowledge_node": "『ベッドアップ60°まで』と上限を固定する1が不適切時の優先対応",
     "task": "safety_priority",
     "primary_ability": "DECIDE",
     "secondary_ability": "INTERPRET",
@@ -15261,7 +15261,7 @@
   {
     "id": "Q877",
     "theme": "筋皮神経支配の筋はどれか",
-    "knowledge_node": "筋皮神経支配の筋",
+    "knowledge_node": "筋皮神経は烏口腕筋、上腕二頭筋、上腕筋を支配する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15296,7 +15296,7 @@
   {
     "id": "Q879",
     "theme": "動脈と触知可能な部位との組合せで誤っているのはどれか",
-    "knowledge_node": "動脈と触知可能な部位との組合せ",
+    "knowledge_node": "後脛骨動脈は内果後方で触知する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15365,7 +15365,7 @@
   {
     "id": "Q883",
     "theme": "Scarpa 三角の内で触知できる筋はどれか",
-    "knowledge_node": "Scarpa 三角の内で触知できる筋",
+    "knowledge_node": "Scarpa三角には腸腰筋と恥骨筋などが床を形成し、体表から触知可能である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15399,7 +15399,7 @@
   {
     "id": "Q885",
     "theme": "神経筋接合部における神経伝達物質はどれか",
-    "knowledge_node": "神経筋接合部における神経伝達物質",
+    "knowledge_node": "運動神経終末からアセチルコリンが放出され、ニコチン性受容体へ結合する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15433,7 +15433,7 @@
   {
     "id": "Q887",
     "theme": "筋紡錘の感覚神経線維で正しいのはどれか",
-    "knowledge_node": "筋紡錘の感覚神経線維",
+    "knowledge_node": "筋紡錘の求心性線維は一次終末のIa群と二次終末のII群",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15469,7 +15469,7 @@
   {
     "id": "Q889",
     "theme": "脳神経とその働きの組合せで正しいのはどれか",
-    "knowledge_node": "脳神経とその働きの組合せ",
+    "knowledge_node": "三叉神経下顎枝は咀嚼筋を支配して下顎運動を担う",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15486,7 +15486,7 @@
   {
     "id": "Q890",
     "theme": "排尿に関与する神経で正しいのはどれか",
-    "knowledge_node": "排尿に関与する神経",
+    "knowledge_node": "排尿筋が弛緩し、内尿道括約筋が収縮して蓄尿を促す",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15503,7 +15503,7 @@
   {
     "id": "Q891",
     "theme": "男性生殖器系で正しいのはどれか",
-    "knowledge_node": "男性生殖器系",
+    "knowledge_node": "性的刺激による勃起には大脳辺縁系や視床下部など中枢神経系が関与し、副交感神経を介して陰茎血流が増加する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15520,7 +15520,7 @@
   {
     "id": "Q892",
     "theme": "嫌気的代謝の過程で生成される物質はどれか",
-    "knowledge_node": "嫌気的代謝の過程で生成される物質",
+    "knowledge_node": "グルコースからピルビン酸が生成され、酸素不足時には乳酸へ変換される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15555,7 +15555,7 @@
   {
     "id": "Q894",
     "theme": "筋と足への作用との組合せで正しいのはどれか",
-    "knowledge_node": "筋と足への作用との組合せ",
+    "knowledge_node": "長母指伸筋は足関節背屈、後脛骨筋は内がえしに作用する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15572,7 +15572,7 @@
   {
     "id": "Q895",
     "theme": "股関節伸展、内転、内旋および膝関節屈曲に作用する筋はどれか",
-    "knowledge_node": "股関節伸展、内転、内旋および膝関節屈曲に作用する筋",
+    "knowledge_node": "半腱様筋は股関節伸展・内転・内旋、膝関節屈曲・内旋に作用する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15590,7 +15590,7 @@
   {
     "id": "Q896",
     "theme": "努力吸気時に働く筋はどれか",
-    "knowledge_node": "努力吸気時に働く筋",
+    "knowledge_node": "胸鎖乳突筋や斜角筋など補助吸気筋が働く",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15607,7 +15607,7 @@
   {
     "id": "Q897",
     "theme": "反射マーカを用いた三次元歩行分析装置で評価が最も困難なのはどれか",
-    "knowledge_node": "反射マーカを用いた三次元歩行分析装置で評価が最も困難なのはどれかに対して適切な評価・検査を選択する",
+    "knowledge_node": "三次元歩行分析装置では反射マーカから歩幅、歩行率、関節角度、身体重心推定などを解析できるが、足底圧分布には圧力計測装置が必要であるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -15624,7 +15624,7 @@
   {
     "id": "Q898",
     "theme": "尿検査項目とその検査結果が高値となる疾患との組合せで正しいのはどれか",
-    "knowledge_node": "尿検査項目とその検査結果が高値となる疾患との組合せ",
+    "knowledge_node": "筋細胞崩壊によりミオグロビンが血中・尿中へ流出し、尿中ミオグロビンが高値となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15641,7 +15641,7 @@
   {
     "id": "Q899",
     "theme": "悪性腫瘍細胞の特徴で誤っているのはどれか",
-    "knowledge_node": "悪性腫瘍細胞の特徴",
+    "knowledge_node": "悪性腫瘍細胞は一般に核が大きく、核/細胞質比は大きくなる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15676,7 +15676,7 @@
   {
     "id": "Q901",
     "theme": "良性の骨軟部腫瘍はどれか",
-    "knowledge_node": "良性の骨軟部腫瘍",
+    "knowledge_node": "海綿状血管腫は良性血管性腫瘍・血管奇形として扱われる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15711,7 +15711,7 @@
   {
     "id": "Q903",
     "theme": "Eriksonによる成人中期の心理的発達課題はどれか",
-    "knowledge_node": "Eriksonによる成人中期の心理的発達課題",
+    "knowledge_node": "成人中期の課題は生殖性（世代性）対停滞である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15745,7 +15745,7 @@
   {
     "id": "Q905",
     "theme": "切断後の幻肢で正しいのはどれか",
-    "knowledge_node": "切断後の幻肢",
+    "knowledge_node": "幻肢は切断端より遠位、特に手指・足趾など末梢部を明確に感じやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15798,7 +15798,7 @@
   {
     "id": "Q908",
     "theme": "肩腱板断裂で陽性となるのはどれか",
-    "knowledge_node": "肩腱板断裂で陽性となるのはどれかに対して適切な評価・検査を選択する",
+    "knowledge_node": "drop arm testは肩を外転位からゆっくり下ろせるかをみる検査で、腱板、特に棘上筋断裂で陽性となる",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -15815,7 +15815,7 @@
   {
     "id": "Q909",
     "theme": "疾患と頻度の多い症候との組合せで正しいのはどれか",
-    "knowledge_node": "疾患と頻度の多い症候との組合せ",
+    "knowledge_node": "自律神経障害が強く、起立性低血圧が高頻度にみられる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15832,7 +15832,7 @@
   {
     "id": "Q910",
     "theme": "視神経脊髄炎で正しいのはどれか",
-    "knowledge_node": "視神経脊髄炎",
+    "knowledge_node": "視神経脊髄炎は自己免疫性中枢神経疾患で、視神経炎・脊髄炎を反復し再発と寛解を繰り返すことが多い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15866,7 +15866,7 @@
   {
     "id": "Q912",
     "theme": "心室中隔欠損症で正しいのはどれか",
-    "knowledge_node": "心室中隔欠損症",
+    "knowledge_node": "左室から右室への左右シャントが生じ、肺循環血流量が増加する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -15970,7 +15970,7 @@
   {
     "id": "Q918",
     "theme": "てんかんに伴う精神症状として適切でないのはどれか",
-    "knowledge_node": "てんかんに伴う精神症状として",
+    "knowledge_node": "てんかん関連の精神症状として粘着性、爆発性、不機嫌状態、もうろう状態などが知られる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16144,7 +16144,7 @@
   {
     "id": "Q928",
     "theme": "第Ⅶ脳神経の検査はどれか",
-    "knowledge_node": "第Ⅶ脳神経の検査はどれかに対して適切な評価・検査を選択する",
+    "knowledge_node": "第VII脳神経は顔面神経で、表情筋を支配するを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -16213,7 +16213,7 @@
   {
     "id": "Q932",
     "theme": "病巣と症状の組合せで正しいのはどれか",
-    "knowledge_node": "病巣と症状の組合せ",
+    "knowledge_node": "小脳歯状核は運動の協調・調節に関与し、障害で協調運動障害が生じる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16230,7 +16230,7 @@
   {
     "id": "Q933",
     "theme": "失語症の型と症状の組合せで正しいのはどれか",
-    "knowledge_node": "失語症の型と症状の組合せ",
+    "knowledge_node": "発話が非流暢で自発言語が障害される一方、理解は比較的保たれる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16299,7 +16299,7 @@
   {
     "id": "Q937",
     "theme": "Wallenberg症候群に関連する摂食嚥下障害はどれか",
-    "knowledge_node": "Wallenberg症候群に関連する摂食嚥下障害",
+    "knowledge_node": "疑核・嚥下中枢障害により咽頭期嚥下障害を生じ、食道入口部開大不全が起こりやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16351,7 +16351,7 @@
   {
     "id": "Q940",
     "theme": "悪性腫瘍の合併がない初発の皮膚筋炎で、死因となる頻度が最も高い合併症はどれか",
-    "knowledge_node": "悪性腫瘍の合併がない初発の皮膚筋炎で、死因となる頻度が最も高い合併症",
+    "knowledge_node": "間質性肺炎が重篤な合併症で、とくに急速進行型は主要死因となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16403,7 +16403,7 @@
   {
     "id": "Q943",
     "theme": "橈骨粗面に付着する筋はどれか",
-    "knowledge_node": "橈骨粗面に付着する筋",
+    "knowledge_node": "上腕二頭筋は橈骨粗面へ停止し、肘屈曲と前腕回外に作用する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16420,7 +16420,7 @@
   {
     "id": "Q944",
     "theme": "大転子に付着する筋はどれか",
-    "knowledge_node": "大転子に付着する筋",
+    "knowledge_node": "第56回午前53問は「2つ選べ」の設問だが、厚生労働省は3・4、3・5、4・5の3通りの解答を正解として採点した",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16438,7 +16438,7 @@
   {
     "id": "Q945",
     "theme": "健常成人において脊椎に対する脊髄最下端の位置はどれか",
-    "knowledge_node": "健常成人において脊椎に対する脊髄最下端の位置",
+    "knowledge_node": "成人脊髄は通常L1〜L2椎体高で終末し、そこから馬尾となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16491,7 +16491,7 @@
   {
     "id": "Q948",
     "theme": "上大静脈と下大静脈とを結ぶ静脈はどれか",
-    "knowledge_node": "上大静脈と下大静脈とを結ぶ静脈",
+    "knowledge_node": "奇静脈系は胸壁静脈を集め、上・下大静脈系を側副的に連絡する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16508,7 +16508,7 @@
   {
     "id": "Q949",
     "theme": "筋と支配神経の組合せで正しいのはどれか",
-    "knowledge_node": "筋と支配神経の組合せ",
+    "knowledge_node": "上眼瞼挙筋は動眼神経、上斜筋は滑車神経支配である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16647,7 +16647,7 @@
   {
     "id": "Q957",
     "theme": "蓄尿時に作用する体性運動神経はどれか",
-    "knowledge_node": "蓄尿時に作用する体性運動神経",
+    "knowledge_node": "蓄尿時には陰部神経が外尿道括約筋を収縮させ、尿禁制を保つ",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16664,7 +16664,7 @@
   {
     "id": "Q958",
     "theme": "副腎皮質ホルモンについて正しいのはどれか",
-    "knowledge_node": "副腎皮質ホルモン",
+    "knowledge_node": "コルチゾールには日内変動があり、早朝に高く夜間に低い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16700,7 +16700,7 @@
   {
     "id": "Q960",
     "theme": "関節可動域測定法（日本整形外科学会、日本リハビリテーション医学会基準による）における胸腰部回旋の",
-    "knowledge_node": "関節可動域測定法（日本整形外科学会、日本リハビリテーション医学会基準による）における胸腰部回旋のに対して適切な評価・検査を選択する",
+    "knowledge_node": "胸腰部回旋ROM測定では基本軸を両上後腸骨棘を結ぶ線、移動軸を両肩峰を結ぶ線として評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -16734,7 +16734,7 @@
   {
     "id": "Q962",
     "theme": "運動学習におけるパフォーマンスの知識はどれか",
-    "knowledge_node": "運動学習におけるパフォーマンスの知識",
+    "knowledge_node": "なく、動作のやり方・運動パターンに関する情報",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16769,7 +16769,7 @@
   {
     "id": "Q964",
     "theme": "記憶過程の要素として正しいのはどれか",
-    "knowledge_node": "記憶過程の要素として",
+    "knowledge_node": "記憶過程は記銘（符号化）、保持、想起からなる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16786,7 +16786,7 @@
   {
     "id": "Q965",
     "theme": "イラスト風に描かれた人物のセリフを書き込む形式の心理検査はどれか",
-    "knowledge_node": "イラスト風に描かれた人物のセリフを書き込む形式の心理検査はどれかに対して適切な評価・検査を選択する",
+    "knowledge_node": "P-Fスタディは欲求不満場面の漫画風イラストを示し、登場人物の吹き出しへ台詞を書き込ませて反応傾向をみるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -16803,7 +16803,7 @@
   {
     "id": "Q966",
     "theme": "認知療法を発展させたのは誰か",
-    "knowledge_node": "認知療法を発展させたのは誰か",
+    "knowledge_node": "認知療法はAaron T. Beckがうつ病などの治療法として体系化した",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16820,7 +16820,7 @@
   {
     "id": "Q967",
     "theme": "老年期における精神保健上の問題として正しいのはどれか",
-    "knowledge_node": "老年期における精神保健上の問題として",
+    "knowledge_node": "老年期には退職、死別、身体機能低下などで社会的つながりが減少し、社会的孤立が重要な精神保健上の問題となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16889,7 +16889,7 @@
   {
     "id": "Q971",
     "theme": "悪性リンパ腫について正しいのはどれか",
-    "knowledge_node": "悪性リンパ腫",
+    "knowledge_node": "悪性リンパ腫はリンパ球を発生母体とする悪性腫瘍である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -16906,7 +16906,7 @@
   {
     "id": "Q972",
     "theme": "骨折の名称と部位の組合せで正しいのはどれか",
-    "knowledge_node": "骨折の名称と部位の組合せ",
+    "knowledge_node": "Galeazzi骨折は橈骨骨幹部骨折に遠位橈尺関節脱臼を伴い、Jefferson骨折は環椎破裂骨折である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -17252,7 +17252,7 @@
   {
     "id": "Q992",
     "theme": "正常な歩行周期とその説明の組合せで正しいのはどれか",
-    "knowledge_node": "正常な歩行周期とその説明の組合せ",
+    "knowledge_node": "前遊脚期は反対側の初期接地から同側の足趾離地までである",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -17286,7 +17286,7 @@
   {
     "id": "Q994",
     "theme": "8つの下位尺度で構成されているQOL評価はどれか",
-    "knowledge_node": "8つの下位尺度で構成されているQOL評価はどれかに対して適切な評価・検査を選択する",
+    "knowledge_node": "SF-36は健康関連QOLを身体機能、日常役割機能、痛み、全体的健康感、活力、社会生活機能、心の健康など8下位尺度で評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -17303,7 +17303,7 @@
   {
     "id": "Q995",
     "theme": "四肢の周径測定法として正しいのはどれか",
-    "knowledge_node": "四肢の周径測定法として正しいのはどれかに対して適切な評価・検査を選択する",
+    "knowledge_node": "周径測定は再現性のため測定部位・肢位を統一し、メジャーを皮膚に密着させて過度に締め付けず測定する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -17355,7 +17355,7 @@
   {
     "id": "Q998",
     "theme": "歩行障害とその原因の組合せで正しいのはどれか",
-    "knowledge_node": "歩行障害とその原因の組合せ",
+    "knowledge_node": "鶏歩（steppage gait）は足関節背屈筋麻痺で生じ、総腓骨神経麻痺が代表的原因",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -17391,7 +17391,7 @@
   {
     "id": "Q1000",
     "theme": "松葉杖歩行を行うために必要な機能と上肢の筋との組合せで正しいのはどれか",
-    "knowledge_node": "松葉杖歩行を行うために必要な機能と上肢の筋との組合せ",
+    "knowledge_node": "脇当てを体幹側面へ安定させるため肩関節内転に働く大胸筋などが関与する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -17408,7 +17408,7 @@
   {
     "id": "Q1001",
     "theme": "脳血管障害の片麻痺について正しいのはどれか",
-    "knowledge_node": "脳血管障害の片麻痺",
+    "knowledge_node": "屈筋優位の共同運動が出やすく、肘屈曲姿勢をとることが多い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -17443,7 +17443,7 @@
   {
     "id": "Q1003",
     "theme": "Guillain-Barré症候群について正しいのはどれか",
-    "knowledge_node": "Guillain-Barré症候群",
+    "knowledge_node": "Guillain-Barré症候群は急性の弛緩性麻痺と腱反射低下を特徴とし、日本では欧米より軸索型の割合が高いとされる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -17530,7 +17530,7 @@
   {
     "id": "Q1008",
     "theme": "全身持久力トレーニングの効果で減少するのはどれか",
-    "knowledge_node": "全身持久力トレーニングの効果で減少するのはどれかに対して適切な評価・検査を選択する",
+    "knowledge_node": "持久力トレーニングでは同一運動強度での心拍・換気応答が小さくなり、最大酸素摂取量、毛細血管密度、嫌気性代謝閾値などは改善するを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -17564,7 +17564,7 @@
   {
     "id": "Q1010",
     "theme": "膝関節前十字靱帯再建術後3日経過した時点で行う理学療法として適切でないのはどれか",
-    "knowledge_node": "膝関節前十字靱帯再建術後3日経過した時点で行う理学療法として適切でないのはどれかに対して適切な装具・機器設定を選択する",
+    "knowledge_node": "ACL再建術後3日では疼痛・腫脹管理、ROM、自動介助運動、筋賦活が中心で、荷重を伴うハーフスクワットは通常この時期の最優先ではないに対する機器選択",
     "task": "device_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": null,
@@ -17667,7 +17667,7 @@
   {
     "id": "Q1016",
     "theme": "脳底動脈から直接分岐する血管はどれか",
-    "knowledge_node": "脳底動脈から直接分岐する血管はどれかに対して適切な評価・検査を選択する",
+    "knowledge_node": "脳底動脈からは上小脳動脈と前下小脳動脈などが分岐するを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -17718,7 +17718,7 @@
   {
     "id": "Q1019",
     "theme": "足関節外側面において、外果の前方を走行する筋はどれか",
-    "knowledge_node": "足関節外側面において、外果の前方を走行する筋はどれかに対して適切な装具・機器設定を選択する",
+    "knowledge_node": "第3腓骨筋腱は足関節前外側を通り外果の前方を走行するに対する機器選択",
     "task": "device_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": null,
@@ -17752,7 +17752,7 @@
   {
     "id": "Q1021",
     "theme": "橈骨神経が支配する筋はどれか",
-    "knowledge_node": "橈骨神経が支配する筋",
+    "knowledge_node": "橈骨神経は肘筋と回外筋を支配する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -17909,7 +17909,7 @@
   {
     "id": "Q1030",
     "theme": "水溶性ホルモンはどれか",
-    "knowledge_node": "水溶性ホルモン",
+    "knowledge_node": "グルカゴンとバソプレッシンはペプチド系で水溶性ホルモン",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -17927,7 +17927,7 @@
   {
     "id": "Q1031",
     "theme": "身体活動のエネルギー代謝で誤っているのはどれか",
-    "knowledge_node": "身体活動のエネルギー代謝",
+    "knowledge_node": "脂質利用の割合が増えるため、「20分以上では脂質より糖質が利用される」と一律にする記述は誤り",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -17944,7 +17944,7 @@
   {
     "id": "Q1032",
     "theme": "肩関節外転150°の時の肩甲上腕関節外転角度で正しいのはどれか",
-    "knowledge_node": "肩関節外転150°の時の肩甲上腕関節外転角度",
+    "knowledge_node": "肩甲上腕リズムを概ね2:1とすると、150°挙上時の肩甲上腕関節の寄与は約100°となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -17961,7 +17961,7 @@
   {
     "id": "Q1033",
     "theme": "脊椎の回旋運動について正しいのはどれか",
-    "knowledge_node": "脊椎の回旋運動",
+    "knowledge_node": "頭板状筋は片側収縮で頭頸部を同側へ回旋する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -17997,7 +17997,7 @@
   {
     "id": "Q1035",
     "theme": "がんとその原因となる病原体との組合せで正しいのはどれか",
-    "knowledge_node": "がんとその原因となる病原体との組合せ",
+    "knowledge_node": "B型肝炎ウイルスは肝細胞癌、ヒトパピローマウイルスは子宮頸癌と関連する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18015,7 +18015,7 @@
   {
     "id": "Q1036",
     "theme": "急性炎症と比較した場合の慢性炎症の特徴はどれか",
-    "knowledge_node": "急性炎症と比較した場合の慢性炎症の特徴",
+    "knowledge_node": "急性期の著明な血管透過性亢進や浮腫より、組織破壊・線維化・血管新生後の毛細血管退縮など修復性変化が目立つ",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18032,7 +18032,7 @@
   {
     "id": "Q1037",
     "theme": "痙縮の治療に用いられるボツリヌス毒素の作用部位はどれか",
-    "knowledge_node": "痙縮の治療に用いられるボツリヌス毒素の作用部位",
+    "knowledge_node": "ボツリヌス毒素は運動神経終末でアセチルコリン放出を阻害し、神経筋伝達を抑制して痙縮を軽減する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18083,7 +18083,7 @@
   {
     "id": "Q1040",
     "theme": "防衛機制として誤っているのはどれか",
-    "knowledge_node": "防衛機制として",
+    "knowledge_node": "抑圧・合理化・反動形成・スプリッティングは防衛機制として扱われるが、転移は治療関係で感情を治療者へ向ける現象で、防衛機制とは区別される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18118,7 +18118,7 @@
   {
     "id": "Q1042",
     "theme": "ASIAの評価法における脊髄の髄節とその感覚支配領域検査ポイントの組合せで正しいのはどれか",
-    "knowledge_node": "ASIAの評価法における脊髄の髄節とその感覚支配領域検査ポイントの組合せで正しいのはどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "ASIAの感覚キーポイントではT4は乳頭部に相当するを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -18186,7 +18186,7 @@
   {
     "id": "Q1046",
     "theme": "特発性肺線維症について正しいのはどれか",
-    "knowledge_node": "特発性肺線維症",
+    "knowledge_node": "吸気終末の捻髪音（fine crackles）が典型的",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18257,7 +18257,7 @@
   {
     "id": "Q1050",
     "theme": "疾患と症状の組合せで正しいのはどれか",
-    "knowledge_node": "疾患と症状の組合せ",
+    "knowledge_node": "感情のコントロール低下から情動失禁を認めることがある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18345,7 +18345,7 @@
   {
     "id": "Q1055",
     "theme": "運動に関する中枢神経について正しいのはどれか",
-    "knowledge_node": "運動に関する中枢神経",
+    "knowledge_node": "黒質緻密部のドパミン作動性ニューロンは線条体へ投射する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18380,7 +18380,7 @@
   {
     "id": "Q1057",
     "theme": "律動的な不随意運動はどれか",
-    "knowledge_node": "律動的な不随意運動",
+    "knowledge_node": "振戦は規則的・律動的な不随意運動",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18398,7 +18398,7 @@
   {
     "id": "Q1058",
     "theme": "注意障害の検査はどれか",
-    "knowledge_node": "注意障害を評価するTMTの選択",
+    "knowledge_node": "TMTは注意、視覚探索、処理速度、注意転換などを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -18469,7 +18469,7 @@
   {
     "id": "Q1062",
     "theme": "上腕骨骨幹部骨折で最も合併しやすい神経障害はどれか",
-    "knowledge_node": "上腕骨骨幹部骨折で最も合併しやすい神経障害",
+    "knowledge_node": "橈骨神経が橈骨神経溝を走行するため骨折で損傷されやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18504,7 +18504,7 @@
   {
     "id": "Q1064",
     "theme": "認知症のスクリーニング検査はどれか",
-    "knowledge_node": "認知症のスクリーニング検査はどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "MMSEは見当識、記銘・再生、注意計算、言語などを短時間で評価する認知症スクリーニング検査",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -18521,7 +18521,7 @@
   {
     "id": "Q1065",
     "theme": "装具と疾患の組合せで正しいのはどれか",
-    "knowledge_node": "装具と疾患の組合せで正しいのはどれかに対する適切な装具・機器・環境設定を選択する",
+    "knowledge_node": "SOMI装具は頸椎を固定する装具で、環軸椎など上位頸椎の不安定性・骨折に用いられる",
     "task": "device_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": null,
@@ -18538,7 +18538,7 @@
   {
     "id": "Q1066",
     "theme": "脳卒中後のPusher現象について誤っているのはどれか",
-    "knowledge_node": "脳卒中後のPusher現象",
+    "knowledge_node": "患者は麻痺側へ傾き、非麻痺側上下肢で支持面を押す",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18573,7 +18573,7 @@
   {
     "id": "Q1068",
     "theme": "ポストポリオ症候群で正しいのはどれか",
-    "knowledge_node": "ポストポリオ症候群",
+    "knowledge_node": "残存運動ニューロンの過負荷・脱落により運動単位数が減少し、新たな筋力低下や疲労、疼痛が生じ得る",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18642,7 +18642,7 @@
   {
     "id": "Q1072",
     "theme": "関節円板を有する関節はどれか",
-    "knowledge_node": "関節円板を有する関節",
+    "knowledge_node": "第57回午前51問は「2つ選べ」の設問だが、厚生労働省は1・3、1・4、3・4の3通りの解答を正解として採点した",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18660,7 +18660,7 @@
   {
     "id": "Q1073",
     "theme": "膝関節半月板について正しいのはどれか",
-    "knowledge_node": "膝関節半月板",
+    "knowledge_node": "半月板の外縁（red zone）は血行があり、内縁は無血管に近い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18678,7 +18678,7 @@
   {
     "id": "Q1074",
     "theme": "深部反射と反射中枢の組合せで誤っているのはどれか",
-    "knowledge_node": "深部反射と反射中枢の組合せ",
+    "knowledge_node": "腕橈骨筋反射の反射中枢は主にC5・C6であり、C8・T1ではない",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18695,7 +18695,7 @@
   {
     "id": "Q1075",
     "theme": "自律神経作用と支配する節前ニューロンの起始レベルとの組合せで正しいのはどれか",
-    "knowledge_node": "自律神経作用と支配する節前ニューロンの起始レベルとの組合せ",
+    "knowledge_node": "瞳孔散大筋は交感神経支配で、節前ニューロンは上位胸髄（主にT1付近）から出る",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18729,7 +18729,7 @@
   {
     "id": "Q1077",
     "theme": "心臓について正しいのはどれか",
-    "knowledge_node": "右房室弁は三尖弁",
+    "knowledge_node": "右房室弁が三尖弁であること",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18765,7 +18765,7 @@
   {
     "id": "Q1079",
     "theme": "副腎髄質から分泌されるホルモンはどれか",
-    "knowledge_node": "副腎髄質から分泌されるホルモン",
+    "knowledge_node": "副腎髄質はカテコールアミン（アドレナリン、ノルアドレナリン）を分泌する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18782,7 +18782,7 @@
   {
     "id": "Q1080",
     "theme": "光が角膜から網膜に達する経路で正しいのはどれか",
-    "knowledge_node": "光が角膜から網膜に達する経路",
+    "knowledge_node": "角膜から入った光は前眼房→瞳孔→水晶体→硝子体→網膜の順に通過する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18799,7 +18799,7 @@
   {
     "id": "Q1081",
     "theme": "骨格筋の収縮について誤っているのはどれか",
-    "knowledge_node": "骨格筋の収縮",
+    "knowledge_node": "単一刺激で生じるのは単収縮であり、強縮には高頻度の反復刺激が必要",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18833,7 +18833,7 @@
   {
     "id": "Q1083",
     "theme": "TypeⅡと比べてTypeⅠの筋線維の特徴で正しいのはどれか",
-    "knowledge_node": "TypeⅡと比べてTypeⅠの筋線維の特徴",
+    "knowledge_node": "Type I線維は酸化系優位で疲労しにくく、ミトコンドリア・ミオグロビンが多い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18867,7 +18867,7 @@
   {
     "id": "Q1085",
     "theme": "脂質の消化吸収について正しいのはどれか",
-    "knowledge_node": "脂質の消化吸収",
+    "knowledge_node": "胆汁酸は肝臓でコレステロールから合成される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18918,7 +18918,7 @@
   {
     "id": "Q1088",
     "theme": "エネルギー代謝で誤っているのはどれか",
-    "knowledge_node": "エネルギー代謝",
+    "knowledge_node": "安静時代謝量は基礎代謝量より一般に大きい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -18989,7 +18989,7 @@
   {
     "id": "Q1092",
     "theme": "前癌病変になる進行性病変はどれか",
-    "knowledge_node": "前癌病変になる進行性病変",
+    "knowledge_node": "異形成は細胞の大きさ・形態・配列などに異常を生じる進行性変化で、前癌病変として扱われる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19006,7 +19006,7 @@
   {
     "id": "Q1093",
     "theme": "非ステロイド性抗炎症薬の副作用として正しいのはどれか",
-    "knowledge_node": "非ステロイド性抗炎症薬の副作用として",
+    "knowledge_node": "NSAIDsはプロスタグランジン産生を抑制し、胃粘膜防御を低下させるため胃潰瘍・消化管出血を起こしうる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19108,7 +19108,7 @@
   {
     "id": "Q1099",
     "theme": "フレイルの指標とサルコペニアの評価で共通する項目はどれか",
-    "knowledge_node": "フレイルとサルコペニアに共通する握力・歩行速度評価",
+    "knowledge_node": "フレイルとサルコペニアの双方で筋力低下と身体機能低下を評価し、握力と歩行速度が共通項目となる",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -19178,7 +19178,7 @@
   {
     "id": "Q1103",
     "theme": "アキレス腱断裂について正しいのはどれか",
-    "knowledge_node": "アキレス腱断裂",
+    "knowledge_node": "軽い日常動作でも発生する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19195,7 +19195,7 @@
   {
     "id": "Q1104",
     "theme": "骨形成不全症で正しいのはどれか",
-    "knowledge_node": "骨形成不全症",
+    "knowledge_node": "骨形成不全症はI型コラーゲン異常などによる遺伝性疾患で、反復骨折・骨変形に加えて難聴を合併することがある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19212,7 +19212,7 @@
   {
     "id": "Q1105",
     "theme": "原発性骨粗鬆症について正しいのはどれか",
-    "knowledge_node": "原発性骨粗鬆症",
+    "knowledge_node": "海綿骨を含む骨量が減少し、喫煙は骨折・骨粗鬆症の危険因子となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19297,7 +19297,7 @@
   {
     "id": "Q1110",
     "theme": "睡眠・覚醒のパターンを記録する睡眠日誌（睡眠表）の記載が最も有用なのはどれか",
-    "knowledge_node": "睡眠日誌が有用な概日リズム睡眠障害の評価",
+    "knowledge_node": "睡眠日誌は就床・入眠・覚醒時刻を連日記録して概日リズムのずれを把握するため、睡眠相後退症候群で特に有用を評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -19314,7 +19314,7 @@
   {
     "id": "Q1111",
     "theme": "ベンゾジアゼピン系睡眠薬の副作用はどれか",
-    "knowledge_node": "ベンゾジアゼピン系睡眠薬の副作用",
+    "knowledge_node": "筋弛緩作用によるふらつき・運動失調、持ち越し効果、依存などに注意する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19403,7 +19403,7 @@
   {
     "id": "Q1116",
     "theme": "Gowers徴候を生じやすい疾患はどれか",
-    "knowledge_node": "Gowers徴候を生じやすい疾患",
+    "knowledge_node": "Gowers徴候は骨盤帯・大腿近位筋の筋力低下で、床から立つ際に手で大腿をよじ登る動作",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19439,7 +19439,7 @@
   {
     "id": "Q1118",
     "theme": "開放性運動連鎖による運動はどれか",
-    "knowledge_node": "開放性運動連鎖による運動",
+    "knowledge_node": "遠位部が固定されず自由に動く",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19475,7 +19475,7 @@
   {
     "id": "Q1120",
     "theme": "正中神経と尺骨神経の表在感覚支配領域（掌側）が橈側と尺側で分かれる手指はどれか",
-    "knowledge_node": "正中神経と尺骨神経の表在感覚支配領域（掌側）が橈側と尺側で分かれる手指",
+    "knowledge_node": "正中神経と尺骨神経の境界が環指中央付近にあり、環指の橈側半分を正中、尺側半分を尺骨神経が支配する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19543,7 +19543,7 @@
   {
     "id": "Q1124",
     "theme": "Parkinson病の評価で適切なのはどれか",
-    "knowledge_node": "Parkinson病に用いる評価・徴候の選択",
+    "knowledge_node": "Westphal現象はParkinson病でみられる姿勢反射障害・筋強剛に関連する現象として評価される",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -19577,7 +19577,7 @@
   {
     "id": "Q1126",
     "theme": "疼痛検査に用いるのはどれか",
-    "knowledge_node": "疼痛強度を評価するface scaleとNRSの選択",
+    "knowledge_node": "face scaleとNRSはいずれも疼痛強度の評価に用いる",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -19629,7 +19629,7 @@
   {
     "id": "Q1129",
     "theme": "新型コロナウイルス（COVID-19）による肺炎後の患者に呼吸機能検査を行ったところ、努力性肺活量は",
-    "knowledge_node": "FVC・1秒率・予測1秒量から%FEV1を算出する",
+    "knowledge_node": "1秒量は5.00L×0.80＝4.00Lを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -19646,7 +19646,7 @@
   {
     "id": "Q1130",
     "theme": "関節と生じやすい脱臼の組合せで正しいのはどれか",
-    "knowledge_node": "関節と生じやすい脱臼の組合せ",
+    "knowledge_node": "肘関節脱臼は後方脱臼が最も多い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19733,7 +19733,7 @@
   {
     "id": "Q1135",
     "theme": "ICFコアセットについて正しいのはどれか",
-    "knowledge_node": "ICFコアセット",
+    "knowledge_node": "ICFコアセットは特定疾患・状況で重要なICF項目を選んだもので、脳卒中用などが開発されている",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19784,7 +19784,7 @@
   {
     "id": "Q1138",
     "theme": "運動軸が2つの関節はどれか",
-    "knowledge_node": "運動軸が2つの関節",
+    "knowledge_node": "橈骨手根関節は楕円関節で、屈伸と橈尺屈の2軸運動が可能",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19801,7 +19801,7 @@
   {
     "id": "Q1139",
     "theme": "筋滑車がみられる筋はどれか",
-    "knowledge_node": "筋滑車がみられる筋",
+    "knowledge_node": "顎二腹筋は中間腱が線維性滑車を介して方向を変え、上斜筋は眼窩内の滑車を通るため筋滑車をもつ",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19835,7 +19835,7 @@
   {
     "id": "Q1141",
     "theme": "運動神経線維のみの脳神経はどれか",
-    "knowledge_node": "運動神経線維のみの脳神経",
+    "knowledge_node": "純運動性脳神経は滑車神経、外転神経、舌下神経など",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19870,7 +19870,7 @@
   {
     "id": "Q1143",
     "theme": "一側のみにある動脈はどれか",
-    "knowledge_node": "一側のみにある動脈",
+    "knowledge_node": "腕頭動脈は大動脈弓から右側だけに分岐する一側性の動脈",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -19939,7 +19939,7 @@
   {
     "id": "Q1147",
     "theme": "遺伝情報伝達について正しいのはどれか",
-    "knowledge_node": "遺伝情報伝達",
+    "knowledge_node": "3塩基の組合せであるコドンが1つのアミノ酸を指定する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20041,7 +20041,7 @@
   {
     "id": "Q1153",
     "theme": "下垂体前葉から分泌されるホルモンはどれか",
-    "knowledge_node": "下垂体前葉から分泌されるホルモン",
+    "knowledge_node": "プロラクチンは下垂体前葉から分泌され、乳汁産生を促進する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20093,7 +20093,7 @@
   {
     "id": "Q1156",
     "theme": "肩甲骨の上方回旋に作用する筋はどれか",
-    "knowledge_node": "肩甲骨の上方回旋に作用する筋",
+    "knowledge_node": "前鋸筋は僧帽筋と協働して肩甲骨を上方回旋させ、上肢挙上を可能にする",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20110,7 +20110,7 @@
   {
     "id": "Q1157",
     "theme": "膝関節屈曲と足関節底屈の両方に作用する筋はどれか",
-    "knowledge_node": "膝関節屈曲と足関節底屈の両方に作用する筋",
+    "knowledge_node": "足底筋と腓腹筋はいずれも膝関節と足関節をまたぎ、膝屈曲と足関節底屈に作用する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20178,7 +20178,7 @@
   {
     "id": "Q1161",
     "theme": "呼吸機能検査について正しいのはどれか",
-    "knowledge_node": "呼吸機能検査",
+    "knowledge_node": "呼吸筋力が低下すると最大吸気・呼気が不十分となり、肺活量は低下する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20195,7 +20195,7 @@
   {
     "id": "Q1162",
     "theme": "下肢の深部静脈血栓症により塞栓をきたすことが最も多い臓器はどれか",
-    "knowledge_node": "下肢の深部静脈血栓症により塞栓をきたすことが最も多い臓器",
+    "knowledge_node": "下肢深部静脈血栓が遊離すると下大静脈から右心系を経て肺動脈へ到達し、肺塞栓症を起こす",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20212,7 +20212,7 @@
   {
     "id": "Q1163",
     "theme": "欲求を満たせないときに、正反対の欲求を発展させ心的平衡を保とうとする防衛機制はどれか",
-    "knowledge_node": "欲求を満たせないときに、正反対の欲求を発展させ心的平衡を保とうとする防衛機制",
+    "knowledge_node": "受け入れ難い欲求と正反対の態度・行動を強く示して不安を処理する防衛機制が反動形成",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20265,7 +20265,7 @@
   {
     "id": "Q1166",
     "theme": "発達評価はどれか",
-    "knowledge_node": "DDSTⅡは乳幼児の発達を個人・社会、微細運動、言語、粗大運動の領域でスクリーニングする発達評価",
+    "knowledge_node": "DDSTⅡで乳幼児の4領域の発達をスクリーニングする",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20282,7 +20282,7 @@
   {
     "id": "Q1167",
     "theme": "高齢者の大腿骨近位部骨折について正しいのはどれか",
-    "knowledge_node": "高齢者の大腿骨近位部骨折",
+    "knowledge_node": "高齢者の上腕骨近位部骨折は転倒で多く、骨粗鬆症に加え認知症も転倒・骨折の危険因子となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20299,7 +20299,7 @@
   {
     "id": "Q1168",
     "theme": "腰部脊柱管狭窄症で正しいのはどれか",
-    "knowledge_node": "腰部脊柱管狭窄症",
+    "knowledge_node": "神経性間欠性跛行が特徴で、腰椎屈曲で症状が軽減し、伸展で増悪しやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20368,7 +20368,7 @@
   {
     "id": "Q1172",
     "theme": "原発性自然気胸について正しいのはどれか",
-    "knowledge_node": "原発性自然気胸",
+    "knowledge_node": "原発性自然気胸は若年・やせ型・高身長の男性に多く、再発も少なくない",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20386,7 +20386,7 @@
   {
     "id": "Q1173",
     "theme": "糖尿病性腎症で正しいのはどれか",
-    "knowledge_node": "糖尿病性腎症",
+    "knowledge_node": "糸球体基底膜肥厚や糸球体硬化が進み、末期腎不全へ至る",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20422,7 +20422,7 @@
   {
     "id": "Q1175",
     "theme": "症候と内分泌異常の組合せで正しいのはどれか",
-    "knowledge_node": "症候と内分泌異常の組合せ",
+    "knowledge_node": "PTH低下により低カルシウム血症となり、神経筋興奮性が高まってテタニーを生じる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20439,7 +20439,7 @@
   {
     "id": "Q1176",
     "theme": "イネイブラー（enabler）である家族と患者との共依存が問題となる疾患はどれか",
-    "knowledge_node": "イネイブラー（enabler）である家族と患者との共依存が問題となる疾患",
+    "knowledge_node": "家族が問題行動を肩代わりし依存を維持させるenablerとなり、共依存が問題になる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20610,7 +20610,7 @@
   {
     "id": "Q1186",
     "theme": "厚生労働省「健康づくりのための身体活動基準2013」で、強度が4METs以上となる運動の例はどれか",
-    "knowledge_node": "厚生労働省「健康づくりのための身体活動基準2013」で、強度が4METs以上となる運動の例",
+    "knowledge_node": "ラジオ体操第1は全身を連続して動かす運動で、約4METs程度の中等度活動に相当する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20627,7 +20627,7 @@
   {
     "id": "Q1187",
     "theme": "感覚神経のみの脳神経はどれか",
-    "knowledge_node": "感覚神経のみの脳神経",
+    "knowledge_node": "純感覚性脳神経は嗅神経、視神経、内耳神経",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20698,7 +20698,7 @@
   {
     "id": "Q1191",
     "theme": "腱板損傷の検査で正しいのはどれか",
-    "knowledge_node": "腱板損傷の検査",
+    "knowledge_node": "Drop arm testは肩関節外転位から上肢をゆっくり下降できるかをみる検査で、腱板、特に棘上筋断裂で陽性となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20715,7 +20715,7 @@
   {
     "id": "Q1192",
     "theme": "静的立位で下腿義足の足部外側が床から浮き上がった",
-    "knowledge_node": "静的立位で下腿義足の足部外側が床から浮き上がったに対する適切な装具・機器・環境設定を選択する",
+    "knowledge_node": "下腿義足で足部外側が浮くのは、ソケットの初期内転角が大きすぎて義足全体が内反方向に傾く場合に起こる",
     "task": "device_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": null,
@@ -20732,7 +20732,7 @@
   {
     "id": "Q1193",
     "theme": "脊髄損傷で異所性化骨の好発部位はどれか",
-    "knowledge_node": "脊髄損傷で異所性化骨の好発部位",
+    "knowledge_node": "脊髄損傷後の異所性骨化は股関節周囲に最も多く、次いで膝など大関節周囲に生じやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20749,7 +20749,7 @@
   {
     "id": "Q1194",
     "theme": "2010年に定められたアメリカリウマチ学会とヨーロッパリウマチ学会との合同による関節リウマチ分類基準",
-    "knowledge_node": "2010年に定められたアメリカリウマチ学会とヨーロッパリウマチ学会との合同による関節リウマチ分類基準に",
+    "knowledge_node": "2010 ACR/EULAR分類基準は関節病変、血清学的検査、急性期反応物質、症状持続期間から点数化する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20767,7 +20767,7 @@
   {
     "id": "Q1195",
     "theme": "胸郭出口症候群で陽性となる検査はどれか",
-    "knowledge_node": "胸郭出口症候群で陽性となる検査はどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "Roos testは上肢を挙上外転外旋位で開閉手運動を反復し、胸郭出口での神経血管圧迫症状を誘発するを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -20819,7 +20819,7 @@
   {
     "id": "Q1198",
     "theme": "腹圧性尿失禁で正しいのはどれか",
-    "knowledge_node": "腹圧性尿失禁",
+    "knowledge_node": "腹圧性尿失禁は咳・くしゃみ・跳躍など腹圧上昇時に漏れ、骨盤底筋訓練が第一選択の保存療法として有効",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20836,7 +20836,7 @@
   {
     "id": "Q1199",
     "theme": "安全対策に関する理論であるHeinrichの法則で正しいのはどれか",
-    "knowledge_node": "安全対策に関する理論であるHeinrichの法則",
+    "knowledge_node": "Heinrichの法則は1件の重大事故の背後に多数の軽微事故・ヒヤリハットが存在するという考え",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20904,7 +20904,7 @@
   {
     "id": "Q1203",
     "theme": "腎臓から分泌されるホルモンはどれか",
-    "knowledge_node": "腎臓から分泌されるホルモン",
+    "knowledge_node": "腎臓は傍糸球体細胞からレニン、間質細胞などからエリスロポエチンを分泌する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20921,7 +20921,7 @@
   {
     "id": "Q1204",
     "theme": "皮下組織の直下に筋腹を触知できる筋はどれか",
-    "knowledge_node": "皮下組織の直下に筋腹を触知できる筋",
+    "knowledge_node": "深指屈筋は前腕尺側部で尺側手根屈筋などの位置関係に注意すれば筋腹を触知できる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20938,7 +20938,7 @@
   {
     "id": "Q1205",
     "theme": "腸骨稜に付着する筋はどれか",
-    "knowledge_node": "腸骨稜に付着する筋",
+    "knowledge_node": "広背筋は胸腰筋膜や腸骨稜後部などから起始し、上腕骨小結節稜へ停止する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20955,7 +20955,7 @@
   {
     "id": "Q1206",
     "theme": "細胞内小器官の働きで正しいのはどれか",
-    "knowledge_node": "細胞内小器官の働き",
+    "knowledge_node": "粗面小胞体にはリボソームが付着し、分泌蛋白・膜蛋白などの蛋白質合成が行われる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -20990,7 +20990,7 @@
   {
     "id": "Q1208",
     "theme": "排尿に関与する神経はどれか",
-    "knowledge_node": "排尿に関与する神経",
+    "knowledge_node": "陰部神経による外尿道括約筋の随意制御と、下腹神経による蓄尿時の交感神経制御が関与する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21007,7 +21007,7 @@
   {
     "id": "Q1209",
     "theme": "血糖を上昇させる作用のあるホルモンはどれか",
-    "knowledge_node": "血糖を上昇させる作用のあるホルモン",
+    "knowledge_node": "アドレナリンとグルカゴンはいずれも肝グリコーゲン分解や糖新生を促し血糖を上昇させる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21043,7 +21043,7 @@
   {
     "id": "Q1211",
     "theme": "肺活量算出に最低限必要な肺気量分画はどれか",
-    "knowledge_node": "肺活量算出に最低限必要な肺気量分画",
+    "knowledge_node": "肺活量VCは全肺気量TLCから残気量RVを引いて求められるため、最低限必要なのは全肺気量と残気量",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21095,7 +21095,7 @@
   {
     "id": "Q1214",
     "theme": "鉄棒に肩関節屈曲90°、肘関節屈曲90°の肢位で懸垂している状態からゆっくりと体を下降させているとき",
-    "knowledge_node": "鉄棒に肩関節屈曲90°、肘関節屈曲90°の肢位で懸垂している状態からゆっくりと体を下降させているとき、遠心性収縮をする筋",
+    "knowledge_node": "懸垂位からゆっくり体を下降する際、肩関節は屈曲方向へ動くのを広背筋など肩伸展筋が遠心性に制動する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21112,7 +21112,7 @@
   {
     "id": "Q1215",
     "theme": "正常歩行で遠心性収縮をする筋はどれか",
-    "knowledge_node": "正常歩行で遠心性収縮をする筋",
+    "knowledge_node": "踵接地後の足関節底屈を前脛骨筋が遠心性に制御し、立脚中期までの脛骨前傾を下腿三頭筋が遠心性に制御する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21146,7 +21146,7 @@
   {
     "id": "Q1217",
     "theme": "胃全摘出術後の巨赤芽球性貧血で欠乏する栄養素はどれか",
-    "knowledge_node": "胃全摘出術後の巨赤芽球性貧血で欠乏する栄養素",
+    "knowledge_node": "胃全摘後は内因子が失われ、回腸でのビタミンB12吸収が障害されるため巨赤芽球性貧血を生じる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21180,7 +21180,7 @@
   {
     "id": "Q1219",
     "theme": "性的な欲動をコントロールするために、性的なことを理論的に分析しようとする防衛機制はどれか",
-    "knowledge_node": "性的な欲動をコントロールするために、性的なことを理論的に分析しようとする防衛機制",
+    "knowledge_node": "感情や欲動から距離を置き、抽象的・理論的に分析して処理する防衛機制が知性化",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21198,7 +21198,7 @@
   {
     "id": "Q1220",
     "theme": "Freudの発達論において1～3歳ころはどれか",
-    "knowledge_node": "Freudの発達論において1～3歳ころ",
+    "knowledge_node": "1〜3歳頃は肛門期で、排泄のコントロールが中心課題となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21232,7 +21232,7 @@
   {
     "id": "Q1222",
     "theme": "脳卒中の評価法とそれに含まれる項目の組合せで正しいのはどれか",
-    "knowledge_node": "脳卒中の評価法とそれに含まれる項目の組合せで正しいのはどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "SIASには体幹機能評価が含まれる",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -21268,7 +21268,7 @@
   {
     "id": "Q1224",
     "theme": "ASIAの評価対象はどれか",
-    "knowledge_node": "ASIAの評価対象はどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "ASIAでS4-5感覚と随意肛門収縮から仙髄機能温存を判定する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -21302,7 +21302,7 @@
   {
     "id": "Q1226",
     "theme": "原始反射と誘発される運動の組合せで正しいのはどれか",
-    "knowledge_node": "原始反射と誘発される運動の組合せ",
+    "knowledge_node": "刺激反対側下肢が伸展する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21337,7 +21337,7 @@
   {
     "id": "Q1228",
     "theme": "Perthes病で正しいのはどれか",
-    "knowledge_node": "Perthes病",
+    "knowledge_node": "Perthes病は小児の大腿骨頭骨端への血流障害による無腐性壊死で、片側性が多い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21354,7 +21354,7 @@
   {
     "id": "Q1229",
     "theme": "Colles骨折で正しいのはどれか",
-    "knowledge_node": "Colles骨折",
+    "knowledge_node": "Colles骨折は橈骨遠位端の伸展型骨折で、腫脹や転位に伴い正中神経障害を合併することがある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21371,7 +21371,7 @@
   {
     "id": "Q1230",
     "theme": "糖尿病性神経障害に特徴的な所見はどれか",
-    "knowledge_node": "糖尿病性神経障害に特徴的な所見",
+    "knowledge_node": "糖尿病性多発ニューロパチーは左右対称・遠位優位で、足趾から靴下型に感覚障害が進む",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21406,7 +21406,7 @@
   {
     "id": "Q1232",
     "theme": "ビタミンと欠乏時の症候との組合せで正しいのはどれか",
-    "knowledge_node": "ビタミンと欠乏時の症候との組合せ",
+    "knowledge_node": "Ca吸収低下から骨軟化症や骨量低下を生じ、骨粗鬆症リスクにも関与する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21441,7 +21441,7 @@
   {
     "id": "Q1234",
     "theme": "興奮や昏迷などの意志発動の異常が主体となる統合失調症の病型はどれか",
-    "knowledge_node": "興奮や昏迷などの意志発動の異常が主体となる統合失調症の病型",
+    "knowledge_node": "精神運動興奮、昏迷、拒絶、常同など意志・運動面の異常が前景に立つ",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21544,7 +21544,7 @@
   {
     "id": "Q1240",
     "theme": "Danielsらの徒手筋力テストの検査肢位において、膝関節の伸展と屈曲が同じになる段階はどれか",
-    "knowledge_node": "Danielsらの徒手筋力テストの検査肢位において、膝関節の伸展と屈曲が同じになる段階",
+    "knowledge_node": "重力を除去した肢位で膝伸展・膝屈曲を評価するため、両者とも側臥位など同じ重力除去肢位となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21561,7 +21561,7 @@
   {
     "id": "Q1241",
     "theme": "GCSの評定で正しいのはどれか",
-    "knowledge_node": "GCSの評定",
+    "knowledge_node": "GCSのE2は疼痛刺激で開眼する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21595,7 +21595,7 @@
   {
     "id": "Q1243",
     "theme": "PTB式下腿義足のソケットにおける荷重部位で正しいのはどれか",
-    "knowledge_node": "PTB式下腿義足のソケットにおける荷重部位",
+    "knowledge_node": "膝蓋腱、脛骨内側面、腓腹筋部など耐圧部で荷重し、脛骨稜・粗面・末端など骨突出部は除圧する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21612,7 +21612,7 @@
   {
     "id": "Q1244",
     "theme": "骨壊死を合併しやすい骨折はどれか",
-    "knowledge_node": "骨壊死を合併しやすい骨折",
+    "knowledge_node": "大腿骨頸部骨折は関節包内骨折で大腿骨頭への血流が障害されやすく、無腐性壊死を合併しやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21629,7 +21629,7 @@
   {
     "id": "Q1245",
     "theme": "上肢・下肢のBrunnstrom法ステージとテスト動作の組合せで正しいのはどれか",
-    "knowledge_node": "上肢・下肢のBrunnstrom法ステージとテスト動作の組合せ",
+    "knowledge_node": "、立位で股関節伸展位を保ちながら膝だけを屈曲する、より分離した運動が可能になる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21647,7 +21647,7 @@
   {
     "id": "Q1246",
     "theme": "Duchenne型筋ジストロフィーで正しいのはどれか",
-    "knowledge_node": "Duchenne型筋ジストロフィー",
+    "knowledge_node": "骨盤帯近位筋から筋力低下が進行し、床から立つ際にGowers徴候を示す",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21699,7 +21699,7 @@
   {
     "id": "Q1249",
     "theme": "温熱の局所反応で正しいのはどれか",
-    "knowledge_node": "温熱の局所反応",
+    "knowledge_node": "温度変化に対する神経線維の影響は線維径や髄鞘の有無で異なり、薄い有髄線維であるAδ線維は無髄C線維より伝導速度変化の影響を受けやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21716,7 +21716,7 @@
   {
     "id": "Q1250",
     "theme": "持久力に必要なエネルギー供給系の説明で正しいのはどれか",
-    "knowledge_node": "持久力に必要なエネルギー供給系の説明",
+    "knowledge_node": "解糖系は細胞質でグルコースを分解しATPを産生する無酸素性エネルギー供給系",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21733,7 +21733,7 @@
   {
     "id": "Q1251",
     "theme": "腰椎椎間板ヘルニアで正しいのはどれか",
-    "knowledge_node": "腰椎椎間板ヘルニア",
+    "knowledge_node": "腰椎椎間板ヘルニアで進行性筋力低下や膀胱直腸障害など重篤な神経障害があれば手術を考慮する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21767,7 +21767,7 @@
   {
     "id": "Q1253",
     "theme": "SF-36の下位尺度はどれか",
-    "knowledge_node": "SF-36の下位尺度",
+    "knowledge_node": "SF-36は健康関連QOLを8下位尺度で評価し、その一つに『体の痛み（Bodily Pain）』がある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21784,7 +21784,7 @@
   {
     "id": "Q1254",
     "theme": "1950年代、北欧での知的障害者の人権改善運動の発端となった取り組みはどれか",
-    "knowledge_node": "1950年代、北欧での知的障害者の人権改善運動の発端となった取り組み",
+    "knowledge_node": "北欧で知的障害者を施設隔離せず一般社会と同等の生活条件へ近づけようとした運動がノーマライゼーション",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21818,7 +21818,7 @@
   {
     "id": "Q1256",
     "theme": "前骨間神経に支配される筋はどれか",
-    "knowledge_node": "前骨間神経に支配される筋",
+    "knowledge_node": "前骨間神経は正中神経の運動枝で、長母指屈筋、方形回内筋、深指屈筋橈側部などを支配する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21835,7 +21835,7 @@
   {
     "id": "Q1257",
     "theme": "眼球運動に関わる脳神経として正しいのはどれか",
-    "knowledge_node": "眼球運動に関わる脳神経として",
+    "knowledge_node": "眼球運動を直接支配する脳神経は動眼・滑車・外転神経",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21940,7 +21940,7 @@
   {
     "id": "Q1263",
     "theme": "下垂体前葉から分泌されるホルモンはどれか",
-    "knowledge_node": "下垂体前葉から分泌されるホルモン",
+    "knowledge_node": "プロラクチンは下垂体前葉から分泌され、乳腺で乳汁産生を促進する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -21957,7 +21957,7 @@
   {
     "id": "Q1264",
     "theme": "長期間の有酸素運動の効果として正しいのはどれか",
-    "knowledge_node": "長期間の有酸素運動の効果として",
+    "knowledge_node": "一回拍出量増加などで最大心拍出量が増え、活動筋の毛細血管密度も増加する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22095,7 +22095,7 @@
   {
     "id": "Q1272",
     "theme": "基本的立位姿勢を矢状面から観察した場合、重心線が通るのはどこか",
-    "knowledge_node": "基本的立位姿勢を矢状面から観察した場合、重心線が通るのはどこか",
+    "knowledge_node": "矢状面の重心線は耳垂付近、肩峰付近、大転子や膝関節のやや前方、外果のやや前方を通る",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22112,7 +22112,7 @@
   {
     "id": "Q1273",
     "theme": "運動学習の効率で正しいのはどれか",
-    "knowledge_node": "運動学習の効率",
+    "knowledge_node": "練習課題と実際に必要な基準課題の類似性が高いほど、学習の転移が起こりやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22129,7 +22129,7 @@
   {
     "id": "Q1274",
     "theme": "病因のうち化学的要因はどれか",
-    "knowledge_node": "病因のうち化学的要因",
+    "knowledge_node": "喫煙に含まれる多数の化学物質は組織障害や発癌に関与するため、化学的病因に分類される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22146,7 +22146,7 @@
   {
     "id": "Q1275",
     "theme": "良性腫瘍と比較した悪性腫瘍の特徴はどれか",
-    "knowledge_node": "良性腫瘍と比較した悪性腫瘍の特徴",
+    "knowledge_node": "悪性腫瘍は周囲組織へ境界を越えて浸潤性に増殖する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22181,7 +22181,7 @@
   {
     "id": "Q1277",
     "theme": "Eriksonの発達段階で成人前期に獲得すべき課題はどれか",
-    "knowledge_node": "Eriksonの発達段階で成人前期に獲得すべき課題",
+    "knowledge_node": "成人前期の課題は親密性対孤立で、他者との深い関係を築くことが中心",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22215,7 +22215,7 @@
   {
     "id": "Q1279",
     "theme": "頸髄損傷完全麻痺（第6頸髄節まで機能残存）の上肢機能で可能なのはどれか",
-    "knowledge_node": "頸髄損傷完全麻痺（第6頸髄節まで機能残存）の上肢機能で可能なのはどれか。2 つ選べ",
+    "knowledge_node": "C6まで機能残存ならC5の肘屈筋とC6の手関節伸筋が使用できる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22319,7 +22319,7 @@
   {
     "id": "Q1285",
     "theme": "血管疾患と関連因子の組合せで誤っているのはどれか",
-    "knowledge_node": "血管疾患と関連因子の組合せ",
+    "knowledge_node": "結節性多発動脈炎は中小動脈の壊死性血管炎で、B型肝炎などとの関連が知られる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22354,7 +22354,7 @@
   {
     "id": "Q1287",
     "theme": "気管支喘息の治療薬はどれか",
-    "knowledge_node": "気管支喘息の治療薬",
+    "knowledge_node": "気道炎症を抑える吸入ステロイドが長期管理の中心薬となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22371,7 +22371,7 @@
   {
     "id": "Q1288",
     "theme": "大動脈解離の続発症で誤っているのはどれか",
-    "knowledge_node": "大動脈解離の続発症",
+    "knowledge_node": "分枝閉塞による腎不全・脳梗塞・脊髄虚血や、破裂による心タンポナーデを起こしうる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22388,7 +22388,7 @@
   {
     "id": "Q1289",
     "theme": "全身性エリテマトーデスにみられにくいのはどれか",
-    "knowledge_node": "全身性エリテマトーデスに",
+    "knowledge_node": "中枢神経症状として頭痛、けいれん、精神症状、気分変動などを生じうる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22406,7 +22406,7 @@
   {
     "id": "Q1290",
     "theme": "精神遅滞の発症と関連がない疾患はどれか",
-    "knowledge_node": "精神遅滞の発症と関連がない疾患",
+    "knowledge_node": "Wallenberg症候群は延髄外側梗塞による後天性神経症候群で、知的障害の発症原因とはならない",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22440,7 +22440,7 @@
   {
     "id": "Q1292",
     "theme": "鉄欠乏性貧血の患者にみられやすい睡眠・覚醒障害はどれか",
-    "knowledge_node": "鉄欠乏性貧血の患者にみられやすい睡眠・覚醒障害",
+    "knowledge_node": "鉄欠乏はむずむず脚症候群の重要な関連因子で、夜間安静時に下肢の不快感と動かしたい衝動が出現する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22492,7 +22492,7 @@
   {
     "id": "Q1295",
     "theme": "50 歳の男性",
-    "knowledge_node": "脳挫傷後の人格・社会行動変化を評価する高次脳機能検査の選択",
+    "knowledge_node": "受傷後に人格変化、脱抑制、自己中心性など前頭葉機能障害が疑われるため、前頭葉機能を簡便に評価するFABが優先される",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -22526,7 +22526,7 @@
   {
     "id": "Q1297",
     "theme": "課題と記憶の組合せで正しいのはどれか",
-    "knowledge_node": "課題と記憶の組合せ",
+    "knowledge_node": "紙や鉛筆を使わず暗算するには、数値を一時保持しながら操作するワーキングメモリーが必要である",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22577,7 +22577,7 @@
   {
     "id": "Q1300",
     "theme": "股関節の屈曲拘縮を調べるテストはどれか",
-    "knowledge_node": "股関節屈曲拘縮を評価するThomas testの選択",
+    "knowledge_node": "Thomasテストは一側股関節を最大屈曲し、反対側大腿が浮き上がるかをみて股関節屈曲拘縮を評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -22594,7 +22594,7 @@
   {
     "id": "Q1301",
     "theme": "SIAS に含まれるのはどれか",
-    "knowledge_node": "SIAS に含まれるのはどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "SIASには視空間認知、言語、体幹機能、感覚、麻痺側・非麻痺側運動などが含まれるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -22629,7 +22629,7 @@
   {
     "id": "Q1303",
     "theme": "筋萎縮性側索硬化症で正しいのはどれか",
-    "knowledge_node": "筋萎縮性側索硬化症",
+    "knowledge_node": "上位・下位運動ニューロン障害が混在し、筋萎縮は手など四肢遠位から目立つ型がある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22646,7 +22646,7 @@
   {
     "id": "Q1304",
     "theme": "熱傷部位の皮膚で正しいのはどれか",
-    "knowledge_node": "熱傷部位の皮膚",
+    "knowledge_node": "熱傷創に感染があると植皮床の血行や組織状態が悪化し、移植皮膚の生着を妨げる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22697,7 +22697,7 @@
   {
     "id": "Q1307",
     "theme": "重症筋無力症患者の QMG score〈Quantitative Myasthenia Gravis",
-    "knowledge_node": "重症筋無力症患者の QMG score〈Quantitative Myasthenia Gravisに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "QMGには眼球運動・眼瞼下垂、嚥下、発語、四肢筋力、肺活量など重症筋無力症の主要症候が含まれるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -22715,7 +22715,7 @@
   {
     "id": "Q1308",
     "theme": "フレイルの判定要件でないのはどれか",
-    "knowledge_node": "フレイルの判定要件でないのはどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "Friedの身体的フレイル基準は体重減少、疲労感、筋力低下、歩行速度低下、身体活動低下を評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -22733,7 +22733,7 @@
   {
     "id": "Q1309",
     "theme": "IL〈Independent Living〉運動で正しいのはどれか",
-    "knowledge_node": "IL〈Independent Living〉運動",
+    "knowledge_node": "IL運動は障害者自身が生活の主体となり、介助を受けながらでも自己決定・自己選択して地域で暮らす権利を重視する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22750,7 +22750,7 @@
   {
     "id": "Q1310",
     "theme": "QOL 評価尺度はどれか",
-    "knowledge_node": "QOL 評価尺度はどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "SF-36は身体機能、日常役割機能、痛み、全体的健康感、活力、社会生活機能、心の健康などを評価する健康関連QOL尺度",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -22784,7 +22784,7 @@
   {
     "id": "Q1312",
     "theme": "非ステロイド性抗炎症薬〈NSAIDs〉の副作用で正しいのはどれか",
-    "knowledge_node": "非ステロイド性抗炎症薬〈NSAIDs〉の副作用",
+    "knowledge_node": "NSAIDsはCOX阻害でプロスタグランジンを減らし、胃粘膜保護低下から胃潰瘍を起こしうる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22801,7 +22801,7 @@
   {
     "id": "Q1313",
     "theme": "肩甲背神経に支配される筋はどれか",
-    "knowledge_node": "肩甲背神経に支配される筋",
+    "knowledge_node": "肩甲背神経は菱形筋を主に支配し、肩甲挙筋にも運動枝を与える",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22940,7 +22940,7 @@
   {
     "id": "Q1321",
     "theme": "免疫グロブリンで正しいのはどれか",
-    "knowledge_node": "免疫グロブリン",
+    "knowledge_node": "IgGは胎盤を通過し、胎児・新生児へ受動免疫を与える",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -22992,7 +22992,7 @@
   {
     "id": "Q1324",
     "theme": "病因のうち化学的要因はどれか",
-    "knowledge_node": "病因のうち化学的要因",
+    "knowledge_node": "アスベストは吸入により肺線維症や悪性中皮腫などを生じる化学的有害因子",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23009,7 +23009,7 @@
   {
     "id": "Q1325",
     "theme": "末梢血管抵抗が低下するショックをきたす病態はどれか",
-    "knowledge_node": "末梢血管抵抗が低下するショックをきたす病態",
+    "knowledge_node": "血管拡張により末梢血管抵抗が低下する分布異常性ショックとなる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23026,7 +23026,7 @@
   {
     "id": "Q1326",
     "theme": "咳をしたときに生じる尿失禁はどれか",
-    "knowledge_node": "咳をしたときに生じる尿失禁",
+    "knowledge_node": "咳やくしゃみなど腹圧上昇時に膀胱内圧が尿道閉鎖圧を上回って漏れるのが腹圧性尿失禁",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23043,7 +23043,7 @@
   {
     "id": "Q1327",
     "theme": "改訂日本版デンバー式発達スクリーニング検査〈JDDST-R〉で「母指と示指によるつまみ動作」の通過率",
-    "knowledge_node": "改訂日本版デンバー式発達スクリーニング検査〈JDDST-R〉で「母指と示指によるつまみ動作」の通過率 75 % が含まれる時期",
+    "knowledge_node": "JDDST-Rで母指と示指によるつまみ動作の75%通過時期はおよそ12〜13か月に含まれる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23094,7 +23094,7 @@
   {
     "id": "Q1330",
     "theme": "外傷性脊髄損傷で正しいのはどれか",
-    "knowledge_node": "外傷性脊髄損傷",
+    "knowledge_node": "頸髄損傷が胸腰髄損傷より多い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23111,7 +23111,7 @@
   {
     "id": "Q1331",
     "theme": "脳卒中患者の身体機能評価に用いられる評価尺度はどれか",
-    "knowledge_node": "脳卒中患者の身体機能評価に用いられる評価尺度はどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "NIHSSは脳卒中急性期の神経学的重症度、SIASは脳卒中の機能障害を評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -23129,7 +23129,7 @@
   {
     "id": "Q1332",
     "theme": "手根管症候群でみられる症候はどれか",
-    "knowledge_node": "手根管症候群でみられる症候",
+    "knowledge_node": "正中神経が圧迫され、母指球筋萎縮や母指〜環指橈側のしびれがみられる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23147,7 +23147,7 @@
   {
     "id": "Q1333",
     "theme": "Lewy 小体型認知症の早期にみられる症状はどれか",
-    "knowledge_node": "Lewy 小体型認知症の早期にみられる症状",
+    "knowledge_node": "具体的で反復する幻視が初期からみられやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23164,7 +23164,7 @@
   {
     "id": "Q1334",
     "theme": "全般性不安障害で正しいのはどれか",
-    "knowledge_node": "全般性不安障害",
+    "knowledge_node": "全般性不安障害は女性に多く、過剰な不安・心配が慢性的に続き、自律神経症状や他の精神疾患の併存も多い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23182,7 +23182,7 @@
   {
     "id": "Q1335",
     "theme": "ノンレム睡眠で正しいのはどれか",
-    "knowledge_node": "ノンレム睡眠",
+    "knowledge_node": "ノンレム睡眠は成人睡眠時間の大部分を占め、深睡眠を含む",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23285,7 +23285,7 @@
   {
     "id": "Q1341",
     "theme": "運動制御における内部モデル形成で重要な役割をもつ中枢神経系はどれか",
-    "knowledge_node": "運動制御における内部モデル形成で重要な役割をもつ中枢神経系",
+    "knowledge_node": "小脳は運動指令と感覚フィードバックを比較し、予測的制御に用いる内部モデル形成に重要な役割を担う",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23320,7 +23320,7 @@
   {
     "id": "Q1343",
     "theme": "Lawton の IADL スケールに含まれるのはどれか",
-    "knowledge_node": "Lawton の IADL スケールに含まれるのはどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "Lawton IADLには電話使用、買物、食事準備、家事、洗濯、交通、服薬、金銭管理が含まれるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -23338,7 +23338,7 @@
   {
     "id": "Q1344",
     "theme": "ICF の環境因子はどれか",
-    "knowledge_node": "ICF の環境因子",
+    "knowledge_node": "ICFの環境因子には製品・技術、自然環境、支援、人々の態度、サービス・制度などが含まれる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23373,7 +23373,7 @@
   {
     "id": "Q1346",
     "theme": "H 反射を導出するために刺激する神経で正しいのはどれか",
-    "knowledge_node": "H 反射を導出するために刺激する神経",
+    "knowledge_node": "H反射は末梢神経を電気刺激してIa求心性線維を興奮させ、脊髄単シナプス反射を介して筋応答を記録する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23441,7 +23441,7 @@
   {
     "id": "Q1350",
     "theme": "痙直型脳性麻痺児の陽性徴候はどれか",
-    "knowledge_node": "痙直型脳性麻痺児の陽性徴候",
+    "knowledge_node": "痙直型脳性麻痺の陽性徴候は痙縮や共同運動など異常な運動パターンの出現",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23458,7 +23458,7 @@
   {
     "id": "Q1351",
     "theme": "MRC〈Medical Research Council〉 sum score による筋力が集中治療",
-    "knowledge_node": "MRC〈Medical Research Council〉 sum score による筋力が集中治療に対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "MRC sum scoreでICU-AWの全身筋力低下を判定する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -23511,7 +23511,7 @@
   {
     "id": "Q1354",
     "theme": "骨折の名称と部位の組合せで正しいのはどれか",
-    "knowledge_node": "骨折の名称と部位の組合せ",
+    "knowledge_node": "Galeazzi骨折は橈骨骨幹部骨折＋遠位橈尺関節脱臼、Jefferson骨折は環椎破裂骨折",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23529,7 +23529,7 @@
   {
     "id": "Q1355",
     "theme": "滑車神経が支配する外眼筋はどれか",
-    "knowledge_node": "滑車神経が支配する外眼筋",
+    "knowledge_node": "滑車神経は上斜筋のみを支配する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23564,7 +23564,7 @@
   {
     "id": "Q1357",
     "theme": "甲状腺が分泌するホルモンはどれか",
-    "knowledge_node": "甲状腺が分泌するホルモン",
+    "knowledge_node": "甲状腺C細胞はカルシトニンを分泌し、血中カルシウム濃度を低下させる方向に働く",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23598,7 +23598,7 @@
   {
     "id": "Q1359",
     "theme": "体細胞分裂の開始に関わる細胞内小器官はどれか",
-    "knowledge_node": "体細胞分裂の開始に関わる細胞内小器官",
+    "knowledge_node": "中心小体は中心体を構成し、細胞分裂時に紡錘体形成へ関与する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23615,7 +23615,7 @@
   {
     "id": "Q1360",
     "theme": "末梢神経の C 線維で正しいのはどれか",
-    "knowledge_node": "末梢神経の C 線維",
+    "knowledge_node": "C線維は無髄で最も細く伝導速度が遅い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23649,7 +23649,7 @@
   {
     "id": "Q1362",
     "theme": "各臓器と血流量の局所性調節の組合せで正しいのはどれか",
-    "knowledge_node": "各臓器と血流量の局所性調節の組合せ",
+    "knowledge_node": "局所低酸素により肺細動脈が収縮し、換気不良部への血流を減らす低酸素性肺血管収縮が起こる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23684,7 +23684,7 @@
   {
     "id": "Q1364",
     "theme": "体温の調節機構で正しいのはどれか",
-    "knowledge_node": "体温の調節機構",
+    "knowledge_node": "体温調節中枢は間脳の視床下部にある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23736,7 +23736,7 @@
   {
     "id": "Q1367",
     "theme": "成人の正常立位姿勢で正しいのはどれか",
-    "knowledge_node": "成人の正常立位姿勢",
+    "knowledge_node": "成人立位の身体重心は第2仙椎前方付近にあり、矢状面の重心線は大転子近傍を通る",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23753,7 +23753,7 @@
   {
     "id": "Q1368",
     "theme": "前頭葉の損傷による高次脳機能障害で生じるのはどれか",
-    "knowledge_node": "前頭葉の損傷による高次脳機能障害で生じるのはどれか。 2つ選べ",
+    "knowledge_node": "優位半球下前頭回の損傷でBroca失語、運動関連領域の障害で肢節運動失行などが生じうる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23770,7 +23770,7 @@
   {
     "id": "Q1369",
     "theme": "アポトーシスによる細胞の変化はどれか",
-    "knowledge_node": "アポトーシスによる細胞の変化",
+    "knowledge_node": "アポトーシスは個々の細胞が散在性に縮小・断片化して除去され、周囲に強い炎症を起こしにくい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23787,7 +23787,7 @@
   {
     "id": "Q1370",
     "theme": "無意識の願望と思考を意識的に気付きから排除する防衛機制はどれか",
-    "knowledge_node": "無意識の願望と思考を意識的に気付きから排除する防衛機制",
+    "knowledge_node": "受け入れ難い願望・思考を無意識に意識外へ押し込むのが抑圧",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23805,7 +23805,7 @@
   {
     "id": "Q1371",
     "theme": "Freud の発達論で 6 ～12 歳ころはどれか",
-    "knowledge_node": "Freud の発達論で 6 ～12 歳ころ",
+    "knowledge_node": "Freudの心理性的発達で6〜12歳頃は潜在期",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23839,7 +23839,7 @@
   {
     "id": "Q1373",
     "theme": "不動による廃用症候群で生じやすい病態はどれか",
-    "knowledge_node": "不動による廃用症候群で生じやすい病態",
+    "knowledge_node": "静脈うっ滞と凝固亢進により深部静脈血栓症を生じやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23874,7 +23874,7 @@
   {
     "id": "Q1375",
     "theme": "便秘を最も生じやすい薬剤はどれか",
-    "knowledge_node": "便秘を最も生じやすい薬剤",
+    "knowledge_node": "オピオイドのモルヒネは腸管蠕動を抑制し、便秘を非常に起こしやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23909,7 +23909,7 @@
   {
     "id": "Q1377",
     "theme": "骨粗鬆症の危険因子で誤っているのはどれか",
-    "knowledge_node": "骨粗鬆症の危険因子",
+    "knowledge_node": "骨粗鬆症の危険因子には不動、エストロゲン低下、副甲状腺機能亢進、ステロイド長期投与などがある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23927,7 +23927,7 @@
   {
     "id": "Q1378",
     "theme": "筋萎縮性側索硬化症における典型的な筋電図検査所見で正しいのはどれか",
-    "knowledge_node": "筋萎縮性側索硬化症における典型的な筋電図検査所見で正しいのはどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "ALSの針筋電図では脱神経・再支配所見に加え線維束性収縮電位を認めるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -23961,7 +23961,7 @@
   {
     "id": "Q1380",
     "theme": "転移性骨腫瘍で正しいのはどれか",
-    "knowledge_node": "転移性骨腫瘍",
+    "knowledge_node": "前立腺癌は造骨性転移が多い",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -23996,7 +23996,7 @@
   {
     "id": "Q1382",
     "theme": "統合失調症の陰性症状はどれか",
-    "knowledge_node": "統合失調症の陰性症状",
+    "knowledge_node": "統合失調症の陰性症状には意欲低下、感情平板化、社会的引きこもり、思考・発語の貧困などがある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24013,7 +24013,7 @@
   {
     "id": "Q1383",
     "theme": "自閉症スペクトラム障害児が母親の手をとり目的の物に持っていく行動はどれか",
-    "knowledge_node": "自閉症スペクトラム障害児が母親の手をとり目的の物に持っていく行動",
+    "knowledge_node": "自閉スペクトラム症で、他者の手を道具のように使って目的物へ導く行動はクレーン現象",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24066,7 +24066,7 @@
   {
     "id": "Q1386",
     "theme": "65 歳の女性",
-    "knowledge_node": "食事・歯磨きでの片側見落としから半側空間無視を評価する検査を選択する",
+    "knowledge_node": "非麻痺側を向く一方、麻痺側刺激への反応はあり、食事・歯磨きで麻痺側の見落としが多いを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -24118,7 +24118,7 @@
   {
     "id": "Q1389",
     "theme": "ノーマライゼーションで正しいのはどれか",
-    "knowledge_node": "ノーマライゼーション",
+    "knowledge_node": "ノーマライゼーションは障害者も地域で普通の生活を営み、自己決定を尊重されるという社会理念",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24186,7 +24186,7 @@
   {
     "id": "Q1393",
     "theme": "Fugl-Meyer Assessment で正しいのはどれか",
-    "knowledge_node": "Fugl-Meyer Assessment で正しいのはどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "FMAは総得点226点で、Brunnstromの共同運動・分離運動に関連する運動項目を含むを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -24203,7 +24203,7 @@
   {
     "id": "Q1394",
     "theme": "WeeFIM で正しいのはどれか",
-    "knowledge_node": "WeeFIM で正しいのはどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "WeeFIMの社会的認知には社会的交流があり、小児では遊びへの参加などを含めて評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -24220,7 +24220,7 @@
   {
     "id": "Q1395",
     "theme": "フレイルの判定要件はどれか",
-    "knowledge_node": "フレイルの判定要件はどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "身体的フレイルの代表要件には歩行速度低下と身体活動量低下が含まれるを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -24271,7 +24271,7 @@
   {
     "id": "Q1398",
     "theme": "MRC sum score で評価できるのはどれか",
-    "knowledge_node": "MRC sum score で評価できるのはどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "MRC sum scoreをICU獲得性筋力低下の評価に用いる",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -24288,7 +24288,7 @@
   {
     "id": "Q1399",
     "theme": "理学療法評価における社会的情報に該当しないのはどれか",
-    "knowledge_node": "理学療法評価における社会的情報に該当しないのはどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "体重は身体的・医学的情報であり社会的情報ではないを評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -24305,7 +24305,7 @@
   {
     "id": "Q1400",
     "theme": "日本で最初の理学療法士養成教育機関が開設された時期はどれか",
-    "knowledge_node": "日本で最初の理学療法士養成教育機関が開設された時期",
+    "knowledge_node": "日本最初の理学療法士養成校は1963年に開設され、1960年代に該当する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24375,7 +24375,7 @@
   {
     "id": "Q1404",
     "theme": "自律神経障害の症状はどれか",
-    "knowledge_node": "自律神経障害の症状",
+    "knowledge_node": "不整脈や起立性低血圧など循環調節異常がみられる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24411,7 +24411,7 @@
   {
     "id": "Q1406",
     "theme": "無作為化比較試験で正しいのはどれか",
-    "knowledge_node": "無作為化比較試験",
+    "knowledge_node": "無作為割付により既知・未知の交絡因子を群間で均衡化しやすい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24445,7 +24445,7 @@
   {
     "id": "Q1408",
     "theme": "運動神経線維のみの脳神経はどれか",
-    "knowledge_node": "運動神経線維のみの脳神経",
+    "knowledge_node": "副神経は胸鎖乳突筋・僧帽筋を支配する純運動性脳神経",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24496,7 +24496,7 @@
   {
     "id": "Q1411",
     "theme": "下垂体後葉から分泌されるホルモンはどれか",
-    "knowledge_node": "下垂体後葉から分泌されるホルモン",
+    "knowledge_node": "下垂体後葉からはオキシトシンとバソプレシンが放出される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24549,7 +24549,7 @@
   {
     "id": "Q1414",
     "theme": "ATP 産生に関わる細胞小器官はどれか",
-    "knowledge_node": "ATP 産生に関わる細胞小器官",
+    "knowledge_node": "ATPの主要産生部位はミトコンドリア",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24566,7 +24566,7 @@
   {
     "id": "Q1415",
     "theme": "タイプⅡ筋線維と比較した場合のタイプⅠ筋線維の特徴はどれか",
-    "knowledge_node": "タイプⅡ筋線維と比較した場合のタイプⅠ筋線維の特徴",
+    "knowledge_node": "Ⅰ型線維は遅筋で発生張力は小さめだが、酸化能・ミオグロビン・ミトコンドリアが多く疲労しにくい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24600,7 +24600,7 @@
   {
     "id": "Q1417",
     "theme": "呼吸の調節機構で正しいのはどれか",
-    "knowledge_node": "呼吸の調節機構",
+    "knowledge_node": "肺伸展受容器の情報は迷走神経を介して延髄・橋の呼吸中枢へ伝わる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24686,7 +24686,7 @@
   {
     "id": "Q1422",
     "theme": "頭頸部の屈曲と伸展の両方に作用する筋はどれか",
-    "knowledge_node": "頭頸部の屈曲と伸展の両方に作用する筋",
+    "knowledge_node": "胸鎖乳突筋は両側収縮で頸部屈曲、頭部は上位頸椎で伸展方向にも作用しうる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24703,7 +24703,7 @@
   {
     "id": "Q1423",
     "theme": "健常者の股関節で正しいのはどれか",
-    "knowledge_node": "健常者の股関節",
+    "knowledge_node": "大腿骨頸体角は約120〜130°で、恥骨大腿靱帯は股関節伸展で緊張する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24754,7 +24754,7 @@
   {
     "id": "Q1426",
     "theme": "急性炎症と比較した場合の慢性炎症の特徴はどれか",
-    "knowledge_node": "急性炎症と比較した場合の慢性炎症の特徴",
+    "knowledge_node": "修復反応として血管新生と線維化が進む",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24772,7 +24772,7 @@
   {
     "id": "Q1427",
     "theme": "良性腫瘍と比較した場合の悪性腫瘍の特徴はどれか",
-    "knowledge_node": "良性腫瘍と比較した場合の悪性腫瘍の特徴",
+    "knowledge_node": "細胞・核の異型性が強く、浸潤性で境界不明瞭",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24789,7 +24789,7 @@
   {
     "id": "Q1428",
     "theme": "正しい組合せはどれか",
-    "knowledge_node": "正しい組合せ",
+    "knowledge_node": "社会生活技能訓練SSTはRobert Libermanらにより精神科リハで体系化された",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24824,7 +24824,7 @@
   {
     "id": "Q1430",
     "theme": "Piaget の発達論で 0 ～ 2 歳ころはどれか",
-    "knowledge_node": "Piaget の発達論で 0 ～ 2 歳ころ",
+    "knowledge_node": "Piagetで0〜2歳頃は感覚運動期",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24842,7 +24842,7 @@
   {
     "id": "Q1431",
     "theme": "投影法の人格検査はどれか",
-    "knowledge_node": "投影法の人格検査",
+    "knowledge_node": "TATは曖昧な絵から物語を作らせる投影法の人格検査",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24876,7 +24876,7 @@
   {
     "id": "Q1433",
     "theme": "関節リウマチの Steinbrocker のステージⅣの特徴はどれか",
-    "knowledge_node": "関節リウマチの Steinbrocker のステージⅣの特徴",
+    "knowledge_node": "関節強直や高度変形を認める",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -24963,7 +24963,7 @@
   {
     "id": "Q1438",
     "theme": "肩関節周囲炎で正しいのはどれか",
-    "knowledge_node": "肩関節周囲炎",
+    "knowledge_node": "疼痛と可動域制限により結髪・結帯動作が困難となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25014,7 +25014,7 @@
   {
     "id": "Q1441",
     "theme": "アルコール離脱症状の後遺症はどれか",
-    "knowledge_node": "アルコール離脱症状の後遺症",
+    "knowledge_node": "ビタミンB1欠乏などからKorsakoff症候群を残すことがある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25066,7 +25066,7 @@
   {
     "id": "Q1444",
     "theme": "自閉スペクトラム症〈自閉症スペクトラム障害〉児にみられる特徴はどれか",
-    "knowledge_node": "自閉スペクトラム症〈自閉症スペクトラム障害〉児にみられる特徴",
+    "knowledge_node": "社会的相互作用や非言語的情動表現に困難があり、表情変化が乏しいことがある",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25293,7 +25293,7 @@
   {
     "id": "Q1457",
     "theme": "安静立位姿勢における重心線の通る位置で正しいのはどれか",
-    "knowledge_node": "安静立位姿勢における重心線の通る位置",
+    "knowledge_node": "矢状面の重心線は外果のやや前方を通る",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25365,7 +25365,7 @@
   {
     "id": "Q1461",
     "theme": "SF-36 で正しいのはどれか",
-    "knowledge_node": "SF-36には社会生活機能など8下位尺度が含まれる自己記入式QOL評価",
+    "knowledge_node": "SF-36が8下位尺度から健康関連QOLを評価すること",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25416,7 +25416,7 @@
   {
     "id": "Q1464",
     "theme": "SIASの評価で正しいのはどれか",
-    "knowledge_node": "SIASの評価で正しいのはどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "SIASには非麻痺側機能として握力評価が含まれる",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -25433,7 +25433,7 @@
   {
     "id": "Q1465",
     "theme": "装具と疾患の組合せで適切なのはどれか",
-    "knowledge_node": "装具と疾患の組合せで適切なのはどれかに対する適切な装具・機器・設定を選択する",
+    "knowledge_node": "脳卒中片麻痺で下肢Brunnstrom stage Vでも、立脚初期の急激な底屈や遊脚期の下垂足が残れば、足関節底屈制動式短下肢装具が適応となる",
     "task": "device_selection",
     "primary_ability": "PRESCRIBE",
     "secondary_ability": null,
@@ -25467,7 +25467,7 @@
   {
     "id": "Q1467",
     "theme": "注意障害を評価する検査法はどれか",
-    "knowledge_node": "注意障害を評価する検査法を選択する",
+    "knowledge_node": "CATで持続・選択・分配・転換性注意を評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -25554,7 +25554,7 @@
   {
     "id": "Q1472",
     "theme": "COPD 患者で増加するのはどれか",
-    "knowledge_node": "COPD 患者で増加するのはどれか。 2つ選べ",
+    "knowledge_node": "air trappingにより機能的残気量と全肺気量が増加する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25572,7 +25572,7 @@
   {
     "id": "Q1473",
     "theme": "呼吸に対する腹臥位の効果で正しいのはどれか",
-    "knowledge_node": "呼吸に対する腹臥位の効果",
+    "knowledge_node": "重力依存側となる腹側肺への血流が増える",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25623,7 +25623,7 @@
   {
     "id": "Q1476",
     "theme": "職業倫理で正しいのはどれか",
-    "knowledge_node": "職業倫理で正しいのはどれか。 2つ選べ",
+    "knowledge_node": "個人情報を保護し、患者の自己決定権を尊重することが基本となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25640,7 +25640,7 @@
   {
     "id": "Q1477",
     "theme": "白線がある筋はどれか",
-    "knowledge_node": "白線がある筋",
+    "knowledge_node": "腹直筋は左右の筋腹の間に白線があり、腹壁正中を形成する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25726,7 +25726,7 @@
   {
     "id": "Q1482",
     "theme": "骨格筋の筋線維で正しいのはどれか",
-    "knowledge_node": "骨格筋の筋線維",
+    "knowledge_node": "骨格筋線維内の筋原線維はZ線で区切られる筋節（sarcomere）が反復する構造",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25812,7 +25812,7 @@
   {
     "id": "Q1487",
     "theme": "腸管におけるカルシウム吸収を低下させるのはどれか",
-    "knowledge_node": "腸管におけるカルシウム吸収を低下させるのはどれか。 2つ選べ",
+    "knowledge_node": "副腎皮質ステロイドはCa吸収を低下させ、リンの過剰摂取も腸管Ca吸収を妨げうる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25830,7 +25830,7 @@
   {
     "id": "Q1488",
     "theme": "昇圧作用を持つのはどれか",
-    "knowledge_node": "昇圧作用を持つのはどれか。 2つ選べ",
+    "knowledge_node": "アルドステロンはNa・水貯留を介し、コルチゾールも血管反応性維持などを通じ昇圧作用をもつ",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25881,7 +25881,7 @@
   {
     "id": "Q1491",
     "theme": "運動軸が 1 つの関節はどれか",
-    "knowledge_node": "運動軸が 1 つの関節はどれか。 2つ選べ",
+    "knowledge_node": "腕尺関節と母指IP関節はいずれも蝶番関節で1軸性",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25899,7 +25899,7 @@
   {
     "id": "Q1492",
     "theme": "急性炎症初期にみられないのはどれか",
-    "knowledge_node": "急性炎症初期に",
+    "knowledge_node": "壊疽は循環障害・壊死の結果で、急性炎症の五徴候には含まれない",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25950,7 +25950,7 @@
   {
     "id": "Q1495",
     "theme": "質問紙法はどれか",
-    "knowledge_node": "質問紙法はどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "BDI-IIはうつ症状について本人が回答する自己記入式質問紙を評価する",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -25967,7 +25967,7 @@
   {
     "id": "Q1496",
     "theme": "ICF の概念モデル（生物心理社会モデル）に含まれる構成要素はどれか",
-    "knowledge_node": "ICF の概念モデル（生物心理社会モデル）に含まれる構成要素",
+    "knowledge_node": "ICFの生物心理社会モデルには心身機能・身体構造、活動、参加、環境因子、個人因子が相互作用する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -25985,7 +25985,7 @@
   {
     "id": "Q1497",
     "theme": "Parkinson 病の治療薬はどれか",
-    "knowledge_node": "Parkinson 病の治療薬",
+    "knowledge_node": "ドパミン前駆体L-dopaが主要治療薬",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26020,7 +26020,7 @@
   {
     "id": "Q1499",
     "theme": "外傷性脊髄損傷で正しいのはどれか",
-    "knowledge_node": "外傷性脊髄損傷",
+    "knowledge_node": "高齢者、とくに転倒による頸髄不全損傷が増加している",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26038,7 +26038,7 @@
   {
     "id": "Q1500",
     "theme": "感覚障害を合併するのはどれか",
-    "knowledge_node": "感覚障害を合併するのはどれか。 2つ選べ",
+    "knowledge_node": "多発性硬化症は中枢神経の感覚路障害、CIDPは末梢神経障害で感覚障害を伴う",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26073,7 +26073,7 @@
   {
     "id": "Q1502",
     "theme": "機能性神経学的症状症/変換症〈転換性障害〉で正しいのはどれか",
-    "knowledge_node": "機能性神経学的症状症/変換症〈転換性障害〉",
+    "knowledge_node": "診断を理解し受け入れ、早期から適切な説明とリハを受けられるほど予後がよい",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26090,7 +26090,7 @@
   {
     "id": "Q1503",
     "theme": "人格検査はどれか",
-    "knowledge_node": "人格検査はどれかに対する適切な評価・検査・尺度を選択する",
+    "knowledge_node": "CMIは心身両面の自覚症状や神経症傾向を質問紙で把握する検査で、STAIは状態不安・特性不安という人格傾向を評価する質問紙",
     "task": "assessment_selection",
     "primary_ability": "MEASURE",
     "secondary_ability": null,
@@ -26336,7 +26336,7 @@
   {
     "id": "Q1517",
     "theme": "変形性膝関節症で正しいのはどれか",
-    "knowledge_node": "変形性膝関節症",
+    "knowledge_node": "疼痛と廃用により大腿四頭筋萎縮を認める",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26388,7 +26388,7 @@
   {
     "id": "Q1520",
     "theme": "歩行率〈ケイデンス〉の単位はどれか",
-    "knowledge_node": "歩行率〈ケイデンス〉の単位",
+    "knowledge_node": "ケイデンスは単位時間あたりの歩数で、通常『歩/分』",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26406,7 +26406,7 @@
   {
     "id": "Q1521",
     "theme": "ICF で環境因子はどれか",
-    "knowledge_node": "ICF で環境因子",
+    "knowledge_node": "訪問リハビリテーションは利用可能なサービス・制度であり、ICFでは環境因子に分類される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26491,7 +26491,7 @@
   {
     "id": "Q1526",
     "theme": "糖尿病性神経障害に特徴的な所見はどれか",
-    "knowledge_node": "糖尿病性神経障害に特徴的な所見",
+    "knowledge_node": "糖尿病性多発ニューロパチーは左右対称・遠位優位の靴下型感覚障害が典型",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26525,7 +26525,7 @@
   {
     "id": "Q1528",
     "theme": "前向き臨床研究における倫理で正しいのはどれか",
-    "knowledge_node": "前向き臨床研究における倫理で正しいのはどれか。 2つ選べ",
+    "knowledge_node": "事前に取得データ・リスク等を説明して同意を得て、途中撤回しても不利益がないことを保障する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26543,7 +26543,7 @@
   {
     "id": "Q1529",
     "theme": "Brown-Séquard 症候群で、損傷レベル以下の対側に最も出現しやすい症状はどれか",
-    "knowledge_node": "Brown-Séquard 症候群で、損傷レベル以下の対側に最も出現しやすい症状",
+    "knowledge_node": "損傷髄節以下の対側に温痛覚障害が生じる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26577,7 +26577,7 @@
   {
     "id": "Q1531",
     "theme": "橈骨神経で正しいのはどれか",
-    "knowledge_node": "橈骨神経で正しいのはどれか。 2つ選べ",
+    "knowledge_node": "橈骨神経は腕神経叢後神経束から分岐し、腕橈骨筋を支配する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26594,7 +26594,7 @@
   {
     "id": "Q1532",
     "theme": "橋から出る脳神経はどれか",
-    "knowledge_node": "橋から出る脳神経",
+    "knowledge_node": "三叉神経は橋外側から出る",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26612,7 +26612,7 @@
   {
     "id": "Q1533",
     "theme": "広背筋を支配している神経はどれか",
-    "knowledge_node": "広背筋を支配している神経",
+    "knowledge_node": "広背筋は腕神経叢後神経束由来の胸背神経に支配される",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26718,7 +26718,7 @@
   {
     "id": "Q1539",
     "theme": "体温で正しいのはどれか",
-    "knowledge_node": "体温で正しいのはどれか。 2つ選べ",
+    "knowledge_node": "肝臓は高い代謝活動により主要な熱産生臓器であり、深部にも温度受容器が存在する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26805,7 +26805,7 @@
   {
     "id": "Q1544",
     "theme": "遠心性収縮が生じるのはどれか",
-    "knowledge_node": "遠心性収縮が生じるのはどれか。 2つ選べ",
+    "knowledge_node": "上肢をゆっくり下ろす三角筋前部と、立位から座る際の大腿四頭筋は張力を保ちながら伸張される遠心性収縮",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26823,7 +26823,7 @@
   {
     "id": "Q1545",
     "theme": "健常者の歩行で正しいのはどれか",
-    "knowledge_node": "健常者の歩行",
+    "knowledge_node": "ハムストリングスなどが遠心性に活動し、前方へ振り出された下肢を減速する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26840,7 +26840,7 @@
   {
     "id": "Q1546",
     "theme": "ショックの症状はどれか",
-    "knowledge_node": "ショックの症状",
+    "knowledge_node": "組織低灌流に対する代償として呼吸促迫がみられる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26893,7 +26893,7 @@
   {
     "id": "Q1549",
     "theme": "末梢血管抵抗が上昇するショックはどれか",
-    "knowledge_node": "末梢血管抵抗が上昇するショック",
+    "knowledge_node": "交感神経性血管収縮により末梢血管抵抗が上昇する",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26910,7 +26910,7 @@
   {
     "id": "Q1550",
     "theme": "性欲をスポーツに打ち込むことで解消しようとする防衛機制はどれか",
-    "knowledge_node": "性欲をスポーツに打ち込むことで解消しようとする防衛機制",
+    "knowledge_node": "社会的に受容されにくい欲動をスポーツなど価値ある活動へ転換する防衛機制が昇華",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26964,7 +26964,7 @@
   {
     "id": "Q1553",
     "theme": "角膜反射に関わるのはどれか",
-    "knowledge_node": "角膜反射に関わるのはどれか。 2つ選べ",
+    "knowledge_node": "角膜反射は求心路が三叉神経第1枝、遠心路が顔面神経で眼輪筋を収縮させる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -26982,7 +26982,7 @@
   {
     "id": "Q1554",
     "theme": "TNM 分類で誤っているのはどれか",
-    "knowledge_node": "TNM 分類",
+    "knowledge_node": "TNM分類は原発腫瘍T、所属リンパ節N、遠隔転移Mで病期を表す国際的な共通枠組みである",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -27053,7 +27053,7 @@
   {
     "id": "Q1558",
     "theme": "アキレス腱断裂で正しいのはどれか",
-    "knowledge_node": "アキレス腱断裂",
+    "knowledge_node": "腓腹筋を圧迫しても足関節底屈が起こらないThompson test陽性となる",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -27139,7 +27139,7 @@
   {
     "id": "Q1563",
     "theme": "アルコール依存症で正しいのはどれか",
-    "knowledge_node": "アルコール依存症",
+    "knowledge_node": "抑うつ症状を併存することがあり、国家試験対策では1を正答とする",
     "task": "fact_recall",
     "primary_ability": "KNOW",
     "secondary_ability": null,
@@ -27157,7 +27157,7 @@
   {
     "id": "Q1564",
     "theme": "自閉スペクトラム症〈自閉症スペクトラム障害〉を強く示唆する患者の発言はどれか",
-    "knowledge_node": "自閉スペクトラム症〈自閉症スペクトラム障害〉を強く示唆する患者の発言",
+    "knowledge_node": "予定変更への強いこだわりと柔軟な対応困難は、自閉スペクトラム症の限定・反復的行動や変化への抵抗を強く示唆する",
     "task": "finding_interpretation",
     "primary_ability": "INTERPRET",
     "secondary_ability": "KNOW",
