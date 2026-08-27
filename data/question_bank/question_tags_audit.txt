@@ -1,47 +1,55 @@
 LicenseTown question_tags.json audit
-source: LicenseTown_LT問題Q1-Q1564_Ver0.3タグ差替え_フォント統一版.docx
+source: formal question_tags production datasets through Q1564
 records: 1564
 Q range: Q1-Q1564
+duplicates: 0
+missing: 0
 errors: 0
 
+tag_version:
+  1.0: 1364
+  0.3: 200
+
 tag_status:
-  provisional_bulk: 1364
+  reviewed: 1364
   reviewed_sample: 200
+  provisional_bulk: 0
 
 task:
-  assessment_selection: 145
-  cause_identification: 17
-  device_selection: 30
-  fact_recall: 1025
-  finding_interpretation: 100
-  functional_goal_decision: 22
-  intervention_selection: 181
-  prognosis_prediction: 3
-  safety_priority: 41
+  assessment_selection: 167
+  cause_identification: 5
+  device_selection: 45
+  fact_recall: 850
+  finding_interpretation: 177
+  functional_goal_decision: 16
+  intervention_selection: 208
+  prognosis_prediction: 5
+  safety_priority: 91
 
 primary:
-  DECIDE: 66
-  INTERPRET: 117
-  KNOW: 1025
-  MEASURE: 145
-  PREDICT: 3
-  PRESCRIBE: 208
+  DECIDE: 110
+  INTERPRET: 182
+  KNOW: 850
+  MEASURE: 167
+  PREDICT: 5
+  PRESCRIBE: 250
 
 secondary:
-  DECIDE: 75
-  INTERPRET: 1318
-  KNOW: 126
-  MEASURE: 18
+  DECIDE: 69
+  INTERPRET: 278
+  KNOW: 23
+  MEASURE: 14
   PREDICT: 1
-  PRESCRIBE: 26
+  PRESCRIBE: 20
+  null: 1159
 
 level:
-  1: 1014
-  2: 110
-  3: 366
-  4: 74
+  1: 840
+  2: 181
+  3: 449
+  4: 94
 
 safety:
-  critical: 43
-  moderate: 121
-  none: 1400
+  critical: 65
+  moderate: 218
+  none: 1281
