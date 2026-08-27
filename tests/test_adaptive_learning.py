@@ -1,5 +1,6 @@
 import os
 import json
+import re
 from collections import Counter
 from pathlib import Path
 from types import SimpleNamespace
@@ -10,6 +11,7 @@ os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
 import app as bot_app
 import database
+import learning_engine
 from learning_engine import (
     build_daily_session,
     build_initial_assessment,
@@ -44,6 +46,10 @@ def test_all_formal_question_tags_load_and_match_ids():
         "reviewed_sample": 200,
         "reviewed": 1364,
     }
+    assert all(
+        re.fullmatch(r"KN[0-9]{4}", tag["knowledge_node_id"])
+        for tag in tags
+    )
 
 
 def test_formal_tag_schema_keeps_v03_and_accepts_v10_reviewed():
@@ -57,6 +63,8 @@ def test_formal_tag_schema_keeps_v03_and_accepts_v10_reviewed():
         "reviewed_sample", "provisional_bulk", "reviewed",
     ]
     assert None in properties["secondary_ability"]["enum"]
+    assert "knowledge_node_id" in schema["items"]["required"]
+    assert properties["knowledge_node_id"]["pattern"] == "^KN[0-9]{4}$"
 
 
 def test_initial_assessment_is_ten_balanced_questions_and_never_exceeds_fifteen():
@@ -89,6 +97,38 @@ def test_daily_session_prioritizes_confident_errors_without_exposing_tags():
     assert "Q1" in {question["id"] for question in selected}
     assert all("primary_ability" not in question for question in selected)
     assert all("knowledge_node" not in question for question in selected)
+    assert all("knowledge_node_id" not in question for question in selected)
+
+
+def _assert_node_history_prioritizes_second_question(monkeypatch, tags):
+    monkeypatch.setattr(learning_engine, "_candidate_ids", lambda _category=None: ["Q2", "Q3"])
+    monkeypatch.setattr(learning_engine, "get_question_tag", lambda q_id: tags[q_id])
+    monkeypatch.setattr(learning_engine, "get_quiz_question", lambda q_id: {"id": q_id})
+    rng = SimpleNamespace(random=lambda: 0.0)
+    history = [
+        {"question_id": "Q1", "is_correct": False},
+        {"question_id": "Q1", "is_correct": False},
+    ]
+
+    assert learning_engine.build_daily_session(
+        history, question_count=1, rng=rng
+    ) == [{"id": "Q2"}]
+
+
+def test_daily_session_groups_node_history_by_stable_id(monkeypatch):
+    _assert_node_history_prioritizes_second_question(monkeypatch, {
+        "Q1": {"knowledge_node_id": "KN0001", "knowledge_node": "old label"},
+        "Q2": {"knowledge_node_id": "KN0001", "knowledge_node": "new label"},
+        "Q3": {"knowledge_node_id": "KN0003", "knowledge_node": "other label"},
+    })
+
+
+def test_daily_session_falls_back_to_knowledge_node_label(monkeypatch):
+    _assert_node_history_prioritizes_second_question(monkeypatch, {
+        "Q1": {"knowledge_node": "shared legacy label"},
+        "Q2": {"knowledge_node": "shared legacy label"},
+        "Q3": {"knowledge_node": "other legacy label"},
+    })
 
 
 def test_assessment_state_is_saved_existing_history_counts_and_reset_clears_it():

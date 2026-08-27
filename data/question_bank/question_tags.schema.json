@@ -7,6 +7,7 @@
     "required": [
       "id",
       "knowledge_node",
+      "knowledge_node_id",
       "task",
       "primary_ability",
       "level",
@@ -30,6 +31,10 @@
       "knowledge_node": {
         "type": "string",
         "minLength": 1
+      },
+      "knowledge_node_id": {
+        "type": "string",
+        "pattern": "^KN[0-9]{4}$"
       },
       "task": {
         "type": "string",

@@ -18,6 +18,7 @@ from typing import Any
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BANK_DIR = REPOSITORY_ROOT / "data" / "question_bank"
 DEFAULT_SCHEMA_PATH = DEFAULT_BANK_DIR / "schema" / "question_bank_schema_v1.json"
+DEFAULT_REGISTRY_PATH = DEFAULT_BANK_DIR / "knowledge_nodes.json"
 QUESTION_BANK_FILES = {
     "questions": "questions.json",
     "answers": "answers.json",
@@ -183,6 +184,20 @@ def load_schema(schema_path: Path = DEFAULT_SCHEMA_PATH) -> dict[str, Any]:
     return schema
 
 
+def load_registry(registry_path: Path = DEFAULT_REGISTRY_PATH) -> list[dict[str, Any]]:
+    try:
+        registry = json.loads(registry_path.read_text(encoding="utf-8-sig"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise QuestionBankValidationError(
+            [f"{registry_path.name}: JSON parse failed: {exc}"]
+        ) from exc
+    if not isinstance(registry, list):
+        raise QuestionBankValidationError(
+            [f"{registry_path.name}: root must be an array"]
+        )
+    return registry
+
+
 def _records_by_id(records: Any) -> dict[str, dict[str, Any]]:
     if not isinstance(records, list):
         return {}
@@ -193,8 +208,176 @@ def _records_by_id(records: Any) -> dict[str, dict[str, Any]]:
     }
 
 
+def _validate_registry(
+    tags: dict[str, dict[str, Any]],
+    registry: Any,
+    report: dict[str, Any],
+    issues: list[str],
+) -> None:
+    """Validate stable node IDs and the bidirectional registry mapping."""
+
+    if not isinstance(registry, list):
+        issues.append("knowledge_nodes.json: must be a JSON array")
+        return
+
+    registry_ids: list[str] = []
+    registry_by_id: dict[str, dict[str, Any]] = {}
+    question_to_nodes: dict[str, list[str]] = {}
+    orphan_nodes = 0
+    registry_format_invalid = 0
+    confirmed_shared_groups = 0
+    confirmed_shared_questions = 0
+    singleton_nodes = 0
+    required = {
+        "knowledge_node_id", "label", "status", "question_ids",
+        "aliases", "successor_ids",
+    }
+
+    for index, node in enumerate(registry):
+        path = f"knowledge_nodes[{index}]"
+        if not isinstance(node, dict):
+            issues.append(f"{path}: must be an object")
+            continue
+        missing = required - node.keys()
+        if missing:
+            issues.append(f"{path}: missing required properties {sorted(missing)}")
+
+        node_id = node.get("knowledge_node_id")
+        if not isinstance(node_id, str) or re.fullmatch(r"KN[0-9]{4}", node_id) is None:
+            registry_format_invalid += 1
+            issues.append(f"{path}: invalid knowledge_node_id {node_id!r}")
+            continue
+        registry_ids.append(node_id)
+        registry_by_id.setdefault(node_id, node)
+
+        if not isinstance(node.get("label"), str) or not node["label"]:
+            issues.append(f"{path}: label must be a non-empty string")
+        status = node.get("status")
+        if status not in {"confirmed_shared", "singleton_initial"}:
+            issues.append(f"{path}: invalid status {status!r}")
+
+        question_ids = node.get("question_ids")
+        if not isinstance(question_ids, list):
+            issues.append(f"{path}: question_ids must be an array")
+            question_ids = []
+        if not question_ids:
+            orphan_nodes += 1
+            issues.append(f"{path}: registry node has no question_ids")
+        if status == "confirmed_shared":
+            confirmed_shared_groups += 1
+            confirmed_shared_questions += len(question_ids)
+            if len(question_ids) < 2:
+                issues.append(f"{path}: confirmed_shared must contain multiple questions")
+        elif status == "singleton_initial":
+            singleton_nodes += 1
+            if len(question_ids) != 1:
+                issues.append(f"{path}: singleton_initial must contain exactly one question")
+
+        for q_id in question_ids:
+            if not isinstance(q_id, str):
+                issues.append(f"{path}: question ID must be a string")
+                continue
+            question_to_nodes.setdefault(q_id, []).append(node_id)
+
+        for field in ("aliases", "successor_ids"):
+            values = node.get(field)
+            if not isinstance(values, list) or any(
+                not isinstance(value, str) for value in values
+            ):
+                issues.append(f"{path}: {field} must be an array of strings")
+
+    registry_id_duplicates = sum(
+        count - 1 for count in Counter(registry_ids).values() if count > 1
+    )
+    if registry_id_duplicates:
+        issues.append(
+            f"knowledge_nodes.json: contains {registry_id_duplicates} duplicate node IDs"
+        )
+
+    multiply_assigned_questions = sum(
+        1 for node_ids in question_to_nodes.values() if len(node_ids) > 1
+    )
+    if multiply_assigned_questions:
+        issues.append(
+            f"knowledge_nodes.json: {multiply_assigned_questions} questions map to multiple nodes"
+        )
+    missing_registry_questions = EXPECTED_IDS - question_to_nodes.keys()
+    unexpected_registry_questions = question_to_nodes.keys() - EXPECTED_IDS
+    if missing_registry_questions:
+        issues.append(
+            f"knowledge_nodes.json: missing {len(missing_registry_questions)} question IDs"
+        )
+    if unexpected_registry_questions:
+        issues.append(
+            "knowledge_nodes.json: contains "
+            f"{len(unexpected_registry_questions)} unexpected question IDs"
+        )
+
+    present_node_ids = 0
+    empty_node_ids = 0
+    tag_format_invalid = 0
+    tag_nodes_missing_from_registry = 0
+    mapping_mismatches = 0
+    tag_node_ids: set[str] = set()
+    for q_id, tag in tags.items():
+        node_id = tag.get("knowledge_node_id")
+        if isinstance(node_id, str) and node_id:
+            present_node_ids += 1
+            tag_node_ids.add(node_id)
+        else:
+            empty_node_ids += 1
+            continue
+        if re.fullmatch(r"KN[0-9]{4}", node_id) is None:
+            tag_format_invalid += 1
+        if node_id not in registry_by_id:
+            tag_nodes_missing_from_registry += 1
+        if question_to_nodes.get(q_id) != [node_id]:
+            mapping_mismatches += 1
+
+    unreferenced_registry_nodes = len(set(registry_ids) - tag_node_ids)
+    if empty_node_ids:
+        issues.append(f"question_tags: {empty_node_ids} knowledge_node_id values are empty")
+    if tag_format_invalid:
+        issues.append(
+            f"question_tags: {tag_format_invalid} knowledge_node_id values have invalid format"
+        )
+    if tag_nodes_missing_from_registry:
+        issues.append(
+            "question_tags: "
+            f"{tag_nodes_missing_from_registry} node IDs do not exist in the registry"
+        )
+    if mapping_mismatches:
+        issues.append(
+            f"question_tags/registry: {mapping_mismatches} bidirectional mappings differ"
+        )
+    if unreferenced_registry_nodes:
+        issues.append(
+            f"knowledge_nodes.json: {unreferenced_registry_nodes} nodes are not used by tags"
+        )
+
+    report.update({
+        "knowledge_node_id_present": present_node_ids,
+        "knowledge_node_id_empty": empty_node_ids,
+        "knowledge_node_id_format_invalid": tag_format_invalid,
+        "registry_node_count": len(registry),
+        "registry_id_duplicate": registry_id_duplicates,
+        "registry_id_format_invalid": registry_format_invalid,
+        "registry_missing_question": len(missing_registry_questions),
+        "registry_unexpected_question": len(unexpected_registry_questions),
+        "registry_multiple_node_question": multiply_assigned_questions,
+        "registry_orphan_node": orphan_nodes,
+        "registry_unreferenced_node": unreferenced_registry_nodes,
+        "registry_mapping_mismatch": mapping_mismatches,
+        "registry_confirmed_shared_groups": confirmed_shared_groups,
+        "registry_confirmed_shared_questions": confirmed_shared_questions,
+        "registry_singleton_nodes": singleton_nodes,
+    })
+
+
 def validate_question_bank_data(
-    data: dict[str, Any], schema: dict[str, Any]
+    data: dict[str, Any],
+    schema: dict[str, Any],
+    registry: Any | None = None,
 ) -> dict[str, Any]:
     """Validate the formal schema plus all cross-file and tag invariants."""
 
@@ -298,6 +481,8 @@ def validate_question_bank_data(
     report["secondary_self_duplicate"] = secondary_self_duplicates
     report["safety_contradiction"] = safety_contradictions
     report["cause_identification"] = forbidden_nodes
+    if registry is not None:
+        _validate_registry(tags, registry, report, issues)
     report["schema_issue_count"] = len(issues)
 
     if issues:
@@ -308,11 +493,15 @@ def validate_question_bank_data(
 def validate_question_bank(
     bank_dir: Path = DEFAULT_BANK_DIR,
     schema_path: Path = DEFAULT_SCHEMA_PATH,
+    registry_path: Path | None = None,
 ) -> dict[str, Any]:
     """Load and validate the repository's formal question bank."""
 
+    selected_registry_path = registry_path or bank_dir / DEFAULT_REGISTRY_PATH.name
     return validate_question_bank_data(
-        load_question_bank_data(bank_dir), load_schema(schema_path)
+        load_question_bank_data(bank_dir),
+        load_schema(schema_path),
+        load_registry(selected_registry_path),
     )
 
 
@@ -320,9 +509,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--bank-dir", type=Path, default=DEFAULT_BANK_DIR)
     parser.add_argument("--schema", type=Path, default=DEFAULT_SCHEMA_PATH)
+    parser.add_argument("--registry", type=Path, default=None)
     args = parser.parse_args()
     try:
-        report = validate_question_bank(args.bank_dir, args.schema)
+        report = validate_question_bank(args.bank_dir, args.schema, args.registry)
     except QuestionBankValidationError as exc:
         print(str(exc))
         return 1

@@ -18,6 +18,11 @@ ABILITY_LABELS = {
 }
 
 
+def _knowledge_node_key(tag):
+    """Prefer the stable node ID while retaining compatibility with old tags."""
+    return tag.get("knowledge_node_id") or tag.get("knowledge_node")
+
+
 def _candidate_ids(category_small=None):
     ids = list(question_ids())
     if category_small is not None:
@@ -173,7 +178,7 @@ def build_daily_session(
         if not q_id:
             continue
         latest[q_id] = result
-        node = get_question_tag(q_id).get("knowledge_node")
+        node = _knowledge_node_key(get_question_tag(q_id))
         node_results[node].append(bool(result.get("is_correct")))
 
     excluded = set(exclude_ids or ())
@@ -193,7 +198,7 @@ def build_daily_session(
             score = 400
         else:
             score = 50
-        node_history = node_results.get(tag.get("knowledge_node"), ())
+        node_history = node_results.get(_knowledge_node_key(tag), ())
         if len(node_history) >= 2 and sum(node_history) / len(node_history) < 0.6:
             score += 150
         if tag.get("safety") not in {None, "", "none"}:
