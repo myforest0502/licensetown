@@ -3,9 +3,11 @@ import copy
 import pytest
 
 from scripts.validate_question_bank import (
+    DEFAULT_REGISTRY_PATH,
     DEFAULT_SCHEMA_PATH,
     QuestionBankValidationError,
     load_question_bank_data,
+    load_registry,
     load_schema,
     validate_question_bank,
     validate_question_bank_data,
@@ -25,6 +27,12 @@ def test_formal_schema_is_v1_and_covers_all_four_json_files():
     assert schema["properties"]["questions"]["items"]["properties"]["exam"][
         "type"
     ] == ["object", "null"]
+    tag_schema = schema["properties"]["question_tags"]["items"]
+    assert "knowledge_node_id" in tag_schema["required"]
+    assert tag_schema["properties"]["knowledge_node_id"] == {
+        "type": "string",
+        "pattern": "^KN[0-9]{4}$",
+    }
 
 
 def test_formal_question_bank_passes_schema_and_cross_file_validation():
@@ -55,7 +63,33 @@ def test_formal_question_bank_passes_schema_and_cross_file_validation():
     assert report["secondary_self_duplicate"] == 0
     assert report["safety_contradiction"] == 0
     assert report["cause_identification"] == 0
+    assert report["knowledge_node_id_present"] == 1564
+    assert report["knowledge_node_id_empty"] == 0
+    assert report["knowledge_node_id_format_invalid"] == 0
+    assert report["registry_node_count"] == 1538
+    assert report["registry_confirmed_shared_groups"] == 25
+    assert report["registry_confirmed_shared_questions"] == 51
+    assert report["registry_singleton_nodes"] == 1513
+    assert report["registry_id_duplicate"] == 0
+    assert report["registry_id_format_invalid"] == 0
+    assert report["registry_missing_question"] == 0
+    assert report["registry_unexpected_question"] == 0
+    assert report["registry_multiple_node_question"] == 0
+    assert report["registry_orphan_node"] == 0
+    assert report["registry_unreferenced_node"] == 0
+    assert report["registry_mapping_mismatch"] == 0
     assert report["schema_issue_count"] == 0
+
+
+def test_registry_allows_confirmed_shared_ids_and_maps_every_question_once():
+    registry = load_registry(DEFAULT_REGISTRY_PATH)
+    shared = [node for node in registry if node["status"] == "confirmed_shared"]
+    mapped_questions = [q_id for node in registry for q_id in node["question_ids"]]
+
+    assert len(shared) == 25
+    assert sum(len(node["question_ids"]) for node in shared) == 51
+    assert all(len(node["question_ids"]) >= 2 for node in shared)
+    assert len(mapped_questions) == len(set(mapped_questions)) == 1564
 
 
 def test_validator_detects_cross_file_answer_and_tag_contradictions():
@@ -97,3 +131,27 @@ def test_validator_detects_missing_and_duplicate_ids():
     assert captured.value.report["missing"]["questions"] == 1
     assert captured.value.report["duplicates"]["questions"] == 1
     assert captured.value.report["id_mismatch"] == 1
+
+
+def test_validator_detects_registry_mapping_duplicate_and_orphan_nodes():
+    data = copy.deepcopy(load_question_bank_data())
+    schema = load_schema()
+    registry = copy.deepcopy(load_registry())
+    registry[0]["question_ids"].append(registry[1]["question_ids"][0])
+    registry.append({
+        "knowledge_node_id": registry[0]["knowledge_node_id"],
+        "label": "duplicate and orphan",
+        "status": "singleton_initial",
+        "question_ids": [],
+        "aliases": [],
+        "successor_ids": [],
+    })
+
+    with pytest.raises(QuestionBankValidationError) as captured:
+        validate_question_bank_data(data, schema, registry)
+
+    report = captured.value.report
+    assert report["registry_id_duplicate"] == 1
+    assert report["registry_multiple_node_question"] == 1
+    assert report["registry_orphan_node"] == 1
+    assert report["registry_mapping_mismatch"] >= 1

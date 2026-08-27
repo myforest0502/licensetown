@@ -188,6 +188,7 @@
           "id",
           "theme",
           "knowledge_node",
+          "knowledge_node_id",
           "task",
           "primary_ability",
           "secondary_ability",
@@ -209,6 +210,10 @@
           "knowledge_node": {
             "type": "string",
             "minLength": 1
+          },
+          "knowledge_node_id": {
+            "type": "string",
+            "pattern": "^KN[0-9]{4}$"
           },
           "task": {
             "$ref": "#/$defs/task"
