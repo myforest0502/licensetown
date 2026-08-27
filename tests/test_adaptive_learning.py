@@ -31,6 +31,10 @@ def test_all_formal_question_tags_load_and_match_ids():
         get_question_tag(f"Q{number}")["secondary_ability"] is None
         for number in range(201, 231)
     )
+    assert get_question_tag("Q830")["tag_version"] == "1.0"
+    assert get_question_tag("Q830")["tag_status"] == "reviewed"
+    assert get_question_tag("Q831")["tag_version"] == "0.3"
+    assert get_question_tag("Q831")["tag_status"] == "provisional_bulk"
     assert get_question_tag("Q1564")["tag_status"] == "provisional_bulk"
 
 
