@@ -111,6 +111,14 @@ class FakeCursor:
             self.database.deleted_learning_tables.append("learning_events")
             return
 
+        if normalized.startswith("DELETE FROM question_attempts"):
+            self.database.deleted_learning_tables.append("question_attempts")
+            return
+
+        if normalized.startswith("DELETE FROM user_node_state"):
+            self.database.deleted_learning_tables.append("user_node_state")
+            return
+
         if normalized.startswith("DELETE FROM learning_time_totals"):
             self.database.deleted_learning_tables.append("learning_time_totals")
             return
@@ -156,7 +164,13 @@ class DatabaseResetTest(unittest.TestCase):
         self.assertEqual(1, database.connection_count)
         self.assertEqual(1, database.delete_count)
         self.assertEqual(
-            ["learning_events", "learning_time_totals", "learning_time_events"],
+            [
+                "question_attempts",
+                "user_node_state",
+                "learning_events",
+                "learning_time_totals",
+                "learning_time_events",
+            ],
             database.deleted_learning_tables,
         )
         self.assertNotIn("supporter_links", database.deleted_learning_tables)

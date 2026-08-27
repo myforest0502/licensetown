@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 STANDARD_STUDY_MINUTES = 500 * 60
 STANDARD_TOTAL_ANSWERS = 3000
 STANDARD_UNIQUE_QUESTIONS = 1000
+NODE_LEARNING_SCHEMA_VERSION = "2026_08_node_learning_state_v1"
 
 
 def database_is_available() -> bool:
@@ -161,6 +162,131 @@ def init_database() -> None:
                 CREATE INDEX IF NOT EXISTS supporter_links_supporter_active_idx
                 ON supporter_links (supporter_user_id, is_active)
                 """
+            )
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS schema_migrations (
+                    version TEXT PRIMARY KEY,
+                    applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+                )
+                """
+            )
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS question_attempts (
+                    id BIGSERIAL PRIMARY KEY,
+                    event_key TEXT NOT NULL,
+                    user_id TEXT NOT NULL,
+                    question_id TEXT NOT NULL,
+                    knowledge_node_id TEXT NOT NULL,
+                    mode TEXT NOT NULL,
+                    selected_answers JSONB NOT NULL,
+                    is_correct BOOLEAN NOT NULL,
+                    confidence SMALLINT,
+                    answered_at TIMESTAMPTZ NOT NULL,
+                    attempt_position SMALLINT NOT NULL,
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                    UNIQUE (event_key, attempt_position),
+                    CHECK (question_id ~ '^Q[1-9][0-9]{0,3}$'),
+                    CHECK (knowledge_node_id ~ '^KN[0-9]{4}$'),
+                    CHECK (confidence IS NULL OR confidence BETWEEN 1 AND 3),
+                    CHECK (attempt_position >= 1)
+                )
+                """
+            )
+            cur.execute(
+                """
+                CREATE INDEX IF NOT EXISTS question_attempts_user_date_idx
+                ON question_attempts (user_id, answered_at DESC)
+                """
+            )
+            cur.execute(
+                """
+                CREATE INDEX IF NOT EXISTS question_attempts_user_question_date_idx
+                ON question_attempts (user_id, question_id, answered_at DESC)
+                """
+            )
+            cur.execute(
+                """
+                CREATE INDEX IF NOT EXISTS question_attempts_user_node_date_idx
+                ON question_attempts (user_id, knowledge_node_id, answered_at DESC)
+                """
+            )
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS user_node_state (
+                    user_id TEXT NOT NULL,
+                    knowledge_node_id TEXT NOT NULL,
+                    state TEXT NOT NULL DEFAULT 'unseen',
+                    attempt_count INTEGER NOT NULL DEFAULT 0,
+                    correct_count INTEGER NOT NULL DEFAULT 0,
+                    incorrect_count INTEGER NOT NULL DEFAULT 0,
+                    confident_wrong_count INTEGER NOT NULL DEFAULT 0,
+                    consecutive_correct INTEGER NOT NULL DEFAULT 0,
+                    repair_confirmation_count INTEGER NOT NULL DEFAULT 0,
+                    first_seen_at TIMESTAMPTZ,
+                    last_seen_at TIMESTAMPTZ,
+                    last_correct_at TIMESTAMPTZ,
+                    last_incorrect_at TIMESTAMPTZ,
+                    last_question_id TEXT,
+                    next_review_at TIMESTAMPTZ,
+                    last_error_type TEXT,
+                    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                    PRIMARY KEY (user_id, knowledge_node_id),
+                    CHECK (knowledge_node_id ~ '^KN[0-9]{4}$'),
+                    CHECK (state IN (
+                        'unseen', 'checking', 'repairing', 'repaired',
+                        'stable', 'recheck_due'
+                    )),
+                    CHECK (attempt_count >= 0),
+                    CHECK (correct_count >= 0),
+                    CHECK (incorrect_count >= 0),
+                    CHECK (confident_wrong_count >= 0),
+                    CHECK (consecutive_correct >= 0),
+                    CHECK (repair_confirmation_count >= 0),
+                    CHECK (
+                        last_question_id IS NULL OR
+                        last_question_id ~ '^Q[1-9][0-9]{0,3}$'
+                    ),
+                    CHECK (
+                        last_error_type IS NULL OR
+                        last_error_type IN (
+                            'knowledge_gap',
+                            'misconception',
+                            'calculation_method',
+                            'reading_overthinking',
+                            'uncertain_recall',
+                            'application_failure'
+                        )
+                    )
+                )
+                """
+            )
+            cur.execute(
+                """
+                CREATE INDEX IF NOT EXISTS user_node_state_user_state_idx
+                ON user_node_state (user_id, state)
+                """
+            )
+            cur.execute(
+                """
+                CREATE INDEX IF NOT EXISTS user_node_state_user_review_idx
+                ON user_node_state (user_id, next_review_at)
+                """
+            )
+            cur.execute(
+                """
+                CREATE INDEX IF NOT EXISTS user_node_state_user_last_seen_idx
+                ON user_node_state (user_id, last_seen_at DESC)
+                """
+            )
+            cur.execute(
+                """
+                INSERT INTO schema_migrations (version)
+                VALUES (%s)
+                ON CONFLICT (version) DO NOTHING
+                """,
+                (NODE_LEARNING_SCHEMA_VERSION,),
             )
 
     logger.info("Neonデータベースの準備が完了しました。")
@@ -361,6 +487,8 @@ def reset_user_profile(user_id: str) -> None:
 
     with get_db_connection() as conn:
         with conn.cursor() as cur:
+            cur.execute("DELETE FROM question_attempts WHERE user_id = %s", (user_id,))
+            cur.execute("DELETE FROM user_node_state WHERE user_id = %s", (user_id,))
             cur.execute("DELETE FROM learning_events WHERE user_id = %s", (user_id,))
             cur.execute("DELETE FROM learning_time_totals WHERE user_id = %s", (user_id,))
             cur.execute("DELETE FROM learning_time_events WHERE user_id = %s", (user_id,))
