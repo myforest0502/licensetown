@@ -190,7 +190,7 @@ def test_apply_flag_is_rejected_before_database_access(monkeypatch, capsys):
         lambda: (_ for _ in ()).throw(AssertionError("DB must not be accessed")),
     )
     assert backfill.main(["--apply"]) == 2
-    assert "not implemented" in capsys.readouterr().out
+    assert "requires --confirm" in capsys.readouterr().out
 
 
 def test_rebuild_node_state_uses_full_ordered_attempt_history():

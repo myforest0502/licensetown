@@ -46,6 +46,10 @@ STOP_COUNTERS = (
 )
 
 
+class BackfillSafetyError(RuntimeError):
+    """Raised before commit when an apply safety condition is not satisfied."""
+
+
 def _new_report() -> dict[str, Any]:
     return {
         "run_mode": "dry-run",
@@ -364,22 +368,201 @@ def run_dry_run(connection=None) -> dict[str, Any]:
     return report
 
 
+def required_confirmation(report: dict[str, Any]) -> str:
+    """Return the human confirmation token for the current re-audit."""
+    return f"BACKFILL_{report['new_attempt_candidates']}_ATTEMPTS"
+
+
+def _insert_attempt(cursor, candidate: dict[str, Any]) -> bool:
+    cursor.execute(
+        """
+        INSERT INTO question_attempts (
+            event_key, user_id, question_id, knowledge_node_id, mode,
+            selected_answers, is_correct, confidence, answered_at,
+            attempt_position
+        ) VALUES (
+            %s, %s, %s, %s, %s, %s::jsonb, %s, %s, %s, %s
+        )
+        ON CONFLICT (event_key, attempt_position) DO NOTHING
+        RETURNING id
+        """,
+        (
+            candidate["event_key"], candidate["user_id"],
+            candidate["question_id"], candidate["knowledge_node_id"],
+            candidate["mode"],
+            json.dumps(candidate.get("selected_answers"), ensure_ascii=False),
+            candidate["is_correct"], candidate.get("confidence"),
+            candidate["answered_at"], candidate["attempt_position"],
+        ),
+    )
+    return cursor.fetchone() is not None
+
+
+def _replace_user_node_states(
+    cursor,
+    affected_users: set[str],
+    states: list[dict[str, Any]],
+) -> None:
+    """Replace only affected users' derived state inside the apply transaction."""
+    if not affected_users:
+        return
+    cursor.execute(
+        "DELETE FROM user_node_state WHERE user_id = ANY(%s)",
+        (sorted(affected_users),),
+    )
+    for state in states:
+        cursor.execute(
+            """
+            INSERT INTO user_node_state (
+                user_id, knowledge_node_id, state, attempt_count,
+                correct_count, incorrect_count, confident_wrong_count,
+                consecutive_correct, repair_confirmation_count,
+                first_seen_at, last_seen_at, last_correct_at,
+                last_incorrect_at, last_question_id, next_review_at,
+                last_error_type, updated_at
+            ) VALUES (
+                %s, %s, %s, %s, %s, %s, %s, %s, 0,
+                %s, %s, %s, %s, %s, NULL, NULL, NOW()
+            )
+            """,
+            (
+                state["user_id"], state["knowledge_node_id"], state["state"],
+                state["attempt_count"], state["correct_count"],
+                state["incorrect_count"], state["confident_wrong_count"],
+                state["consecutive_correct"], state["first_seen_at"],
+                state["last_seen_at"], state["last_correct_at"],
+                state["last_incorrect_at"], state["last_question_id"],
+            ),
+        )
+
+
+def _count_states(cursor, affected_users: set[str]) -> int:
+    if not affected_users:
+        return 0
+    cursor.execute(
+        "SELECT COUNT(*) FROM user_node_state WHERE user_id = ANY(%s)",
+        (sorted(affected_users),),
+    )
+    row = cursor.fetchone()
+    return int(row[0]) if row else 0
+
+
+def apply_backfill(
+    connection,
+    confirm: str,
+    tag_resolver: Callable[[str], dict[str, Any]] = get_question_tag,
+) -> dict[str, Any]:
+    """Apply missing attempts and rebuild state; caller owns the transaction."""
+    before_events, before_attempts = load_read_only_snapshot(connection)
+    audit, candidates = audit_learning_history(
+        before_events, before_attempts, tag_resolver
+    )
+    if not audit["apply_eligible"]:
+        raise BackfillSafetyError("re-audit is not apply eligible; no writes allowed")
+    expected_confirm = required_confirmation(audit)
+    if confirm != expected_confirm:
+        raise BackfillSafetyError(
+            f"confirmation mismatch; expected {expected_confirm}"
+        )
+
+    inserted = 0
+    with connection.cursor() as cursor:
+        for candidate in candidates:
+            inserted += int(_insert_attempt(cursor, candidate))
+
+    after_events, after_attempts = load_read_only_snapshot(connection)
+    post_audit, remaining = audit_learning_history(
+        after_events, after_attempts, tag_resolver
+    )
+    if len(after_events) != len(before_events):
+        raise BackfillSafetyError("learning_events count changed during apply")
+    if (
+        not post_audit["apply_eligible"]
+        or remaining
+        or post_audit["existing_conflicts"]
+    ):
+        raise BackfillSafetyError("post-insert attempt verification failed")
+
+    source_event_keys = {event.get("event_key") for event in before_events}
+    affected_users = {
+        attempt["user_id"]
+        for attempt in after_attempts
+        if attempt.get("event_key") in source_event_keys and attempt.get("user_id")
+    }
+    affected_attempts = [
+        attempt for attempt in after_attempts
+        if attempt.get("user_id") in affected_users
+    ]
+    rebuilt_states = rebuild_user_node_states(affected_attempts)
+    with connection.cursor() as cursor:
+        _replace_user_node_states(cursor, affected_users, rebuilt_states)
+        rebuilt_count = _count_states(cursor, affected_users)
+    if rebuilt_count != len(rebuilt_states):
+        raise BackfillSafetyError("user_node_state row verification failed")
+
+    final_events, final_attempts = load_read_only_snapshot(connection)
+    final_audit, final_remaining = audit_learning_history(
+        final_events, final_attempts, tag_resolver
+    )
+    if (
+        len(final_events) != len(before_events)
+        or not final_audit["apply_eligible"]
+        or final_remaining
+        or final_audit["existing_conflicts"]
+        or final_audit["existing_matched"] != audit["total_attempt_candidates"]
+    ):
+        raise BackfillSafetyError("post-write verification failed")
+
+    result = dict(final_audit)
+    result.update({
+        "run_mode": "apply",
+        "inserted": inserted,
+        "skipped": final_audit["existing_matched"] - inserted,
+        "conflicts": final_audit["existing_conflicts"],
+        "question_attempts_total": len(final_attempts),
+        "rebuilt_state_rows": rebuilt_count,
+        "learning_events_before": len(before_events),
+        "learning_events_after": len(final_events),
+        "learning_events_unchanged": len(before_events) == len(final_events),
+    })
+    return result
+
+
+def run_apply(confirm: str, connection=None) -> dict[str, Any]:
+    """Run one atomic apply.  Connection context commits or rolls back."""
+    if connection is None:
+        if not database.database_is_available():
+            raise RuntimeError("DATABASE_URL is required for the apply command")
+        with database.get_db_connection() as created_connection:
+            return apply_backfill(created_connection, confirm)
+    with connection:
+        return apply_backfill(connection, confirm)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--apply",
         action="store_true",
-        help="reserved for ⑤-C2; writes are not implemented in this version",
+        help="apply missing attempts after a fresh safety audit",
+    )
+    parser.add_argument(
+        "--confirm",
+        help="required apply token, for example BACKFILL_335_ATTEMPTS",
     )
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
-    if args.apply:
-        print("ERROR: --apply is not implemented in ⑤-C1; no database writes were made.")
+    if args.apply and not args.confirm:
+        print("ERROR: --apply requires --confirm; no database writes were made.")
         return 2
-    report = run_dry_run()
+    try:
+        report = run_apply(args.confirm) if args.apply else run_dry_run()
+    except BackfillSafetyError as exc:
+        print(f"ERROR: {exc}; transaction rolled back.")
+        return 2
     print(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
     return 0 if report["apply_eligible"] else 1
 
