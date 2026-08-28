@@ -30,9 +30,11 @@ def _formal_ids():
 
 def test_formal_relation_and_merge_candidate_json_load():
     relations, candidates = load_node_relation_data()
-    assert len(relations) == 4
+    assert len(relations) == 13
     assert len(candidates) == 5
     assert {item["relation_type"] for item in relations} == {"PREREQUISITE", "TRANSFER"}
+    assert sum(item["relation_type"] == "PREREQUISITE" for item in relations) == 12
+    assert sum(item["relation_type"] == "TRANSFER" for item in relations) == 1
 
 
 def test_relation_ids_references_enums_direction_and_duplicates_are_valid():
@@ -64,10 +66,32 @@ def test_invalid_relation_data_is_rejected(mutation):
 
 def test_formal_filter_excludes_medium_pending_transfer():
     reviewed = get_reviewed_node_relations()
-    assert len(reviewed) == 3
+    assert len(reviewed) == 12
     assert all(item["relation_type"] == "PREREQUISITE" for item in reviewed)
     assert all(item["confidence"] == "high" for item in reviewed)
     assert "KNR0004" not in {item["relation_id"] for item in reviewed}
+
+
+def test_expansion_relations_are_formal_and_held_pairs_are_absent():
+    relations = get_node_relations()
+    reviewed = get_reviewed_node_relations()
+    expansion_ids = {f"KNR{number:04d}" for number in range(5, 14)}
+    assert expansion_ids <= {item["relation_id"] for item in relations}
+    assert expansion_ids <= {item["relation_id"] for item in reviewed}
+    expansion = [item for item in relations if item["relation_id"] in expansion_ids]
+    assert all(item["relation_type"] == "PREREQUISITE" for item in expansion)
+    assert all(item["confidence"] == "high" for item in expansion)
+    assert all(item["review_status"] == "reviewed_candidate" for item in expansion)
+    assert all(item["verification_role"] == "diagnostic_only" for item in expansion)
+    held_pairs = {
+        ("KN1204", "KN0688"),
+        ("KN1053", "KN1311"),
+        ("KN0833", "KN1099"),
+    }
+    assert held_pairs.isdisjoint({
+        (item["source_node_id"], item["target_node_id"])
+        for item in relations
+    })
 
 
 def test_duplicate_relation_with_a_distinct_id_is_rejected():
