@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+import logging
 import os
 
 os.environ.setdefault("OPENAI_API_KEY", "test-key")
@@ -10,6 +11,8 @@ from knowledge_node_relations import get_node_relations, get_reviewed_node_relat
 from prerequisite_backtrack_pilot import (
     build_pending_backtrack_candidate,
     inject_pending_backtrack_candidate,
+    is_prerequisite_backtrack_pilot_enabled,
+    parse_prerequisite_backtrack_pilot_user_ids,
 )
 
 
@@ -119,6 +122,20 @@ def test_previous_question_and_invalid_depth_prevent_injection():
     assert recursive == original
 
 
+def test_allowlist_parser_trims_ignores_empty_and_deduplicates():
+    assert parse_prerequisite_backtrack_pilot_user_ids(
+        " abc, def,abc, , "
+    ) == {"abc", "def"}
+    assert parse_prerequisite_backtrack_pilot_user_ids(None) == set()
+
+
+def test_pilot_gate_fails_closed():
+    assert not is_prerequisite_backtrack_pilot_enabled(False, "abc", {"abc"})
+    assert not is_prerequisite_backtrack_pilot_enabled(True, "abc", set())
+    assert not is_prerequisite_backtrack_pilot_enabled(True, "other", {"abc"})
+    assert is_prerequisite_backtrack_pilot_enabled(True, "abc", {"abc", "def"})
+
+
 def session_questions():
     ids = ["Q386", "Q2", "Q3", "Q4", "Q5"] + [
         f"Q{number}" for number in range(6, 31)
@@ -152,6 +169,9 @@ def test_feature_flag_false_skips_history_and_preserves_existing_next_set(monkey
     app.study_sessions["flag-off-user"] = session
     monkeypatch.setattr(app, "ENABLE_PREREQUISITE_BACKTRACK", False)
     monkeypatch.setattr(
+        app, "PREREQUISITE_BACKTRACK_PILOT_USER_IDS", {"flag-off-user"}
+    )
+    monkeypatch.setattr(
         app,
         "get_question_attempts",
         lambda _user_id: (_ for _ in ()).throw(AssertionError("history fetched")),
@@ -167,7 +187,8 @@ def test_feature_flag_false_skips_history_and_preserves_existing_next_set(monkey
         app.study_sessions.pop("flag-off-user", None)
 
 
-def test_feature_flag_true_queues_one_mip_candidate_without_recursion(monkeypatch):
+def test_feature_flag_true_queues_one_mip_candidate_without_recursion(monkeypatch, caplog):
+    caplog.set_level(logging.INFO)
     session = make_session()
     source = attempt("Q260", MIP["source_node_id"], True, 2, 1, "old-event", "pilot-user")
     target = attempt(
@@ -175,6 +196,7 @@ def test_feature_flag_true_queues_one_mip_candidate_without_recursion(monkeypatc
     )
     app.study_sessions["pilot-user"] = session
     monkeypatch.setattr(app, "ENABLE_PREREQUISITE_BACKTRACK", True)
+    monkeypatch.setattr(app, "PREREQUISITE_BACKTRACK_PILOT_USER_IDS", {"pilot-user"})
     monkeypatch.setattr(app, "get_question_attempts", lambda _user_id: [source, target])
     monkeypatch.setattr(app, "get_reviewed_node_relations", lambda: [MIP])
     monkeypatch.setattr(app, "get_quiz_question", lambda question_id: {"id": question_id})
@@ -189,5 +211,31 @@ def test_feature_flag_true_queues_one_mip_candidate_without_recursion(monkeypatc
         assert session["prerequisite_backtrack_set"] == 2
         assert app.queue_prerequisite_backtrack_for_next_set("pilot-user", session) is None
         assert "pending_prerequisite_backtrack" not in session
+        assert "event=prerequisite_backtrack_selected" in caplog.text
+        assert "relation_id=KNR0003" in caplog.text
+        assert "source_question_id=Q260" in caplog.text
+        assert "target_question_id=Q386" in caplog.text
+        assert "diagnosis=SOURCE_UNSTABLE" in caplog.text
+        assert "reason=uncertain_or_guessed_correct_source" in caplog.text
+        assert "pilot-user" not in caplog.text
     finally:
         app.study_sessions.pop("pilot-user", None)
+
+
+def test_non_allowlisted_and_empty_allowlist_skip_history(monkeypatch):
+    session = make_session()
+    app.study_sessions["outside-user"] = session
+    monkeypatch.setattr(app, "ENABLE_PREREQUISITE_BACKTRACK", True)
+    monkeypatch.setattr(
+        app,
+        "get_question_attempts",
+        lambda _user_id: (_ for _ in ()).throw(AssertionError("history fetched")),
+    )
+    try:
+        monkeypatch.setattr(app, "PREREQUISITE_BACKTRACK_PILOT_USER_IDS", set())
+        assert app.queue_prerequisite_backtrack_for_next_set("outside-user", session) is None
+        monkeypatch.setattr(app, "PREREQUISITE_BACKTRACK_PILOT_USER_IDS", {"pilot-user"})
+        assert app.queue_prerequisite_backtrack_for_next_set("outside-user", session) is None
+        assert "pending_prerequisite_backtrack" not in session
+    finally:
+        app.study_sessions.pop("outside-user", None)

@@ -68,6 +68,8 @@ from knowledge_node_relations import get_reviewed_node_relations
 from prerequisite_backtrack_pilot import (
     build_pending_backtrack_candidate,
     inject_pending_backtrack_candidate,
+    is_prerequisite_backtrack_pilot_enabled,
+    parse_prerequisite_backtrack_pilot_user_ids,
 )
 
 # =========================================================
@@ -79,6 +81,9 @@ logging.basicConfig(level=logging.INFO)
 ENABLE_PREREQUISITE_BACKTRACK = os.getenv(
     "ENABLE_PREREQUISITE_BACKTRACK", "false"
 ).strip().lower() in {"1", "true", "yes", "on"}
+PREREQUISITE_BACKTRACK_PILOT_USER_IDS = parse_prerequisite_backtrack_pilot_user_ids(
+    os.getenv("PREREQUISITE_BACKTRACK_PILOT_USER_IDS")
+)
 
 
 # =========================================================
@@ -943,7 +948,12 @@ def start_next_quiz(user_id):
     current_session["current_set"] = current_set + 1
     start_index = current_set * questions_per_set
     end_index = start_index + questions_per_set
-    if globals().get("ENABLE_PREREQUISITE_BACKTRACK", False):
+    pilot_enabled = globals().get("is_prerequisite_backtrack_pilot_enabled")
+    if pilot_enabled and pilot_enabled(
+        globals().get("ENABLE_PREREQUISITE_BACKTRACK", False),
+        user_id,
+        globals().get("PREREQUISITE_BACKTRACK_PILOT_USER_IDS", ()),
+    ):
         candidate = current_session.pop("pending_prerequisite_backtrack", None)
         updated_questions, injected = inject_pending_backtrack_candidate(
             current_session["all_questions"],
@@ -958,8 +968,13 @@ def start_next_quiz(user_id):
             used_ids = current_session.setdefault("prerequisite_backtrack_used_ids", [])
             used_ids.append(candidate["question_id"])
             logging.info(
-                "Queued one prerequisite backtrack question for next set: relation=%s",
+                "event=prerequisite_backtrack_selected relation_id=%s "
+                "source_question_id=%s target_question_id=%s diagnosis=%s reason=%s",
                 candidate.get("relation_id"),
+                candidate.get("question_id"),
+                candidate.get("trigger_target_question_id"),
+                candidate.get("source_status"),
+                candidate.get("candidate_reason"),
             )
     new_questions = current_session["all_questions"][start_index:end_index]
 
@@ -1780,7 +1795,11 @@ def record_confirmed_learning_batch(user_id, session):
 def queue_prerequisite_backtrack_for_next_set(user_id, session):
     """Feature-flagged pilot: queue no more than one depth-1 candidate."""
     if (
-        not ENABLE_PREREQUISITE_BACKTRACK
+        not is_prerequisite_backtrack_pilot_enabled(
+            ENABLE_PREREQUISITE_BACKTRACK,
+            user_id,
+            PREREQUISITE_BACKTRACK_PILOT_USER_IDS,
+        )
         or session.get("mode", "study") != "study"
         or session.get("session_kind") == "initial_assessment"
         or session.get("current_set", 1) >= session.get("total_sets", 1)

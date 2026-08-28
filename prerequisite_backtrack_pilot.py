@@ -12,6 +12,24 @@ from prerequisite_diagnosis import (
 )
 
 
+def parse_prerequisite_backtrack_pilot_user_ids(value: str | None) -> set[str]:
+    """Parse a comma-separated allowlist without retaining empty entries."""
+    return {
+        item.strip()
+        for item in str(value or "").split(",")
+        if item.strip()
+    }
+
+
+def is_prerequisite_backtrack_pilot_enabled(
+    feature_enabled: bool,
+    user_id: str | None,
+    pilot_user_ids: Iterable[str],
+) -> bool:
+    """Fail closed unless both the feature and explicit user allowlist match."""
+    return bool(feature_enabled and user_id and user_id in set(pilot_user_ids))
+
+
 def build_pending_backtrack_candidate(
     current_attempts: Iterable[dict[str, Any]],
     all_attempts: Iterable[dict[str, Any]],
@@ -56,6 +74,7 @@ def build_pending_backtrack_candidate(
                 "target_node_id": relation["target_node_id"],
                 "trigger_target_question_id": target.get("question_id"),
                 "source_status": diagnosis["source_status"],
+                "candidate_reason": selection["candidate_reason"],
                 "depth": 1,
             }
     return None
