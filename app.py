@@ -52,6 +52,7 @@ from site_ui import site_ui
 from question_bank import (
     get_category_group_names,
     get_category_names_for_group,
+    get_question_tag,
     resolve_category_small,
     QUESTION_BANK_ERROR_MESSAGE,
     QuestionBankError,
@@ -1724,8 +1725,15 @@ def record_confirmed_learning_batch(user_id, session):
         is_correct = is_answer_correct(question, answer)
         correct_count += int(is_correct)
         confidence = answer_data.get("confidence")
+        question_id = str(question.get("id"))
+        knowledge_node_id = get_question_tag(question_id).get("knowledge_node_id")
+        if not knowledge_node_id:
+            raise QuestionBankError(
+                f"Knowledge Node ID not found for {question_id}"
+            )
         question_results.append({
-            "question_id": str(question.get("id")),
+            "question_id": question_id,
+            "knowledge_node_id": knowledge_node_id,
             "selected_answers": selected_answers_for_history(question, answer),
             "is_correct": is_correct,
             "confidence": int(confidence) if str(confidence) in {"1", "2", "3"} else None,

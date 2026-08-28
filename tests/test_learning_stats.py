@@ -21,6 +21,8 @@ from question_bank import get_category_small, get_quiz_question, is_answer_corre
 
 def clear_local_stats():
     database._local_learning_events.clear()
+    database._local_question_attempts.clear()
+    database._local_user_node_states.clear()
     database._local_learning_seconds.clear()
     database._local_learning_time_events.clear()
 
@@ -60,7 +62,11 @@ def test_recent_accuracy_and_complete_reset():
 def test_confirmed_batch_and_signed_dashboard_render_real_values():
     clear_local_stats()
     user_id = "dashboard-user"
-    questions = [{"answer": answer} for answer in ["A", "B", "C", "D", "E"]]
+    questions = [get_quiz_question(f"Q{number}") for number in range(1, 6)]
+    correct_answers = [
+        "".join(question["accepted_answer_sets"][0])
+        for question in questions
+    ]
     session = {
         "session_id": "dashboard-session",
         "current_set": 1,
@@ -68,7 +74,10 @@ def test_confirmed_batch_and_signed_dashboard_render_real_values():
         "questions": questions,
         "all_answers": {
             number: {"answer": answer}
-            for number, answer in enumerate(["A", "B", "X", "X", "E"], 1)
+            for number, answer in enumerate(
+                [correct_answers[0], correct_answers[1], "X", "X", correct_answers[4]],
+                1,
+            )
         },
         "mode": "study",
     }
@@ -82,6 +91,7 @@ def test_confirmed_batch_and_signed_dashboard_render_real_values():
     assert ">5<small>問</small>" in text
     assert text.count(">60<small>%</small>") >= 2
     assert "5 / 30問" in text
+    assert "KN0001" not in text
 
 
 def test_question_results_store_formal_single_multi_either_and_null_confidence():
@@ -124,18 +134,21 @@ def test_question_results_store_formal_single_multi_either_and_null_confidence()
     assert len(results) == 5
     assert results[0] == {
         "question_id": "Q1",
+        "knowledge_node_id": "KN0001",
         "selected_answers": ["B"],
         "is_correct": True,
         "confidence": 2,
     }
     assert results[1] == {
         "question_id": "Q521",
+        "knowledge_node_id": "KN0513",
         "selected_answers": ["2", "4"],
         "is_correct": True,
         "confidence": 1,
     }
     assert results[2] == {
         "question_id": "Q551",
+        "knowledge_node_id": "KN0543",
         "selected_answers": ["2"],
         "is_correct": True,
         "confidence": None,
@@ -144,6 +157,11 @@ def test_question_results_store_formal_single_multi_either_and_null_confidence()
     assert all(isinstance(item["selected_answers"], list) for item in results)
     assert event["answered_count"] == 5
     assert event["correct_count"] == sum(item["is_correct"] for item in results)
+    assert len(database._local_question_attempts) == 5
+    assert all(
+        item["knowledge_node_id"].startswith("KN")
+        for item in database._local_question_attempts
+    )
 
 
 def test_question_results_duplicate_resume_home_and_reset_are_safe():

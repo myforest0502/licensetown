@@ -29,6 +29,8 @@ def load_database_code(available, get_connection) -> dict:
         "get_db_connection": get_connection,
         "_known_user_ids": set(),
         "_local_learning_events": {},
+        "_local_question_attempts": [],
+        "_local_user_node_states": {},
         "_local_learning_seconds": {},
         "_local_learning_time_events": [],
         "_local_supporter_links": {},
@@ -145,12 +147,32 @@ class DatabaseResetTest(unittest.TestCase):
         )
         namespace["user_names"]["user-1"] = "利用者"
         namespace["user_modes"]["user-1"] = "study"
+        namespace["_local_question_attempts"].extend([
+            {"user_id": "user-1"},
+            {"user_id": "user-2"},
+        ])
+        namespace["_local_user_node_states"].update({
+            ("user-1", "KN0001"): {"attempt_count": 1},
+            ("user-2", "KN0002"): {"attempt_count": 1},
+        })
 
         namespace["reset_user_profile"]("user-1")
 
         self.assertIsNone(namespace["user_names"].get("user-1"))
         self.assertIsNone(namespace["user_modes"].get("user-1"))
         self.assertFalse(namespace["user_profile_exists"]("user-1"))
+        self.assertEqual(
+            [{"user_id": "user-2"}],
+            namespace["_local_question_attempts"],
+        )
+        self.assertNotIn(
+            ("user-1", "KN0001"),
+            namespace["_local_user_node_states"],
+        )
+        self.assertIn(
+            ("user-2", "KN0002"),
+            namespace["_local_user_node_states"],
+        )
 
     def test_neon_reset_deletes_only_the_target_user_profile(self) -> None:
         database = FakeDatabase(name="利用者", mode="study")

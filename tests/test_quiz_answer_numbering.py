@@ -142,6 +142,9 @@ def load_current_app_functions() -> SimpleNamespace:
             str(selected).upper().strip() == str(question.get("answer", "")).upper().strip()
         ),
         "selected_answers_for_history": lambda question, selected: list(str(selected)),
+        "get_question_tag": lambda question_id: {
+            "knowledge_node_id": f"KN{int(str(question_id).lstrip('Q')):04d}"
+        },
         "explain_contexts": {},
         "user_states": {},
         "user_names": {},
