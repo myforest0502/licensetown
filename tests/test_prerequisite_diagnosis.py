@@ -90,8 +90,9 @@ def test_medium_transfer_is_not_simulated():
     transfer_target = attempt(medium_transfer["target_node_id"], False, 2, 3, "Q246")
     report = simulate_prerequisite_diagnoses([transfer_target], relations)
     assert report["target_node_attempts"] == 0
+    assert report["prerequisite_relation_count"] == 12
     assert {item["relation_id"] for item in report["relations"]} == {
-        "KNR0001", "KNR0002", "KNR0003",
+        f"KNR{number:04d}" for number in range(1, 14) if number != 4
     }
 
 
@@ -103,9 +104,38 @@ def test_simulation_is_deterministic_and_reports_relations_in_id_order():
     second = simulate_prerequisite_diagnoses([source, wrong], relations)
     assert first == second
     assert [item["relation_id"] for item in first["relations"]] == [
-        "KNR0001", "KNR0002", "KNR0003",
+        f"KNR{number:04d}" for number in range(1, 14) if number != 4
     ]
     assert first["SOURCE_CONFIDENT_CORRECT"] == 1
+
+
+def test_expanded_report_includes_zero_activity_relations_and_consistent_totals():
+    source = attempt(RELATION["source_node_id"], True, 1, 1, "Q745")
+    correct_target = attempt(RELATION["target_node_id"], True, 1, 2, "Q1209")
+    wrong_target = target(3)
+    report = simulate_prerequisite_diagnoses(
+        [wrong_target, source, correct_target],
+        get_node_relations(),
+    )
+
+    assert report["prerequisite_relation_count"] == 12
+    assert len(report["relations"]) == 12
+    first = report["relations"][0]
+    assert first["target_attempt_count"] == 2
+    assert first["target_wrong_count"] == 1
+    assert first["recommended_backtrack_true"] == 0
+    assert first["recommended_backtrack_false"] == 1
+    assert sum(report[status] for status in (
+        SOURCE_UNSEEN,
+        SOURCE_UNSTABLE,
+        SOURCE_CONFIDENT_CORRECT,
+        SOURCE_CONFLICT,
+    )) == report["prerequisite_evaluable_target_wrong_attempts"]
+    assert (
+        report["recommended_backtrack_true"]
+        + report["recommended_backtrack_false"]
+    ) == report["prerequisite_evaluable_target_wrong_attempts"]
+    assert all(item["target_attempt_count"] == 0 for item in report["relations"][1:])
 
 
 class ReadOnlyCursor:

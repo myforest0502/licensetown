@@ -104,7 +104,7 @@ def derive_prerequisite_diagnosis(
 def simulate_prerequisite_diagnoses(
     attempts: Iterable[dict[str, Any]],
     relations: Iterable[dict[str, Any]],
-    example_limit: int = 10,
+    example_limit: int = 20,
 ) -> dict[str, Any]:
     """Replay saved attempts without mutating attempts, relations, or Node state."""
     ordered = sorted((dict(attempt) for attempt in attempts), key=attempt_order_key)
@@ -124,12 +124,18 @@ def simulate_prerequisite_diagnoses(
             "relation_id": relation["relation_id"],
             "source_node_id": relation["source_node_id"],
             "target_node_id": relation["target_node_id"],
+            "target_attempt_count": 0,
             "target_wrong_count": 0,
             **{status: 0 for status in SOURCE_STATUSES},
-            "recommended_backtrack": 0,
+            "recommended_backtrack_true": 0,
+            "recommended_backtrack_false": 0,
         }
         for relation in eligible
     }
+
+    for target in target_attempts:
+        for relation in by_target[target["knowledge_node_id"]]:
+            relation_reports[relation["relation_id"]]["target_attempt_count"] += 1
 
     for target in target_wrong:
         for relation in by_target[target["knowledge_node_id"]]:
@@ -138,15 +144,24 @@ def simulate_prerequisite_diagnoses(
             item = relation_reports[relation["relation_id"]]
             item["target_wrong_count"] += 1
             item[diagnosis["source_status"]] += 1
-            item["recommended_backtrack"] += int(diagnosis["recommended_backtrack"])
+            key = (
+                "recommended_backtrack_true"
+                if diagnosis["recommended_backtrack"]
+                else "recommended_backtrack_false"
+            )
+            item[key] += 1
 
     status_counts = Counter(item["source_status"] for item in diagnoses)
+    backtrack_counts = Counter(item["recommended_backtrack"] for item in diagnoses)
     return {
         "total_attempts": len(ordered),
+        "prerequisite_relation_count": len(eligible),
         "target_node_attempts": len(target_attempts),
         "target_wrong_attempts": len(target_wrong),
         "prerequisite_evaluable_target_wrong_attempts": len(diagnoses),
         **{status: status_counts[status] for status in SOURCE_STATUSES},
+        "recommended_backtrack_true": backtrack_counts[True],
+        "recommended_backtrack_false": backtrack_counts[False],
         "relations": list(relation_reports.values()),
         "examples": diagnoses[:max(0, example_limit)],
     }
