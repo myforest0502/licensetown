@@ -1,0 +1,47 @@
+[
+  {
+    "candidate_id": "KNC0001",
+    "node_ids": ["KN0597", "KN0807"],
+    "question_ids": ["Q605", "Q815"],
+    "topic": "交感神経作用",
+    "confidence": "high",
+    "review_status": "pending_clinical_review",
+    "reason": "両者とも交感神経の作用を扱うが、全般知識と気管支拡張という粒度差があり、統合前に最小修復対象が同一か確認が必要。"
+  },
+  {
+    "candidate_id": "KNC0002",
+    "node_ids": ["KN1337", "KN1509"],
+    "question_ids": ["Q1358", "Q1535"],
+    "topic": "半規管と角加速度",
+    "confidence": "high",
+    "review_status": "pending_clinical_review",
+    "reason": "半規管が頭部回転の角加速度を感知する同一知識と報告されており、統合候補。"
+  },
+  {
+    "candidate_id": "KNC0003",
+    "node_ids": ["KN1082", "KN1292"],
+    "question_ids": ["Q1093", "Q1312"],
+    "topic": "NSAIDsと胃潰瘍",
+    "confidence": "high",
+    "review_status": "pending_clinical_review",
+    "reason": "COX/PG抑制による胃粘膜防御低下という同一機序と報告されており、統合候補。"
+  },
+  {
+    "candidate_id": "KNC0004",
+    "node_ids": ["KN0609", "KN1210"],
+    "question_ids": ["Q617", "Q1363", "Q1225"],
+    "topic": "ワルファリンとビタミンK",
+    "confidence": "high",
+    "review_status": "pending_clinical_review",
+    "reason": "ビタミンK依存性凝固因子阻害とビタミンKによる作用減弱の同一修復単位性を確認する統合候補。"
+  },
+  {
+    "candidate_id": "KNC0005",
+    "node_ids": ["KN0205", "KN0272"],
+    "question_ids": ["Q206", "Q273"],
+    "topic": "Parkinson病のすくみ足と外的キュー",
+    "confidence": "high",
+    "review_status": "pending_clinical_review",
+    "reason": "両問ともすくみ足に対する視覚的外的キュー選択と報告されており、統合候補。"
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "relation_id": "KNR0001",
+    "relation_type": "PREREQUISITE",
+    "source_node_id": "KN0737",
+    "target_node_id": "KN1195",
+    "bidirectional": false,
+    "verification_role": "diagnostic_only",
+    "confidence": "high",
+    "review_status": "reviewed_candidate",
+    "evidence": "アドレナリン単独の血糖上昇作用の理解が、アドレナリンとグルカゴンの血糖上昇作用を理解する前提となる。",
+    "source_question_ids": ["Q745"],
+    "target_question_ids": ["Q1209"],
+    "version": "0.1"
+  },
+  {
+    "relation_id": "KNR0002",
+    "relation_type": "PREREQUISITE",
+    "source_node_id": "KN1391",
+    "target_node_id": "KN1460",
+    "bidirectional": false,
+    "verification_role": "diagnostic_only",
+    "confidence": "high",
+    "review_status": "reviewed_candidate",
+    "evidence": "自律神経節前線維一般のACh原則が、交感神経節前線維の伝達物質を判断する前提となる。",
+    "source_question_ids": ["Q1416"],
+    "target_question_ids": ["Q1485"],
+    "version": "0.1"
+  },
+  {
+    "relation_id": "KNR0003",
+    "relation_type": "PREREQUISITE",
+    "source_node_id": "KN0259",
+    "target_node_id": "KN0381",
+    "bidirectional": false,
+    "verification_role": "diagnostic_only",
+    "confidence": "high",
+    "review_status": "reviewed_candidate",
+    "evidence": "MIPが吸気筋力を反映するという理解が、MIP値から吸気筋トレーニング負荷を設定する判断の前提となる。",
+    "source_question_ids": ["Q260"],
+    "target_question_ids": ["Q386"],
+    "version": "0.1"
+  },
+  {
+    "relation_id": "KNR0004",
+    "relation_type": "TRANSFER",
+    "source_node_id": "KN1138",
+    "target_node_id": "KN0245",
+    "bidirectional": false,
+    "verification_role": "transfer_check",
+    "confidence": "medium",
+    "review_status": "pending_review",
+    "evidence": "過換気・PaCO2低下・呼吸性アルカローシスの基礎理解を、COPDにおける慢性高CO2血症の代償解釈へ応用する関係候補。",
+    "source_question_ids": ["Q1150"],
+    "target_question_ids": ["Q246"],
+    "version": "0.1"
+  }
+]
