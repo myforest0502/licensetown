@@ -2,6 +2,7 @@ import logging
 import math
 import os
 import json
+import copy
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from typing import Any
@@ -15,6 +16,8 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 _known_user_ids: set[str] = set()
 _local_learning_events: dict[str, dict[str, Any]] = {}
+_local_question_attempts: list[dict[str, Any]] = []
+_local_user_node_states: dict[tuple[str, str], dict[str, Any]] = {}
 _local_learning_seconds: dict[str, float] = {}
 _local_learning_time_events: list[dict[str, Any]] = []
 _local_supporter_links: dict[tuple[str, str], bool] = {}
@@ -481,6 +484,14 @@ def reset_user_profile(user_id: str) -> None:
         _local_learning_time_events[:] = [
             event for event in _local_learning_time_events if event["user_id"] != user_id
         ]
+        _local_question_attempts[:] = [
+            attempt for attempt in _local_question_attempts
+            if attempt["user_id"] != user_id
+        ]
+        for state_key in [
+            key for key in _local_user_node_states if key[0] == user_id
+        ]:
+            _local_user_node_states.pop(state_key, None)
         globals().get("_local_initial_assessment_completed", set()).discard(user_id)
         _known_user_ids.discard(user_id)
         return
@@ -517,6 +528,128 @@ def get_question_history(user_id: str) -> list[dict[str, Any]]:
     return history
 
 
+def get_question_attempts(user_id: str) -> list[dict[str, Any]]:
+    """保存済みの1問単位回答履歴を内部利用向けに返す。"""
+    if not database_is_available():
+        return copy.deepcopy([
+            attempt for attempt in _local_question_attempts
+            if attempt["user_id"] == user_id
+        ])
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT event_key, user_id, question_id, knowledge_node_id,
+                       mode, selected_answers, is_correct, confidence,
+                       answered_at, attempt_position
+                FROM question_attempts
+                WHERE user_id = %s
+                ORDER BY answered_at, event_key, attempt_position
+                """,
+                (user_id,),
+            )
+            columns = (
+                "event_key", "user_id", "question_id", "knowledge_node_id",
+                "mode", "selected_answers", "is_correct", "confidence",
+                "answered_at", "attempt_position",
+            )
+            return [dict(zip(columns, row)) for row in cur.fetchall()]
+
+
+def get_user_node_states(user_id: str) -> list[dict[str, Any]]:
+    """Node別の基本集計を内部利用向けに返す。"""
+    if not database_is_available():
+        return [
+            dict(state)
+            for (stored_user_id, _node_id), state
+            in _local_user_node_states.items()
+            if stored_user_id == user_id
+        ]
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT user_id, knowledge_node_id, state, attempt_count,
+                       correct_count, incorrect_count, confident_wrong_count,
+                       consecutive_correct, repair_confirmation_count,
+                       first_seen_at, last_seen_at, last_correct_at,
+                       last_incorrect_at, last_question_id, next_review_at,
+                       last_error_type, updated_at
+                FROM user_node_state
+                WHERE user_id = %s
+                ORDER BY knowledge_node_id
+                """,
+                (user_id,),
+            )
+            columns = (
+                "user_id", "knowledge_node_id", "state", "attempt_count",
+                "correct_count", "incorrect_count", "confident_wrong_count",
+                "consecutive_correct", "repair_confirmation_count",
+                "first_seen_at", "last_seen_at", "last_correct_at",
+                "last_incorrect_at", "last_question_id", "next_review_at",
+                "last_error_type", "updated_at",
+            )
+            return [dict(zip(columns, row)) for row in cur.fetchall()]
+
+
+def _result_attempts(question_results):
+    """Node ID付きの新規回答だけを1問単位保存対象にする。"""
+    if not isinstance(question_results, list):
+        return []
+    if not question_results:
+        return []
+    has_node_ids = [bool(result.get("knowledge_node_id")) for result in question_results]
+    if any(has_node_ids) and not all(has_node_ids):
+        raise ValueError("question_results contains a missing knowledge_node_id")
+    if not any(has_node_ids):
+        return []
+    return list(enumerate(question_results, start=1))
+
+
+def _update_local_node_state(user_id, result, timestamp):
+    node_id = result["knowledge_node_id"]
+    state_key = (user_id, node_id)
+    is_correct = bool(result.get("is_correct"))
+    confidence = result.get("confidence")
+    state = _local_user_node_states.get(state_key)
+    if state is None:
+        state = {
+            "user_id": user_id,
+            "knowledge_node_id": node_id,
+            "state": "checking" if is_correct else "repairing",
+            "attempt_count": 0,
+            "correct_count": 0,
+            "incorrect_count": 0,
+            "confident_wrong_count": 0,
+            "consecutive_correct": 0,
+            "repair_confirmation_count": 0,
+            "first_seen_at": timestamp,
+            "last_seen_at": None,
+            "last_correct_at": None,
+            "last_incorrect_at": None,
+            "last_question_id": None,
+            "next_review_at": None,
+            "last_error_type": None,
+            "updated_at": timestamp,
+        }
+        _local_user_node_states[state_key] = state
+    state["attempt_count"] += 1
+    state["last_seen_at"] = timestamp
+    state["last_question_id"] = result["question_id"]
+    state["updated_at"] = timestamp
+    if is_correct:
+        state["correct_count"] += 1
+        state["consecutive_correct"] += 1
+        state["last_correct_at"] = timestamp
+    else:
+        state["incorrect_count"] += 1
+        state["consecutive_correct"] = 0
+        state["last_incorrect_at"] = timestamp
+        state["state"] = "repairing"
+        if confidence == 1:
+            state["confident_wrong_count"] += 1
+
+
 def record_learning_batch(
     user_id: str,
     event_key: str,
@@ -528,20 +661,46 @@ def record_learning_batch(
 ) -> bool:
     """確定済みの回答バッチを重複なしで保存する。"""
     timestamp = answered_at or datetime.now(timezone.utc)
+    attempts = _result_attempts(question_results)
     if not database_is_available():
         if event_key in _local_learning_events:
             return False
-        _local_learning_events[event_key] = {
-            "user_id": user_id,
-            "mode": mode,
-            "answered_count": answered_count,
-            "correct_count": correct_count,
-            "answered_at": timestamp,
-            "question_results": (
-                json.loads(json.dumps(question_results, ensure_ascii=False))
-                if question_results is not None else None
-            ),
-        }
+        attempts_before = len(_local_question_attempts)
+        states_before = copy.deepcopy(_local_user_node_states)
+        try:
+            _local_learning_events[event_key] = {
+                "user_id": user_id,
+                "mode": mode,
+                "answered_count": answered_count,
+                "correct_count": correct_count,
+                "answered_at": timestamp,
+                "question_results": (
+                    json.loads(json.dumps(question_results, ensure_ascii=False))
+                    if question_results is not None else None
+                ),
+            }
+            for attempt_position, result in attempts:
+                _local_question_attempts.append({
+                    "event_key": event_key,
+                    "user_id": user_id,
+                    "question_id": result["question_id"],
+                    "knowledge_node_id": result["knowledge_node_id"],
+                    "mode": mode,
+                    "selected_answers": copy.deepcopy(
+                        result.get("selected_answers", [])
+                    ),
+                    "is_correct": bool(result.get("is_correct")),
+                    "confidence": result.get("confidence"),
+                    "answered_at": timestamp,
+                    "attempt_position": attempt_position,
+                })
+                _update_local_node_state(user_id, result, timestamp)
+        except Exception:
+            _local_learning_events.pop(event_key, None)
+            del _local_question_attempts[attempts_before:]
+            _local_user_node_states.clear()
+            _local_user_node_states.update(states_before)
+            raise
         return True
 
     with get_db_connection() as conn:
@@ -560,7 +719,79 @@ def record_learning_batch(
                     if question_results is not None else None,
                 ),
             )
-            return cur.rowcount == 1
+            if cur.rowcount != 1:
+                return False
+            for attempt_position, result in attempts:
+                cur.execute(
+                    """
+                    INSERT INTO question_attempts (
+                        event_key, user_id, question_id, knowledge_node_id,
+                        mode, selected_answers, is_correct, confidence,
+                        answered_at, attempt_position
+                    ) VALUES (
+                        %s, %s, %s, %s, %s, %s::jsonb, %s, %s, %s, %s
+                    )
+                    """,
+                    (
+                        event_key, user_id, result["question_id"],
+                        result["knowledge_node_id"], mode,
+                        json.dumps(result.get("selected_answers", []), ensure_ascii=False),
+                        bool(result.get("is_correct")), result.get("confidence"),
+                        timestamp, attempt_position,
+                    ),
+                )
+                is_correct = bool(result.get("is_correct"))
+                confident_wrong = int(
+                    not is_correct and result.get("confidence") == 1
+                )
+                cur.execute(
+                    """
+                    INSERT INTO user_node_state (
+                        user_id, knowledge_node_id, state, attempt_count,
+                        correct_count, incorrect_count, confident_wrong_count,
+                        consecutive_correct, first_seen_at, last_seen_at,
+                        last_correct_at, last_incorrect_at, last_question_id,
+                        updated_at
+                    ) VALUES (
+                        %s, %s, %s, 1, %s, %s, %s, %s, %s, %s,
+                        %s, %s, %s, NOW()
+                    )
+                    ON CONFLICT (user_id, knowledge_node_id) DO UPDATE SET
+                        state = CASE
+                            WHEN EXCLUDED.incorrect_count = 1 THEN 'repairing'
+                            ELSE user_node_state.state
+                        END,
+                        attempt_count = user_node_state.attempt_count + 1,
+                        correct_count = user_node_state.correct_count + EXCLUDED.correct_count,
+                        incorrect_count = user_node_state.incorrect_count + EXCLUDED.incorrect_count,
+                        confident_wrong_count = user_node_state.confident_wrong_count + EXCLUDED.confident_wrong_count,
+                        consecutive_correct = CASE
+                            WHEN EXCLUDED.incorrect_count = 1 THEN 0
+                            ELSE user_node_state.consecutive_correct + 1
+                        END,
+                        last_seen_at = EXCLUDED.last_seen_at,
+                        last_correct_at = COALESCE(
+                            EXCLUDED.last_correct_at,
+                            user_node_state.last_correct_at
+                        ),
+                        last_incorrect_at = COALESCE(
+                            EXCLUDED.last_incorrect_at,
+                            user_node_state.last_incorrect_at
+                        ),
+                        last_question_id = EXCLUDED.last_question_id,
+                        updated_at = NOW()
+                    """,
+                    (
+                        user_id, result["knowledge_node_id"],
+                        "checking" if is_correct else "repairing",
+                        int(is_correct), int(not is_correct), confident_wrong,
+                        int(is_correct), timestamp, timestamp,
+                        timestamp if is_correct else None,
+                        timestamp if not is_correct else None,
+                        result["question_id"],
+                    ),
+                )
+            return True
 
 
 def add_learning_time(

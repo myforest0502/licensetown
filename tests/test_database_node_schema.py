@@ -167,7 +167,7 @@ def test_node_learning_schema_init_and_version_registration_are_idempotent(monke
     assert not any("DROP " in query or "TRUNCATE " in query for query in queries)
 
 
-def test_existing_tables_are_retained_and_phase_b_writes_are_not_connected(monkeypatch):
+def test_existing_tables_are_retained_and_phase_b_writes_are_connected(monkeypatch):
     executed = run_init(monkeypatch)
     queries = [query for query, _params in executed]
     for table in (
@@ -180,8 +180,9 @@ def test_existing_tables_are_retained_and_phase_b_writes_are_not_connected(monke
         assert any(f"CREATE TABLE IF NOT EXISTS {table}" in query for query in queries)
 
     record_source = inspect.getsource(database.record_learning_batch)
-    assert "question_attempts" not in record_source
-    assert "user_node_state" not in record_source
+    assert "INSERT INTO question_attempts" in record_source
+    assert "INSERT INTO user_node_state" in record_source
+    assert "ON CONFLICT (user_id, knowledge_node_id) DO UPDATE" in record_source
 
 
 def test_init_without_database_url_keeps_local_fallback(monkeypatch):
