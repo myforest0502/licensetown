@@ -31,6 +31,7 @@ from docx import Document
 from pypdf import PdfReader
 from database import (
     add_learning_time,
+    get_question_attempts,
     get_question_history,
     is_initial_assessment_completed,
     mark_initial_assessment_completed,
@@ -53,6 +54,7 @@ from question_bank import (
     get_category_group_names,
     get_category_names_for_group,
     get_question_tag,
+    get_quiz_question,
     resolve_category_small,
     QUESTION_BANK_ERROR_MESSAGE,
     QuestionBankError,
@@ -62,12 +64,21 @@ from question_bank import (
     select_random_questions as select_formal_questions,
     select_questions_by_category as select_formal_questions_by_category,
 )
+from knowledge_node_relations import get_reviewed_node_relations
+from prerequisite_backtrack_pilot import (
+    build_pending_backtrack_candidate,
+    inject_pending_backtrack_candidate,
+)
 
 # =========================================================
 # ロギング設定
 # =========================================================
 
 logging.basicConfig(level=logging.INFO)
+
+ENABLE_PREREQUISITE_BACKTRACK = os.getenv(
+    "ENABLE_PREREQUISITE_BACKTRACK", "false"
+).strip().lower() in {"1", "true", "yes", "on"}
 
 
 # =========================================================
@@ -932,6 +943,24 @@ def start_next_quiz(user_id):
     current_session["current_set"] = current_set + 1
     start_index = current_set * questions_per_set
     end_index = start_index + questions_per_set
+    if globals().get("ENABLE_PREREQUISITE_BACKTRACK", False):
+        candidate = current_session.pop("pending_prerequisite_backtrack", None)
+        updated_questions, injected = inject_pending_backtrack_candidate(
+            current_session["all_questions"],
+            candidate,
+            start_index,
+            questions_per_set,
+            get_quiz_question,
+        )
+        if injected:
+            current_session["all_questions"] = updated_questions
+            current_session["prerequisite_backtrack_set"] = current_set + 1
+            used_ids = current_session.setdefault("prerequisite_backtrack_used_ids", [])
+            used_ids.append(candidate["question_id"])
+            logging.info(
+                "Queued one prerequisite backtrack question for next set: relation=%s",
+                candidate.get("relation_id"),
+            )
     new_questions = current_session["all_questions"][start_index:end_index]
 
     if len(new_questions) != questions_per_set:
@@ -1746,6 +1775,40 @@ def record_confirmed_learning_batch(user_id, session):
         correct_count=correct_count,
         question_results=question_results,
     )
+
+
+def queue_prerequisite_backtrack_for_next_set(user_id, session):
+    """Feature-flagged pilot: queue no more than one depth-1 candidate."""
+    if (
+        not ENABLE_PREREQUISITE_BACKTRACK
+        or session.get("mode", "study") != "study"
+        or session.get("session_kind") == "initial_assessment"
+        or session.get("current_set", 1) >= session.get("total_sets", 1)
+        or session.get("prerequisite_backtrack_set") == session.get("current_set")
+        or session.get("pending_prerequisite_backtrack")
+    ):
+        return None
+
+    event_key = f'{session["session_id"]}:{session["current_set"]}'
+    attempts = get_question_attempts(user_id)
+    current_attempts = [item for item in attempts if item.get("event_key") == event_key]
+    if not current_attempts:
+        return None
+    current_end = session["current_set"] * session["questions_per_set"]
+    excluded = {
+        str(question.get("id"))
+        for question in session.get("all_questions", ())[:current_end]
+    }
+    excluded.update(session.get("prerequisite_backtrack_used_ids", ()))
+    candidate = build_pending_backtrack_candidate(
+        current_attempts,
+        attempts,
+        get_reviewed_node_relations(),
+        excluded_question_ids=excluded,
+    )
+    if candidate:
+        session["pending_prerequisite_backtrack"] = candidate
+    return candidate
 
 
 def get_session_question_results(session):
@@ -3044,6 +3107,9 @@ def process_study_answer_input(reply_token, user_id, user_message):
     for question_number, answer_data in parsed_answers.items():
         session["all_answers"][question_number] = answer_data
     record_confirmed_learning_batch(user_id, session)
+    globals().get(
+        "queue_prerequisite_backtrack_for_next_set", lambda *_args: None
+    )(user_id, session)
     learning_answer_counts[user_id] = max(
         learning_answer_counts.get(user_id, 0),
         len(session["all_answers"]),
