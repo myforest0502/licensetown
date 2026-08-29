@@ -1,0 +1,26 @@
+{% extends "goukaku/base.html" %}
+{% block title %}今日のおすすめ学習{% endblock %}
+{% block content %}
+<header class="app-header title-only"><h1>今日のおすすめ学習</h1></header>
+<div class="page-content web-quiz-page">
+  {% if completed %}
+  <section class="card web-quiz-complete">
+    <span>🎉</span><h2>10問完走！</h2>
+    <strong>{{ correct_count }} / {{ question_count }}問 正解</strong>
+    <p>今日の学習履歴へ保存しました。</p>
+    <a class="primary-action" href="{{ dashboard_url }}">合格への道へ戻る</a>
+  </section>
+  {% else %}
+  <section class="card web-quiz-card" data-web-quiz data-answer-url="{{ url_for('answer_web_recommendation', session_id=session_id) }}" data-question-id="{{ question.id }}">
+    <div class="web-quiz-progress"><b>第{{ question.number }}問</b><span>{{ question.number }} / {{ question.total }}</span></div>
+    <h2>{{ question.question }}</h2>
+    <fieldset class="web-choice-list"><legend>回答（複数選択可）</legend>{% for label, text in question.choices.items() %}<label><input type="checkbox" name="answer" value="{{ label }}"><b>{{ label }}</b><span>{{ text }}</span></label>{% endfor %}</fieldset>
+    <fieldset class="web-confidence"><legend>自信度</legend><label><input type="radio" name="confidence" value="1">1 自信あり</label><label><input type="radio" name="confidence" value="2">2 少し迷った</label><label><input type="radio" name="confidence" value="3">3 あてずっぽう</label></fieldset>
+    <div class="web-quiz-actions"><button class="primary-action" data-submit-answer>回答する</button><button class="secondary-action" data-submit-unknown>0＝分からない</button></div>
+    <p class="web-quiz-status" data-web-quiz-status role="status" aria-live="polite"></p>
+    <section class="web-quiz-result" data-web-quiz-result hidden><h3 data-result-mark></h3><p>あなたの回答：<b data-selected-answer></b></p><p>正解：<b data-correct-answer></b></p><p data-explanation></p><div data-choice-explanations></div><button class="primary-action" data-next-question>次の問題へ</button></section>
+  </section>
+  {% endif %}
+</div>
+{% if not completed %}<script src="{{ url_for('static', filename='goukaku/web_learning.js', v='20260830-cross-device1') }}" defer></script>{% endif %}
+{% endblock %}

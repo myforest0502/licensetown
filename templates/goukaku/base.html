@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#ffffff">
   <title>{% block title %}合格への道{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='goukaku/goukaku.css', v='20260830-recommend-pc1') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='goukaku/goukaku.css', v='20260830-cross-device1') }}">
 </head>
 <body>
   <main class="app-shell">{% block content %}{% endblock %}</main>
   {% if liff_id %}<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>{% endif %}
-  <script src="{{ url_for('static', filename='goukaku/goukaku.js', v='20260830-recommend-pc1') }}" defer></script>
+  <script src="{{ url_for('static', filename='goukaku/goukaku.js', v='20260830-cross-device1') }}" defer></script>
 </body>
 </html>

@@ -7,11 +7,12 @@ import json
 import urllib.request
 import re
 import random
+import secrets
 import unicodedata
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from flask import Flask, request, abort
+from flask import Flask, abort, render_template, request
 
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -2028,14 +2029,6 @@ def reply_written_check_result(reply_token, evaluation):
 
 
 def reply_current_quiz(reply_token, session, intro_text=None):
-    line_bot_api.reply_message(
-        reply_token,
-        build_current_quiz_messages(session, intro_text=intro_text),
-    )
-
-
-def build_current_quiz_messages(session, intro_text=None):
-    """現在の5問と回答導線をReply/Pushで共通利用できる形にする。"""
     start_number = ((session["current_set"] - 1) * session["questions_per_set"]) + 1
     session["expected_numbers"] = list(
         range(start_number, start_number + session["questions_per_set"])
@@ -2061,7 +2054,7 @@ def build_current_quiz_messages(session, intro_text=None):
             quick_reply=QuickReply(items=quick_reply_items),
         ),
     ])
-    return reply_messages
+    line_bot_api.reply_message(reply_token, reply_messages)
 
 
 def start_and_reply_quiz(
@@ -2117,50 +2110,48 @@ def parse_dashboard_recommendation_command(message):
     return category_small, question_count
 
 
-dashboard_recommendation_start_lock = threading.Lock()
+web_recommendation_sessions = {}
+web_recommendation_start_lock = threading.Lock()
 
 
-def start_and_push_dashboard_recommendation(user_id, category_small, question_count):
-    """今日のおすすめ分野を開始し、最初の5問を本人のLINEへ送る。"""
-    with dashboard_recommendation_start_lock:
-        active_session = study_sessions.get(user_id)
-        if (
-            active_session
-            and active_session.get("session_kind") == "dashboard_recommendation"
-            and active_session.get("category_small") == category_small
-            and active_session.get("question_count") == question_count
-            and active_session.get("status") in {
-                "waiting_for_answers", "waiting_for_confidence", "waiting_for_written_answer",
-            }
-        ):
-            return False
-
-        user_modes[user_id] = "study"
-        user_states.pop(user_id, None)
-        quiz_category_selections[user_id] = {
-            "mode": "study",
+def create_web_recommendation_session(user_id, category_small, question_count, token):
+    """正式分野のWeb学習セッションを作成する。LINEセッションとは共有しない。"""
+    with web_recommendation_start_lock:
+        for session_id, session in web_recommendation_sessions.items():
+            if (
+                session.get("user_id") == user_id
+                and session.get("category_small") == category_small
+                and session.get("question_count") == question_count
+                and not session.get("completed")
+            ):
+                return session_id, False
+        questions = select_category_questions(category_small, question_count)
+        session_id = secrets.token_urlsafe(24)
+        web_recommendation_sessions[session_id] = {
+            "user_id": user_id,
+            "dashboard_token": token,
             "category_small": category_small,
+            "question_count": question_count,
+            "questions": questions,
+            "current_index": 0,
+            "correct_count": 0,
+            "completed": False,
+            "started_at": time.time(),
         }
-        start_quiz(
-            user_id,
-            session_kind="dashboard_recommendation",
-            question_count=question_count,
-        )
-        created_session = study_sessions[user_id]
-        try:
-            line_bot_api.push_message(
-                user_id,
-                build_current_quiz_messages(
-                    created_session,
-                    intro_text="今日のおすすめを用意したぞ。まず5問いくぞ＾＾",
-                ),
-            )
-        except Exception:
-            if study_sessions.get(user_id) is created_session:
-                study_sessions.pop(user_id, None)
-            logging.exception("Dashboard recommendation LINE push failed")
-            raise
-        return True
+        return session_id, True
+
+
+def web_question_view(session):
+    if session.get("completed"):
+        return None
+    question = session["questions"][session["current_index"]]
+    return {
+        "id": str(question["id"]),
+        "number": session["current_index"] + 1,
+        "total": session["question_count"],
+        "question": question["question"],
+        "choices": question["choices"],
+    }
 
 
 @app.post("/goukaku-no-michi/recommendation/start")
@@ -2190,17 +2181,100 @@ def start_dashboard_recommendation():
         }, 409
 
     try:
-        started = start_and_push_dashboard_recommendation(
-            user_id,
-            category_small,
-            question_count,
+        session_id, started = create_web_recommendation_session(
+            user_id, category_small, question_count, payload.get("token")
         )
-    except Exception:
-        return {"ok": False, "message": "LINEへの問題送信に失敗しました。"}, 502
+    except QuestionBankError:
+        logging.exception("Web recommendation session creation failed")
+        return {"ok": False, "message": "問題を準備できませんでした。"}, 503
     return {
         "ok": True,
         "already_started": not started,
-        "message": "LINEに問題を送りました。",
+        "redirect_url": f"/goukaku-no-michi/learning/{session_id}",
+    }
+
+
+@app.get("/goukaku-no-michi/learning/<session_id>")
+def web_recommendation_learning(session_id):
+    session = web_recommendation_sessions.get(session_id)
+    if not session:
+        return "学習セッションが見つかりません。", 404
+    return render_template(
+        "goukaku/web_learning.html",
+        session_id=session_id,
+        question=web_question_view(session),
+        completed=session.get("completed", False),
+        correct_count=session.get("correct_count", 0),
+        question_count=session["question_count"],
+        dashboard_url=f'/goukaku-no-michi?token={session["dashboard_token"]}',
+    )
+
+
+@app.post("/goukaku-no-michi/learning/<session_id>/answer")
+def answer_web_recommendation(session_id):
+    session = web_recommendation_sessions.get(session_id)
+    if not session or session.get("completed"):
+        return {"ok": False, "message": "この学習セッションは終了しています。"}, 409
+    payload = request.get_json(silent=True) if request.is_json else None
+    if not isinstance(payload, dict):
+        return {"ok": False, "message": "回答形式を確認してください。"}, 400
+    question = session["questions"][session["current_index"]]
+    if str(payload.get("question_id", "")) != str(question["id"]):
+        return {"ok": False, "message": "問題が更新されています。画面を再読み込みしてください。"}, 409
+
+    unknown = payload.get("unknown") is True
+    raw_selected = payload.get("selected_answers", [])
+    if not isinstance(raw_selected, list):
+        return {"ok": False, "message": "回答形式を確認してください。"}, 400
+    selected = [] if unknown else [str(value).upper() for value in raw_selected]
+    valid_choices = set(question["choices"])
+    confidence = None if unknown else payload.get("confidence")
+    if (
+        (not unknown and (not selected or not set(selected).issubset(valid_choices)))
+        or (not unknown and confidence not in {1, 2, 3})
+        or (unknown and raw_selected)
+    ):
+        return {"ok": False, "message": "回答と自信度を確認してください。"}, 400
+
+    is_correct = False if unknown else is_answer_correct(question, selected)
+    question_id = str(question["id"])
+    knowledge_node_id = get_question_tag(question_id).get("knowledge_node_id")
+    result = {
+        "question_id": question_id,
+        "knowledge_node_id": knowledge_node_id,
+        "selected_answers": selected_answers_for_history(question, selected),
+        "is_correct": is_correct,
+        "confidence": confidence,
+        "answer_status": "unknown" if unknown else "answered",
+    }
+    answer_number = session["current_index"] + 1
+    record_learning_batch(
+        user_id=session["user_id"],
+        event_key=f"web-recommendation:{session_id}:{answer_number}",
+        mode="study",
+        answered_count=1,
+        correct_count=int(is_correct),
+        question_results=[result],
+    )
+    session["correct_count"] += int(is_correct)
+    session["current_index"] += 1
+    session["completed"] = session["current_index"] >= session["question_count"]
+    if session["completed"]:
+        add_learning_time(
+            session["user_id"],
+            max(time.time() - session["started_at"], 0),
+            event_key=f"web-recommendation:{session_id}:time",
+        )
+    return {
+        "ok": True,
+        "is_correct": is_correct,
+        "selected_answer": "0（分からない）" if unknown else "".join(sorted(selected)),
+        "correct_answer": get_display_answer(question),
+        "explanation": question["explanation"],
+        "choice_explanations": question.get("choice_explanations", {}),
+        "completed": session["completed"],
+        "correct_count": session["correct_count"],
+        "question_count": session["question_count"],
     }
 
 

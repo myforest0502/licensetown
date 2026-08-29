@@ -94,7 +94,6 @@ def load_current_app_functions() -> SimpleNamespace:
         "advance_quiz_explanations",
         "start_quiz",
         "start_next_quiz",
-        "build_current_quiz_messages",
         "parse_dashboard_recommendation_command",
         "reply_new_user_welcome",
         "reply_gen_first_greeting",
@@ -434,7 +433,7 @@ class QuizAnswerNumberingTest(unittest.TestCase):
         study = function_source("reply_study_set_result")
         heat = function_source("reply_nekketsu_continue_choice")
         invalid = function_source("reply_quiz_input_error")
-        resumed = function_source("build_current_quiz_messages")
+        resumed = function_source("reply_current_quiz")
         pushed = function_source("push_quiz_to_line")
         for label in ("続ける", "源さんに預ける", "ホームに戻る"):
             self.assertIn(label, study)

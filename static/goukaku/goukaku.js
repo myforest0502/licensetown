@@ -69,8 +69,16 @@ function openOfficialAccountChat(accountId, message) {
 document.querySelectorAll('[data-recommendation-start-url]').forEach((button) => button.addEventListener('click', async () => {
   const status = button.parentElement?.querySelector('[data-recommendation-status]');
   button.disabled = true;
-  if (status) status.textContent = 'LINEへ問題を送っています…';
+  if (status) status.textContent = '学習を準備しています…';
   try {
+    if (await liffReady) {
+      await window.liff.sendMessages([{
+        type: 'text',
+        text: button.dataset.recommendationLineCommand,
+      }]);
+      window.liff.closeWindow();
+      return;
+    }
     const response = await fetch(button.dataset.recommendationStartUrl, {
       method: 'POST',
       credentials: 'same-origin',
@@ -83,11 +91,11 @@ document.querySelectorAll('[data-recommendation-start-url]').forEach((button) =>
     });
     const result = await response.json().catch(() => ({}));
     if (!response.ok || !result.ok) throw new Error(result.message || '問題を送信できませんでした。');
-    if (status) status.textContent = result.message || 'LINEに問題を送りました。';
-    if (await liffReady) window.liff.closeWindow();
+    if (!result.redirect_url) throw new Error('学習画面を開けませんでした。');
+    window.location.assign(result.redirect_url);
   } catch (error) {
     console.error('Dashboard recommendation start failed', error);
-    if (status) status.textContent = error.message || 'LINEへの問題送信に失敗しました。';
+    if (status) status.textContent = error.message || '学習を開始できませんでした。';
   } finally {
     button.disabled = false;
   }

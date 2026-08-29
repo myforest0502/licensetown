@@ -1,5 +1,4 @@
 import os
-from types import SimpleNamespace
 
 os.environ.setdefault("OPENAI_API_KEY", "test-key")
 os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
@@ -10,7 +9,7 @@ from app import app
 import database
 from database import record_learning_batch
 from goukaku_ui import create_dashboard_token
-from question_bank import CATEGORY_NAMES, get_category_small
+from question_bank import CATEGORY_NAMES, get_category_small, get_quiz_question, question_ids
 
 
 def test_goukaku_home_renders(monkeypatch):
@@ -35,7 +34,7 @@ def test_goukaku_home_renders(monkeypatch):
     assert ">0<small>問</small>" in text
     assert "data-line-message=\"相談する\"" in text
     assert 'class="app-shell"' in text
-    assert text.count("20260830-recommend-pc1") == 2
+    assert text.count("20260830-cross-device1") == 2
     assert 'data-line-account-id="@licensetown-test"' in text
     assert 'data-liff-id="1234567890-test"' in text
     assert "https://static.line-scdn.net/liff/edge/2/sdk.js" in text
@@ -155,6 +154,7 @@ def test_dashboard_and_subjects_render_real_field_history_without_demo_values(mo
     assert f'data-dashboard-token="{token}"' in home_text
     assert 'data-recommendation-field="解剖学"' in home_text
     assert 'data-recommendation-count="10"' in home_text
+    assert 'data-recommendation-line-command="今日のおすすめ学習：解剖学：10問"' in home_text
     assert 'data-line-message="今日のおすすめ学習：解剖学：10問"' not in home_text
     assert "閲覧のみ" not in home_text
     assert f"/goukaku-no-michi/subjects?token={token}" in home_text
@@ -196,20 +196,13 @@ def test_recommendation_challenge_has_scoped_responsive_cta_css():
     assert ".recommend-card .recommend-challenge-status{" in css
 
 
-def test_dashboard_recommendation_post_uses_token_user(monkeypatch):
+def test_dashboard_recommendation_post_uses_token_user_and_starts_web(monkeypatch):
     token = create_dashboard_token("recommendation-token-user")
-    started = []
+    app_module.web_recommendation_sessions.clear()
     monkeypatch.setattr(
         app_module,
         "build_dashboard",
         lambda user_id: {"recommended_study": [("医学概論", 10)]},
-    )
-    monkeypatch.setattr(
-        app_module,
-        "start_and_push_dashboard_recommendation",
-        lambda user_id, category_small, count: started.append(
-            (user_id, category_small, count)
-        ) or True,
     )
 
     response = app.test_client().post(
@@ -218,17 +211,28 @@ def test_dashboard_recommendation_post_uses_token_user(monkeypatch):
     )
 
     assert response.status_code == 200
-    assert response.get_json()["message"] == "LINEに問題を送りました。"
-    assert started == [("recommendation-token-user", 6, 10)]
+    redirect_url = response.get_json()["redirect_url"]
+    assert redirect_url.startswith("/goukaku-no-michi/learning/")
+    session = next(iter(app_module.web_recommendation_sessions.values()))
+    assert session["user_id"] == "recommendation-token-user"
+    assert session["category_small"] == 6
+    assert session["question_count"] == 10
+    assert len(session["questions"]) == 10
+    assert app.test_client().get(redirect_url).status_code == 200
+
+    duplicate = app.test_client().post(
+        "/goukaku-no-michi/recommendation/start",
+        json={"token": token, "field": "医学概論", "count": 10},
+    )
+    assert duplicate.status_code == 200
+    assert duplicate.get_json()["redirect_url"] == redirect_url
+    assert duplicate.get_json()["already_started"] is True
+    assert len(app_module.web_recommendation_sessions) == 1
+    app_module.web_recommendation_sessions.clear()
 
 
 def test_dashboard_recommendation_post_rejects_invalid_token_field_and_count(monkeypatch):
-    started = []
-    monkeypatch.setattr(
-        app_module,
-        "start_and_push_dashboard_recommendation",
-        lambda *args: started.append(args),
-    )
+    app_module.web_recommendation_sessions.clear()
     client = app.test_client()
     token = create_dashboard_token("recommendation-validation-user")
 
@@ -248,7 +252,7 @@ def test_dashboard_recommendation_post_rejects_invalid_token_field_and_count(mon
         "/goukaku-no-michi/recommendation/start",
         json={"token": token, "field": "医学概論", "count": 30},
     ).status_code == 400
-    assert started == []
+    assert app_module.web_recommendation_sessions == {}
 
 
 def test_dashboard_recommendation_post_rejects_stale_display(monkeypatch):
@@ -267,46 +271,79 @@ def test_dashboard_recommendation_post_rejects_stale_display(monkeypatch):
     assert response.status_code == 409
 
 
-def test_dashboard_recommendation_pushes_first_set_once(monkeypatch):
-    user_id = "recommendation-push-user"
-    app_module.study_sessions.pop(user_id, None)
-    pushes = []
-
-    def fake_start_quiz(start_user_id, session_kind=None, question_count=None, **_kwargs):
-        assert start_user_id == user_id
-        app_module.study_sessions[user_id] = {
-            "session_kind": session_kind,
-            "category_small": 6,
-            "question_count": question_count,
-            "status": "waiting_for_answers",
-        }
-
-    monkeypatch.setattr(app_module, "start_quiz", fake_start_quiz)
-    monkeypatch.setattr(
-        app_module,
-        "build_current_quiz_messages",
-        lambda session, intro_text=None: ["intro", "questions-1-5", "answer-guide"],
+def test_web_recommendation_answers_unknown_multiple_and_completes(monkeypatch):
+    database._local_learning_events.clear()
+    database._local_question_attempts.clear()
+    app_module.web_recommendation_sessions.clear()
+    multi_question = next(
+        question for question in (get_quiz_question(q_id) for q_id in question_ids())
+        if len(question["accepted_answer_sets"][0]) > 1
     )
-    monkeypatch.setattr(
-        app_module,
-        "line_bot_api",
-        SimpleNamespace(push_message=lambda target, messages: pushes.append((target, messages))),
+    questions = [multi_question] + [get_quiz_question(f"Q{number}") for number in range(1, 10)]
+    session_id = "web-complete-session"
+    app_module.web_recommendation_sessions[session_id] = {
+        "user_id": "web-learning-user",
+        "dashboard_token": create_dashboard_token("web-learning-user"),
+        "category_small": 1,
+        "question_count": 10,
+        "questions": questions,
+        "current_index": 0,
+        "correct_count": 0,
+        "completed": False,
+        "started_at": __import__("time").time(),
+    }
+    client = app.test_client()
+
+    for index, question in enumerate(questions):
+        if index == 1:
+            payload = {
+                "question_id": str(question["id"]),
+                "selected_answers": [],
+                "confidence": None,
+                "unknown": True,
+            }
+        else:
+            payload = {
+                "question_id": str(question["id"]),
+                "selected_answers": question["accepted_answer_sets"][0],
+                "confidence": 1,
+                "unknown": False,
+            }
+        response = client.post(
+            f"/goukaku-no-michi/learning/{session_id}/answer", json=payload
+        )
+        assert response.status_code == 200
+        if index == 0:
+            assert response.get_json()["is_correct"] is True
+
+    assert app_module.web_recommendation_sessions[session_id]["completed"] is True
+    assert len(database._local_learning_events) == 10
+    unknown_event = next(
+        event for event in database._local_learning_events.values()
+        if event["question_results"][0]["answer_status"] == "unknown"
     )
+    assert unknown_event["question_results"][0]["selected_answers"] == []
+    assert unknown_event["question_results"][0]["confidence"] is None
+    complete_text = client.get(
+        f"/goukaku-no-michi/learning/{session_id}"
+    ).get_data(as_text=True)
+    assert "10問完走！" in complete_text
+    assert "学習履歴へ保存しました" in complete_text
+    app_module.web_recommendation_sessions.clear()
+    database._local_learning_events.clear()
+    database._local_question_attempts.clear()
 
-    assert app_module.start_and_push_dashboard_recommendation(user_id, 6, 10) is True
-    assert pushes == [(user_id, ["intro", "questions-1-5", "answer-guide"])]
-    assert app_module.start_and_push_dashboard_recommendation(user_id, 6, 10) is False
-    assert len(pushes) == 1
-    app_module.study_sessions.pop(user_id, None)
 
-
-def test_dashboard_recommendation_js_posts_without_line_redirect():
+def test_dashboard_recommendation_js_uses_liff_reply_or_web_without_push():
     js = (__import__("pathlib").Path(__file__).resolve().parents[1] / "static" / "goukaku" / "goukaku.js").read_text(encoding="utf-8")
     assert "fetch(button.dataset.recommendationStartUrl" in js
     assert "credentials: 'same-origin'" in js
-    assert "LINEに問題を送りました。" in js
-    assert "if (await liffReady) window.liff.closeWindow();" in js
+    assert "text: button.dataset.recommendationLineCommand" in js
+    assert "window.liff.sendMessages" in js
+    assert "window.location.assign(result.redirect_url)" in js
     assert "[data-line-message]:not([data-recommendation-start-url])" in js
+    endpoint_source = __import__("inspect").getsource(app_module.start_dashboard_recommendation)
+    assert "push_message" not in endpoint_source
 
 
 def test_mode_intro_copy_is_kept_verbatim():
