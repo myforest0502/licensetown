@@ -9,11 +9,12 @@
   },
   {
     "candidate_id": "KNC0002",
+    "source_candidate_ids": ["KNC0002", "SNC0013"],
     "canonical_node_id": "KN1337",
-    "alias_node_ids": ["KN1509"],
+    "alias_node_ids": ["KN0945", "KN1509"],
     "canonical_label": "半規管と角加速度",
-    "selection_rule": "lowest_numeric_existing_node_id",
-    "reason": "既存IDを削除せず、番号が小さいKN1337をcanonicalとして履歴互換性を維持する。"
+    "selection_rule": "existing_canonical_root_is_stable",
+    "reason": "既存公開済みcanonical root KN1337を安定維持し、より小さい新規alias KN0945もKN1337へ直接解決する。"
   },
   {
     "candidate_id": "KNC0003",
@@ -33,10 +34,108 @@
   },
   {
     "candidate_id": "KNC0005",
+    "source_candidate_ids": ["KNC0005", "SNC0014"],
     "canonical_node_id": "KN0205",
-    "alias_node_ids": ["KN0272"],
+    "alias_node_ids": ["KN0272", "KN1421"],
     "canonical_label": "Parkinson病のすくみ足と外的キュー",
     "selection_rule": "lowest_numeric_existing_node_id",
-    "reason": "既存IDを削除せず、番号が小さいKN0205をcanonicalとして履歴互換性を維持する。"
+    "reason": "既存canonical root KN0205を維持し、KN0272とKN1421をalias chainなしでKN0205へ直接解決する。"
+  },
+  {
+    "candidate_id": "SNC0001", "canonical_node_id": "KN0593", "alias_node_ids": ["KN1245"],
+    "canonical_label": "ネフロンの構成", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0002", "canonical_node_id": "KN0503", "alias_node_ids": ["KN0883"],
+    "canonical_label": "嫌気的解糖とピルビン酸・乳酸", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0003", "canonical_node_id": "KN0623", "alias_node_ids": ["KN1212"],
+    "canonical_label": "リンパ浮腫と蜂窩織炎", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0004", "canonical_node_id": "KN0232", "alias_node_ids": ["KN0312"],
+    "canonical_label": "Brown-Séquard症候群", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0005", "canonical_node_id": "KN1324", "alias_node_ids": ["KN1367"],
+    "canonical_label": "ICFの環境因子", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0006", "source_candidate_ids": ["SNC0006", "SNC0023"],
+    "canonical_node_id": "KN0202", "alias_node_ids": ["KN0227", "KN0318"],
+    "canonical_label": "心リハ中の胸部危険徴候と運動中止", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済み2候補を一つのclusterとし、全aliasをKN0202へ直接解決する。"
+  },
+  {
+    "candidate_id": "SNC0007", "canonical_node_id": "KN0509", "alias_node_ids": ["KN0927"],
+    "canonical_label": "下腿義足の足部内側浮き", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0008", "canonical_node_id": "KN0107", "alias_node_ids": ["KN0148"],
+    "canonical_label": "Borg 13で安定時の運動継続", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0009", "canonical_node_id": "KN0627", "alias_node_ids": ["KN1220"],
+    "canonical_label": "欠神発作と過換気誘発", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0010", "canonical_node_id": "KN0795", "alias_node_ids": ["KN1366"],
+    "canonical_label": "ノーマライゼーション", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0011", "canonical_node_id": "KN1013", "alias_node_ids": ["KN1527"],
+    "canonical_label": "角膜反射の求心路・遠心路", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0012", "canonical_node_id": "KN1080", "alias_node_ids": ["KN1518"],
+    "canonical_label": "遠心性収縮", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0015", "source_candidate_ids": ["SNC0015", "SNC0016", "SNC0017"],
+    "canonical_node_id": "KN0071", "alias_node_ids": ["KN0126", "KN0195", "KN0211"],
+    "canonical_label": "Pusher現象の視覚的正中学習", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済み3候補を一つのclusterとし、全aliasをKN0071へ直接解決する。"
+  },
+  {
+    "candidate_id": "SNC0018", "canonical_node_id": "KN0112", "alias_node_ids": ["KN0142"],
+    "canonical_label": "股関節外転筋と骨盤制御", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0019", "canonical_node_id": "KN0128", "alias_node_ids": ["KN0196"],
+    "canonical_label": "足底腱膜炎の柔軟性介入", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0020", "canonical_node_id": "KN0007", "alias_node_ids": ["KN0033"],
+    "canonical_label": "下垂足・鶏歩へのAFO", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0021", "canonical_node_id": "KN1256", "alias_node_ids": ["KN1432"],
+    "canonical_label": "矢状面重心線と外果", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0022", "canonical_node_id": "KN0068", "alias_node_ids": ["KN0190"],
+    "canonical_label": "多発性硬化症の活動・疲労記録", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
+  },
+  {
+    "candidate_id": "SNC0025", "canonical_node_id": "KN0725", "alias_node_ids": ["KN0940"],
+    "canonical_label": "上斜筋と滑車神経", "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "Aoi承認済みの同一最小修復対象。"
   }
 ]

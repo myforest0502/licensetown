@@ -29,10 +29,32 @@ def load_and_validate_canonical_map(
     records = _read_array(bank_dir / "knowledge_node_canonical_map.json")
     nodes = _read_array(bank_dir / "knowledge_nodes.json")
     candidates = _read_array(bank_dir / "knowledge_node_merge_candidates.json")
+    reviews = _read_array(bank_dir / "same_node_review_v0.2.json")
     node_ids = {str(item.get("knowledge_node_id")) for item in nodes}
     candidates_by_id = {str(item.get("candidate_id")): item for item in candidates}
+    reviews_by_id = {str(item.get("candidate_id")): item for item in reviews}
     aliases: dict[str, str] = {}
     seen_candidates: set[str] = set()
+    canonical_ids = [str(item.get("canonical_node_id")) for item in records]
+    if len(canonical_ids) != len(set(canonical_ids)):
+        raise KnowledgeNodeCanonicalValidationError("duplicate canonical Node")
+    canonical_id_set = set(canonical_ids)
+
+    def reviewed_nodes(candidate_id: str, path: str) -> set[str]:
+        candidate = candidates_by_id.get(candidate_id)
+        if candidate is not None:
+            if candidate.get("review_status") != "reviewed":
+                raise KnowledgeNodeCanonicalValidationError(f"{path} is not reviewed")
+            return {str(item) for item in candidate.get("node_ids", [])}
+        review = reviews_by_id.get(candidate_id)
+        if (
+            review is None
+            or review.get("review_status") != "reviewed"
+            or review.get("aoi_decision") != "SAME_NODE_APPROVED"
+        ):
+            raise KnowledgeNodeCanonicalValidationError(f"{path} is not Aoi-approved")
+        canonical = str(review.get("canonical_node_id"))
+        return {canonical, *(str(item) for item in review.get("alias_node_ids", []))}
 
     for index, record in enumerate(records):
         path = f"canonical_map[{index}]"
@@ -47,26 +69,41 @@ def load_and_validate_canonical_map(
         if candidate_id in seen_candidates:
             raise KnowledgeNodeCanonicalValidationError(f"duplicate candidate: {candidate_id}")
         seen_candidates.add(candidate_id)
-        candidate = candidates_by_id.get(candidate_id)
-        if not candidate or candidate.get("review_status") != "reviewed":
-            raise KnowledgeNodeCanonicalValidationError(f"{path} is not reviewed")
         canonical = str(record["canonical_node_id"])
         alias_ids = [str(item) for item in record["alias_node_ids"]]
         if not alias_ids or len(alias_ids) != len(set(alias_ids)):
             raise KnowledgeNodeCanonicalValidationError(f"{path} aliases must be unique")
         combined = {canonical, *alias_ids}
-        if combined != set(candidate.get("node_ids", [])):
+        source_candidate_ids = [
+            str(item) for item in record.get("source_candidate_ids", [candidate_id])
+        ]
+        if not source_candidate_ids or len(source_candidate_ids) != len(set(source_candidate_ids)):
+            raise KnowledgeNodeCanonicalValidationError(f"{path} source candidates must be unique")
+        reviewed_combined: set[str] = set()
+        for source_id in source_candidate_ids:
+            reviewed_combined.update(reviewed_nodes(source_id, path))
+        if combined != reviewed_combined:
             raise KnowledgeNodeCanonicalValidationError(f"{path} does not match candidate Nodes")
         if any(node_id not in node_ids for node_id in combined):
             raise KnowledgeNodeCanonicalValidationError(f"{path} references unknown Node")
-        if canonical != min(combined, key=lambda value: int(value[2:])):
-            raise KnowledgeNodeCanonicalValidationError(f"{path} canonical is not the lowest ID")
-        if record["selection_rule"] != "lowest_numeric_existing_node_id":
+        selection_rule = record["selection_rule"]
+        if selection_rule == "lowest_numeric_existing_node_id":
+            if canonical != min(combined, key=lambda value: int(value[2:])):
+                raise KnowledgeNodeCanonicalValidationError(f"{path} canonical is not the lowest ID")
+        elif selection_rule == "existing_canonical_root_is_stable":
+            original = candidates_by_id.get(candidate_id)
+            if not original or canonical not in {str(item) for item in original.get("node_ids", [])}:
+                raise KnowledgeNodeCanonicalValidationError(
+                    f"{path} stable root is not present in the original reviewed candidate"
+                )
+        else:
             raise KnowledgeNodeCanonicalValidationError(f"{path} has invalid selection rule")
         for alias in alias_ids:
-            if alias in aliases or alias in {item["canonical_node_id"] for item in records}:
+            if alias in aliases or alias in canonical_id_set:
                 raise KnowledgeNodeCanonicalValidationError(f"duplicate or cyclic alias: {alias}")
             aliases[alias] = canonical
+    if any(canonical in aliases for canonical in aliases.values()):
+        raise KnowledgeNodeCanonicalValidationError("alias chain or cycle detected")
     return records, aliases
 
 
