@@ -49,7 +49,7 @@ from learning_engine import (
     summarize_initial_assessment,
     summarize_daily_session,
 )
-from goukaku_ui import create_dashboard_token, goukaku_ui
+from goukaku_ui import build_dashboard, create_dashboard_token, dashboard_user_id, goukaku_ui
 from site_ui import site_ui
 from question_bank import (
     get_category_group_names,
@@ -2028,6 +2028,14 @@ def reply_written_check_result(reply_token, evaluation):
 
 
 def reply_current_quiz(reply_token, session, intro_text=None):
+    line_bot_api.reply_message(
+        reply_token,
+        build_current_quiz_messages(session, intro_text=intro_text),
+    )
+
+
+def build_current_quiz_messages(session, intro_text=None):
+    """現在の5問と回答導線をReply/Pushで共通利用できる形にする。"""
     start_number = ((session["current_set"] - 1) * session["questions_per_set"]) + 1
     session["expected_numbers"] = list(
         range(start_number, start_number + session["questions_per_set"])
@@ -2053,7 +2061,7 @@ def reply_current_quiz(reply_token, session, intro_text=None):
             quick_reply=QuickReply(items=quick_reply_items),
         ),
     ])
-    line_bot_api.reply_message(reply_token, reply_messages)
+    return reply_messages
 
 
 def start_and_reply_quiz(
@@ -2107,6 +2115,93 @@ def parse_dashboard_recommendation_command(message):
     if question_count <= 0 or question_count % QUESTIONS_PER_SET != 0:
         return None
     return category_small, question_count
+
+
+dashboard_recommendation_start_lock = threading.Lock()
+
+
+def start_and_push_dashboard_recommendation(user_id, category_small, question_count):
+    """今日のおすすめ分野を開始し、最初の5問を本人のLINEへ送る。"""
+    with dashboard_recommendation_start_lock:
+        active_session = study_sessions.get(user_id)
+        if (
+            active_session
+            and active_session.get("session_kind") == "dashboard_recommendation"
+            and active_session.get("category_small") == category_small
+            and active_session.get("question_count") == question_count
+            and active_session.get("status") in {
+                "waiting_for_answers", "waiting_for_confidence", "waiting_for_written_answer",
+            }
+        ):
+            return False
+
+        user_modes[user_id] = "study"
+        user_states.pop(user_id, None)
+        quiz_category_selections[user_id] = {
+            "mode": "study",
+            "category_small": category_small,
+        }
+        start_quiz(
+            user_id,
+            session_kind="dashboard_recommendation",
+            question_count=question_count,
+        )
+        created_session = study_sessions[user_id]
+        try:
+            line_bot_api.push_message(
+                user_id,
+                build_current_quiz_messages(
+                    created_session,
+                    intro_text="今日のおすすめを用意したぞ。まず5問いくぞ＾＾",
+                ),
+            )
+        except Exception:
+            if study_sessions.get(user_id) is created_session:
+                study_sessions.pop(user_id, None)
+            logging.exception("Dashboard recommendation LINE push failed")
+            raise
+        return True
+
+
+@app.post("/goukaku-no-michi/recommendation/start")
+def start_dashboard_recommendation():
+    payload = request.get_json(silent=True) if request.is_json else None
+    if not isinstance(payload, dict):
+        return {"ok": False, "message": "正しい形式で送信してください。"}, 400
+
+    user_id = dashboard_user_id(payload.get("token"))
+    if not user_id:
+        return {"ok": False, "message": "合格への道を開き直してください。"}, 403
+
+    field_name = str(payload.get("field", "")).strip()
+    try:
+        question_count = int(payload.get("count"))
+        category_small = resolve_category_small(field_name)
+    except (QuestionBankError, TypeError, ValueError):
+        return {"ok": False, "message": "おすすめ分野を確認できませんでした。"}, 400
+    if question_count != 10:
+        return {"ok": False, "message": "おすすめ問題数を確認できませんでした。"}, 400
+
+    current_recommendations = build_dashboard(user_id).get("recommended_study", [])
+    if (field_name, question_count) not in current_recommendations:
+        return {
+            "ok": False,
+            "message": "おすすめ内容が更新されました。画面を再読み込みしてください。",
+        }, 409
+
+    try:
+        started = start_and_push_dashboard_recommendation(
+            user_id,
+            category_small,
+            question_count,
+        )
+    except Exception:
+        return {"ok": False, "message": "LINEへの問題送信に失敗しました。"}, 502
+    return {
+        "ok": True,
+        "already_started": not started,
+        "message": "LINEに問題を送りました。",
+    }
 
 
 def advance_and_reply_quiz(reply_token, user_id, expected_session_id=None):

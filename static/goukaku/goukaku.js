@@ -66,7 +66,34 @@ function openOfficialAccountChat(accountId, message) {
   return true;
 }
 
-document.querySelectorAll('[data-line-message]').forEach((button) => button.addEventListener('click', async () => {
+document.querySelectorAll('[data-recommendation-start-url]').forEach((button) => button.addEventListener('click', async () => {
+  const status = button.parentElement?.querySelector('[data-recommendation-status]');
+  button.disabled = true;
+  if (status) status.textContent = 'LINEへ問題を送っています…';
+  try {
+    const response = await fetch(button.dataset.recommendationStartUrl, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: button.dataset.dashboardToken,
+        field: button.dataset.recommendationField,
+        count: Number(button.dataset.recommendationCount),
+      }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.ok) throw new Error(result.message || '問題を送信できませんでした。');
+    if (status) status.textContent = result.message || 'LINEに問題を送りました。';
+    if (await liffReady) window.liff.closeWindow();
+  } catch (error) {
+    console.error('Dashboard recommendation start failed', error);
+    if (status) status.textContent = error.message || 'LINEへの問題送信に失敗しました。';
+  } finally {
+    button.disabled = false;
+  }
+}));
+
+document.querySelectorAll('[data-line-message]:not([data-recommendation-start-url])').forEach((button) => button.addEventListener('click', async () => {
   const message = button.dataset.lineMessage;
   const accountId = button.closest('[data-line-account-id]')?.dataset.lineAccountId;
   const status = button.closest('.mobile-actions')?.querySelector('[data-line-action-status]');

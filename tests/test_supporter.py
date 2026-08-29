@@ -202,6 +202,8 @@ def test_supporter_can_open_linked_learner_dashboard_read_only_without_state_cha
     assert "5<small>問</small>" in text
     assert "60<small>%</small>" in text
     assert "data-line-message" not in text
+    assert "data-recommendation-start-url" not in text
+    assert "チャレンジする！" not in text
     assert "/goukaku-no-michi/learning" not in text
     assert "PRIVATE-CONSULTATION" not in text
     assert database_before == (

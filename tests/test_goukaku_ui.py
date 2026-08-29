@@ -1,9 +1,11 @@
 import os
+from types import SimpleNamespace
 
 os.environ.setdefault("OPENAI_API_KEY", "test-key")
 os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
 os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
+import app as app_module
 from app import app
 import database
 from database import record_learning_batch
@@ -33,8 +35,7 @@ def test_goukaku_home_renders(monkeypatch):
     assert ">0<small>問</small>" in text
     assert "data-line-message=\"相談する\"" in text
     assert 'class="app-shell"' in text
-    assert "20260817-liff1" in text
-    assert "20260830-recommend1" in text
+    assert text.count("20260830-recommend-pc1") == 2
     assert 'data-line-account-id="@licensetown-test"' in text
     assert 'data-liff-id="1234567890-test"' in text
     assert "https://static.line-scdn.net/liff/edge/2/sdk.js" in text
@@ -150,8 +151,11 @@ def test_dashboard_and_subjects_render_real_field_history_without_demo_values(mo
     assert "100問を目標に基礎を固めましょう" in home_text
     assert "今日は解剖学を10問解こう" in home_text
     assert "チャレンジする！" in home_text
-    assert 'data-line-message="今日のおすすめ学習：解剖学：10問"' in home_text
-    assert 'class="recommend-challenge" data-line-account-id="@licensetown-test" data-liff-id="1234567890-test"' in home_text
+    assert 'data-recommendation-start-url="/goukaku-no-michi/recommendation/start"' in home_text
+    assert f'data-dashboard-token="{token}"' in home_text
+    assert 'data-recommendation-field="解剖学"' in home_text
+    assert 'data-recommendation-count="10"' in home_text
+    assert 'data-line-message="今日のおすすめ学習：解剖学：10問"' not in home_text
     assert "閲覧のみ" not in home_text
     assert f"/goukaku-no-michi/subjects?token={token}" in home_text
 
@@ -189,6 +193,120 @@ def test_recommendation_challenge_has_scoped_responsive_cta_css():
     css = (__import__("pathlib").Path(__file__).resolve().parents[1] / "static" / "goukaku" / "goukaku.css").read_text(encoding="utf-8")
     assert ".recommend-card .recommend-challenge{min-height:46px" in css
     assert "@media(max-width:700px){.recommend-card .recommend-challenge{width:100%;min-height:48px" in css
+    assert ".recommend-card .recommend-challenge-status{" in css
+
+
+def test_dashboard_recommendation_post_uses_token_user(monkeypatch):
+    token = create_dashboard_token("recommendation-token-user")
+    started = []
+    monkeypatch.setattr(
+        app_module,
+        "build_dashboard",
+        lambda user_id: {"recommended_study": [("医学概論", 10)]},
+    )
+    monkeypatch.setattr(
+        app_module,
+        "start_and_push_dashboard_recommendation",
+        lambda user_id, category_small, count: started.append(
+            (user_id, category_small, count)
+        ) or True,
+    )
+
+    response = app.test_client().post(
+        "/goukaku-no-michi/recommendation/start",
+        json={"token": token, "field": "医学概論", "count": 10, "user_id": "attacker"},
+    )
+
+    assert response.status_code == 200
+    assert response.get_json()["message"] == "LINEに問題を送りました。"
+    assert started == [("recommendation-token-user", 6, 10)]
+
+
+def test_dashboard_recommendation_post_rejects_invalid_token_field_and_count(monkeypatch):
+    started = []
+    monkeypatch.setattr(
+        app_module,
+        "start_and_push_dashboard_recommendation",
+        lambda *args: started.append(args),
+    )
+    client = app.test_client()
+    token = create_dashboard_token("recommendation-validation-user")
+
+    assert client.post(
+        "/goukaku-no-michi/recommendation/start",
+        json={"field": "医学概論", "count": 10},
+    ).status_code == 403
+    assert client.post(
+        "/goukaku-no-michi/recommendation/start",
+        json={"token": "invalid", "field": "医学概論", "count": 10},
+    ).status_code == 403
+    assert client.post(
+        "/goukaku-no-michi/recommendation/start",
+        json={"token": token, "field": "存在しない分野", "count": 10},
+    ).status_code == 400
+    assert client.post(
+        "/goukaku-no-michi/recommendation/start",
+        json={"token": token, "field": "医学概論", "count": 30},
+    ).status_code == 400
+    assert started == []
+
+
+def test_dashboard_recommendation_post_rejects_stale_display(monkeypatch):
+    token = create_dashboard_token("recommendation-stale-user")
+    monkeypatch.setattr(
+        app_module,
+        "build_dashboard",
+        lambda user_id: {"recommended_study": [("解剖学", 10)]},
+    )
+
+    response = app.test_client().post(
+        "/goukaku-no-michi/recommendation/start",
+        json={"token": token, "field": "医学概論", "count": 10},
+    )
+
+    assert response.status_code == 409
+
+
+def test_dashboard_recommendation_pushes_first_set_once(monkeypatch):
+    user_id = "recommendation-push-user"
+    app_module.study_sessions.pop(user_id, None)
+    pushes = []
+
+    def fake_start_quiz(start_user_id, session_kind=None, question_count=None, **_kwargs):
+        assert start_user_id == user_id
+        app_module.study_sessions[user_id] = {
+            "session_kind": session_kind,
+            "category_small": 6,
+            "question_count": question_count,
+            "status": "waiting_for_answers",
+        }
+
+    monkeypatch.setattr(app_module, "start_quiz", fake_start_quiz)
+    monkeypatch.setattr(
+        app_module,
+        "build_current_quiz_messages",
+        lambda session, intro_text=None: ["intro", "questions-1-5", "answer-guide"],
+    )
+    monkeypatch.setattr(
+        app_module,
+        "line_bot_api",
+        SimpleNamespace(push_message=lambda target, messages: pushes.append((target, messages))),
+    )
+
+    assert app_module.start_and_push_dashboard_recommendation(user_id, 6, 10) is True
+    assert pushes == [(user_id, ["intro", "questions-1-5", "answer-guide"])]
+    assert app_module.start_and_push_dashboard_recommendation(user_id, 6, 10) is False
+    assert len(pushes) == 1
+    app_module.study_sessions.pop(user_id, None)
+
+
+def test_dashboard_recommendation_js_posts_without_line_redirect():
+    js = (__import__("pathlib").Path(__file__).resolve().parents[1] / "static" / "goukaku" / "goukaku.js").read_text(encoding="utf-8")
+    assert "fetch(button.dataset.recommendationStartUrl" in js
+    assert "credentials: 'same-origin'" in js
+    assert "LINEに問題を送りました。" in js
+    assert "if (await liffReady) window.liff.closeWindow();" in js
+    assert "[data-line-message]:not([data-recommendation-start-url])" in js
 
 
 def test_mode_intro_copy_is_kept_verbatim():
