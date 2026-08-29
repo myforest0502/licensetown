@@ -8,6 +8,10 @@ from typing import Any, Iterable
 
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_weakness_evidence import derive_repeated_weakness_evidence
+from knowledge_node_repair_evidence import (
+    DIFFERENT_QUESTION_STRONG,
+    classify_repair_confirmation,
+)
 
 
 STATES = ("unseen", "checking", "repairing", "repaired", "stable", "recheck_due")
@@ -86,7 +90,6 @@ def derive_knowledge_node_state(
     state = "unseen"
     reason = ""
     repair_wrong_questions: set[str] = set()
-    repair_confirmation_question: str | None = None
     confident_correct_after_wrong_count = 0
     has_prior_wrong = False
     history: list[dict[str, Any]] = []
@@ -101,13 +104,13 @@ def derive_knowledge_node_state(
         confidence = item.get("confidence")
 
         if is_correct is False:
+            previous_state = state
             state = "repairing"
             reason = "A wrong answer requires repair, regardless of the previous state."
-            if not has_prior_wrong or repair_confirmation_question is not None:
+            if not has_prior_wrong or previous_state in {"repaired", "stable"}:
                 repair_wrong_questions = {question_id}
             else:
                 repair_wrong_questions.add(question_id)
-            repair_confirmation_question = None
             has_prior_wrong = True
             continue
 
@@ -122,21 +125,21 @@ def derive_knowledge_node_state(
             reason = "Correct answers without prior repair evidence remain checking."
             continue
 
-        is_new_repair_question = question_id not in repair_wrong_questions
-        if confidence == 1 and is_new_repair_question:
+        evidence_strengths = {
+            classify_repair_confirmation(wrong_question, question_id)
+            for wrong_question in repair_wrong_questions
+        }
+        is_strong_confirmation = DIFFERENT_QUESTION_STRONG in evidence_strengths
+        if confidence == 1 and is_strong_confirmation:
             confident_correct_after_wrong_count += 1
             if state == "repairing":
                 state = "repaired"
-                repair_confirmation_question = question_id
-                reason = "A different question was answered correctly with confidence=1 after a wrong answer."
-            elif state == "repaired" and question_id != repair_confirmation_question:
-                state = "stable"
-                reason = "A further distinct question was answered correctly with confidence=1."
-            elif state == "stable":
-                reason = "Stable evidence remains intact after another confident correct answer."
+                reason = "A strong different-question confirmation was correct with confidence=1 after a wrong answer."
+            elif state == "repaired":
+                reason = "Short-term repair remains repaired; stable requires the future time-based policy."
         elif state == "repairing":
             reason = (
-                "A correct answer is the same question or lacks confidence=1; repair remains unconfirmed."
+                "The correct answer is same/weakly different or lacks confidence=1; repair remains unconfirmed."
             )
 
     result = _result(

@@ -9,6 +9,10 @@ from typing import Any, Iterable
 
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import derive_all_user_node_states
+from knowledge_node_repair_evidence import (
+    DIFFERENT_QUESTION_STRONG,
+    classify_repair_confirmation,
+)
 from question_bank import get_question_tag, get_quiz_question, question_ids
 from prerequisite_backtrack_pilot import (
     is_prerequisite_backtrack_pilot_enabled,
@@ -68,6 +72,8 @@ def _node_attempt_summary(attempts: Iterable[dict[str, Any]]) -> dict[str, dict[
 
 def _priority(state: str, summary: dict[str, Any], safety: str) -> tuple[int, str, str]:
     has_wrong = bool(summary["wrong_questions"])
+    if state == "repaired":
+        return 150, "repaired", "maintenance"
     if has_wrong and safety in {"critical", "high", "moderate"}:
         return 1000, "safety_wrong", "repair"
     if summary["confident_wrong"]:
@@ -123,11 +129,18 @@ def select_node_adaptive_questions(
             "confident_wrong": False, "uncertain_correct": False, "unknown": False,
         })
         score, reason, group = _priority(state, summary, str(tag.get("safety", "none")))
+        evidence_strengths = {
+            classify_repair_confirmation(wrong_id, question_id)
+            for wrong_id in summary["wrong_questions"]
+        }
         is_same_q_repeat = question_id in summary["wrong_questions"]
+        strong_confirmation = DIFFERENT_QUESTION_STRONG in evidence_strengths
         if is_same_q_repeat:
             score -= 180
+        elif strong_confirmation:
+            score += 80
         elif summary["wrong_questions"]:
-            score += 80  # Prefer another Q in the same canonical repair target.
+            score += 20
         if question_id not in seen_question_ids:
             score += 10
         candidates.append({
@@ -140,6 +153,7 @@ def select_node_adaptive_questions(
             "previous_wrong_count": len(summary["wrong_questions"]),
             "previous_correct_count": len(summary["correct_questions"]),
             "same_question_repeat": is_same_q_repeat,
+            "strong_repair_confirmation": strong_confirmation,
             "safety": str(tag.get("safety", "none")),
             "confident_wrong": summary["confident_wrong"],
             "unknown_evidence": summary["unknown"],

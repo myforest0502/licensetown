@@ -44,6 +44,9 @@ def test_empty_history_includes_unseen_and_unique_questions(monkeypatch):
 
 def test_repairing_prefers_different_question_and_limits_node_concentration(monkeypatch):
     fake_bank(monkeypatch)
+    monkeypatch.setattr(selector, "classify_repair_confirmation", lambda old, new: (
+        "same_question" if old == new else "different_question_strong"
+    ))
     selected = selector.select_node_adaptive_questions(
         [attempt("Q1", "KN0001", False)], 30, rng=random.Random(1)
     )
@@ -51,6 +54,20 @@ def test_repairing_prefers_different_question_and_limits_node_concentration(monk
     assert node_items[0]["question_id"] == "Q2"
     assert node_items[0]["same_question_repeat"] is False
     assert len(node_items) <= 2
+
+
+def test_repaired_node_is_not_kept_in_high_priority_repair(monkeypatch):
+    fake_bank(monkeypatch)
+    monkeypatch.setattr(selector, "derive_all_user_node_states", lambda *_args, **_kwargs: [
+        {"canonical_node_id": "KN0001", "state": "repaired"}
+    ])
+    selected = selector.select_node_adaptive_questions(
+        [attempt("Q1", "KN0001", False)], 10, rng=random.Random(11)
+    )
+    node_items = [item for item in selected if item["canonical_node_id"] == "KN0001"]
+    assert all(item["priority_group"] == "maintenance" for item in node_items)
+    assert all(item["priority_reason"] == "repaired" for item in node_items)
+    assert any(item["state"] == "unseen" for item in selected)
 
 
 def test_priority_order_safety_confident_and_cross_wrong(monkeypatch):
@@ -91,8 +108,12 @@ def test_canonical_aliases_share_state(monkeypatch):
     assert q2["previous_wrong_count"] == 1
 
 
-def test_recheck_due_and_checking_are_included(monkeypatch):
+def test_repaired_and_checking_are_included_without_same_day_stable(monkeypatch):
     fake_bank(monkeypatch)
+    monkeypatch.setattr(selector, "derive_all_user_node_states", lambda *_args, **_kwargs: [
+        {"canonical_node_id": "KN0001", "state": "repaired"},
+        {"canonical_node_id": "KN0003", "state": "checking"},
+    ])
     old = NOW - timedelta(days=31)
     attempts = [
         {**attempt("Q1", "KN0001", False, 2, minute=1), "answered_at": old},
@@ -101,7 +122,11 @@ def test_recheck_due_and_checking_are_included(monkeypatch):
         attempt("Q5", "KN0003", True, 1, minute=4),
     ]
     selected = selector.select_node_adaptive_questions(attempts, 20, rng=random.Random(5), as_of=NOW)
-    assert any(item["state"] == "recheck_due" for item in selected)
+    assert not any(item["state"] in {"stable", "recheck_due"} for item in selected)
+    assert not any(
+        item["state"] == "repaired" and item["priority_group"] == "repair"
+        for item in selected
+    )
     assert any(item["state"] == "checking" for item in selected)
 
 

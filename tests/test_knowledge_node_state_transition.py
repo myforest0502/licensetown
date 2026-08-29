@@ -61,27 +61,26 @@ def test_different_question_confidence_two_correct_does_not_repair():
 
 def test_different_question_confidence_one_correct_repairs():
     result = derive_knowledge_node_state([
-        attempt("u", "KN1080", "Q1091", False, 2, 1),
-        attempt("u", "KN1518", "Q1544", True, 1, 2),
+        attempt("u", "KN0268", "Q269", False, 2, 1),
+        attempt("u", "KN0268", "Q361", True, 1, 2),
     ])
     assert result["state"] == "repaired"
     assert result["confident_correct_after_wrong_count"] == 1
 
 
-def test_repaired_then_third_question_confidence_one_is_stable():
+def test_same_day_additional_confident_correct_never_becomes_stable():
     assert state(
-        attempt("u", "KN0071", "Q72", False, 2, 1),
-        attempt("u", "KN0126", "Q127", True, 1, 2),
-        attempt("u", "KN0195", "Q196", True, 1, 3),
-    ) == "stable"
+        attempt("u", "KN0268", "Q269", False, 2, 1),
+        attempt("u", "KN0268", "Q361", True, 1, 2),
+        attempt("u", "KN0268", "Q361", True, 1, 3),
+    ) == "repaired"
 
 
 def test_stable_then_wrong_returns_to_repairing():
     assert state(
-        attempt("u", "KN0071", "Q72", False, 2, 1),
-        attempt("u", "KN0126", "Q127", True, 1, 2),
-        attempt("u", "KN0195", "Q196", True, 1, 3),
-        attempt("u", "KN0211", "Q212", False, 1, 4),
+        attempt("u", "KN0268", "Q269", False, 2, 1),
+        attempt("u", "KN0268", "Q361", True, 1, 2),
+        attempt("u", "KN0268", "Q269", False, 1, 4),
     ) == "repairing"
 
 
@@ -105,19 +104,19 @@ def test_cross_question_confident_wrong_is_repairing():
 
 def test_aliases_are_canonicalized_and_users_are_not_mixed():
     records = derive_all_user_node_states([
-        attempt("a", "KN1080", "Q1091", False, 2, 1),
-        attempt("a", "KN1518", "Q1544", True, 1, 2),
-        attempt("b", "KN1518", "Q1544", True, 1, 3),
+        attempt("a", "KN0268", "Q269", False, 2, 1),
+        attempt("a", "KN0268", "Q361", True, 1, 2),
+        attempt("b", "KN0268", "Q361", True, 1, 3),
     ])
     assert len(records) == 2
-    assert {item["canonical_node_id"] for item in records} == {"KN1080"}
+    assert {item["canonical_node_id"] for item in records} == {"KN0268"}
     assert sorted(item["state"] for item in records) == ["checking", "repaired"]
 
 
 def test_timeline_has_no_future_leakage():
     timeline = derive_state_timeline([
-        attempt("u", "KN1080", "Q1091", False, 2, 1),
-        attempt("u", "KN1518", "Q1544", True, 1, 2),
+        attempt("u", "KN0268", "Q269", False, 2, 1),
+        attempt("u", "KN0268", "Q361", True, 1, 2),
     ])
     assert [item["state"] for item in timeline] == ["repairing", "repaired"]
 
@@ -130,19 +129,42 @@ def test_recheck_due_is_design_only():
     assert report["recheck_due_policy"]["implemented_in_production"] is False
 
 
-def test_stable_becomes_recheck_due_when_read_after_30_days():
+def test_repaired_does_not_become_stable_or_due_from_time_alone():
     history = [
-        attempt("u", "KN0071", "Q1", False, 2, 1),
-        attempt("u", "KN0126", "Q2", True, 1, 2),
-        attempt("u", "KN0195", "Q3", True, 1, 3),
+        attempt("u", "KN0268", "Q269", False, 2, 1),
+        attempt("u", "KN0268", "Q361", True, 1, 2),
     ]
-    assert derive_knowledge_node_state(history, as_of=NOW + timedelta(days=31))["state"] == "recheck_due"
+    assert derive_knowledge_node_state(history, as_of=NOW + timedelta(days=31))["state"] == "repaired"
+
+
+def test_different_question_with_same_demand_is_weak_and_does_not_repair():
+    assert state(
+        attempt("u", "KN1080", "Q1091", False, 2, 1),
+        attempt("u", "KN1518", "Q1544", True, 1, 2),
+    ) == "repairing"
+
+
+def test_different_question_confidence_three_correct_does_not_repair():
+    assert state(
+        attempt("u", "KN0268", "Q269", False, 2, 1),
+        attempt("u", "KN0268", "Q361", True, 3, 2),
+    ) == "repairing"
 
 
 def test_unknown_answer_is_wrong_evidence():
     item = attempt("u", "KN0001", "Q1", True, None, 1)
     item["answer_status"] = "unknown"
     assert derive_knowledge_node_state([item])["state"] == "repairing"
+
+
+def test_repaired_then_unknown_returns_to_repairing():
+    unknown = attempt("u", "KN0268", "Q269", True, None, 3)
+    unknown["answer_status"] = "unknown"
+    assert state(
+        attempt("u", "KN0268", "Q269", False, 2, 1),
+        attempt("u", "KN0268", "Q361", True, 1, 2),
+        unknown,
+    ) == "repairing"
 
 
 def test_simulation_reports_kn1080_and_raw_unseen_slots_anonymously():
