@@ -9,6 +9,7 @@ import re
 import random
 import unicodedata
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 from flask import Flask, request, abort
 
@@ -70,6 +71,13 @@ from prerequisite_backtrack_pilot import (
     inject_pending_backtrack_candidate,
     is_prerequisite_backtrack_pilot_enabled,
     parse_prerequisite_backtrack_pilot_user_ids,
+)
+from written_understanding_check import (
+    build_written_prompt,
+    evaluation_fallback,
+    parse_structured_evaluation,
+    select_written_check_candidate,
+    unknown_evaluation,
 )
 
 # =========================================================
@@ -1866,6 +1874,137 @@ def get_session_question_results(session):
     return results
 
 
+def get_written_check_session_results(session):
+    """Return current answers with formal Node IDs for candidate selection."""
+    results = []
+    for number, question in enumerate(session.get("all_questions", ()), start=1):
+        answer_data = session.get("all_answers", {}).get(number)
+        if not answer_data:
+            continue
+        question_id = str(question.get("id"))
+        results.append({
+            "question_id": question_id,
+            "knowledge_node_id": get_question_tag(question_id).get("knowledge_node_id"),
+            "is_correct": is_answer_correct(question, answer_data.get("answer")),
+        })
+    return results
+
+
+def build_pending_written_check(user_id, session):
+    """Build at most one written check after an adaptive 30-question session."""
+    if (
+        session.get("session_kind") != "adaptive_daily"
+        or session.get("question_count") != 30
+        or session.get("written_check_count", 0) >= 1
+    ):
+        return None
+    candidate = select_written_check_candidate(
+        get_written_check_session_results(session),
+        get_question_history(user_id),
+        used_canonical_node_ids=session.get("written_check_node_ids", ()),
+    )
+    if not candidate:
+        return None
+    source = get_quiz_question(candidate["source_question_id"])
+    tag = get_question_tag(candidate["source_question_id"])
+    knowledge_node = str(tag.get("knowledge_node", "")).strip()
+    if not knowledge_node:
+        return None
+    return {
+        **candidate,
+        "knowledge_node": knowledge_node,
+        "written_prompt": build_written_prompt(knowledge_node),
+        "formal_answer": get_display_answer(source),
+        "formal_explanation": str(source.get("explanation", "")).strip(),
+    }
+
+
+def evaluate_written_answer(check, written_answer):
+    """Evaluate one answer against formal data using a strict JSON contract."""
+    response = client.chat.completions.create(
+        model="gpt-4.1-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "記述式理解確認の判定者です。正式資料だけを基準に判定し、"
+                    "JSONのみ返してください。resultはPASS/PARTIAL/FAILのいずれか、"
+                    "reasonとfeedbackは短い日本語にしてください。"
+                ),
+            },
+            {
+                "role": "user",
+                "content": json.dumps({
+                    "written_prompt": check["written_prompt"],
+                    "knowledge_node": check["knowledge_node"],
+                    "formal_answer": check["formal_answer"],
+                    "formal_explanation": check["formal_explanation"],
+                    "written_answer": written_answer,
+                }, ensure_ascii=False),
+            },
+        ],
+        response_format={"type": "json_object"},
+        temperature=0,
+        max_tokens=350,
+    )
+    content = response.choices[0].message.content or ""
+    return parse_structured_evaluation(content)
+
+
+def save_written_check_result(user_id, session, check, written_answer, evaluation):
+    """Persist auxiliary evidence without creating attempts or changing Node state."""
+    created_at = datetime.now(timezone.utc)
+    result = {
+        "canonical_node_id": check["canonical_node_id"],
+        "source_question_id": check["source_question_id"],
+        "written_prompt": check["written_prompt"],
+        "written_answer": written_answer,
+        "written_answer_status": "unknown" if written_answer == "0" else "answered",
+        "evaluation": evaluation["result"],
+        "evaluation_reason": evaluation["reason"],
+        "created_at": created_at.isoformat(),
+    }
+    record_learning_batch(
+        user_id=user_id,
+        event_key=(
+            f'{session["session_id"]}:written:'
+            f'{session.get("written_check_count", 0) + 1}'
+        ),
+        mode="written_check",
+        answered_count=0,
+        correct_count=0,
+        answered_at=created_at,
+        question_results=[result],
+    )
+    return result
+
+
+def reply_written_check_offer(reply_token, explanation_messages, check):
+    messages = [TextSendMessage(text=text) for text in explanation_messages]
+    messages.append(TextSendMessage(
+        text=(
+            "最後に、理解できた内容を自分の言葉で確認してみよう。\n\n"
+            + check["written_prompt"]
+            + "\n\n分からなければ、0だけ送ってくれ。"
+        ),
+        quick_reply=QuickReply(items=[
+            QuickReplyButton(action=MessageAction(label="0 分からない", text="0")),
+            QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
+        ]),
+    ))
+    line_bot_api.reply_message(reply_token, messages)
+
+
+def reply_written_check_result(reply_token, evaluation):
+    line_bot_api.reply_message(reply_token, TextSendMessage(
+        text=(evaluation["feedback"] + "\n\nおー！今日もよく頑張ったなぁ＾＾"),
+        quick_reply=QuickReply(items=[
+            QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
+            QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),
+        ]),
+    ))
+
+
 def reply_current_quiz(reply_token, session, intro_text=None):
     start_number = ((session["current_set"] - 1) * session["questions_per_set"]) + 1
     session["expected_numbers"] = list(
@@ -3212,6 +3351,36 @@ def process_study_flow_command(reply_token, user_id, user_message):
 
     status = session.get("status")
 
+    if status == "waiting_for_written_answer":
+        if user_message == "源さんに預ける":
+            study_sessions.pop(user_id, None)
+            return_home(reply_token, user_id, interrupt=True)
+            return True
+        check = session.get("pending_written_check")
+        if not check:
+            session["status"] = "quiz_completed"
+            reply_explanation_choice(reply_token, completed=True)
+            return True
+        if user_message == "0":
+            evaluation = unknown_evaluation()
+        else:
+            try:
+                evaluation = evaluate_written_answer(check, user_message)
+            except Exception:
+                logging.exception("Written understanding evaluation failed.")
+                evaluation = evaluation_fallback()
+        save_written_check_result(
+            user_id, session, check, user_message, evaluation
+        )
+        session.setdefault("written_check_node_ids", []).append(
+            check["canonical_node_id"]
+        )
+        session["written_check_count"] = session.get("written_check_count", 0) + 1
+        session.pop("pending_written_check", None)
+        session["status"] = "quiz_completed"
+        reply_written_check_result(reply_token, evaluation)
+        return True
+
     if status == "assessment_completed":
         if user_message == "勉強を始める":
             assessment_question_ids = [
@@ -3264,12 +3433,22 @@ def process_study_flow_command(reply_token, user_id, user_message):
 
         explanation_messages = advance_quiz_explanations(session)
         if session["status"] == "quiz_completed":
-            reply_explanation_choice(
-                reply_token,
-                completed=True,
-                quiz_result=session.get("quiz_result"),
-                explanation_messages=explanation_messages,
-            )
+            written_check = globals().get(
+                "build_pending_written_check", lambda *_args: None
+            )(user_id, session)
+            if written_check:
+                session["pending_written_check"] = written_check
+                session["status"] = "waiting_for_written_answer"
+                reply_written_check_offer(
+                    reply_token, explanation_messages, written_check
+                )
+            else:
+                reply_explanation_choice(
+                    reply_token,
+                    completed=True,
+                    quiz_result=session.get("quiz_result"),
+                    explanation_messages=explanation_messages,
+                )
         else:
             reply_next_explanation_choice(
                 reply_token,
@@ -3360,7 +3539,10 @@ def handle_text_message(event):
         and active_session
         and active_session.get("mode") == "study"
     ):
-        pause_quiz_session(user_id)
+        if active_session.get("status") == "waiting_for_written_answer":
+            study_sessions.pop(user_id, None)
+        else:
+            pause_quiz_session(user_id)
         return_home(event.reply_token, user_id, interrupt=True)
         return
 

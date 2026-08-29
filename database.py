@@ -528,6 +528,23 @@ def get_question_history(user_id: str) -> list[dict[str, Any]]:
     return history
 
 
+def get_written_check_history(user_id: str) -> list[dict[str, Any]]:
+    """Return persisted written-check evidence without treating it as quiz history."""
+    history = []
+    for question_results, answered_at in _get_question_result_rows(user_id):
+        if isinstance(question_results, str):
+            try:
+                question_results = json.loads(question_results)
+            except json.JSONDecodeError:
+                continue
+        if not isinstance(question_results, list):
+            continue
+        for result in question_results:
+            if isinstance(result, dict) and result.get("source_question_id"):
+                history.append({**result, "timestamp": answered_at})
+    return history
+
+
 def get_question_attempts(user_id: str) -> list[dict[str, Any]]:
     """保存済みの1問単位回答履歴を内部利用向けに返す。"""
     if not database_is_available():
