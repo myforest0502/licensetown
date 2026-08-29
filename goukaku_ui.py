@@ -9,6 +9,7 @@ from database import (
     get_dashboard_learning_data,
     get_field_learning_summary,
     get_learning_activity,
+    get_weekly_question_history,
     get_supported_learner_ids,
     user_names,
 )
@@ -211,6 +212,16 @@ def supporter_dashboard():
         supporter_token=token,
         report=report,
     )
+
+
+@goukaku_ui.route("/supporter/weekly-question-history")
+def supporter_weekly_question_history():
+    token = request.args.get("token")
+    _, learner_id = authorized_supporter_learner(token, request.args.get("learner_user_id"))
+    learner_name = user_names.get(learner_id, "学習者") or "学習者"
+    return render_template("goukaku/supporter_weekly_questions.html", learner_name=learner_name,
+                           learner_id=learner_id, supporter_token=token,
+                           weekly=get_weekly_question_history(learner_id))
 
 
 @goukaku_ui.route("/supporter/goukaku-no-michi")

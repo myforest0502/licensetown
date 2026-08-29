@@ -34,7 +34,7 @@ def test_goukaku_home_renders(monkeypatch):
     assert ">0<small>問</small>" in text
     assert "data-line-message=\"相談する\"" in text
     assert 'class="app-shell"' in text
-    assert text.count("20260830-cross-device1") == 2
+    assert text.count("20260830-weekly-history1") == 2
     assert 'data-line-account-id="@licensetown-test"' in text
     assert 'data-liff-id="1234567890-test"' in text
     assert "https://static.line-scdn.net/liff/edge/2/sdk.js" in text

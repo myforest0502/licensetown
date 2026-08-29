@@ -122,3 +122,13 @@ document.querySelectorAll('[data-line-message]:not([data-recommendation-start-ur
     status.textContent = 'LINEアプリ内から開いてください。';
   }
 }));
+
+document.querySelectorAll('[data-copy-q-ids]').forEach((button) => button.addEventListener('click', async () => {
+  const status = button.nextElementSibling;
+  try {
+    await navigator.clipboard.writeText(button.dataset.copyQIds);
+    if (status) status.textContent = 'コピーしました';
+  } catch (_error) {
+    if (status) status.textContent = 'コピーできませんでした';
+  }
+}));

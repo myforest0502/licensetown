@@ -1,0 +1,13 @@
+{% extends "goukaku/base.html" %}
+{% block title %}今週の学習履歴{% endblock %}
+{% block content %}
+<header class="app-header title-only"><h1>今週の学習履歴</h1></header>
+<main class="page-content weekly-question-page">
+  <p><b>{{ learner_name }}</b>さん／{{ weekly.start_date.strftime('%Y/%m/%d') }} ～ {{ weekly.end_date.strftime('%Y/%m/%d') }}</p>
+  <section class="weekly-question-summary"><article class="card"><span>総回答数</span><strong>{{ weekly.total_attempts }}<small>回</small></strong></article><article class="card"><span>ユニークQ</span><strong>{{ weekly.unique_questions }}<small>問</small></strong></article></section>
+  {% for title, ids in [('取り組んだQ', weekly.attempted_question_ids), ('間違えたQ', weekly.wrong_question_ids), ('0＝分からないQ', weekly.unknown_question_ids), ('自信あり誤答Q', weekly.confident_wrong_question_ids)] %}
+  <section class="card weekly-question-list"><h2>{{ title }}</h2><p>{{ ids|join(' ') if ids else '該当なし' }}</p><button type="button" data-copy-q-ids="{{ ids|join(' ') }}" {% if not ids %}disabled{% endif %}>Q番号をコピー</button><span role="status"></span></section>
+  {% endfor %}
+  <a class="back-to-top" href="{{ url_for('goukaku_ui.supporter_dashboard', token=supporter_token, learner_user_id=learner_id) }}">学習見守りへ戻る</a>
+</main>
+{% endblock %}

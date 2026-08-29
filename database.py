@@ -584,6 +584,46 @@ def get_question_attempts(user_id: str) -> list[dict[str, Any]]:
             return attempts
 
 
+def get_weekly_question_history(user_id: str, now: datetime | None = None) -> dict[str, Any]:
+    """Return seven JST calendar days from bounded question_attempts reads."""
+    jst = ZoneInfo("Asia/Tokyo")
+    current = now or datetime.now(timezone.utc)
+    if current.tzinfo is None:
+        current = current.replace(tzinfo=timezone.utc)
+    end_date = current.astimezone(jst).date()
+    start_date = end_date - timedelta(days=6)
+    start_at = datetime.combine(start_date, datetime.min.time(), jst).astimezone(timezone.utc)
+    end_at = datetime.combine(end_date + timedelta(days=1), datetime.min.time(), jst).astimezone(timezone.utc)
+    if not database_is_available():
+        attempts = [copy.deepcopy(item) for item in _local_question_attempts
+                    if item.get("user_id") == user_id
+                    and start_at <= _as_utc(item.get("answered_at")) < end_at]
+    else:
+        with get_db_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    SELECT question_id, selected_answers, is_correct, confidence, answered_at
+                    FROM question_attempts
+                    WHERE user_id = %s AND answered_at >= %s AND answered_at < %s
+                    ORDER BY answered_at, event_key, attempt_position
+                """, (user_id, start_at, end_at))
+                columns = ("question_id", "selected_answers", "is_correct", "confidence", "answered_at")
+                attempts = [dict(zip(columns, row)) for row in cur.fetchall()]
+    def ordered(values):
+        def key(value):
+            text = str(value)
+            return (int(text[1:]) if text.startswith("Q") and text[1:].isdigit() else 10**9, text)
+        return sorted(values, key=key)
+    attempted = {str(item.get("question_id")) for item in attempts}
+    wrong = {str(item.get("question_id")) for item in attempts if item.get("is_correct") is False}
+    unknown = {str(item.get("question_id")) for item in attempts if item.get("answer_status") == "unknown" or (not item.get("selected_answers") and item.get("confidence") is None)}
+    confident_wrong = {str(item.get("question_id")) for item in attempts if item.get("is_correct") is False and item.get("confidence") == 1 and str(item.get("question_id")) not in unknown}
+    return {"start_date": start_date, "end_date": end_date, "total_attempts": len(attempts),
+            "unique_questions": len(attempted), "attempted_question_ids": ordered(attempted),
+            "wrong_question_ids": ordered(wrong), "unknown_question_ids": ordered(unknown),
+            "confident_wrong_question_ids": ordered(confident_wrong)}
+
+
 def get_user_node_states(user_id: str) -> list[dict[str, Any]]:
     """Node別の基本集計を内部利用向けに返す。"""
     if not database_is_available():
