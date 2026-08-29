@@ -79,6 +79,7 @@ from written_understanding_check import (
     select_written_check_candidate,
     unknown_evaluation,
 )
+from adaptive_question_selector import build_node_adaptive_session
 
 # =========================================================
 # ロギング設定
@@ -92,6 +93,9 @@ ENABLE_PREREQUISITE_BACKTRACK = os.getenv(
 PREREQUISITE_BACKTRACK_PILOT_USER_IDS = parse_prerequisite_backtrack_pilot_user_ids(
     os.getenv("PREREQUISITE_BACKTRACK_PILOT_USER_IDS")
 )
+ENABLE_NODE_ADAPTIVE_RECOMMENDATION = os.getenv(
+    "ENABLE_NODE_ADAPTIVE_RECOMMENDATION", "false"
+).strip().lower() in {"1", "true", "yes", "on"}
 
 
 # =========================================================
@@ -905,9 +909,16 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
     if session_kind == "initial_assessment":
         all_questions = build_initial_assessment(total_question_count)
     elif session_kind == "adaptive_daily":
-        all_questions = build_daily_session(
-            get_question_history(user_id), total_question_count, exclude_ids=exclude_ids
-        )
+        if ENABLE_NODE_ADAPTIVE_RECOMMENDATION:
+            all_questions = build_node_adaptive_session(
+                get_question_attempts(user_id),
+                total_question_count,
+                exclude_ids=exclude_ids,
+            )
+        else:
+            all_questions = build_daily_session(
+                get_question_history(user_id), total_question_count, exclude_ids=exclude_ids
+            )
     elif category_small is None:
         all_questions = select_random_questions(total_question_count)
     else:
