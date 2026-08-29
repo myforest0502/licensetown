@@ -111,7 +111,7 @@ def test_merge_candidates_reference_formal_unique_nodes_and_questions():
     assert len({item["candidate_id"] for item in candidates}) == len(candidates)
     assert all(len(item["node_ids"]) >= 2 for item in candidates)
     assert all(len(item["node_ids"]) == len(set(item["node_ids"])) for item in candidates)
-    assert all(item["review_status"] == "pending_clinical_review" for item in candidates)
+    assert all(item["review_status"] == "reviewed" for item in candidates)
 
 
 @pytest.mark.parametrize("mutation", [

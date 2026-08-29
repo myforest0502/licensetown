@@ -123,6 +123,14 @@ def test_daily_session_groups_node_history_by_stable_id(monkeypatch):
     })
 
 
+def test_daily_session_groups_reviewed_alias_with_canonical_node(monkeypatch):
+    _assert_node_history_prioritizes_second_question(monkeypatch, {
+        "Q1": {"knowledge_node_id": "KN0597"},
+        "Q2": {"knowledge_node_id": "KN0807"},
+        "Q3": {"knowledge_node_id": "KN0003"},
+    })
+
+
 def test_daily_session_falls_back_to_knowledge_node_label(monkeypatch):
     _assert_node_history_prioritizes_second_question(monkeypatch, {
         "Q1": {"knowledge_node": "shared legacy label"},

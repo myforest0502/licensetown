@@ -1,0 +1,42 @@
+[
+  {
+    "candidate_id": "KNC0001",
+    "canonical_node_id": "KN0597",
+    "alias_node_ids": ["KN0807"],
+    "canonical_label": "交感神経作用",
+    "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "既存IDを削除せず、番号が小さいKN0597をcanonicalとして履歴互換性を維持する。"
+  },
+  {
+    "candidate_id": "KNC0002",
+    "canonical_node_id": "KN1337",
+    "alias_node_ids": ["KN1509"],
+    "canonical_label": "半規管と角加速度",
+    "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "既存IDを削除せず、番号が小さいKN1337をcanonicalとして履歴互換性を維持する。"
+  },
+  {
+    "candidate_id": "KNC0003",
+    "canonical_node_id": "KN1082",
+    "alias_node_ids": ["KN1292"],
+    "canonical_label": "NSAIDsと胃潰瘍",
+    "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "既存IDを削除せず、番号が小さいKN1082をcanonicalとして履歴互換性を維持する。"
+  },
+  {
+    "candidate_id": "KNC0004",
+    "canonical_node_id": "KN0609",
+    "alias_node_ids": ["KN1210"],
+    "canonical_label": "ワルファリンの作用機序とビタミンK拮抗",
+    "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "既存IDを削除せず、番号が小さいKN0609をcanonicalとして履歴互換性を維持する。"
+  },
+  {
+    "candidate_id": "KNC0005",
+    "canonical_node_id": "KN0205",
+    "alias_node_ids": ["KN0272"],
+    "canonical_label": "Parkinson病のすくみ足と外的キュー",
+    "selection_rule": "lowest_numeric_existing_node_id",
+    "reason": "既存IDを削除せず、番号が小さいKN0205をcanonicalとして履歴互換性を維持する。"
+  }
+]

@@ -6,6 +6,7 @@ import random
 from collections import defaultdict
 
 from question_bank import get_question, get_question_tag, get_quiz_question, question_ids
+from knowledge_node_canonical import canonicalize_knowledge_node_id
 
 
 ABILITY_LABELS = {
@@ -20,7 +21,8 @@ ABILITY_LABELS = {
 
 def _knowledge_node_key(tag):
     """Prefer the stable node ID while retaining compatibility with old tags."""
-    return tag.get("knowledge_node_id") or tag.get("knowledge_node")
+    node_id = tag.get("knowledge_node_id") or tag.get("knowledge_node")
+    return canonicalize_knowledge_node_id(node_id)
 
 
 def _candidate_ids(category_small=None):
