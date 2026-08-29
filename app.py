@@ -853,6 +853,12 @@ def format_quiz_messages(questions, start_number=1):
         "つまり「A1」なら、\n"
         "答えはA、自信ありって意味だ。\n\n"
         "複数選択の問題は「BD1」のように、答えを続けて入力してくれ。\n\n"
+        "どうしても答えが分からない時は、無理に選ばなくていいぞ。\n"
+        "その問題のところに「0」だけ入れてくれ(^^)\n\n"
+        "例：A1 B2 0 D1 E2\n"
+        "※ C0のようには入力しない。\n"
+        "※ 0は自信度じゃなくて「分からない」の意味だ。\n"
+        f"※ {len(questions)}問分の位置は必ず残してくれ。\n\n"
         f"{len(questions)}問分をまとめて送ってくれ（笑）"
     )
 
@@ -1107,14 +1113,16 @@ def parse_quiz_answers(user_message, expected_numbers=None):
     """
 
     normalized_message = unicodedata.normalize("NFKC", user_message).upper()
+    if re.search(r"[A-E]0|(?<!\d)0[A-E0-9]", normalized_message):
+        return {}
     compact_message = re.sub(r"[\s,、]+", "", normalized_message)
 
     if not compact_message:
         return {}
 
-    explicit_pattern = re.compile(r"(\d+):?([A-E]{1,5})([1-3])")
+    explicit_pattern = re.compile(r"(\d+):?(?:([A-E]{1,5})([1-3])|(0))")
 
-    if compact_message[0].isdigit():
+    if compact_message[0].isdigit() and compact_message[0] != "0":
         explicit_matches = list(explicit_pattern.finditer(compact_message))
 
         if "".join(match.group(0) for match in explicit_matches) != compact_message:
@@ -1129,8 +1137,9 @@ def parse_quiz_answers(user_message, expected_numbers=None):
                 return {}
 
             parsed_answers[question_number] = {
-                "answer": match.group(2),
+                "answer": match.group(2) or "",
                 "confidence": match.group(3),
+                **({"answer_status": "unknown"} if match.group(4) else {}),
             }
 
         expected_count = len(expected_numbers) if expected_numbers is not None else QUESTIONS_PER_SET
@@ -1142,14 +1151,13 @@ def parse_quiz_answers(user_message, expected_numbers=None):
 
         return parsed_answers
 
-    implicit_matches = re.findall(r"([A-E]{1,5}?)([1-3])", compact_message)
+    implicit_tokens = re.findall(r"[A-E]{1,5}?[1-3]|0", compact_message)
 
     expected_count = len(expected_numbers) if expected_numbers is not None else QUESTIONS_PER_SET
 
     if (
-        len(implicit_matches) != expected_count
-        or "".join("".join(match) for match in implicit_matches)
-        != compact_message
+        len(implicit_tokens) != expected_count
+        or "".join(implicit_tokens) != compact_message
     ):
         return {}
 
@@ -1159,13 +1167,17 @@ def parse_quiz_answers(user_message, expected_numbers=None):
         return {}
 
     return {
-        question_number: {
-            "answer": selected_answer,
-            "confidence": confidence,
-        }
-        for question_number, (selected_answer, confidence) in zip(
+        question_number: (
+            {"answer": "", "confidence": None, "answer_status": "unknown"}
+            if token == "0"
+            else {
+                "answer": token[:-1],
+                "confidence": token[-1],
+            }
+        )
+        for question_number, token in zip(
             answer_numbers,
-            implicit_matches,
+            implicit_tokens,
         )
     }
 
@@ -1178,7 +1190,9 @@ def calculate_quiz_result(questions, answers):
     for question_number, question_data in enumerate(questions, start=1):
         answer_data = answers.get(question_number, {})
         selected_answer = str(answer_data.get("answer", "")).upper().strip()
-        confidence = str(answer_data.get("confidence", "")).strip()
+        confidence_value = answer_data.get("confidence")
+        confidence = "" if confidence_value is None else str(confidence_value).strip()
+        answer_status = answer_data.get("answer_status", "answered")
         correct_answer = get_display_answer(question_data)
         is_correct = is_answer_correct(question_data, selected_answer)
 
@@ -1193,6 +1207,7 @@ def calculate_quiz_result(questions, answers):
                 "correct_answer": correct_answer,
                 "confidence": confidence,
                 "is_correct": is_correct,
+                "answer_status": answer_status,
             }
         )
 
@@ -1341,6 +1356,7 @@ def create_quiz_result_messages(
             "confidence",
             "",
         )
+        answer_status = user_answer_data.get("answer_status", "answered")
 
         correct_answer = get_display_answer(question_data)
 
@@ -1358,10 +1374,12 @@ def create_quiz_result_messages(
                 for label, text in choice_explanations.items()
             )
 
-        confidence_text = CONFIDENCE_LEVELS.get(
-            confidence,
-            "不明",
+        confidence_text = (
+            "—（分からない）"
+            if answer_status == "unknown"
+            else CONFIDENCE_LEVELS.get(confidence, "不明")
         )
+        selected_answer_text = "0（分からない）" if answer_status == "unknown" else selected_answer
 
         is_correct = is_answer_correct(question_data, selected_answer)
 
@@ -1373,7 +1391,7 @@ def create_quiz_result_messages(
         result_parts.append(
             (
                 f"【第{question_number}問】{result_mark}\n"
-                f"あなたの回答：{selected_answer}\n"
+                f"あなたの回答：{selected_answer_text}\n"
                 f"正解：{correct_answer}\n"
                 f"自信度：{confidence_text}\n"
                 f"解説：{explanation}{choice_explanation_text}"
@@ -1781,6 +1799,7 @@ def record_confirmed_learning_batch(user_id, session):
             "selected_answers": selected_answers_for_history(question, answer),
             "is_correct": is_correct,
             "confidence": int(confidence) if str(confidence) in {"1", "2", "3"} else None,
+            "answer_status": answer_data.get("answer_status", "answered"),
         })
     return record_learning_batch(
         user_id=user_id,
@@ -1842,6 +1861,7 @@ def get_session_question_results(session):
             "question_id": str(question.get("id")),
             "is_correct": is_answer_correct(question, answer_data.get("answer")),
             "confidence": int(confidence) if str(confidence) in {"1", "2", "3"} else None,
+            "answer_status": answer_data.get("answer_status", "answered"),
         })
     return results
 
@@ -1951,7 +1971,8 @@ def reply_quiz_input_error(reply_token, start_number, questions_per_set):
                       range(start_number, start_number + questions_per_set),
                       ["A1", "B2", "C3", "D2", "E1"],
                   )
-              )),
+              )
+              + "\n\n分からない問題は、その位置にC0ではなく「0」だけ入れてくれ。"),
         quick_reply=QuickReply(items=[
             QuickReplyButton(action=MessageAction(label="源さんに預ける", text="源さんに預ける")),
             QuickReplyButton(action=MessageAction(label="ホームに戻る", text="ホームに戻る")),

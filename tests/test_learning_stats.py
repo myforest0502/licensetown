@@ -5,6 +5,7 @@ os.environ.setdefault("OPENAI_API_KEY", "test-key")
 os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
 os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
+import app as app_module
 import database
 from app import app, record_confirmed_learning_batch
 from database import (
@@ -12,6 +13,7 @@ from database import (
     get_field_learning_summary,
     get_learning_activity,
     get_learning_summary,
+    get_question_attempts,
     record_learning_batch,
     reset_user_profile,
 )
@@ -138,6 +140,7 @@ def test_question_results_store_formal_single_multi_either_and_null_confidence()
         "selected_answers": ["B"],
         "is_correct": True,
         "confidence": 2,
+        "answer_status": "answered",
     }
     assert results[1] == {
         "question_id": "Q521",
@@ -145,6 +148,7 @@ def test_question_results_store_formal_single_multi_either_and_null_confidence()
         "selected_answers": ["2", "4"],
         "is_correct": True,
         "confidence": 1,
+        "answer_status": "answered",
     }
     assert results[2] == {
         "question_id": "Q551",
@@ -152,6 +156,7 @@ def test_question_results_store_formal_single_multi_either_and_null_confidence()
         "selected_answers": ["2"],
         "is_correct": True,
         "confidence": None,
+        "answer_status": "answered",
     }
     assert results[3]["is_correct"] is False
     assert all(isinstance(item["selected_answers"], list) for item in results)
@@ -162,6 +167,43 @@ def test_question_results_store_formal_single_multi_either_and_null_confidence()
         item["knowledge_node_id"].startswith("KN")
         for item in database._local_question_attempts
     )
+
+
+def test_unknown_answer_is_distinct_in_learning_events_attempts_and_local_fallback():
+    clear_local_stats()
+    user_id = "unknown-answer-user"
+    questions = [get_quiz_question(f"Q{number}") for number in range(1, 6)]
+    answers = app_module.parse_quiz_answers(
+        "A1 B2 0 D1 E2", expected_numbers=set(range(1, 6))
+    )
+    session = {
+        "session_id": "unknown-answer-session",
+        "current_set": 1,
+        "questions_per_set": 5,
+        "questions": questions,
+        "all_answers": answers,
+        "mode": "study",
+    }
+    assert record_confirmed_learning_batch(user_id, session)
+
+    result = database._local_learning_events["unknown-answer-session:1"]["question_results"][2]
+    assert result["selected_answers"] == []
+    assert result["confidence"] is None
+    assert result["answer_status"] == "unknown"
+    assert result["is_correct"] is False
+    assert all(
+        item["answer_status"] == "answered"
+        for index, item in enumerate(
+            database._local_learning_events["unknown-answer-session:1"]["question_results"]
+        )
+        if index != 2
+    )
+
+    attempt = get_question_attempts(user_id)[2]
+    assert attempt["selected_answers"] == []
+    assert attempt["confidence"] is None
+    assert attempt["answer_status"] == "unknown"
+    assert attempt["is_correct"] is False
 
 
 def test_question_results_duplicate_resume_home_and_reset_are_safe():

@@ -127,6 +127,70 @@ def test_formal_selection_and_multiple_answer_parser_work_for_five_questions():
     assert parsed[1] == {"answer": "BD", "confidence": "1"}
 
 
+def test_unknown_zero_parser_preserves_all_five_positions():
+    cases = {
+        "A1 B2 0 D1 E2": [3],
+        "0 B2 C3 D1 E2": [1],
+        "A1 B2 C3 D1 0": [5],
+        "0 0 C3 D1 E2": [1, 2],
+        "0 0 0 0 0": [1, 2, 3, 4, 5],
+        "1:A1 2:B2 3:0 4:D1 5:E2": [3],
+    }
+    for text, unknown_numbers in cases.items():
+        parsed = bot_app.parse_quiz_answers(text, expected_numbers=set(range(1, 6)))
+        assert list(parsed) == [1, 2, 3, 4, 5]
+        for number in unknown_numbers:
+            assert parsed[number] == {
+                "answer": "",
+                "confidence": None,
+                "answer_status": "unknown",
+            }
+        for number in set(range(1, 6)) - set(unknown_numbers):
+            assert parsed[number].get("answer_status", "answered") == "answered"
+
+
+def test_unknown_zero_parser_rejects_attached_or_wrong_token_counts():
+    invalid = [
+        "A0 B2 C3 D1 E2",
+        "B0 B2 C3 D1 E2",
+        "0A B2 C3 D1 E2",
+        "01 B2 C3 D1 E2",
+        "A1 B2 D1 E2",
+        "A1 B2 C3 D1 E2 A1",
+    ]
+    for text in invalid:
+        assert bot_app.parse_quiz_answers(text, expected_numbers=set(range(1, 6))) == {}
+
+
+def test_answer_instructions_explain_zero_without_replacing_existing_rules():
+    message = bot_app.format_quiz_messages(
+        [get_quiz_question(f"Q{number}") for number in range(1, 6)]
+    )[0]
+    assert "A1 B2 0 D1 E2" in message
+    assert "0は自信度じゃなくて「分からない」の意味" in message
+    assert "C0のようには入力しない" in message
+    assert "5問分の位置は必ず残して" in message
+    assert "1＝自信あり" in message
+    assert "2＝少し迷った" in message
+    assert "3＝あてずっぽう" in message
+    assert "BD1" in message
+
+
+def test_unknown_zero_is_graded_wrong_and_displayed_as_unknown():
+    questions = [get_quiz_question(f"Q{number}") for number in range(1, 6)]
+    parsed = bot_app.parse_quiz_answers(
+        "A1 B2 0 D1 E2", expected_numbers=set(range(1, 6))
+    )
+    result = bot_app.calculate_quiz_result(questions, parsed)
+    detail = result["details"][2]
+    assert detail["is_correct"] is False
+    assert detail["confidence"] == ""
+    assert detail["answer_status"] == "unknown"
+    rendered = "\n".join(bot_app.create_quiz_result_messages(questions, parsed))
+    assert "あなたの回答：0（分からない）" in rendered
+    assert "自信度：—（分からない）" in rendered
+
+
 def test_formal_questions_flow_through_existing_thirty_question_session(monkeypatch):
     questions = [get_quiz_question(f"Q{number}") for number in range(1, 31)]
     monkeypatch.setattr(bot_app, "select_formal_questions", lambda count: questions[:count])

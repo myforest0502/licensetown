@@ -531,10 +531,16 @@ def get_question_history(user_id: str) -> list[dict[str, Any]]:
 def get_question_attempts(user_id: str) -> list[dict[str, Any]]:
     """保存済みの1問単位回答履歴を内部利用向けに返す。"""
     if not database_is_available():
-        return copy.deepcopy([
+        attempts = copy.deepcopy([
             attempt for attempt in _local_question_attempts
             if attempt["user_id"] == user_id
         ])
+        for attempt in attempts:
+            attempt.setdefault(
+                "answer_status",
+                "unknown" if not attempt.get("selected_answers") else "answered",
+            )
+        return attempts
     with get_db_connection() as conn:
         with conn.cursor() as cur:
             cur.execute(
@@ -553,7 +559,12 @@ def get_question_attempts(user_id: str) -> list[dict[str, Any]]:
                 "mode", "selected_answers", "is_correct", "confidence",
                 "answered_at", "attempt_position",
             )
-            return [dict(zip(columns, row)) for row in cur.fetchall()]
+            attempts = [dict(zip(columns, row)) for row in cur.fetchall()]
+            for attempt in attempts:
+                attempt["answer_status"] = (
+                    "unknown" if not attempt.get("selected_answers") else "answered"
+                )
+            return attempts
 
 
 def get_user_node_states(user_id: str) -> list[dict[str, Any]]:
@@ -691,6 +702,10 @@ def record_learning_batch(
                     ),
                     "is_correct": bool(result.get("is_correct")),
                     "confidence": result.get("confidence"),
+                    "answer_status": result.get(
+                        "answer_status",
+                        "unknown" if not result.get("selected_answers") else "answered",
+                    ),
                     "answered_at": timestamp,
                     "attempt_position": attempt_position,
                 })
