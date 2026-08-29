@@ -2093,6 +2093,22 @@ def start_and_reply_quiz(
     return False
 
 
+def parse_dashboard_recommendation_command(message):
+    """合格への道のCTAが送る正式分野・問題数を安全に取り出す。"""
+    match = re.fullmatch(r"今日のおすすめ学習：(.+?)：(\d+)問", str(message).strip())
+    if not match:
+        return None
+    category_name, question_count_text = match.groups()
+    try:
+        category_small = resolve_category_small(category_name)
+        question_count = int(question_count_text)
+    except (QuestionBankError, ValueError):
+        return None
+    if question_count <= 0 or question_count % QUESTIONS_PER_SET != 0:
+        return None
+    return category_small, question_count
+
+
 def advance_and_reply_quiz(reply_token, user_id, expected_session_id=None):
     """既存セッションの次の5問を準備し、同じ返信内で直ちに表示する。"""
     try:
@@ -3574,6 +3590,24 @@ def handle_text_message(event):
 
     if user_message == "合格への道":
         reply_dashboard_link(event.reply_token, user_id)
+        return
+
+    dashboard_recommendation = parse_dashboard_recommendation_command(user_message)
+    if dashboard_recommendation:
+        category_small, question_count = dashboard_recommendation
+        user_modes[user_id] = "study"
+        user_states.pop(user_id, None)
+        quiz_category_selections[user_id] = {
+            "mode": "study",
+            "category_small": category_small,
+        }
+        start_and_reply_quiz(
+            event.reply_token,
+            user_id,
+            intro_text="今日のおすすめを用意したぞ。まず5問いくぞ＾＾",
+            session_kind="dashboard_recommendation",
+            question_count=question_count,
+        )
         return
 
     current_state = user_states.get(user_id)

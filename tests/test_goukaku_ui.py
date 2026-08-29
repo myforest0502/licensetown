@@ -34,6 +34,7 @@ def test_goukaku_home_renders(monkeypatch):
     assert "data-line-message=\"相談する\"" in text
     assert 'class="app-shell"' in text
     assert "20260817-liff1" in text
+    assert "20260830-recommend1" in text
     assert 'data-line-account-id="@licensetown-test"' in text
     assert 'data-liff-id="1234567890-test"' in text
     assert "https://static.line-scdn.net/liff/edge/2/sdk.js" in text
@@ -125,7 +126,9 @@ def test_goukaku_subjects_renders_official_tab_label():
     assert 'data-combo-chart' not in text
 
 
-def test_dashboard_and_subjects_render_real_field_history_without_demo_values():
+def test_dashboard_and_subjects_render_real_field_history_without_demo_values(monkeypatch):
+    monkeypatch.setenv("LINE_OFFICIAL_ACCOUNT_ID", "@licensetown-test")
+    monkeypatch.setenv("LIFF_ID", "1234567890-test")
     database._local_learning_events.clear()
     user_id = "field-ui-user"
     q_id = "Q1"
@@ -146,6 +149,10 @@ def test_dashboard_and_subjects_render_real_field_history_without_demo_values():
     assert "50%" in home_text
     assert "100問を目標に基礎を固めましょう" in home_text
     assert "今日は解剖学を10問解こう" in home_text
+    assert "チャレンジする！" in home_text
+    assert 'data-line-message="今日のおすすめ学習：解剖学：10問"' in home_text
+    assert 'class="recommend-challenge" data-line-account-id="@licensetown-test" data-liff-id="1234567890-test"' in home_text
+    assert "閲覧のみ" not in home_text
     assert f"/goukaku-no-michi/subjects?token={token}" in home_text
 
     detail_text = client.get(f"/goukaku-no-michi/subjects?token={token}").get_data(as_text=True)
@@ -176,6 +183,12 @@ def test_learning_selection_shows_selected_field():
     assert "精神医学" in text
     assert "10問" in text
     assert "この分野の学習へ進む" in text
+
+
+def test_recommendation_challenge_has_scoped_responsive_cta_css():
+    css = (__import__("pathlib").Path(__file__).resolve().parents[1] / "static" / "goukaku" / "goukaku.css").read_text(encoding="utf-8")
+    assert ".recommend-card .recommend-challenge{min-height:46px" in css
+    assert "@media(max-width:700px){.recommend-card .recommend-challenge{width:100%;min-height:48px" in css
 
 
 def test_mode_intro_copy_is_kept_verbatim():

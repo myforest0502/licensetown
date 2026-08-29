@@ -94,6 +94,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "advance_quiz_explanations",
         "start_quiz",
         "start_next_quiz",
+        "parse_dashboard_recommendation_command",
         "reply_new_user_welcome",
         "reply_gen_first_greeting",
         "build_dashboard_url",
@@ -213,7 +214,7 @@ def load_current_app_functions() -> SimpleNamespace:
             "専門": ("基礎運動学", "臨床運動学", "動作分析学", "運動器", "理学療法評価各論", "理学療法治療各論"),
         }[group_name],
         "resolve_category_small": lambda category_name, group_name=None: {
-            "解剖学": 1, "内科学": 8, "運動器": 16,
+            "解剖学": 1, "医学概論": 6, "内科学": 8, "運動器": 16,
         }[category_name],
         "QuestionBankError": ValueError,
         "QUIZ_QUESTION_COUNT": 30,
@@ -1458,6 +1459,59 @@ class ConfigurableQuizTest(unittest.TestCase):
         app.study_sessions.clear()
         app.explain_contexts.clear()
         app.quiz_category_selections.clear()
+
+    def test_dashboard_recommendation_starts_displayed_category_and_count(self) -> None:
+        function_globals = app.handle_text_message.__globals__
+        original_start_reply = function_globals["start_and_reply_quiz"]
+        started = []
+        function_globals["start_and_reply_quiz"] = (
+            lambda token, user_id, **kwargs: started.append((token, user_id, kwargs))
+        )
+        user_id = "dashboard-recommendation-user"
+
+        try:
+            app.handle_text_message(
+                make_text_event(user_id, "今日のおすすめ学習：医学概論：10問")
+            )
+        finally:
+            function_globals["start_and_reply_quiz"] = original_start_reply
+
+        self.assertEqual("study", app.user_modes[user_id])
+        self.assertEqual(6, app.quiz_category_selections[user_id]["category_small"])
+        self.assertEqual(1, len(started))
+        self.assertEqual("dashboard_recommendation", started[0][2]["session_kind"])
+        self.assertEqual(10, started[0][2]["question_count"])
+
+    def test_dashboard_recommendation_uses_existing_category_quiz_flow(self) -> None:
+        user_id = "dashboard-recommendation-session"
+        app.user_modes[user_id] = "study"
+        app.quiz_category_selections[user_id] = {"category_small": 6}
+        function_globals = app.start_quiz.__globals__
+        original_selector = function_globals["select_category_questions"]
+        selected = []
+        function_globals["select_category_questions"] = (
+            lambda category_small, count: selected.append((category_small, count))
+            or make_all_questions()[:count]
+        )
+        try:
+            app.start_quiz(
+                user_id,
+                session_kind="dashboard_recommendation",
+                question_count=10,
+            )
+        finally:
+            function_globals["select_category_questions"] = original_selector
+
+        session = app.study_sessions[user_id]
+        self.assertEqual([(6, 10)], selected)
+        self.assertEqual(10, session["question_count"])
+        self.assertEqual(5, len(session["questions"]))
+        self.assertEqual(6, session["category_small"])
+        self.assertEqual("dashboard_recommendation", session["session_kind"])
+        self.assertEqual(10, len(session["all_questions"]))
+        app.start_next_quiz(user_id)
+        self.assertEqual(2, session["current_set"])
+        self.assertEqual([6, 7, 8, 9, 10], session["expected_numbers"])
 
     def test_study_and_nekketsu_share_hierarchical_category_selection(self) -> None:
         function_globals = app.handle_text_message.__globals__
