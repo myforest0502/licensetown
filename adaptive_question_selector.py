@@ -110,7 +110,7 @@ def select_node_adaptive_questions(
     }
     summaries = _node_attempt_summary(attempts)
     seen_question_ids = {str(item.get("question_id") or "") for item in attempts}
-    excluded = {str(value) for value in exclude_ids}
+    excluded = {str(value) for value in (exclude_ids or ())}
     candidates = []
     for question_id in question_ids():
         if question_id in excluded:

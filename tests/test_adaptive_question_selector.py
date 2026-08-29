@@ -130,6 +130,16 @@ def test_exclusions_are_respected(monkeypatch):
     assert not ({"Q1", "Q2"} & {item["question_id"] for item in selected})
 
 
+def test_exclude_ids_accepts_none_and_empty_iterables(monkeypatch):
+    fake_bank(monkeypatch)
+    for excluded in (None, (), []):
+        selected = selector.select_node_adaptive_questions(
+            [], 30, exclude_ids=excluded, rng=random.Random(8)
+        )
+        assert len(selected) == 30
+        assert len({item["question_id"] for item in selected}) == 30
+
+
 def test_user_histories_cannot_be_mixed(monkeypatch):
     fake_bank(monkeypatch)
     try:
