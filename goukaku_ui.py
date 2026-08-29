@@ -15,6 +15,7 @@ from database import (
 )
 from learning_analysis import build_gensan_comment, build_learning_guidance
 from supporter_report import build_supporter_report
+from pilot_diagnostics import build_pilot_diagnostics
 
 
 goukaku_ui = Blueprint("goukaku_ui", __name__)
@@ -222,6 +223,18 @@ def supporter_weekly_question_history():
     return render_template("goukaku/supporter_weekly_questions.html", learner_name=learner_name,
                            learner_id=learner_id, supporter_token=token,
                            weekly=get_weekly_question_history(learner_id))
+
+
+@goukaku_ui.route("/supporter/pilot-diagnostics")
+def supporter_pilot_diagnostics():
+    token = request.args.get("token")
+    _, learner_id = authorized_supporter_learner(token, request.args.get("learner_user_id"))
+    period = request.args.get("period", "7")
+    if period not in {"7", "30", "all"}:
+        period = "7"
+    return render_template("goukaku/supporter_pilot_diagnostics.html",
+                           diagnostics=build_pilot_diagnostics(learner_id, period),
+                           learner_id=learner_id, supporter_token=token)
 
 
 @goukaku_ui.route("/supporter/goukaku-no-michi")

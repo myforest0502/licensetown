@@ -545,12 +545,13 @@ def get_written_check_history(user_id: str) -> list[dict[str, Any]]:
     return history
 
 
-def get_question_attempts(user_id: str) -> list[dict[str, Any]]:
+def get_question_attempts(user_id: str, start_at: datetime | None = None) -> list[dict[str, Any]]:
     """保存済みの1問単位回答履歴を内部利用向けに返す。"""
     if not database_is_available():
         attempts = copy.deepcopy([
             attempt for attempt in _local_question_attempts
             if attempt["user_id"] == user_id
+            and (start_at is None or _as_utc(attempt.get("answered_at")) >= _as_utc(start_at))
         ])
         for attempt in attempts:
             attempt.setdefault(
@@ -560,17 +561,24 @@ def get_question_attempts(user_id: str) -> list[dict[str, Any]]:
         return attempts
     with get_db_connection() as conn:
         with conn.cursor() as cur:
-            cur.execute(
-                """
+            if start_at is None:
+                cur.execute("""
                 SELECT event_key, user_id, question_id, knowledge_node_id,
                        mode, selected_answers, is_correct, confidence,
                        answered_at, attempt_position
                 FROM question_attempts
                 WHERE user_id = %s
                 ORDER BY answered_at, event_key, attempt_position
-                """,
-                (user_id,),
-            )
+                """, (user_id,))
+            else:
+                cur.execute("""
+                SELECT event_key, user_id, question_id, knowledge_node_id,
+                       mode, selected_answers, is_correct, confidence,
+                       answered_at, attempt_position
+                FROM question_attempts
+                WHERE user_id = %s AND answered_at >= %s
+                ORDER BY answered_at, event_key, attempt_position
+                """, (user_id, start_at))
             columns = (
                 "event_key", "user_id", "question_id", "knowledge_node_id",
                 "mode", "selected_answers", "is_correct", "confidence",
