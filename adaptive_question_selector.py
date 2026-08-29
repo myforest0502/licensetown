@@ -10,12 +10,30 @@ from typing import Any, Iterable
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import derive_all_user_node_states
 from question_bank import get_question_tag, get_quiz_question, question_ids
+from prerequisite_backtrack_pilot import (
+    is_prerequisite_backtrack_pilot_enabled,
+    parse_prerequisite_backtrack_pilot_user_ids,
+)
 
 
 REPAIR_REASONS = {
     "safety_wrong", "confident_wrong", "cross_question_wrong", "repairing",
     "previous_wrong_unconfirmed",
 }
+
+
+def parse_node_adaptive_pilot_user_ids(value: str | None) -> set[str]:
+    """Reuse the established comma-separated, trimmed, deduplicated parser."""
+    return parse_prerequisite_backtrack_pilot_user_ids(value)
+
+
+def is_node_adaptive_recommendation_enabled(
+    feature_enabled: bool, user_id: str | None, pilot_user_ids
+) -> bool:
+    """Fail closed unless both the flag and explicit allowlist match."""
+    return is_prerequisite_backtrack_pilot_enabled(
+        feature_enabled, user_id, pilot_user_ids
+    )
 
 
 def _attempt_time(item: dict[str, Any]):

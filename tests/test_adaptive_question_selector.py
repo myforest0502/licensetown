@@ -146,6 +146,7 @@ def test_user_histories_cannot_be_mixed(monkeypatch):
 def test_flag_false_uses_legacy_without_attempt_db_read(monkeypatch):
     legacy = [{"id": f"Q{i}"} for i in range(1, 31)]
     monkeypatch.setattr(app, "ENABLE_NODE_ADAPTIVE_RECOMMENDATION", False)
+    monkeypatch.setattr(app, "NODE_ADAPTIVE_RECOMMENDATION_PILOT_USER_IDS", {"flag-off"})
     monkeypatch.setattr(app, "get_question_history", lambda _u: [])
     monkeypatch.setattr(app, "build_daily_session", lambda *args, **kwargs: legacy)
     monkeypatch.setattr(app, "format_quiz_messages", lambda _questions: ["quiz"])
@@ -159,6 +160,7 @@ def test_flag_false_uses_legacy_without_attempt_db_read(monkeypatch):
 def test_flag_true_uses_node_selector(monkeypatch):
     adaptive = [{"id": f"Q{i}"} for i in range(1, 31)]
     monkeypatch.setattr(app, "ENABLE_NODE_ADAPTIVE_RECOMMENDATION", True)
+    monkeypatch.setattr(app, "NODE_ADAPTIVE_RECOMMENDATION_PILOT_USER_IDS", {"flag-on"})
     monkeypatch.setattr(app, "get_question_attempts", lambda _u: [{"question_id": "Q1"}])
     monkeypatch.setattr(app, "build_node_adaptive_session", lambda *args, **kwargs: adaptive)
     monkeypatch.setattr(app, "format_quiz_messages", lambda _questions: ["quiz"])
@@ -166,6 +168,36 @@ def test_flag_true_uses_node_selector(monkeypatch):
     app.start_quiz("flag-on", session_kind="adaptive_daily")
     assert app.study_sessions["flag-on"]["all_questions"] == adaptive
     app.study_sessions.pop("flag-on", None)
+
+
+def test_node_adaptive_allowlist_parser_trims_deduplicates_and_drops_empty():
+    assert selector.parse_node_adaptive_pilot_user_ids("abc, def,abc, ,") == {
+        "abc", "def"
+    }
+    assert selector.parse_node_adaptive_pilot_user_ids(None) == set()
+
+
+def test_node_adaptive_allowlist_is_fail_closed():
+    enabled = selector.is_node_adaptive_recommendation_enabled
+    assert not enabled(False, "son", {"son"})
+    assert not enabled(True, "son", set())
+    assert not enabled(True, "son", selector.parse_node_adaptive_pilot_user_ids(None))
+    assert not enabled(True, "other", {"son"})
+    assert enabled(True, "son", {"son", "other"})
+
+
+def test_flag_true_non_allowlisted_user_preserves_legacy_and_no_attempt_read(monkeypatch):
+    legacy = [{"id": f"Q{i}"} for i in range(1, 31)]
+    monkeypatch.setattr(app, "ENABLE_NODE_ADAPTIVE_RECOMMENDATION", True)
+    monkeypatch.setattr(app, "NODE_ADAPTIVE_RECOMMENDATION_PILOT_USER_IDS", {"son"})
+    monkeypatch.setattr(app, "get_question_history", lambda _u: [])
+    monkeypatch.setattr(app, "build_daily_session", lambda *args, **kwargs: legacy)
+    monkeypatch.setattr(app, "format_quiz_messages", lambda _questions: ["quiz"])
+    monkeypatch.setattr(app, "get_question_attempts", lambda _u: (_ for _ in ()).throw(AssertionError("extra DB read")))
+    app.user_modes["not-son"] = "study"
+    app.start_quiz("not-son", session_kind="adaptive_daily")
+    assert app.study_sessions["not-son"]["all_questions"] == legacy
+    app.study_sessions.pop("not-son", None)
 
 
 class Cursor:
