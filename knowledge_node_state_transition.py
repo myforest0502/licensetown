@@ -15,7 +15,8 @@ from knowledge_node_repair_evidence import (
 
 
 STATES = ("unseen", "checking", "repairing", "repaired", "stable", "recheck_due")
-RECHECK_DUE_AFTER = timedelta(days=30)
+REPAIRED_RECHECK_AFTER = timedelta(days=7)
+STABLE_RECHECK_AFTER = timedelta(days=30)
 
 
 def _sort_key(attempt: dict[str, Any]) -> tuple[str, str, int, int]:
@@ -28,8 +29,16 @@ def _sort_key(attempt: dict[str, Any]) -> tuple[str, str, int, int]:
 
 
 def is_recheck_due(state: str, last_attempted_at: datetime, as_of: datetime) -> bool:
-    """Define the future time policy without applying it to production state."""
-    return state == "stable" and as_of - last_attempted_at >= RECHECK_DUE_AFTER
+    interval = REPAIRED_RECHECK_AFTER if state == "repaired" else STABLE_RECHECK_AFTER
+    return state in {"repaired", "stable"} and as_of - last_attempted_at >= interval
+
+
+def _as_datetime(value) -> datetime | None:
+    if isinstance(value, str):
+        value = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if not isinstance(value, datetime):
+        return None
+    return value.replace(tzinfo=timezone.utc) if value.tzinfo is None else value.astimezone(timezone.utc)
 
 
 def _evidence(history: list[dict[str, Any]]) -> dict[str, Any]:
@@ -92,9 +101,15 @@ def derive_knowledge_node_state(
     repair_wrong_questions: set[str] = set()
     confident_correct_after_wrong_count = 0
     has_prior_wrong = False
+    next_review_at: datetime | None = None
+    retention_reference_question: str | None = None
     history: list[dict[str, Any]] = []
 
     for item in ordered:
+        attempted_at = _as_datetime(item.get("attempted_at") or item.get("answered_at"))
+        if state in {"repaired", "stable"} and next_review_at and attempted_at and attempted_at >= next_review_at:
+            state = "recheck_due"
+            reason = "The spaced retention review date has arrived."
         history.append(item)
         question_id = str(item.get("question_id") or "")
         is_correct = (
@@ -112,6 +127,8 @@ def derive_knowledge_node_state(
             else:
                 repair_wrong_questions.add(question_id)
             has_prior_wrong = True
+            next_review_at = None
+            retention_reference_question = None
             continue
 
         if is_correct is not True:
@@ -130,10 +147,22 @@ def derive_knowledge_node_state(
             for wrong_question in repair_wrong_questions
         }
         is_strong_confirmation = DIFFERENT_QUESTION_STRONG in evidence_strengths
+        if state == "recheck_due":
+            retention_strength = classify_repair_confirmation(retention_reference_question, question_id)
+            if confidence == 1 and retention_strength == DIFFERENT_QUESTION_STRONG:
+                state = "stable"
+                retention_reference_question = question_id
+                next_review_at = attempted_at + STABLE_RECHECK_AFTER if attempted_at else None
+                reason = "A spaced strong different-question check was correct with confidence=1."
+            else:
+                reason = "Retention evidence was same/weak or lacked confidence=1; review remains due."
+            continue
         if confidence == 1 and is_strong_confirmation:
             confident_correct_after_wrong_count += 1
             if state == "repairing":
                 state = "repaired"
+                retention_reference_question = question_id
+                next_review_at = attempted_at + REPAIRED_RECHECK_AFTER if attempted_at else None
                 reason = "A strong different-question confirmation was correct with confidence=1 after a wrong answer."
             elif state == "repaired":
                 reason = "Short-term repair remains repaired; stable requires the future time-based policy."
@@ -149,18 +178,12 @@ def derive_knowledge_node_state(
         history,
         confident_correct_after_wrong_count,
     )
-    if state == "stable" and as_of is not None:
-        last_attempted_at = ordered[-1].get("attempted_at") or ordered[-1].get("answered_at")
-        if isinstance(last_attempted_at, str):
-            last_attempted_at = datetime.fromisoformat(last_attempted_at.replace("Z", "+00:00"))
-        if isinstance(last_attempted_at, datetime):
-            if last_attempted_at.tzinfo is None:
-                last_attempted_at = last_attempted_at.replace(tzinfo=timezone.utc)
-            if as_of.tzinfo is None:
-                as_of = as_of.replace(tzinfo=timezone.utc)
-            if is_recheck_due(state, last_attempted_at, as_of):
-                result["state"] = "recheck_due"
-                result["reason"] = "Stable evidence is at least 30 days old and needs rechecking."
+    as_of = _as_datetime(as_of)
+    if state in {"repaired", "stable"} and next_review_at and as_of and as_of >= next_review_at:
+        result["state"] = "recheck_due"
+        result["reason"] = "The spaced retention review date has arrived."
+    result["next_review_at"] = next_review_at
+    result["due_overdue_days"] = max(0, (as_of - next_review_at).days) if as_of and next_review_at and as_of >= next_review_at else 0
     return result
 
 

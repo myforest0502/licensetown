@@ -70,6 +70,32 @@ def test_repaired_node_is_not_kept_in_high_priority_repair(monkeypatch):
     assert any(item["state"] == "unseen" for item in selected)
 
 
+def test_recheck_due_is_above_maintenance_but_below_repairing():
+    empty = {"wrong_questions": set(), "correct_questions": set(), "confident_wrong": False,
+             "uncertain_correct": False, "unknown": False}
+    wrong = {**empty, "wrong_questions": {"Q1"}}
+    due_score = selector._priority("recheck_due", empty, "none")[0]
+    assert selector._priority("repairing", wrong, "none")[0] > due_score
+    assert due_score > selector._priority("stable", empty, "none")[0]
+
+
+def test_recheck_due_prefers_strong_question_without_duplicates(monkeypatch):
+    fake_bank(monkeypatch)
+    monkeypatch.setattr(selector, "derive_all_user_node_states", lambda *_args, **_kwargs: [
+        {"canonical_node_id": "KN0001", "state": "recheck_due", "due_overdue_days": 3}
+    ])
+    monkeypatch.setattr(selector, "classify_repair_confirmation", lambda old, new: (
+        "same_question" if old == new else "different_question_strong"
+    ))
+    selected = selector.select_node_adaptive_questions(
+        [attempt("Q1", "KN0001", False)], 30, rng=random.Random(12)
+    )
+    node_items = [item for item in selected if item["canonical_node_id"] == "KN0001"]
+    assert node_items[0]["question_id"] == "Q2"
+    assert len({item["question_id"] for item in selected}) == len(selected) == 30
+    assert any(item["state"] == "unseen" for item in selected)
+
+
 def test_priority_order_safety_confident_and_cross_wrong(monkeypatch):
     fake_bank(monkeypatch, safety_by_node={"KN0001": "critical"})
     attempts = [

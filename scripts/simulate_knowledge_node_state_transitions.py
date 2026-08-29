@@ -66,8 +66,8 @@ def build_report(attempts: list[dict[str, Any]]) -> dict[str, Any]:
         "unseen_raw_node_slots": max(0, user_count * registry_count - attempted_raw_node_slots),
         "kn1080": [item for item in states if item["canonical_node_id"] == "KN1080"],
         "recheck_due_policy": {
-            "implemented_in_production": False,
-            "design": "stable and 30 days since last attempt",
+            "implemented_in_production": True,
+            "design": "repaired + 7 days or stable + 30 days",
         },
     }
 

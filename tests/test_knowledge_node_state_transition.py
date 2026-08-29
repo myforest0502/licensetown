@@ -121,20 +121,20 @@ def test_timeline_has_no_future_leakage():
     assert [item["state"] for item in timeline] == ["repairing", "repaired"]
 
 
-def test_recheck_due_is_design_only():
+def test_recheck_due_intervals_are_state_specific():
     assert is_recheck_due("stable", NOW, NOW + timedelta(days=30))
-    assert not is_recheck_due("repaired", NOW, NOW + timedelta(days=60))
+    assert is_recheck_due("repaired", NOW, NOW + timedelta(days=7))
     report = build_report([])
     assert report["state_counts"]["recheck_due"] == 0
-    assert report["recheck_due_policy"]["implemented_in_production"] is False
+    assert report["recheck_due_policy"]["implemented_in_production"] is True
 
 
-def test_repaired_does_not_become_stable_or_due_from_time_alone():
+def test_repaired_becomes_due_but_never_stable_from_time_alone():
     history = [
         attempt("u", "KN0268", "Q269", False, 2, 1),
         attempt("u", "KN0268", "Q361", True, 1, 2),
     ]
-    assert derive_knowledge_node_state(history, as_of=NOW + timedelta(days=31))["state"] == "repaired"
+    assert derive_knowledge_node_state(history, as_of=NOW + timedelta(days=31))["state"] == "recheck_due"
 
 
 def test_different_question_with_same_demand_is_weak_and_does_not_repair():

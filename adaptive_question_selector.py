@@ -110,10 +110,8 @@ def select_node_adaptive_questions(
         raise ValueError("attempts must belong to one user")
     randomizer = rng or random.Random()
     as_of = as_of or datetime.now(timezone.utc)
-    states = {
-        item["canonical_node_id"]: item["state"]
-        for item in derive_all_user_node_states(attempts, as_of=as_of)
-    }
+    state_records = {item["canonical_node_id"]: item for item in derive_all_user_node_states(attempts, as_of=as_of)}
+    states = {node: item["state"] for node, item in state_records.items()}
     summaries = _node_attempt_summary(attempts)
     seen_question_ids = {str(item.get("question_id") or "") for item in attempts}
     excluded = {str(value) for value in (exclude_ids or ())}
@@ -129,6 +127,8 @@ def select_node_adaptive_questions(
             "confident_wrong": False, "uncertain_correct": False, "unknown": False,
         })
         score, reason, group = _priority(state, summary, str(tag.get("safety", "none")))
+        if state == "recheck_due":
+            score += min(int(state_records.get(node, {}).get("due_overdue_days", 0)), 30)
         evidence_strengths = {
             classify_repair_confirmation(wrong_id, question_id)
             for wrong_id in summary["wrong_questions"]
