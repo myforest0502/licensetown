@@ -1,0 +1,1180 @@
+[
+  {
+    "candidate_id": "SNC0001",
+    "node_ids": [
+      "KN0593",
+      "KN1245"
+    ],
+    "question_ids": [
+      "Q601",
+      "Q1260"
+    ],
+    "knowledge_node_labels": [
+      "ネフロンは腎小体と尿細管からなり、腎小体は糸球体とBowman嚢で構成される",
+      "ネフロンは腎小体（糸球体＋Bowman嚢）と尿細管から構成される"
+    ],
+    "problem_summaries": [
+      "腎臓の解剖について正しいのはどれか。",
+      "腎臓で正しいのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "ネフロンは腎小体と尿細管からなり、腎小体は糸球体とBowman嚢で構成される。選択肢では「糸球体と尿細管からなる」が最も適切である。",
+      "ネフロンは腎小体（糸球体＋Bowman嚢）と尿細管から構成される。"
+    ],
+    "topic": "ネフロンの構成",
+    "why_same_node": "どちらもネフロン=腎小体（糸球体＋Bowman嚢）＋尿細管という同一の解剖知識を問う。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0002",
+    "node_ids": [
+      "KN0503",
+      "KN0883"
+    ],
+    "question_ids": [
+      "Q511",
+      "Q892"
+    ],
+    "knowledge_node_labels": [
+      "グルコースが解糖系を通ってピルビン酸となり、酸素供給が不十分な条件では乳酸へ変換される",
+      "グルコースからピルビン酸が生成され、酸素不足時には乳酸へ変換される"
+    ],
+    "problem_summaries": [
+      "嫌気的代謝の過程で生成される物質はどれか。",
+      "嫌気的代謝の過程で生成される物質はどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "嫌気的解糖ではグルコースが解糖系を通ってピルビン酸となり、酸素供給が不十分な条件では乳酸へ変換される。選択肢のうち解糖系で生成されるのはピルビン酸であるため、正答は4である。",
+      "嫌気的解糖ではグルコースからピルビン酸が生成され、酸素不足時には乳酸へ変換される。クエン酸・フマル酸・イソクエン酸はTCA回路の中間体であるため4が正しい。"
+    ],
+    "topic": "嫌気的解糖とピルビン酸・乳酸",
+    "why_same_node": "どちらもグルコースからピルビン酸、低酸素下で乳酸へという同一経路が正答根拠。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0003",
+    "node_ids": [
+      "KN0623",
+      "KN1212"
+    ],
+    "question_ids": [
+      "Q631",
+      "Q1227"
+    ],
+    "knowledge_node_labels": [
+      "リンパ浮腫では蛋白に富む間質液が貯留し、皮膚バリア低下も加わって蜂窩織炎を繰り返しやすい",
+      "リンパ浮腫では皮膚バリア低下と蛋白に富む間質液貯留により蜂窩織炎など感染を繰り返しやすい"
+    ],
+    "problem_summaries": [
+      "リンパ浮腫について正しいのはどれか。",
+      "リンパ浮腫で正しいのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "リンパ浮腫では蛋白に富む間質液が貯留し、皮膚バリア低下も加わって蜂窩織炎を繰り返しやすい。慢性化すると皮膚・皮下組織の線維化も進行する。",
+      "リンパ浮腫では皮膚バリア低下と蛋白に富む間質液貯留により蜂窩織炎など感染を繰り返しやすい。"
+    ],
+    "topic": "リンパ浮腫と蜂窩織炎",
+    "why_same_node": "蛋白に富む間質液と皮膚バリア低下による感染反復という中心機序が同一。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0004",
+    "node_ids": [
+      "KN0232",
+      "KN0312"
+    ],
+    "question_ids": [
+      "Q233",
+      "Q314"
+    ],
+    "knowledge_node_labels": [
+      "Brown-Séquard症候群の同側運動・深部感覚障害と対側温痛覚障害",
+      "Brown-Séquard型脊髄半側損傷の同側深部感覚・対側温痛覚障害"
+    ],
+    "problem_summaries": [
+      "右胸髄半側損傷によるBrown-Séquard症候群で、損傷高位より下にみられる所見の組合せとして正しいのはどれか。",
+      "右第10胸髄の脊髄半側損傷で生じる所見の組合せはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "皮質脊髄路と後索は延髄で交叉するため、胸髄右半側の損傷では損傷より下の右側に運動麻痺と位置覚・振動覚低下が生じる。脊髄視床路は脊髄内で交叉して上行するため、痛覚・温度覚は損傷側と反対の左側で低下する。",
+      "脊髄半側損傷では、後索を同側性に上行する位置覚が病変側で低下する。一方、温度覚を伝える脊髄視床路は脊髄内で交叉してから対側を上行するため、病変より下方では反対側に低下が生じる。右第10胸髄半側損傷では、右下肢の位置覚低下と左下肢の温度覚低下の組合せとなる。"
+    ],
+    "topic": "Brown-Séquard症候群",
+    "why_same_node": "同側運動・深部感覚障害と対側温痛覚障害の交叉解釈が同一。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0005",
+    "node_ids": [
+      "KN1324",
+      "KN1367"
+    ],
+    "question_ids": [
+      "Q1344",
+      "Q1390"
+    ],
+    "knowledge_node_labels": [
+      "ICFの環境因子には製品・技術、自然環境、支援、人々の態度、サービス・制度などが含まれる",
+      "ICFの環境因子には制度・サービス・支援・態度などが含まれる"
+    ],
+    "problem_summaries": [
+      "ICF の環境因子はどれか。",
+      "ICFの分類で環境因子に含まれるのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "ICFの環境因子には製品・技術、自然環境、支援、人々の態度、サービス・制度などが含まれる。利用可能な保健サービスが該当。",
+      "ICFの環境因子には制度・サービス・支援・態度などが含まれる。"
+    ],
+    "topic": "ICFの環境因子",
+    "why_same_node": "制度・サービス・支援・態度等を環境因子と識別する同一知識。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0006",
+    "node_ids": [
+      "KN0202",
+      "KN0318"
+    ],
+    "question_ids": [
+      "Q203",
+      "Q320"
+    ],
+    "knowledge_node_labels": [
+      "心リハ中の胸部症状と血圧低下に対する運動中止判断",
+      "胸部圧迫感と運動時収縮期血圧低下に対する運動中止判断"
+    ],
+    "problem_summaries": [
+      "76歳の男性。慢性心不全（NYHAⅡ）のため外来心臓リハビリテーションを実施している。自転車エルゴメータ運動開始8分後、突然「胸が締め付けられる」と訴えた。血圧は運動前124/72mmHg、現在96/60mmHg、脈拍は118/分、不整は認めない。SpO₂は96％である。 理学療法士として最も適切な対応はどれか。",
+      "運動負荷中に胸部圧迫感が出現し、運動強度の増加に伴って収縮期血圧が12 mmHg低下した。理学療法士の対応で適切なのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "運動中に突然胸部絞扼感が出現し、血圧も124/72mmHgから96/60mmHgへ低下している。慢性心不全患者で新たな胸部症状と運動時血圧低下がみられるため、心筋虚血や循環動態悪化を否定できない。直ちに運動を中止し、症状と全身状態を評価する。",
+      "運動負荷の増加中に収縮期血圧が10 mmHg以上低下し、さらに胸部圧迫感を伴う所見は心筋虚血や循環応答不良を疑う中止徴候である。運動様式や負荷を変更して継続せず、直ちに運動を中止して安静時の症状とバイタルサインを確認し、速やかに医学的評価を求める必要がある。"
+    ],
+    "topic": "胸部症状と血圧低下時の運動中止",
+    "why_same_node": "運動中の胸部圧迫感と収縮期血圧低下を危険徴候として即時中止する判断が同一。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0007",
+    "node_ids": [
+      "KN0509",
+      "KN0927"
+    ],
+    "question_ids": [
+      "Q517",
+      "Q936"
+    ],
+    "knowledge_node_labels": [
+      "静的立位で下腿義足の足部内側が床から浮き上がったから病態・機能障害を解釈",
+      "下腿義足静止立位で足部内側が浮くアライメント原因の推定"
+    ],
+    "problem_summaries": [
+      "静的立位で下腿義足の足部内側が床から浮き上がった。 原因はどれか。",
+      "静的立位で下腿義足の足部内側が床から浮き上がった。原因はどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "下腿義足で足部内側が床から浮く場合、義足全体に外側へ倒れやすいアライメントが生じている。初期内転角が不足するとソケットが相対的に外転位となり、足部内側が浮きやすくなる。したがって正答は2である。",
+      "足部内側が浮く前額面異常はソケット初期内転角不足により義足が外反方向へ傾くことで生じる。3が正しい。"
+    ],
+    "topic": "下腿義足の足部内側浮き",
+    "why_same_node": "同一所見からソケット初期内転角不足を推定する同一のアライメント知識。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0008",
+    "node_ids": [
+      "KN0107",
+      "KN0148"
+    ],
+    "question_ids": [
+      "Q107",
+      "Q148"
+    ],
+    "knowledge_node_labels": [
+      "安定したBorg13での継続判断",
+      "安定した運動負荷の継続判断"
+    ],
+    "problem_summaries": [
+      "69歳の男性。急性心筋梗塞に対するPCI施行後7日である。病棟内歩行は自立している。歩行練習中、胸痛はないが軽い息切れを訴えた。血圧は126/74mmHg、心拍数は78/分から92/分へ上昇し、SpO₂は97％を維持している。Borg指数は13である。理学療法士として最も適切な判断はどれか。",
+      "72歳の男性。慢性心不全で外来心臓リハビリテーションを実施している。運動中のBorg指数は13、心拍数は安静時68/分から92/分、血圧は118/70mmHgから132/74mmHgとなった。胸痛、めまい、不整脈はなく、SpO₂は96％である。最も適切な対応はどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "歩行中に軽い息切れを認めるが、胸痛はなく、血圧とSpO₂は安定し、心拍数上昇も78/分から92/分の範囲である。Borg指数13は「ややきつい」程度で、心臓リハビリテーションの運動強度として許容される。現在の負荷を維持し、症状と循環動態を観察しながら継続する。",
+      "Borg指数13で、心拍数と血圧は運動に伴い適度に上昇している。胸痛、めまい、不整脈、酸素化低下もなく、明らかな中止基準は示されていない。現在の負荷を維持し、自覚症状と循環動態を監視しながら継続する。"
+    ],
+    "topic": "Borg 13で安定時の運動継続",
+    "why_same_node": "Borg 13で症状・循環動態・酸素化が安定しているとき現負荷を継続する判断が同一。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0009",
+    "node_ids": [
+      "KN0627",
+      "KN1220"
+    ],
+    "question_ids": [
+      "Q635",
+      "Q1235"
+    ],
+    "knowledge_node_labels": [
+      "欠神発作は過換気で誘発されやすい",
+      "欠神発作は小児に多く、数秒間の意識消失を反復し、過換気で誘発されやすい"
+    ],
+    "problem_summaries": [
+      "てんかんについて正しいのはどれか。2つ選べ。",
+      "欠神発作で正しいのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "欠神発作は過換気で誘発されやすい。旧分類の複雑部分発作は意識障害を伴う焦点発作で側頭葉てんかんに多い。単純部分発作は意識が保たれる。",
+      "欠神発作は小児に多く、数秒間の意識消失を反復し、過換気で誘発されやすい。"
+    ],
+    "topic": "欠神発作と過換気誘発",
+    "why_same_node": "欠神発作は小児に多く過換気で誘発されやすいという同一の識別知識。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0010",
+    "node_ids": [
+      "KN0795",
+      "KN1366"
+    ],
+    "question_ids": [
+      "Q803",
+      "Q1389"
+    ],
+    "knowledge_node_labels": [
+      "ノーマライゼーションは障害の有無にかかわらず、地域で通常の生活を営める社会を目指す理念である",
+      "ノーマライゼーションは障害者も地域で普通の生活を営み、自己決定を尊重されるという社会理念"
+    ],
+    "problem_summaries": [
+      "ノーマライゼーションで正しいのはどれか。",
+      "ノーマライゼーションで正しいのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "ノーマライゼーションは障害の有無にかかわらず、地域で通常の生活を営める社会を目指す理念である。差別や社会的不利益の解消が中心で4が正しい。",
+      "ノーマライゼーションは障害者も地域で普通の生活を営み、自己決定を尊重されるという社会理念。"
+    ],
+    "topic": "ノーマライゼーション",
+    "why_same_node": "障害の有無にかかわらず地域で普通の生活と自己決定を保障する同一理念。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0011",
+    "node_ids": [
+      "KN1013",
+      "KN1527"
+    ],
+    "question_ids": [
+      "Q1023",
+      "Q1553"
+    ],
+    "knowledge_node_labels": [
+      "角膜反射の求心路は三叉神経第1枝、遠心路は顔面神経である",
+      "角膜反射は求心路が三叉神経第1枝、遠心路が顔面神経で眼輪筋を収縮させる"
+    ],
+    "problem_summaries": [
+      "三叉神経が関与するのはどれか。",
+      "角膜反射に関わるのはどれか。 2つ選べ。"
+    ],
+    "correct_answer_concept_summaries": [
+      "角膜反射の求心路は三叉神経第1枝、遠心路は顔面神経である。",
+      "角膜反射は求心路が三叉神経第1枝、遠心路が顔面神経で眼輪筋を収縮させる。"
+    ],
+    "topic": "角膜反射の求心路・遠心路",
+    "why_same_node": "求心路が三叉神経第1枝、遠心路が顔面神経という同一反射弓。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0012",
+    "node_ids": [
+      "KN1080",
+      "KN1518"
+    ],
+    "question_ids": [
+      "Q1091",
+      "Q1544"
+    ],
+    "knowledge_node_labels": [
+      "遠心性収縮は筋が張力を出しながら伸張される収縮",
+      "上肢をゆっくり下ろす三角筋前部と、立位から座る際の大腿四頭筋は張力を保ちながら伸張される遠心性収縮"
+    ],
+    "problem_summaries": [
+      "遠心性収縮が生じるのはどれか。2つ選べ。",
+      "遠心性収縮が生じるのはどれか。 2つ選べ。"
+    ],
+    "correct_answer_concept_summaries": [
+      "遠心性収縮は筋が張力を出しながら伸張される収縮。懸垂で体を下ろす上腕二頭筋と、しゃがみ込みで背屈を制動するヒラメ筋が該当する。",
+      "上肢をゆっくり下ろす三角筋前部と、立位から座る際の大腿四頭筋は張力を保ちながら伸張される遠心性収縮。"
+    ],
+    "topic": "遠心性収縮",
+    "why_same_node": "筋が張力を発揮しながら伸張される収縮という同一定義の事例識別。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0013",
+    "node_ids": [
+      "KN0945",
+      "KN1337"
+    ],
+    "question_ids": [
+      "Q954",
+      "Q1358"
+    ],
+    "knowledge_node_labels": [
+      "半規管の感覚受容器は膨大部稜にあり、角加速度を感知する",
+      "半規管は内リンパ流と膨大部稜で頭部の角加速度を感知する"
+    ],
+    "problem_summaries": [
+      "平衡聴覚器について正しいのはどれか。",
+      "平衡聴覚器で正しいのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "半規管の感覚受容器は膨大部稜にあり、角加速度を感知する。4が正しい。",
+      "半規管は内リンパ流と膨大部稜で頭部の角加速度を感知する。"
+    ],
+    "topic": "半規管と角加速度",
+    "why_same_node": "内リンパ流と膨大部稜により角加速度を感知する同一知識。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0014",
+    "node_ids": [
+      "KN0272",
+      "KN1421"
+    ],
+    "question_ids": [
+      "Q273",
+      "Q1446"
+    ],
+    "knowledge_node_labels": [
+      "Parkinson病のすくみ足に対する視覚的外的キュー",
+      "Parkinson病のすくみ足・突進に対し床上の視覚的外的キューを用いる"
+    ],
+    "problem_summaries": [
+      "Parkinson病患者が狭い場所で歩行開始時のすくみ足を認める。即時的な対処として最も適切なのはどれか。",
+      "70 歳の男性。Parkinson 病。Hoehn ＆ Yahr の重症度分類ステージⅢ。歩行時にたびたびすくみ足や小刻み歩行からの突進を生じる。 この患者の歩行練習で適切なのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "すくみ足では床の横線、レーザー、リズム音など外的手掛かりが自動運動の障害を補い、歩行開始を促す。狭所や方向転換では注意負荷を減らし、明確な一課題として提示する。類題では症状を増悪させる二重課題と、動作を引き出す外的キューを区別する。",
+      "Parkinson病のすくみ足には視覚キューとして床の等間隔線を踏む練習が有効。"
+    ],
+    "topic": "Parkinson病のすくみ足と視覚的外的キュー",
+    "why_same_node": "床上の目印など視覚的外的キューですくみ足を改善する同一介入知識。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0015",
+    "node_ids": [
+      "KN0071",
+      "KN0126"
+    ],
+    "question_ids": [
+      "Q71",
+      "Q126"
+    ],
+    "knowledge_node_labels": [
+      "視覚的垂直を用いた正中学習",
+      "視覚基準による正中位学習"
+    ],
+    "problem_summaries": [
+      "69歳の男性。右視床出血発症後3週で回復期リハビリテーション病棟に入院している。左片麻痺を認め、Brunnstrom stageは上肢Ⅲ、手指Ⅲ、下肢Ⅳである。座位保持では麻痺側上肢でベッドを強く押し、体幹を左側へ傾ける。本人は「まっすぐ座っている」と訴えるが、他動的に正中位へ修正すると強く抵抗する。感覚障害は軽度で、明らかな半側空間無視は認めない。 座位の安定性改善を目的として最も適切な理学療法介入はどれか。",
+      "71歳の女性。右視床出血発症後4週である。左片麻痺はBrunnstrom stageⅣである。立位では身体が左側へ傾き、右上肢と右下肢で支持面を押して傾きを強める。本人は「まっすぐ立っている」と話す。視覚的な垂直指標を提示すると一時的に正中位を保持できるが、視覚情報を除くと再び左側へ押し返す姿勢が出現する。 正中位の学習を促すため、最も適切な介入はどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "麻痺側上肢で支持面を押し、体幹を麻痺側へ傾け、正中位への修正に抵抗することからPusher現象が考えられる。本人の主観的な垂直と実際の垂直にずれがあるため、鏡や垂直な柱などの視覚情報を用い、自ら正中位を確認して修正する練習を行うことが適切である。",
+      "麻痺側上下肢で支持面を押し返し、身体を麻痺側へ傾ける一方、本人はその姿勢を正しいと認識していることからPusher現象が考えられる。視覚的な垂直情報を利用し、自ら姿勢を修正する学習を反復することが有効である。"
+    ],
+    "topic": "Pusher現象の視覚的垂直学習",
+    "why_same_node": "視覚的垂直指標を用いて正中位を自己修正する同一介入原理。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0016",
+    "node_ids": [
+      "KN0071",
+      "KN0211"
+    ],
+    "question_ids": [
+      "Q71",
+      "Q212"
+    ],
+    "knowledge_node_labels": [
+      "視覚的垂直を用いた正中学習",
+      "Pusher現象に対する視覚的垂直を用いた正中位学習"
+    ],
+    "problem_summaries": [
+      "69歳の男性。右視床出血発症後3週で回復期リハビリテーション病棟に入院している。左片麻痺を認め、Brunnstrom stageは上肢Ⅲ、手指Ⅲ、下肢Ⅳである。座位保持では麻痺側上肢でベッドを強く押し、体幹を左側へ傾ける。本人は「まっすぐ座っている」と訴えるが、他動的に正中位へ修正すると強く抵抗する。感覚障害は軽度で、明らかな半側空間無視は認めない。 座位の安定性改善を目的として最も適切な理学療法介入はどれか。",
+      "75歳の男性。右視床出血後4週である。座位では麻痺側へ体幹を傾け、療法士が正中位へ修正しようとすると非麻痺側上下肢で支持面を押し返し、さらに麻痺側へ傾こうとする。一方、視覚的な目印を提示すると正中位へ近づくことができる。 理学療法として最も適切なのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "麻痺側上肢で支持面を押し、体幹を麻痺側へ傾け、正中位への修正に抵抗することからPusher現象が考えられる。本人の主観的な垂直と実際の垂直にずれがあるため、鏡や垂直な柱などの視覚情報を用い、自ら正中位を確認して修正する練習を行うことが適切である。",
+      "麻痺側へ体幹を傾け、正中位へ修正されると非麻痺側上下肢で支持面を押し返すPusher現象を認める。一方、視覚的な目印を提示すると正中位へ近づけるため、視覚情報を利用できる。鏡や垂直物などの視覚的基準を用いて、本人自身が正しい正中位を学習することが適切である。"
+    ],
+    "topic": "Pusher現象の視覚的垂直学習",
+    "why_same_node": "座位でも視覚的垂直を基準に正中位を学習する中心介入は同一。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0017",
+    "node_ids": [
+      "KN0126",
+      "KN0195"
+    ],
+    "question_ids": [
+      "Q126",
+      "Q196"
+    ],
+    "knowledge_node_labels": [
+      "視覚基準による正中位学習",
+      "視覚的手掛かりによる正中学習"
+    ],
+    "problem_summaries": [
+      "71歳の女性。右視床出血発症後4週である。左片麻痺はBrunnstrom stageⅣである。立位では身体が左側へ傾き、右上肢と右下肢で支持面を押して傾きを強める。本人は「まっすぐ立っている」と話す。視覚的な垂直指標を提示すると一時的に正中位を保持できるが、視覚情報を除くと再び左側へ押し返す姿勢が出現する。 正中位の学習を促すため、最も適切な介入はどれか。",
+      "69歳の男性。右視床出血発症後3週である。左片麻痺は軽度まで改善しているが、座位・立位では麻痺側へ強く身体を押し返し、介助者が正中位へ修正しようとすると抵抗する。本人は傾いている自覚がない。理学療法として最も適切なのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "麻痺側上下肢で支持面を押し返し、身体を麻痺側へ傾ける一方、本人はその姿勢を正しいと認識していることからPusher現象が考えられる。視覚的な垂直情報を利用し、自ら姿勢を修正する学習を反復することが有効である。",
+      "麻痺側へ身体を能動的に押し返し、正中位へ修正されると抵抗し、自身の傾きを認識していない。Pusher現象では身体の垂直認知が偏っているため、鏡や周囲の垂直物など視覚的手掛かりを利用し、本人が正しい正中位を確認しながら姿勢を学習する。"
+    ],
+    "topic": "Pusher現象の視覚的正中学習",
+    "why_same_node": "鏡や垂直物を視覚的手掛かりとする正中学習が同一。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0018",
+    "node_ids": [
+      "KN0112",
+      "KN0142"
+    ],
+    "question_ids": [
+      "Q112",
+      "Q142"
+    ],
+    "knowledge_node_labels": [
+      "外転筋機能と骨盤制御",
+      "外転筋と荷重時骨盤制御"
+    ],
+    "problem_summaries": [
+      "67歳の女性。右変形性股関節症で保存療法中である。歩行開始時に右股関節痛を認めるが、歩行を続けると軽減する。Trendelenburg徴候は陽性で、股関節外転筋MMT3である。股関節屈曲可動域は110°、脚長差は認めない。歩行能力改善を目的として最も優先すべき介入はどれか。",
+      "63歳の女性。右変形性股関節症。立ち上がりと階段昇段時に右殿部痛を訴える。右片脚立位では左骨盤が下制し、Trendelenburg徴候は陽性である。右股関節外転筋力はMMT3、股関節伸展可動域は5°である。現時点で最も優先すべき介入はどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "Trendelenburg徴候陽性で股関節外転筋MMT3であり、右立脚期の骨盤支持能力が低下している。脚長差はなく、屈曲ROMも110°保たれているため、歩行能力改善には外転筋機能を高め、片脚支持時に骨盤を水平に制御する練習を優先することが適切である。",
+      "右片脚立位で左骨盤が下制し、Trendelenburg徴候が陽性で、右股関節外転筋力はMMT3である。右立脚時の骨盤保持不良が明確であるため、疼痛に配慮しながら股関節外転筋機能と荷重時の骨盤制御を改善する。"
+    ],
+    "topic": "股関節外転筋と骨盤制御",
+    "why_same_node": "Trendelenburg徴候とMMT3から外転筋機能・片脚荷重時骨盤制御を優先する同一修復単位。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0019",
+    "node_ids": [
+      "KN0128",
+      "KN0196"
+    ],
+    "question_ids": [
+      "Q128",
+      "Q197"
+    ],
+    "knowledge_node_labels": [
+      "下腿三頭筋・足底腱膜柔軟性",
+      "腓腹筋・ヒラメ筋・足底腱膜伸張"
+    ],
+    "problem_summaries": [
+      "48歳の男性。市民ランナーである。起床後の最初の数歩で右踵部に疼痛を認めるが、歩行を続けると軽減する。足関節背屈可動域は膝伸展位で5°、膝屈曲位で15°である。足底部に腫脹は認めない。疼痛軽減と再発予防を目的として最も適切な介入はどれか。",
+      "48歳の男性。ランニング愛好者。3か月前から起床時の最初の一歩で右踵部痛があり、歩き始めると軽減する。足関節背屈可動域は膝伸展位で5°、膝屈曲位で15°である。下腿三頭筋の短縮を認める。最も適切な介入はどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "起床時の一歩目で踵部痛が強く、歩行により軽減することや、膝伸展位で足関節背屈が制限されていることから、足底腱膜と下腿三頭筋の柔軟性低下が症状に関与していると考えられる。柔軟性改善は疼痛軽減と再発予防につながる。",
+      "起床時の最初の一歩で踵部痛が強く歩き始めると軽減し、足関節背屈は膝伸展位5°、膝屈曲位15°で下腿三頭筋短縮もある。腓腹筋・ヒラメ筋と足底腱膜の柔軟性を改善しつつ、ランニング負荷を段階的に調整して足底腱膜への負担を減らす。"
+    ],
+    "topic": "足底腱膜炎の柔軟性介入",
+    "why_same_node": "下腿三頭筋と足底腱膜の柔軟性改善を選ぶ同一病態・介入判断。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0020",
+    "node_ids": [
+      "KN0007",
+      "KN0033"
+    ],
+    "question_ids": [
+      "Q7",
+      "Q33"
+    ],
+    "knowledge_node_labels": [
+      "下垂足へのAFO適応",
+      "鶏歩へのAFO適応"
+    ],
+    "problem_summaries": [
+      "45歳の男性。右腓骨頭部骨折後に総腓骨神経麻痺を生じ、受傷後3か月である。足関節背屈MMT2、長母趾伸筋MMT1、底屈MMT5。足関節背屈ROMは正常で、感覚障害は下腿外側から足背に認める。歩行では遊脚期に股・膝関節屈曲を増大させる代償歩行を認めるが、立脚期の膝折れや膝過伸展は認めない。 歩行能力の改善を最も早期に期待できる対応はどれか。",
+      "17歳の男子高校生。Charcot-Marie-Tooth病と診断されている。独歩可能であるが、体育の長距離走では転倒しやすい。両側凹足を認め、足関節背屈MMT3、底屈MMT4である。足関節背屈ROMは正常、深部感覚は軽度低下している。歩行では初期接地で前足部接地となりやすく、遊脚期には軽度の鶏歩を認める。 歩行能力の改善を最も早期に期待できる対応はどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "足関節背屈MMT2、長母趾伸筋MMT1で遊脚期の足尖挙上が不十分となり、股・膝関節屈曲を増大させる鶏歩が生じている。背屈ROMは正常で、底屈筋力や立脚期の膝制御も保たれているため、短下肢装具で足尖クリアランスを補助することで、歩行の安全性と効率を早期に改善できる。",
+      "足関節背屈MMT3で初期接地は前足部接地となりやすく、遊脚期には軽度の鶏歩を認める。背屈ROMは保たれているため、歩行障害の主因は背屈筋力不足による足尖クリアランス低下である。短下肢装具により遊脚期の足尖挙上を補助し、安全で効率的な歩行を早期に獲得することが期待できる。"
+    ],
+    "topic": "下垂足・鶏歩へのAFO",
+    "why_same_node": "背屈筋力低下による足尖クリアランス不足をAFOで補う同一適応判断。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0021",
+    "node_ids": [
+      "KN1256",
+      "KN1432"
+    ],
+    "question_ids": [
+      "Q1272",
+      "Q1457"
+    ],
+    "knowledge_node_labels": [
+      "矢状面の重心線は耳垂付近、肩峰付近、大転子や膝関節のやや前方、外果のやや前方を通る",
+      "矢状面の重心線は外果のやや前方を通る"
+    ],
+    "problem_summaries": [
+      "基本的立位姿勢を矢状面から観察した場合、重心線が通るのはどこか。",
+      "安静立位姿勢における重心線の通る位置で正しいのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "矢状面の重心線は耳垂付近、肩峰付近、大転子や膝関節のやや前方、外果のやや前方を通る。選択肢では外果前方が正しい。",
+      "矢状面の重心線は外果のやや前方を通る。"
+    ],
+    "topic": "矢状面重心線と外果",
+    "why_same_node": "安静立位の矢状面重心線が外果のやや前方を通る同一解剖学的基準。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0022",
+    "node_ids": [
+      "KN0068",
+      "KN0190"
+    ],
+    "question_ids": [
+      "Q68",
+      "Q191"
+    ],
+    "knowledge_node_labels": [
+      "活動記録による疲労管理",
+      "活動・疲労記録による自己管理"
+    ],
+    "problem_summaries": [
+      "33歳の女性。再発寛解型多発性硬化症である。最近の再発はなく、屋内外歩行は自立している。午後になると下肢の重だるさが増し、事務作業中に集中力が低下する。下肢MMTは4＋で、感覚障害は軽度である。疲労重症度尺度では高値を示すが、涼しい環境でも症状に大きな変化はない。本人は仕事を続けながら運動を行いたいと希望している。 日常生活における疲労管理として最も適切な指導はどれか。",
+      "34歳の女性。再発寛解型多発性硬化症。屋内外歩行は自立している。午前中に30分歩行した日は、午後の家事中に強い疲労が出現するが、翌朝には回復している。本人は「仕事と家事を続けながら運動もしたい」と希望している。運動量の自己管理として最も適切なのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "午後になると下肢の重だるさと集中力低下が増すが、涼しい環境でも症状に大きな変化はなく、仕事と運動の継続を希望している。活動記録で疲労が強くなる作業、時間帯、運動量を把握し、症状が増悪する前に休息を計画的に配置することで、過度な疲労を避けながら仕事と身体活動を両立する。",
+      "午前中に30分歩行した日は午後の家事中に強い疲労が出るが、翌朝には回復している。仕事や家事を続けながら運動するには、運動だけを切り離さず生活活動と疲労の関係を記録し、一日の総活動量を把握して運動と休息を配分することが重要である。"
+    ],
+    "topic": "多発性硬化症の活動・疲労記録",
+    "why_same_node": "活動量と疲労の関係を記録し、休息と運動を配分する同一自己管理戦略。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0023",
+    "node_ids": [
+      "KN0202",
+      "KN0227"
+    ],
+    "question_ids": [
+      "Q203",
+      "Q228"
+    ],
+    "knowledge_node_labels": [
+      "心リハ中の胸部症状と血圧低下に対する運動中止判断",
+      "心リハ中の胸部圧迫感・顔面蒼白に対する運動中止判断"
+    ],
+    "problem_summaries": [
+      "76歳の男性。慢性心不全（NYHAⅡ）のため外来心臓リハビリテーションを実施している。自転車エルゴメータ運動開始8分後、突然「胸が締め付けられる」と訴えた。血圧は運動前124/72mmHg、現在96/60mmHg、脈拍は118/分、不整は認めない。SpO₂は96％である。 理学療法士として最も適切な対応はどれか。",
+      "76歳の男性。慢性心不全に対して外来心臓リハビリテーションを実施している。運動中に胸部圧迫感を訴え、顔面蒼白となった。理学療法士として最も適切な対応はどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "運動中に突然胸部絞扼感が出現し、血圧も124/72mmHgから96/60mmHgへ低下している。慢性心不全患者で新たな胸部症状と運動時血圧低下がみられるため、心筋虚血や循環動態悪化を否定できない。直ちに運動を中止し、症状と全身状態を評価する。",
+      "運動中の胸部圧迫感と顔面蒼白は循環器イベントを疑う危険徴候である。直ちに運動を中止し、全身状態を確認することが最優先となる。"
+    ],
+    "topic": "心リハ中の胸部危険徴候",
+    "why_same_node": "胸部圧迫感・顔面蒼白など循環器イベントを疑う所見で運動を即時中止する同一安全判断。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "high",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "一方の誤答後に他方を別Qの修復確認として出題することが医学教育的に妥当。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0024",
+    "node_ids": [
+      "KN0842",
+      "KN1175"
+    ],
+    "question_ids": [
+      "Q851",
+      "Q1188"
+    ],
+    "knowledge_node_labels": [
+      "多発性硬化症は中枢神経の錐体路障害を起こし、上位運動ニューロン徴候として腱反射亢進や病的反射を示す",
+      "錐体路障害では上位運動ニューロン徴候として深部腱反射亢進、病的反射、表在反射消失などを示す"
+    ],
+    "problem_summaries": [
+      "腱反射が亢進する疾患はどれか。",
+      "錐体路徴候はどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "多発性硬化症は中枢神経の錐体路障害を起こし、上位運動ニューロン徴候として腱反射亢進や病的反射を示す。2が正しい。",
+      "錐体路障害では上位運動ニューロン徴候として深部腱反射亢進、病的反射、表在反射消失などを示す。腹壁反射消失が該当する。"
+    ],
+    "topic": "錐体路障害の上位運動ニューロン徴候",
+    "why_same_node": "多発性硬化症の疾患文脈と一般的錐体路徴候は、腱反射亢進・病的反射という中心知識を共有するが粒度確認が必要。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "medium",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0025",
+    "node_ids": [
+      "KN0725",
+      "KN0940"
+    ],
+    "question_ids": [
+      "Q733",
+      "Q949"
+    ],
+    "knowledge_node_labels": [
+      "上斜筋は滑車神経支配である",
+      "上眼瞼挙筋は動眼神経、上斜筋は滑車神経支配である"
+    ],
+    "problem_summaries": [
+      "外眼筋の中で動眼神経の支配でないのはどれか。",
+      "筋と支配神経の組合せで正しいのはどれか。2つ選べ。"
+    ],
+    "correct_answer_concept_summaries": [
+      "上斜筋は滑車神経支配である。動眼神経は上直筋、下直筋、内直筋、下斜筋、上眼瞼挙筋を支配するため1が正しい。",
+      "上眼瞼挙筋は動眼神経、上斜筋は滑車神経支配である。3・4が正しい。"
+    ],
+    "topic": "上斜筋と滑車神経",
+    "why_same_node": "どちらも上斜筋=滑車神経を正答根拠に含むが、一方は複数筋の組合せ問題のため最小単位の確認が必要。",
+    "why_not_prerequisite": "一方が他方の前提なのではなく、両問の中心的な修復内容自体が同じ。",
+    "why_not_transfer": "別場面への応用力より、同一の中心知識を別Qで再確認している。",
+    "confidence": "medium",
+    "recommended_action": "SAME_NODE",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0026",
+    "node_ids": [
+      "KN0913",
+      "KN0914"
+    ],
+    "question_ids": [
+      "Q922",
+      "Q923"
+    ],
+    "knowledge_node_labels": [
+      "腰椎椎間板ヘルニアの疼痛分布から責任椎間を推定する",
+      "亜急性腰椎椎間板ヘルニアに対する理学療法選択"
+    ],
+    "problem_summaries": [
+      "次の文により15、16の問いに答えよ。45歳の女性。3日前、自宅で荷物を持ち上げた際に、腰部と左下腿の後面から足背外側部にかけての強い痛みがあった。安静にしていたが、疼痛が軽快しないため受診し、腰椎椎間板ヘルニアと診断された。 15 最も疑われる病変部位はどれか。",
+      "次の文により15、16の問いに答えよ。45歳の女性。3日前、自宅で荷物を持ち上げた際に、腰部と左下腿の後面から足背外側部にかけての強い痛みがあった。安静にしていたが、疼痛が軽快しないため受診し、腰椎椎間板ヘルニアと診断された。 16 発症から2か月が経過し、足背外側部の疼痛と安静時の腰痛は改善したが、労作時に軽度の腰痛が続いているため再度受診した。理学療法として適切でないのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "下腿後面から足背外側部へ放散する疼痛はS1神経根領域を示唆し、L5/S1椎間板ヘルニアが最も疑われる。5が正しい。",
+      "発症2か月で安静時痛は改善し、軽度労作時痛のみ。慢性期には体幹筋訓練や柔軟性改善が重要で、装具の継続装着は廃用を助長しうるため3が不適切。"
+    ],
+    "topic": "腰椎椎間板ヘルニアの診断と理学療法",
+    "why_same_node": "SAME_NODEではない。疼痛分布から責任椎間を推定する診断理解は、亜急性期介入の選択に先行するが同一知識ではない。",
+    "why_not_prerequisite": "該当せず。PREREQUISITE分類が妥当。",
+    "why_not_transfer": "対等な応用関係ではなく、基礎から個別判断への方向性がある。",
+    "confidence": "high",
+    "recommended_action": "PREREQUISITE",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0027",
+    "node_ids": [
+      "KN0647",
+      "KN1533"
+    ],
+    "question_ids": [
+      "Q655",
+      "Q1559"
+    ],
+    "knowledge_node_labels": [
+      "偽関節は血流が乏しい骨折や骨癒合条件の悪い部位で生じやすい",
+      "手舟状骨は血流が乏しい部位があり偽関節を生じやすい"
+    ],
+    "problem_summaries": [
+      "偽関節を生じやすいのはどれか。2つ選べ。",
+      "骨折後に偽関節を生じやすいのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "偽関節は血流が乏しい骨折や骨癒合条件の悪い部位で生じやすい。手舟状骨は近位部血流が乏しく、大腿骨頸部は関節包内骨折で血行障害を起こしやすいため、1・4が正しい。",
+      "手舟状骨は血流が乏しい部位があり偽関節を生じやすい。"
+    ],
+    "topic": "血流不良と手舟状骨偽関節",
+    "why_same_node": "SAME_NODEではない。血流の乏しい骨折で偽関節が生じやすい一般原理が、手舟状骨の個別判断の前提。",
+    "why_not_prerequisite": "該当せず。PREREQUISITE分類が妥当。",
+    "why_not_transfer": "対等な応用関係ではなく、基礎から個別判断への方向性がある。",
+    "confidence": "high",
+    "recommended_action": "PREREQUISITE",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0028",
+    "node_ids": [
+      "KN0184",
+      "KN1499"
+    ],
+    "question_ids": [
+      "Q185",
+      "Q1524"
+    ],
+    "knowledge_node_labels": [
+      "Berg Balance Scale選択",
+      "Berg Balance Scaleの項目・採点・解釈を理解する"
+    ],
+    "problem_summaries": [
+      "脳卒中患者の外来理学療法で、静的立位だけでなく、立ち上がり、移乗、方向転換、物品へのリーチ、片脚立位を含むバランス能力の変化を経時的に評価したい。最も適切な評価尺度はどれか。",
+      "BBS で正しいのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "静的立位だけでなく、立ち上がり、移乗、方向転換、リーチ、片脚立位など複数の姿勢課題を経時的に評価したい。Berg Balance Scaleはこれらを含む複数項目から構成され、脳卒中患者の総合的なバランス能力の変化を評価できる。",
+      "BBSは14項目・各0〜4点で、タンデム立位保持を含む。"
+    ],
+    "topic": "Berg Balance Scaleの選択と項目理解",
+    "why_same_node": "SAME_NODEではない。BBSを適切なバランス評価として選ぶことと、項目・採点を知ることは方向性のある別知識。",
+    "why_not_prerequisite": "該当せず。PREREQUISITE分類が妥当。",
+    "why_not_transfer": "対等な応用関係ではなく、基礎から個別判断への方向性がある。",
+    "confidence": "medium",
+    "recommended_action": "PREREQUISITE",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0029",
+    "node_ids": [
+      "KN1112",
+      "KN1439"
+    ],
+    "question_ids": [
+      "Q1123",
+      "Q1464"
+    ],
+    "knowledge_node_labels": [
+      "SIASに含まれる非麻痺側機能などの評価項目",
+      "SIASには非麻痺側機能として握力評価が含まれる"
+    ],
+    "problem_summaries": [
+      "SIASに含まれるのはどれか。",
+      "SIASの評価で正しいのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "SIASは脳卒中患者の麻痺側運動、感覚、体幹、言語、視空間機能に加え、非麻痺側機能も評価する。",
+      "SIASには非麻痺側機能として握力評価が含まれる。"
+    ],
+    "topic": "SIASの非麻痺側機能と握力",
+    "why_same_node": "SAME_NODEではない。SIASが非麻痺側機能を含む一般理解が、握力がその具体項目であるという判断の前提。",
+    "why_not_prerequisite": "該当せず。PREREQUISITE分類が妥当。",
+    "why_not_transfer": "対等な応用関係ではなく、基礎から個別判断への方向性がある。",
+    "confidence": "medium",
+    "recommended_action": "PREREQUISITE",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0030",
+    "node_ids": [
+      "KN0760",
+      "KN1424"
+    ],
+    "question_ids": [
+      "Q768",
+      "Q1449"
+    ],
+    "knowledge_node_labels": [
+      "慢性心不全患者のBarthel Index得点をADL情報から判定する",
+      "片麻痺患者のADL情報からBarthel Index総得点を算出する"
+    ],
+    "problem_summaries": [
+      "80歳の女性。慢性心不全。NYHA分類classⅢである。急性増悪にて入院加療後、退院した。自宅でのADLは、Barthel Indexによる評価で、食事、移乗、整容、トイレ動作、入浴、着替え、排便、排尿は自立、歩行は歩行器使用にて45m以上可能である。階段昇降は部分介助を要する。この患者のBarthel Indexの点数はどれか。",
+      "58 歳の男性。右脳出血による左片麻痺。発症から 3 か月経過し、Brunnstrom 法ステージでは、左下肢Ⅲで中等度の半側空間無視がみられる。ブレーキのかけ忘れが観察されるが、車椅子とベッド、トイレの移乗動作は自力でできる。下衣をあげること、入浴、階段昇降は介助を要する。平地歩行は杖と装具を使用し、介助で 30 m 歩行することができる。車椅子駆動は可能である。排泄コントロールは良好で食事と整容は自立レベルであった。 Barthe…"
+    ],
+    "correct_answer_concept_summaries": [
+      "厚生労働省の第55回国家試験では、複数の選択肢を正解として採点している。国家試験対策としてLTも公式採点に従う。 食事10、移乗15、整容5、トイレ10、入浴5、着替え10、排便10、排尿10、階段5で計80点となる。歩行器で45m以上の歩行を15点と扱えば合計95点、歩行器の種類・採点基準により10点と扱えば90点となるため、4・5の両方を正答とする。",
+      "食事10、移乗15、整容5、トイレ5、更衣5、排便10、排尿10、歩行10、入浴0、階段0で合計65点となる。"
+    ],
+    "topic": "Barthel Index採点",
+    "why_same_node": "SAME_NODEではない。同じBI採点基準を異なる疾患・ADL組合せに適用する転移証拠であり、問題ごとの計算条件は異なる。",
+    "why_not_prerequisite": "単純な先行知識ではなく、同じ原理を異なる状況へ適用する。",
+    "why_not_transfer": "該当せず。TRANSFER分類が妥当。",
+    "confidence": "high",
+    "recommended_action": "TRANSFER",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0031",
+    "node_ids": [
+      "KN0205",
+      "KN0765"
+    ],
+    "question_ids": [
+      "Q206",
+      "Q773"
+    ],
+    "knowledge_node_labels": [
+      "Parkinson病のすくみ足に対する外的キューの活用",
+      "Parkinson病の小刻み・突進・すくみ足に対する歩行練習"
+    ],
+    "problem_summaries": [
+      "71歳の男性。Parkinson病（Hoehn & Yahr分類Ⅲ）。歩行開始時や方向転換時にすくみ足を認めるが、リズムよく床に置かれた目印を越える場面では歩行が改善する。歩行能力改善のため最も適切な介入はどれか。",
+      "75歳の女性。Parkinson病。Hoehn & Yahrの重症度分類ステージⅣ。歩行時に小刻み歩行、突進現象、すくみ足が出現する。歩行練習として適切なのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "歩行開始時や方向転換時にすくみ足が出現する一方、床に配置された目印を越える場面では歩行が改善している。この所見から視覚的な外的キューを利用できることが分かるため、目印やリズムなどの外的刺激を利用した歩行練習が適切である。",
+      "Parkinson病のすくみ足には視覚的・聴覚的キューが有効で、広い空間で歩幅を意識して歩くことが適切である。狭い一本線や二重課題はすくみを悪化させやすい。"
+    ],
+    "topic": "Parkinson病の外的キューと歩行練習",
+    "why_same_node": "SAME_NODEではない。外的キューの基礎知識を、小刻み・突進を含む包括的歩行練習へ応用する関係。",
+    "why_not_prerequisite": "単純な先行知識ではなく、同じ原理を異なる状況へ適用する。",
+    "why_not_transfer": "該当せず。TRANSFER分類が妥当。",
+    "confidence": "medium",
+    "recommended_action": "TRANSFER",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0032",
+    "node_ids": [
+      "KN0717",
+      "KN1213"
+    ],
+    "question_ids": [
+      "Q725",
+      "Q1228"
+    ],
+    "knowledge_node_labels": [
+      "Perthes病は小児の大腿骨頭骨端に生じる阻血性壊死で、治療では骨頭を臼蓋内に保ちつつ免荷する装具療法が行われる",
+      "Perthes病は小児の大腿骨頭骨端への血流障害による無腐性壊死で、片側性が多い"
+    ],
+    "problem_summaries": [
+      "Perthes病で正しいのはどれか。2つ選べ。",
+      "Perthes病で正しいのはどれか。2つ選べ。"
+    ],
+    "correct_answer_concept_summaries": [
+      "Perthes病は小児の大腿骨頭骨端に生じる阻血性壊死で、治療では骨頭を臼蓋内に保ちつつ免荷する装具療法が行われる。したがって2・4が正しい。",
+      "Perthes病は小児の大腿骨頭骨端への血流障害による無腐性壊死で、片側性が多い。"
+    ],
+    "topic": "Perthes病の病態と治療",
+    "why_same_node": "SAME_NODEではない。疾患は同じだが、阻血性壊死・片側性の病態知識と、免荷・containment治療は別の修復単位。",
+    "why_not_prerequisite": "明確な前提から応用への方向性は確認できない。",
+    "why_not_transfer": "同じ中心知識の場面間適用とは言えない。",
+    "confidence": "high",
+    "recommended_action": "RELATED_ONLY",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0033",
+    "node_ids": [
+      "KN1414",
+      "KN1490"
+    ],
+    "question_ids": [
+      "Q1439",
+      "Q1515"
+    ],
+    "knowledge_node_labels": [
+      "GBSは感染後に遠位から上行する対称性筋力低下で発症することが多い",
+      "GBSは上気道感染や消化器感染後に発症することが多い"
+    ],
+    "problem_summaries": [
+      "Guillain-Barré 症候群の初期症状で特徴的なのはどれか。",
+      "Guillain-Barré 症候群で適切なのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "GBSは感染後に遠位から上行する対称性筋力低下で発症することが多い。",
+      "GBSは上気道感染や消化器感染後に発症することが多い。"
+    ],
+    "topic": "GBSの感染後発症と上行性麻痺",
+    "why_same_node": "SAME_NODEではない。同一疾患だが、先行感染と対称性上行性筋力低下は別の診断特徴。",
+    "why_not_prerequisite": "明確な前提から応用への方向性は確認できない。",
+    "why_not_transfer": "同じ中心知識の場面間適用とは言えない。",
+    "confidence": "medium",
+    "recommended_action": "RELATED_ONLY",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0034",
+    "node_ids": [
+      "KN0538",
+      "KN0808"
+    ],
+    "question_ids": [
+      "Q546",
+      "Q817"
+    ],
+    "knowledge_node_labels": [
+      "トロンビンは凝固カスケードでプロトロンビンから生成され、フィブリノゲンをフィブリンへ変換する中心的凝固酵素である",
+      "トロンビンとフィブリノゲンは凝固系に直接関与する"
+    ],
+    "problem_summaries": [
+      "血液凝固因子はどれか。",
+      "血液凝固因子はどれか。2つ選べ。"
+    ],
+    "correct_answer_concept_summaries": [
+      "トロンビンは凝固カスケードでプロトロンビンから生成され、フィブリノゲンをフィブリンへ変換する中心的凝固酵素である。アルブミンやヘモグロビンは凝固因子ではなく、プラスミノゲンは線溶系に関与する。",
+      "トロンビンとフィブリノゲンは凝固系に直接関与する。フィブリノゲンはトロンビンによりフィブリンへ変換されるため2・4が正しい。"
+    ],
+    "topic": "トロンビンと凝固系",
+    "why_same_node": "SAME_NODEではない。トロンビンのフィブリン生成作用と、凝固因子を複数選ぶ分類知識は重なるが同一とは限らない。",
+    "why_not_prerequisite": "明確な前提から応用への方向性は確認できない。",
+    "why_not_transfer": "同じ中心知識の場面間適用とは言えない。",
+    "confidence": "medium",
+    "recommended_action": "RELATED_ONLY",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0035",
+    "node_ids": [
+      "KN1130",
+      "KN1384"
+    ],
+    "question_ids": [
+      "Q1141",
+      "Q1408"
+    ],
+    "knowledge_node_labels": [
+      "純運動性脳神経は滑車神経、外転神経、舌下神経など",
+      "副神経は胸鎖乳突筋・僧帽筋を支配する純運動性脳神経"
+    ],
+    "problem_summaries": [
+      "運動神経線維のみの脳神経はどれか。2つ選べ。",
+      "運動神経線維のみの脳神経はどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "純運動性脳神経は滑車神経、外転神経、舌下神経など。選択肢では滑車神経と舌下神経。",
+      "副神経は胸鎖乳突筋・僧帽筋を支配する純運動性脳神経。"
+    ],
+    "topic": "純運動性脳神経",
+    "why_same_node": "SAME_NODEではない。純運動性という分類は同じだが、滑車・外転・舌下神経と副神経は個別に覚える必要がある。",
+    "why_not_prerequisite": "明確な前提から応用への方向性は確認できない。",
+    "why_not_transfer": "同じ中心知識の場面間適用とは言えない。",
+    "confidence": "medium",
+    "recommended_action": "RELATED_ONLY",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0036",
+    "node_ids": [
+      "KN0856",
+      "KN1182"
+    ],
+    "question_ids": [
+      "Q865",
+      "Q1196"
+    ],
+    "knowledge_node_labels": [
+      "筋力増強運動について正しいのはどれかに対して適切な理学療法・介入を選択する",
+      "筋力増強運動で正しいのはどれかに対する適切な介入・練習・指導を選択する"
+    ],
+    "problem_summaries": [
+      "筋力増強運動について正しいのはどれか。",
+      "筋力増強運動で正しいのはどれか。"
+    ],
+    "correct_answer_concept_summaries": [
+      "等尺性収縮では血圧が上昇しやすく、特に高血圧・心疾患患者では息こらえを避けて監視する。5が正しい。",
+      "閉鎖性運動連鎖では末端が固定され複数関節・複数筋が協調して働くため、複数筋群の筋力増強に適する。"
+    ],
+    "topic": "筋力増強運動の正しい原則",
+    "why_same_node": "SAME_NODEではない。設問形式と大テーマは同じだが、正答の中心原則が一致するか追加確認が必要。",
+    "why_not_prerequisite": "明確な前提から応用への方向性は確認できない。",
+    "why_not_transfer": "同じ中心知識の場面間適用とは言えない。",
+    "confidence": "low",
+    "recommended_action": "RELATED_ONLY",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0037",
+    "node_ids": [
+      "KN1142",
+      "KN1252"
+    ],
+    "question_ids": [
+      "Q1155",
+      "Q1268"
+    ],
+    "knowledge_node_labels": [
+      "筋と作用の組合せ",
+      "筋と作用の組合せ"
+    ],
+    "problem_summaries": [
+      "筋と作用の組合せで正しいのはどれか。2つ選べ。",
+      "筋と作用の組合せで正しいのはどれか。2つ選べ。"
+    ],
+    "correct_answer_concept_summaries": [
+      "前頭筋は眉を挙上し、側頭筋は下顎を挙上する。3・4が正しい。",
+      "短腓骨筋は足関節底屈・外がえしに作用し、薄筋は股関節内転に加えて膝屈曲に作用する。"
+    ],
+    "topic": "筋と作用の組合せ",
+    "why_same_node": "SAME_NODEではない。ラベルと問題形式は同一だが、前頭筋・側頭筋と短腓骨筋・薄筋は異なる解剖知識。",
+    "why_not_prerequisite": "明確な前提から応用への方向性は確認できない。",
+    "why_not_transfer": "同じ中心知識の場面間適用とは言えない。",
+    "confidence": "high",
+    "recommended_action": "UNRELATED",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  },
+  {
+    "candidate_id": "SNC0038",
+    "node_ids": [
+      "KN0935",
+      "KN1062"
+    ],
+    "question_ids": [
+      "Q944",
+      "Q1072"
+    ],
+    "knowledge_node_labels": [
+      "第56回午前53問は「2つ選べ」の設問だが、厚生労働省は3・4、3・5、4・5の3通りの解答を正解として採点した",
+      "第57回午前51問は「2つ選べ」の設問だが、厚生労働省は1・3、1・4、3・4の3通りの解答を正解として採点した"
+    ],
+    "problem_summaries": [
+      "大転子に付着する筋はどれか。2つ選べ。",
+      "関節円板を有する関節はどれか。2つ選べ。"
+    ],
+    "correct_answer_concept_summaries": [
+      "厚生労働省の第56回国家試験では、設問不備等により3通りの解答を正答として採点している。国家試験対策としてLTも公式採点に従う。 第56回午前53問は「2つ選べ」の設問だが、厚生労働省は3・4、3・5、4・5の3通りの解答を正解として採点した。国家試験対策ではこの3通りを正答として扱う。",
+      "厚生労働省の第57回国家試験では、設問不備等により3通りの解答を正答として採点している。国家試験対策としてLTも公式採点に従う。 第57回午前51問は「2つ選べ」の設問だが、厚生労働省は1・3、1・4、3・4の3通りの解答を正解として採点した。国家試験対策ではこの3通りを正答として扱う。"
+    ],
+    "topic": "複数正答の公式採点",
+    "why_same_node": "SAME_NODEではない。どちらも公式採点上の複数正答だが、医学的な修復内容は別問題である。",
+    "why_not_prerequisite": "明確な前提から応用への方向性は確認できない。",
+    "why_not_transfer": "同じ中心知識の場面間適用とは言えない。",
+    "confidence": "high",
+    "recommended_action": "UNRELATED",
+    "repair_confirmation_suitability": "自動利用せず、Aoiの臨床・教育レビューを先行する。",
+    "clinical_review_recommended": true
+  }
+]

@@ -1,0 +1,63 @@
+LicenseTown SAME_NODE candidate expansion v0.1 audit
+source_questions: 1564
+source_question_tags: 1564
+source_knowledge_nodes: 1538
+candidate_total: 38
+SAME_NODE_high: 23
+SAME_NODE_medium: 2
+SAME_NODE_low: 0
+NEEDS_CLINICAL_REVIEW: 0
+PREREQUISITE: 4
+RELATED_ONLY: 5
+SAME_NODE: 25
+TRANSFER: 2
+UNRELATED: 2
+existing_canonical_pair_overlap: 0
+existing_relation_pair_overlap: 0
+canonical_map_modified: no
+merge_candidates_modified: no
+question_tags_modified: no
+knowledge_nodes_modified: no
+production_db_accessed: no
+
+Aoi canonical review queue (SAME_NODE only):
+- SNC0001 KN0593 / KN1245 [SAME_NODE high] ネフロンの構成
+- SNC0002 KN0503 / KN0883 [SAME_NODE high] 嫌気的解糖とピルビン酸・乳酸
+- SNC0003 KN0623 / KN1212 [SAME_NODE high] リンパ浮腫と蜂窩織炎
+- SNC0004 KN0232 / KN0312 [SAME_NODE high] Brown-Séquard症候群
+- SNC0005 KN1324 / KN1367 [SAME_NODE high] ICFの環境因子
+- SNC0006 KN0202 / KN0318 [SAME_NODE high] 胸部症状と血圧低下時の運動中止
+- SNC0007 KN0509 / KN0927 [SAME_NODE high] 下腿義足の足部内側浮き
+- SNC0008 KN0107 / KN0148 [SAME_NODE high] Borg 13で安定時の運動継続
+- SNC0009 KN0627 / KN1220 [SAME_NODE high] 欠神発作と過換気誘発
+- SNC0010 KN0795 / KN1366 [SAME_NODE high] ノーマライゼーション
+- SNC0011 KN1013 / KN1527 [SAME_NODE high] 角膜反射の求心路・遠心路
+- SNC0012 KN1080 / KN1518 [SAME_NODE high] 遠心性収縮
+- SNC0013 KN0945 / KN1337 [SAME_NODE high] 半規管と角加速度
+- SNC0014 KN0272 / KN1421 [SAME_NODE high] Parkinson病のすくみ足と視覚的外的キュー
+- SNC0015 KN0071 / KN0126 [SAME_NODE high] Pusher現象の視覚的垂直学習
+- SNC0016 KN0071 / KN0211 [SAME_NODE high] Pusher現象の視覚的垂直学習
+- SNC0017 KN0126 / KN0195 [SAME_NODE high] Pusher現象の視覚的正中学習
+- SNC0018 KN0112 / KN0142 [SAME_NODE high] 股関節外転筋と骨盤制御
+- SNC0019 KN0128 / KN0196 [SAME_NODE high] 足底腱膜炎の柔軟性介入
+- SNC0020 KN0007 / KN0033 [SAME_NODE high] 下垂足・鶏歩へのAFO
+- SNC0021 KN1256 / KN1432 [SAME_NODE high] 矢状面重心線と外果
+- SNC0022 KN0068 / KN0190 [SAME_NODE high] 多発性硬化症の活動・疲労記録
+- SNC0023 KN0202 / KN0227 [SAME_NODE high] 心リハ中の胸部危険徴候
+- SNC0024 KN0842 / KN1175 [SAME_NODE medium] 錐体路障害の上位運動ニューロン徴候
+- SNC0025 KN0725 / KN0940 [SAME_NODE medium] 上斜筋と滑車神経
+
+Aoi boundary review queue (not SAME_NODE):
+- SNC0026 KN0913 / KN0914 [PREREQUISITE high] 腰椎椎間板ヘルニアの診断と理学療法
+- SNC0027 KN0647 / KN1533 [PREREQUISITE high] 血流不良と手舟状骨偽関節
+- SNC0028 KN0184 / KN1499 [PREREQUISITE medium] Berg Balance Scaleの選択と項目理解
+- SNC0029 KN1112 / KN1439 [PREREQUISITE medium] SIASの非麻痺側機能と握力
+- SNC0030 KN0760 / KN1424 [TRANSFER high] Barthel Index採点
+- SNC0031 KN0205 / KN0765 [TRANSFER medium] Parkinson病の外的キューと歩行練習
+- SNC0032 KN0717 / KN1213 [RELATED_ONLY high] Perthes病の病態と治療
+- SNC0033 KN1414 / KN1490 [RELATED_ONLY medium] GBSの感染後発症と上行性麻痺
+- SNC0034 KN0538 / KN0808 [RELATED_ONLY medium] トロンビンと凝固系
+- SNC0035 KN1130 / KN1384 [RELATED_ONLY medium] 純運動性脳神経
+- SNC0036 KN0856 / KN1182 [RELATED_ONLY low] 筋力増強運動の正しい原則
+- SNC0037 KN1142 / KN1252 [UNRELATED high] 筋と作用の組合せ
+- SNC0038 KN0935 / KN1062 [UNRELATED high] 複数正答の公式採点
