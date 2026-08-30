@@ -18,6 +18,17 @@
   <section class="card pilot-diagnostic-card"><h2>最新のおすすめ30問シミュレーション</h2>
     <p>選定問題数 {{ diagnostics.adaptive_count }} / 重複なし {{ diagnostics.adaptive_unique_questions }} / 対象Node数 {{ diagnostics.adaptive_unique_nodes }}</p>
     <p>修復 {{ diagnostics.adaptive_groups.get('repair', 0) }} / 確認 {{ diagnostics.adaptive_groups.get('checking', 0) }} / 探索 {{ diagnostics.adaptive_groups.get('exploration', 0) }} / 定着維持 {{ diagnostics.adaptive_groups.get('maintenance', 0) }}</p>
+    <details class="adaptive-audit"><summary>30問の選定理由を見る</summary>
+      <div class="adaptive-audit-actions"><button type="button" data-copy-q-ids="{{ diagnostics.adaptive_audit_text }}">30問監査データをコピー</button><span aria-live="polite"></span></div>
+      <ol class="adaptive-audit-list">{% for item in diagnostics.adaptive_details %}<li class="adaptive-audit-item">
+        <h3>{{ item.rank }}位　{{ item.question_id }}</h3>
+        <p><b>Knowledge Node：</b>{{ item.canonical_node_id }}　{{ item.node_label }}</p>
+        <p><b>現在状態：</b>{{ item.state_label }}</p>
+        <p><b>分類：</b>{{ item.group_label }}</p>
+        <p><b>選定理由：</b>{{ item.reason_label }}</p>
+        <p><b>priority：</b>{{ item.priority_score }}</p>
+      </li>{% endfor %}</ol>
+    </details>
   </section>
   <section class="card pilot-diagnostic-card"><h2>分野横断の弱点候補</h2>{% for item in diagnostics.weakness %}<p>知識項目 {{ item.canonical_node_id }}：異なる問題での誤答 {{ item.wrong_question_count }} / 自信あり誤答 {{ item.confident_wrong_count }}</p>{% else %}<p>該当なし</p>{% endfor %}</section>
   <a class="back-to-top" href="{{ url_for('goukaku_ui.supporter_dashboard',token=supporter_token,learner_user_id=learner_id) }}">学習見守りへ戻る</a>

@@ -1,4 +1,5 @@
 import os
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 os.environ.setdefault("OPENAI_API_KEY", "x")
 os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "x")
@@ -9,7 +10,7 @@ import pilot_diagnostics
 from app import app
 from database import set_supporter_link, deactivate_supporter_link
 from goukaku_ui import create_supporter_token
-from pilot_diagnostics import build_pilot_diagnostics
+from pilot_diagnostics import build_adaptive_selection_audit, build_pilot_diagnostics
 
 NOW = datetime(2026, 8, 30, tzinfo=timezone.utc)
 
@@ -34,6 +35,8 @@ def test_period_behavior_confidence_unknown_and_user_isolation():
     assert seven["touched_nodes"] == 5
     assert sum(seven["state_counts"].values()) == seven["canonical_node_total"]
     assert seven["adaptive_count"] == seven["adaptive_unique_questions"] == 30
+    assert [item["question_id"] for item in seven["adaptive_details"]]
+    assert Counter(item["priority_group"] for item in seven["adaptive_details"]) == Counter(seven["adaptive_groups"])
 
 def test_diagnostics_route_requires_active_supporter_and_not_on_personal_dashboard():
     set_supporter_link("supporter","learner"); token=create_supporter_token("supporter"); client=app.test_client()
@@ -47,6 +50,9 @@ def test_diagnostics_route_requires_active_supporter_and_not_on_personal_dashboa
     assert 'class="pilot-period-tab active" aria-current="page"' in html
     for label in ("学習範囲", "理解状態", "修復・定着", "最新のおすすめ30問シミュレーション", "分野横断の弱点候補"):
         assert label in html
+    assert "30問の選定理由を見る" in html
+    assert "30問監査データをコピー" in html
+    assert html.count('class="adaptive-audit-item"') == 30
     assert "LT学習診断" not in client.get(f"/goukaku-no-michi?token=invalid").get_data(as_text=True)
     deactivate_supporter_link("supporter","learner"); assert client.get(path).status_code == 403
 
@@ -82,3 +88,31 @@ def test_state_and_repair_retention_counts_use_pure_replay(monkeypatch):
     assert result["repaired_to_repairing"] == 1
     assert result["due_to_stable"] == 1
     assert result["due_to_repairing"] == 1
+
+
+def test_adaptive_audit_preserves_selector_order_and_uses_formal_node_label():
+    selected = [
+        {
+            "question_id": "Q1", "canonical_node_id": "KN0001", "state": "repairing",
+            "priority_group": "repair", "priority_reason": "confident_wrong",
+            "priority_score": 950, "strong_repair_confirmation": True,
+            "same_question_repeat": False,
+        },
+        {
+            "question_id": "Q2", "canonical_node_id": "KN0002", "state": "unseen",
+            "priority_group": "exploration", "priority_reason": "unseen",
+            "priority_score": 310, "strong_repair_confirmation": False,
+            "same_question_repeat": False,
+        },
+    ]
+    original = [dict(item) for item in selected]
+    details, audit_text = build_adaptive_selection_audit(selected)
+    assert selected == original
+    assert [item["question_id"] for item in details] == ["Q1", "Q2"]
+    assert [item["rank"] for item in details] == [1, 2]
+    assert details[0]["node_label"] != "名称未登録"
+    assert details[0]["state_label"] == "修復中"
+    assert details[0]["group_label"] == "修復"
+    assert "自信あり誤答" in details[0]["reason_label"]
+    assert "strong別問題の修復確認候補" in details[0]["reason_label"]
+    assert "1. Q1 / KN0001" in audit_text and "2. Q2 / KN0002" in audit_text
