@@ -1,0 +1,2386 @@
+{
+  "version": "0.1-shadow",
+  "relation_review_packets": [
+    {
+      "repair_target_node_id": "KN0238",
+      "repair_target_labels": [
+        "Fickの原理による酸素摂取量の算出"
+      ],
+      "source_question": {
+        "question_id": "Q239",
+        "question_text": "運動中の心拍出量が10L/分、動静脈酸素較差が100mL/Lであった。Fickの原理から求める酸素摂取量はどれか。",
+        "display_answer": "E",
+        "explanation": "Fickの原理では、酸素摂取量は心拍出量と動静脈酸素較差の積で求める。単位をそろえると、10L/分×100mL/L＝1,000mL/分となる。運動時の酸素摂取量は、循環による酸素運搬量と末梢組織での酸素抜き取りの双方で決まる。",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "prerequisite_nodes": [
+          "Fickの原理では、酸素摂取量は心拍出量と動静脈酸素較差の積で求める。",
+          "10×100＝1,000mL/分である。",
+          "単位をそろえると、10L/分×100mL/L＝1,000mL/分となる。"
+        ],
+        "safety": "none"
+      },
+      "candidate_confirmations": [
+        {
+          "relation_id": "KNR0012",
+          "relation_type": "PREREQUISITE",
+          "related_node_id": "KN0467",
+          "candidate_question_ids": [
+            "Q475"
+          ],
+          "confidence": "high",
+          "review_status": "reviewed_candidate",
+          "verification_role": "diagnostic_only",
+          "formally_enabled_for_repair": false,
+          "candidate_questions": [
+            {
+              "question_id": "Q475",
+              "question_text": "心肺運動負荷試験で用いる酸素脈〈VO2/HR〉が主に反映するのはどれか。",
+              "display_answer": "E",
+              "explanation": "酸素脈〈VO₂/HR〉は1心拍あたりの酸素摂取量を表す。Fickの原理から、心拍出量＝心拍数×一回拍出量であるため、VO₂/HRは一回拍出量と動静脈酸素較差の積を反映する。運動中の循環応答を見る指標として用いられる。",
+              "task": "finding_interpretation",
+              "primary_ability": "INTERPRET",
+              "secondary_ability": null,
+              "prerequisite_nodes": [
+                "Fickの原理でVO2＝心拍出量×動静脈酸素較差となること",
+                "VO2/HRは一回拍出量×動静脈酸素較差を反映すること"
+              ],
+              "safety": "none"
+            }
+          ],
+          "why_it_may_confirm": "The relation metadata says the candidate question requires or transfers the repair target concept, but that claim still needs human review.",
+          "false_positive_concern": "A learner may answer from the target question's surrounding knowledge without demonstrating the source Node itself."
+        }
+      ],
+      "recommended_decision": "UNCERTAIN",
+      "human_review_required": true,
+      "formal_repair_enabled": false
+    },
+    {
+      "repair_target_node_id": "KN0259",
+      "repair_target_labels": [
+        "MIPが反映する吸気筋力"
+      ],
+      "source_question": {
+        "question_id": "Q260",
+        "question_text": "最大吸気口腔内圧〈MIP〉が主に反映するのはどれか。",
+        "display_answer": "B",
+        "explanation": "MIPは閉鎖されたマウスピースに対して最大吸気努力を行った際の陰圧で、横隔膜など吸気筋の総合的な筋力指標である。MEPは呼気筋力を反映する。類題では圧の最大値は筋力、スパイロメトリーの流量は気流制限、DLCOは拡散能と区別する。",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "prerequisite_nodes": [
+          "類題では圧の最大値は筋力、スパイロメトリーの流量は気流制限、DLCOは拡散能と区別する。",
+          "MIPは閉鎖されたマウスピースに対して最大吸気努力を行った際の陰圧で、横隔膜など吸気筋の総合的な筋力指標である。",
+          "MEPは呼気筋力を反映する。"
+        ],
+        "safety": "none"
+      },
+      "candidate_confirmations": [
+        {
+          "relation_id": "KNR0003",
+          "relation_type": "PREREQUISITE",
+          "related_node_id": "KN0381",
+          "candidate_question_ids": [
+            "Q386"
+          ],
+          "confidence": "high",
+          "review_status": "reviewed_candidate",
+          "verification_role": "diagnostic_only",
+          "formally_enabled_for_repair": false,
+          "candidate_questions": [
+            {
+              "question_id": "Q386",
+              "question_text": "安定期COPD患者にthreshold deviceを用いた吸気筋トレーニングを開始する。最大吸気口腔内圧〈MIP〉が60 cmH₂Oであった。初期負荷をMIPの30％に設定する場合はどれか。",
+              "display_answer": "A",
+              "explanation": "MIP 60 cmH₂Oの30％は、60×0.30＝18 cmH₂Oである。吸気筋トレーニングでは測定の再現性を確認し、患者の息切れ、疲労、呼吸パターンを監視しながら開始する。一定期間ごとにMIPと症状を再評価し、耐容性に応じて負荷や時間を漸増する。数値だけでなく正しい機器操作も確認する。",
+              "task": "intervention_selection",
+              "primary_ability": "PRESCRIBE",
+              "secondary_ability": null,
+              "prerequisite_nodes": [
+                "吸気筋トレーニングでは測定の再現性を確認し、患者の息切れ、疲労、呼吸パターンを監視しながら開始する。",
+                "数値だけでなく正しい機器操作も確認する。",
+                "一定期間ごとにMIPと症状を再評価し、耐容性に応じて負荷や時間を漸増する。"
+              ],
+              "safety": "none"
+            }
+          ],
+          "why_it_may_confirm": "The relation metadata says the candidate question requires or transfers the repair target concept, but that claim still needs human review.",
+          "false_positive_concern": "A learner may answer from the target question's surrounding knowledge without demonstrating the source Node itself."
+        }
+      ],
+      "recommended_decision": "UNCERTAIN",
+      "human_review_required": true,
+      "formal_repair_enabled": false
+    },
+    {
+      "repair_target_node_id": "KN0305",
+      "repair_target_labels": [
+        "口すぼめ呼吸による呼気時気道内圧維持と気道虚脱抑制"
+      ],
+      "source_question": {
+        "question_id": "Q307",
+        "question_text": "COPD患者に口すぼめ呼吸を指導する主な目的はどれか。",
+        "display_answer": "B",
+        "explanation": "口すぼめ呼吸は呼気抵抗をつくり、呼気時の気道内圧を保って末梢気道の動的虚脱を抑え、呼気を延長する。閉塞性障害では「吐きやすくする」機序を理解する。",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "prerequisite_nodes": [
+          "閉塞性障害では「吐きやすくする」機序を理解する。",
+          "口すぼめ呼吸は呼気抵抗をつくり、呼気時の気道内圧を保って末梢気道の動的虚脱を抑え、呼気を延長する。",
+          "呼気時の気道虚脱を軽減する。"
+        ],
+        "safety": "none"
+      },
+      "candidate_confirmations": [
+        {
+          "relation_id": "KNR0006",
+          "relation_type": "PREREQUISITE",
+          "related_node_id": "KN1373",
+          "candidate_question_ids": [
+            "Q1397"
+          ],
+          "confidence": "high",
+          "review_status": "reviewed_candidate",
+          "verification_role": "diagnostic_only",
+          "formally_enabled_for_repair": false,
+          "candidate_questions": [
+            {
+              "question_id": "Q1397",
+              "question_text": "口すぼめ呼吸の指導で正しいのはどれか。",
+              "display_answer": "3",
+              "explanation": "口すぼめ呼吸はCOPDで呼気時の気道虚脱を防ぎ、呼気を延長する。",
+              "task": "intervention_selection",
+              "primary_ability": "PRESCRIBE",
+              "secondary_ability": "INTERPRET",
+              "prerequisite_nodes": [
+                "口すぼめ呼吸はCOPDで呼気時の気道虚脱を防ぎ、呼気を延長する。",
+                "COPDに適用。"
+              ],
+              "safety": "none"
+            }
+          ],
+          "why_it_may_confirm": "The relation metadata says the candidate question requires or transfers the repair target concept, but that claim still needs human review.",
+          "false_positive_concern": "A learner may answer from the target question's surrounding knowledge without demonstrating the source Node itself."
+        },
+        {
+          "relation_id": "KNR0007",
+          "relation_type": "PREREQUISITE",
+          "related_node_id": "KN1003",
+          "candidate_question_ids": [
+            "Q1013"
+          ],
+          "confidence": "high",
+          "review_status": "reviewed_candidate",
+          "verification_role": "diagnostic_only",
+          "formally_enabled_for_repair": false,
+          "candidate_questions": [
+            {
+              "question_id": "Q1013",
+              "question_text": "呼吸障害に対する理学療法として、口すぼめ呼吸が有効なのはどれか。",
+              "display_answer": "1",
+              "explanation": "COPDでは口すぼめ呼吸により呼気時の気道内圧を保ち、末梢気道の虚脱を抑えて呼気を延長できる。",
+              "task": "intervention_selection",
+              "primary_ability": "PRESCRIBE",
+              "secondary_ability": null,
+              "prerequisite_nodes": [
+                "COPDでは口すぼめ呼吸により呼気時の気道内圧を保ち、末梢気道の虚脱を抑えて呼気を延長できる。",
+                "呼吸障害に対する理学療法として、口すぼめ呼吸が有効なのはどれか。"
+              ],
+              "safety": "none"
+            }
+          ],
+          "why_it_may_confirm": "The relation metadata says the candidate question requires or transfers the repair target concept, but that claim still needs human review.",
+          "false_positive_concern": "A learner may answer from the target question's surrounding knowledge without demonstrating the source Node itself."
+        }
+      ],
+      "recommended_decision": "UNCERTAIN",
+      "human_review_required": true,
+      "formal_repair_enabled": false
+    },
+    {
+      "repair_target_node_id": "KN0358",
+      "repair_target_labels": [
+        "ACBTの呼吸コントロール・胸郭拡張・強制呼出法"
+      ],
+      "source_question": {
+        "question_id": "Q362",
+        "question_text": "気管支拡張症患者に自律的な排痰法としてactive cycle of breathing techniques〈ACBT〉を指導する。ACBTを構成する基本的な組合せはどれか。",
+        "display_answer": "B",
+        "explanation": "ACBTは、安静で力みの少ない呼吸コントロール、深吸気と必要に応じた吸気保持を用いる胸郭拡張運動、低～中肺気量からのハフィングを中心とする強制呼出手技で構成する。これらを循環させ、末梢から中枢へ分泌物を移動させる。強い咳だけを反復すると疲労や気道虚脱を招くことがある。",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "prerequisite_nodes": [
+          "ACBTは、安静で力みの少ない呼吸コントロール、深吸気と必要に応じた吸気保持を用いる胸郭拡張運動、低～中肺気量からのハフィングを中心とする強制呼出手技で構成する。",
+          "これらを循環させ、末梢から中枢へ分泌物を移動させる。",
+          "強い咳だけを反復すると疲労や気道虚脱を招くことがある。"
+        ],
+        "safety": "none"
+      },
+      "candidate_confirmations": [
+        {
+          "relation_id": "KNR0009",
+          "relation_type": "PREREQUISITE",
+          "related_node_id": "KN0222",
+          "candidate_question_ids": [
+            "Q223"
+          ],
+          "confidence": "high",
+          "review_status": "reviewed_candidate",
+          "verification_role": "diagnostic_only",
+          "formally_enabled_for_repair": false,
+          "candidate_questions": [
+            {
+              "question_id": "Q223",
+              "question_text": "74歳の男性。気管支拡張症である。朝方に多量の喀痰を認め、自力での排痰が困難となっている。SpO₂は95％で全身状態は安定している。理学療法として最も適切なのはどれか。",
+              "display_answer": "A",
+              "explanation": "気管支拡張症で喀痰が多く、自力排痰が困難である。全身状態は安定しているため、Active Cycle of Breathing Techniques（ACBT）による気道クリアランスが適切である。",
+              "task": "intervention_selection",
+              "primary_ability": "PRESCRIBE",
+              "secondary_ability": null,
+              "prerequisite_nodes": [
+                "気道分泌物貯留",
+                "気道クリアランス",
+                "ACBTの構成"
+              ],
+              "safety": "none"
+            }
+          ],
+          "why_it_may_confirm": "The relation metadata says the candidate question requires or transfers the repair target concept, but that claim still needs human review.",
+          "false_positive_concern": "A learner may answer from the target question's surrounding knowledge without demonstrating the source Node itself."
+        }
+      ],
+      "recommended_decision": "UNCERTAIN",
+      "human_review_required": true,
+      "formal_repair_enabled": false
+    },
+    {
+      "repair_target_node_id": "KN0666",
+      "repair_target_labels": [
+        "Bohr効果により酸素解離曲線が右方移動し、ヘモグロビンから酸素が解離しやすくなる",
+        "組織でpHが低下すると酸素解離曲線が右方移動し、ヘモグロビンから酸素が放出されやすくなるBohr効果が起こる"
+      ],
+      "source_question": {
+        "question_id": "Q674",
+        "question_text": "末梢組織への酸素供給を増やすのはどれか。",
+        "display_answer": "1",
+        "explanation": "組織でpHが低下すると酸素解離曲線が右方移動し、ヘモグロビンから酸素が放出されやすくなるBohr効果が起こる。したがって1が正しい。",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "prerequisite_nodes": [
+          "したがって1が正しい。",
+          "組織でpHが低下すると酸素解離曲線が右方移動し、ヘモグロビンから酸素が放出されやすくなるBohr効果が起こる。"
+        ],
+        "safety": "none"
+      },
+      "candidate_confirmations": [
+        {
+          "relation_id": "KNR0011",
+          "relation_type": "PREREQUISITE",
+          "related_node_id": "KN0316",
+          "candidate_question_ids": [
+            "Q318"
+          ],
+          "confidence": "high",
+          "review_status": "reviewed_candidate",
+          "verification_role": "diagnostic_only",
+          "formally_enabled_for_repair": false,
+          "candidate_questions": [
+            {
+              "question_id": "Q318",
+              "question_text": "発熱と代謝性アシドーシスがある患者で、ヘモグロビン酸素解離曲線に生じる変化はどれか。",
+              "display_answer": "A",
+              "explanation": "体温上昇とアシドーシスによる水素イオン濃度上昇はいずれも、ヘモグロビン酸素解離曲線を右方へ移動させる。右方移動ではヘモグロビンの酸素親和性が低下し、同じ酸素分圧でも末梢組織へ酸素を放出しやすくなる。発熱と代謝性アシドーシスが同方向に作用する点が判断の決め手である。",
+              "task": "finding_interpretation",
+              "primary_ability": "INTERPRET",
+              "secondary_ability": null,
+              "prerequisite_nodes": [
+                "右方移動ではヘモグロビンの酸素親和性が低下し、同じ酸素分圧でも末梢組織へ酸素を放出しやすくなる。",
+                "発熱と代謝性アシドーシスが同方向に作用する点が判断の決め手である。",
+                "体温上昇とpH低下により右方移動し、組織への酸素解離が促進される。"
+              ],
+              "safety": "none"
+            }
+          ],
+          "why_it_may_confirm": "The relation metadata says the candidate question requires or transfers the repair target concept, but that claim still needs human review.",
+          "false_positive_concern": "A learner may answer from the target question's surrounding knowledge without demonstrating the source Node itself."
+        }
+      ],
+      "recommended_decision": "UNCERTAIN",
+      "human_review_required": true,
+      "formal_repair_enabled": false
+    },
+    {
+      "repair_target_node_id": "KN0737",
+      "repair_target_labels": [
+        "アドレナリンは肝・筋のグリコーゲン分解や糖新生を促進し、血糖を上昇させる"
+      ],
+      "source_question": {
+        "question_id": "Q745",
+        "question_text": "血糖を上昇させる作用のあるホルモンはどれか。",
+        "display_answer": "1",
+        "explanation": "アドレナリンは肝・筋のグリコーゲン分解や糖新生を促進し、血糖を上昇させる。したがって1が正しい。",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "prerequisite_nodes": [
+          "したがって1が正しい。",
+          "アドレナリンは肝・筋のグリコーゲン分解や糖新生を促進し、血糖を上昇させる。"
+        ],
+        "safety": "none"
+      },
+      "candidate_confirmations": [
+        {
+          "relation_id": "KNR0001",
+          "relation_type": "PREREQUISITE",
+          "related_node_id": "KN1195",
+          "candidate_question_ids": [
+            "Q1209"
+          ],
+          "confidence": "high",
+          "review_status": "reviewed_candidate",
+          "verification_role": "diagnostic_only",
+          "formally_enabled_for_repair": false,
+          "candidate_questions": [
+            {
+              "question_id": "Q1209",
+              "question_text": "血糖を上昇させる作用のあるホルモンはどれか。2つ選べ。",
+              "display_answer": "1・4",
+              "explanation": "アドレナリンとグルカゴンはいずれも肝グリコーゲン分解や糖新生を促し血糖を上昇させる。",
+              "task": "fact_recall",
+              "primary_ability": "KNOW",
+              "secondary_ability": null,
+              "prerequisite_nodes": [
+                "アドレナリンとグルカゴンはいずれも肝グリコーゲン分解や糖新生を促し血糖を上昇させる。",
+                "グルカゴンは血糖上昇。",
+                "アドレナリンは血糖上昇。"
+              ],
+              "safety": "none"
+            }
+          ],
+          "why_it_may_confirm": "The relation metadata says the candidate question requires or transfers the repair target concept, but that claim still needs human review.",
+          "false_positive_concern": "A learner may answer from the target question's surrounding knowledge without demonstrating the source Node itself."
+        }
+      ],
+      "recommended_decision": "UNCERTAIN",
+      "human_review_required": true,
+      "formal_repair_enabled": false
+    },
+    {
+      "repair_target_node_id": "KN0922",
+      "repair_target_labels": [
+        "Trendelenburg徴候は股関節外転筋機能不全で生じ、変形性股関節症で中殿筋機能低下を伴うと出現しやすい",
+        "変形性股関節症では股関節外転筋機能低下によりTrendelenburg徴候がみられる"
+      ],
+      "source_question": {
+        "question_id": "Q931",
+        "question_text": "Trendelenburg徴候が生じやすいのはどれか。",
+        "display_answer": "1",
+        "explanation": "Trendelenburg徴候は股関節外転筋機能不全で生じ、変形性股関節症で中殿筋機能低下を伴うと出現しやすい。1が正しい。",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "prerequisite_nodes": [
+          "Trendelenburg徴候は股関節外転筋機能不全で生じ、変形性股関節症で中殿筋機能低下を伴うと出現しやすい。",
+          "Trendelenburg徴候が生じやすいのはどれか。"
+        ],
+        "safety": "none"
+      },
+      "candidate_confirmations": [
+        {
+          "relation_id": "KNR0013",
+          "relation_type": "PREREQUISITE",
+          "related_node_id": "KN0112",
+          "candidate_question_ids": [
+            "Q112"
+          ],
+          "confidence": "high",
+          "review_status": "reviewed_candidate",
+          "verification_role": "diagnostic_only",
+          "formally_enabled_for_repair": false,
+          "candidate_questions": [
+            {
+              "question_id": "Q112",
+              "question_text": "67歳の女性。右変形性股関節症で保存療法中である。歩行開始時に右股関節痛を認めるが、歩行を続けると軽減する。Trendelenburg徴候は陽性で、股関節外転筋MMT3である。股関節屈曲可動域は110°、脚長差は認めない。歩行能力改善を目的として最も優先すべき介入はどれか。",
+              "display_answer": "A",
+              "explanation": "Trendelenburg徴候陽性で股関節外転筋MMT3であり、右立脚期の骨盤支持能力が低下している。脚長差はなく、屈曲ROMも110°保たれているため、歩行能力改善には外転筋機能を高め、片脚支持時に骨盤を水平に制御する練習を優先することが適切である。",
+              "task": "intervention_selection",
+              "primary_ability": "PRESCRIBE",
+              "secondary_ability": "INTERPRET",
+              "prerequisite_nodes": [
+                "Trendelenburg",
+                "股外転筋"
+              ],
+              "safety": "none"
+            }
+          ],
+          "why_it_may_confirm": "The relation metadata says the candidate question requires or transfers the repair target concept, but that claim still needs human review.",
+          "false_positive_concern": "A learner may answer from the target question's surrounding knowledge without demonstrating the source Node itself."
+        }
+      ],
+      "recommended_decision": "UNCERTAIN",
+      "human_review_required": true,
+      "formal_repair_enabled": false
+    },
+    {
+      "repair_target_node_id": "KN0992",
+      "repair_target_labels": [
+        "脊髄性運動失調では深部感覚障害を視覚で代償するため、閉眼で動揺が増えるRomberg徴候陽性が典型的である"
+      ],
+      "source_question": {
+        "question_id": "Q1002",
+        "question_text": "脊髄性運動失調症でみられるのはどれか。",
+        "display_answer": "5",
+        "explanation": "脊髄性運動失調では深部感覚障害を視覚で代償するため、閉眼で動揺が増えるRomberg徴候陽性が典型的である。",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "prerequisite_nodes": [
+          "脊髄性運動失調では深部感覚障害を視覚で代償するため、閉眼で動揺が増えるRomberg徴候陽性が典型的である。",
+          "脊髄性運動失調症でみられるのはどれか。"
+        ],
+        "safety": "none"
+      },
+      "candidate_confirmations": [
+        {
+          "relation_id": "KNR0005",
+          "relation_type": "PREREQUISITE",
+          "related_node_id": "KN0304",
+          "candidate_question_ids": [
+            "Q306"
+          ],
+          "confidence": "high",
+          "review_status": "reviewed_candidate",
+          "verification_role": "diagnostic_only",
+          "formally_enabled_for_repair": false,
+          "candidate_questions": [
+            {
+              "question_id": "Q306",
+              "question_text": "開眼では立位を保てるが、閉眼すると動揺が著明に増大する。主に障害が疑われるのはどれか。",
+              "display_answer": "E",
+              "explanation": "閉眼で動揺が増えるRomberg徴候陽性は、視覚で代償されていた深部感覚障害を示し、脊髄後索系障害を疑う。小脳性運動失調では開眼時から不安定になりやすい。",
+              "task": "finding_interpretation",
+              "primary_ability": "INTERPRET",
+              "secondary_ability": null,
+              "prerequisite_nodes": [
+                "小脳性運動失調では開眼時から不安定になりやすい。",
+                "閉眼で動揺が増えるRomberg徴候陽性は、視覚で代償されていた深部感覚障害を示し、脊髄後索系障害を疑う。",
+                "深部感覚入力が障害される。"
+              ],
+              "safety": "none"
+            }
+          ],
+          "why_it_may_confirm": "The relation metadata says the candidate question requires or transfers the repair target concept, but that claim still needs human review.",
+          "false_positive_concern": "A learner may answer from the target question's surrounding knowledge without demonstrating the source Node itself."
+        }
+      ],
+      "recommended_decision": "UNCERTAIN",
+      "human_review_required": true,
+      "formal_repair_enabled": false
+    },
+    {
+      "repair_target_node_id": "KN1138",
+      "repair_target_labels": [
+        "過換気ではCO2が過剰に排出されPaCO2が低下し、呼吸性アルカローシスとなる"
+      ],
+      "source_question": {
+        "question_id": "Q1150",
+        "question_text": "酸塩基平衡で正しいのはどれか。",
+        "display_answer": "3",
+        "explanation": "過換気ではCO2が過剰に排出されPaCO2が低下し、呼吸性アルカローシスとなる。",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "prerequisite_nodes": [
+          "過換気ではCO2が過剰に排出されPaCO2が低下し、呼吸性アルカローシスとなる。",
+          "酸塩基平衡で正しいのはどれか。"
+        ],
+        "safety": "none"
+      },
+      "candidate_confirmations": [
+        {
+          "relation_id": "KNR0004",
+          "relation_type": "TRANSFER",
+          "related_node_id": "KN0245",
+          "candidate_question_ids": [
+            "Q246"
+          ],
+          "confidence": "medium",
+          "review_status": "pending_review",
+          "verification_role": "transfer_check",
+          "formally_enabled_for_repair": false,
+          "candidate_questions": [
+            {
+              "question_id": "Q246",
+              "question_text": "安定期COPD患者の動脈血液ガス分析は、pH 7.37、PaCO2 60mmHg、HCO3－ 32mEq/Lであった。酸塩基平衡の判定で最も適切なのはどれか。",
+              "display_answer": "A",
+              "explanation": "PaCO2上昇は呼吸性アシドーシス方向の変化で、HCO3－上昇は腎による代償を示す。pHは正常範囲内でも7.40より酸性側であり、安定期COPDという経過から慢性の代償性呼吸性アシドーシスと判断する。類題ではpH、PaCO2、HCO3－の順に主病態と代償方向を確認する。",
+              "task": "finding_interpretation",
+              "primary_ability": "INTERPRET",
+              "secondary_ability": null,
+              "prerequisite_nodes": [
+                "類題ではpH、PaCO2、HCO3－の順に主病態と代償方向を確認する。",
+                "PaCO2上昇は呼吸性アシドーシス方向の変化で、HCO3－上昇は腎による代償を示す。",
+                "pHは正常範囲内でも7.40より酸性側であり、安定期COPDという経過から慢性の代償性呼吸性アシドーシスと判断する。"
+              ],
+              "safety": "none"
+            }
+          ],
+          "why_it_may_confirm": "The relation metadata says the candidate question requires or transfers the repair target concept, but that claim still needs human review.",
+          "false_positive_concern": "A learner may answer from the target question's surrounding knowledge without demonstrating the source Node itself."
+        }
+      ],
+      "recommended_decision": "UNCERTAIN",
+      "human_review_required": true,
+      "formal_repair_enabled": false
+    },
+    {
+      "repair_target_node_id": "KN1155",
+      "repair_target_labels": [
+        "神経性間欠性跛行が特徴で、腰椎屈曲で症状が軽減し、伸展で増悪しやすい"
+      ],
+      "source_question": {
+        "question_id": "Q1168",
+        "question_text": "腰部脊柱管狭窄症で正しいのはどれか。",
+        "display_answer": "3",
+        "explanation": "腰部脊柱管狭窄症では神経性間欠性跛行が特徴で、腰椎屈曲で症状が軽減し、伸展で増悪しやすい。",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "prerequisite_nodes": [
+          "腰部脊柱管狭窄症では神経性間欠性跛行が特徴で、腰椎屈曲で症状が軽減し、伸展で増悪しやすい。",
+          "間欠性跛行を生じる。"
+        ],
+        "safety": "none"
+      },
+      "candidate_confirmations": [
+        {
+          "relation_id": "KNR0008",
+          "relation_type": "PREREQUISITE",
+          "related_node_id": "KN0858",
+          "candidate_question_ids": [
+            "Q867"
+          ],
+          "confidence": "high",
+          "review_status": "reviewed_candidate",
+          "verification_role": "diagnostic_only",
+          "formally_enabled_for_repair": false,
+          "candidate_questions": [
+            {
+              "question_id": "Q867",
+              "question_text": "腰椎変性すべり症で歩行中に殿部から下肢にかけて疼痛が出現したときの対応で正しいのはどれか。",
+              "display_answer": "1",
+              "explanation": "腰椎変性すべり症では腰部脊柱管狭窄による神経性間欠性跛行を伴うことが多く、腰椎屈曲で症状が軽減する。歩行中に痛みが出たらしゃがみ込むのが有効で1が正しい。",
+              "task": "intervention_selection",
+              "primary_ability": "PRESCRIBE",
+              "secondary_ability": "INTERPRET",
+              "prerequisite_nodes": [
+                "腰椎変性すべり症では腰部脊柱管狭窄による神経性間欠性跛行を伴うことが多く、腰椎屈曲で症状が軽減する。",
+                "歩行中に痛みが出たらしゃがみ込むのが有効で1が正しい。",
+                "腰椎屈曲位で脊柱管が広がり症状が軽減しやすい。"
+              ],
+              "safety": "moderate"
+            }
+          ],
+          "why_it_may_confirm": "The relation metadata says the candidate question requires or transfers the repair target concept, but that claim still needs human review.",
+          "false_positive_concern": "A learner may answer from the target question's surrounding knowledge without demonstrating the source Node itself."
+        },
+        {
+          "relation_id": "KNR0010",
+          "relation_type": "PREREQUISITE",
+          "related_node_id": "KN0282",
+          "candidate_question_ids": [
+            "Q284"
+          ],
+          "confidence": "high",
+          "review_status": "reviewed_candidate",
+          "verification_role": "diagnostic_only",
+          "formally_enabled_for_repair": false,
+          "candidate_questions": [
+            {
+              "question_id": "Q284",
+              "question_text": "歩行で両下肢痛が出現するが、自転車走行では症状が軽い。最も考えられるのはどれか。",
+              "display_answer": "C",
+              "explanation": "腰部脊柱管狭窄症の神経性間欠跛行は腰椎伸展で悪化し、前屈位となる自転車や手押し車で軽減しやすい。類題では運動量より姿勢依存性を鑑別点にする。",
+              "task": "finding_interpretation",
+              "primary_ability": "INTERPRET",
+              "secondary_ability": null,
+              "prerequisite_nodes": [
+                "類題では運動量より姿勢依存性を鑑別点にする。",
+                "腰部脊柱管狭窄症の神経性間欠跛行は腰椎伸展で悪化し、前屈位となる自転車や手押し車で軽減しやすい。",
+                "前屈による軽減が特徴的である。"
+              ],
+              "safety": "none"
+            }
+          ],
+          "why_it_may_confirm": "The relation metadata says the candidate question requires or transfers the repair target concept, but that claim still needs human review.",
+          "false_positive_concern": "A learner may answer from the target question's surrounding knowledge without demonstrating the source Node itself."
+        }
+      ],
+      "recommended_decision": "UNCERTAIN",
+      "human_review_required": true,
+      "formal_repair_enabled": false
+    },
+    {
+      "repair_target_node_id": "KN1391",
+      "repair_target_labels": [
+        "自律神経の節前線維末端では交感・副交感ともアセチルコリンが放出される"
+      ],
+      "source_question": {
+        "question_id": "Q1416",
+        "question_text": "自律神経で正しいのはどれか。",
+        "display_answer": "5",
+        "explanation": "自律神経の節前線維末端では交感・副交感ともアセチルコリンが放出される。",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "prerequisite_nodes": [
+          "自律神経の節前線維末端では交感・副交感ともアセチルコリンが放出される。",
+          "節前線維末端はACh。"
+        ],
+        "safety": "none"
+      },
+      "candidate_confirmations": [
+        {
+          "relation_id": "KNR0002",
+          "relation_type": "PREREQUISITE",
+          "related_node_id": "KN1460",
+          "candidate_question_ids": [
+            "Q1485"
+          ],
+          "confidence": "high",
+          "review_status": "reviewed_candidate",
+          "verification_role": "diagnostic_only",
+          "formally_enabled_for_repair": false,
+          "candidate_questions": [
+            {
+              "question_id": "Q1485",
+              "question_text": "交感神経で正しいのはどれか。",
+              "display_answer": "5",
+              "explanation": "交感神経節前線維末端からはアセチルコリンが放出される。",
+              "task": "fact_recall",
+              "primary_ability": "KNOW",
+              "secondary_ability": null,
+              "prerequisite_nodes": [
+                "交感神経節前線維末端からはアセチルコリンが放出される。",
+                "節前線維末端はACh。"
+              ],
+              "safety": "none"
+            }
+          ],
+          "why_it_may_confirm": "The relation metadata says the candidate question requires or transfers the repair target concept, but that claim still needs human review.",
+          "false_positive_concern": "A learner may answer from the target question's surrounding knowledge without demonstrating the source Node itself."
+        }
+      ],
+      "recommended_decision": "UNCERTAIN",
+      "human_review_required": true,
+      "formal_repair_enabled": false
+    }
+  ],
+  "singleton_written_review_packets": [
+    {
+      "canonical_node_id": "KN0311",
+      "field": "解剖学",
+      "safety": "none",
+      "task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "source_question_id": "Q313",
+      "source_display_answer": "D",
+      "knowledge_node_label": "前骨間神経麻痺でみられるOKサイン障害",
+      "written_prompt": "「前骨間神経麻痺でみられるOKサイン障害」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "前骨間神経麻痺でみられるOKサイン障害",
+          "前骨間神経は長母指屈筋と示指の深指屈筋などを支配する。障害されると母指IP関節と示指DIP関節を十分に屈曲できず、指尖で円を作るつまみができないため、母指と示指の指腹を合わせる代償的なつまみ方となる。感覚枝を持たない運動神経である点も重要である。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "前骨間神経は長母指屈筋と示指の深指屈筋などを支配する。障害されると母指IP関節と示指DIP関節を十分に屈曲できず、指尖で円を作るつまみができないため、母指と示指の指腹を合わせる代償的なつまみ方となる。感覚枝を持たない運動神経である点も重要である。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "前骨間神経は長母指屈筋と示指の深指屈筋などを支配する。障害されると母指IP関節と示指DIP関節を十分に屈曲できず、指尖で円を作るつまみができないため、母指と示指の指腹を合わせる代償的なつまみ方となる。感覚枝を持たない運動神経である点も重要である。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "前骨間神経麻痺でみられるOKサイン障害",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "D",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0238",
+      "field": "生理学",
+      "safety": "none",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "source_question_id": "Q239",
+      "source_display_answer": "E",
+      "knowledge_node_label": "Fickの原理による酸素摂取量の算出",
+      "written_prompt": "「Fickの原理による酸素摂取量の算出」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "Fickの原理による酸素摂取量の算出",
+          "Fickの原理では、酸素摂取量は心拍出量と動静脈酸素較差の積で求める。単位をそろえると、10L/分×100mL/L＝1,000mL/分となる。運動時の酸素摂取量は、循環による酸素運搬量と末梢組織での酸素抜き取りの双方で決まる。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "Fickの原理では、酸素摂取量は心拍出量と動静脈酸素較差の積で求める。単位をそろえると、10L/分×100mL/L＝1,000mL/分となる。運動時の酸素摂取量は、循環による酸素運搬量と末梢組織での酸素抜き取りの双方で決まる。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "Fickの原理では、酸素摂取量は心拍出量と動静脈酸素較差の積で求める。単位をそろえると、10L/分×100mL/L＝1,000mL/分となる。運動時の酸素摂取量は、循環による酸素運搬量と末梢組織での酸素抜き取りの双方で決まる。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "Fickの原理による酸素摂取量の算出",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "E",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0611",
+      "field": "心理学",
+      "safety": "none",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "source_question_id": "Q619",
+      "source_display_answer": "4",
+      "knowledge_node_label": "意識せずに技能や習慣として再生される記憶は手続き記憶で、非陳述記憶に分類される",
+      "written_prompt": "「意識せずに技能や習慣として再生される記憶は手続き記憶で、非陳述記憶に分類される」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "意識せずに技能や習慣として再生される記憶は手続き記憶で、非陳述記憶に分類される",
+          "意識せずに技能や習慣として再生される記憶は手続き記憶で、非陳述記憶に分類される。自転車操作や楽器演奏などが代表例である。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "意識せずに技能や習慣として再生される記憶は手続き記憶で、非陳述記憶に分類される。自転車操作や楽器演奏などが代表例である。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "意識せずに技能や習慣として再生される記憶は手続き記憶で、非陳述記憶に分類される。自転車操作や楽器演奏などが代表例である。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "意識せずに技能や習慣として再生される記憶は手続き記憶で、非陳述記憶に分類される",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "4",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0236",
+      "field": "人間発達学",
+      "safety": "none",
+      "task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "source_question_id": "Q237",
+      "source_display_answer": "D",
+      "knowledge_node_label": "ATNRの姿勢反応の識別",
+      "written_prompt": "「ATNRの姿勢反応の識別」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "ATNRの姿勢反応の識別",
+          "非対称性緊張性頸反射は、背臥位で頭部を一側へ回旋すると、顔を向けた側の上下肢が伸展し、反対側が屈曲する反応で、フェンシング肢位とも呼ばれる。頸部の屈曲・伸展で上下肢に異なる反応が出る対称性緊張性頸反射と区別する。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "非対称性緊張性頸反射は、背臥位で頭部を一側へ回旋すると、顔を向けた側の上下肢が伸展し、反対側が屈曲する反応で、フェンシング肢位とも呼ばれる。頸部の屈曲・伸展で上下肢に異なる反応が出る対称性緊張性頸反射と区別する。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "非対称性緊張性頸反射は、背臥位で頭部を一側へ回旋すると、顔を向けた側の上下肢が伸展し、反対側が屈曲する反応で、フェンシング肢位とも呼ばれる。頸部の屈曲・伸展で上下肢に異なる反応が出る対称性緊張性頸反射と区別する。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "ATNRの姿勢反応の識別",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "D",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0785",
+      "field": "教育学",
+      "safety": "moderate",
+      "task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "source_question_id": "Q793",
+      "source_display_answer": "1",
+      "knowledge_node_label": "神経筋再教育の目的と適切な実施方法",
+      "written_prompt": "「神経筋再教育の目的と適切な実施方法」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "神経筋再教育の目的と適切な実施方法",
+          "神経筋再教育は残存する神経筋機能を利用して正しい随意運動パターンを再学習する方法で、随意運動の促通を目的とする。したがって1が正しい。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "神経筋再教育は残存する神経筋機能を利用して正しい随意運動パターンを再学習する方法で、随意運動の促通を目的とする。したがって1が正しい。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "神経筋再教育は残存する神経筋機能を利用して正しい随意運動パターンを再学習する方法で、随意運動の促通を目的とする。したがって1が正しい。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "神経筋再教育の目的と適切な実施方法",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "1",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0100",
+      "field": "医学概論",
+      "safety": "critical",
+      "task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "source_question_id": "Q100",
+      "source_display_answer": "C",
+      "knowledge_node_label": "模擬作業で緊急停止反応と安全確認能力を評価する",
+      "written_prompt": "「模擬作業で緊急停止反応と安全確認能力を評価する」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "模擬作業で緊急停止反応と安全確認能力を評価する",
+          "通常の機械操作は可能だが、緊急停止課題では反応時間が遅れ、安全確認も不十分である。製造業への復職では歩行自立や筋力だけでなく、実際の作業環境で緊急時に迅速かつ安全に対応できるかが重要である。模擬環境で安全動作評価と緊急対応訓練を行い、復職可否を判断する。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "通常の機械操作は可能だが、緊急停止課題では反応時間が遅れ、安全確認も不十分である。製造業への復職では歩行自立や筋力だけでなく、実際の作業環境で緊急時に迅速かつ安全に対応できるかが重要である。模擬環境で安全動作評価と緊急対応訓練を行い、復職可否を判断する。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "通常の機械操作は可能だが、緊急停止課題では反応時間が遅れ、安全確認も不十分である。製造業への復職では歩行自立や筋力だけでなく、実際の作業環境で緊急時に迅速かつ安全に対応できるかが重要である。模擬環境で安全動作評価と緊急対応訓練を行い、復職可否を判断する。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "模擬作業で緊急停止反応と安全確認能力を評価する",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "C",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0676",
+      "field": "病理学",
+      "safety": "moderate",
+      "task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "source_question_id": "Q684",
+      "source_display_answer": "2",
+      "knowledge_node_label": "神経原性ショックにおける低血圧・徐脈などの特徴",
+      "written_prompt": "「神経原性ショックにおける低血圧・徐脈などの特徴」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "神経原性ショックにおける低血圧・徐脈などの特徴",
+          "神経原性ショックでは交感神経活動低下により末梢血管拡張と低血圧を生じ、迷走神経優位となって徐脈を伴うのが特徴である。したがって2が正しい。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "神経原性ショックでは交感神経活動低下により末梢血管拡張と低血圧を生じ、迷走神経優位となって徐脈を伴うのが特徴である。したがって2が正しい。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "神経原性ショックでは交感神経活動低下により末梢血管拡張と低血圧を生じ、迷走神経優位となって徐脈を伴うのが特徴である。したがって2が正しい。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "神経原性ショックにおける低血圧・徐脈などの特徴",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "2",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0017",
+      "field": "内科学",
+      "safety": "critical",
+      "task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "source_question_id": "Q17",
+      "source_display_answer": "C",
+      "knowledge_node_label": "バイタルサインと人工呼吸器条件を監視しながら、端座位から立位へ段階的に離床を進めるへの介入選択",
+      "written_prompt": "「バイタルサインと人工呼吸器条件を監視しながら、端座位から立位へ段階的に離床を進めるへの介入選択」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "バイタルサインと人工呼吸器条件を監視しながら、端座位から立位へ段階的に離床を進めるへの介入選択",
+          "人工呼吸管理中であるが、鎮静は終了し指示理解が可能で、酸素化と循環動態も安定している。一方、ICU入室8日目で四肢MMT2〜3、自力起き上がり困難を認め、ICU-acquired weaknessが疑われる。バイタルサインと人工呼吸器条件を監視しながら、端座位から立位へ段階的に離床を進める。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "人工呼吸管理中であるが、鎮静は終了し指示理解が可能で、酸素化と循環動態も安定している。一方、ICU入室8日目で四肢MMT2〜3、自力起き上がり困難を認め、ICU-acquired weaknessが疑われる。バイタルサインと人工呼吸器条件を監視しながら、端座位から立位へ段階的に離床を進める。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "人工呼吸管理中であるが、鎮静は終了し指示理解が可能で、酸素化と循環動態も安定している。一方、ICU入室8日目で四肢MMT2〜3、自力起き上がり困難を認め、ICU-acquired weaknessが疑われる。バイタルサインと人工呼吸器条件を監視しながら、端座位から立位へ段階的に離床を進める。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "バイタルサインと人工呼吸器条件を監視しながら、端座位から立位へ段階的に離床を進めるへの介入選択",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "C",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0013",
+      "field": "神経医学",
+      "safety": "moderate",
+      "task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "source_question_id": "Q13",
+      "source_display_answer": "B",
+      "knowledge_node_label": "易疲労性を踏まえた運動配慮",
+      "written_prompt": "「易疲労性を踏まえた運動配慮」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "易疲労性を踏まえた運動配慮",
+          "重症筋無力症では反復活動により筋力が低下し、休息によって回復する易疲労性と日内変動が特徴である。本症例も朝は軽く、夕方に階段や洗髪で疲労が増している。疲労の少ない時間帯に短時間の運動を分割して行い、過用による症状増悪を避けながら活動能力を維持する。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "重症筋無力症では反復活動により筋力が低下し、休息によって回復する易疲労性と日内変動が特徴である。本症例も朝は軽く、夕方に階段や洗髪で疲労が増している。疲労の少ない時間帯に短時間の運動を分割して行い、過用による症状増悪を避けながら活動能力を維持する。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "重症筋無力症では反復活動により筋力が低下し、休息によって回復する易疲労性と日内変動が特徴である。本症例も朝は軽く、夕方に階段や洗髪で疲労が増している。疲労の少ない時間帯に短時間の運動を分割して行い、過用による症状増悪を避けながら活動能力を維持する。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "易疲労性を踏まえた運動配慮",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "B",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0563",
+      "field": "精神医学",
+      "safety": "none",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "source_question_id": "Q571",
+      "source_display_answer": "2・4",
+      "knowledge_node_label": "断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する",
+      "written_prompt": "「断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する",
+          "アルコール離脱では断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する。病的・複雑酩酊は飲酒時の異常酩酊で、Wernicke脳症は栄養障害である。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "アルコール離脱では断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する。病的・複雑酩酊は飲酒時の異常酩酊で、Wernicke脳症は栄養障害である。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "アルコール離脱では断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する。病的・複雑酩酊は飲酒時の異常酩酊で、Wernicke脳症は栄養障害である。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "2・4",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0028",
+      "field": "小児学",
+      "safety": "critical",
+      "task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "source_question_id": "Q28",
+      "source_display_answer": "C",
+      "knowledge_node_label": "無痛性皮膚障害の自己管理",
+      "written_prompt": "「無痛性皮膚障害の自己管理」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "無痛性皮膚障害の自己管理",
+          "足底の触覚・痛覚が著しく低下しているため、右踵部に発赤があっても疼痛を自覚できない。短下肢装具による局所圧迫や摩擦が持続すると、皮膚損傷や潰瘍へ進行する危険がある。毎日、踵を含む足部皮膚を観察し、発赤や傷を早期に発見するとともに、装具の適合状態を定期的に確認する習慣が最優先となる。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "足底の触覚・痛覚が著しく低下しているため、右踵部に発赤があっても疼痛を自覚できない。短下肢装具による局所圧迫や摩擦が持続すると、皮膚損傷や潰瘍へ進行する危険がある。毎日、踵を含む足部皮膚を観察し、発赤や傷を早期に発見するとともに、装具の適合状態を定期的に確認する習慣が最優先となる。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "足底の触覚・痛覚が著しく低下しているため、右踵部に発赤があっても疼痛を自覚できない。短下肢装具による局所圧迫や摩擦が持続すると、皮膚損傷や潰瘍へ進行する危険がある。毎日、踵を含む足部皮膚を観察し、発赤や傷を早期に発見するとともに、装具の適合状態を定期的に確認する習慣が最優先となる。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "無痛性皮膚障害の自己管理",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "C",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0505",
+      "field": "臨床心理学",
+      "safety": "none",
+      "task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "source_question_id": "Q513",
+      "source_display_answer": "4",
+      "knowledge_node_label": "医療面接における自由質問法はどれかから病態・機能障害を解釈",
+      "written_prompt": "「医療面接における自由質問法はどれかから病態・機能障害を解釈」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "医療面接における自由質問法はどれかから病態・機能障害を解釈",
+          "自由質問法は、患者が自分の言葉で幅広く答えられる質問である。「どのようなことでお困りですか」は回答内容を限定せず、主訴や生活上の問題を自由に語ってもらえるため、4が該当する。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "自由質問法は、患者が自分の言葉で幅広く答えられる質問である。「どのようなことでお困りですか」は回答内容を限定せず、主訴や生活上の問題を自由に語ってもらえるため、4が該当する。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "自由質問法は、患者が自分の言葉で幅広く答えられる質問である。「どのようなことでお困りですか」は回答内容を限定せず、主訴や生活上の問題を自由に語ってもらえるため、4が該当する。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "医療面接における自由質問法はどれかから病態・機能障害を解釈",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "4",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0388",
+      "field": "基礎運動学",
+      "safety": "critical",
+      "task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "source_question_id": "Q393",
+      "source_display_answer": "C",
+      "knowledge_node_label": "骨転移患者の新規荷重時痛から病的骨折リスクを疑い運動を中止する",
+      "written_prompt": "「骨転移患者の新規荷重時痛から病的骨折リスクを疑い運動を中止する」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "骨転移患者の新規荷重時痛から病的骨折リスクを疑い運動を中止する",
+          "大腿骨近位部の骨転移があり、荷重時の新規鼠径部痛が前日より増悪し、安静時にも持続している。病的骨折の切迫を疑う警告所見であるため、荷重練習を中止して医学的評価を求める。抵抗運動、跳躍、歩行距離延長は骨への負荷を増やす。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "大腿骨近位部の骨転移があり、荷重時の新規鼠径部痛が前日より増悪し、安静時にも持続している。病的骨折の切迫を疑う警告所見であるため、荷重練習を中止して医学的評価を求める。抵抗運動、跳躍、歩行距離延長は骨への負荷を増やす。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "大腿骨近位部の骨転移があり、荷重時の新規鼠径部痛が前日より増悪し、安静時にも持続している。病的骨折の切迫を疑う警告所見であるため、荷重練習を中止して医学的評価を求める。抵抗運動、跳躍、歩行距離延長は骨への負荷を増やす。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "骨転移患者の新規荷重時痛から病的骨折リスクを疑い運動を中止する",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "C",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0554",
+      "field": "臨床運動学",
+      "safety": "none",
+      "task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "source_question_id": "Q562",
+      "source_display_answer": "1",
+      "knowledge_node_label": "運動障害と評価方法の組合せの基本事項",
+      "written_prompt": "「運動障害と評価方法の組合せの基本事項」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "運動障害と評価方法の組合せの基本事項",
+          "運動失調の評価には指鼻試験や踵膝試験などの協調運動検査を用いる。Brunnstrom stageは片麻痺の回復段階、MMTは筋力評価であるため1が正しい。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "運動失調の評価には指鼻試験や踵膝試験などの協調運動検査を用いる。Brunnstrom stageは片麻痺の回復段階、MMTは筋力評価であるため1が正しい。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "運動失調の評価には指鼻試験や踵膝試験などの協調運動検査を用いる。Brunnstrom stageは片麻痺の回復段階、MMTは筋力評価であるため1が正しい。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "運動障害と評価方法の組合せの基本事項",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "1",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0012",
+      "field": "動作分析学",
+      "safety": "moderate",
+      "task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "source_question_id": "Q12",
+      "source_display_answer": "B",
+      "knowledge_node_label": "歩行時痛は消失し、ジョギングも可能であるが、切り返し動作で不安感を認めているを評価する",
+      "written_prompt": "「歩行時痛は消失し、ジョギングも可能であるが、切り返し動作で不安感を認めているを評価する」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "歩行時痛は消失し、ジョギングも可能であるが、切り返し動作で不安感を認めているを評価する",
+          "歩行時痛は消失し、ジョギングも可能であるが、切り返し動作で不安感を認めている。ROM、MMT、片脚踵上げに左右差がないため、単純な筋力や可動域よりも、方向転換時の姿勢制御や足関節の動的安定性を評価する必要がある。Star Excursion Balance Testなどを用いて競技動作に必要な動的バランス能力を確認する。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "歩行時痛は消失し、ジョギングも可能であるが、切り返し動作で不安感を認めている。ROM、MMT、片脚踵上げに左右差がないため、単純な筋力や可動域よりも、方向転換時の姿勢制御や足関節の動的安定性を評価する必要がある。Star Excursion Balance Testなどを用いて競技動作に必要な動的バランス能力を確認する。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "歩行時痛は消失し、ジョギングも可能であるが、切り返し動作で不安感を認めている。ROM、MMT、片脚踵上げに左右差がないため、単純な筋力や可動域よりも、方向転換時の姿勢制御や足関節の動的安定性を評価する必要がある。Star Excursion Balance Testなどを用いて競技動作に必要な動的バランス能力を確認する。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "歩行時痛は消失し、ジョギングも可能であるが、切り返し動作で不安感を認めているを評価する",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "B",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0010",
+      "field": "運動器",
+      "safety": "critical",
+      "task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "source_question_id": "Q10",
+      "source_display_answer": "C",
+      "knowledge_node_label": "急な低酸素・呼吸困難への初期対応",
+      "written_prompt": "「急な低酸素・呼吸困難への初期対応」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "急な低酸素・呼吸困難への初期対応",
+          "術後2日で、端座位開始後に突然の呼吸困難、呼吸数30/分、SpO₂88％、心拍数118/分、軽度胸痛が出現している。大腿骨骨折術後で下腿浮腫もあり、肺血栓塞栓症など重篤な合併症を否定できない。理学療法を直ちに中止して安静を確保し、バイタルサインを監視しながら速やかに医師へ報告する。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "術後2日で、端座位開始後に突然の呼吸困難、呼吸数30/分、SpO₂88％、心拍数118/分、軽度胸痛が出現している。大腿骨骨折術後で下腿浮腫もあり、肺血栓塞栓症など重篤な合併症を否定できない。理学療法を直ちに中止して安静を確保し、バイタルサインを監視しながら速やかに医師へ報告する。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "術後2日で、端座位開始後に突然の呼吸困難、呼吸数30/分、SpO₂88％、心拍数118/分、軽度胸痛が出現している。大腿骨骨折術後で下腿浮腫もあり、肺血栓塞栓症など重篤な合併症を否定できない。理学療法を直ちに中止して安静を確保し、バイタルサインを監視しながら速やかに医師へ報告する。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "急な低酸素・呼吸困難への初期対応",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "C",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0003",
+      "field": "理学療法評価各論",
+      "safety": "moderate",
+      "task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "source_question_id": "Q3",
+      "source_display_answer": "C",
+      "knowledge_node_label": "一側前庭機能低下の代償訓練",
+      "written_prompt": "「一側前庭機能低下の代償訓練」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "一側前庭機能低下の代償訓練",
+          "安静時のめまいは消失しているが、頭部運動や方向転換で浮動感が出現し、右Head Impulse Test陽性、foam上閉眼で著明な動揺を認める。これは右前庭機能低下に対する代償が不十分な状態を示す。視線安定化訓練と頭部運動を伴う平衡練習を段階的に行い、前庭代償を促進することが適切である。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "安静時のめまいは消失しているが、頭部運動や方向転換で浮動感が出現し、右Head Impulse Test陽性、foam上閉眼で著明な動揺を認める。これは右前庭機能低下に対する代償が不十分な状態を示す。視線安定化訓練と頭部運動を伴う平衡練習を段階的に行い、前庭代償を促進することが適切である。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "安静時のめまいは消失しているが、頭部運動や方向転換で浮動感が出現し、右Head Impulse Test陽性、foam上閉眼で著明な動揺を認める。これは右前庭機能低下に対する代償が不十分な状態を示す。視線安定化訓練と頭部運動を伴う平衡練習を段階的に行い、前庭代償を促進することが適切である。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "一側前庭機能低下の代償訓練",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "C",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0011",
+      "field": "理学療法治療各論",
+      "safety": "critical",
+      "task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "source_question_id": "Q11",
+      "source_display_answer": "B",
+      "knowledge_node_label": "自律神経過反射への初期対応",
+      "written_prompt": "「自律神経過反射への初期対応」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "自律神経過反射への初期対応",
+          "第6胸髄完全損傷者に、急激な高血圧、拍動性頭痛、顔面紅潮、徐脈、痙縮増強が出現しており、自律神経過反射が考えられる。導尿予定時刻を過ぎているため膀胱充満が誘因として疑われる。まず座位として血圧上昇を抑え、衣服や膀胱など損傷高位以下の刺激を確認し、速やかに除去する。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "第6胸髄完全損傷者に、急激な高血圧、拍動性頭痛、顔面紅潮、徐脈、痙縮増強が出現しており、自律神経過反射が考えられる。導尿予定時刻を過ぎているため膀胱充満が誘因として疑われる。まず座位として血圧上昇を抑え、衣服や膀胱など損傷高位以下の刺激を確認し、速やかに除去する。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "第6胸髄完全損傷者に、急激な高血圧、拍動性頭痛、顔面紅潮、徐脈、痙縮増強が出現しており、自律神経過反射が考えられる。導尿予定時刻を過ぎているため膀胱充満が誘因として疑われる。まず座位として血圧上昇を抑え、衣服や膀胱など損傷高位以下の刺激を確認し、速やかに除去する。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "自律神経過反射への初期対応",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "B",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN1009",
+      "field": "解剖学",
+      "safety": "none",
+      "task": "device_selection",
+      "primary_ability": "PRESCRIBE",
+      "source_question_id": "Q1019",
+      "source_display_answer": "4",
+      "knowledge_node_label": "第3腓骨筋腱は足関節前外側を通り外果の前方を走行するに対する機器選択",
+      "written_prompt": "「第3腓骨筋腱は足関節前外側を通り外果の前方を走行するに対する機器選択」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "第3腓骨筋腱は足関節前外側を通り外果の前方を走行するに対する機器選択",
+          "第3腓骨筋腱は足関節前外側を通り外果の前方を走行する。長・短腓骨筋は外果後方を通る。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "第3腓骨筋腱は足関節前外側を通り外果の前方を走行する。長・短腓骨筋は外果後方を通る。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "第3腓骨筋腱は足関節前外側を通り外果の前方を走行する。長・短腓骨筋は外果後方を通る。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "第3腓骨筋腱は足関節前外側を通り外果の前方を走行するに対する機器選択",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "4",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0273",
+      "field": "生理学",
+      "safety": "none",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "source_question_id": "Q274",
+      "source_display_answer": "E",
+      "knowledge_node_label": "酸素摂取量からMETsを算出する",
+      "written_prompt": "「酸素摂取量からMETsを算出する」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "酸素摂取量からMETsを算出する",
+          "1METは安静時酸素摂取量3.5mL/kg/分である。したがって21÷3.5＝6METsとなる。類題では酸素摂取量からMETsへ変換するとき3.5で除し、METsから酸素摂取量へ戻すとき3.5を乗じる。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "1METは安静時酸素摂取量3.5mL/kg/分である。したがって21÷3.5＝6METsとなる。類題では酸素摂取量からMETsへ変換するとき3.5で除し、METsから酸素摂取量へ戻すとき3.5を乗じる。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "1METは安静時酸素摂取量3.5mL/kg/分である。したがって21÷3.5＝6METsとなる。類題では酸素摂取量からMETsへ変換するとき3.5で除し、METsから酸素摂取量へ戻すとき3.5を乗じる。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "酸素摂取量からMETsを算出する",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "E",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0678",
+      "field": "心理学",
+      "safety": "none",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "source_question_id": "Q686",
+      "source_display_answer": "4",
+      "knowledge_node_label": "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める",
+      "written_prompt": "「成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める",
+          "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める。したがって4が最も適切である。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める。したがって4が最も適切である。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める。したがって4が最も適切である。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "4",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0294",
+      "field": "人間発達学",
+      "safety": "none",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "source_question_id": "Q296",
+      "source_display_answer": "B",
+      "knowledge_node_label": "Moro反射の消失時期",
+      "written_prompt": "「Moro反射の消失時期」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "Moro反射の消失時期",
+          "Moro反射は出生時にみられ、生後4～6か月頃までに統合される。原始反射の類題では出現時期だけでなく、消失遅延が中枢神経障害を示唆することも押さえる。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "Moro反射は出生時にみられ、生後4～6か月頃までに統合される。原始反射の類題では出現時期だけでなく、消失遅延が中枢神経障害を示唆することも押さえる。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "Moro反射は出生時にみられ、生後4～6か月頃までに統合される。原始反射の類題では出現時期だけでなく、消失遅延が中枢神経障害を示唆することも押さえる。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "Moro反射の消失時期",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "B",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0547",
+      "field": "教育学",
+      "safety": "none",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "source_question_id": "Q555",
+      "source_display_answer": "3",
+      "knowledge_node_label": "フィードバックの説明の基本事項",
+      "written_prompt": "「フィードバックの説明の基本事項」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "フィードバックの説明の基本事項",
+          "同時フィードバックは運動課題を実行している最中に与える情報である。帯域幅・要約・漸減的フィードバックは与える条件や頻度が異なるため3が正しい。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "同時フィードバックは運動課題を実行している最中に与える情報である。帯域幅・要約・漸減的フィードバックは与える条件や頻度が異なるため3が正しい。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "同時フィードバックは運動課題を実行している最中に与える情報である。帯域幅・要約・漸減的フィードバックは与える条件や頻度が異なるため3が正しい。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "フィードバックの説明の基本事項",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "3",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0131",
+      "field": "医学概論",
+      "safety": "none",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "source_question_id": "Q131",
+      "source_display_answer": "D",
+      "knowledge_node_label": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である",
+      "written_prompt": "「感度は、実際に疾患がある患者のうち検査陽性となった者の割合である」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である",
+          "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である。本問では疾患患者20人中18人が陽性であるため、18÷20×100＝90％となる。非患者80人中16人が陽性という情報は偽陽性に関係し、感度の計算には使用しない。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である。本問では疾患患者20人中18人が陽性であるため、18÷20×100＝90％となる。非患者80人中16人が陽性という情報は偽陽性に関係し、感度の計算には使用しない。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である。本問では疾患患者20人中18人が陽性であるため、18÷20×100＝90％となる。非患者80人中16人が陽性という情報は偽陽性に関係し、感度の計算には使用しない。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "D",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0450",
+      "field": "病理学",
+      "safety": "none",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "source_question_id": "Q458",
+      "source_display_answer": "C",
+      "knowledge_node_label": "創傷治癒増殖期の肉芽形成・血管新生・上皮化",
+      "written_prompt": "「創傷治癒増殖期の肉芽形成・血管新生・上皮化」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "創傷治癒増殖期の肉芽形成・血管新生・上皮化",
+          "創傷治癒の増殖期では線維芽細胞が増殖してコラーゲンなどの細胞外基質を形成し、血管新生と肉芽組織形成が進む。同時に上皮化も進行する。止血・炎症だけの段階から、組織を再構築して創部を埋める段階へ移行している。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "創傷治癒の増殖期では線維芽細胞が増殖してコラーゲンなどの細胞外基質を形成し、血管新生と肉芽組織形成が進む。同時に上皮化も進行する。止血・炎症だけの段階から、組織を再構築して創部を埋める段階へ移行している。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "創傷治癒の増殖期では線維芽細胞が増殖してコラーゲンなどの細胞外基質を形成し、血管新生と肉芽組織形成が進む。同時に上皮化も進行する。止血・炎症だけの段階から、組織を再構築して創部を埋める段階へ移行している。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "創傷治癒増殖期の肉芽形成・血管新生・上皮化",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "C",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0698",
+      "field": "内科学",
+      "safety": "none",
+      "task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "source_question_id": "Q706",
+      "source_display_answer": "1",
+      "knowledge_node_label": "食道癌放射線療法後に生じうる晩期副作用の予測",
+      "written_prompt": "「食道癌放射線療法後に生じうる晩期副作用の予測」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "食道癌放射線療法後に生じうる晩期副作用の予測",
+          "放射線療法の晩期障害は照射後数か月〜数年して出現し、末梢神経障害や線維化などがある。気道浮腫、食欲不振、皮膚炎、悪心は急性期に生じやすい。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "放射線療法の晩期障害は照射後数か月〜数年して出現し、末梢神経障害や線維化などがある。気道浮腫、食欲不振、皮膚炎、悪心は急性期に生じやすい。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "放射線療法の晩期障害は照射後数か月〜数年して出現し、末梢神経障害や線維化などがある。気道浮腫、食欲不振、皮膚炎、悪心は急性期に生じやすい。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "食道癌放射線療法後に生じうる晩期副作用の予測",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "1",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0180",
+      "field": "神経医学",
+      "safety": "none",
+      "task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "source_question_id": "Q181",
+      "source_display_answer": "C",
+      "knowledge_node_label": "写真・実演・指差しで意思確認",
+      "written_prompt": "「写真・実演・指差しで意思確認」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "写真・実演・指差しで意思確認",
+          "日常的な言語理解は比較的保たれているが、文章による意思表出が難しい。歩行補助具を本人と選ぶには、一度に多くの情報を求めず、補助具を一つずつ提示し、実演・写真・指差しなど非言語的手段も使って本人の選好を確認する。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "日常的な言語理解は比較的保たれているが、文章による意思表出が難しい。歩行補助具を本人と選ぶには、一度に多くの情報を求めず、補助具を一つずつ提示し、実演・写真・指差しなど非言語的手段も使って本人の選好を確認する。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "日常的な言語理解は比較的保たれているが、文章による意思表出が難しい。歩行補助具を本人と選ぶには、一度に多くの情報を求めず、補助具を一つずつ提示し、実演・写真・指差しなど非言語的手段も使って本人の選好を確認する。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "写真・実演・指差しで意思確認",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "C",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0564",
+      "field": "精神医学",
+      "safety": "none",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "source_question_id": "Q572",
+      "source_display_answer": "5",
+      "knowledge_node_label": "反復する過食と、体重増加を防ぐ自己誘発性嘔吐や下剤乱用などの代償行動がみられる",
+      "written_prompt": "「反復する過食と、体重増加を防ぐ自己誘発性嘔吐や下剤乱用などの代償行動がみられる」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "反復する過食と、体重増加を防ぐ自己誘発性嘔吐や下剤乱用などの代償行動がみられる",
+          "神経性大食症では反復する過食と、体重増加を防ぐ自己誘発性嘔吐や下剤乱用などの代償行動がみられる。代償行動では自己誘発性嘔吐が代表的である。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "神経性大食症では反復する過食と、体重増加を防ぐ自己誘発性嘔吐や下剤乱用などの代償行動がみられる。代償行動では自己誘発性嘔吐が代表的である。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "神経性大食症では反復する過食と、体重増加を防ぐ自己誘発性嘔吐や下剤乱用などの代償行動がみられる。代償行動では自己誘発性嘔吐が代表的である。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "反復する過食と、体重増加を防ぐ自己誘発性嘔吐や下剤乱用などの代償行動がみられる",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "5",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0006",
+      "field": "小児学",
+      "safety": "none",
+      "task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "source_question_id": "Q6",
+      "source_display_answer": "B",
+      "knowledge_node_label": "立脚中期の足関節背屈角度は正常範囲内である一方、遊脚期に背屈不足とつま先接触を認めているを評価する",
+      "written_prompt": "「立脚中期の足関節背屈角度は正常範囲内である一方、遊脚期に背屈不足とつま先接触を認めているを評価する」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "立脚中期の足関節背屈角度は正常範囲内である一方、遊脚期に背屈不足とつま先接触を認めているを評価する",
+          "立脚中期の足関節背屈角度は正常範囲内である一方、遊脚期に背屈不足とつま先接触を認めている。足関節背屈ROMは膝屈曲位15°、伸展位5°で、著明な可動域制限だけでは遊脚期のつまずきを説明しにくい。したがって、前脛骨筋など足関節背屈筋の遊脚期における筋活動を評価し、収縮のタイミングや量を確認する必要がある。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "立脚中期の足関節背屈角度は正常範囲内である一方、遊脚期に背屈不足とつま先接触を認めている。足関節背屈ROMは膝屈曲位15°、伸展位5°で、著明な可動域制限だけでは遊脚期のつまずきを説明しにくい。したがって、前脛骨筋など足関節背屈筋の遊脚期における筋活動を評価し、収縮のタイミングや量を確認する必要がある。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "立脚中期の足関節背屈角度は正常範囲内である一方、遊脚期に背屈不足とつま先接触を認めている。足関節背屈ROMは膝屈曲位15°、伸展位5°で、著明な可動域制限だけでは遊脚期のつまずきを説明しにくい。したがって、前脛骨筋など足関節背屈筋の遊脚期における筋活動を評価し、収縮のタイミングや量を確認する必要がある。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "立脚中期の足関節背屈角度は正常範囲内である一方、遊脚期に背屈不足とつま先接触を認めているを評価する",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "B",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    },
+    {
+      "canonical_node_id": "KN0508",
+      "field": "臨床心理学",
+      "safety": "none",
+      "task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "source_question_id": "Q516",
+      "source_display_answer": "4",
+      "knowledge_node_label": "注意機能の評価法",
+      "written_prompt": "「注意機能の評価法」について、正答の記号や選択肢を使わず、判断の根拠となる中心概念を1〜2文で説明してくれ。",
+      "rubric": {
+        "pass_required_elements": [
+          "注意機能の評価法",
+          "TMTは数字や文字を順番に結ぶ課題を通じて、注意の持続・選択・配分や処理速度、課題切替を評価する。MMPIやバウムテストは人格・心理評価であり、Kohsは構成能力などをみる。したがって正答は4である。"
+        ],
+        "partial_condition": "Nodeの中心概念に触れるが、根拠・因果・適用条件のいずれかが不足する。",
+        "fail_condition": "中心概念と異なる、無関係、または正答記号のみである。",
+        "medical_critical_error": "正式解説の主要な因果関係・方向・適応を逆に説明する。",
+        "accepted_expression_guidance": "用語の完全一致は求めず、正式解説と同じ中心概念と因果があれば許容する。",
+        "reference_explanation": "TMTは数字や文字を順番に結ぶ課題を通じて、注意の持続・選択・配分や処理速度、課題切替を評価する。MMPIやバウムテストは人格・心理評価であり、Kohsは構成能力などをみる。したがって正答は4である。"
+      },
+      "deterministic_cases": [
+        {
+          "kind": "clear_correct",
+          "answer": "TMTは数字や文字を順番に結ぶ課題を通じて、注意の持続・選択・配分や処理速度、課題切替を評価する。MMPIやバウムテストは人格・心理評価であり、Kohsは構成能力などをみる。したがって正答は4である。",
+          "expected": "PASS"
+        },
+        {
+          "kind": "missing_essence",
+          "answer": "注意機能の評価法",
+          "expected": "PARTIAL"
+        },
+        {
+          "kind": "plausible_wrong",
+          "answer": "主要な因果関係は正式解説と逆である。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "memorized_choice_only",
+          "answer": "4",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "unrelated",
+          "answer": "今日は天気が良い。",
+          "expected": "FAIL"
+        },
+        {
+          "kind": "empty",
+          "answer": "",
+          "expected": "UNKNOWN"
+        }
+      ],
+      "formal_repair_enabled": false
+    }
+  ],
+  "strong_alt_reference_nodes": [
+    {
+      "canonical_node_id": "KN0268",
+      "question_ids": [
+        "Q269",
+        "Q361"
+      ],
+      "strong_alt_pairs": [
+        [
+          "Q269",
+          "Q361"
+        ]
+      ],
+      "written_is_not_assumed_equivalent": true
+    },
+    {
+      "canonical_node_id": "KN0652",
+      "question_ids": [
+        "Q660",
+        "Q1308"
+      ],
+      "strong_alt_pairs": [
+        [
+          "Q660",
+          "Q1308"
+        ]
+      ],
+      "written_is_not_assumed_equivalent": true
+    },
+    {
+      "canonical_node_id": "KN0899",
+      "question_ids": [
+        "Q908",
+        "Q1191"
+      ],
+      "strong_alt_pairs": [
+        [
+          "Q908",
+          "Q1191"
+        ]
+      ],
+      "written_is_not_assumed_equivalent": true
+    }
+  ],
+  "safety": {
+    "formal_state_changes": 0,
+    "adaptive_changes": 0,
+    "database_writes": 0,
+    "production_api_calls": 0
+  }
+}
