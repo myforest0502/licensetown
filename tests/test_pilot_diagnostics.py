@@ -41,8 +41,13 @@ def test_diagnostics_route_requires_active_supporter_and_not_on_personal_dashboa
     assert client.get("/supporter/pilot-diagnostics").status_code == 403
     assert client.get(f"/supporter/pilot-diagnostics?token={token}&learner_user_id=other").status_code == 403
     response=client.get(path); assert response.status_code == 200
-    assert "LT Pilot Diagnostics" in response.get_data(as_text=True)
-    assert "LT Pilot Diagnostics" not in client.get(f"/goukaku-no-michi?token=invalid").get_data(as_text=True)
+    html = response.get_data(as_text=True)
+    assert "LT学習診断" in html
+    assert html.index("全期間") < html.index("直近7日") < html.index("直近30日")
+    assert 'class="pilot-period-tab active" aria-current="page"' in html
+    for label in ("学習範囲", "理解状態", "修復・定着", "最新のおすすめ30問シミュレーション", "分野横断の弱点候補"):
+        assert label in html
+    assert "LT学習診断" not in client.get(f"/goukaku-no-michi?token=invalid").get_data(as_text=True)
     deactivate_supporter_link("supporter","learner"); assert client.get(path).status_code == 403
 
 
