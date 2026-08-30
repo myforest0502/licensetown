@@ -1,77 +1,1139 @@
 {
-  "status": "not_run_pending_explicit_api_authorization",
+  "status": "completed",
   "model": "gpt-4.1-mini",
   "temperature": 0,
   "node_count": 10,
   "case_count": 70,
   "repeat_count": 2,
   "planned_api_calls": 120,
-  "actual_api_calls": 0,
-  "false_pass_count": null,
-  "false_fail_candidate_count": null,
-  "verdict_instability_count": null,
-  "pass_reproducibility": null,
+  "actual_api_calls": 120,
+  "false_pass_count": 1,
+  "false_fail_candidate_count": 0,
+  "memorized_answer_pass_count": 0,
+  "critical_error_pass_count": 0,
+  "verdict_instability_count": 0,
+  "pass_reproducibility": 1.0,
   "formal_state_changes": 0,
-  "representatives": [
+  "rows": [
     {
       "canonical_node_id": "KN0100",
       "field": "医学概論",
       "safety": "critical",
-      "formal_strong_alt_reference": false
+      "formal_strong_alt_reference": false,
+      "case_kind": "clear_correct",
+      "expected": "PASS",
+      "verdicts": [
+        "PASS",
+        "PASS"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0100",
+      "field": "医学概論",
+      "safety": "critical",
+      "formal_strong_alt_reference": false,
+      "case_kind": "missing_required_element",
+      "expected": "PARTIAL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0100",
+      "field": "医学概論",
+      "safety": "critical",
+      "formal_strong_alt_reference": false,
+      "case_kind": "plausible_wrong",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0100",
+      "field": "医学概論",
+      "safety": "critical",
+      "formal_strong_alt_reference": false,
+      "case_kind": "memorized_answer",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0100",
+      "field": "医学概論",
+      "safety": "critical",
+      "formal_strong_alt_reference": false,
+      "case_kind": "critical_error",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0100",
+      "field": "医学概論",
+      "safety": "critical",
+      "formal_strong_alt_reference": false,
+      "case_kind": "unrelated",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0100",
+      "field": "医学概論",
+      "safety": "critical",
+      "formal_strong_alt_reference": false,
+      "case_kind": "empty",
+      "expected": "UNKNOWN",
+      "verdicts": [
+        "UNKNOWN",
+        "UNKNOWN"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
     },
     {
       "canonical_node_id": "KN0017",
       "field": "内科学",
       "safety": "critical",
-      "formal_strong_alt_reference": false
+      "formal_strong_alt_reference": false,
+      "case_kind": "clear_correct",
+      "expected": "PASS",
+      "verdicts": [
+        "PASS",
+        "PASS"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0017",
+      "field": "内科学",
+      "safety": "critical",
+      "formal_strong_alt_reference": false,
+      "case_kind": "missing_required_element",
+      "expected": "PARTIAL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0017",
+      "field": "内科学",
+      "safety": "critical",
+      "formal_strong_alt_reference": false,
+      "case_kind": "plausible_wrong",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0017",
+      "field": "内科学",
+      "safety": "critical",
+      "formal_strong_alt_reference": false,
+      "case_kind": "memorized_answer",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0017",
+      "field": "内科学",
+      "safety": "critical",
+      "formal_strong_alt_reference": false,
+      "case_kind": "critical_error",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0017",
+      "field": "内科学",
+      "safety": "critical",
+      "formal_strong_alt_reference": false,
+      "case_kind": "unrelated",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0017",
+      "field": "内科学",
+      "safety": "critical",
+      "formal_strong_alt_reference": false,
+      "case_kind": "empty",
+      "expected": "UNKNOWN",
+      "verdicts": [
+        "UNKNOWN",
+        "UNKNOWN"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
     },
     {
       "canonical_node_id": "KN0785",
       "field": "教育学",
       "safety": "moderate",
-      "formal_strong_alt_reference": false
+      "formal_strong_alt_reference": false,
+      "case_kind": "clear_correct",
+      "expected": "PASS",
+      "verdicts": [
+        "PASS",
+        "PASS"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0785",
+      "field": "教育学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false,
+      "case_kind": "missing_required_element",
+      "expected": "PARTIAL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0785",
+      "field": "教育学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false,
+      "case_kind": "plausible_wrong",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0785",
+      "field": "教育学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false,
+      "case_kind": "memorized_answer",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0785",
+      "field": "教育学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false,
+      "case_kind": "critical_error",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0785",
+      "field": "教育学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false,
+      "case_kind": "unrelated",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0785",
+      "field": "教育学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false,
+      "case_kind": "empty",
+      "expected": "UNKNOWN",
+      "verdicts": [
+        "UNKNOWN",
+        "UNKNOWN"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
     },
     {
       "canonical_node_id": "KN0676",
       "field": "病理学",
       "safety": "moderate",
-      "formal_strong_alt_reference": false
+      "formal_strong_alt_reference": false,
+      "case_kind": "clear_correct",
+      "expected": "PASS",
+      "verdicts": [
+        "PASS",
+        "PASS"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0676",
+      "field": "病理学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false,
+      "case_kind": "missing_required_element",
+      "expected": "PARTIAL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0676",
+      "field": "病理学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false,
+      "case_kind": "plausible_wrong",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0676",
+      "field": "病理学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false,
+      "case_kind": "memorized_answer",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0676",
+      "field": "病理学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false,
+      "case_kind": "critical_error",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0676",
+      "field": "病理学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false,
+      "case_kind": "unrelated",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0676",
+      "field": "病理学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false,
+      "case_kind": "empty",
+      "expected": "UNKNOWN",
+      "verdicts": [
+        "UNKNOWN",
+        "UNKNOWN"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
     },
     {
       "canonical_node_id": "KN0311",
       "field": "解剖学",
       "safety": "none",
-      "formal_strong_alt_reference": false
+      "formal_strong_alt_reference": false,
+      "case_kind": "clear_correct",
+      "expected": "PASS",
+      "verdicts": [
+        "PASS",
+        "PASS"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0311",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "missing_required_element",
+      "expected": "PARTIAL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0311",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "plausible_wrong",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0311",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "memorized_answer",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0311",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "critical_error",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0311",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "unrelated",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0311",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "empty",
+      "expected": "UNKNOWN",
+      "verdicts": [
+        "UNKNOWN",
+        "UNKNOWN"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
     },
     {
       "canonical_node_id": "KN0238",
       "field": "生理学",
       "safety": "none",
-      "formal_strong_alt_reference": false
+      "formal_strong_alt_reference": false,
+      "case_kind": "clear_correct",
+      "expected": "PASS",
+      "verdicts": [
+        "PASS",
+        "PASS"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0238",
+      "field": "生理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "missing_required_element",
+      "expected": "PARTIAL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0238",
+      "field": "生理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "plausible_wrong",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0238",
+      "field": "生理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "memorized_answer",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0238",
+      "field": "生理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "critical_error",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0238",
+      "field": "生理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "unrelated",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0238",
+      "field": "生理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "empty",
+      "expected": "UNKNOWN",
+      "verdicts": [
+        "UNKNOWN",
+        "UNKNOWN"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
     },
     {
       "canonical_node_id": "KN0611",
       "field": "心理学",
       "safety": "none",
-      "formal_strong_alt_reference": false
+      "formal_strong_alt_reference": false,
+      "case_kind": "clear_correct",
+      "expected": "PASS",
+      "verdicts": [
+        "PASS",
+        "PASS"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0611",
+      "field": "心理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "missing_required_element",
+      "expected": "PARTIAL",
+      "verdicts": [
+        "PARTIAL",
+        "PARTIAL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0611",
+      "field": "心理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "plausible_wrong",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0611",
+      "field": "心理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "memorized_answer",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0611",
+      "field": "心理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "critical_error",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0611",
+      "field": "心理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "unrelated",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0611",
+      "field": "心理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false,
+      "case_kind": "empty",
+      "expected": "UNKNOWN",
+      "verdicts": [
+        "UNKNOWN",
+        "UNKNOWN"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
     },
     {
       "canonical_node_id": "KN0268",
       "field": "基礎運動学",
       "safety": "none",
-      "formal_strong_alt_reference": true
+      "formal_strong_alt_reference": true,
+      "case_kind": "clear_correct",
+      "expected": "PASS",
+      "verdicts": [
+        "PASS",
+        "PASS"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0268",
+      "field": "基礎運動学",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "missing_required_element",
+      "expected": "PARTIAL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0268",
+      "field": "基礎運動学",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "plausible_wrong",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0268",
+      "field": "基礎運動学",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "memorized_answer",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0268",
+      "field": "基礎運動学",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "critical_error",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0268",
+      "field": "基礎運動学",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "unrelated",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0268",
+      "field": "基礎運動学",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "empty",
+      "expected": "UNKNOWN",
+      "verdicts": [
+        "UNKNOWN",
+        "UNKNOWN"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
     },
     {
       "canonical_node_id": "KN0652",
       "field": "理学療法治療各論",
       "safety": "none",
-      "formal_strong_alt_reference": true
+      "formal_strong_alt_reference": true,
+      "case_kind": "clear_correct",
+      "expected": "PASS",
+      "verdicts": [
+        "PASS",
+        "PASS"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0652",
+      "field": "理学療法治療各論",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "missing_required_element",
+      "expected": "PARTIAL",
+      "verdicts": [
+        "PARTIAL",
+        "PARTIAL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0652",
+      "field": "理学療法治療各論",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "plausible_wrong",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0652",
+      "field": "理学療法治療各論",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "memorized_answer",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0652",
+      "field": "理学療法治療各論",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "critical_error",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0652",
+      "field": "理学療法治療各論",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "unrelated",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0652",
+      "field": "理学療法治療各論",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "empty",
+      "expected": "UNKNOWN",
+      "verdicts": [
+        "UNKNOWN",
+        "UNKNOWN"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
     },
     {
       "canonical_node_id": "KN0899",
       "field": "解剖学",
       "safety": "none",
-      "formal_strong_alt_reference": true
+      "formal_strong_alt_reference": true,
+      "case_kind": "clear_correct",
+      "expected": "PASS",
+      "verdicts": [
+        "PASS",
+        "PASS"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0899",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "missing_required_element",
+      "expected": "PARTIAL",
+      "verdicts": [
+        "PASS",
+        "PASS"
+      ],
+      "consistent": true,
+      "false_pass": true,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0899",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "plausible_wrong",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0899",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "memorized_answer",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0899",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "critical_error",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0899",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "unrelated",
+      "expected": "FAIL",
+      "verdicts": [
+        "FAIL",
+        "FAIL"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
+    },
+    {
+      "canonical_node_id": "KN0899",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": true,
+      "case_kind": "empty",
+      "expected": "UNKNOWN",
+      "verdicts": [
+        "UNKNOWN",
+        "UNKNOWN"
+      ],
+      "consistent": true,
+      "false_pass": false,
+      "false_fail_candidate": false,
+      "formal_state_changes": 0
     }
   ]
 }
