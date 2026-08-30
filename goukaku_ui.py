@@ -17,7 +17,10 @@ from database import (
 from learning_analysis import build_gensan_comment, build_learning_guidance
 from supporter_report import build_supporter_report
 from pilot_diagnostics import build_pilot_diagnostics
-from field_progress_presentation import build_field_progress_presentation
+from field_evidence import build_field_evidence
+from field_progress import build_field_progress
+from field_progress_presentation import build_field_progress_presentation_from_calculation
+from overall_progress_presentation import build_overall_progress_presentation
 
 
 goukaku_ui = Blueprint("goukaku_ui", __name__)
@@ -29,6 +32,12 @@ SUPPORTER_TOKEN_MAX_AGE_SECONDS = 30 * 24 * 60 * 60
 
 def field_progress_ui_enabled():
     return os.getenv("ENABLE_FIELD_PROGRESS_UI", "").strip().lower() in {
+        "1", "true", "yes", "on",
+    }
+
+
+def overall_progress_ui_enabled():
+    return os.getenv("ENABLE_OVERALL_PROGRESS_UI", "").strip().lower() in {
         "1", "true", "yes", "on",
     }
 
@@ -110,6 +119,8 @@ def build_dashboard(user_id=None):
         "field_stats": [],
         "field_progress_ui_enabled": False,
         "field_progress_fields": [],
+        "overall_progress_ui_enabled": False,
+        "overall_progress_preview": None,
         "weak_fields": [],
         "weak_analysis_message": "まずは100問を目標に基礎を固めましょう。",
         "recommended_study": [],
@@ -133,10 +144,20 @@ def build_dashboard(user_id=None):
         )
         fields = learning_data["fields"]
         dashboard["field_stats"] = [item for item in fields if item["learned"]]
-        if field_progress_ui_enabled():
+        field_preview = field_progress_ui_enabled()
+        overall_preview = overall_progress_ui_enabled()
+        if field_preview or overall_preview:
+            evidence = build_field_evidence(get_question_attempts(user_id))
+            progress = build_field_progress(evidence)
+        if field_preview:
             dashboard["field_progress_ui_enabled"] = True
-            dashboard["field_progress_fields"] = build_field_progress_presentation(
-                get_question_attempts(user_id), legacy_fields=fields
+            dashboard["field_progress_fields"] = build_field_progress_presentation_from_calculation(
+                evidence, progress, legacy_fields=fields
+            )
+        if overall_preview:
+            dashboard["overall_progress_ui_enabled"] = True
+            dashboard["overall_progress_preview"] = build_overall_progress_presentation(
+                progress, overall_accuracy_percent=dashboard["average_accuracy"]
             )
         dashboard.update(build_learning_guidance(dashboard["total_answers"], fields))
         remainder = dashboard["total_answers"] % 100

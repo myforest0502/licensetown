@@ -35,6 +35,18 @@ def build_field_progress_presentation(
     """Return all 18 fields using the formal Evidence -> Progress pipeline."""
     evidence = build_field_evidence(attempts)
     progress = build_field_progress(evidence)
+    return build_field_progress_presentation_from_calculation(
+        evidence, progress, legacy_fields=legacy_fields
+    )
+
+
+def build_field_progress_presentation_from_calculation(
+    evidence: Mapping[str, Any],
+    progress: Mapping[str, Any],
+    *,
+    legacy_fields: Iterable[Mapping[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
+    """Format a precomputed Evidence/Progress pair without replaying state."""
     evidence_by_id: Mapping[int, dict[str, Any]] = {
         item["field_id"]: item for item in evidence["fields"]
     }

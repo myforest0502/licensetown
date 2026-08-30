@@ -13,7 +13,12 @@
   </section>
   <dialog id="exam-dialog"><h2>試験日について</h2><p>現在表示している試験日は暫定です。<br>正式な試験日が発表され次第、正式日程へ更新されます。<br>それに伴い、試験日までの日数も自動的に修正されます。</p><button data-dialog-close>閉じる</button></dialog>
 
+  {% if dashboard.overall_progress_ui_enabled %}
+  {% set overall = dashboard.overall_progress_preview %}
+  <section class="card achievement overall-progress-preview"><h2>合格への到達度</h2><div class="achievement-body"><div class="ring" style="--value:{{ overall.progress_raw * 100 }}"><span>{{ overall.progress_display }}</span></div><div class="achievement-copy"><strong>必要な知識をどこまで学習・修復・定着できたか</strong><p>正答率や合格確率ではなく、学習の進み具合を表す指標です。</p><dl class="overall-progress-metrics"><div><dt>学習範囲</dt><dd>{{ overall.coverage_display }}</dd></div><div><dt>修復済み</dt><dd>{{ overall.repair_completed_display }}</dd></div><div><dt>定着</dt><dd>{{ overall.stable_display }}</dd></div></dl><small>覚えたままか確認する時期になると、到達度が少し変わることがあります。</small></div></div></section>
+  {% else %}
   <section class="card achievement"><h2>総合到達度</h2><div class="achievement-body"><div class="ring" style="--value:{{ dashboard.overall_progress }}"><span>{{ dashboard.overall_progress }}<small>%</small></span></div><div class="achievement-copy"><strong>学習を積み重ねて、目標学習量に近づいていこう</strong><p>LTで記録された学習時間と問題演習量から算出した学習進捗の目安です。合格を保証する数値ではありません。</p><span class="line-remaining">目標学習量まで あと {{ remaining_progress }}%</span></div></div></section>
+  {% endif %}
 
   <section class="summary-grid five">
     <article class="mini-card"><span class="mini-icon">▤</span><b>総回答数</b><strong>{{ '{:,}'.format(dashboard.total_answers) }}<small>問</small></strong></article>
