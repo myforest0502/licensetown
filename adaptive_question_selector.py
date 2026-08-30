@@ -74,6 +74,10 @@ def _priority(state: str, summary: dict[str, Any], safety: str) -> tuple[int, st
     has_wrong = bool(summary["wrong_questions"])
     if state == "repaired":
         return 150, "repaired", "maintenance"
+    if state == "stable":
+        return 100, "stable_maintenance", "maintenance"
+    if state == "recheck_due":
+        return 700, "recheck_due", "checking"
     if has_wrong and safety in {"critical", "high", "moderate"}:
         return 1000, "safety_wrong", "repair"
     if summary["confident_wrong"]:
@@ -84,8 +88,6 @@ def _priority(state: str, summary: dict[str, Any], safety: str) -> tuple[int, st
         return 850, "repairing", "repair"
     if has_wrong:
         return 800, "previous_wrong_unconfirmed", "repair"
-    if state == "recheck_due":
-        return 700, "recheck_due", "checking"
     if summary["uncertain_correct"]:
         return 600, "uncertain_correct", "checking"
     if state == "checking":
