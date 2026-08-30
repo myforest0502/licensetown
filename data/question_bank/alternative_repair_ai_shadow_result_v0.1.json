@@ -1,0 +1,77 @@
+{
+  "status": "not_run_pending_explicit_api_authorization",
+  "model": "gpt-4.1-mini",
+  "temperature": 0,
+  "node_count": 10,
+  "case_count": 70,
+  "repeat_count": 2,
+  "planned_api_calls": 120,
+  "actual_api_calls": 0,
+  "false_pass_count": null,
+  "false_fail_candidate_count": null,
+  "verdict_instability_count": null,
+  "pass_reproducibility": null,
+  "formal_state_changes": 0,
+  "representatives": [
+    {
+      "canonical_node_id": "KN0100",
+      "field": "医学概論",
+      "safety": "critical",
+      "formal_strong_alt_reference": false
+    },
+    {
+      "canonical_node_id": "KN0017",
+      "field": "内科学",
+      "safety": "critical",
+      "formal_strong_alt_reference": false
+    },
+    {
+      "canonical_node_id": "KN0785",
+      "field": "教育学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false
+    },
+    {
+      "canonical_node_id": "KN0676",
+      "field": "病理学",
+      "safety": "moderate",
+      "formal_strong_alt_reference": false
+    },
+    {
+      "canonical_node_id": "KN0311",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": false
+    },
+    {
+      "canonical_node_id": "KN0238",
+      "field": "生理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false
+    },
+    {
+      "canonical_node_id": "KN0611",
+      "field": "心理学",
+      "safety": "none",
+      "formal_strong_alt_reference": false
+    },
+    {
+      "canonical_node_id": "KN0268",
+      "field": "基礎運動学",
+      "safety": "none",
+      "formal_strong_alt_reference": true
+    },
+    {
+      "canonical_node_id": "KN0652",
+      "field": "理学療法治療各論",
+      "safety": "none",
+      "formal_strong_alt_reference": true
+    },
+    {
+      "canonical_node_id": "KN0899",
+      "field": "解剖学",
+      "safety": "none",
+      "formal_strong_alt_reference": true
+    }
+  ]
+}
