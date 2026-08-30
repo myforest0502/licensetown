@@ -10,7 +10,9 @@ from typing import Any, Iterable
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import derive_all_user_node_states
 from knowledge_node_repair_evidence import (
+    DIFFERENT_QUESTION_WEAK,
     DIFFERENT_QUESTION_STRONG,
+    SAME_QUESTION,
     classify_repair_confirmation,
 )
 from question_bank import get_question_tag, get_quiz_question, question_ids
@@ -138,6 +140,14 @@ def select_node_adaptive_questions(
         is_same_q_repeat = question_id in summary["wrong_questions"]
         strong_confirmation = DIFFERENT_QUESTION_STRONG in evidence_strengths
         if is_same_q_repeat:
+            repair_evidence_quality = SAME_QUESTION
+        elif strong_confirmation:
+            repair_evidence_quality = DIFFERENT_QUESTION_STRONG
+        elif summary["wrong_questions"]:
+            repair_evidence_quality = DIFFERENT_QUESTION_WEAK
+        else:
+            repair_evidence_quality = None
+        if is_same_q_repeat:
             score -= 180
         elif strong_confirmation:
             score += 80
@@ -156,6 +166,7 @@ def select_node_adaptive_questions(
             "previous_correct_count": len(summary["correct_questions"]),
             "same_question_repeat": is_same_q_repeat,
             "strong_repair_confirmation": strong_confirmation,
+            "repair_evidence_quality": repair_evidence_quality,
             "safety": str(tag.get("safety", "none")),
             "confident_wrong": summary["confident_wrong"],
             "unknown_evidence": summary["unknown"],
@@ -173,7 +184,7 @@ def select_node_adaptive_questions(
     selected_ids: set[str] = set()
     node_counts: Counter[str] = Counter()
 
-    def take(group: str, limit: int, node_cap: int = 2):
+    def take(group: str, limit: int, node_cap: int):
         for item in candidates:
             if len([value for value in selected if value["priority_group"] == group]) >= limit:
                 break
@@ -185,10 +196,13 @@ def select_node_adaptive_questions(
             selected_ids.add(item["question_id"])
             node_counts[item["canonical_node_id"]] += 1
 
+    # Prefer one representative question per canonical Node. Only use a second
+    # question when a bucket cannot otherwise reach its existing composition target.
     for group, limit in targets.items():
-        take(group, limit)
-    # Maintenance and any unused groups fill natural shortages; keep 2/Node where possible.
-    for cap in (2, 3, question_count):
+        take(group, limit, node_cap=1)
+        take(group, limit, node_cap=2)
+    # Maintenance and unused groups fill natural shortages with the same two-pass rule.
+    for cap in (1, 2, 3, question_count):
         for item in candidates:
             if len(selected) >= question_count:
                 break

@@ -1,5 +1,6 @@
 import os
 import random
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 
 os.environ.setdefault("OPENAI_API_KEY", "test-key")
@@ -34,6 +35,15 @@ def fake_bank(monkeypatch, count=60, safety_by_node=None):
     return ids
 
 
+def custom_bank(monkeypatch, node_by_q, safety_by_node=None):
+    safety_by_node = safety_by_node or {}
+    monkeypatch.setattr(selector, "question_ids", lambda: tuple(node_by_q))
+    monkeypatch.setattr(selector, "get_question_tag", lambda q: {
+        "knowledge_node_id": node_by_q[q],
+        "safety": safety_by_node.get(node_by_q[q], "none"),
+    })
+
+
 def test_empty_history_includes_unseen_and_unique_questions(monkeypatch):
     fake_bank(monkeypatch)
     selected = selector.select_node_adaptive_questions([], 30, rng=random.Random(1))
@@ -54,6 +64,101 @@ def test_repairing_prefers_different_question_and_limits_node_concentration(monk
     assert node_items[0]["question_id"] == "Q2"
     assert node_items[0]["same_question_repeat"] is False
     assert len(node_items) <= 2
+
+
+def test_one_node_one_question_first_pass_preserves_repair_diversity(monkeypatch):
+    node_by_q = {"Q1": "KN0001", "Q2": "KN0001"}
+    node_by_q.update({f"Q{i}": f"KN{i:04d}" for i in range(3, 45)})
+    custom_bank(monkeypatch, node_by_q)
+    monkeypatch.setattr(selector, "classify_repair_confirmation", lambda old, new: (
+        "same_question" if old == new else "different_question_strong"
+    ))
+    selected = selector.select_node_adaptive_questions([
+        attempt("Q1", "KN0001", False, minute=1),
+        attempt("Q3", "KN0003", False, minute=2),
+        attempt("Q4", "KN0004", False, minute=3),
+        attempt("Q5", "KN0005", False, minute=4),
+        attempt("Q6", "KN0006", False, minute=5),
+    ], 10, rng=random.Random(31))
+    repair = [item for item in selected if item["priority_group"] == "repair"]
+    assert {item["canonical_node_id"] for item in repair} >= {"KN0001", "KN0003"}
+    assert sum(item["canonical_node_id"] == "KN0001" for item in repair) == 1
+
+
+def test_second_question_is_allowed_only_as_shortage_fallback(monkeypatch):
+    node_by_q = {"Q1": "KN0001", "Q2": "KN0001", "Q3": "KN0002"}
+    custom_bank(monkeypatch, node_by_q)
+    monkeypatch.setattr(selector, "classify_repair_confirmation", lambda old, new: (
+        "same_question" if old == new else "different_question_strong"
+    ))
+    selected = selector.select_node_adaptive_questions([
+        attempt("Q1", "KN0001", False),
+    ], 3, rng=random.Random(32))
+    assert len(selected) == 3
+    assert len({item["question_id"] for item in selected}) == 3
+    assert sum(item["canonical_node_id"] == "KN0001" for item in selected) == 2
+
+
+def test_safety_repair_uses_strong_then_weak_then_same(monkeypatch):
+    node_by_q = {"Q1": "KN0001", "Q2": "KN0001", "Q3": "KN0001"}
+    node_by_q.update({f"Q{i}": f"KN{i:04d}" for i in range(4, 45)})
+    custom_bank(monkeypatch, node_by_q, {"KN0001": "critical"})
+
+    def quality(old, new):
+        if old == new:
+            return "same_question"
+        return "different_question_weak" if new == "Q2" else "different_question_strong"
+
+    monkeypatch.setattr(selector, "classify_repair_confirmation", quality)
+    selected = selector.select_node_adaptive_questions([
+        attempt("Q1", "KN0001", False),
+    ], 10, rng=random.Random(33))
+    node_item = next(item for item in selected if item["canonical_node_id"] == "KN0001")
+    assert node_item["question_id"] == "Q3"
+    assert node_item["repair_evidence_quality"] == "different_question_strong"
+
+    monkeypatch.setattr(selector, "classify_repair_confirmation", lambda old, new: (
+        "same_question" if old == new else "different_question_weak"
+    ))
+    selected = selector.select_node_adaptive_questions([
+        attempt("Q1", "KN0001", False),
+    ], 10, rng=random.Random(34))
+    node_item = next(item for item in selected if item["canonical_node_id"] == "KN0001")
+    assert node_item["question_id"] in {"Q2", "Q3"}
+    assert node_item["repair_evidence_quality"] == "different_question_weak"
+
+    node_by_q.pop("Q2")
+    node_by_q.pop("Q3")
+    custom_bank(monkeypatch, node_by_q, {"KN0001": "critical"})
+    selected = selector.select_node_adaptive_questions([
+        attempt("Q1", "KN0001", False),
+    ], 10, rng=random.Random(35))
+    node_item = next(item for item in selected if item["canonical_node_id"] == "KN0001")
+    assert node_item["question_id"] == "Q1"
+    assert node_item["repair_evidence_quality"] == "same_question"
+
+
+def test_full_session_keeps_composition_unique_questions_and_node_diversity(monkeypatch):
+    fake_bank(monkeypatch, count=80)
+    monkeypatch.setattr(selector, "classify_repair_confirmation", lambda old, new: (
+        "same_question" if old == new else "different_question_strong"
+    ))
+    attempts = [
+        attempt(f"Q{node * 2 - 1}", f"KN{node:04d}", False, minute=node)
+        for node in range(1, 16)
+    ] + [
+        attempt(f"Q{node * 2 - 1}", f"KN{node:04d}", True, 1, minute=node)
+        for node in range(16, 26)
+    ]
+    selected = selector.select_node_adaptive_questions(
+        attempts, 30, rng=random.Random(36)
+    )
+    groups = Counter(item["priority_group"] for item in selected)
+    nodes = Counter(item["canonical_node_id"] for item in selected)
+    assert groups == {"repair": 15, "checking": 10, "exploration": 5}
+    assert len(selected) == len({item["question_id"] for item in selected}) == 30
+    assert len(nodes) == 30
+    assert max(nodes.values()) == 1
 
 
 def test_repaired_node_is_not_kept_in_high_priority_repair(monkeypatch):
