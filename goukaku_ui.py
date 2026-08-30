@@ -1,4 +1,3 @@
-from datetime import date
 import os
 
 from flask import Blueprint, abort, render_template, request, url_for
@@ -21,12 +20,17 @@ from field_evidence import build_field_evidence
 from field_progress import build_field_progress
 from field_progress_presentation import build_field_progress_presentation_from_calculation
 from overall_progress_presentation import build_overall_progress_presentation
+from dashboard_settings import (
+    get_daily_question_goal,
+    get_effective_exam_date,
+    get_reward_progress,
+    tokyo_today,
+)
+from learning_milestones import build_learning_milestones
 
 
 goukaku_ui = Blueprint("goukaku_ui", __name__)
 
-EXAM_DATE = date(2027, 2, 20)
-TODAY_GOAL = 30
 SUPPORTER_TOKEN_MAX_AGE_SECONDS = 30 * 24 * 60 * 60
 
 
@@ -103,11 +107,12 @@ def authorized_supporter_learner(token, requested_learner_id=None):
 
 
 def build_dashboard(user_id=None):
-    today = date.today()
+    today = tokyo_today()
+    exam_date = get_effective_exam_date(user_id)
     dashboard = {
         "current_date": today,
-        "exam_date": EXAM_DATE,
-        "days_until_exam": max((EXAM_DATE - today).days, 0),
+        "exam_date": exam_date,
+        "days_until_exam": max((exam_date - today).days, 0) if exam_date else None,
         "exam_is_tentative": True,
         "overall_progress": 0,
         "total_answers": 0,
@@ -125,11 +130,10 @@ def build_dashboard(user_id=None):
         "weak_analysis_message": "まずは100問を目標に基礎を固めましょう。",
         "recommended_study": [],
         "recommendation_reason": None,
-        "today_goal": TODAY_GOAL,
+        "today_goal": get_daily_question_goal(user_id),
         "today_progress": 0,
         "streak_days": 0,
-        "next_reward_answers": 100,
-        "reward_progress": 0,
+        **get_reward_progress(0),
         "gensan_comment": "今日はまだ来てねぇな。5問だけやるか？＾＾",
     }
     if user_id:
@@ -160,9 +164,7 @@ def build_dashboard(user_id=None):
                 progress, overall_accuracy_percent=dashboard["average_accuracy"]
             )
         dashboard.update(build_learning_guidance(dashboard["total_answers"], fields))
-        remainder = dashboard["total_answers"] % 100
-        dashboard["next_reward_answers"] = 100 - remainder if remainder else 100
-        dashboard["reward_progress"] = remainder
+        dashboard.update(get_reward_progress(dashboard["total_answers"]))
         dashboard["gensan_comment"] = build_gensan_comment(
             dashboard["total_answers"],
             fields,
@@ -213,15 +215,14 @@ def subjects():
 
 @goukaku_ui.route("/goukaku-no-michi/footprints")
 def footprints():
-    user_name = request.args.get("name", "あなた").strip()[:30] or "あなた"
-    events = [
-        ("8月12日", "トータル100問達成！"),
-        ("8月15日", "初めて相談モードを利用"),
-        ("8月17日", "初めて熱血モードにチャレンジ！"),
-        ("8月24日", "調子が出ない中でも3問クリア"),
-        ("9月3日", "初めて30問完走！"),
-    ]
-    return render_template("goukaku/footprints.html", user_name=user_name, events=events)
+    token = request.args.get("token")
+    user_id = dashboard_user_id(token)
+    events = build_learning_milestones(get_question_attempts(user_id), limit=5) if user_id else []
+    return render_template(
+        "goukaku/footprints.html",
+        events=events,
+        return_url=url_for("goukaku_ui.home", token=token),
+    )
 
 
 @goukaku_ui.route("/goukaku-no-michi/learning")

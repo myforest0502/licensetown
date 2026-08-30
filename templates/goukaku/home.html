@@ -7,9 +7,9 @@
   <section class="date-card">
     <div class="date-list">
       <div><span class="line-icon">▣</span><p><b>今日</b><strong>{{ dashboard.current_date.strftime('%Y/%m/%d') }}</strong></p></div>
-      <div><span class="line-icon target">◎</span><p><b>試験日</b><strong>{{ dashboard.exam_date.strftime('%Y/%m/%d') }}（暫定） <button class="help" data-dialog-open aria-label="試験日の説明">?</button></strong></p></div>
+      <div><span class="line-icon target">◎</span><p><b>試験日</b><strong>{% if dashboard.exam_date %}{{ dashboard.exam_date.strftime('%Y/%m/%d') }}（暫定） <button class="help" data-dialog-open aria-label="試験日の説明">?</button>{% else %}未設定{% endif %}</strong></p></div>
     </div>
-    <div class="countdown"><span>試験まで</span><strong>{{ dashboard.days_until_exam }}<small>日</small></strong><em>毎日コツコツ、合格はぐっと近づく！</em></div>
+    <div class="countdown"><span>試験まで</span><strong>{% if dashboard.days_until_exam is not none %}{{ dashboard.days_until_exam }}<small>日</small>{% else %}未設定{% endif %}</strong><em>毎日コツコツ、合格はぐっと近づく！</em></div>
   </section>
   <dialog id="exam-dialog"><h2>試験日について</h2><p>現在表示している試験日は暫定です。<br>正式な試験日が発表され次第、正式日程へ更新されます。<br>それに伴い、試験日までの日数も自動的に修正されます。</p><button data-dialog-close>閉じる</button></dialog>
 
@@ -47,9 +47,9 @@
   </section>
 
   <section class="motivation-grid dashboard-footer-cards">
-    <article class="motivation-card reward-card"><h2>🎁 次の報酬まで</h2><strong>あと <b>{{ dashboard.next_reward_answers }}</b> 問</strong><p>100問ごとに学習マイルストーン！</p><div class="reward-progress"><i style="width:{{ dashboard.reward_progress }}%"></i></div><small>{{ dashboard.reward_progress }} / 100問</small><span class="reward-icon">LT</span></article>
+    <article class="motivation-card reward-card"><h2>🎁 次の報酬まで</h2><strong>あと <b>{{ dashboard.next_reward_answers }}</b> 問</strong><p>{{ dashboard.reward_interval }}問ごとに学習マイルストーン！</p><div class="reward-progress"><i style="width:{{ (dashboard.reward_progress * 100 / dashboard.reward_interval)|round(1) }}%"></i></div><small>{{ dashboard.reward_progress }} / {{ dashboard.reward_interval }}問</small><span class="reward-icon">LT</span></article>
     <article class="motivation-card target-progress-card"><h2>🎯 目標学習量まで</h2><strong>あと <b>{{ remaining_progress }}</b>%</strong><p>毎日コツコツ積み重ねよう！<br>目標達成まで、もう一息！</p><div class="target-progress"><i style="width:{{ dashboard.overall_progress }}%"></i></div></article>
-    {% if not read_only %}<a class="motivation-card footprint-card" href="{{ url_for('goukaku_ui.footprints') }}"><div><h2>👣 あなたの足跡を見る</h2><p>これまでの学習の軌跡を<br>タイムラインで確認できます。</p><span>足跡を見る ›</span></div><b class="footprint-chart">↗</b></a>{% endif %}
+    {% if not read_only %}<a class="motivation-card footprint-card" href="{{ url_for('goukaku_ui.footprints', token=dashboard_token) }}"><div><h2>👣 あなたの足跡を見る</h2><p>これまでの学習の軌跡を<br>タイムラインで確認できます。</p><span>足跡を見る ›</span></div><b class="footprint-chart">↗</b></a>{% endif %}
   </section>
 
   {% if not read_only %}<section class="actions mobile-actions" data-line-account-id="{{ line_official_account_id }}" data-liff-id="{{ liff_id }}"><h2>次にやること</h2><div class="action-grid">

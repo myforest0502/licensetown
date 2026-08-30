@@ -34,7 +34,8 @@ def test_goukaku_home_renders(monkeypatch):
     assert ">0<small>問</small>" in text
     assert "data-line-message=\"相談する\"" in text
     assert 'class="app-shell"' in text
-    assert text.count("20260830-weekly-history1") == 2
+    assert "20260830-fixed-demo-cleanup1" in text
+    assert "20260830-weekly-history1" in text
     assert 'data-line-account-id="@licensetown-test"' in text
     assert 'data-liff-id="1234567890-test"' in text
     assert "https://static.line-scdn.net/liff/edge/2/sdk.js" in text
@@ -171,12 +172,14 @@ def test_dashboard_and_subjects_render_real_field_history_without_demo_values(mo
     database._local_learning_events.clear()
 
 
-def test_footprints_use_registered_name_parameter():
+def test_footprints_show_safe_empty_state_without_demo_events():
     response = app.test_client().get("/goukaku-no-michi/footprints?name=たろう")
     assert response.status_code == 200
     text = response.get_data(as_text=True)
-    assert "たろうの足跡" in text
-    assert "相談内容は表示せず" in text
+    assert "あなたの足跡" in text
+    assert "学習を始めると、ここにあなたの歩みが残っていきます。" in text
+    assert "トータル100問達成" not in text
+    assert "初めて相談モード" not in text
 
 
 def test_learning_selection_shows_selected_field():

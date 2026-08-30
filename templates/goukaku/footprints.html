@@ -1,6 +1,6 @@
 {% extends "goukaku/base.html" %}
-{% block title %}{{ user_name }}の足跡{% endblock %}
+{% block title %}あなたの足跡{% endblock %}
 {% block content %}
-<header class="app-header"><a href="{{ url_for('goukaku_ui.home') }}" aria-label="戻る" class="icon-btn">‹</a><h1>{{ user_name }}の足跡</h1><button aria-label="閉じる" class="icon-btn close" data-close>×</button></header>
-<div class="page-content"><p class="timeline-lead">数字だけでは見えない、小さな一歩と節目の記録です。</p><section class="card timeline">{% for event_date, text in events %}<article><i></i><time>{{ event_date }}</time><strong>{{ text }}</strong></article>{% endfor %}</section><p class="privacy-note">相談内容は表示せず、できたことだけを記録します。</p></div>
+<header class="app-header"><a href="{{ return_url }}" aria-label="戻る" class="icon-btn">‹</a><h1>あなたの足跡</h1><button aria-label="閉じる" class="icon-btn close" data-close>×</button></header>
+<div class="page-content"><p class="timeline-lead">数字だけでは見えない、小さな一歩と節目の記録です。</p><section class="card timeline">{% if events %}{% for event in events %}<article><i></i><time>{{ event.display_date }}</time><strong>{{ event.title }}</strong><small>{{ event.description }}</small></article>{% endfor %}{% else %}<p class="timeline-empty">学習を始めると、ここにあなたの歩みが残っていきます。</p>{% endif %}</section><p class="privacy-note">相談内容は表示せず、保存済みの学習実績だけを記録します。</p></div>
 {% endblock %}
