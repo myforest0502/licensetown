@@ -9,6 +9,7 @@ from database import (
     get_dashboard_learning_data,
     get_field_learning_summary,
     get_learning_activity,
+    get_question_attempts,
     get_weekly_question_history,
     get_supported_learner_ids,
     user_names,
@@ -16,6 +17,7 @@ from database import (
 from learning_analysis import build_gensan_comment, build_learning_guidance
 from supporter_report import build_supporter_report
 from pilot_diagnostics import build_pilot_diagnostics
+from field_progress_presentation import build_field_progress_presentation
 
 
 goukaku_ui = Blueprint("goukaku_ui", __name__)
@@ -23,6 +25,12 @@ goukaku_ui = Blueprint("goukaku_ui", __name__)
 EXAM_DATE = date(2027, 2, 20)
 TODAY_GOAL = 30
 SUPPORTER_TOKEN_MAX_AGE_SECONDS = 30 * 24 * 60 * 60
+
+
+def field_progress_ui_enabled():
+    return os.getenv("ENABLE_FIELD_PROGRESS_UI", "").strip().lower() in {
+        "1", "true", "yes", "on",
+    }
 
 
 def create_dashboard_token(user_id):
@@ -100,6 +108,8 @@ def build_dashboard(user_id=None):
         "last_7_days_accuracy": 0,
         "average_accuracy": 0,
         "field_stats": [],
+        "field_progress_ui_enabled": False,
+        "field_progress_fields": [],
         "weak_fields": [],
         "weak_analysis_message": "まずは100問を目標に基礎を固めましょう。",
         "recommended_study": [],
@@ -123,6 +133,11 @@ def build_dashboard(user_id=None):
         )
         fields = learning_data["fields"]
         dashboard["field_stats"] = [item for item in fields if item["learned"]]
+        if field_progress_ui_enabled():
+            dashboard["field_progress_ui_enabled"] = True
+            dashboard["field_progress_fields"] = build_field_progress_presentation(
+                get_question_attempts(user_id), legacy_fields=fields
+            )
         dashboard.update(build_learning_guidance(dashboard["total_answers"], fields))
         remainder = dashboard["total_answers"] % 100
         dashboard["next_reward_answers"] = 100 - remainder if remainder else 100
