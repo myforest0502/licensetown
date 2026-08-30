@@ -26,7 +26,7 @@
   "critical_error_block_count": 40,
   "target_mismatch_block_count": 0,
   "parse_error_block_count": 20,
-  "fail_closed_count": 40,
+  "fail_closed_count": 20,
   "formal_state_changes": 0,
   "rows": [
     {

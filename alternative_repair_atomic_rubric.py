@@ -257,7 +257,9 @@ def run_atomic_shadow(
         "critical_error_block_count": sum(row["critical_error_block_count"] for row in rows),
         "target_mismatch_block_count": sum(row["target_mismatch_block_count"] for row in rows),
         "parse_error_block_count": sum(row["parse_error_block_count"] for row in rows),
-        "fail_closed_count": sum(row["parse_error_block_count"] for row in rows) + len(packets) * repeat_count,
+        # Empty answers already appear in parse_error_block_count via the local
+        # fail-closed result; do not count them a second time.
+        "fail_closed_count": sum(row["parse_error_block_count"] for row in rows),
         "formal_state_changes": sum(row["formal_state_changes"] for row in rows),
         "rows": rows,
     }
