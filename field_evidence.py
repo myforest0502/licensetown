@@ -137,6 +137,10 @@ def build_field_evidence(
             or (not item.get("selected_answers") and item.get("confidence") is None)
             for item in field_attempts
         )
+        correct_answer_count = sum(
+            item.get("is_correct") is True and item.get("answer_status") != "unknown"
+            for item in field_attempts
+        )
         weakness_counts = Counter(
             weakness[node_id]["evidence_level"]
             for node_id in attempted_nodes
@@ -197,6 +201,12 @@ def build_field_evidence(
                 "3": confidence_counts[3],
             },
             "unknown_answer_count": unknown_count,
+            "question_answer_count": len(field_attempts),
+            "question_correct_count": correct_answer_count,
+            "question_accuracy": (
+                correct_answer_count / len(field_attempts)
+                if field_attempts else None
+            ),
             "repeated_weakness_evidence_count": sum(
                 weakness_counts[level] for level in REPEATED_WEAKNESS_LEVELS
             ),
@@ -207,6 +217,16 @@ def build_field_evidence(
         })
 
     canonical_nodes = set(_CATALOG["fields_by_node"])
+    canonical_node_evidence = []
+    for node_id in sorted(canonical_nodes):
+        state = states.get(node_id)
+        canonical_node_evidence.append({
+            "canonical_node_id": node_id,
+            "field_ids": sorted(_CATALOG["fields_by_node"][node_id]),
+            "state": state["state"] if state else "unseen",
+            "next_review_at": _timestamp(state.get("next_review_at")) if state else None,
+            "due_overdue_days": int(state.get("due_overdue_days") or 0) if state else 0,
+        })
     return {
         "status": "evidence_only",
         "official_mastery_score": None,
@@ -218,6 +238,7 @@ def build_field_evidence(
         ),
         "multi_field_node_count": len(_CATALOG["multi_field_nodes"]),
         "multi_field_nodes": _CATALOG["multi_field_nodes"],
+        "canonical_node_evidence": canonical_node_evidence,
         "multi_field_membership_policy": "duplicated_in_each_member_field_for_evidence_only",
         "fields": fields,
     }
