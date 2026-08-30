@@ -224,6 +224,9 @@ def run_atomic_shadow(
                 "false_pass": expected != "PASS" and "PASS" in finals,
                 "false_fail_candidate": expected == "PASS" and any(value != "PASS" for value in finals),
                 "formal_state_changes": sum(item["formal_state_change"] for item in evaluations),
+                # Structured only; no raw response, learner identity, or personal data.
+                # Kept so future false-PASS audits can inspect matched/missing IDs.
+                "evaluation_details": evaluations,
             })
     correct = [value for row in rows if row["expected"] == "PASS" for value in row["final_shadow_verdicts"]]
     return {
