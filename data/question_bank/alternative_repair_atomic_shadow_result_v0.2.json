@@ -1,0 +1,328 @@
+{
+  "status": "not_run_pending_explicit_api_authorization",
+  "node_count": 10,
+  "average_required_element_count": 3.3,
+  "case_count": 80,
+  "adversarial_case_count": 10,
+  "repeat_count": 2,
+  "planned_api_calls": 140,
+  "actual_api_calls": 0,
+  "formal_state_changes": 0,
+  "rubrics": [
+    {
+      "canonical_node_id": "KN0100",
+      "atomic_rubric": {
+        "version": "0.2-atomic",
+        "required_elements": [
+          {
+            "id": "R1",
+            "criterion": "模擬作業で緊急停止反応と安全確認能力を評価する",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R2",
+            "criterion": "通常の機械操作は可能だが、緊急停止課題では反応時間が遅れ、安全確認も不十分である",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R3",
+            "criterion": "製造業への復職では歩行自立や筋力だけでなく、実際の作業環境で緊急時に迅速かつ安全に対応できるかが重要である",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R4",
+            "criterion": "模擬環境で安全動作評価と緊急対応訓練を行い、復職可否を判断する",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          }
+        ],
+        "partial_condition": "必須elementを1つ以上満たすが全数ではない。",
+        "fail_condition": "必須elementを1つも満たさない、無関係、または暗記記号のみ。",
+        "critical_errors": [
+          "主要な因果関係・方向・適応・禁忌を逆に説明する。"
+        ],
+        "memorized_answer_rejection": "Node名、疾患名、用語名、または元問題の正答記号だけではPASS不可。",
+        "reference_explanation": "通常の機械操作は可能だが、緊急停止課題では反応時間が遅れ、安全確認も不十分である。製造業への復職では歩行自立や筋力だけでなく、実際の作業環境で緊急時に迅速かつ安全に対応できるかが重要である。模擬環境で安全動作評価と緊急対応訓練を行い、復職可否を判断する。"
+      }
+    },
+    {
+      "canonical_node_id": "KN0017",
+      "atomic_rubric": {
+        "version": "0.2-atomic",
+        "required_elements": [
+          {
+            "id": "R1",
+            "criterion": "バイタルサインと人工呼吸器条件を監視しながら",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R2",
+            "criterion": "端座位から立位へ段階的に離床を進めるへの介入選択",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          }
+        ],
+        "partial_condition": "必須elementを1つ以上満たすが全数ではない。",
+        "fail_condition": "必須elementを1つも満たさない、無関係、または暗記記号のみ。",
+        "critical_errors": [
+          "主要な因果関係・方向・適応・禁忌を逆に説明する。"
+        ],
+        "memorized_answer_rejection": "Node名、疾患名、用語名、または元問題の正答記号だけではPASS不可。",
+        "reference_explanation": "人工呼吸管理中であるが、鎮静は終了し指示理解が可能で、酸素化と循環動態も安定している。一方、ICU入室8日目で四肢MMT2〜3、自力起き上がり困難を認め、ICU-acquired weaknessが疑われる。バイタルサインと人工呼吸器条件を監視しながら、端座位から立位へ段階的に離床を進める。"
+      }
+    },
+    {
+      "canonical_node_id": "KN0785",
+      "atomic_rubric": {
+        "version": "0.2-atomic",
+        "required_elements": [
+          {
+            "id": "R1",
+            "criterion": "神経筋再教育の目的と適切な実施方法",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R2",
+            "criterion": "神経筋再教育は残存する神経筋機能を利用して正しい随意運動パターンを再学習する方法で、随意運動の促通を目的とする",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R3",
+            "criterion": "したがって",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          }
+        ],
+        "partial_condition": "必須elementを1つ以上満たすが全数ではない。",
+        "fail_condition": "必須elementを1つも満たさない、無関係、または暗記記号のみ。",
+        "critical_errors": [
+          "主要な因果関係・方向・適応・禁忌を逆に説明する。"
+        ],
+        "memorized_answer_rejection": "Node名、疾患名、用語名、または元問題の正答記号だけではPASS不可。",
+        "reference_explanation": "神経筋再教育は残存する神経筋機能を利用して正しい随意運動パターンを再学習する方法で、随意運動の促通を目的とする。したがって1が正しい。"
+      }
+    },
+    {
+      "canonical_node_id": "KN0676",
+      "atomic_rubric": {
+        "version": "0.2-atomic",
+        "required_elements": [
+          {
+            "id": "R1",
+            "criterion": "神経原性ショックにおける低血圧・徐脈などの特徴",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R2",
+            "criterion": "神経原性ショックでは交感神経活動低下により末梢血管拡張と低血圧を生じ、迷走神経優位となって徐脈を伴うのが特徴である",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R3",
+            "criterion": "したがって",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          }
+        ],
+        "partial_condition": "必須elementを1つ以上満たすが全数ではない。",
+        "fail_condition": "必須elementを1つも満たさない、無関係、または暗記記号のみ。",
+        "critical_errors": [
+          "主要な因果関係・方向・適応・禁忌を逆に説明する。"
+        ],
+        "memorized_answer_rejection": "Node名、疾患名、用語名、または元問題の正答記号だけではPASS不可。",
+        "reference_explanation": "神経原性ショックでは交感神経活動低下により末梢血管拡張と低血圧を生じ、迷走神経優位となって徐脈を伴うのが特徴である。したがって2が正しい。"
+      }
+    },
+    {
+      "canonical_node_id": "KN0311",
+      "atomic_rubric": {
+        "version": "0.2-atomic",
+        "required_elements": [
+          {
+            "id": "R1",
+            "criterion": "前骨間神経麻痺でみられるOKサイン障害",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R2",
+            "criterion": "前骨間神経は長母指屈筋と示指の深指屈筋などを支配する",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R3",
+            "criterion": "障害されると母指IP関節と示指DIP関節を十分に屈曲できず、指尖で円を作るつまみができないため、母指と示指の指腹を合わせる代償的なつまみ方となる",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R4",
+            "criterion": "感覚枝を持たない運動神経である点も重要である",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          }
+        ],
+        "partial_condition": "必須elementを1つ以上満たすが全数ではない。",
+        "fail_condition": "必須elementを1つも満たさない、無関係、または暗記記号のみ。",
+        "critical_errors": [
+          "主要な因果関係・方向・適応・禁忌を逆に説明する。"
+        ],
+        "memorized_answer_rejection": "Node名、疾患名、用語名、または元問題の正答記号だけではPASS不可。",
+        "reference_explanation": "前骨間神経は長母指屈筋と示指の深指屈筋などを支配する。障害されると母指IP関節と示指DIP関節を十分に屈曲できず、指尖で円を作るつまみができないため、母指と示指の指腹を合わせる代償的なつまみ方となる。感覚枝を持たない運動神経である点も重要である。"
+      }
+    },
+    {
+      "canonical_node_id": "KN0238",
+      "atomic_rubric": {
+        "version": "0.2-atomic",
+        "required_elements": [
+          {
+            "id": "R1",
+            "criterion": "Fickの原理による酸素摂取量の算出",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R2",
+            "criterion": "Fickの原理では、酸素摂取量は心拍出量と動静脈酸素較差の積で求める",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R3",
+            "criterion": "単位をそろえると、10L/分×100mL/L＝1,000mL/分となる",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R4",
+            "criterion": "運動時の酸素摂取量は、循環による酸素運搬量と末梢組織での酸素抜き取りの双方で決まる",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          }
+        ],
+        "partial_condition": "必須elementを1つ以上満たすが全数ではない。",
+        "fail_condition": "必須elementを1つも満たさない、無関係、または暗記記号のみ。",
+        "critical_errors": [
+          "主要な因果関係・方向・適応・禁忌を逆に説明する。"
+        ],
+        "memorized_answer_rejection": "Node名、疾患名、用語名、または元問題の正答記号だけではPASS不可。",
+        "reference_explanation": "Fickの原理では、酸素摂取量は心拍出量と動静脈酸素較差の積で求める。単位をそろえると、10L/分×100mL/L＝1,000mL/分となる。運動時の酸素摂取量は、循環による酸素運搬量と末梢組織での酸素抜き取りの双方で決まる。"
+      }
+    },
+    {
+      "canonical_node_id": "KN0611",
+      "atomic_rubric": {
+        "version": "0.2-atomic",
+        "required_elements": [
+          {
+            "id": "R1",
+            "criterion": "意識せずに技能や習慣として再生される記憶は手続き記憶で",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R2",
+            "criterion": "非陳述記憶に分類される",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          }
+        ],
+        "partial_condition": "必須elementを1つ以上満たすが全数ではない。",
+        "fail_condition": "必須elementを1つも満たさない、無関係、または暗記記号のみ。",
+        "critical_errors": [
+          "主要な因果関係・方向・適応・禁忌を逆に説明する。"
+        ],
+        "memorized_answer_rejection": "Node名、疾患名、用語名、または元問題の正答記号だけではPASS不可。",
+        "reference_explanation": "意識せずに技能や習慣として再生される記憶は手続き記憶で、非陳述記憶に分類される。自転車操作や楽器演奏などが代表例である。"
+      }
+    },
+    {
+      "canonical_node_id": "KN0268",
+      "atomic_rubric": {
+        "version": "0.2-atomic",
+        "required_elements": [
+          {
+            "id": "R1",
+            "criterion": "ランダム練習の文脈干渉と保持・転移効果",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R2",
+            "criterion": "ランダム練習は課題切替えによる文脈干渉が大きく、練習中の成績は低下しやすい",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R3",
+            "criterion": "一方、課題を毎回再構成する処理が学習を深め、保持・転移テストでは良好になりやすい",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R4",
+            "criterion": "類題では一時的な遂行成績と、後日の学習成果を分けて考える",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          }
+        ],
+        "partial_condition": "必須elementを1つ以上満たすが全数ではない。",
+        "fail_condition": "必須elementを1つも満たさない、無関係、または暗記記号のみ。",
+        "critical_errors": [
+          "主要な因果関係・方向・適応・禁忌を逆に説明する。"
+        ],
+        "memorized_answer_rejection": "Node名、疾患名、用語名、または元問題の正答記号だけではPASS不可。",
+        "reference_explanation": "ランダム練習は課題切替えによる文脈干渉が大きく、練習中の成績は低下しやすい。一方、課題を毎回再構成する処理が学習を深め、保持・転移テストでは良好になりやすい。類題では一時的な遂行成績と、後日の学習成果を分けて考える。"
+      }
+    },
+    {
+      "canonical_node_id": "KN0652",
+      "atomic_rubric": {
+        "version": "0.2-atomic",
+        "required_elements": [
+          {
+            "id": "R1",
+            "criterion": "体重減少",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R2",
+            "criterion": "疲労感",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R3",
+            "criterion": "筋力低下",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R4",
+            "criterion": "歩行速度低下",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          }
+        ],
+        "partial_condition": "必須elementを1つ以上満たすが全数ではない。",
+        "fail_condition": "必須elementを1つも満たさない、無関係、または暗記記号のみ。",
+        "critical_errors": [
+          "主要な因果関係・方向・適応・禁忌を逆に説明する。"
+        ],
+        "memorized_answer_rejection": "Node名、疾患名、用語名、または元問題の正答記号だけではPASS不可。",
+        "reference_explanation": "身体的フレイルでは体重減少、疲労感、筋力低下、歩行速度低下、身体活動量低下が代表的である。したがって疲労感増加と動作緩慢に相当する1・3が正しい。"
+      }
+    },
+    {
+      "canonical_node_id": "KN0899",
+      "atomic_rubric": {
+        "version": "0.2-atomic",
+        "required_elements": [
+          {
+            "id": "R1",
+            "criterion": "drop arm testは肩を外転位からゆっくり下ろせるかをみる検査で",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R2",
+            "criterion": "腱板",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          },
+          {
+            "id": "R3",
+            "criterion": "特に棘上筋断裂で陽性となる",
+            "acceptable_wording": "医学的に同義な用語・略語・語順違いを許容する。"
+          }
+        ],
+        "partial_condition": "必須elementを1つ以上満たすが全数ではない。",
+        "fail_condition": "必須elementを1つも満たさない、無関係、または暗記記号のみ。",
+        "critical_errors": [
+          "主要な因果関係・方向・適応・禁忌を逆に説明する。"
+        ],
+        "memorized_answer_rejection": "Node名、疾患名、用語名、または元問題の正答記号だけではPASS不可。",
+        "reference_explanation": "drop arm testは肩を外転位からゆっくり下ろせるかをみる検査で、腱板、特に棘上筋断裂で陽性となる。2が正しい。"
+      }
+    }
+  ]
+}
