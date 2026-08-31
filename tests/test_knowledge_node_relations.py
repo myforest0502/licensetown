@@ -132,5 +132,5 @@ def test_invalid_merge_candidate_data_is_rejected(mutation):
 
 
 def test_existing_question_bank_loader_remains_compatible():
-    assert question_count() == 1574
+    assert question_count() == 1591
     assert get_question_tag("Q260")["knowledge_node_id"] == "KN0259"

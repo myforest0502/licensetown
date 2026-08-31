@@ -252,7 +252,7 @@ def _question_ids_for_different_categories():
     first_id = "Q1"
     first_category = get_category_small(first_id)
     second_id = next(
-        f"Q{number}" for number in range(2, 1575)
+        f"Q{number}" for number in range(2, 1592)
         if get_category_small(f"Q{number}") != first_category
     )
     return first_id, second_id

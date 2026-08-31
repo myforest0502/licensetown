@@ -3058,9 +3058,10 @@
   {
     "knowledge_node_id": "KN0305",
     "label": "口すぼめ呼吸による呼気時気道内圧維持と気道虚脱抑制",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q307"
+      "Q307",
+      "Q1590"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3238,9 +3239,10 @@
   {
     "knowledge_node_id": "KN0323",
     "label": "半月板損傷を確認するMcMurray系徒手検査の選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q325"
+      "Q325",
+      "Q1584"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3738,9 +3740,10 @@
   {
     "knowledge_node_id": "KN0373",
     "label": "発育性股関節形成不全の初期装具での屈曲・外転位保持",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q378"
+      "Q378",
+      "Q1582"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4129,9 +4132,10 @@
   {
     "knowledge_node_id": "KN0412",
     "label": "インセンティブスパイロメトリによる深吸気・肺胞拡張の促進",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q419"
+      "Q419",
+      "Q1580"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5139,9 +5143,10 @@
   {
     "knowledge_node_id": "KN0513",
     "label": "Parkinson病の主要徴候には安静時振戦、筋強剛、無動・寡動、姿勢反射障害があり、突進現象や歯車様固縮がみられる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q521"
+      "Q521",
+      "Q1581"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5349,9 +5354,10 @@
   {
     "knowledge_node_id": "KN0534",
     "label": "虹彩には瞳孔を拡大させる瞳孔散大筋と、縮小させる瞳孔括約筋がある",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q542"
+      "Q542",
+      "Q1591"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5479,9 +5485,10 @@
   {
     "knowledge_node_id": "KN0547",
     "label": "フィードバックの説明の基本事項",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q555"
+      "Q555",
+      "Q1578"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5770,9 +5777,10 @@
   {
     "knowledge_node_id": "KN0576",
     "label": "水中運動療法の生理作用には水圧、浮力、粘性抵抗、熱伝導などが関与する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q584"
+      "Q584",
+      "Q1588"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5990,9 +5998,10 @@
   {
     "knowledge_node_id": "KN0598",
     "label": "体静脈系うっ血により頸静脈怒張、肝脾腫、末梢浮腫などがみられる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q606"
+      "Q606",
+      "Q1587"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6464,9 +6473,10 @@
   {
     "knowledge_node_id": "KN0645",
     "label": "腹圧性尿失禁に対する骨盤底筋群の筋力強化",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q653"
+      "Q653",
+      "Q1577"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6605,9 +6615,10 @@
   {
     "knowledge_node_id": "KN0659",
     "label": "バソプレシン（ADH）は視床下部の視索上核・室傍核で合成され、下垂体後葉から放出される",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q667"
+      "Q667",
+      "Q1585"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6876,9 +6887,10 @@
   {
     "knowledge_node_id": "KN0686",
     "label": "Malgaigne骨折は骨盤輪の垂直不安定性を伴う骨盤骨折である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q694"
+      "Q694",
+      "Q1575"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7146,9 +7158,10 @@
   {
     "knowledge_node_id": "KN0713",
     "label": "前頭葉・側頭葉優位の限局性萎縮が特徴で、人格変化や脱抑制、言語症状などが目立つ",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q721"
+      "Q721",
+      "Q1583"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7186,9 +7199,10 @@
   {
     "knowledge_node_id": "KN0717",
     "label": "Perthes病は小児の大腿骨頭骨端に生じる阻血性壊死で、治療では骨頭を臼蓋内に保ちつつ免荷する装具療法が行われる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q725"
+      "Q725",
+      "Q1586"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7276,9 +7290,10 @@
   {
     "knowledge_node_id": "KN0726",
     "label": "筋と支配神経との組合せ",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q734"
+      "Q734",
+      "Q1576"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7326,9 +7341,10 @@
   {
     "knowledge_node_id": "KN0731",
     "label": "皮膚の痛覚・温度覚など侵害刺激は自由神経終末で受容される",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q739"
+      "Q739",
+      "Q1589"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7806,9 +7822,10 @@
   {
     "knowledge_node_id": "KN0779",
     "label": "Froment徴候は尺骨神経麻痺で母指内転筋が弱く、紙をつまむ際に長母指屈筋で代償して母指IP関節が屈曲する徴候である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q787"
+      "Q787",
+      "Q1579"
     ],
     "aliases": [],
     "successor_ids": []

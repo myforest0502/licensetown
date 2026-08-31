@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "id": "Q1",
     "theme": "脳血管障害・歩行分析",
@@ -28919,6 +28919,315 @@
       "真陽性",
       "患者数",
       "sensitivity"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1575",
+    "theme": "骨折の名称と部位の組合せで正しいのはどれか。",
+    "knowledge_node": "Malgaigne骨折は骨盤輪の垂直不安定性を伴う骨盤骨折である",
+    "knowledge_node_id": "KN0686",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Bennettは第1中手骨基部、Jeffersonは環椎、Smithは橈骨遠位端骨折であるため4が正しい。",
+      "Malgaigne骨折は骨盤輪の垂直不安定性を伴う骨盤骨折である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1576",
+    "theme": "筋と支配神経の組合せで正しいのはどれか。",
+    "knowledge_node": "筋と支配神経との組合せ",
+    "knowledge_node_id": "KN0726",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "縫工筋は大腿神経、前脛骨筋は深腓骨神経支配であるため3・4が正しい。",
+      "縫工筋は大腿神経支配である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1577",
+    "theme": "骨盤底筋体操の効果が最も期待される病態はどれか。",
+    "knowledge_node": "腹圧性尿失禁に対する骨盤底筋群の筋力強化",
+    "knowledge_node_id": "KN0645",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "腹圧性尿失禁では、咳や跳躍など腹圧上昇時に尿道閉鎖を支える骨盤底筋群の機能低下が中心となる。",
+      "したがって最優先の筋力増強対象は骨盤底筋群である。",
+      "骨盤底筋群は尿道・膀胱頸部を支持する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1578",
+    "theme": "運動学習について正しいのはどれか。",
+    "knowledge_node": "フィードバックの説明の基本事項",
+    "knowledge_node_id": "KN0547",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "フィードバックの説明で正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1579",
+    "theme": "尺骨神経麻痺でみられるのはどれか。",
+    "knowledge_node": "Froment徴候は尺骨神経麻痺で母指内転筋が弱く、紙をつまむ際に長母指屈筋で代償して母指IP関節が屈曲する徴候である",
+    "knowledge_node_id": "KN0779",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Froment徴候は尺骨神経麻痺で母指内転筋が弱く、紙をつまむ際に長母指屈筋で代償して母指IP関節が屈曲する徴候である。",
+      "したがって2が正しい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1580",
+    "theme": "呼吸リハビリテーションで正しいのはどれか。",
+    "knowledge_node": "インセンティブスパイロメトリによる深吸気・肺胞拡張の促進",
+    "knowledge_node_id": "KN0412",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "浅い呼吸や無気肺の予防を目的に用い、努力性呼気や息こらえを主目的とする器具ではない。",
+      "ゆっくり深い吸気と持続最大吸気を促すのが主目的である。",
+      "腹部手術後のインセンティブスパイロメトリは、患者自身にゆっくり深い吸気を行わせ、持続最大吸気を促すことで肺胞の再膨張を図る。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1581",
+    "theme": "Parkinson病の症状、徴候について正しいのはどれか。",
+    "knowledge_node": "Parkinson病の主要徴候には安静時振戦、筋強剛、無動・寡動、姿勢反射障害があり、突進現象や歯車様固縮がみられる",
+    "knowledge_node_id": "KN0513",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Parkinson病で主にみられる徴候はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1582",
+    "theme": "発育性股関節形成不全について正しいのはどれか。",
+    "knowledge_node": "発育性股関節形成不全の初期装具での屈曲・外転位保持",
+    "knowledge_node_id": "KN0373",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "乳児早期の発育性股関節形成不全では、適応を確認したうえでPavlik harnessなどを用い、股関節を屈曲・外転位に保って大腿骨頭の求心性を促す。",
+      "過度な外転は大腿骨頭壊死、過度な屈曲は神経障害の危険があるため、装具位置と整復状態を定期的に確認し、保護者が自己判断で調整しないよう指導する。",
+      "適度な屈曲・外転位で整復と臼蓋発達を促す。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1583",
+    "theme": "病名と症状の組合せで正しいのはどれか。",
+    "knowledge_node": "前頭葉・側頭葉優位の限局性萎縮が特徴で、人格変化や脱抑制、言語症状などが目立つ",
+    "knowledge_node_id": "KN0713",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Pick病を含む前頭側頭型認知症では前頭葉・側頭葉優位の限局性萎縮が特徴で、人格変化や脱抑制、言語症状などが目立つ。",
+      "したがって4が正しい。",
+      "Pick病では前頭・側頭葉の限局性萎縮がみられる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1584",
+    "theme": "膝半月板断裂で陽性を示すのはどれか。",
+    "knowledge_node": "半月板損傷を確認するMcMurray系徒手検査の選択",
+    "knowledge_node_id": "KN0323",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "McMurrayテストは膝を屈曲位から伸展させながら下腿に回旋と内外反ストレスを加え、関節裂隙の疼痛やクリックを確認して内側・外側半月板を評価する。",
+      "問題文の症状と検査対象が直接一致する。",
+      "膝関節裂隙の圧痛と屈伸時のクリック・疼痛は半月板損傷を示唆する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1585",
+    "theme": "下垂体後葉から分泌されるホルモンはどれか。2つ選べ。",
+    "knowledge_node": "バソプレシン（ADH）は視床下部の視索上核・室傍核で合成され、下垂体後葉から放出される",
+    "knowledge_node_id": "KN0659",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "したがって5が正しい。",
+      "バソプレシン（ADH）は視床下部の視索上核・室傍核で合成され、下垂体後葉から放出される。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1586",
+    "theme": "小児疾患と補装具の組合せで正しいのはどれか。",
+    "knowledge_node": "Perthes病は小児の大腿骨頭骨端に生じる阻血性壊死で、治療では骨頭を臼蓋内に保ちつつ免荷する装具療法が行われる",
+    "knowledge_node_id": "KN0717",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Perthes病は小児の大腿骨頭骨端に生じる阻血性壊死で、治療では骨頭を臼蓋内に保ちつつ免荷する装具療法が行われる。",
+      "したがって2・4が正しい。",
+      "大腿骨頭の阻血性壊死である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1587",
+    "theme": "心不全で正しいのはどれか。",
+    "knowledge_node": "体静脈系うっ血により頸静脈怒張、肝脾腫、末梢浮腫などがみられる",
+    "knowledge_node_id": "KN0598",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "心不全の症候として正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1588",
+    "theme": "水中運動療法の作用と効果について正しいのはどれか。",
+    "knowledge_node": "水中運動療法の生理作用には水圧、浮力、粘性抵抗、熱伝導などが関与する",
+    "knowledge_node_id": "KN0576",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "水の物理的特性で水中運動療法における生理的な作用に影響しの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1589",
+    "theme": "皮膚感覚と受容器の組合せで正しいのはどれか。",
+    "knowledge_node": "皮膚の痛覚・温度覚など侵害刺激は自由神経終末で受容される",
+    "knowledge_node_id": "KN0731",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Pacini小体やMeissner小体などは機械受容器であるため4が正しい。",
+      "皮膚の痛覚・温度覚など侵害刺激は自由神経終末で受容される。",
+      "自由神経終末は侵害受容に関与する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1590",
+    "theme": "口すぼめ呼吸で正しいのはどれか。",
+    "knowledge_node": "口すぼめ呼吸による呼気時気道内圧維持と気道虚脱抑制",
+    "knowledge_node_id": "KN0305",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "閉塞性障害では「吐きやすくする」機序を理解する。",
+      "口すぼめ呼吸は呼気抵抗をつくり、呼気時の気道内圧を保って末梢気道の動的虚脱を抑え、呼気を延長する。",
+      "呼気時の気道虚脱を軽減する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1591",
+    "theme": "視覚器で正しいのはどれか。",
+    "knowledge_node": "虹彩には瞳孔を拡大させる瞳孔散大筋と、縮小させる瞳孔括約筋がある",
+    "knowledge_node_id": "KN0534",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "視覚器で正しいのはどれかの基本概念"
     ],
     "tag_version": "1.0",
     "tag_status": "reviewed",

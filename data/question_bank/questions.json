@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "id": "Q1",
     "management_code": "Q1-C-15-O",
@@ -31051,6 +31051,363 @@
       "exam_no": 45,
       "session": "午前",
       "question_no": 23
+    }
+  },
+  {
+    "id": "Q1575",
+    "management_code": "Q1575-C-16-P",
+    "category_large": "C",
+    "category_small": 16,
+    "source": "P",
+    "title": null,
+    "question_text": "骨折の名称と部位の組合せで正しいのはどれか。",
+    "choices": {
+      "1": "Monteggia骨折　上腕骨",
+      "2": "Cotton骨折　橈骨",
+      "3": "Malgaigne骨折　骨盤",
+      "4": "Jefferson骨折　大腿骨",
+      "5": "Bennett骨折　脛骨"
+    },
+    "exam": {
+      "exam_no": 50,
+      "session": "午後",
+      "question_no": 90
+    }
+  },
+  {
+    "id": "Q1576",
+    "management_code": "Q1576-A-1-P",
+    "category_large": "A",
+    "category_small": 1,
+    "source": "P",
+    "title": null,
+    "question_text": "筋と支配神経の組合せで正しいのはどれか。",
+    "choices": {
+      "1": "腸骨筋　大腿神経",
+      "2": "大殿筋　上殿神経",
+      "3": "小殿筋　下殿神経",
+      "4": "前脛骨筋　脛骨神経",
+      "5": "内閉鎖筋　閉鎖神経"
+    },
+    "exam": {
+      "exam_no": 50,
+      "session": "午前",
+      "question_no": 52
+    }
+  },
+  {
+    "id": "Q1577",
+    "management_code": "Q1577-C-18-P",
+    "category_large": "C",
+    "category_small": 18,
+    "source": "P",
+    "title": null,
+    "question_text": "骨盤底筋体操の効果が最も期待される病態はどれか。",
+    "choices": {
+      "1": "溢流性尿失禁",
+      "2": "過活動膀胱",
+      "3": "機能性尿失禁",
+      "4": "切迫性尿失禁",
+      "5": "腹圧性尿失禁"
+    },
+    "exam": {
+      "exam_no": 49,
+      "session": "午後",
+      "question_no": 37
+    }
+  },
+  {
+    "id": "Q1578",
+    "management_code": "Q1578-A-5-P",
+    "category_large": "A",
+    "category_small": 5,
+    "source": "P",
+    "title": null,
+    "question_text": "運動学習について正しいのはどれか。",
+    "choices": {
+      "1": "理学療法士は患者に内在的フィードバックを与える。",
+      "2": "内部モデルの形成には感覚フィードバックが必要である。",
+      "3": "感覚情報がなくても新たな運動課題を学習することができる。",
+      "4": "フィードフォワードは遂行中の運動の軌道修正に使用される。",
+      "5": "指導者が与えるフィードバックは運動学習の成立に必須である。"
+    },
+    "exam": {
+      "exam_no": 47,
+      "session": "午後",
+      "question_no": 22
+    }
+  },
+  {
+    "id": "Q1579",
+    "management_code": "Q1579-C-17-P",
+    "category_large": "C",
+    "category_small": 17,
+    "source": "P",
+    "title": null,
+    "question_text": "尺骨神経麻痺でみられるのはどれか。",
+    "choices": {
+      "1": "Kernig徴候",
+      "2": "Lasègue徴候",
+      "3": "Froment徴候",
+      "4": "Lhermitte徴候",
+      "5": "McMurray徴候"
+    },
+    "exam": {
+      "exam_no": 47,
+      "session": "午前",
+      "question_no": 86
+    }
+  },
+  {
+    "id": "Q1580",
+    "management_code": "Q1580-C-18-P",
+    "category_large": "C",
+    "category_small": 18,
+    "source": "P",
+    "title": null,
+    "question_text": "呼吸リハビリテーションで正しいのはどれか。",
+    "choices": {
+      "1": "ハッフィングは胸郭の伸張を目的とする。",
+      "2": "横隔膜呼吸は、呼吸補助筋の活動を促進する。",
+      "3": "呼吸困難時の症状改善には、腹臥位が有効である。",
+      "4": "インセンティブスパイロメトリは長く吸気を持続させる。",
+      "5": "口すぼめ呼吸は、呼気よりも吸気を長くするように指導する。"
+    },
+    "exam": {
+      "exam_no": 47,
+      "session": "午後",
+      "question_no": 47
+    }
+  },
+  {
+    "id": "Q1581",
+    "management_code": "Q1581-B-9-P",
+    "category_large": "B",
+    "category_small": 9,
+    "source": "P",
+    "title": null,
+    "question_text": "Parkinson病の症状、徴候について正しいのはどれか。",
+    "choices": {
+      "1": "企図振戦",
+      "2": "アテトーゼ",
+      "3": "Myerson徴候",
+      "4": "ミオクロニー発作",
+      "5": "折りたたみナイフ現象"
+    },
+    "exam": {
+      "exam_no": 49,
+      "session": "午後",
+      "question_no": 89
+    }
+  },
+  {
+    "id": "Q1582",
+    "management_code": "Q1582-B-11-P",
+    "category_large": "B",
+    "category_small": 11,
+    "source": "P",
+    "title": null,
+    "question_text": "発育性股関節形成不全について正しいのはどれか。",
+    "choices": {
+      "1": "開排は制限されない。",
+      "2": "大腿骨頭の前方脱臼が多い。",
+      "3": "乳児期ではリーメンビューゲル装具を用いる。",
+      "4": "2歳以上では外転位保持免荷装具を用いる。",
+      "5": "二次的な変形性股関節症にはなりにくい。"
+    },
+    "exam": {
+      "exam_no": 49,
+      "session": "午前",
+      "question_no": 32
+    }
+  },
+  {
+    "id": "Q1583",
+    "management_code": "Q1583-C-18-P",
+    "category_large": "C",
+    "category_small": 18,
+    "source": "P",
+    "title": null,
+    "question_text": "病名と症状の組合せで正しいのはどれか。",
+    "choices": {
+      "1": "前頭側頭型認知症　脱抑制",
+      "2": "進行性核上性麻痺　取り繕い",
+      "3": "皮質基底核変性症　認知の変動",
+      "4": "Lewy小体型認知症　肢節運動失行",
+      "5": "Alzheimer型認知症　垂直性眼球運動障害"
+    },
+    "exam": {
+      "exam_no": 51,
+      "session": "午前",
+      "question_no": 96
+    }
+  },
+  {
+    "id": "Q1584",
+    "management_code": "Q1584-C-17-P",
+    "category_large": "C",
+    "category_small": 17,
+    "source": "P",
+    "title": null,
+    "question_text": "膝半月板断裂で陽性を示すのはどれか。",
+    "choices": {
+      "1": "Jacksonテスト",
+      "2": "Lachmanテスト",
+      "3": "McMurrayテスト",
+      "4": "Oberテスト",
+      "5": "Roosテスト"
+    },
+    "exam": {
+      "exam_no": 49,
+      "session": "午後",
+      "question_no": 34
+    }
+  },
+  {
+    "id": "Q1585",
+    "management_code": "Q1585-A-2-P",
+    "category_large": "A",
+    "category_small": 2,
+    "source": "P",
+    "title": null,
+    "question_text": "下垂体後葉から分泌されるホルモンはどれか。2つ選べ。",
+    "choices": {
+      "1": "グレリン",
+      "2": "エストロゲン",
+      "3": "オキシトシン",
+      "4": "バソプレシン",
+      "5": "アルドステロン"
+    },
+    "exam": {
+      "exam_no": 49,
+      "session": "午前",
+      "question_no": 68
+    }
+  },
+  {
+    "id": "Q1586",
+    "management_code": "Q1586-C-18-P",
+    "category_large": "C",
+    "category_small": 18,
+    "source": "P",
+    "title": null,
+    "question_text": "小児疾患と補装具の組合せで正しいのはどれか。",
+    "choices": {
+      "1": "二分脊椎　Denis Browneスプリント",
+      "2": "Perthes病　股関節外転装具",
+      "3": "大腿骨頭すべり症　交互歩行装具（RGO）",
+      "4": "発育性股関節形成不全　S.W.A.S.H.装具",
+      "5": "Duchenne型筋ジストロフィー　背屈制限付短下肢装具"
+    },
+    "exam": {
+      "exam_no": 50,
+      "session": "午前",
+      "question_no": 38
+    }
+  },
+  {
+    "id": "Q1587",
+    "management_code": "Q1587-B-8-P",
+    "category_large": "B",
+    "category_small": 8,
+    "source": "P",
+    "title": null,
+    "question_text": "心不全で正しいのはどれか。",
+    "choices": {
+      "1": "左心不全では肝腫大をきたす。",
+      "2": "左心不全では頸静脈怒張がみられる。",
+      "3": "右心不全では肺動脈圧が上昇する。",
+      "4": "右心不全では下腿浮腫がみられる。",
+      "5": "脳性ナトリウム利尿ペプチドが低下する。"
+    },
+    "exam": {
+      "exam_no": 49,
+      "session": "午後",
+      "question_no": 85
+    }
+  },
+  {
+    "id": "Q1588",
+    "management_code": "Q1588-C-18-P",
+    "category_large": "C",
+    "category_small": 18,
+    "source": "P",
+    "title": null,
+    "question_text": "水中運動療法の作用と効果について正しいのはどれか。",
+    "choices": {
+      "1": "静水圧は静脈還流を増大させる。",
+      "2": "動水圧の大きさは運動速度に反比例する。",
+      "3": "皮膚からの感覚フィードバックを受けにくい。",
+      "4": "水中での身体の熱喪失量は空気中に比べて小さい。",
+      "5": "静水圧は呼気時の胸郭運動には抵抗として作用する。"
+    },
+    "exam": {
+      "exam_no": 51,
+      "session": "午後",
+      "question_no": 38
+    }
+  },
+  {
+    "id": "Q1589",
+    "management_code": "Q1589-A-2-P",
+    "category_large": "A",
+    "category_small": 2,
+    "source": "P",
+    "title": null,
+    "question_text": "皮膚感覚と受容器の組合せで正しいのはどれか。",
+    "choices": {
+      "1": "痛覚　自由神経終末",
+      "2": "温覚　Pacini（パチニ）小体",
+      "3": "冷覚　Meissner（マイスネル）小体",
+      "4": "触覚　Krause（クラウゼ）小体",
+      "5": "圧覚　Ruffini（ルフィニ）終末"
+    },
+    "exam": {
+      "exam_no": 49,
+      "session": "午後",
+      "question_no": 61
+    }
+  },
+  {
+    "id": "Q1590",
+    "management_code": "Q1590-C-18-P",
+    "category_large": "C",
+    "category_small": 18,
+    "source": "P",
+    "title": null,
+    "question_text": "口すぼめ呼吸で正しいのはどれか。",
+    "choices": {
+      "1": "気道の虚脱を抑える。",
+      "2": "全肺気量を増加させる。",
+      "3": "吸気時間を延長させる。",
+      "4": "呼吸仕事量を増加させる。",
+      "5": "機能的残気量を増加させる。"
+    },
+    "exam": {
+      "exam_no": 50,
+      "session": "午後",
+      "question_no": 39
+    }
+  },
+  {
+    "id": "Q1591",
+    "management_code": "Q1591-A-1-P",
+    "category_large": "A",
+    "category_small": 1,
+    "source": "P",
+    "title": null,
+    "question_text": "視覚器で正しいのはどれか。",
+    "choices": {
+      "1": "虹彩には瞳孔括約筋がある。",
+      "2": "眼動脈は外頸動脈の分枝である。",
+      "3": "視神経乳頭は眼球軸の外側にある。",
+      "4": "角膜には血管が多数分布している。",
+      "5": "網膜中心窩には錐体よりも杆体の方が多い。"
+    },
+    "exam": {
+      "exam_no": 47,
+      "session": "午後",
+      "question_no": 59
     }
   }
 ]
