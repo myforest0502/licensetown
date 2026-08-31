@@ -85,11 +85,11 @@ def test_small_category_still_keeps_thirty_question_study_flow():
 
 
 def test_formal_bank_has_all_questions_and_boundary_ids():
-    assert question_count() == 1564
+    assert question_count() == 1574
     assert get_question("Q1")["id"] == "Q1"
     assert get_answer("Q500")["id"] == "Q500"
     assert get_question("Q501")["id"] == "Q501"
-    assert get_explanation("Q1564")["id"] == "Q1564"
+    assert get_explanation("Q1574")["id"] == "Q1574"
 
 
 def test_accepted_answer_sets_cover_single_multi_and_either_answers():

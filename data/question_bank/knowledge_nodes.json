@@ -22,9 +22,10 @@
   {
     "knowledge_node_id": "KN0003",
     "label": "一側前庭機能低下の代償訓練",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q3"
+      "Q3",
+      "Q1565"
     ],
     "aliases": [],
     "successor_ids": []
@@ -62,9 +63,10 @@
   {
     "knowledge_node_id": "KN0007",
     "label": "下垂足へのAFO適応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q7"
+      "Q7",
+      "Q1566"
     ],
     "aliases": [],
     "successor_ids": []
@@ -662,9 +664,10 @@
   {
     "knowledge_node_id": "KN0067",
     "label": "Trendelenburg徴候は陰性で外転筋MMT5だが、股関節伸展ROMは0°で、立脚終期の骨盤回旋が乏しく歩幅が短いを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q67"
+      "Q67",
+      "Q1567"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1303,9 +1306,10 @@
   {
     "knowledge_node_id": "KN0131",
     "label": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q131"
+      "Q131",
+      "Q1574"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1803,9 +1807,10 @@
   {
     "knowledge_node_id": "KN0181",
     "label": "後方アプローチによる人工股関節全置換術後では、股関節の深い屈曲に内転と内旋が加わると後方脱臼の危険が高まる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q182"
+      "Q182",
+      "Q1568"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2446,9 +2451,10 @@
   {
     "knowledge_node_id": "KN0245",
     "label": "慢性高CO2血症における代償性呼吸性アシドーシス",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q246"
+      "Q246",
+      "Q1569"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2466,9 +2472,10 @@
   {
     "knowledge_node_id": "KN0247",
     "label": "感度・特異度から陽性尤度比を算出する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q248"
+      "Q248",
+      "Q1570"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2727,9 +2734,10 @@
   {
     "knowledge_node_id": "KN0273",
     "label": "酸素摂取量からMETsを算出する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q274"
+      "Q274",
+      "Q1571"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3940,9 +3948,10 @@
   {
     "knowledge_node_id": "KN0394",
     "label": "立脚終期から前遊脚期の前方推進に寄与する足関節底屈筋群",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q399"
+      "Q399",
+      "Q1572"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6434,9 +6443,10 @@
   {
     "knowledge_node_id": "KN0643",
     "label": "大腿義足の異常歩行と原因の対応関係",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q651"
+      "Q651",
+      "Q1573"
     ],
     "aliases": [],
     "successor_ids": []

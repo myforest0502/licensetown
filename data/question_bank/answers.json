@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "id": "Q1",
     "display_answer": "B",
@@ -15866,6 +15866,106 @@
     "accepted_answer_sets": [
       [
         "4"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1565",
+    "display_answer": "5",
+    "accepted_answer_sets": [
+      [
+        "5"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1566",
+    "display_answer": "5",
+    "accepted_answer_sets": [
+      [
+        "5"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1567",
+    "display_answer": "1",
+    "accepted_answer_sets": [
+      [
+        "1"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1568",
+    "display_answer": "4",
+    "accepted_answer_sets": [
+      [
+        "4"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1569",
+    "display_answer": "4",
+    "accepted_answer_sets": [
+      [
+        "4"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1570",
+    "display_answer": "5",
+    "accepted_answer_sets": [
+      [
+        "5"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1571",
+    "display_answer": "4",
+    "accepted_answer_sets": [
+      [
+        "4"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1572",
+    "display_answer": "3",
+    "accepted_answer_sets": [
+      [
+        "3"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1573",
+    "display_answer": "5",
+    "accepted_answer_sets": [
+      [
+        "5"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1574",
+    "display_answer": "2",
+    "accepted_answer_sets": [
+      [
+        "2"
       ]
     ],
     "answer_basis": "MHLW_official"

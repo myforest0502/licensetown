@@ -12,7 +12,10 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 QUESTION_BANK_DIR = Path(__file__).resolve().parent / "data" / "question_bank"
-EXPECTED_QUESTION_IDS = {f"Q{number}" for number in range(1, 1565)}
+EXPECTED_QUESTION_COUNT = 1574
+EXPECTED_QUESTION_IDS = {
+    f"Q{number}" for number in range(1, EXPECTED_QUESTION_COUNT + 1)
+}
 QUESTION_BANK_ERROR_MESSAGE = (
     "おう、悪い。今は正式問題バンクを読み込めない状態だ。\n"
     "自由会話の問題には切り替えず、ここで止めておくぞ。少し待ってからもう一度試してくれ。"
@@ -105,7 +108,9 @@ def _load_question_bank():
     tags = _index(_read_json("question_tags.json"), "question_tags.json")
     _validate_tags(tags)
     if set(questions) != EXPECTED_QUESTION_IDS:
-        raise ValueError("Formal question bank must contain exactly Q1-Q1564")
+        raise ValueError(
+            f"Formal question bank must contain exactly Q1-Q{EXPECTED_QUESTION_COUNT}"
+        )
     if (
         set(questions) != set(answers)
         or set(questions) != set(explanations)

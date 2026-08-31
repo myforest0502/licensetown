@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "id": "Q1",
     "theme": "脳血管障害・歩行分析",
@@ -28730,6 +28730,195 @@
     "prerequisite_nodes": [
       "予定変更への強いこだわりと柔軟な対応困難は、自閉スペクトラム症の限定・反復的行動や変化への抵抗を強く示唆する。",
       "予定変更への強い混乱はASDを示唆。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1565",
+    "theme": "末梢性めまいに対する理学療法で適切なのはどれか。",
+    "knowledge_node": "一側前庭機能低下の代償訓練",
+    "knowledge_node_id": "KN0003",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "HIT",
+      "前庭代償",
+      "視線安定化"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1566",
+    "theme": "45歳の男性。筋萎縮性側索硬化症。発症から1年経過している。ADLは自立しているが、主に下肢の筋力低下、バランス不良および鶏歩が認められる。理学療法で適切なのはどれか。",
+    "knowledge_node": "下垂足へのAFO適応",
+    "knowledge_node_id": "KN0007",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "総腓骨神経",
+      "下垂足",
+      "AFO"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1567",
+    "theme": "右股関節の関節可動域は、屈曲90°、伸展−15°、外転0°、内転15°である。予想される歩行時の特徴はどれか。",
+    "knowledge_node": "Trendelenburg徴候は陰性で外転筋MMT5だが、股関節伸展ROMは0°で、立脚終期の骨盤回旋が乏しく歩幅が短いを評価する",
+    "knowledge_node_id": "KN0067",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "股伸展ROM",
+      "骨盤回旋",
+      "step length"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1568",
+    "theme": "大腿骨近位部骨折に対する人工骨頭置換術（後方アプローチ）後、全荷重が可能な状態での理学療法で適切でないのはどれか。",
+    "knowledge_node": "後方アプローチによる人工股関節全置換術後では、股関節の深い屈曲に内転と内旋が加わると後方脱臼の危険が高まる",
+    "knowledge_node_id": "KN0181",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "KNOW",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "flexion",
+      "adduction",
+      "internal rotation"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1569",
+    "theme": "慢性閉塞性肺疾患で代償性呼吸性アシドーシスを呈する。基準値と比較した動脈血液所見で正しいのはどれか。",
+    "knowledge_node": "慢性高CO2血症における代償性呼吸性アシドーシス",
+    "knowledge_node_id": "KN0245",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "類題ではpH、PaCO2、HCO3－の順に主病態と代償方向を確認する。",
+      "PaCO2上昇は呼吸性アシドーシス方向の変化で、HCO3－上昇は腎による代償を示す。",
+      "pHは正常範囲内でも7.40より酸性側であり、安定期COPDという経過から慢性の代償性呼吸性アシドーシスと判断する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1570",
+    "theme": "100人の中に転倒経験者が50人いて、そのうち40人はバランス検査で異常を指摘された。また、検査で異常を指摘されなかった転倒未経験者は30人であった。この検査の陽性尤度比はどれか。ただし、陽性尤度比＝感度／（1－特異度）とする。",
+    "knowledge_node": "感度・特異度から陽性尤度比を算出する",
+    "knowledge_node_id": "KN0247",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "陽性尤度比は感度÷〈1－特異度〉で求める。",
+      "陽性尤度比は陽性結果によって検査前オッズが何倍になるかを示す。",
+      "したがって0.80÷〈1－0.60〉＝0.80÷0.40＝2.0である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1571",
+    "theme": "最大酸素摂取量が2.10 L/分、体重が50.0 kgである。このとき最大酸素摂取量は何METsか。",
+    "knowledge_node": "酸素摂取量からMETsを算出する",
+    "knowledge_node_id": "KN0273",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "1METは安静時酸素摂取量3.5mL/kg/分である。",
+      "類題では酸素摂取量からMETsへ変換するとき3.5で除し、METsから酸素摂取量へ戻すとき3.5を乗じる。",
+      "21÷3.5＝6である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1572",
+    "theme": "正常歩行時の関節運動について正しいのはどれか。",
+    "knowledge_node": "立脚終期から前遊脚期の前方推進に寄与する足関節底屈筋群",
+    "knowledge_node_id": "KN0394",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "正常歩行の蹴り出しと対側歩幅の確保に重要であり、底屈筋機能低下では前方推進力が低下する。",
+      "立脚終期から前遊脚期では、下腿三頭筋を中心とする足関節底屈筋群が遠心性から求心性活動へ移り、床反力を利用して身体を前方へ推進する。",
+      "足関節底屈筋群は立脚終期の蹴り出しで前方推進に大きく寄与する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1573",
+    "theme": "大腿義足の異常歩行と原因の組合せで正しいのはどれか。",
+    "knowledge_node": "大腿義足の異常歩行と原因の対応関係",
+    "knowledge_node_id": "KN0643",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "したがって「義足膝の不安定―股関節伸展筋力低下」が正しい。",
+      "大腿義足で股関節伸展筋力が低下すると、立脚初期に骨盤・体幹を安定させにくく、義足膝が屈曲して不安定になりやすい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1574",
+    "theme": "検査の感度の定義",
+    "knowledge_node": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である",
+    "knowledge_node_id": "KN0131",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": "MEASURE",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "真陽性",
+      "患者数",
+      "sensitivity"
     ],
     "tag_version": "1.0",
     "tag_status": "reviewed",

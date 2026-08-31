@@ -1,0 +1,12 @@
+[
+  {"pair_id":"SDQ0004","knowledge_node_id":"KN0003","question_ids":["Q3","Q1565"],"strength":"strong","review_status":"reviewed","source":"第51回午前Q32"},
+  {"pair_id":"SDQ0005","knowledge_node_id":"KN0007","question_ids":["Q7","Q1566"],"strength":"strong","review_status":"reviewed","source":"第51回午前Q15"},
+  {"pair_id":"SDQ0006","knowledge_node_id":"KN0067","question_ids":["Q67","Q1567"],"strength":"strong","review_status":"reviewed","source":"第49回午前Q15"},
+  {"pair_id":"SDQ0007","knowledge_node_id":"KN0181","question_ids":["Q182","Q1568"],"strength":"strong","review_status":"reviewed","source":"第51回午後Q42"},
+  {"pair_id":"SDQ0008","knowledge_node_id":"KN0245","question_ids":["Q246","Q1569"],"strength":"strong","review_status":"reviewed","source":"第48回午後Q94"},
+  {"pair_id":"SDQ0009","knowledge_node_id":"KN0247","question_ids":["Q248","Q1570"],"strength":"strong","review_status":"reviewed","source":"第48回午後Q49"},
+  {"pair_id":"SDQ0010","knowledge_node_id":"KN0273","question_ids":["Q274","Q1571"],"strength":"strong","review_status":"reviewed","source":"第50回午前Q39"},
+  {"pair_id":"SDQ0011","knowledge_node_id":"KN0394","question_ids":["Q399","Q1572"],"strength":"strong","review_status":"reviewed","source":"第47回午前Q28"},
+  {"pair_id":"SDQ0012","knowledge_node_id":"KN0643","question_ids":["Q651","Q1573"],"strength":"strong","review_status":"reviewed","source":"第49回午前Q39"},
+  {"pair_id":"SDQ0013","knowledge_node_id":"KN0131","question_ids":["Q131","Q1574"],"strength":"strong","review_status":"reviewed","source":"第45回午前Q23"}
+]

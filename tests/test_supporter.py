@@ -100,7 +100,7 @@ def test_supporter_report_aggregates_only_learning_metrics():
     now = datetime.now(timezone.utc)
     q1 = "Q1"
     q2 = next(
-        f"Q{number}" for number in range(2, 1565)
+        f"Q{number}" for number in range(2, 1575)
         if get_category_small(f"Q{number}") != get_category_small(q1)
     )
     record_learning_batch(

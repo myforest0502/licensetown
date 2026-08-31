@@ -25,7 +25,8 @@ QUESTION_BANK_FILES = {
     "explanations": "explanations.json",
     "question_tags": "question_tags.json",
 }
-EXPECTED_IDS = {f"Q{number}" for number in range(1, 1565)}
+EXPECTED_QUESTION_COUNT = 1574
+EXPECTED_IDS = {f"Q{number}" for number in range(1, EXPECTED_QUESTION_COUNT + 1)}
 TASK_PRIMARY_ABILITIES = {
     "fact_recall": "KNOW",
     "finding_interpretation": "INTERPRET",
@@ -390,7 +391,7 @@ def validate_question_bank_data(
         records = data.get(name)
         if not isinstance(records, list):
             report["counts"][name] = 0
-            report["missing"][name] = 1564
+            report["missing"][name] = EXPECTED_QUESTION_COUNT
             report["duplicates"][name] = 0
             issues.append(f"{name}: must be a JSON array")
             id_sets[name] = set()
@@ -409,8 +410,10 @@ def validate_question_bank_data(
         report["missing"][name] = len(missing)
         report["duplicates"][name] = duplicates
         id_sets[name] = set(ids)
-        if len(records) != 1564:
-            issues.append(f"{name}: expected 1564 records, found {len(records)}")
+        if len(records) != EXPECTED_QUESTION_COUNT:
+            issues.append(
+                f"{name}: expected {EXPECTED_QUESTION_COUNT} records, found {len(records)}"
+            )
         if missing:
             issues.append(f"{name}: missing {len(missing)} formal IDs")
         if duplicates:
