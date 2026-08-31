@@ -29232,5 +29232,57 @@
     "tag_version": "1.0",
     "tag_status": "reviewed",
     "source": "past_exam"
+  },
+  {
+    "id": "Q1592",
+    "theme": "四肢遠位部の筋力低下を特徴とする筋ジストロフィー",
+    "knowledge_node": "筋強直性ジストロフィー",
+    "knowledge_node_id": "KN0902",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "筋ジストロフィーの病型別筋力低下分布"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1593",
+    "theme": "Duchenne型筋ジストロフィーで生じやすい下肢関節拘縮",
+    "knowledge_node": "デュシェンヌ型筋ジストロフィーでは下腿三頭筋短縮による尖足や拘縮が歩行能力低下を促進するため、歩行能力維持には関節拘縮予防と継続的な可動域管理を優先する",
+    "knowledge_node_id": "KN0039",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Duchenne型筋ジストロフィーの進行",
+      "筋短縮と関節拘縮"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1594",
+    "theme": "内分泌器官とホルモンの対応",
+    "knowledge_node": "カルシトニンは甲状腺傍濾胞細胞から、パラトルモン（PTH）は副甲状腺から分泌されるため、同一臓器から分泌される組合せではない",
+    "knowledge_node_id": "KN0533",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "内分泌器官と分泌ホルモン"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
   }
 ]

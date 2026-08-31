@@ -23,7 +23,7 @@ from question_bank import get_question_tag, get_quiz_question, question_count
 
 
 def test_all_formal_question_tags_load_and_match_ids():
-    assert question_count() == 1591
+    assert question_count() == 1594
     assert get_question_tag("Q1")["tag_status"] == "reviewed_sample"
     assert get_question_tag("Q1")["tag_version"] == "0.3"
     assert get_question_tag("Q200")["tag_status"] == "reviewed_sample"
@@ -37,8 +37,8 @@ def test_all_formal_question_tags_load_and_match_ids():
     assert get_question_tag("Q830")["tag_status"] == "reviewed"
     assert get_question_tag("Q831")["tag_version"] == "1.0"
     assert get_question_tag("Q831")["tag_status"] == "reviewed"
-    assert get_question_tag("Q1591")["tag_version"] == "1.0"
-    assert get_question_tag("Q1591")["tag_status"] == "reviewed"
+    assert get_question_tag("Q1594")["tag_version"] == "1.0"
+    assert get_question_tag("Q1594")["tag_status"] == "reviewed"
 
     tags = [get_question_tag(f"Q{number}") for number in range(1, 1592)]
     assert Counter(tag["tag_version"] for tag in tags) == {"0.3": 200, "1.0": 1391}

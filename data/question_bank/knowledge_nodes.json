@@ -384,9 +384,10 @@
   {
     "knowledge_node_id": "KN0039",
     "label": "デュシェンヌ型筋ジストロフィーでは下腿三頭筋短縮による尖足や拘縮が歩行能力低下を促進するため、歩行能力維持には関節拘縮予防と継続的な可動域管理を優先する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q39"
+      "Q39",
+      "Q1593"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5344,9 +5345,10 @@
   {
     "knowledge_node_id": "KN0533",
     "label": "カルシトニンは甲状腺傍濾胞細胞から、パラトルモン（PTH）は副甲状腺から分泌されるため、同一臓器から分泌される組合せではない",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q541"
+      "Q541",
+      "Q1594"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9057,9 +9059,10 @@
   {
     "knowledge_node_id": "KN0902",
     "label": "筋強直性ジストロフィー",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q911"
+      "Q911",
+      "Q1592"
     ],
     "aliases": [],
     "successor_ids": []

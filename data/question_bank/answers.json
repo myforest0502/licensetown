@@ -16146,5 +16146,35 @@
       ]
     ],
     "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1592",
+    "display_answer": "3",
+    "accepted_answer_sets": [
+      [
+        "3"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1593",
+    "display_answer": "3",
+    "accepted_answer_sets": [
+      [
+        "3"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1594",
+    "display_answer": "1",
+    "accepted_answer_sets": [
+      [
+        "1"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
   }
 ]

@@ -39,10 +39,10 @@ def test_formal_question_bank_passes_schema_and_cross_file_validation():
     report = validate_question_bank()
 
     assert report["counts"] == {
-        "questions": 1591,
-        "answers": 1591,
-        "explanations": 1591,
-        "question_tags": 1591,
+        "questions": 1594,
+        "answers": 1594,
+        "explanations": 1594,
+        "question_tags": 1594,
     }
     assert report["missing"] == {
         "questions": 0,
@@ -63,13 +63,13 @@ def test_formal_question_bank_passes_schema_and_cross_file_validation():
     assert report["secondary_self_duplicate"] == 0
     assert report["safety_contradiction"] == 0
     assert report["cause_identification"] == 0
-    assert report["knowledge_node_id_present"] == 1591
+    assert report["knowledge_node_id_present"] == 1594
     assert report["knowledge_node_id_empty"] == 0
     assert report["knowledge_node_id_format_invalid"] == 0
     assert report["registry_node_count"] == 1538
-    assert report["registry_confirmed_shared_groups"] == 52
-    assert report["registry_confirmed_shared_questions"] == 105
-    assert report["registry_singleton_nodes"] == 1486
+    assert report["registry_confirmed_shared_groups"] == 55
+    assert report["registry_confirmed_shared_questions"] == 111
+    assert report["registry_singleton_nodes"] == 1483
     assert report["registry_id_duplicate"] == 0
     assert report["registry_id_format_invalid"] == 0
     assert report["registry_missing_question"] == 0
@@ -86,10 +86,10 @@ def test_registry_allows_confirmed_shared_ids_and_maps_every_question_once():
     shared = [node for node in registry if node["status"] == "confirmed_shared"]
     mapped_questions = [q_id for node in registry for q_id in node["question_ids"]]
 
-    assert len(shared) == 52
-    assert sum(len(node["question_ids"]) for node in shared) == 105
+    assert len(shared) == 55
+    assert sum(len(node["question_ids"]) for node in shared) == 111
     assert all(len(node["question_ids"]) >= 2 for node in shared)
-    assert len(mapped_questions) == len(set(mapped_questions)) == 1591
+    assert len(mapped_questions) == len(set(mapped_questions)) == 1594
 
 
 def test_validator_detects_cross_file_answer_and_tag_contradictions():
