@@ -22,7 +22,7 @@ EXPECTED = {
     "Q1580": (47, "午後", 47, "4", "KN0412", "Q419", 18),
     "Q1581": (49, "午後", 89, "3", "KN0513", "Q521", 9),
     "Q1582": (49, "午前", 32, "3", "KN0373", "Q378", 11),
-    "Q1583": (51, "午前", 96, "1", "KN0713", "Q721", 18),
+    "Q1583": (51, "午前", 96, "1", "KN0713", "Q721", 10),
     "Q1584": (49, "午後", 34, "3", "KN0323", "Q325", 17),
     "Q1585": (49, "午前", 68, "3・4", "KN0659", "Q667", 2),
     "Q1586": (50, "午前", 38, "2", "KN0717", "Q725", 18),
@@ -100,3 +100,11 @@ def test_question_ids_are_contiguous_and_cross_file_ids_match():
         ids = [row["id"] for row in rows]
         assert ids == expected_ids
         assert len(ids) == len(set(ids)) == 1591
+
+
+def test_frontotemporal_dementia_node_uses_psychiatry_category_consistently():
+    for question_id in ("Q721", "Q1583"):
+        question = get_question(question_id)
+        assert question["category_large"] == "B"
+        assert question["category_small"] == 10
+        assert question["management_code"] == f"{question_id}-B-10-P"
