@@ -1,0 +1,2777 @@
+[
+  {
+    "canonical_node_id": "KN0028",
+    "raw_node_ids": [
+      "KN0028"
+    ],
+    "label": "無痛性皮膚障害の自己管理",
+    "category_large": "B",
+    "category_small": 11,
+    "category_name": "小児学",
+    "all_category_smalls": [
+      11
+    ],
+    "current_question_ids": [
+      "Q28"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 56,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "小児学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0091",
+    "raw_node_ids": [
+      "KN0091"
+    ],
+    "label": "Uhthoff現象への冷却・休息",
+    "category_large": "B",
+    "category_small": 9,
+    "category_name": "神経医学",
+    "all_category_smalls": [
+      9
+    ],
+    "current_question_ids": [
+      "Q91"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 56,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "神経医学のintervention_selection。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0135",
+    "raw_node_ids": [
+      "KN0135"
+    ],
+    "label": "Pavlik harness装着中の皮膚圧迫・ずれを確認し自己調整を避ける",
+    "category_large": "B",
+    "category_small": 11,
+    "category_name": "小児学",
+    "all_category_smalls": [
+      11
+    ],
+    "current_question_ids": [
+      "Q135"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 56,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "小児学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0333",
+    "raw_node_ids": [
+      "KN0333"
+    ],
+    "label": "Down症候群児の頸部痛・歩容変化から環軸椎不安定性を疑う運動中止",
+    "category_large": "B",
+    "category_small": 11,
+    "category_name": "小児学",
+    "all_category_smalls": [
+      11
+    ],
+    "current_question_ids": [
+      "Q336"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 56,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "小児学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0473",
+    "raw_node_ids": [
+      "KN0473"
+    ],
+    "label": "離断性骨軟骨炎疑いで競技負荷を中止し専門評価へつなぐ判断",
+    "category_large": "B",
+    "category_small": 11,
+    "category_name": "小児学",
+    "all_category_smalls": [
+      11
+    ],
+    "current_question_ids": [
+      "Q481"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 56,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "小児学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0010",
+    "raw_node_ids": [
+      "KN0010"
+    ],
+    "label": "急な低酸素・呼吸困難への初期対応",
+    "category_large": "C",
+    "category_small": 16,
+    "category_name": "運動器",
+    "all_category_smalls": [
+      16
+    ],
+    "current_question_ids": [
+      "Q10"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "運動器のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0011",
+    "raw_node_ids": [
+      "KN0011"
+    ],
+    "label": "自律神経過反射への初期対応",
+    "category_large": "C",
+    "category_small": 18,
+    "category_name": "理学療法治療各論",
+    "all_category_smalls": [
+      18
+    ],
+    "current_question_ids": [
+      "Q11"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法治療各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0017",
+    "raw_node_ids": [
+      "KN0017"
+    ],
+    "label": "バイタルサインと人工呼吸器条件を監視しながら、端座位から立位へ段階的に離床を進めるへの介入選択",
+    "category_large": "B",
+    "category_small": 8,
+    "category_name": "内科学",
+    "all_category_smalls": [
+      8
+    ],
+    "current_question_ids": [
+      "Q17"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "内科学のintervention_selection。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0022",
+    "raw_node_ids": [
+      "KN0022"
+    ],
+    "label": "瘢痕拘縮予防のROM・伸張",
+    "category_large": "C",
+    "category_small": 16,
+    "category_name": "運動器",
+    "all_category_smalls": [
+      16
+    ],
+    "current_question_ids": [
+      "Q22"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "運動器のintervention_selection。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0043",
+    "raw_node_ids": [
+      "KN0043"
+    ],
+    "label": "本症例は6分間歩行後にSpO₂91％、Borg指数5まで変化しているため、運動中は酸素飽和度、呼吸困難などの自覚症状、心拍数や血圧を含む循環動態を継続的に監視し、安全な運動強度へ調",
+    "category_large": "C",
+    "category_small": 17,
+    "category_name": "理学療法評価各論",
+    "all_category_smalls": [
+      17
+    ],
+    "current_question_ids": [
+      "Q43"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法評価各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0054",
+    "raw_node_ids": [
+      "KN0054"
+    ],
+    "label": "有酸素＋筋力運動の段階的実施",
+    "category_large": "C",
+    "category_small": 18,
+    "category_name": "理学療法治療各論",
+    "all_category_smalls": [
+      18
+    ],
+    "current_question_ids": [
+      "Q54"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法治療各論のintervention_selection。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0058",
+    "raw_node_ids": [
+      "KN0058"
+    ],
+    "label": "携帯酸素の安全な生活使用",
+    "category_large": "B",
+    "category_small": 8,
+    "category_name": "内科学",
+    "all_category_smalls": [
+      8
+    ],
+    "current_question_ids": [
+      "Q58"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "内科学のintervention_selection。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0073",
+    "raw_node_ids": [
+      "KN0073"
+    ],
+    "label": "末梢動脈疾患の歩行療法では、軽度から中等度の跛行が出現するまで歩き、疼痛が消失するまで休息して再開する方法を反復することで、歩行耐容能の改善を図る",
+    "category_large": "C",
+    "category_small": 18,
+    "category_name": "理学療法治療各論",
+    "all_category_smalls": [
+      18
+    ],
+    "current_question_ids": [
+      "Q73"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法治療各論のintervention_selection。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0083",
+    "raw_node_ids": [
+      "KN0083"
+    ],
+    "label": "運動時低酸素のモニタリング",
+    "category_large": "C",
+    "category_small": 17,
+    "category_name": "理学療法評価各論",
+    "all_category_smalls": [
+      17
+    ],
+    "current_question_ids": [
+      "Q83"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法評価各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0093",
+    "raw_node_ids": [
+      "KN0093"
+    ],
+    "label": "退院後はバッテリー残量の確認・交換、ケーブルの引っ掛かり防止、機器携行などを自ら安全に行う必要があるため、実際の外出場面を想定して自己管理能力を確認する",
+    "category_large": "B",
+    "category_small": 8,
+    "category_name": "内科学",
+    "all_category_smalls": [
+      8
+    ],
+    "current_question_ids": [
+      "Q93"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "内科学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0102",
+    "raw_node_ids": [
+      "KN0102"
+    ],
+    "label": "立位時血圧低下への初期対応",
+    "category_large": "C",
+    "category_small": 18,
+    "category_name": "理学療法治療各論",
+    "all_category_smalls": [
+      18
+    ],
+    "current_question_ids": [
+      "Q102"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法治療各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0103",
+    "raw_node_ids": [
+      "KN0103"
+    ],
+    "label": "段階的競技復帰では、症状が出た場合は無症状で実施できていた前段階へ戻し、十分な無症状期間を確認してから再び負荷を段階的に上げる時の優先対応",
+    "category_large": "C",
+    "category_small": 16,
+    "category_name": "運動器",
+    "all_category_smalls": [
+      16
+    ],
+    "current_question_ids": [
+      "Q103"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "運動器のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0105",
+    "raw_node_ids": [
+      "KN0105"
+    ],
+    "label": "疼痛を皮膚損傷の警告として利用できないため、毎日の足部観察、靴内の異物や縫い目の確認、足幅や圧迫部位に配慮した靴選びを習慣化し、潰瘍への進行を防ぐことが重要である時の優先対応",
+    "category_large": "B",
+    "category_small": 8,
+    "category_name": "内科学",
+    "all_category_smalls": [
+      8
+    ],
+    "current_question_ids": [
+      "Q105"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "内科学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0132",
+    "raw_node_ids": [
+      "KN0132"
+    ],
+    "label": "足部痛の原因と皮膚・循環・運動機能を評価し、安全な運動療法を検討する",
+    "category_large": "C",
+    "category_small": 18,
+    "category_name": "理学療法治療各論",
+    "all_category_smalls": [
+      18
+    ],
+    "current_question_ids": [
+      "Q132"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法治療各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0151",
+    "raw_node_ids": [
+      "KN0151"
+    ],
+    "label": "肩甲帯・腱板の動的安定性",
+    "category_large": "C",
+    "category_small": 16,
+    "category_name": "運動器",
+    "all_category_smalls": [
+      16
+    ],
+    "current_question_ids": [
+      "Q152"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "運動器のintervention_selection。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0163",
+    "raw_node_ids": [
+      "KN0163"
+    ],
+    "label": "シャント肢を避けた血圧測定",
+    "category_large": "B",
+    "category_small": 8,
+    "category_name": "内科学",
+    "all_category_smalls": [
+      8
+    ],
+    "current_question_ids": [
+      "Q164"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "内科学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0176",
+    "raw_node_ids": [
+      "KN0176"
+    ],
+    "label": "脊柱過屈曲を避けた生活動作",
+    "category_large": "C",
+    "category_small": 18,
+    "category_name": "理学療法治療各論",
+    "all_category_smalls": [
+      18
+    ],
+    "current_question_ids": [
+      "Q177"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法治療各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0177",
+    "raw_node_ids": [
+      "KN0177"
+    ],
+    "label": "運動中低血糖への糖質摂取",
+    "category_large": "C",
+    "category_small": 17,
+    "category_name": "理学療法評価各論",
+    "all_category_smalls": [
+      17
+    ],
+    "current_question_ids": [
+      "Q178"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法評価各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0197",
+    "raw_node_ids": [
+      "KN0197"
+    ],
+    "label": "運動中血圧低下・めまいで中止",
+    "category_large": "C",
+    "category_small": 17,
+    "category_name": "理学療法評価各論",
+    "all_category_smalls": [
+      17
+    ],
+    "current_question_ids": [
+      "Q198"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法評価各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0281",
+    "raw_node_ids": [
+      "KN0281"
+    ],
+    "label": "胸痛・ST低下・運動時血圧低下に対する運動負荷中止",
+    "category_large": "C",
+    "category_small": 17,
+    "category_name": "理学療法評価各論",
+    "all_category_smalls": [
+      17
+    ],
+    "current_question_ids": [
+      "Q283"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法評価各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0286",
+    "raw_node_ids": [
+      "KN0286"
+    ],
+    "label": "重度高カリウム血症時の運動中止と医師報告",
+    "category_large": "C",
+    "category_small": 17,
+    "category_name": "理学療法評価各論",
+    "all_category_smalls": [
+      17
+    ],
+    "current_question_ids": [
+      "Q288"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法評価各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0287",
+    "raw_node_ids": [
+      "KN0287"
+    ],
+    "label": "安定した踵部黒色痂皮の除圧・保護と感染観察",
+    "category_large": "C",
+    "category_small": 18,
+    "category_name": "理学療法治療各論",
+    "all_category_smalls": [
+      18
+    ],
+    "current_question_ids": [
+      "Q289"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法治療各論のintervention_selection。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0301",
+    "raw_node_ids": [
+      "KN0301"
+    ],
+    "label": "症候性重度低ナトリウム血症の緊急対応",
+    "category_large": "C",
+    "category_small": 18,
+    "category_name": "理学療法治療各論",
+    "all_category_smalls": [
+      18
+    ],
+    "current_question_ids": [
+      "Q303"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法治療各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0319",
+    "raw_node_ids": [
+      "KN0319"
+    ],
+    "label": "内シャントのスリル消失時の運動中止と速やかな報告",
+    "category_large": "C",
+    "category_small": 17,
+    "category_name": "理学療法評価各論",
+    "all_category_smalls": [
+      17
+    ],
+    "current_question_ids": [
+      "Q321"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法評価各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0320",
+    "raw_node_ids": [
+      "KN0320"
+    ],
+    "label": "運動中低血糖に対する即時の糖質補給と運動中止",
+    "category_large": "C",
+    "category_small": 18,
+    "category_name": "理学療法治療各論",
+    "all_category_smalls": [
+      18
+    ],
+    "current_question_ids": [
+      "Q322"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法治療各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0322",
+    "raw_node_ids": [
+      "KN0322"
+    ],
+    "label": "リンパ浮腫患者の発熱・発赤・熱感から蜂窩織炎を疑う緊急対応",
+    "category_large": "C",
+    "category_small": 18,
+    "category_name": "理学療法治療各論",
+    "all_category_smalls": [
+      18
+    ],
+    "current_question_ids": [
+      "Q324"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法治療各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0331",
+    "raw_node_ids": [
+      "KN0331"
+    ],
+    "label": "尿閉・会陰部感覚低下を伴う馬尾症候群red flagへの緊急対応",
+    "category_large": "C",
+    "category_small": 17,
+    "category_name": "理学療法評価各論",
+    "all_category_smalls": [
+      17
+    ],
+    "current_question_ids": [
+      "Q334"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "理学療法評価各論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0458",
+    "raw_node_ids": [
+      "KN0458"
+    ],
+    "label": "上腕骨顆上骨折後の循環障害・コンパートメント症候群徴候の優先確認",
+    "category_large": "C",
+    "category_small": 16,
+    "category_name": "運動器",
+    "all_category_smalls": [
+      16
+    ],
+    "current_question_ids": [
+      "Q466"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "運動器のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0463",
+    "raw_node_ids": [
+      "KN0463"
+    ],
+    "label": "VA-ECMO離床前のカニューレ固定・血行動態・回路安全確認",
+    "category_large": "B",
+    "category_small": 8,
+    "category_name": "内科学",
+    "all_category_smalls": [
+      8
+    ],
+    "current_question_ids": [
+      "Q471"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "内科学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN1278",
+    "raw_node_ids": [
+      "KN1278"
+    ],
+    "label": "大腿骨近位部骨折術後の下腿腫脹・圧痛からDVTを疑いD-dimerを優先確認する",
+    "category_large": "C",
+    "category_small": 16,
+    "category_name": "運動器",
+    "all_category_smalls": [
+      16
+    ],
+    "current_question_ids": [
+      "Q1294"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 55,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "運動器のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0013",
+    "raw_node_ids": [
+      "KN0013"
+    ],
+    "label": "易疲労性を踏まえた運動配慮",
+    "category_large": "B",
+    "category_small": 9,
+    "category_name": "神経医学",
+    "all_category_smalls": [
+      9
+    ],
+    "current_question_ids": [
+      "Q13"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 4,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 54,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "神経医学のintervention_selection。重要度5、Safety4、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0021",
+    "raw_node_ids": [
+      "KN0021"
+    ],
+    "label": "過剰収縮を避けた運動指導",
+    "category_large": "B",
+    "category_small": 9,
+    "category_name": "神経医学",
+    "all_category_smalls": [
+      9
+    ],
+    "current_question_ids": [
+      "Q21"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 4,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 54,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "神経医学のintervention_selection。重要度5、Safety4、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0026",
+    "raw_node_ids": [
+      "KN0026"
+    ],
+    "label": "過用を避けた中等度運動",
+    "category_large": "B",
+    "category_small": 9,
+    "category_name": "神経医学",
+    "all_category_smalls": [
+      9
+    ],
+    "current_question_ids": [
+      "Q26"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 4,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 54,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "神経医学のintervention_selection。重要度5、Safety4、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0175",
+    "raw_node_ids": [
+      "KN0175"
+    ],
+    "label": "視覚キューによるすくみ足対策",
+    "category_large": "B",
+    "category_small": 9,
+    "category_name": "神経医学",
+    "all_category_smalls": [
+      9
+    ],
+    "current_question_ids": [
+      "Q176"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 4,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 54,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "神経医学のintervention_selection。重要度5、Safety4、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0213",
+    "raw_node_ids": [
+      "KN0213"
+    ],
+    "label": "深部感覚低下に対する視覚代償を利用したバランス練習",
+    "category_large": "B",
+    "category_small": 9,
+    "category_name": "神経医学",
+    "all_category_smalls": [
+      9
+    ],
+    "current_question_ids": [
+      "Q214"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 4,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 54,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "神経医学のintervention_selection。重要度5、Safety4、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0388",
+    "raw_node_ids": [
+      "KN0388"
+    ],
+    "label": "骨転移患者の新規荷重時痛から病的骨折リスクを疑い運動を中止する",
+    "category_large": "C",
+    "category_small": 13,
+    "category_name": "基礎運動学",
+    "all_category_smalls": [
+      13
+    ],
+    "current_question_ids": [
+      "Q393"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 3,
+    "source_quality_risk": 1,
+    "priority_score": 54,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "基礎運動学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0785",
+    "raw_node_ids": [
+      "KN0785"
+    ],
+    "label": "神経筋再教育の目的と適切な実施方法",
+    "category_large": "A",
+    "category_small": 5,
+    "category_name": "教育学",
+    "all_category_smalls": [
+      5
+    ],
+    "current_question_ids": [
+      "Q793"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 4,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 54,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "教育学のintervention_selection。重要度5、Safety4、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0029",
+    "raw_node_ids": [
+      "KN0029"
+    ],
+    "label": "休息を組み合わせた歩行訓練",
+    "category_large": "C",
+    "category_small": 15,
+    "category_name": "動作分析学",
+    "all_category_smalls": [
+      15
+    ],
+    "current_question_ids": [
+      "Q29"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 2,
+    "source_quality_risk": 1,
+    "priority_score": 53,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "動作分析学のintervention_selection。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0048",
+    "raw_node_ids": [
+      "KN0048"
+    ],
+    "label": "運動時低酸素への条件再検討",
+    "category_large": "C",
+    "category_small": 15,
+    "category_name": "動作分析学",
+    "all_category_smalls": [
+      15
+    ],
+    "current_question_ids": [
+      "Q48"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 2,
+    "source_quality_risk": 1,
+    "priority_score": 53,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "動作分析学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0100",
+    "raw_node_ids": [
+      "KN0100"
+    ],
+    "label": "模擬作業で緊急停止反応と安全確認能力を評価する",
+    "category_large": "A",
+    "category_small": 6,
+    "category_name": "医学概論",
+    "all_category_smalls": [
+      6
+    ],
+    "current_question_ids": [
+      "Q100"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 2,
+    "source_quality_risk": 1,
+    "priority_score": 53,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "医学概論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0114",
+    "raw_node_ids": [
+      "KN0114"
+    ],
+    "label": "疼痛消失と機能確認後の段階復帰",
+    "category_large": "C",
+    "category_small": 15,
+    "category_name": "動作分析学",
+    "all_category_smalls": [
+      15
+    ],
+    "current_question_ids": [
+      "Q114"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 2,
+    "source_quality_risk": 1,
+    "priority_score": 53,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "動作分析学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0182",
+    "raw_node_ids": [
+      "KN0182"
+    ],
+    "label": "SpO2＋呼吸困難モニタリング",
+    "category_large": "C",
+    "category_small": 15,
+    "category_name": "動作分析学",
+    "all_category_smalls": [
+      15
+    ],
+    "current_question_ids": [
+      "Q183"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 2,
+    "source_quality_risk": 1,
+    "priority_score": 53,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "動作分析学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0187",
+    "raw_node_ids": [
+      "KN0187"
+    ],
+    "label": "安静時痛・蒼白・冷感で運動中止",
+    "category_large": "C",
+    "category_small": 15,
+    "category_name": "動作分析学",
+    "all_category_smalls": [
+      15
+    ],
+    "current_question_ids": [
+      "Q188"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 2,
+    "source_quality_risk": 1,
+    "priority_score": 53,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "動作分析学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0192",
+    "raw_node_ids": [
+      "KN0192"
+    ],
+    "label": "運動中胸部圧迫感への中止・報告",
+    "category_large": "C",
+    "category_small": 15,
+    "category_name": "動作分析学",
+    "all_category_smalls": [
+      15
+    ],
+    "current_question_ids": [
+      "Q193"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 2,
+    "source_quality_risk": 1,
+    "priority_score": 53,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "動作分析学のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0237",
+    "raw_node_ids": [
+      "KN0237"
+    ],
+    "label": "感染性肺結核に対する空気感染予防策とN95使用",
+    "category_large": "A",
+    "category_small": 6,
+    "category_name": "医学概論",
+    "all_category_smalls": [
+      6
+    ],
+    "current_question_ids": [
+      "Q238"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 2,
+    "source_quality_risk": 1,
+    "priority_score": 53,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "医学概論のsafety_priority。重要度5、Safety5、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "safety_priority"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0327",
+    "raw_node_ids": [
+      "KN0327"
+    ],
+    "label": "他動手指伸展痛を伴う急性コンパートメント症候群の識別",
+    "category_large": "C",
+    "category_small": 16,
+    "category_name": "運動器",
+    "all_category_smalls": [
+      16
+    ],
+    "current_question_ids": [
+      "Q329"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 4,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 53,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_F Result → Cause",
+    "reason": "運動器のfinding_interpretation。重要度5、Safety5、臨床推論4。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "finding_interpretation"
+    ],
+    "safety_values": [
+      "critical"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0155",
+    "raw_node_ids": [
+      "KN0155"
+    ],
+    "label": "視覚FBを使った協調・バランス練習",
+    "category_large": "C",
+    "category_small": 13,
+    "category_name": "基礎運動学",
+    "all_category_smalls": [
+      13
+    ],
+    "current_question_ids": [
+      "Q156"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 4,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 3,
+    "source_quality_risk": 1,
+    "priority_score": 52,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "基礎運動学のintervention_selection。重要度5、Safety4、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0676",
+    "raw_node_ids": [
+      "KN0676"
+    ],
+    "label": "神経原性ショックにおける低血圧・徐脈などの特徴",
+    "category_large": "B",
+    "category_small": 7,
+    "category_name": "病理学",
+    "all_category_smalls": [
+      7
+    ],
+    "current_question_ids": [
+      "Q684"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 4,
+    "clinical_reasoning": 4,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 52,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_F Result → Cause",
+    "reason": "病理学のfinding_interpretation。重要度5、Safety4、臨床推論4。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "finding_interpretation"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0679",
+    "raw_node_ids": [
+      "KN0679"
+    ],
+    "label": "自分の感情を他者のものとして捉える投影の識別",
+    "category_large": "B",
+    "category_small": 12,
+    "category_name": "臨床心理学",
+    "all_category_smalls": [
+      12
+    ],
+    "current_question_ids": [
+      "Q687"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 4,
+    "clinical_reasoning": 4,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 52,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_F Result → Cause",
+    "reason": "臨床心理学のfinding_interpretation。重要度5、Safety4、臨床推論4。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "finding_interpretation"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN1288",
+    "raw_node_ids": [
+      "KN1288"
+    ],
+    "label": "大腿切断後の股関節屈曲拘縮を予防する肢位管理",
+    "category_large": "A",
+    "category_small": 6,
+    "category_name": "医学概論",
+    "all_category_smalls": [
+      6
+    ],
+    "current_question_ids": [
+      "Q1305"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 4,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 2,
+    "source_quality_risk": 1,
+    "priority_score": 51,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "医学概論のintervention_selection。重要度5、Safety4、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "moderate"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0755",
+    "raw_node_ids": [
+      "KN0755"
+    ],
+    "label": "急性灰白髄炎（ポリオ）はポリオウイルス感染で脊髄前角細胞を障害する",
+    "category_large": "B",
+    "category_small": 7,
+    "category_name": "病理学",
+    "all_category_smalls": [
+      7
+    ],
+    "current_question_ids": [
+      "Q763"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 2,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 4,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 49,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_A Definition → Case",
+    "reason": "病理学のfact_recall。重要度5、Safety5、臨床推論2。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "fact_recall"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0818",
+    "raw_node_ids": [
+      "KN0818"
+    ],
+    "label": "妊娠中の風疹感染は先天性風疹症候群を起こし、心疾患・白内障・難聴などの先天異常を生じうる",
+    "category_large": "B",
+    "category_small": 7,
+    "category_name": "病理学",
+    "all_category_smalls": [
+      7
+    ],
+    "current_question_ids": [
+      "Q827"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 5,
+    "clinical_reasoning": 2,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 4,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 49,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_A Definition → Case",
+    "reason": "病理学のfact_recall。重要度5、Safety5、臨床推論2。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "fact_recall"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0908",
+    "raw_node_ids": [
+      "KN0908"
+    ],
+    "label": "うつ病の復職支援プログラムの内容として最も適切なのはどれかに対して適切な理学療法・介入を選択する",
+    "category_large": "B",
+    "category_small": 10,
+    "category_name": "精神医学",
+    "all_category_smalls": [
+      10
+    ],
+    "current_question_ids": [
+      "Q917"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 1,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 48,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "精神医学のintervention_selection。重要度5、Safety1、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN1085",
+    "raw_node_ids": [
+      "KN1085"
+    ],
+    "label": "リエゾン精神医学で具体的・支持的に関わるベッドサイド対応",
+    "category_large": "A",
+    "category_small": 3,
+    "category_name": "心理学",
+    "all_category_smalls": [
+      3
+    ],
+    "current_question_ids": [
+      "Q1096"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 1,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 48,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "心理学のintervention_selection。重要度5、Safety1、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN1316",
+    "raw_node_ids": [
+      "KN1316"
+    ],
+    "label": "うつ病の入眠困難に対する睡眠衛生指導",
+    "category_large": "B",
+    "category_small": 10,
+    "category_name": "精神医学",
+    "all_category_smalls": [
+      10
+    ],
+    "current_question_ids": [
+      "Q1336"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 1,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 48,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "精神医学のintervention_selection。重要度5、Safety1、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN1008",
+    "raw_node_ids": [
+      "KN1008"
+    ],
+    "label": "腱板を構成する筋はどれかに対して適切な理学療法・介入を選択する",
+    "category_large": "A",
+    "category_small": 1,
+    "category_name": "解剖学",
+    "all_category_smalls": [
+      1
+    ],
+    "current_question_ids": [
+      "Q1018"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 1,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 47,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "解剖学のintervention_selection。重要度5、Safety1、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0014",
+    "raw_node_ids": [
+      "KN0014"
+    ],
+    "label": "視覚的に物品の変形や動きを確認しながら、物体の硬さや重さに応じた把持力調節を反復するへの介入選択",
+    "category_large": "C",
+    "category_small": 13,
+    "category_name": "基礎運動学",
+    "all_category_smalls": [
+      13
+    ],
+    "current_question_ids": [
+      "Q14"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 1,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 3,
+    "source_quality_risk": 1,
+    "priority_score": 46,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "基礎運動学のintervention_selection。重要度5、Safety1、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0030",
+    "raw_node_ids": [
+      "KN0030"
+    ],
+    "label": "深頸屈筋の運動制御",
+    "category_large": "C",
+    "category_small": 13,
+    "category_name": "基礎運動学",
+    "all_category_smalls": [
+      13
+    ],
+    "current_question_ids": [
+      "Q30"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 1,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 3,
+    "source_quality_risk": 1,
+    "priority_score": 46,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "基礎運動学のintervention_selection。重要度5、Safety1、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "intervention_selection"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0505",
+    "raw_node_ids": [
+      "KN0505"
+    ],
+    "label": "医療面接における自由質問法はどれかから病態・機能障害を解釈",
+    "category_large": "B",
+    "category_small": 12,
+    "category_name": "臨床心理学",
+    "all_category_smalls": [
+      12
+    ],
+    "current_question_ids": [
+      "Q513"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 1,
+    "clinical_reasoning": 4,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 46,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_F Result → Cause",
+    "reason": "臨床心理学のfinding_interpretation。重要度5、Safety1、臨床推論4。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "finding_interpretation"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0554",
+    "raw_node_ids": [
+      "KN0554"
+    ],
+    "label": "運動障害と評価方法の組合せの基本事項",
+    "category_large": "C",
+    "category_small": 14,
+    "category_name": "臨床運動学",
+    "all_category_smalls": [
+      14
+    ],
+    "current_question_ids": [
+      "Q562"
+    ],
+    "strong_available": false,
+    "exam_importance": 5,
+    "safety_importance": 1,
+    "clinical_reasoning": 4,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 46,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_K Static knowledge → Applied judgment",
+    "reason": "臨床運動学のassessment_selection。重要度5、Safety1、臨床推論4。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "assessment_selection"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN1149",
+    "raw_node_ids": [
+      "KN1149"
+    ],
+    "label": "下肢深部静脈血栓が遊離すると下大静脈から右心系を経て肺動脈へ到達し、肺塞栓症を起こす",
+    "category_large": "A",
+    "category_small": 1,
+    "category_name": "解剖学",
+    "all_category_smalls": [
+      1
+    ],
+    "current_question_ids": [
+      "Q1162"
+    ],
+    "strong_available": false,
+    "exam_importance": 4,
+    "safety_importance": 5,
+    "clinical_reasoning": 2,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 4,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 46,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_A Definition → Case",
+    "reason": "解剖学のfact_recall。重要度4、Safety5、臨床推論2。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "fact_recall"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN1009",
+    "raw_node_ids": [
+      "KN1009"
+    ],
+    "label": "第3腓骨筋腱は足関節前外側を通り外果の前方を走行するに対する機器選択",
+    "category_large": "A",
+    "category_small": 1,
+    "category_name": "解剖学",
+    "all_category_smalls": [
+      1
+    ],
+    "current_question_ids": [
+      "Q1019"
+    ],
+    "strong_available": false,
+    "exam_importance": 4,
+    "safety_importance": 1,
+    "clinical_reasoning": 5,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 45,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_J Clinical case → Intervention choice",
+    "reason": "解剖学のdevice_selection。重要度4、Safety1、臨床推論5。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "device_selection"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN1187",
+    "raw_node_ids": [
+      "KN1187"
+    ],
+    "label": "外側皮質脊髄路は大脳皮質から脊髄前角へ下行する主要な随意運動路",
+    "category_large": "A",
+    "category_small": 1,
+    "category_name": "解剖学",
+    "all_category_smalls": [
+      1
+    ],
+    "current_question_ids": [
+      "Q1201"
+    ],
+    "strong_available": false,
+    "exam_importance": 4,
+    "safety_importance": 4,
+    "clinical_reasoning": 2,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 4,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 2,
+    "priority_score": 45,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_A Definition → Case",
+    "reason": "解剖学のfact_recall。重要度4、Safety4、臨床推論2。別経路での確認価値を評価。",
+    "notes": "short_question_context",
+    "tasks": [
+      "fact_recall"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN1470",
+    "raw_node_ids": [
+      "KN1470"
+    ],
+    "label": "BDI-IIはうつ症状について本人が回答する自己記入式質問紙を評価する",
+    "category_large": "A",
+    "category_small": 3,
+    "category_name": "心理学",
+    "all_category_smalls": [
+      3
+    ],
+    "current_question_ids": [
+      "Q1495"
+    ],
+    "strong_available": false,
+    "exam_importance": 4,
+    "safety_importance": 1,
+    "clinical_reasoning": 4,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 2,
+    "priority_score": 45,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_K Static knowledge → Applied judgment",
+    "reason": "心理学のassessment_selection。重要度4、Safety1、臨床推論4。別経路での確認価値を評価。",
+    "notes": "short_question_context",
+    "tasks": [
+      "assessment_selection"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0236",
+    "raw_node_ids": [
+      "KN0236"
+    ],
+    "label": "ATNRの姿勢反応の識別",
+    "category_large": "A",
+    "category_small": 4,
+    "category_name": "人間発達学",
+    "all_category_smalls": [
+      4
+    ],
+    "current_question_ids": [
+      "Q237"
+    ],
+    "strong_available": false,
+    "exam_importance": 4,
+    "safety_importance": 1,
+    "clinical_reasoning": 4,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 44,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_F Result → Cause",
+    "reason": "人間発達学のfinding_interpretation。重要度4、Safety1、臨床推論4。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "finding_interpretation"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0332",
+    "raw_node_ids": [
+      "KN0332"
+    ],
+    "label": "9か月時点の粗大運動発達遅延を示す精査対象所見",
+    "category_large": "A",
+    "category_small": 4,
+    "category_name": "人間発達学",
+    "all_category_smalls": [
+      4
+    ],
+    "current_question_ids": [
+      "Q335"
+    ],
+    "strong_available": false,
+    "exam_importance": 4,
+    "safety_importance": 1,
+    "clinical_reasoning": 4,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 5,
+    "memorization_risk": 5,
+    "balance_adjustment": 5,
+    "source_quality_risk": 1,
+    "priority_score": 44,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_F Result → Cause",
+    "reason": "人間発達学のfinding_interpretation。重要度4、Safety1、臨床推論4。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "finding_interpretation"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0536",
+    "raw_node_ids": [
+      "KN0536"
+    ],
+    "label": "腱を叩いて筋が急速に伸張されると筋紡錘のIa求心性線維が興奮し、脊髄でα運動ニューロンを介して同じ筋を収縮させる伸張反射が起こる",
+    "category_large": "A",
+    "category_small": 2,
+    "category_name": "生理学",
+    "all_category_smalls": [
+      2
+    ],
+    "current_question_ids": [
+      "Q544"
+    ],
+    "strong_available": false,
+    "exam_importance": 4,
+    "safety_importance": 4,
+    "clinical_reasoning": 2,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 4,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 44,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_A Definition → Case",
+    "reason": "生理学のfact_recall。重要度4、Safety4、臨床推論2。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "fact_recall"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0537",
+    "raw_node_ids": [
+      "KN0537"
+    ],
+    "label": "健常者の安静時呼吸の特徴",
+    "category_large": "A",
+    "category_small": 2,
+    "category_name": "生理学",
+    "all_category_smalls": [
+      2
+    ],
+    "current_question_ids": [
+      "Q545"
+    ],
+    "strong_available": false,
+    "exam_importance": 4,
+    "safety_importance": 4,
+    "clinical_reasoning": 2,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 4,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 44,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_A Definition → Case",
+    "reason": "生理学のfact_recall。重要度4、Safety4、臨床推論2。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "fact_recall"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN0663",
+    "raw_node_ids": [
+      "KN0663"
+    ],
+    "label": "痛覚は脊髄後角で二次ニューロンに交代し、対側へ交叉して脊髄側索の外側脊髄視床路を上行する",
+    "category_large": "A",
+    "category_small": 2,
+    "category_name": "生理学",
+    "all_category_smalls": [
+      2
+    ],
+    "current_question_ids": [
+      "Q671"
+    ],
+    "strong_available": false,
+    "exam_importance": 4,
+    "safety_importance": 4,
+    "clinical_reasoning": 2,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 4,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 44,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_A Definition → Case",
+    "reason": "生理学のfact_recall。重要度4、Safety4、臨床推論2。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "fact_recall"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  },
+  {
+    "canonical_node_id": "KN1138",
+    "raw_node_ids": [
+      "KN1138"
+    ],
+    "label": "過換気ではCO2が過剰に排出されPaCO2が低下し、呼吸性アルカローシスとなる",
+    "category_large": "A",
+    "category_small": 2,
+    "category_name": "生理学",
+    "all_category_smalls": [
+      2
+    ],
+    "current_question_ids": [
+      "Q1150"
+    ],
+    "strong_available": false,
+    "exam_importance": 4,
+    "safety_importance": 4,
+    "clinical_reasoning": 2,
+    "single_question_risk": 5,
+    "strong_creation_feasibility": 4,
+    "memorization_risk": 5,
+    "balance_adjustment": 4,
+    "source_quality_risk": 1,
+    "priority_score": 44,
+    "final_rank": "S",
+    "recommended_pattern": "TYPE_A Definition → Case",
+    "reason": "生理学のfact_recall。重要度4、Safety4、臨床推論2。別経路での確認価値を評価。",
+    "notes": "",
+    "tasks": [
+      "fact_recall"
+    ],
+    "safety_values": [
+      "none"
+    ],
+    "question_count": 1
+  }
+]
