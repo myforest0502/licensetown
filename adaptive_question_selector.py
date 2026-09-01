@@ -118,6 +118,12 @@ def select_node_adaptive_questions(
     states = {node: item["state"] for node, item in state_records.items()}
     summaries = _node_attempt_summary(attempts)
     seen_question_ids = {str(item.get("question_id") or "") for item in attempts}
+    recent_attempts = sorted(attempts, key=_attempt_time, reverse=True)[:30]
+    recent_question_ids = {
+        str(item.get("question_id") or "")
+        for item in recent_attempts
+        if item.get("question_id")
+    }
     excluded = {str(value) for value in (exclude_ids or ())}
     candidates = []
     for question_id in question_ids():
@@ -165,6 +171,8 @@ def select_node_adaptive_questions(
             "previous_wrong_count": len(summary["wrong_questions"]),
             "previous_correct_count": len(summary["correct_questions"]),
             "same_question_repeat": is_same_q_repeat,
+            "recent_question_repeat": question_id in recent_question_ids,
+            "recent_cooldown_bypassed": False,
             "strong_repair_confirmation": strong_confirmation,
             "repair_evidence_quality": repair_evidence_quality,
             "safety": str(tag.get("safety", "none")),
@@ -173,6 +181,21 @@ def select_node_adaptive_questions(
             "tie": randomizer.random(),
         })
     candidates.sort(key=lambda item: (item["priority_score"], item["tie"]), reverse=True)
+
+    non_recent_nodes = {
+        item["canonical_node_id"]
+        for item in candidates
+        if not item["recent_question_repeat"]
+    }
+    normal_candidates = [
+        item for item in candidates
+        if not item["recent_question_repeat"]
+        or (
+            item["priority_reason"] == "safety_wrong"
+            and item["canonical_node_id"] not in non_recent_nodes
+        )
+    ]
+    recent_candidates = [item for item in candidates if item["recent_question_repeat"]]
 
     # Soft composition targets: repair half, checking about a third, exploration remainder.
     targets = {
@@ -184,33 +207,57 @@ def select_node_adaptive_questions(
     selected_ids: set[str] = set()
     node_counts: Counter[str] = Counter()
 
-    def take(group: str, limit: int, node_cap: int):
-        for item in candidates:
+    def append_item(item: dict[str, Any]):
+        selected_item = dict(item)
+        selected_item["recent_cooldown_bypassed"] = bool(
+            selected_item["recent_question_repeat"]
+        )
+        selected.append(selected_item)
+        selected_ids.add(selected_item["question_id"])
+        node_counts[selected_item["canonical_node_id"]] += 1
+
+    def take(pool, group: str, limit: int, node_cap: int):
+        for item in pool:
             if len([value for value in selected if value["priority_group"] == group]) >= limit:
                 break
             if item["priority_group"] != group or item["question_id"] in selected_ids:
                 continue
             if node_counts[item["canonical_node_id"]] >= node_cap:
                 continue
-            selected.append(item)
-            selected_ids.add(item["question_id"])
-            node_counts[item["canonical_node_id"]] += 1
+            append_item(item)
 
     # Prefer one representative question per canonical Node. Only use a second
     # question when a bucket cannot otherwise reach its existing composition target.
     for group, limit in targets.items():
-        take(group, limit, node_cap=1)
-        take(group, limit, node_cap=2)
+        take(normal_candidates, group, limit, node_cap=1)
+        take(normal_candidates, group, limit, node_cap=2)
+
+    # A repairing singleton may fill a repair shortage, but never displaces a
+    # non-recent repair candidate. Other recent groups remain cooled down until
+    # the entire question set would otherwise be short.
+    take(recent_candidates, "repair", targets["repair"], node_cap=1)
+    take(recent_candidates, "repair", targets["repair"], node_cap=2)
+
     # Maintenance and unused groups fill natural shortages with the same two-pass rule.
     for cap in (1, 2, 3, question_count):
-        for item in candidates:
+        for item in normal_candidates:
             if len(selected) >= question_count:
                 break
             if item["question_id"] in selected_ids or node_counts[item["canonical_node_id"]] >= cap:
                 continue
-            selected.append(item)
-            selected_ids.add(item["question_id"])
-            node_counts[item["canonical_node_id"]] += 1
+            append_item(item)
+        if len(selected) >= question_count:
+            break
+
+    # Controlled final fallback: only a real bank shortage can bypass cooldown.
+    # Explicit exclude_ids never entered candidates and therefore cannot return.
+    for cap in (1, 2, 3, question_count):
+        for item in recent_candidates:
+            if len(selected) >= question_count:
+                break
+            if item["question_id"] in selected_ids or node_counts[item["canonical_node_id"]] >= cap:
+                continue
+            append_item(item)
         if len(selected) >= question_count:
             break
     return selected[:question_count]
