@@ -330,7 +330,10 @@ def compare_current_and_shadow(
     if same_target:
         label = (
             "same_target_same_reason"
-            if shadow.get("reason_code") == "insufficient_coverage"
+            if (
+                shadow.get("reason_code") == "insufficient_coverage"
+                and current_guidance.get("phase") == "foundation"
+            )
             else "same_target_stronger_reason"
         )
     elif shadow.get("confidence") in {"high", "medium"}:
