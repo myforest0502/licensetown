@@ -128,6 +128,10 @@ def build_field_evidence(
         field_questions = _CATALOG["questions_by_field"][field_id]
         field_nodes = _CATALOG["nodes_by_field"][field_id]
         field_attempts = attempts_by_field[field_id]
+        evaluable_field_attempts = [
+            item for item in field_attempts
+            if item.get("answer_status") != "unknown"
+        ]
         attempted_nodes = field_nodes & set(states)
         state_counts = Counter(states[node_id]["state"] for node_id in attempted_nodes)
         state_counts["unseen"] = len(field_nodes - attempted_nodes)
@@ -144,6 +148,10 @@ def build_field_evidence(
         correct_answer_count = sum(
             item.get("is_correct") is True and item.get("answer_status") != "unknown"
             for item in field_attempts
+        )
+        evaluable_correct_count = sum(
+            item.get("is_correct") is True
+            for item in evaluable_field_attempts
         )
         weakness_counts = Counter(
             weakness[node_id]["evidence_level"]
@@ -171,6 +179,7 @@ def build_field_evidence(
             int(states[node_id].get("confident_correct_after_wrong_count") or 0)
             for node_id in attempted_nodes
         )
+        evaluable_answer_count = len(evaluable_field_attempts)
         fields.append({
             "field_id": field_id,
             "field_name": field_name,
@@ -210,6 +219,12 @@ def build_field_evidence(
             "question_accuracy": (
                 correct_answer_count / len(field_attempts)
                 if field_attempts else None
+            ),
+            "evaluable_answer_count": evaluable_answer_count,
+            "evaluable_correct_count": evaluable_correct_count,
+            "evaluable_accuracy": (
+                evaluable_correct_count / evaluable_answer_count
+                if evaluable_answer_count else None
             ),
             "repeated_weakness_evidence_count": sum(
                 weakness_counts[level] for level in REPEATED_WEAKNESS_LEVELS
