@@ -1,7 +1,7 @@
 # Phase 12 Preview QA Runbook
 
 Date: 2026-09-01
-Status: implementation merged to main; PC and supporter visual QA observed; learner-owner mobile/action and final flag-OFF restoration still pending.
+Status: implementation merged to main; PC, supporter, and learner-owner mobile/action visual QA passed. Final flag-OFF restoration still pending.
 
 ## Current implementation
 
@@ -32,12 +32,15 @@ Completed/static:
 - supporter Preview renders without material clipping or overlap
 - supporter Preview contains no learner start action, as designed
 - existing supporter read-only layout remains intact on the observed surface
+- learner-owner smartphone screenshots confirm the Preview card fits without horizontal scrolling or clipping
+- six state counters collapse to the intended 3-column x 2-row mobile layout
+- learner-owner Preview action is visible, full width, and labeled `この内容を始める`
+- Preview headline shows `内科学 10問` and the displayed action is wired from the same presentation field/count values used by the existing recommendation POST handler
+- current `今日のおすすめ学習` remains visible and unchanged alongside the Preview
+- existing reward, footprint, and lower action cards remain usable and visually intact on the observed mobile surface
 
-Still requires visual confirmation:
+Still requires confirmation:
 
-- learner-owner view action button presence and placement
-- smartphone learner-owner layout
-- Preview action displays the same field/count that it starts
 - baseline restoration after flag OFF at the end of the QA window
 
 ## Purpose of visual QA
