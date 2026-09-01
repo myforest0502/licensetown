@@ -1,7 +1,7 @@
 # Phase 10 Post-Reset Runbook
 
-Date: 2026-09-01
-Status: Stage A/B/D complete; Stage C remains natural-use observation.
+Date: 2026-09-02
+Status: OPERATIONALLY CLOSED. Natural-use audit, cooldown explanation, and current static Question Bank validation are complete.
 
 This runbook records the Phase 10 closure sequence without requiring synthetic production activity.
 
@@ -38,63 +38,65 @@ The audit payload is metadata only and does not alter question_attempts or user_
 
 Audit Lite is on main. Render auto-deploy is the normal delivery path; no migration or synthetic Production DB write is required.
 
-## Stage C — natural post-deploy observation — PENDING REAL USE
+## Stage C — natural post-deploy observation — COMPLETE
 
-After a learner naturally completes adaptive_daily learning, verify from persisted history:
+A natural 30-question adaptive_daily session was observed in Production.
 
-- learning_source = adaptive_daily
-- selection audit fields are present
-- repeated Q, if any, has an explainable Safety/bank-shortage bypass
-- ordinary/non-adaptive events do not contain adaptive audit metadata
-- consecutive adaptive sessions do not show unexplained recent-Q overlap
+Verified from persisted history:
 
-Do not create fake production learning records merely to satisfy this gate.
+- source = adaptive_daily
+- mode = study
+- 6 learning events / 30 question results / 30 unique Q
+- all six saved adaptive audit fields present for all 30 results
+- 8 recent repeats and 8 cooldown bypasses
+- the repeat and bypass Q sets were identical
+- every bypass had `selection_reason=safety_wrong`, `selection_group=repair`, and `repair_evidence_quality=same_question`
+- ordinary repair/checking/exploration selections did not bypass cooldown
 
-## Stage D — refresh static Question Bank audit — COMPLETE
+The eight observed bypass Q were Q8, Q379, Q1305, Q705, Q109, Q1504, Q195, and Q25.
 
-Committed in:
+Subsequent static repairability inspection confirmed that all eight belonged to Safety moderate singleton canonical Nodes at the time of observation and had no different-Q strong candidate. The same-Q Safety bypasses were therefore structurally necessary under the current rule rather than unexplained overlap.
 
-`07fb8a028ea8de29b32cfcdfb63c249ae6951bed`
+No synthetic Production learning records were created for this gate.
 
-Verified Q1-Q1594 snapshot:
+## Stage D — static Question Bank audit — COMPLETE
 
-- records 1594
+The earlier refreshed Q1-Q1594 audit passed all static integrity checks. The formal Question Bank has since been extended by the Safety strong-repair pilot and is now Q1-Q1605.
+
+Current verified snapshot:
+
+- records 1605
+- Q range Q1-Q1605
 - missing IDs 0
 - duplicates 0
-- schema errors 0
-- Knowledge Node reference errors 0
-- answers/explanations/tags inconsistencies 0
+- schema/reference inconsistencies 0
 - validator PASS
-- static related tests 38 passed
+- canonical Nodes 1509
+- singleton canonical Nodes 1422
+- multi-question canonical Nodes 87
 
-Current canonical summary from the refreshed audit:
+The 11 added Q1595-Q1605 questions map to existing canonical Nodes and provide strong different-Q repair supply for the selected Safety pilot Nodes; canonical Node count therefore remains unchanged.
 
-- canonical 1509
-- singleton 1433
-- multi-question 76
-
-No tag changes were made merely to force distributions.
-
-## Stage E — Phase 10 closure gate
+## Stage E — Phase 10 closure gate — COMPLETE
 
 Completed:
 
-- recent cooldown v0.2 deployed
-- audit-lite deployed
-- static Q1-Q1594 tag audit refreshed
+- Recent Cooldown v0.2 deployed
+- adaptive audit-lite deployed
+- natural adaptive_daily session observed
+- audit persistence confirmed
+- observed recent overlap fully explained by Safety/bank-supply exception
+- static Question Bank validation current through Q1605
 
-Remaining operational gate:
+Phase 10 is therefore code-complete, static-complete, and operationally closed.
 
-- at least one natural adaptive use observed after deployment
-- unexpected consecutive-session overlap is absent, or every overlap is explained by Safety/bank-shortage metadata
+Future repeat monitoring continues through Supporter diagnostics, but it is no longer a Phase 10 closure blocker.
 
-Therefore Phase 10 is code/static complete but not yet formally operationally closed.
+## Stage F — Phase 11 policy
 
-## Stage F — Phase 11 start policy
+Phase 11 may continue in diagnostics-only shadow mode while natural-use evidence is accumulated for promotion.
 
-Phase 11 may proceed in design and diagnostics-only shadow mode before the natural-use closure observation is complete, but it must not replace learner-facing recommendations yet.
-
-The first shadow output should answer:
+The shadow output should answer:
 
 1. What should the learner do next?
 2. Why?
@@ -103,3 +105,5 @@ The first shadow output should answer:
 5. What evidence is still missing?
 
 The judgment layer consumes existing evidence; it does not create a second Node-state system or mutate formal learning state.
+
+Promotion beyond diagnostics remains a separate Phase 11 decision and must be based on natural-use evidence, including Safety behavior, disagreement quality versus the current recommendation, retention handling, and absence of obvious overreaction to weak evidence.
