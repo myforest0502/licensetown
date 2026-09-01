@@ -1,8 +1,8 @@
-"""Phase 11 deterministic, read-only shadow learning judgment.
+"""Deterministic read-only Phase 11 shadow learning judgment.
 
-The shadow layer chooses learning intent and scope only. It never chooses exact
-question IDs, writes to the database, calls an LLM, or mutates formal Node
-state. Phase 10 remains responsible for exact adaptive selection.
+This layer chooses learning intent and scope only. It never selects exact Q IDs,
+writes to the database, calls an LLM, or mutates formal Knowledge Node state.
+Phase 10 remains responsible for exact adaptive selection and cooldown.
 """
 
 from __future__ import annotations
@@ -10,6 +10,7 @@ from __future__ import annotations
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from typing import Any, Iterable
+from zoneinfo import ZoneInfo
 
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_weakness_evidence import (
@@ -27,13 +28,13 @@ from question_bank import (
 )
 
 
+TOKYO = ZoneInfo("Asia/Tokyo")
 UNRESOLVED_STATES = {"checking", "repairing", "recheck_due"}
 REPEATED_LEVELS = {
     REPEATED_SAME_QUESTION_WRONG,
     CROSS_QUESTION_WRONG,
     CROSS_QUESTION_CONFIDENT_WRONG,
 }
-
 REASON_LABELS = {
     "safety_repair": "Critical Safetyの未解決誤答",
     "confident_wrong_cluster": "自信あり誤答のまとまり",
@@ -43,6 +44,10 @@ REASON_LABELS = {
     "uncertain_correct_cluster": "迷いながらの正解が多い",
     "maintenance_only": "緊急の弱点がなく広く維持学習",
 }
+CONFIDENCE_RATIONALES = {
+    "high": "Safetyまたは複数の誤答証拠があり、優先理由が明確です。",
+    "medium": "決定表の条件には一致していますが、緊急修復より弱い根拠です。",
+}
 
 
 def _catalog() -> dict[str, Any]:
@@ -50,7 +55,6 @@ def _catalog() -> dict[str, Any]:
     node_by_question: dict[str, str] = {}
     fields_by_node: dict[str, set[int]] = defaultdict(set)
     critical_nodes: set[str] = set()
-    critical_questions: set[str] = set()
     for question_id in question_ids():
         field_id = get_category_small(question_id)
         tag = get_question_tag(question_id)
@@ -59,13 +63,11 @@ def _catalog() -> dict[str, Any]:
         node_by_question[question_id] = node_id
         fields_by_node[node_id].add(field_id)
         if tag.get("safety") == "critical":
-            critical_questions.add(question_id)
             critical_nodes.add(node_id)
     return {
         "field_by_question": field_by_question,
         "node_by_question": node_by_question,
         "fields_by_node": fields_by_node,
-        "critical_questions": critical_questions,
         "critical_nodes": critical_nodes,
     }
 
@@ -106,11 +108,7 @@ def _node_states(field_evidence: dict[str, Any]) -> dict[str, dict[str, Any]]:
     }
 
 
-def _field_name(field_id: int | None) -> str | None:
-    return CATEGORY_NAMES.get(field_id) if field_id is not None else None
-
-
-def _result(
+def _make_result(
     *,
     intent: str,
     field_id: int | None,
@@ -124,12 +122,13 @@ def _result(
     return {
         "learning_intent": intent,
         "target_field_id": field_id,
-        "target_field": _field_name(field_id),
+        "target_field": CATEGORY_NAMES.get(field_id) if field_id is not None else None,
         "question_count": question_count,
         "recommended_route": route,
         "reason_code": reason_code,
         "reason_label": REASON_LABELS[reason_code],
         "confidence": confidence,
+        "confidence_rationale": CONFIDENCE_RATIONALES[confidence],
         "evidence": evidence,
         "observations": observations,
         "shadow_only": True,
@@ -137,32 +136,31 @@ def _result(
 
 
 def _current_target(current_guidance: dict[str, Any] | None) -> str | None:
-    if not current_guidance:
-        return None
-    recommended = current_guidance.get("recommended_study") or []
-    if not recommended:
-        return None
-    first = recommended[0]
-    if isinstance(first, (list, tuple)) and first:
-        return str(first[0])
-    return None
+    recommended = (current_guidance or {}).get("recommended_study") or []
+    first = recommended[0] if recommended else None
+    return str(first[0]) if isinstance(first, (list, tuple)) and first else None
 
 
 def build_shadow_comparison(
     current_guidance: dict[str, Any] | None,
     shadow: dict[str, Any],
 ) -> dict[str, Any]:
-    """Compare current and shadow targets without declaring either system better."""
+    """Compare current and shadow targets without declaring a winner."""
     current_target = _current_target(current_guidance)
     shadow_target = shadow.get("target_field")
     current_phase = (current_guidance or {}).get("phase")
     if current_target == shadow_target and current_target is not None:
-        if shadow.get("reason_code") == "insufficient_coverage" and current_phase == "foundation":
-            label = "same_target_same_reason"
-        else:
-            label = "same_target_stronger_reason"
+        label = (
+            "same_target_same_reason"
+            if shadow.get("reason_code") == "insufficient_coverage"
+            and current_phase == "foundation"
+            else "same_target_stronger_reason"
+        )
     elif shadow.get("reason_code") in {
-        "safety_repair", "confident_wrong_cluster", "repeated_wrong_cluster", "recheck_due"
+        "safety_repair",
+        "confident_wrong_cluster",
+        "repeated_wrong_cluster",
+        "recheck_due",
     }:
         label = "different_target_shadow_has_stronger_evidence"
     else:
@@ -183,25 +181,25 @@ def build_shadow_judgment(
     *,
     as_of: datetime | None = None,
 ) -> dict[str, Any]:
-    """Return the first matching Phase 11 v0.1 shadow rule, top-to-bottom."""
+    """Return the first matching Phase 11 v0.1 rule in J1→J7 order."""
     attempts = [dict(item) for item in attempts]
     as_of = as_of or datetime.now(timezone.utc)
     if as_of.tzinfo is None:
         as_of = as_of.replace(tzinfo=timezone.utc)
-
     user_ids = {str(item.get("user_id") or "") for item in attempts}
     if len(user_ids) > 1:
         raise ValueError("attempts must belong to one user")
 
     fields = _field_map(field_evidence)
     states = _node_states(field_evidence)
-    evaluable_attempts = [item for item in attempts if item.get("answer_status") != "unknown"]
+    evaluable = [item for item in attempts if item.get("answer_status") != "unknown"]
     weakness = {
         item["canonical_node_id"]: item
-        for item in derive_repeated_weakness_evidence(evaluable_attempts)
+        for item in derive_repeated_weakness_evidence(evaluable)
     }
     attempts_by_node: dict[str, list[dict[str, Any]]] = defaultdict(list)
     uncertain_correct_by_field: Counter[int] = Counter()
+    tokyo_today = as_of.astimezone(TOKYO).date()
     today_count = 0
     for item in attempts:
         q_id = _normalize_question_id(item.get("question_id"))
@@ -217,18 +215,19 @@ def build_shadow_judgment(
         ):
             uncertain_correct_by_field[field_id] += 1
         answered_at = _parse_time(item.get("answered_at") or item.get("attempted_at"))
-        if answered_at and answered_at.astimezone(as_of.tzinfo).date() == as_of.date():
+        if answered_at and answered_at.astimezone(TOKYO).date() == tokyo_today:
             today_count += 1
     observations = ["high_same_day_volume"] if today_count >= 60 else []
 
-    # J1 — unresolved critical Safety Node with wrong evidence.
+    # J1: Critical Safety + unresolved state + evaluable wrong evidence.
     safety_candidates: list[tuple[Any, ...]] = []
     for node_id in sorted(_CATALOG["critical_nodes"]):
         state = states.get(node_id, {}).get("state", "unseen")
-        history = attempts_by_node.get(node_id, [])
         wrong = [
-            item for item in history
-            if item.get("is_correct") is False and item.get("answer_status") != "unknown"
+            item
+            for item in attempts_by_node.get(node_id, [])
+            if item.get("is_correct") is False
+            and item.get("answer_status") != "unknown"
         ]
         if state not in UNRESOLVED_STATES or not wrong:
             continue
@@ -252,13 +251,14 @@ def build_shadow_judgment(
             )
             if parsed is not None
         ]
-        last_wrong = max(wrong_times, default=None)
-        recency = -(last_wrong.timestamp()) if last_wrong else 0
+        recency_key = -max(wrong_times).timestamp() if wrong_times else 0
         for field_id in sorted(_CATALOG["fields_by_node"].get(node_id, ())):
-            safety_candidates.append((tier, recency, field_id, node_id, len(wrong), level))
+            safety_candidates.append(
+                (tier, recency_key, field_id, node_id, len(wrong), level)
+            )
     if safety_candidates:
         tier, _recency, field_id, node_id, wrong_count, level = min(safety_candidates)
-        return _result(
+        return _make_result(
             intent="repair",
             field_id=field_id,
             question_count=10,
@@ -275,7 +275,6 @@ def build_shadow_judgment(
             observations=observations,
         )
 
-    # Per-field weakness facts reused by J2/J3.
     facts: dict[int, dict[str, Any]] = {}
     for field_id, field in fields.items():
         node_ids = {
@@ -310,27 +309,33 @@ def build_shadow_judgment(
             ),
             "confident_repair_nodes": len(confident_repair_nodes),
             "repairing": int(field.get("repairing_node_count") or 0),
+            "answered": int(field.get("question_answer_count") or 0),
             "accuracy": field.get("question_accuracy"),
         }
 
-    # J2 — confirmed confident weakness.
+    # J2: cross-question confident wrong, or confident wrong on >=2 repairing Nodes.
     j2 = []
     for field_id, fact in facts.items():
-        if fact["cross_confident"] or fact["confident_repair_nodes"] >= 2:
-            accuracy = fact["accuracy"] if fact["accuracy"] is not None else 1.0
-            j2.append(
-                (
-                    -fact["cross_confident"],
-                    -fact["confident_repair_nodes"],
-                    -fact["repairing"],
-                    accuracy,
-                    field_id,
-                )
+        if not (fact["cross_confident"] or fact["confident_repair_nodes"] >= 2):
+            continue
+        reliable_accuracy = (
+            fact["accuracy"]
+            if fact["answered"] >= 10 and fact["accuracy"] is not None
+            else 1.0
+        )
+        j2.append(
+            (
+                -fact["cross_confident"],
+                -fact["confident_repair_nodes"],
+                -fact["repairing"],
+                reliable_accuracy,
+                field_id,
             )
+        )
     if j2:
-        _a, _b, _c, _d, field_id = min(j2)
+        *_unused, field_id = min(j2)
         fact = facts[field_id]
-        return _result(
+        return _make_result(
             intent="repair",
             field_id=field_id,
             question_count=10,
@@ -345,7 +350,7 @@ def build_shadow_judgment(
             observations=observations,
         )
 
-    # J3 — repeated weakness cluster.
+    # J3: a cross-question wrong Node, or >=2 repeated-weakness Nodes.
     j3 = []
     for field_id, fact in facts.items():
         if fact["cross_wrong"] or fact["repeated"] >= 2:
@@ -353,9 +358,9 @@ def build_shadow_judgment(
                 (-fact["cross_wrong"], -fact["repeated"], -fact["repairing"], field_id)
             )
     if j3:
-        _a, _b, _c, field_id = min(j3)
+        *_unused, field_id = min(j3)
         fact = facts[field_id]
-        return _result(
+        return _make_result(
             intent="repair",
             field_id=field_id,
             question_count=10,
@@ -370,7 +375,7 @@ def build_shadow_judgment(
             observations=observations,
         )
 
-    # J4 — retention recheck.
+    # J4: due retention work; tie by count, max overdue, total overdue, field ID.
     j4 = []
     for field_id, field in fields.items():
         due = [
@@ -383,14 +388,14 @@ def build_shadow_judgment(
         overdue = [int(item.get("due_overdue_days") or 0) for item in due]
         j4.append((-len(due), -max(overdue, default=0), -sum(overdue), field_id))
     if j4:
-        _a, _b, _c, field_id = min(j4)
+        *_unused, field_id = min(j4)
         due = [
             item
             for item in fields[field_id].get("retention_nodes", [])
             if item.get("state") == "recheck_due"
         ]
         overdue = [int(item.get("due_overdue_days") or 0) for item in due]
-        return _result(
+        return _make_result(
             intent="recheck",
             field_id=field_id,
             question_count=10,
@@ -405,10 +410,8 @@ def build_shadow_judgment(
             observations=observations,
         )
 
+    # J5: under 100 answers preserve the existing deterministic foundation target.
     total_answers = len(attempts)
-
-    # J5 — foundation / insufficient coverage. Under 100 answers, reuse the
-    # current deterministic foundation target rather than duplicating it.
     if total_answers < 100:
         target_name = _current_target(current_guidance)
         target_id = next(
@@ -426,7 +429,7 @@ def build_shadow_judgment(
                 ),
                 default=None,
             )
-        return _result(
+        return _make_result(
             intent="coverage",
             field_id=target_id,
             question_count=10,
@@ -441,8 +444,8 @@ def build_shadow_judgment(
             observations=observations,
         )
 
-    # After 100 answers, use a deliberately conservative coverage trigger:
-    # any field with fewer than 10 answered questions. Bank size is not used.
+    # After 100 answers, v0.1 uses only a conservative <10-answer coverage trigger.
+    # It intentionally does not infer weakness from Question Bank size.
     sparse_fields = [
         field
         for field in fields.values()
@@ -457,7 +460,7 @@ def build_shadow_judgment(
                 int(field["field_id"]),
             ),
         )
-        return _result(
+        return _make_result(
             intent="coverage",
             field_id=int(chosen["field_id"]),
             question_count=10,
@@ -472,20 +475,19 @@ def build_shadow_judgment(
             observations=observations,
         )
 
-    # J6 — uncertain-correct stabilization.
+    # J6: >=3 correct answers with confidence 2/3 in a field with >=5 answers.
     j6 = []
     for field_id, count in uncertain_correct_by_field.items():
         answered = int(fields.get(field_id, {}).get("question_answer_count") or 0)
         if answered < 5 or count < 3:
             continue
-        proportion = count / answered
         checking = int(fields[field_id].get("checking_node_count") or 0)
-        j6.append((-count, -proportion, -checking, field_id))
+        j6.append((-count, -(count / answered), -checking, field_id))
     if j6:
-        _a, _b, _c, field_id = min(j6)
+        *_unused, field_id = min(j6)
         count = uncertain_correct_by_field[field_id]
         answered = int(fields[field_id].get("question_answer_count") or 0)
-        return _result(
+        return _make_result(
             intent="stabilization",
             field_id=field_id,
             question_count=10,
@@ -500,8 +502,8 @@ def build_shadow_judgment(
             observations=observations,
         )
 
-    # J7 — broad maintenance. No target field is forced on Phase 10.
-    return _result(
+    # J7: no higher-priority evidence. Let Phase 10 choose a broad 30-question set.
+    return _make_result(
         intent="maintenance",
         field_id=None,
         question_count=30,
