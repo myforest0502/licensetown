@@ -104,9 +104,13 @@ def build_field_evidence(
         item["canonical_node_id"]: item
         for item in derive_all_user_node_states(attempts, as_of=as_of)
     }
+    evaluable_attempts = [
+        item for item in attempts
+        if item.get("answer_status") != "unknown"
+    ]
     weakness = {
         item["canonical_node_id"]: item
-        for item in derive_repeated_weakness_evidence(attempts)
+        for item in derive_repeated_weakness_evidence(evaluable_attempts)
     }
     attempts_by_field: dict[int, list[dict[str, Any]]] = defaultdict(list)
     answered_questions_by_field: dict[int, set[str]] = defaultdict(set)
