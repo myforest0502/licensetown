@@ -9,7 +9,6 @@ from __future__ import annotations
 
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
-from statistics import median
 from typing import Any, Iterable
 
 from knowledge_node_canonical import canonicalize_knowledge_node_id
@@ -166,8 +165,6 @@ def build_shadow_comparison(
         "safety_repair", "confident_wrong_cluster", "repeated_wrong_cluster", "recheck_due"
     }:
         label = "different_target_shadow_has_stronger_evidence"
-    elif current_target and shadow_target and current_target != shadow_target:
-        label = "insufficient_evidence_to_judge"
     else:
         label = "insufficient_evidence_to_judge"
     return {
@@ -198,9 +195,10 @@ def build_shadow_judgment(
 
     fields = _field_map(field_evidence)
     states = _node_states(field_evidence)
+    evaluable_attempts = [item for item in attempts if item.get("answer_status") != "unknown"]
     weakness = {
         item["canonical_node_id"]: item
-        for item in derive_repeated_weakness_evidence(attempts)
+        for item in derive_repeated_weakness_evidence(evaluable_attempts)
     }
     attempts_by_node: dict[str, list[dict[str, Any]]] = defaultdict(list)
     uncertain_correct_by_field: Counter[int] = Counter()
@@ -228,7 +226,10 @@ def build_shadow_judgment(
     for node_id in sorted(_CATALOG["critical_nodes"]):
         state = states.get(node_id, {}).get("state", "unseen")
         history = attempts_by_node.get(node_id, [])
-        wrong = [item for item in history if item.get("is_correct") is False]
+        wrong = [
+            item for item in history
+            if item.get("is_correct") is False and item.get("answer_status") != "unknown"
+        ]
         if state not in UNRESOLVED_STATES or not wrong:
             continue
         weak = weakness.get(node_id, {})
@@ -243,35 +244,54 @@ def build_shadow_judgment(
             tier = 3
         else:
             tier = 4
-        last_wrong = max((_parse_time(item.get("answered_at") or item.get("attempted_at")) for item in wrong), default=None)
+        wrong_times = [
+            parsed
+            for parsed in (
+                _parse_time(item.get("answered_at") or item.get("attempted_at"))
+                for item in wrong
+            )
+            if parsed is not None
+        ]
+        last_wrong = max(wrong_times, default=None)
         recency = -(last_wrong.timestamp()) if last_wrong else 0
         for field_id in sorted(_CATALOG["fields_by_node"].get(node_id, ())):
             safety_candidates.append((tier, recency, field_id, node_id, len(wrong), level))
     if safety_candidates:
         tier, _recency, field_id, node_id, wrong_count, level = min(safety_candidates)
         return _result(
-            intent="repair", field_id=field_id, question_count=10,
-            route="dashboard_recommendation", reason_code="safety_repair", confidence="high",
+            intent="repair",
+            field_id=field_id,
+            question_count=10,
+            route="dashboard_recommendation",
+            reason_code="safety_repair",
+            confidence="high",
             evidence=[
-                f"critical_safety_node={node_id}", f"node_state={states[node_id]['state']}",
-                f"wrong_attempts={wrong_count}", f"weakness_level={level or 'SINGLE_WRONG'}",
+                f"critical_safety_node={node_id}",
+                f"node_state={states[node_id]['state']}",
+                f"wrong_attempts={wrong_count}",
+                f"weakness_level={level or 'SINGLE_WRONG'}",
                 f"safety_priority_tier={tier}",
-            ], observations=observations,
+            ],
+            observations=observations,
         )
 
     # Per-field weakness facts reused by J2/J3.
     facts: dict[int, dict[str, Any]] = {}
     for field_id, field in fields.items():
         node_ids = {
-            node_id for node_id, member_fields in _CATALOG["fields_by_node"].items()
+            node_id
+            for node_id, member_fields in _CATALOG["fields_by_node"].items()
             if field_id in member_fields
         }
         field_weakness = [weakness[node_id] for node_id in node_ids if node_id in weakness]
         confident_repair_nodes = {
-            node_id for node_id in node_ids
+            node_id
+            for node_id in node_ids
             if states.get(node_id, {}).get("state") == "repairing"
             and any(
-                item.get("is_correct") is False and item.get("confidence") == 1
+                item.get("is_correct") is False
+                and item.get("answer_status") != "unknown"
+                and item.get("confidence") == 1
                 for item in attempts_by_node.get(node_id, [])
             )
         }
@@ -284,7 +304,10 @@ def build_shadow_judgment(
                 item.get("evidence_level") == CROSS_QUESTION_WRONG
                 for item in field_weakness
             ),
-            "repeated": sum(item.get("evidence_level") in REPEATED_LEVELS for item in field_weakness),
+            "repeated": sum(
+                item.get("evidence_level") in REPEATED_LEVELS
+                for item in field_weakness
+            ),
             "confident_repair_nodes": len(confident_repair_nodes),
             "repairing": int(field.get("repairing_node_count") or 0),
             "accuracy": field.get("question_accuracy"),
@@ -295,60 +318,91 @@ def build_shadow_judgment(
     for field_id, fact in facts.items():
         if fact["cross_confident"] or fact["confident_repair_nodes"] >= 2:
             accuracy = fact["accuracy"] if fact["accuracy"] is not None else 1.0
-            j2.append((
-                -fact["cross_confident"], -fact["confident_repair_nodes"],
-                -fact["repairing"], accuracy, field_id,
-            ))
+            j2.append(
+                (
+                    -fact["cross_confident"],
+                    -fact["confident_repair_nodes"],
+                    -fact["repairing"],
+                    accuracy,
+                    field_id,
+                )
+            )
     if j2:
         _a, _b, _c, _d, field_id = min(j2)
         fact = facts[field_id]
         return _result(
-            intent="repair", field_id=field_id, question_count=10,
-            route="dashboard_recommendation", reason_code="confident_wrong_cluster", confidence="high",
+            intent="repair",
+            field_id=field_id,
+            question_count=10,
+            route="dashboard_recommendation",
+            reason_code="confident_wrong_cluster",
+            confidence="high",
             evidence=[
                 f"cross_question_confident_wrong_nodes={fact['cross_confident']}",
                 f"distinct_confident_wrong_repairing_nodes={fact['confident_repair_nodes']}",
                 f"repairing_nodes={fact['repairing']}",
-            ], observations=observations,
+            ],
+            observations=observations,
         )
 
     # J3 — repeated weakness cluster.
     j3 = []
     for field_id, fact in facts.items():
         if fact["cross_wrong"] or fact["repeated"] >= 2:
-            j3.append((-fact["cross_wrong"], -fact["repeated"], -fact["repairing"], field_id))
+            j3.append(
+                (-fact["cross_wrong"], -fact["repeated"], -fact["repairing"], field_id)
+            )
     if j3:
         _a, _b, _c, field_id = min(j3)
         fact = facts[field_id]
         return _result(
-            intent="repair", field_id=field_id, question_count=10,
-            route="dashboard_recommendation", reason_code="repeated_wrong_cluster", confidence="high",
+            intent="repair",
+            field_id=field_id,
+            question_count=10,
+            route="dashboard_recommendation",
+            reason_code="repeated_wrong_cluster",
+            confidence="high",
             evidence=[
                 f"cross_question_wrong_nodes={fact['cross_wrong']}",
                 f"repeated_weakness_nodes={fact['repeated']}",
                 f"repairing_nodes={fact['repairing']}",
-            ], observations=observations,
+            ],
+            observations=observations,
         )
 
     # J4 — retention recheck.
     j4 = []
     for field_id, field in fields.items():
-        due = [item for item in field.get("retention_nodes", []) if item.get("state") == "recheck_due"]
+        due = [
+            item
+            for item in field.get("retention_nodes", [])
+            if item.get("state") == "recheck_due"
+        ]
         if not due:
             continue
         overdue = [int(item.get("due_overdue_days") or 0) for item in due]
         j4.append((-len(due), -max(overdue, default=0), -sum(overdue), field_id))
     if j4:
         _a, _b, _c, field_id = min(j4)
-        due = [item for item in fields[field_id].get("retention_nodes", []) if item.get("state") == "recheck_due"]
+        due = [
+            item
+            for item in fields[field_id].get("retention_nodes", [])
+            if item.get("state") == "recheck_due"
+        ]
         overdue = [int(item.get("due_overdue_days") or 0) for item in due]
         return _result(
-            intent="recheck", field_id=field_id, question_count=10,
-            route="dashboard_recommendation", reason_code="recheck_due", confidence="medium",
+            intent="recheck",
+            field_id=field_id,
+            question_count=10,
+            route="dashboard_recommendation",
+            reason_code="recheck_due",
+            confidence="medium",
             evidence=[
-                f"recheck_due_nodes={len(due)}", f"max_overdue_days={max(overdue, default=0)}",
+                f"recheck_due_nodes={len(due)}",
+                f"max_overdue_days={max(overdue, default=0)}",
                 f"total_overdue_days={sum(overdue)}",
-            ], observations=observations,
+            ],
+            observations=observations,
         )
 
     total_answers = len(attempts)
@@ -357,7 +411,10 @@ def build_shadow_judgment(
     # current deterministic foundation target rather than duplicating it.
     if total_answers < 100:
         target_name = _current_target(current_guidance)
-        target_id = next((fid for fid, name in CATEGORY_NAMES.items() if name == target_name), None)
+        target_id = next(
+            (fid for fid, name in CATEGORY_NAMES.items() if name == target_name),
+            None,
+        )
         if target_id is None:
             basics = [fid for fid in BASIC_CATEGORY_SMALLS if fid in fields]
             target_id = min(
@@ -370,16 +427,25 @@ def build_shadow_judgment(
                 default=None,
             )
         return _result(
-            intent="coverage", field_id=target_id, question_count=10,
-            route="dashboard_recommendation", reason_code="insufficient_coverage", confidence="medium",
-            evidence=[f"total_answers={total_answers}", "foundation_threshold=100", "target_source=current_guidance"],
+            intent="coverage",
+            field_id=target_id,
+            question_count=10,
+            route="dashboard_recommendation",
+            reason_code="insufficient_coverage",
+            confidence="medium",
+            evidence=[
+                f"total_answers={total_answers}",
+                "foundation_threshold=100",
+                "target_source=current_guidance",
+            ],
             observations=observations,
         )
 
     # After 100 answers, use a deliberately conservative coverage trigger:
     # any field with fewer than 10 answered questions. Bank size is not used.
     sparse_fields = [
-        field for field in fields.values()
+        field
+        for field in fields.values()
         if int(field.get("question_answer_count") or 0) < 10
     ]
     if sparse_fields:
@@ -392,13 +458,18 @@ def build_shadow_judgment(
             ),
         )
         return _result(
-            intent="coverage", field_id=int(chosen["field_id"]), question_count=10,
-            route="dashboard_recommendation", reason_code="insufficient_coverage", confidence="medium",
+            intent="coverage",
+            field_id=int(chosen["field_id"]),
+            question_count=10,
+            route="dashboard_recommendation",
+            reason_code="insufficient_coverage",
+            confidence="medium",
             evidence=[
                 f"field_answered_count={int(chosen.get('question_answer_count') or 0)}",
                 f"field_node_coverage_percent={float((chosen.get('node_coverage') or {}).get('percent') or 0)}",
                 "minimum_reliable_field_answers=10",
-            ], observations=observations,
+            ],
+            observations=observations,
         )
 
     # J6 — uncertain-correct stabilization.
@@ -415,18 +486,28 @@ def build_shadow_judgment(
         count = uncertain_correct_by_field[field_id]
         answered = int(fields[field_id].get("question_answer_count") or 0)
         return _result(
-            intent="stabilization", field_id=field_id, question_count=10,
-            route="dashboard_recommendation", reason_code="uncertain_correct_cluster", confidence="medium",
+            intent="stabilization",
+            field_id=field_id,
+            question_count=10,
+            route="dashboard_recommendation",
+            reason_code="uncertain_correct_cluster",
+            confidence="medium",
             evidence=[
                 f"uncertain_correct_count={count}",
                 f"uncertain_correct_proportion={round(count / answered, 3)}",
                 f"checking_nodes={int(fields[field_id].get('checking_node_count') or 0)}",
-            ], observations=observations,
+            ],
+            observations=observations,
         )
 
     # J7 — broad maintenance. No target field is forced on Phase 10.
     return _result(
-        intent="maintenance", field_id=None, question_count=30,
-        route="adaptive_daily", reason_code="maintenance_only", confidence="medium",
-        evidence=["no_higher_priority_rule_matched"], observations=observations,
+        intent="maintenance",
+        field_id=None,
+        question_count=30,
+        route="adaptive_daily",
+        reason_code="maintenance_only",
+        confidence="medium",
+        evidence=["no_higher_priority_rule_matched"],
+        observations=observations,
     )
