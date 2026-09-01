@@ -257,10 +257,24 @@ def select_node_adaptive_questions(
     return selected[:question_count]
 
 
-def build_node_adaptive_session(attempts, question_count=30, exclude_ids=(), rng=None):
+def build_node_adaptive_session(
+    attempts, question_count=30, exclude_ids=(), rng=None, *, audit_out=None
+):
     records = select_node_adaptive_questions(
         attempts, question_count, exclude_ids=exclude_ids, rng=rng
     )
     if len(records) < question_count:
         raise ValueError("Not enough questions for Node adaptive session")
+    if audit_out is not None:
+        audit_out.update({
+            item["question_id"]: {
+                "selection_reason": item["priority_reason"],
+                "selection_group": item["priority_group"],
+                "selection_score": item["priority_score"],
+                "repair_evidence_quality": item["repair_evidence_quality"],
+                "recent_question_repeat": item["recent_question_repeat"],
+                "recent_cooldown_bypassed": item["recent_cooldown_bypassed"],
+            }
+            for item in records
+        })
     return [get_quiz_question(item["question_id"]) for item in records]

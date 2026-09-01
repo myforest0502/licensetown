@@ -172,6 +172,65 @@ def test_question_results_store_formal_single_multi_either_and_null_confidence()
     )
 
 
+def test_adaptive_selection_audit_is_saved_without_changing_attempt_processing():
+    clear_local_stats()
+    question = get_quiz_question("Q1")
+    answer = "".join(question["accepted_answer_sets"][0])
+    audit = {
+        "selection_reason": "repairing",
+        "selection_group": "repair",
+        "selection_score": 850,
+        "repair_evidence_quality": "same_question",
+        "recent_question_repeat": True,
+        "recent_cooldown_bypassed": True,
+    }
+    session = {
+        "session_id": "adaptive-audit-session",
+        "current_set": 1,
+        "questions_per_set": 1,
+        "questions": [question],
+        "all_answers": {1: {"answer": answer, "confidence": "1"}},
+        "mode": "study",
+        "session_kind": "adaptive_daily",
+        "adaptive_selection_audit": {"Q1": audit},
+    }
+
+    assert record_confirmed_learning_batch("adaptive-audit-user", session)
+    result = database._local_learning_events[
+        "adaptive-audit-session:1"
+    ]["question_results"][0]
+    assert {key: result[key] for key in audit} == audit
+    assert len(database._local_question_attempts) == 1
+    assert database._local_user_node_states[
+        ("adaptive-audit-user", "KN0001")
+    ]["attempt_count"] == 1
+
+
+def test_non_adaptive_learning_does_not_save_selection_audit():
+    clear_local_stats()
+    question = get_quiz_question("Q1")
+    answer = "".join(question["accepted_answer_sets"][0])
+    session = {
+        "session_id": "random-audit-session",
+        "current_set": 1,
+        "questions_per_set": 1,
+        "questions": [question],
+        "all_answers": {1: {"answer": answer, "confidence": "1"}},
+        "mode": "study",
+        "session_kind": "random",
+        "adaptive_selection_audit": {
+            "Q1": {"selection_reason": "must-not-persist"}
+        },
+    }
+
+    assert record_confirmed_learning_batch("random-audit-user", session)
+    result = database._local_learning_events[
+        "random-audit-session:1"
+    ]["question_results"][0]
+    assert "selection_reason" not in result
+    assert "recent_cooldown_bypassed" not in result
+
+
 def test_unknown_answer_is_distinct_in_learning_events_attempts_and_local_fallback():
     clear_local_stats()
     user_id = "unknown-answer-user"

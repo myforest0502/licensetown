@@ -915,6 +915,7 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
         category_selection.get("category_small")
         if category_selection else None
     )
+    adaptive_selection_audit = None
     if session_kind == "initial_assessment":
         all_questions = build_initial_assessment(total_question_count)
     elif session_kind == "adaptive_daily":
@@ -923,10 +924,12 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
             user_id,
             NODE_ADAPTIVE_RECOMMENDATION_PILOT_USER_IDS,
         ):
+            adaptive_selection_audit = {}
             all_questions = build_node_adaptive_session(
                 get_question_attempts(user_id),
                 total_question_count,
                 exclude_ids=exclude_ids,
+                audit_out=adaptive_selection_audit,
             )
         else:
             all_questions = build_daily_session(
@@ -956,6 +959,8 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
         "category_small": category_small,
         "session_kind": session_kind or ("manual" if category_small is not None else "random"),
     }
+    if adaptive_selection_audit is not None:
+        study_sessions[user_id]["adaptive_selection_audit"] = adaptive_selection_audit
 
     quiz_messages = format_quiz_messages(questions)
 
@@ -1825,7 +1830,7 @@ def record_confirmed_learning_batch(user_id, session):
             raise QuestionBankError(
                 f"Knowledge Node ID not found for {question_id}"
             )
-        question_results.append({
+        result = {
             "question_id": question_id,
             "knowledge_node_id": knowledge_node_id,
             "selected_answers": selected_answers_for_history(question, answer),
@@ -1833,7 +1838,23 @@ def record_confirmed_learning_batch(user_id, session):
             "confidence": int(confidence) if str(confidence) in {"1", "2", "3"} else None,
             "answer_status": answer_data.get("answer_status", "answered"),
             "learning_source": session.get("session_kind", "manual"),
-        })
+        }
+        if session.get("session_kind") == "adaptive_daily":
+            audit = session.get("adaptive_selection_audit", {}).get(question_id)
+            if audit:
+                result.update({
+                    key: audit[key]
+                    for key in (
+                        "selection_reason",
+                        "selection_group",
+                        "selection_score",
+                        "repair_evidence_quality",
+                        "recent_question_repeat",
+                        "recent_cooldown_bypassed",
+                    )
+                    if key in audit
+                })
+        question_results.append(result)
     return record_learning_batch(
         user_id=user_id,
         event_key=f'{session["session_id"]}:{current_set}',

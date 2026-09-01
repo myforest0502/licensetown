@@ -475,6 +475,29 @@ def test_recent_and_same_question_flags_are_independent(monkeypatch):
     assert by_id["Q2"]["recent_question_repeat"] is True
 
 
+def test_session_builder_exports_only_six_selection_audit_fields(monkeypatch):
+    fake_bank(monkeypatch, count=5)
+    monkeypatch.setattr(selector, "get_quiz_question", lambda q: {"id": q})
+    audit = {}
+    questions = selector.build_node_adaptive_session(
+        [attempt("Q1", "KN0001", False)],
+        5,
+        rng=random.Random(56),
+        audit_out=audit,
+    )
+    assert len(questions) == 5
+    assert set(audit["Q1"]) == {
+        "selection_reason",
+        "selection_group",
+        "selection_score",
+        "repair_evidence_quality",
+        "recent_question_repeat",
+        "recent_cooldown_bypassed",
+    }
+    assert audit["Q1"]["recent_question_repeat"] is True
+    assert audit["Q1"]["recent_cooldown_bypassed"] is True
+
+
 def test_only_latest_thirty_attempts_are_cooled_down(monkeypatch):
     fake_bank(monkeypatch, count=70)
     attempts = [
@@ -547,6 +570,35 @@ def test_flag_true_uses_node_selector(monkeypatch):
     app.start_quiz("flag-on", session_kind="adaptive_daily")
     assert app.study_sessions["flag-on"]["all_questions"] == adaptive
     app.study_sessions.pop("flag-on", None)
+
+
+def test_flag_true_keeps_six_field_selection_audit_in_session(monkeypatch):
+    adaptive = [{"id": f"Q{i}"} for i in range(1, 31)]
+    expected = {
+        "selection_reason": "repairing",
+        "selection_group": "repair",
+        "selection_score": 850,
+        "repair_evidence_quality": "same_question",
+        "recent_question_repeat": True,
+        "recent_cooldown_bypassed": True,
+    }
+
+    def build(*_args, audit_out=None, **_kwargs):
+        audit_out["Q1"] = dict(expected)
+        return adaptive
+
+    monkeypatch.setattr(app, "ENABLE_NODE_ADAPTIVE_RECOMMENDATION", True)
+    monkeypatch.setattr(app, "NODE_ADAPTIVE_RECOMMENDATION_PILOT_USER_IDS", {"audit-user"})
+    monkeypatch.setattr(app, "get_question_attempts", lambda _u: [])
+    monkeypatch.setattr(app, "build_node_adaptive_session", build)
+    monkeypatch.setattr(app, "format_quiz_messages", lambda _questions: ["quiz"])
+    app.user_modes["audit-user"] = "study"
+
+    app.start_quiz("audit-user", session_kind="adaptive_daily")
+    assert app.study_sessions["audit-user"]["adaptive_selection_audit"] == {
+        "Q1": expected
+    }
+    app.study_sessions.pop("audit-user", None)
 
 
 def test_node_adaptive_allowlist_parser_trims_deduplicates_and_drops_empty():
