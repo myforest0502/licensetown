@@ -3,7 +3,7 @@
 Date: 2026-09-02
 Status: diagnostics-only implementation complete; learner-facing promotion not yet approved.
 
-This document separates evidence already established from evidence that still requires natural learner use. It is a promotion decision aid, not a learner-facing score.
+This document separates evidence already established from evidence that still requires learner evidence. It is a promotion decision aid, not a learner-facing score.
 
 ## A. Architecture and safety — COMPLETE
 
@@ -73,7 +73,7 @@ Confirmed properties:
 
 ## E. Current-vs-Shadow comparison — COMPLETE AS DIAGNOSTIC
 
-Both target fields now receive the same formal evidence profile.
+Both target fields receive the same formal evidence profile.
 
 Possible disagreement labels:
 
@@ -85,7 +85,7 @@ Same-target labels remain available.
 
 Important limitation:
 
-A stronger formal evidence rank at one snapshot does not prove better future learning outcome. Promotion still requires natural-use review across multiple examples.
+A stronger formal evidence rank at one snapshot does not prove better future learning outcome. Promotion still requires learner evidence across multiple examples.
 
 ## F. Known natural disagreement example — OBSERVED
 
@@ -98,7 +98,7 @@ Previously observed Production snapshot:
 
 Internal-medicine diagnostics showed five confident-wrong repairing Nodes, including one cross-question confident-wrong Node. This supports the existence of a genuine repair signal, but the example alone is insufficient for promotion.
 
-The symmetric comparison diagnostic should be used on the current Production snapshot before drawing a winner conclusion.
+The symmetric comparison diagnostic should be used on current and historical snapshots before drawing a winner conclusion.
 
 ## G. Repeat structure audit — IMPLEMENTED, PRODUCTION INTERPRETATION PENDING
 
@@ -112,7 +112,7 @@ It separates same-Q repeats into:
 - nonadaptive_repeat
 - audit_metadata_unavailable
 
-It also separates same-node different-question confirmations from same-Q repeats.
+It also separates same-node different-question encounters from same-Q repeats.
 
 Promotion-relevant target:
 
@@ -120,64 +120,98 @@ Promotion-relevant target:
 
 Historical/legacy attempts with unavailable audit metadata must not be mislabeled as selector failures.
 
-## H. Natural-use promotion checks — PENDING
+## H. Retrospective historical replay — DESIGNED, IMPLEMENTATION PENDING
 
-The following require real learner activity and should not be manufactured:
+Existing data already stores one daily `recommendation_plan` activity event when the dashboard is opened with a baseline recommendation. The event includes:
 
-### H1. Critical Safety misses
+- persisted baseline target field
+- question goal
+- event timestamp
+
+Together with timestamped `question_attempts` and `build_field_evidence(..., as_of=...)`, this makes a read-only historical replay possible.
+
+For each historical plan snapshot:
+
+1. truncate attempts to before the plan timestamp
+2. reconstruct formal field evidence at that time
+3. replay Phase 11 with `as_of` set to the plan time
+4. compare the persisted baseline target with the historical Shadow target using the symmetric evidence profile
+5. inspect later activity observationally without claiming causality
+
+This can increase the number of Safety, coverage, disagreement, and recheck examples available for evaluation without manufacturing Production activity or adding a write path.
+
+Retrospective replay is supporting evidence only. It cannot prove what the learner would have done if Shadow had actually been shown.
+
+See:
+
+`docs/phase11-retrospective-shadow-audit-v01.md`
+
+## I. Natural-use promotion checks — PENDING
+
+The following still require real learner evidence and must not be manufactured.
+
+### I1. Critical Safety misses
 
 Target:
 
 - zero cases where a stronger unresolved Critical Safety signal exists but Phase 11 selects a weaker field.
 
-### H2. Single-wrong overreaction
+Historical replay may help find past candidate cases; prospective use is still valuable.
+
+### I2. Single-wrong overreaction
 
 Target:
 
 - no repeated pattern of ordinary single wrongs causing unnecessary field takeover.
 
-### H3. Sparse learner coverage
+Retrospective replay can expand the sample beyond current-day screenshots.
+
+### I3. Sparse learner coverage
 
 Target:
 
 - Phase 11 continues to prefer coverage when weakness evidence is insufficient.
 
-### H4. Recheck due handling
+Historical under-100-answer snapshots are particularly useful if stored plans exist.
+
+### I4. Recheck due handling
 
 Target:
 
 - once natural `recheck_due` Nodes exist, they are not starved by weaker J5-J7 signals.
 
-No conclusion can be drawn while the learner has no natural recheck_due examples.
+Historical replay may reveal an earlier valid recheck_due snapshot. If none exists, no conclusion should be forced.
 
-### H5. Phase 11 intent vs Phase 10 exact-Q behavior
+### I5. Phase 11 intent vs Phase 10 exact-Q behavior
 
 Target:
 
 - when Phase 11 says repair/recheck/coverage, the Phase 10 selected set should be directionally consistent without violating cooldown or Safety rules.
 
-### H6. Baseline disagreement quality
+### I6. Baseline disagreement quality
 
 Review both wins and losses.
 
-For each natural disagreement capture:
+For each natural or retrospectively reconstructed disagreement capture:
 
 - Baseline target
 - Shadow target
 - current target formal evidence profile
 - Shadow target formal evidence profile
 - symmetric comparison label
-- whether the resulting learner session produced useful evidence
+- whether later learner activity sampled either target
 
 Do not review only examples favorable to Shadow.
 
-### H7. Recommendation relevance
+### I7. Recommendation relevance
 
 Target:
 
-- across natural examples, Shadow produces fewer obviously irrelevant recommendations than Baseline without introducing Safety misses, repetition problems, or coverage starvation.
+- across prospective natural examples, Shadow produces fewer obviously irrelevant recommendations than Baseline without introducing Safety misses, repetition problems, or coverage starvation.
 
-## I. Promotion decision rule
+Retrospective replay may support consistency review but cannot substitute for the prospective relevance judgment because the learner did not actually receive Shadow guidance.
+
+## J. Promotion decision rule
 
 Do not promote based on one strong screenshot or one favorable disagreement.
 
@@ -190,15 +224,18 @@ A learner-facing promotion decision should require:
 - acceptable sparse-coverage behavior
 - recheck_due behavior observed when naturally available
 - symmetric disagreement review contains both favorable and unfavorable examples
-- overall recommendation relevance is at least clearly no worse than Baseline and preferably better
+- retrospective replay, where available, does not reveal rule-consistency regressions
+- prospective natural-use evidence remains at least clearly no worse than Baseline and preferably better
 
-If evidence is mixed, remain Shadow-only and collect more natural use rather than changing ranking weights prematurely.
+If evidence is mixed, remain Shadow-only and collect more learner evidence rather than changing ranking weights prematurely.
 
-## J. Next review order
+## K. Next review order
 
-1. Read current Production Repeat Structure Audit.
-2. Read current symmetric Baseline-vs-Shadow evidence profiles.
-3. Record any adaptive unexplained repeats.
-4. Record disagreement winner or insufficient-evidence result.
-5. Continue natural-use sampling.
-6. Only then decide whether Phase 11 is ready for a limited learner-facing pilot.
+1. Implement/read the retrospective historical replay diagnostic.
+2. Read current Production Repeat Structure Audit.
+3. Read current symmetric Baseline-vs-Shadow evidence profiles.
+4. Record any adaptive unexplained repeats.
+5. Review historical and current disagreement winners, including current-guidance wins.
+6. Check historical Safety / coverage / recheck candidates.
+7. Continue prospective natural-use sampling.
+8. Only then decide whether Phase 11 is ready for a limited learner-facing pilot.
