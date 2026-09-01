@@ -17,6 +17,10 @@ from knowledge_node_weakness_evidence import (
 )
 
 
+def _attempt_time_value(item: dict[str, Any]) -> Any:
+    return item.get("attempted_at") or item.get("answered_at")
+
+
 def build_active_repair_weakness(
     attempts: Iterable[dict[str, Any]],
     *,
@@ -63,6 +67,9 @@ def build_active_repair_weakness(
             for item in evaluable_wrong
             if item.get("question_id") and item.get("confidence") == 1
         })
+        last_wrong_time = (
+            _attempt_time_value(evaluable_wrong[-1]) if evaluable_wrong else None
+        )
         result[node] = {
             "canonical_node_id": node,
             "active_repair_cycle_attempt_count": len(active_cycle),
@@ -73,6 +80,7 @@ def build_active_repair_weakness(
             "active_evaluable_wrong_attempt_count": len(evaluable_wrong),
             "active_evaluable_wrong_question_count": len(active_wrong_question_ids),
             "active_evaluable_wrong_question_ids": active_wrong_question_ids,
+            "active_last_evaluable_wrong_at": last_wrong_time,
             "active_confident_wrong_count": sum(
                 item.get("confidence") == 1 for item in evaluable_wrong
             ),
