@@ -54,6 +54,7 @@ def _result(
     reason: str,
     history: list[dict[str, Any]],
     confident_correct_after_wrong_count: int,
+    retention_reference_question_id: str | None = None,
 ) -> dict[str, Any]:
     if not history:
         return {
@@ -64,6 +65,7 @@ def _result(
             "wrong_question_count": 0,
             "confident_correct_after_wrong_count": 0,
             "evidence_level": "NO_WRONG_EVIDENCE",
+            "retention_reference_question_id": None,
         }
     evidence = _evidence(history)
     return {
@@ -74,6 +76,7 @@ def _result(
         "wrong_question_count": evidence["wrong_question_count"],
         "confident_correct_after_wrong_count": confident_correct_after_wrong_count,
         "evidence_level": evidence["evidence_level"],
+        "retention_reference_question_id": retention_reference_question_id,
     }
 
 
@@ -177,6 +180,7 @@ def derive_knowledge_node_state(
         reason,
         history,
         confident_correct_after_wrong_count,
+        retention_reference_question,
     )
     as_of = _as_datetime(as_of)
     if state in {"repaired", "stable"} and next_review_at and as_of and as_of >= next_review_at:
