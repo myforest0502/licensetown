@@ -104,7 +104,11 @@ A retrospective historical Shadow replay is designed next so persisted daily Bas
 
 ## Important docs
 
-Start here:
+For the **current operational state**, read this first:
+
+- `docs/phase11-open-gates-20260902.md`
+
+Then use the design/history documents as needed:
 
 - `docs/phase10-long-term-optimization.md`
 - `docs/phase10-real-use-qa.md`
@@ -112,11 +116,21 @@ Start here:
 - `docs/phase11-v01-decision-table.md`
 - `docs/phase11-promotion-evidence-matrix.md`
 - `docs/phase11-retrospective-shadow-audit-v01.md`
+- `docs/strong-repair-pilot-content-audit-v01.md`
 - `docs/phase12-goukaku-visualization-v01.md`
+
+## Current implementation work
+
+Two small safety/evidence fixes are implemented as draft PRs but are intentionally not merged until executable tests can run:
+
+- PR #9 — exclude unknown attempts from field repeated-weakness evidence
+- PR #10 — fail closed for cross-Node formal repair confirmation
+
+Current diagnostics/policy issues are tracked in GitHub. The open-gates document above is the canonical short status summary.
 
 ## Current promotion rule
 
-Phase 11 must not replace learner-facing guidance based on one favorable screenshot or one disagreement.
+Phase 11 must not replace learner-facing guidance based on one favorable screenshot, one disagreement, or one newly repaired Node.
 
 Promotion requires evidence that it does not introduce:
 
@@ -125,9 +139,11 @@ Promotion requires evidence that it does not introduce:
 - sparse-coverage failure
 - recheck_due starvation
 - conflict with Phase 10 exact selection
-- unexplained adaptive repetition
+- true unexplained recent adaptive repetition
 
 Baseline-vs-Shadow disagreements are reviewed symmetrically: either side may have stronger formal evidence.
+
+Unknown attempts may count as learning/exposure activity but must not become confirmed weakness evidence or lower the Phase 11 J2 final accuracy tie-break; evaluable-only tie-break semantics are specified in Issue #11.
 
 ## Safety / development principles
 
@@ -136,6 +152,7 @@ Baseline-vs-Shadow disagreements are reviewed symmetrically: either side may hav
 - selector score is not a mastery score
 - Question Bank distribution is not learner weakness
 - Production learning events must not be fabricated merely to satisfy QA gates
+- structural `different_question_strong` status does not by itself prove that an alternate question is educationally discriminative
 - large changes should preserve a known recovery point and pass focused tests, full pytest, and the Question Bank validator
 
 ## Recovery checkpoint
