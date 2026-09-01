@@ -1268,6 +1268,172 @@ def get_learning_activity(
     }
 
 
+def get_latest_learning_day_summary(
+    user_id: str,
+    now: datetime | None = None,
+    _connection=None,
+) -> dict[str, Any]:
+    """最後に問題へ回答したJST日付の学習量と分野を返す。"""
+    del now  # APIの時刻注入互換用。最終日は全履歴から決める。
+    jst = ZoneInfo("Asia/Tokyo")
+
+    if not database_is_available():
+        latest_rows = [
+            event for event in _local_learning_events.values()
+            if event["user_id"] == user_id and int(event["answered_count"]) > 0
+        ]
+        if not latest_rows:
+            return {
+                "has_learning": False,
+                "date": None,
+                "last_answered_at": None,
+                "answered_count": 0,
+                "correct_count": 0,
+                "accuracy": 0,
+                "study_minutes": 0,
+                "fields": [],
+                "modes": [],
+            }
+        last_answered_at = max(
+            _as_utc(event["answered_at"]) for event in latest_rows
+        )
+        latest_date = last_answered_at.astimezone(jst).date()
+        learning_rows = [
+            event for event in latest_rows
+            if _as_utc(event["answered_at"]).astimezone(jst).date() == latest_date
+        ]
+        time_rows = [
+            event for event in _local_learning_time_events
+            if event["user_id"] == user_id
+            and _as_utc(event["recorded_at"]).astimezone(jst).date() == latest_date
+        ]
+    else:
+        with _connection_or_existing(_connection) as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT answered_at
+                    FROM learning_events
+                    WHERE user_id = %s AND answered_count > 0
+                    ORDER BY answered_at DESC
+                    LIMIT 1
+                    """,
+                    (user_id,),
+                )
+                latest = cur.fetchone()
+                if latest is None:
+                    return {
+                        "has_learning": False,
+                        "date": None,
+                        "last_answered_at": None,
+                        "answered_count": 0,
+                        "correct_count": 0,
+                        "accuracy": 0,
+                        "study_minutes": 0,
+                        "fields": [],
+                        "modes": [],
+                    }
+                last_answered_at = _as_utc(latest[0])
+                latest_date = last_answered_at.astimezone(jst).date()
+                start_at = datetime.combine(
+                    latest_date, datetime.min.time(), jst
+                ).astimezone(timezone.utc)
+                end_at = start_at + timedelta(days=1)
+                cur.execute(
+                    """
+                    SELECT answered_count, correct_count, answered_at,
+                           question_results, mode
+                    FROM learning_events
+                    WHERE user_id = %s
+                      AND answered_count > 0
+                      AND answered_at >= %s
+                      AND answered_at < %s
+                    ORDER BY answered_at
+                    """,
+                    (user_id, start_at, end_at),
+                )
+                learning_rows = [
+                    {
+                        "answered_count": row[0],
+                        "correct_count": row[1],
+                        "answered_at": row[2],
+                        "question_results": row[3],
+                        "mode": row[4],
+                    }
+                    for row in cur.fetchall()
+                ]
+                cur.execute(
+                    """
+                    SELECT elapsed_seconds, recorded_at
+                    FROM learning_time_events
+                    WHERE user_id = %s
+                      AND recorded_at >= %s
+                      AND recorded_at < %s
+                    """,
+                    (user_id, start_at, end_at),
+                )
+                time_rows = [
+                    {"elapsed_seconds": row[0], "recorded_at": row[1]}
+                    for row in cur.fetchall()
+                ]
+
+    answered_count = sum(int(event["answered_count"]) for event in learning_rows)
+    correct_count = sum(int(event["correct_count"]) for event in learning_rows)
+    last_answered_at = max(
+        _as_utc(event["answered_at"]) for event in learning_rows
+    )
+    field_counts: dict[int, dict[str, Any]] = {}
+    modes = set()
+    for event in learning_rows:
+        modes.add(str(event.get("mode", "")))
+        question_results = event.get("question_results")
+        if isinstance(question_results, str):
+            try:
+                question_results = json.loads(question_results)
+            except json.JSONDecodeError:
+                logger.warning("Invalid question_results JSON in latest learning summary")
+                continue
+        if not isinstance(question_results, list):
+            continue
+        for result in question_results:
+            if not isinstance(result, dict):
+                continue
+            question_id = str(result.get("question_id", ""))
+            try:
+                category_small = get_category_small(question_id)
+            except QuestionBankError:
+                logger.warning("Unknown question_id in latest learning summary: %s", question_id)
+                continue
+            item = field_counts.setdefault(category_small, {
+                "category_small": category_small,
+                "name": CATEGORY_NAMES[category_small],
+                "answered_count": 0,
+                "correct_count": 0,
+            })
+            item["answered_count"] += 1
+            item["correct_count"] += int(bool(result.get("is_correct")))
+
+    fields = []
+    for category_small in sorted(field_counts):
+        item = field_counts[category_small]
+        item["accuracy"] = round(
+            item["correct_count"] / item["answered_count"] * 100
+        ) if item["answered_count"] else 0
+        fields.append(item)
+
+    return {
+        "has_learning": True,
+        "date": latest_date.isoformat(),
+        "last_answered_at": last_answered_at,
+        "answered_count": answered_count,
+        "correct_count": correct_count,
+        "accuracy": round(correct_count / answered_count * 100) if answered_count else 0,
+        "study_minutes": round(sum(float(row["elapsed_seconds"]) for row in time_rows) / 60),
+        "fields": fields,
+        "modes": sorted(mode for mode in modes if mode),
+    }
+
+
 def get_dashboard_learning_data(user_id: str) -> dict[str, Any]:
     """dashboard用の集計を、1DB接続と1回のquestion_results取得で組み立てる。"""
     if not database_is_available():

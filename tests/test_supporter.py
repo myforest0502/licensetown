@@ -14,6 +14,7 @@ from app import app
 from database import (
     add_learning_time,
     deactivate_supporter_link,
+    get_latest_learning_day_summary,
     get_learning_summary,
     get_supported_learner_ids,
     record_learning_batch,
@@ -29,6 +30,8 @@ import goukaku_ui as goukaku_module
 
 def clear_local_data():
     database._local_learning_events.clear()
+    database._local_question_attempts.clear()
+    database._local_user_node_states.clear()
     database._local_learning_seconds.clear()
     database._local_learning_time_events.clear()
     database._local_supporter_links.clear()
@@ -115,17 +118,168 @@ def test_supporter_report_aggregates_only_learning_metrics():
     add_learning_time("learner-user", 900, now, "support-time-2")
 
     report = build_supporter_report("learner-user")
-    assert report["today"]["answered_count"] == 3
-    assert report["today"]["correct_count"] == 2
-    assert report["today"]["accuracy"] == 67
-    assert report["today"]["study_minutes"] == 15
+    assert report["latest"]["answered_count"] == 3
+    assert report["latest"]["correct_count"] == 2
+    assert report["latest"]["accuracy"] == 67
+    assert report["latest"]["study_minutes"] == 15
     assert report["weekly_learning_days"] == 2
     assert report["weekly_answers"] == 5
     assert report["weekly_accuracy"] == 60
     assert report["weekly_study_minutes"] == 25
     assert report["streak_days"] == 2
-    assert len(report["today_fields"]) == 2
+    assert len(report["latest_fields"]) == 2
     assert len(report["fields"]) == 2
+
+
+def test_latest_learning_uses_yesterday_when_today_has_no_answers():
+    clear_local_data()
+    today = datetime(2026, 8, 31, 3, 0, tzinfo=timezone.utc)
+    yesterday = today - timedelta(days=1)
+    record_learning_batch(
+        "learner-user", "latest-yesterday", "study", 5, 3, yesterday,
+        [result("Q1", True)] * 3 + [result("Q1", False)] * 2,
+    )
+
+    latest = get_latest_learning_day_summary("learner-user", now=today)
+
+    assert latest["has_learning"]
+    assert latest["date"] == yesterday.date().isoformat()
+    assert latest["answered_count"] == 5
+    assert latest["correct_count"] == 3
+    assert latest["accuracy"] == 60
+
+
+def test_latest_learning_uses_only_last_learning_day_from_full_history():
+    clear_local_data()
+    now = datetime(2026, 8, 31, 3, 0, tzinfo=timezone.utc)
+    record_learning_batch(
+        "learner-user", "latest-three-days-ago", "study", 5, 5,
+        now - timedelta(days=3), [result("Q1", True)] * 5,
+    )
+    record_learning_batch(
+        "learner-user", "latest-yesterday-ten", "nekketsu", 10, 4,
+        now - timedelta(days=1), [result("Q1", True)] * 4 + [result("Q1", False)] * 6,
+    )
+
+    latest = get_latest_learning_day_summary("learner-user", now=now)
+
+    assert latest["answered_count"] == 10
+    assert latest["correct_count"] == 4
+    assert latest["accuracy"] == 40
+    assert latest["modes"] == ["nekketsu"]
+
+
+def test_latest_learning_aggregates_two_fields_and_latest_day_time_only():
+    clear_local_data()
+    now = datetime(2026, 8, 31, 3, 0, tzinfo=timezone.utc)
+    learned_at = now - timedelta(days=1)
+    q1 = "Q1"
+    q2 = next(
+        f"Q{number}" for number in range(2, 1595)
+        if get_category_small(f"Q{number}") != get_category_small(q1)
+    )
+    record_learning_batch(
+        "learner-user", "latest-two-fields", "study", 4, 3, learned_at,
+        [result(q1, True), result(q1, False), result(q2, True), result(q2, True)],
+    )
+    add_learning_time("learner-user", 610, learned_at, "latest-day-time")
+    add_learning_time("learner-user", 900, now, "non-learning-day-time")
+
+    latest = get_latest_learning_day_summary("learner-user", now=now)
+
+    assert latest["study_minutes"] == 10
+    assert len(latest["fields"]) == 2
+    by_category = {item["category_small"]: item for item in latest["fields"]}
+    assert by_category[get_category_small(q1)]["answered_count"] == 2
+    assert by_category[get_category_small(q1)]["correct_count"] == 1
+    assert by_category[get_category_small(q1)]["accuracy"] == 50
+    assert by_category[get_category_small(q2)]["answered_count"] == 2
+    assert by_category[get_category_small(q2)]["correct_count"] == 2
+    assert by_category[get_category_small(q2)]["accuracy"] == 100
+
+
+def test_latest_learning_prefers_today_when_today_has_answers():
+    clear_local_data()
+    now = datetime(2026, 8, 31, 3, 0, tzinfo=timezone.utc)
+    record_learning_batch(
+        "learner-user", "latest-old", "study", 5, 5,
+        now - timedelta(days=2), [result("Q1", True)] * 5,
+    )
+    record_learning_batch(
+        "learner-user", "latest-today", "study", 2, 1, now,
+        [result("Q1", True), result("Q1", False)],
+    )
+
+    latest = get_latest_learning_day_summary("learner-user", now=now)
+
+    assert latest["date"] == now.date().isoformat()
+    assert latest["answered_count"] == 2
+
+
+def test_latest_learning_empty_history_is_safe():
+    clear_local_data()
+
+    latest = get_latest_learning_day_summary("learner-user")
+    report = build_supporter_report("learner-user")
+
+    assert latest == {
+        "has_learning": False,
+        "date": None,
+        "last_answered_at": None,
+        "answered_count": 0,
+        "correct_count": 0,
+        "accuracy": 0,
+        "study_minutes": 0,
+        "fields": [],
+        "modes": [],
+    }
+    assert not report["latest_studied"]
+    assert "これから" in report["comment"]
+
+
+def test_latest_learning_database_path_matches_local_contract(monkeypatch):
+    answered_at = datetime(2026, 8, 31, 11, 13, tzinfo=timezone.utc)
+    question_results = [result("Q1", True), result("Q1", False)]
+
+    class FakeCursor:
+        def __init__(self):
+            self.query = ""
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def execute(self, query, _params):
+            self.query = " ".join(query.split())
+
+        def fetchone(self):
+            return (answered_at,)
+
+        def fetchall(self):
+            if "FROM learning_time_events" in self.query:
+                return [(720, answered_at)]
+            return [(2, 1, answered_at, question_results, "study")]
+
+    class FakeConnection:
+        def cursor(self):
+            return FakeCursor()
+
+    monkeypatch.setattr(database, "DATABASE_URL", "postgresql://configured")
+
+    latest = get_latest_learning_day_summary(
+        "learner-user", _connection=FakeConnection()
+    )
+
+    assert latest["has_learning"]
+    assert latest["date"] == "2026-08-31"
+    assert latest["answered_count"] == 2
+    assert latest["correct_count"] == 1
+    assert latest["accuracy"] == 50
+    assert latest["study_minutes"] == 12
+    assert latest["fields"][0]["answered_count"] == 2
+    assert latest["modes"] == ["study"]
 
 
 def test_supporter_route_requires_signed_active_link_and_cannot_switch_learner():
@@ -265,15 +419,16 @@ def test_supporter_implementation_does_not_access_consultation_data():
     assert "consultation_contexts" not in source
     assert "conversation" not in source
     assert "get_dashboard_learning_data" in source
+    assert "get_latest_learning_day_summary" in source
 
 
 def test_supporter_page_displays_weak_top3_and_recommendation(monkeypatch):
     clear_local_data()
     set_supporter_link("supporter-user", "learner-user")
     report = {
-        "today": {"answered_count": 5, "correct_count": 3, "accuracy": 60, "study_minutes": 12},
-        "today_studied": True,
-        "today_fields": [{"name": "生理学", "answered_count": 5, "accuracy": 60}],
+        "latest": {"answered_count": 5, "correct_count": 3, "accuracy": 60, "study_minutes": 12, "answered_at_label": "8/31 20:13"},
+        "latest_studied": True,
+        "latest_fields": [{"name": "生理学", "answered_count": 5, "accuracy": 60}],
         "weekly_learning_days": 2,
         "weekly_answers": 10,
         "weekly_study_minutes": 25,
@@ -288,6 +443,10 @@ def test_supporter_page_displays_weak_top3_and_recommendation(monkeypatch):
     monkeypatch.setattr(goukaku_module, "build_supporter_report", lambda _user_id: report)
     token = create_supporter_token("supporter-user")
     text = app.test_client().get(f"/supporter?token={token}").get_data(as_text=True)
+    assert "直近の学習" in text
+    assert "最終学習 8/31 20:13" in text
+    assert "直近の取り組み内容" in text
+    assert "今日取り組んだ分野" not in text
     assert "苦手分野 TOP3" in text
     assert "正答率60%" in text
     assert "今日のおすすめ" in text
