@@ -53,6 +53,16 @@ def build_active_repair_weakness(
         evaluable_wrong = [
             item for item in evaluable_cycle if item.get("is_correct") is False
         ]
+        active_wrong_question_ids = sorted({
+            str(item.get("question_id") or "")
+            for item in evaluable_wrong
+            if item.get("question_id")
+        })
+        active_confident_wrong_question_ids = sorted({
+            str(item.get("question_id") or "")
+            for item in evaluable_wrong
+            if item.get("question_id") and item.get("confidence") == 1
+        })
         result[node] = {
             "canonical_node_id": node,
             "active_repair_cycle_attempt_count": len(active_cycle),
@@ -61,15 +71,13 @@ def build_active_repair_weakness(
             ),
             "active_evaluable_attempt_count": len(evaluable_cycle),
             "active_evaluable_wrong_attempt_count": len(evaluable_wrong),
-            "active_evaluable_wrong_question_count": len({
-                str(item.get("question_id") or "") for item in evaluable_wrong
-            }),
+            "active_evaluable_wrong_question_count": len(active_wrong_question_ids),
+            "active_evaluable_wrong_question_ids": active_wrong_question_ids,
             "active_confident_wrong_count": sum(
                 item.get("confidence") == 1 for item in evaluable_wrong
             ),
-            "active_has_confident_wrong": any(
-                item.get("confidence") == 1 for item in evaluable_wrong
-            ),
+            "active_confident_wrong_question_ids": active_confident_wrong_question_ids,
+            "active_has_confident_wrong": bool(active_confident_wrong_question_ids),
             "active_weakness_evidence_level": (
                 weakness.get("evidence_level") if weakness else NO_WRONG_EVIDENCE
             ),
