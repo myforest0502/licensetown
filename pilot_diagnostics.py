@@ -13,7 +13,7 @@ from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import STATES, derive_all_user_node_states, derive_state_timeline
 from knowledge_node_weakness_evidence import derive_repeated_weakness_evidence
 from learning_analysis import build_learning_guidance
-from question_bank import get_question_tag, question_ids
+from question_bank import CATEGORY_NAMES, get_category_small, get_question_tag, question_ids
 
 
 _STATE_LABELS = {
@@ -46,6 +46,115 @@ def _knowledge_node_labels():
 
 
 _NODE_LABELS = _knowledge_node_labels()
+
+
+def _node_field_memberships():
+    memberships = defaultdict(set)
+    for question_id in question_ids():
+        node_id = canonicalize_knowledge_node_id(
+            get_question_tag(question_id)["knowledge_node_id"]
+        )
+        memberships[node_id].add(get_category_small(question_id))
+    return dict(memberships)
+
+
+_NODE_FIELDS = _node_field_memberships()
+
+
+def _wrong_time(value):
+    if isinstance(value, datetime):
+        parsed = value
+    elif value:
+        try:
+            parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        except ValueError:
+            return None
+    else:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed
+
+
+def build_confident_wrong_node_details(attempts, field_evidence, shadow_judgment):
+    """Expose the existing J2 evidence as read-only developer diagnostics."""
+    if shadow_judgment.get("reason_code") != "confident_wrong_cluster":
+        return []
+    target_field = shadow_judgment.get("target_field")
+    target_field_id = next(
+        (field_id for field_id, name in CATEGORY_NAMES.items() if name == target_field),
+        None,
+    )
+    if target_field_id is None:
+        return []
+
+    states = {
+        str(item.get("canonical_node_id")): str(item.get("state") or "unseen")
+        for item in field_evidence.get("canonical_node_evidence", [])
+        if item.get("canonical_node_id")
+    }
+    evaluable = [
+        dict(item)
+        for item in attempts
+        if item.get("answer_status") != "unknown"
+    ]
+    weakness = {
+        item["canonical_node_id"]: item
+        for item in derive_repeated_weakness_evidence(evaluable)
+    }
+    wrong_by_node = defaultdict(list)
+    for item in evaluable:
+        if item.get("is_correct") is not False:
+            continue
+        raw_node_id = str(item.get("knowledge_node_id") or "")
+        if not raw_node_id:
+            continue
+        node_id = canonicalize_knowledge_node_id(raw_node_id)
+        if target_field_id not in _NODE_FIELDS.get(node_id, set()):
+            continue
+        wrong_by_node[node_id].append(item)
+
+    details = []
+    for node_id, wrong in wrong_by_node.items():
+        confident_wrong = [item for item in wrong if item.get("confidence") == 1]
+        if states.get(node_id) != "repairing" or not confident_wrong:
+            continue
+        question_ids_for_node = sorted(
+            {str(item.get("question_id") or "") for item in wrong if item.get("question_id")},
+            key=lambda value: (
+                0, int(value[1:])
+            ) if value.startswith("Q") and value[1:].isdigit() else (1, value),
+        )
+        wrong_times = [
+            parsed
+            for parsed in (
+                _wrong_time(item.get("answered_at") or item.get("attempted_at"))
+                for item in wrong
+            )
+            if parsed is not None
+        ]
+        evidence = weakness.get(node_id, {})
+        details.append({
+            "canonical_node_id": node_id,
+            "knowledge_text": _NODE_LABELS.get(node_id, "名称未登録"),
+            "question_ids": question_ids_for_node,
+            "confident_wrong_count": len(confident_wrong),
+            "distinct_question_count": len(question_ids_for_node),
+            "cross_question": evidence.get("evidence_level")
+            == "CROSS_QUESTION_CONFIDENT_WRONG",
+            "node_state": states[node_id],
+            "node_state_label": _STATE_LABELS.get(states[node_id], states[node_id]),
+            "last_wrong_at": (
+                max(wrong_times).astimezone(ZoneInfo("Asia/Tokyo")).strftime("%Y/%m/%d %H:%M")
+                if wrong_times else None
+            ),
+        })
+    details.sort(key=lambda item: (
+        -item["confident_wrong_count"],
+        -item["distinct_question_count"],
+        item["canonical_node_id"],
+    ))
+    return details
 
 
 def build_adaptive_selection_audit(adaptive):
@@ -134,6 +243,11 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         current_guidance,
         shadow_judgment,
     )
+    confident_wrong_node_details = build_confident_wrong_node_details(
+        all_attempts,
+        field_evidence,
+        shadow_judgment,
+    )
 
     return {
         "period": period, "start_at": start_at, "total_attempts": len(attempts),
@@ -154,4 +268,5 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         "adaptive_audit_text": adaptive_audit_text, "weakness": weakness[:10],
         "current_guidance": current_guidance,
         "shadow_judgment": shadow_judgment,
+        "confident_wrong_node_details": confident_wrong_node_details,
     }

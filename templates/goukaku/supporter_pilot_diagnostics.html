@@ -29,6 +29,22 @@
       <ul>{% for item in diagnostics.shadow_judgment.evidence %}<li>{{ item }}</li>{% endfor %}</ul>
       {% if diagnostics.shadow_judgment.observations %}<p><b>観測フラグ：</b>{{ diagnostics.shadow_judgment.observations|join(', ') }}</p>{% endif %}
     </details>
+    {% if diagnostics.shadow_judgment.reason_code == 'confident_wrong_cluster' %}
+    <div class="shadow-confident-node-details">
+      <h3>自信あり誤答Node詳細</h3>
+      <p>対象 {{ diagnostics.confident_wrong_node_details|length }} Node</p>
+      <ol>{% for item in diagnostics.confident_wrong_node_details %}<li>
+        <h4>{{ item.canonical_node_id }}</h4>
+        <p><b>内容：</b>{{ item.knowledge_text }}</p>
+        <p><b>Q番号：</b>{{ item.question_ids|join(', ') }}</p>
+        <p><b>自信あり誤答：</b>{{ item.confident_wrong_count }}回</p>
+        <p><b>distinct Q：</b>{{ item.distinct_question_count }}</p>
+        <p><b>別問題証拠：</b>{{ 'あり' if item.cross_question else 'なし' }}</p>
+        <p><b>状態：</b>{{ item.node_state_label }}（{{ item.node_state }}）</p>
+        <p><b>直近の誤答：</b>{{ item.last_wrong_at or '日時不明' }}</p>
+      </li>{% else %}<li>該当Nodeの詳細を取得できませんでした。</li>{% endfor %}</ol>
+    </div>
+    {% endif %}
     <p><strong>この判断は学習者画面には反映されていません。</strong></p>
   </section>
 
