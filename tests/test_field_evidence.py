@@ -58,6 +58,47 @@ def test_single_answer_and_confidence_unknown_evidence():
     assert item["repairing_node_count"] == 1
 
 
+def test_unknown_attempts_do_not_create_field_repeated_weakness():
+    field_id = get_category_small("Q1091")
+    report = build_field_evidence([
+        attempt("Q1091", "KN1080", False, None, 1, status="unknown"),
+        attempt("Q1091", "KN1080", False, None, 2, status="unknown"),
+        attempt("Q1544", "KN1518", False, None, 3, status="unknown"),
+    ])
+    item = by_field(report, field_id)
+    assert item["unknown_answer_count"] == 3
+    assert item["question_answer_count"] == 3
+    assert item["repeated_weakness_evidence_count"] == 0
+    assert "REPEATED_SAME_QUESTION_WRONG" not in item["repeated_weakness_evidence_levels"]
+    assert "CROSS_QUESTION_WRONG" not in item["repeated_weakness_evidence_levels"]
+
+
+def test_real_wrong_plus_unknown_does_not_become_repeated_field_weakness():
+    field_id = get_category_small("Q1091")
+    report = build_field_evidence([
+        attempt("Q1091", "KN1080", False, 2, 1),
+        attempt("Q1544", "KN1518", False, None, 2, status="unknown"),
+    ])
+    item = by_field(report, field_id)
+    assert item["unknown_answer_count"] == 1
+    assert item["question_answer_count"] == 2
+    assert item["repeated_weakness_evidence_count"] == 0
+
+
+def test_two_real_wrong_attempts_still_create_field_repeated_weakness():
+    node = get_question_tag("Q1")["knowledge_node_id"]
+    field_id = get_category_small("Q1")
+    report = build_field_evidence([
+        attempt("Q1", node, False, 2, 1),
+        attempt("Q1", node, False, 2, 2),
+    ])
+    item = by_field(report, field_id)
+    assert item["unknown_answer_count"] == 0
+    assert item["question_answer_count"] == 2
+    assert item["repeated_weakness_evidence_count"] == 1
+    assert item["repeated_weakness_evidence_levels"]["REPEATED_SAME_QUESTION_WRONG"] == 1
+
+
 def test_same_question_does_not_repair_but_strong_different_question_does():
     same = build_field_evidence([
         attempt("Q269", "KN0268", False, 2, 1),
