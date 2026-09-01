@@ -15,6 +15,7 @@ from repairability_diagnostics import (
     STRONG_AVAILABLE,
     WEAK_ONLY,
     build_repairing_node_repairability,
+    build_strong_repair_supply_priorities,
 )
 
 
@@ -124,7 +125,61 @@ def test_supporter_route_displays_details_but_learner_route_does_not():
         f"/supporter/pilot-diagnostics?token={token}&learner_user_id=learner"
     ).get_data(as_text=True)
     assert "修復中Nodeの修復可能性" in html
+    assert "strong repair問題 整備優先順位" in html
     assert strong["canonical_node_id"] in html
     assert "strong repair候補Q" in html
     learner = client.get("/goukaku-no-michi?token=invalid").get_data(as_text=True)
     assert "修復中Nodeの修復可能性" not in learner
+    assert "strong repair問題 整備優先順位" not in learner
+
+
+def _priority_item(node, classification, *, safety=(), confident=0, wrong=1, distinct=1):
+    return {
+        "canonical_node_id": node,
+        "formal_label": node,
+        "current_state": "repairing",
+        "classification": classification,
+        "safety": bool(safety),
+        "safety_levels": list(safety),
+        "confident_wrong_count": confident,
+        "current_cycle_wrong_count": wrong,
+        "distinct_wrong_question_count": distinct,
+        "answered_question_ids": ["Q1"], "wrong_question_ids": ["Q1"],
+        "all_question_ids": ["Q1"], "unseen_different_question_ids": [],
+        "strong_repair_candidate_question_ids": [],
+        "weak_repair_candidate_question_ids": [],
+    }
+
+
+def test_supply_priority_excludes_strong_and_orders_explicit_tiers():
+    details = [
+        _priority_item("KN0001", STRONG_AVAILABLE, safety=("critical",)),
+        _priority_item("KN0002", FORMALLY_BLOCKED, safety=("moderate",)),
+        _priority_item("KN0003", FORMALLY_BLOCKED, safety=("critical",)),
+        _priority_item("KN0004", FORMALLY_BLOCKED, confident=2),
+        _priority_item("KN0005", FORMALLY_BLOCKED, confident=1),
+        _priority_item("KN0006", FORMALLY_BLOCKED, confident=0),
+    ]
+    result = build_strong_repair_supply_priorities({"details": details})
+    assert [item["canonical_node_id"] for item in result["details"]] == [
+        "KN0003", "KN0002", "KN0004", "KN0005", "KN0006",
+    ]
+    assert result["priority_counts"] == {"A": 2, "B": 1, "C": 1, "D": 1}
+    assert result["target_node_total"] == 5
+
+
+def test_weak_and_blocked_supply_actions_and_within_tier_order_are_deterministic():
+    details = [
+        _priority_item("KN0003", FORMALLY_BLOCKED, wrong=2, distinct=2),
+        _priority_item("KN0002", WEAK_ONLY, wrong=3, distinct=1),
+        _priority_item("KN0001", FORMALLY_BLOCKED, wrong=2, distinct=2),
+    ]
+    first = build_strong_repair_supply_priorities({"details": details}, top_limit=2)
+    second = build_strong_repair_supply_priorities({"details": details}, top_limit=2)
+    assert first == second
+    assert [item["canonical_node_id"] for item in first["details"]] == [
+        "KN0002", "KN0001", "KN0003",
+    ]
+    assert first["details"][0]["supply_action"] == "review_existing_weak_pair"
+    assert first["details"][1]["supply_action"] == "create_strong_alternate"
+    assert len(first["top"]) == 2

@@ -37,6 +37,30 @@
     </ol></details>
   </section>
 
+  <section class="card pilot-diagnostic-card strong-repair-supply-card">
+    {% set supply = diagnostics.strong_repair_supply_priorities %}
+    <h2>strong repair問題 整備優先順位</h2>
+    <p>整備対象Node {{ supply.target_node_total }} / Priority A {{ supply.priority_counts.A }} / Priority B {{ supply.priority_counts.B }} / Priority C {{ supply.priority_counts.C }} / Priority D {{ supply.priority_counts.D }}</p>
+    <p>weak pair review候補 {{ supply.weak_pair_review_count }} / strong新規問題作成候補 {{ supply.create_strong_alternate_count }}</p>
+    <h3>TOP20</h3>
+    <ol class="strong-repair-priority-top">
+      {% for item in supply.top %}<li class="strong-repair-priority-item">
+        <h4>{{ item.rank }}位　Priority {{ item.supply_priority_tier }}　{{ item.canonical_node_id }}　{{ item.formal_label }}</h4>
+        <p>Safety：{{ item.safety_levels|join(', ') if item.safety else 'なし' }} / 状態：修復中 / 分類：{{ item.classification }}</p>
+        <p>current cycle誤答 {{ item.current_cycle_wrong_count }} / 自信あり誤答 {{ item.confident_wrong_count }} / distinct誤答Q {{ item.distinct_wrong_question_count }}</p>
+        <p>回答済みQ：{{ item.answered_question_ids|join(', ') or 'なし' }}</p>
+        <p>誤答Q：{{ item.wrong_question_ids|join(', ') or 'なし' }}</p>
+        <p>同一Node全Q：{{ item.all_question_ids|join(', ') or 'なし' }}</p>
+        <p>weak候補Q：{{ item.weak_repair_candidate_question_ids|join(', ') or 'なし' }} / strong候補Q：{{ item.strong_repair_candidate_question_ids|join(', ') or 'なし' }}</p>
+        <p>supply_action：{{ item.supply_action }}</p>
+        <p>優先理由：{{ item.supply_priority_reason }}</p>
+      </li>{% else %}<li>整備対象Nodeはありません。</li>{% endfor %}
+    </ol>
+    <details><summary>整備対象の全Nodeを見る</summary><ol>
+      {% for item in supply.details %}<li>{{ item.rank }}位 / Priority {{ item.supply_priority_tier }} / {{ item.canonical_node_id }} / {{ item.formal_label }} / {{ item.supply_action }} / {{ item.supply_priority_reason }}</li>{% endfor %}
+    </ol></details>
+  </section>
+
   <section class="card pilot-diagnostic-card phase11-shadow-card">
     <h2>⑪ Shadow判断（開発中）</h2>
     <p><b>現行おすすめ：</b>{{ diagnostics.shadow_judgment.comparison.current_target or 'なし' }}</p>

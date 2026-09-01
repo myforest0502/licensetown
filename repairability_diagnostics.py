@@ -101,6 +101,11 @@ def build_repairing_node_repairability(
             and item.get("confidence") == 1
             for item in current_cycle
         )
+        current_cycle_wrong_count = sum(
+            item.get("answer_status") != "unknown"
+            and item.get("is_correct") is False
+            for item in current_cycle
+        )
         strong_candidates = []
         weak_candidates = []
         for candidate in all_questions:
@@ -136,6 +141,8 @@ def build_repairing_node_repairability(
             "wrong_question_ids": wrong_questions,
             "confident_wrong": confident_wrong_count > 0,
             "confident_wrong_count": confident_wrong_count,
+            "current_cycle_wrong_count": current_cycle_wrong_count,
+            "distinct_wrong_question_count": len(wrong_questions),
             "all_question_ids": all_questions,
             "unseen_different_question_ids": [
                 question_id for question_id in different_questions
@@ -161,4 +168,87 @@ def build_repairing_node_repairability(
         "same_or_blocked_count": counts[FORMALLY_BLOCKED],
         "repairable_rate": round(counts[STRONG_AVAILABLE] * 100 / total, 1) if total else 0,
         "details": details,
+    }
+
+
+def build_strong_repair_supply_priorities(
+    repairability: dict[str, Any],
+    *,
+    top_limit: int = 20,
+) -> dict[str, Any]:
+    """Rank missing strong-question supply without recalculating repairability."""
+    candidates = []
+    for source in repairability.get("details", []):
+        if source.get("classification") == STRONG_AVAILABLE:
+            continue
+        item = dict(source)
+        safety_levels = set(map(str, item.get("safety_levels", [])))
+        confident_wrong_count = int(item.get("confident_wrong_count") or 0)
+        if safety_levels:
+            tier = "A"
+            strongest_safety = next(
+                (level for level in ("critical", "high", "moderate") if level in safety_levels),
+                sorted(safety_levels)[0],
+            )
+            reason = (
+                f"Safety {strongest_safety}で、formal strong別Qが存在しないため最優先"
+            )
+        elif confident_wrong_count >= 2:
+            tier = "B"
+            reason = (
+                f"自信あり誤答{confident_wrong_count}回で、formal strong別Qが存在しないため優先"
+            )
+        elif confident_wrong_count == 1:
+            tier = "C"
+            reason = "自信あり誤答1回で、formal strong別Qが存在しないため優先"
+        else:
+            tier = "D"
+            reason = "修復中だがformal strong別Qが存在しないため教材整備候補"
+        action = (
+            "review_existing_weak_pair"
+            if item.get("classification") == WEAK_ONLY
+            else "create_strong_alternate"
+        )
+        item.update({
+            "supply_priority_tier": tier,
+            "supply_action": action,
+            "supply_priority_reason": reason,
+        })
+        candidates.append(item)
+
+    tier_order = {"A": 0, "B": 1, "C": 2, "D": 3}
+    safety_order = {"critical": 0, "high": 1, "moderate": 2}
+
+    def priority_key(item):
+        safety_rank = min(
+            (safety_order.get(level, 3) for level in item.get("safety_levels", [])),
+            default=4,
+        )
+        return (
+            tier_order[item["supply_priority_tier"]],
+            safety_rank,
+            -int(item.get("current_cycle_wrong_count") or 0),
+            -int(item.get("confident_wrong_count") or 0),
+            -int(item.get("distinct_wrong_question_count") or 0),
+            str(item.get("canonical_node_id") or ""),
+        )
+
+    candidates.sort(key=priority_key)
+    for rank, item in enumerate(candidates, start=1):
+        item["rank"] = rank
+    tier_counts = {
+        tier: sum(item["supply_priority_tier"] == tier for item in candidates)
+        for tier in ("A", "B", "C", "D")
+    }
+    return {
+        "target_node_total": len(candidates),
+        "priority_counts": tier_counts,
+        "weak_pair_review_count": sum(
+            item["supply_action"] == "review_existing_weak_pair" for item in candidates
+        ),
+        "create_strong_alternate_count": sum(
+            item["supply_action"] == "create_strong_alternate" for item in candidates
+        ),
+        "top": candidates[:max(0, int(top_limit))],
+        "details": candidates,
     }
