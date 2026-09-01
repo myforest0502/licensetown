@@ -1,0 +1,47 @@
+name: Phase11 Formal Integration QA
+
+on:
+  push:
+    branches:
+      - feature/phase11-formal-integration-v01
+  workflow_dispatch:
+
+jobs:
+  focused:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest
+
+      - name: Focused Phase11 formal tests
+        run: |
+          python -m pytest -q \
+            tests/test_field_evidence.py \
+            tests/test_evaluable_field_evidence.py \
+            tests/test_knowledge_node_repair_cycle.py \
+            tests/test_recheck_repair_cycle_reset.py \
+            tests/test_retention_reference_metadata.py \
+            tests/test_phase11_active_field_facts.py \
+            tests/test_phase11_active_repair_rules.py \
+            tests/test_phase11_active_safety.py \
+            tests/test_phase11_active_weakness.py \
+            tests/test_phase11_evaluable_nonrepair_rules.py \
+            tests/test_phase11_retention_field_facts.py \
+            tests/test_phase11_formal_judgment.py \
+            tests/test_knowledge_node_state_transition.py \
+            tests/test_node_spaced_retention.py \
+            tests/test_judgment_shadow.py \
+            tests/test_safety_strong_repair_pilot_v01.py \
+            tests/test_repairability_diagnostics.py \
+            tests/test_phase11_shadow_integration.py
