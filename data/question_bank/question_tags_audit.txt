@@ -1,55 +1,100 @@
 LicenseTown question_tags.json audit
-source: formal question_tags production datasets through Q1564
-records: 1564
-Q range: Q1-Q1564
+source: current formal Question Bank through Q1594
+records: 1594
+Q range: Q1-Q1594
 duplicates: 0
 missing: 0
+schema errors: 0
+Knowledge Node reference errors: 0
+cross-file ID mismatches: 0
 errors: 0
 
 tag_version:
-  1.0: 1364
+  1.0: 1394
   0.3: 200
 
 tag_status:
-  reviewed: 1364
+  reviewed: 1394
   reviewed_sample: 200
   provisional_bulk: 0
 
 task:
-  assessment_selection: 167
-  cause_identification: 5
-  device_selection: 45
-  fact_recall: 850
-  finding_interpretation: 177
-  functional_goal_decision: 16
-  intervention_selection: 208
+  assessment_selection: 170
+  cause_identification: 0
+  device_selection: 44
+  fact_recall: 880
+  finding_interpretation: 186
+  functional_goal_decision: 17
+  intervention_selection: 211
   prognosis_prediction: 5
-  safety_priority: 91
+  safety_priority: 81
 
-primary:
-  DECIDE: 110
-  INTERPRET: 182
-  KNOW: 850
-  MEASURE: 167
+primary ability:
+  DECIDE: 98
+  INTERPRET: 186
+  KNOW: 880
+  MEASURE: 170
   PREDICT: 5
-  PRESCRIBE: 250
+  PRESCRIBE: 255
 
-secondary:
-  DECIDE: 69
-  INTERPRET: 278
-  KNOW: 23
+secondary ability:
+  DECIDE: 68
+  INTERPRET: 275
+  KNOW: 27
   MEASURE: 14
   PREDICT: 1
   PRESCRIBE: 20
-  null: 1159
+  null: 1189
 
 level:
-  1: 840
-  2: 181
-  3: 449
-  4: 94
+  1: 859
+  2: 185
+  3: 455
+  4: 95
 
 safety:
-  critical: 65
-  moderate: 218
-  none: 1281
+  critical: 65 (4.1%)
+  moderate: 216 (13.6%)
+  none: 1313 (82.4%)
+
+source:
+  original: 500 (31.4%)
+  past_exam: 1094 (68.6%)
+
+candidate metric highlights:
+  fact_recall: 880 (55.2%)
+
+Q1565-Q1594 additions:
+  records: 30
+  source past_exam: 30
+  source original: 0
+  task assessment_selection: 2
+  task fact_recall: 22
+  task finding_interpretation: 2
+  task intervention_selection: 3
+  task safety_priority: 1
+  safety critical: 1
+  safety moderate: 3
+  safety none: 26
+
+canonical Knowledge Node coverage:
+  canonical nodes: 1509
+  singleton canonical nodes: 1433
+  multi-question canonical nodes: 76
+  note: Q1565-Q1594 map to 30 existing canonical nodes. Of those,
+        29 were singleton nodes through Q1564 and became multi-question nodes;
+        one was already multi-question. Canonical node count remains 1509.
+
+previous Q1564 audit delta:
+  records: 1564 -> 1594 (+30)
+  tag_version 1.0: 1364 -> 1394 (+30)
+  tag_status reviewed: 1364 -> 1394 (+30)
+  fact_recall: 850 -> 880 (+30)
+  safety critical: 65 -> 65 (+0)
+  safety moderate: 218 -> 216 (-2)
+  safety none: 1281 -> 1313 (+32)
+  canonical nodes: 1509 -> 1509 (+0)
+  singleton canonical nodes: 1462 -> 1433 (-29)
+  multi-question canonical nodes: 47 -> 76 (+29)
+  note: task/ability/safety deltas include both the 30 formal additions and
+        formal tag refinements made after the previous audit snapshot.
