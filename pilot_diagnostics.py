@@ -18,6 +18,7 @@ from knowledge_node_state_transition import STATES, derive_all_user_node_states,
 from knowledge_node_weakness_evidence import derive_repeated_weakness_evidence
 from learning_analysis import build_learning_guidance
 from question_bank import CATEGORY_NAMES, get_category_small, get_question_tag, question_ids
+from repairability_diagnostics import build_repairing_node_repairability
 
 
 _STATE_LABELS = {
@@ -330,6 +331,10 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
     saved_adaptive_daily_audit = build_saved_adaptive_daily_audit(
         get_latest_adaptive_daily_learning_session_events(user_id)
     )
+    repairing_node_repairability = build_repairing_node_repairability(
+        all_attempts,
+        as_of=now,
+    )
 
     return {
         "period": period, "start_at": start_at, "total_attempts": len(attempts),
@@ -352,4 +357,5 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         "shadow_judgment": shadow_judgment,
         "confident_wrong_node_details": confident_wrong_node_details,
         "saved_adaptive_daily_audit": saved_adaptive_daily_audit,
+        "repairing_node_repairability": repairing_node_repairability,
     }

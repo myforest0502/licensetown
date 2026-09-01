@@ -16,6 +16,27 @@
   <section class="card pilot-diagnostic-card"><h2>理解状態</h2><p>未着手 {{ diagnostics.state_counts.unseen }} / 確認中 {{ diagnostics.state_counts.checking }} / 修復中 {{ diagnostics.state_counts.repairing }} / 修復済み {{ diagnostics.state_counts.repaired }} / 定着 {{ diagnostics.state_counts.stable }} / 再確認待ち {{ diagnostics.state_counts.recheck_due }}</p></section>
   <section class="card pilot-diagnostic-card"><h2>修復・定着</h2><p>修復中→修復済み {{ diagnostics.repair_to_repaired }} / 修復済み→修復中 {{ diagnostics.repaired_to_repairing }} / 再確認待ち→定着 {{ diagnostics.due_to_stable }} / 再確認待ち→修復中 {{ diagnostics.due_to_repairing }}</p></section>
 
+  <section class="card pilot-diagnostic-card repairing-node-repairability-card">
+    {% set repairability = diagnostics.repairing_node_repairability %}
+    <h2>修復中Nodeの修復可能性</h2>
+    <p>修復中Node {{ repairability.repairing_node_total }} / strong別Qあり {{ repairability.strong_available_count }} / weak別Qのみ {{ repairability.weak_only_count }} / same-Qのみ・formal blocked {{ repairability.same_or_blocked_count }}</p>
+    <p>repair可能率 {{ repairability.repairable_rate }}%</p>
+    <details><summary>Node詳細を見る</summary><ol class="repairability-node-list">
+      {% for item in repairability.details %}<li class="repairability-node-item">
+        <h3>{{ item.canonical_node_id }}　{{ item.formal_label }}</h3>
+        <p>状態：修復中 / 分類：{{ item.classification }}</p>
+        <p>回答済みQ：{{ item.answered_question_ids|join(', ') or 'なし' }}</p>
+        <p>現在の誤答Q：{{ item.wrong_question_ids|join(', ') or 'なし（0回答等でformal誤答証拠なし）' }}</p>
+        <p>自信あり誤答：{{ item.confident_wrong_count }}回</p>
+        <p>同一Node全Q：{{ item.all_question_ids|join(', ') or 'なし' }}</p>
+        <p>未出題の別Q候補：{{ item.unseen_different_question_ids|join(', ') or 'なし' }}</p>
+        <p>strong repair候補Q：{{ item.strong_repair_candidate_question_ids|join(', ') or 'なし' }}</p>
+        <p>weak repair候補Q：{{ item.weak_repair_candidate_question_ids|join(', ') or 'なし' }}</p>
+        <p>Safety：{{ item.safety_levels|join(', ') if item.safety else 'なし' }}</p>
+      </li>{% else %}<li>現在、修復中のNodeはありません。</li>{% endfor %}
+    </ol></details>
+  </section>
+
   <section class="card pilot-diagnostic-card phase11-shadow-card">
     <h2>⑪ Shadow判断（開発中）</h2>
     <p><b>現行おすすめ：</b>{{ diagnostics.shadow_judgment.comparison.current_target or 'なし' }}</p>
