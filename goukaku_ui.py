@@ -28,6 +28,8 @@ from dashboard_settings import (
     tokyo_today,
 )
 from learning_milestones import build_learning_milestones
+from judgment_shadow import build_shadow_judgment
+from phase12_presentation import build_phase12_presentation
 
 
 goukaku_ui = Blueprint("goukaku_ui", __name__)
@@ -43,6 +45,12 @@ def field_progress_ui_enabled():
 
 def overall_progress_ui_enabled():
     return os.getenv("ENABLE_OVERALL_PROGRESS_UI", "").strip().lower() in {
+        "1", "true", "yes", "on",
+    }
+
+
+def phase12_guidance_preview_enabled():
+    return os.getenv("ENABLE_PHASE12_GUIDANCE_PREVIEW", "").strip().lower() in {
         "1", "true", "yes", "on",
     }
 
@@ -127,6 +135,8 @@ def build_dashboard(user_id=None):
         "field_progress_fields": [],
         "overall_progress_ui_enabled": False,
         "overall_progress_preview": None,
+        "phase12_guidance_preview_enabled": False,
+        "phase12_guidance_preview": None,
         "weak_fields": [],
         "weak_analysis_message": "まずは100問を目標に基礎を固めましょう。",
         "recommended_study": [],
@@ -153,8 +163,13 @@ def build_dashboard(user_id=None):
         dashboard["field_stats"] = [item for item in fields if item["learned"]]
         field_preview = field_progress_ui_enabled()
         overall_preview = overall_progress_ui_enabled()
+        phase12_preview = phase12_guidance_preview_enabled()
+        attempts = None
+        evidence = None
+        if field_preview or overall_preview or phase12_preview:
+            attempts = get_question_attempts(user_id)
+            evidence = build_field_evidence(attempts)
         if field_preview or overall_preview:
-            evidence = build_field_evidence(get_question_attempts(user_id))
             progress = build_field_progress(evidence)
         if field_preview:
             dashboard["field_progress_ui_enabled"] = True
@@ -166,7 +181,19 @@ def build_dashboard(user_id=None):
             dashboard["overall_progress_preview"] = build_overall_progress_presentation(
                 progress, overall_accuracy_percent=dashboard["average_accuracy"]
             )
-        dashboard.update(build_learning_guidance(dashboard["total_answers"], fields))
+        current_guidance = build_learning_guidance(dashboard["total_answers"], fields)
+        dashboard.update(current_guidance)
+        if phase12_preview:
+            shadow_judgment = build_shadow_judgment(
+                attempts,
+                evidence,
+                current_guidance,
+            )
+            dashboard["phase12_guidance_preview_enabled"] = True
+            dashboard["phase12_guidance_preview"] = build_phase12_presentation(
+                shadow_judgment,
+                evidence,
+            )
         if dashboard["recommended_study"]:
             recommended_name, recommended_count = dashboard["recommended_study"][0]
             recommended_field = next(

@@ -46,6 +46,28 @@
   </div>
   </section>
 
+  {% if dashboard.phase12_guidance_preview_enabled %}
+  {% set preview = dashboard.phase12_guidance_preview %}
+  <section class="card phase12-guidance-preview">
+    <div class="phase12-preview-heading"><h2>🧭 次にやること Preview</h2><span>検証中</span></div>
+    <strong>{{ preview.headline }}</strong>
+    <p class="phase12-preview-reason">{{ preview.reason }}</p>
+    <dl class="phase12-state-summary">
+      <div><dt>未着手</dt><dd>{{ preview.state_summary.unseen }}</dd></div>
+      <div><dt>確認中</dt><dd>{{ preview.state_summary.checking }}</dd></div>
+      <div><dt>修復中</dt><dd>{{ preview.state_summary.repairing }}</dd></div>
+      <div><dt>修復済み</dt><dd>{{ preview.state_summary.repaired }}</dd></div>
+      <div><dt>再確認待ち</dt><dd>{{ preview.state_summary.recheck_due }}</dd></div>
+      <div><dt>定着</dt><dd>{{ preview.state_summary.stable }}</dd></div>
+    </dl>
+    {% if preview.attention_items %}<div class="phase12-attention-list"><h3>いま確認したいこと</h3>{% for item in preview.attention_items %}<article><b>{{ item.label }}</b><span>{{ item.field }}</span><p>{{ item.message }}</p></article>{% endfor %}</div>{% endif %}
+    {% if not read_only %}
+      {% if preview.recommended_route == 'dashboard_recommendation' and preview.target_field %}<button class="phase12-preview-action recommend-challenge" data-phase12-action data-recommendation-start-url="{{ url_for('start_dashboard_recommendation') }}" data-dashboard-token="{{ dashboard_token }}" data-recommendation-field="{{ preview.target_field }}" data-recommendation-count="{{ preview.question_count }}" data-recommendation-line-command="今日のおすすめ学習：{{ preview.target_field }}：{{ preview.question_count }}問">この内容を始める</button><p class="recommend-challenge-status" data-recommendation-status role="status" aria-live="polite"></p>{% else %}<button class="phase12-preview-action" data-phase12-action data-line-message="勉強する">おすすめ学習を始める</button>{% endif %}
+    {% endif %}
+    <small class="phase12-preview-note">現在は検証中の案内です。通常のおすすめ学習はこれまでどおり利用できます。</small>
+  </section>
+  {% endif %}
+
   <section class="motivation-grid dashboard-footer-cards">
     <article class="motivation-card reward-card"><h2>🎁 次の報酬まで</h2><strong>あと <b>{{ dashboard.next_reward_answers }}</b> 問</strong><p>{{ dashboard.reward_interval }}問ごとに学習マイルストーン！</p><div class="reward-progress"><i style="width:{{ (dashboard.reward_progress * 100 / dashboard.reward_interval)|round(1) }}%"></i></div><small>{{ dashboard.reward_progress }} / {{ dashboard.reward_interval }}問</small><span class="reward-icon">LT</span></article>
     <article class="motivation-card target-progress-card"><h2>🎯 目標学習量まで</h2><strong>あと <b>{{ remaining_progress }}</b>%</strong><p>毎日コツコツ積み重ねよう！<br>目標達成まで、もう一息！</p><div class="target-progress"><i style="width:{{ dashboard.overall_progress }}%"></i></div></article>
