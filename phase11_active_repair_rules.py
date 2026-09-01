@@ -9,6 +9,18 @@ def _field_record(field_records: Mapping[int, Mapping[str, Any]], field_id: int)
     return field_records.get(field_id, {})
 
 
+def _evaluable_count(field: Mapping[str, Any]) -> int:
+    if "evaluable_answer_count" in field:
+        return int(field.get("evaluable_answer_count") or 0)
+    return int(field.get("question_answer_count") or 0)
+
+
+def _evaluable_accuracy(field: Mapping[str, Any]):
+    if "evaluable_accuracy" in field:
+        return field.get("evaluable_accuracy")
+    return field.get("question_accuracy")
+
+
 def build_j2_candidates(
     active_field_facts: Mapping[int, Mapping[str, Any]],
     *,
@@ -29,8 +41,8 @@ def build_j2_candidates(
             active.get("active_evaluable_wrong_repairing_node_count") or 0
         )
         field = _field_record(field_records, int(field_id))
-        evaluable_count = int(field.get("evaluable_answer_count") or 0)
-        evaluable_accuracy = field.get("evaluable_accuracy")
+        evaluable_count = _evaluable_count(field)
+        evaluable_accuracy = _evaluable_accuracy(field)
         reliable_accuracy = (
             float(evaluable_accuracy)
             if evaluable_count >= 10 and evaluable_accuracy is not None
