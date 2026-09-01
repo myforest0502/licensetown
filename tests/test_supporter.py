@@ -429,6 +429,18 @@ def test_supporter_page_displays_weak_top3_and_recommendation(monkeypatch):
         "latest": {"answered_count": 5, "correct_count": 3, "accuracy": 60, "study_minutes": 12, "answered_at_label": "8/31 20:13"},
         "latest_studied": True,
         "latest_fields": [{"name": "生理学", "answered_count": 5, "accuracy": 60}],
+        "latest_activity": {
+            "has_activity": True,
+            "date_label": "8/31",
+            "has_problem_learning": True,
+            "consultation_used": False,
+            "recommendation": None,
+            "learning_sources": {
+                "recommendation": 0, "normal": 0, "nekketsu": 0,
+                "initial_assessment": 0, "legacy": 5, "other": 0,
+            },
+            "fields": [{"name": "生理学", "answered_count": 5, "accuracy": 60}],
+        },
         "weekly_learning_days": 2,
         "weekly_answers": 10,
         "weekly_study_minutes": 25,

@@ -5,7 +5,11 @@ from __future__ import annotations
 from datetime import timezone
 from zoneinfo import ZoneInfo
 
-from database import get_dashboard_learning_data, get_latest_learning_day_summary
+from database import (
+    get_dashboard_learning_data,
+    get_latest_activity_day_summary,
+    get_latest_learning_day_summary,
+)
 from learning_analysis import build_learning_guidance
 
 
@@ -30,6 +34,7 @@ def build_supporter_report(learner_user_id: str) -> dict:
     fields = learning_data["fields"]
     guidance = build_learning_guidance(summary["total_answers"], fields)
     latest = get_latest_learning_day_summary(learner_user_id)
+    latest_activity = get_latest_activity_day_summary(learner_user_id)
     if latest["has_learning"]:
         answered_at = latest["last_answered_at"]
         if answered_at.tzinfo is None:
@@ -43,11 +48,17 @@ def build_supporter_report(learner_user_id: str) -> dict:
     else:
         latest["date_label"] = ""
         latest["answered_at_label"] = ""
+    if latest_activity["has_activity"]:
+        _, month, day = latest_activity["date"].split("-")
+        latest_activity["date_label"] = f"{int(month)}/{int(day)}"
+    else:
+        latest_activity["date_label"] = ""
     learned_fields = [item for item in fields if item["learned"]]
     return {
         "latest": latest,
         "latest_studied": latest["has_learning"],
         "latest_fields": latest["fields"],
+        "latest_activity": latest_activity,
         "weekly_learning_days": activity["weekly_learning_days"],
         "weekly_answers": activity["weekly_answers"],
         "weekly_study_minutes": activity["weekly_study_minutes"],

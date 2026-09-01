@@ -417,6 +417,7 @@ def test_web_recommendation_answers_unknown_multiple_and_completes(monkeypatch):
     )
     assert unknown_event["question_results"][0]["selected_answers"] == []
     assert unknown_event["question_results"][0]["confidence"] is None
+    assert unknown_event["question_results"][0]["learning_source"] == "dashboard_recommendation"
     complete_text = client.get(
         f"/goukaku-no-michi/learning/{session_id}"
     ).get_data(as_text=True)

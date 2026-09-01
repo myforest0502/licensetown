@@ -3,6 +3,7 @@ import math
 import os
 import json
 import copy
+import hashlib
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from typing import Any
@@ -733,7 +734,7 @@ def record_learning_batch(
     answered_count: int,
     correct_count: int,
     answered_at: datetime | None = None,
-    question_results: list[dict[str, Any]] | None = None,
+    question_results: list[dict[str, Any]] | dict[str, Any] | None = None,
 ) -> bool:
     """確定済みの回答バッチを重複なしで保存する。"""
     timestamp = answered_at or datetime.now(timezone.utc)
@@ -782,6 +783,7 @@ def record_learning_batch(
             _local_user_node_states.update(states_before)
             raise
         return True
+
 
     with get_db_connection() as conn:
         with conn.cursor() as cur:
@@ -872,6 +874,30 @@ def record_learning_batch(
                     ),
                 )
             return True
+
+
+def record_activity_event(
+    user_id: str,
+    activity_type: str,
+    metadata: dict[str, Any] | None = None,
+    occurred_at: datetime | None = None,
+) -> bool:
+    """回答ではない利用事実を、JST日次で重複なくlearning_eventsへ保存する。"""
+    timestamp = occurred_at or datetime.now(timezone.utc)
+    jst_date = _as_utc(timestamp).astimezone(ZoneInfo("Asia/Tokyo")).date().isoformat()
+    user_hash = hashlib.sha256(user_id.encode("utf-8")).hexdigest()[:16]
+    activity_metadata = {"activity_type": activity_type}
+    if metadata:
+        activity_metadata.update(metadata)
+    return record_learning_batch(
+        user_id=user_id,
+        event_key=f"{activity_type}:{user_hash}:{jst_date}",
+        mode=activity_type,
+        answered_count=0,
+        correct_count=0,
+        answered_at=timestamp,
+        question_results=activity_metadata,
+    )
 
 
 def add_learning_time(
@@ -1431,6 +1457,193 @@ def get_latest_learning_day_summary(
         "study_minutes": round(sum(float(row["elapsed_seconds"]) for row in time_rows) / 60),
         "fields": fields,
         "modes": sorted(mode for mode in modes if mode),
+    }
+
+
+def get_latest_activity_day_summary(
+    user_id: str,
+    _connection=None,
+) -> dict[str, Any]:
+    """問題学習または相談を行った最新JST日の内訳を返す。"""
+    jst = ZoneInfo("Asia/Tokyo")
+    empty = {
+        "has_activity": False,
+        "date": None,
+        "has_problem_learning": False,
+        "consultation_used": False,
+        "fields": [],
+        "recommendation": None,
+        "learning_sources": {
+            "recommendation": 0,
+            "normal": 0,
+            "nekketsu": 0,
+            "initial_assessment": 0,
+            "legacy": 0,
+            "other": 0,
+        },
+    }
+    if not database_is_available():
+        eligible = [
+            event for event in _local_learning_events.values()
+            if event["user_id"] == user_id
+            and (
+                int(event.get("answered_count", 0)) > 0
+                or event.get("mode") == "consultation"
+            )
+        ]
+        if not eligible:
+            return empty
+        latest_date = max(
+            _as_utc(event["answered_at"]).astimezone(jst).date()
+            for event in eligible
+        )
+        activity_rows = [
+            event for event in _local_learning_events.values()
+            if event["user_id"] == user_id
+            and _as_utc(event["answered_at"]).astimezone(jst).date() == latest_date
+        ]
+    else:
+        with _connection_or_existing(_connection) as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT answered_at
+                    FROM learning_events
+                    WHERE user_id = %s
+                      AND (answered_count > 0 OR mode = 'consultation')
+                    ORDER BY answered_at DESC
+                    LIMIT 1
+                    """,
+                    (user_id,),
+                )
+                latest = cur.fetchone()
+                if latest is None:
+                    return empty
+                latest_date = _as_utc(latest[0]).astimezone(jst).date()
+                start_at = datetime.combine(
+                    latest_date, datetime.min.time(), jst
+                ).astimezone(timezone.utc)
+                end_at = start_at + timedelta(days=1)
+                cur.execute(
+                    """
+                    SELECT mode, answered_count, correct_count, answered_at,
+                           question_results
+                    FROM learning_events
+                    WHERE user_id = %s
+                      AND answered_at >= %s
+                      AND answered_at < %s
+                    ORDER BY answered_at
+                    """,
+                    (user_id, start_at, end_at),
+                )
+                activity_rows = [
+                    {
+                        "mode": row[0],
+                        "answered_count": row[1],
+                        "correct_count": row[2],
+                        "answered_at": row[3],
+                        "question_results": row[4],
+                    }
+                    for row in cur.fetchall()
+                ]
+
+    field_counts: dict[int, dict[str, Any]] = {}
+    sources = dict(empty["learning_sources"])
+    consultation_used = False
+    plan = None
+    problem_answered_count = 0
+    for event in activity_rows:
+        mode = str(event.get("mode", ""))
+        event_answered_count = int(event.get("answered_count", 0))
+        problem_answered_count += event_answered_count
+        consultation_used = consultation_used or mode == "consultation"
+        results = event.get("question_results")
+        if isinstance(results, str):
+            try:
+                results = json.loads(results)
+            except json.JSONDecodeError:
+                logger.warning("Invalid question_results JSON in latest activity summary")
+                results = None
+        if mode == "recommendation_plan" and isinstance(results, dict):
+            if results.get("activity_type") == "recommendation_plan":
+                plan = {
+                    "field": str(results.get("field", "")),
+                    "goal": max(int(results.get("goal", 0)), 0),
+                }
+            continue
+        if not isinstance(results, list):
+            if event_answered_count:
+                if mode == "nekketsu":
+                    sources["nekketsu"] += event_answered_count
+                elif mode == "study":
+                    sources["legacy"] += event_answered_count
+                else:
+                    sources["other"] += event_answered_count
+            continue
+        classified_count = 0
+        for result in results:
+            if not isinstance(result, dict) or not result.get("question_id"):
+                continue
+            classified_count += 1
+            source = result.get("learning_source")
+            if mode == "nekketsu":
+                sources["nekketsu"] += 1
+            elif source == "dashboard_recommendation":
+                sources["recommendation"] += 1
+            elif source == "initial_assessment":
+                sources["initial_assessment"] += 1
+            elif source in {"adaptive_daily", "manual", "random"}:
+                sources["normal"] += 1
+            elif mode == "study" and not source:
+                sources["legacy"] += 1
+            else:
+                sources["other"] += 1
+            question_id = str(result["question_id"])
+            try:
+                category_small = get_category_small(question_id)
+            except QuestionBankError:
+                logger.warning("Unknown question_id in latest activity summary: %s", question_id)
+                continue
+            field = field_counts.setdefault(category_small, {
+                "category_small": category_small,
+                "name": CATEGORY_NAMES[category_small],
+                "answered_count": 0,
+                "correct_count": 0,
+            })
+            field["answered_count"] += 1
+            field["correct_count"] += int(bool(result.get("is_correct")))
+        missing_count = max(event_answered_count - classified_count, 0)
+        if missing_count:
+            if mode == "nekketsu":
+                sources["nekketsu"] += missing_count
+            elif mode == "study":
+                sources["legacy"] += missing_count
+            else:
+                sources["other"] += missing_count
+
+    fields = []
+    for category_small in sorted(field_counts):
+        field = field_counts[category_small]
+        field["accuracy"] = round(
+            field["correct_count"] / field["answered_count"] * 100
+        ) if field["answered_count"] else 0
+        fields.append(field)
+    if plan:
+        progress = next(
+            (field["answered_count"] for field in fields if field["name"] == plan["field"]),
+            0,
+        )
+        plan["progress"] = min(progress, plan["goal"])
+        plan["completed"] = bool(plan["goal"] and progress >= plan["goal"])
+
+    return {
+        "has_activity": True,
+        "date": latest_date.isoformat(),
+        "has_problem_learning": problem_answered_count > 0,
+        "consultation_used": consultation_used,
+        "fields": fields,
+        "recommendation": plan,
+        "learning_sources": sources,
     }
 
 

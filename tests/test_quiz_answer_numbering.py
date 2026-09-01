@@ -137,6 +137,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "consultation_contexts": {},
         "learning_answer_counts": {},
         "record_learning_batch": lambda **kwargs: True,
+        "record_activity_event": lambda *args, **kwargs: True,
         "add_learning_time": lambda *args, **kwargs: None,
         "get_display_answer": lambda question: str(question.get("answer", "")).upper().strip(),
         "is_answer_correct": lambda question, selected: (

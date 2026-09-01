@@ -141,6 +141,7 @@ def test_question_results_store_formal_single_multi_either_and_null_confidence()
         "is_correct": True,
         "confidence": 2,
         "answer_status": "answered",
+        "learning_source": "manual",
     }
     assert results[1] == {
         "question_id": "Q521",
@@ -149,6 +150,7 @@ def test_question_results_store_formal_single_multi_either_and_null_confidence()
         "is_correct": True,
         "confidence": 1,
         "answer_status": "answered",
+        "learning_source": "manual",
     }
     assert results[2] == {
         "question_id": "Q551",
@@ -157,6 +159,7 @@ def test_question_results_store_formal_single_multi_either_and_null_confidence()
         "is_correct": True,
         "confidence": None,
         "answer_status": "answered",
+        "learning_source": "manual",
     }
     assert results[3]["is_correct"] is False
     assert all(isinstance(item["selected_answers"], list) for item in results)

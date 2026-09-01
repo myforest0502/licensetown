@@ -9,6 +9,7 @@ from database import (
     get_field_learning_summary,
     get_learning_activity,
     get_question_attempts,
+    record_activity_event,
     get_weekly_question_history,
     get_supported_learner_ids,
     user_names,
@@ -198,9 +199,17 @@ def build_dashboard(user_id=None):
 def home():
     token = request.args.get("token")
     user_id = dashboard_user_id(token)
+    dashboard = build_dashboard(user_id)
+    if user_id and dashboard["recommended_study"]:
+        recommended_name, recommended_count = dashboard["recommended_study"][0]
+        record_activity_event(
+            user_id,
+            "recommendation_plan",
+            {"field": recommended_name, "goal": recommended_count},
+        )
     return render_template(
         "goukaku/home.html",
-        dashboard=build_dashboard(user_id),
+        dashboard=dashboard,
         dashboard_token=token,
         dashboard_title="合格への道",
         read_only=False,

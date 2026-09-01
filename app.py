@@ -37,6 +37,7 @@ from database import (
     get_question_history,
     is_initial_assessment_completed,
     mark_initial_assessment_completed,
+    record_activity_event,
     record_learning_batch,
     reset_user_profile,
     user_names,
@@ -1831,6 +1832,7 @@ def record_confirmed_learning_batch(user_id, session):
             "is_correct": is_correct,
             "confidence": int(confidence) if str(confidence) in {"1", "2", "3"} else None,
             "answer_status": answer_data.get("answer_status", "answered"),
+            "learning_source": session.get("session_kind", "manual"),
         })
     return record_learning_batch(
         user_id=user_id,
@@ -2246,6 +2248,7 @@ def answer_web_recommendation(session_id):
         "is_correct": is_correct,
         "confidence": confidence,
         "answer_status": "unknown" if unknown else "answered",
+        "learning_source": "dashboard_recommendation",
     }
     answer_number = session["current_index"] + 1
     record_learning_batch(
@@ -4202,6 +4205,7 @@ def handle_text_message(event):
         )
 
     if current_mode == "chat":
+        record_activity_event(user_id, "consultation")
         consultation_contexts.setdefault(user_id, []).append(user_message)
         reply_consultation_response(event.reply_token, reply_message)
     else:
