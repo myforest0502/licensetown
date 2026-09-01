@@ -51,25 +51,112 @@ Current formal state-transition code already enforces one canonical Node, so thi
 
 Do not merge until focused/full pytest can run.
 
-## Formal policy newly fixed
+## Unknown evidence policy — FORMALLY DEFINED
 
-### Issue #11 — evaluable-only Phase11 J2 accuracy tie-break
+Canonical policy documents:
 
-Decision:
+- `docs/unknown-evidence-semantics-v01.md`
+- `docs/unknown-storage-contract-v01.md`
 
-- unknown counts as learning/exposure activity
-- unknown does not count as confirmed wrong evidence
-- unknown must not lower the accuracy used as the final J2 weakness-priority tie-break
+Core rule:
 
-Future implementation should add separate evidence fields:
+> unknown means encountered but not evaluably answered.
+
+Therefore unknown has different meanings by layer.
+
+### Exposure/activity
+
+Unknown counts toward raw activity/exposure and coarse global answer-volume milestones.
+
+### Formal Node state
+
+Unknown remains an unresolved repair trigger:
+
+- it can move a Node to `repairing`
+- it can reopen a repaired/stable Node
+- a later strong different-Q confidence=1 correct may still confirm repair
+
+Do not remove this behavior without a separate state-machine decision.
+
+### Confirmed weakness
+
+Unknown does not independently create confirmed wrong evidence, repeated weakness, confident wrong, or Critical Safety wrong evidence.
+
+### Evaluable policy statistics
+
+Issues #11/#12/#13 specify one shared evidence definition:
 
 - `evaluable_answer_count`
 - `evaluable_correct_count`
 - `evaluable_accuracy`
 
-Existing general `question_accuracy` semantics remain unchanged for compatibility.
+Existing general/raw accuracy fields remain unchanged for compatibility.
 
-J2 reliability threshold must use **10 evaluable answers**, not 10 raw attempts.
+## Phase11 unknown-related gates
+
+### Issue #11 — J2 evaluable-only accuracy tie-break
+
+Formal decision:
+
+- J2 final accuracy tie-break uses `evaluable_accuracy`
+- reliability threshold is `evaluable_answer_count >= 10`
+- unknown cannot make an otherwise equal field appear weaker through the final accuracy tie-break
+
+J2 evidence hierarchy itself remains unchanged.
+
+### Issue #12 — J5 evaluable field sufficiency
+
+A field with many unknown attempts must not escape insufficient-coverage merely because raw `question_answer_count >= 10`.
+
+After the global 100-answer stage boundary, J5 field sufficiency uses:
+
+- `evaluable_answer_count < 10` => insufficient coverage
+
+The global 100-answer foundation/analysis exposure milestone remains raw for compatibility.
+
+### Issue #13 — J6 evaluable denominator
+
+J6 uncertain-correct stabilization uses:
+
+- minimum `evaluable_answer_count >= 5`
+- uncertain-correct proportion = uncertain-correct / evaluable answers
+
+Unknown cannot satisfy the five-answer threshold or dilute the proportion.
+
+## Phase10 unknown semantics
+
+### Issue #14 — Safety unknown selector reason
+
+Current selector correctly treats unknown as repair work, but Safety unknown-only evidence can currently be labeled `safety_wrong` because unknown Qs are placed in the internal wrong-question set.
+
+Approved future semantics preserve Safety priority and the existing Safety singleton cooldown exception while separating the audit reason:
+
+- confirmed Safety wrong => `safety_wrong`
+- Safety unknown-only unresolved => `safety_unresolved`
+
+A Node containing both real wrong and unknown remains `safety_wrong`.
+
+Historical saved events are not rewritten.
+
+### Issue #15 — Node repair trigger vs confirmed weakness
+
+Current state transition behavior remains intact, but returned state evidence must not be casually interpreted as confirmed weakness when unknown is the only repair trigger.
+
+Before changing legacy `evidence_level` fields, audit consumers and add explicit confirmed-weakness fields if needed.
+
+## Supporter diagnostic unknown semantics
+
+### Issue #16 — weekly wrong/unknown overlap
+
+Current weekly Q history can place an unknown Q in both `wrong_question_ids` and `unknown_question_ids` because unknown is physically stored with `is_correct=false`.
+
+Approved diagnostic meaning:
+
+- unknown list = unknown attempts
+- wrong list = evaluable non-unknown wrong attempts
+- a Q may still appear in both only if separate attempts of both kinds genuinely occurred within the period
+
+This is Supporter diagnostic cleanup only.
 
 ## Diagnostics gates still open
 
@@ -113,21 +200,28 @@ Confirmed persistence behavior:
 - persisted payload contains Baseline `field` and `goal`
 - historical Baseline phase must be reconstructed from `SUM(learning_events.answered_count)` before snapshot T
 - Shadow replay is eligible only when formal result/attempt history coverage is complete
-- replay applies the **current Phase11 v0.1 policy** to historical evidence; it is not historical-code time travel and not causal A/B evidence
+- replay applies the **current Phase11 policy** to historical evidence; it is not historical-code time travel and not causal A/B evidence
 
-## Current promotion order
+Static audit also confirmed Baseline field statistics count unknown in raw answered count while unknown does not increment correct count. Retrospective output should therefore show raw vs evaluable evidence context for both target fields without claiming that unknown caused the persisted Baseline choice.
+
+Production `question_attempts` has no dedicated answer_status column; `get_question_attempts()` reconstructs unknown from empty `selected_answers`. Retrospective coverage validation must use that actual storage contract and fail closed on event/attempt inconsistency.
+
+## Current promotion/implementation order
 
 1. Execute tests for draft PR #9 and #10; merge only if green.
-2. Implement Issue #4 corrected repeat classification and re-read Production repeat history.
-3. Implement Issue #11 evaluable-only J2 tie-break semantics together with the shared evidence fix.
-4. Implement Issue #3 retrospective replay.
-5. Harden Issue #2 and fix Issue #5 presentation when touching the same diagnostics area.
-6. Continue prospective natural-use comparison of Baseline vs Shadow, including Current wins and Shadow losses.
-7. Observe natural recheck_due behavior when it exists.
-8. Only then consider a limited learner-facing Phase11 pilot.
+2. Land the shared evaluable evidence fields once #6 is green.
+3. Implement Issues #11/#12/#13 together from that shared evidence definition; do not duplicate unknown filters in each rule.
+4. Implement Issue #14 Safety unresolved labeling without weakening Safety priority/cooldown protection.
+5. Implement Issue #4 corrected repeat classification and re-read Production repeat history.
+6. Implement Issue #3 retrospective replay using the corrected current-policy evidence semantics.
+7. Harden Issue #2 and fix Issues #5/#16 when touching the same Supporter diagnostics area.
+8. Audit/clarify legacy state evidence fields under Issue #15 before any new consumer treats them as confirmed weakness.
+9. Continue prospective natural-use Baseline-vs-Shadow comparison, including Current wins and Shadow losses.
+10. Observe natural recheck_due behavior when it exists.
+11. Only then consider a limited learner-facing Phase11 pilot.
 
 ## Promotion rule unchanged
 
-Do not promote Phase11 because of one favorable screenshot, one disagreement, or one newly repaired Node.
+Do not promote Phase11 because of one favorable screenshot, one disagreement, one newly repaired Node, or one apparently better formal rank.
 
-Promotion still requires no Critical Safety miss, no systematic single-wrong takeover, trustworthy repeat diagnostics, acceptable sparse coverage, recheck behavior, symmetric disagreement review, and prospective evidence that is clearly no worse than Baseline.
+Promotion still requires no Critical Safety miss, no systematic single-wrong takeover, trustworthy repeat diagnostics, evaluable sparse-coverage handling, correct recheck behavior, symmetric disagreement review, and prospective evidence that is clearly no worse than Baseline.
