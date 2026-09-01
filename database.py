@@ -649,6 +649,75 @@ def get_latest_adaptive_daily_learning_event(user_id: str) -> dict[str, Any] | N
     }
 
 
+def _learning_session_id_from_event_key(event_key: Any) -> str | None:
+    """Extract the persisted quiz session id from ``{session_id}:{set_no}``."""
+    head, separator, tail = str(event_key or "").rpartition(":")
+    if not separator or not head or not tail.isdigit() or int(tail) < 1:
+        return None
+    return head
+
+
+def get_latest_adaptive_daily_learning_session_events(user_id: str) -> list[dict[str, Any]]:
+    """Return every persisted batch belonging to the latest adaptive session."""
+    latest = get_latest_adaptive_daily_learning_event(user_id)
+    if latest is None:
+        return []
+    session_id = _learning_session_id_from_event_key(latest.get("event_key"))
+    if session_id is None:
+        return [latest]
+
+    if not database_is_available():
+        events = []
+        for event_key, event in _local_learning_events.items():
+            if (
+                event.get("user_id") != user_id
+                or _learning_session_id_from_event_key(event_key) != session_id
+            ):
+                continue
+            results = event.get("question_results")
+            if isinstance(results, str):
+                try:
+                    results = json.loads(results)
+                except (TypeError, ValueError):
+                    continue
+            if not isinstance(results, list) or not any(
+                isinstance(item, dict)
+                and item.get("learning_source") == "adaptive_daily"
+                for item in results
+            ):
+                continue
+            events.append({"event_key": event_key, **copy.deepcopy(event)})
+    else:
+        with get_db_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT event_key, user_id, mode, answered_count, correct_count,
+                           answered_at, question_results
+                    FROM learning_events
+                    WHERE user_id = %s
+                      AND split_part(event_key, ':', 1) = %s
+                      AND question_results @> '[{"learning_source": "adaptive_daily"}]'::jsonb
+                    ORDER BY answered_at, event_key
+                    """,
+                    (user_id, session_id),
+                )
+                events = [
+                    {
+                        "event_key": row[0], "user_id": row[1], "mode": row[2],
+                        "answered_count": row[3], "correct_count": row[4],
+                        "answered_at": row[5], "question_results": row[6],
+                    }
+                    for row in cur.fetchall()
+                ]
+
+    def sort_key(event):
+        tail = str(event.get("event_key") or "").rpartition(":")[2]
+        return (int(tail) if tail.isdigit() else 10**9, _as_utc(event["answered_at"]))
+
+    return sorted(events, key=sort_key)
+
+
 def get_weekly_question_history(user_id: str, now: datetime | None = None) -> dict[str, Any]:
     """Return seven JST calendar days from bounded question_attempts reads."""
     jst = ZoneInfo("Asia/Tokyo")

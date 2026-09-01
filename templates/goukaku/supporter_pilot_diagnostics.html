@@ -48,10 +48,12 @@
     <p><strong>この判断は学習者画面には反映されていません。</strong></p>
   </section>
 
-  <section class="card pilot-diagnostic-card saved-adaptive-audit-card"><h2>実出題 adaptive_daily 監査</h2>
+  <section class="card pilot-diagnostic-card saved-adaptive-audit-card"><h2>最新 adaptive_daily 30問セッション監査</h2>
     {% set saved = diagnostics.saved_adaptive_daily_audit %}
     {% if saved.exists %}
-    <p>日時 {{ saved.event_at or '日時不明' }} / source {{ saved.source }} / mode {{ saved.mode }}</p>
+    <p>最初の保存日時 {{ saved.first_event_at or '日時不明' }} / 最終保存日時 {{ saved.last_event_at or '日時不明' }}</p>
+    <p>source {{ saved.source }} / mode {{ saved.mode }} / event数 {{ saved.event_count }}</p>
+    {% if saved.session_complete %}<p><b>30問監査完了</b></p>{% else %}<p><b>進行中: {{ saved.question_count }}/{{ saved.expected_question_count }}問</b></p>{% endif %}
     <p>問題数 {{ saved.question_count }} / unique Q {{ saved.unique_question_count }}</p>
     <p><b>audit fields complete:</b> {{ 'PASS' if saved.audit_fields_complete else 'FAIL' }} / recent repeats: {{ saved.recent_repeat_count }} / cooldown bypasses: {{ saved.cooldown_bypass_count }}</p>
     {% if saved.recent_repeat_question_ids %}<p>recent repeat対象Q：{{ saved.recent_repeat_question_ids|join(', ') }}</p>{% endif %}

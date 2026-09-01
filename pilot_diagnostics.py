@@ -8,7 +8,7 @@ from zoneinfo import ZoneInfo
 from adaptive_question_selector import select_node_adaptive_questions
 from database import (
     get_dashboard_learning_data,
-    get_latest_adaptive_daily_learning_event,
+    get_latest_adaptive_daily_learning_session_events,
     get_question_attempts,
 )
 from field_evidence import build_field_evidence
@@ -209,9 +209,9 @@ def _current_dashboard_guidance(user_id: str):
     )
 
 
-def build_saved_adaptive_daily_audit(event):
+def build_saved_adaptive_daily_audit(events):
     """Summarize only the audit values already persisted in learning_events."""
-    if not event:
+    if not events:
         return {
             "exists": False,
             "results": [],
@@ -219,36 +219,48 @@ def build_saved_adaptive_daily_audit(event):
             "recent_repeat_count": 0,
             "cooldown_bypass_count": 0,
         }
-    results = event.get("question_results")
-    if isinstance(results, str):
-        try:
-            results = json.loads(results)
-        except (TypeError, ValueError):
-            results = []
-    if not isinstance(results, list):
-        results = []
+    if isinstance(events, dict):
+        events = [events]
     details = []
-    for result in results:
-        if not isinstance(result, dict):
-            continue
-        missing = [name for name in _SAVED_ADAPTIVE_AUDIT_FIELDS if name not in result]
-        item = {
-            "question_id": str(result.get("question_id") or "不明"),
-            "missing_audit_fields": missing,
-        }
-        item.update({name: result.get(name) for name in _SAVED_ADAPTIVE_AUDIT_FIELDS})
-        details.append(item)
-    answered_at = _wrong_time(event.get("answered_at"))
+    for event in events:
+        results = event.get("question_results")
+        if isinstance(results, str):
+            try:
+                results = json.loads(results)
+            except (TypeError, ValueError):
+                results = []
+        if not isinstance(results, list):
+            results = []
+        for result in results:
+            if not isinstance(result, dict):
+                continue
+            missing = [name for name in _SAVED_ADAPTIVE_AUDIT_FIELDS if name not in result]
+            item = {
+                "question_id": str(result.get("question_id") or "不明"),
+                "missing_audit_fields": missing,
+            }
+            item.update({name: result.get(name) for name in _SAVED_ADAPTIVE_AUDIT_FIELDS})
+            details.append(item)
+    event_times = [_wrong_time(event.get("answered_at")) for event in events]
+    event_times = [value for value in event_times if value is not None]
+    unique_question_count = len({item["question_id"] for item in details})
+    expected_question_count = 30
+    session_complete = (
+        len(events) == 6
+        and len(details) == expected_question_count
+        and unique_question_count == expected_question_count
+    )
     return {
         "exists": True,
-        "event_at": (
-            answered_at.astimezone(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M:%S")
-            if answered_at else None
-        ),
+        "first_event_at": min(event_times).astimezone(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M:%S") if event_times else None,
+        "last_event_at": max(event_times).astimezone(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M:%S") if event_times else None,
         "source": "adaptive_daily",
-        "mode": str(event.get("mode") or "不明"),
+        "mode": str(events[-1].get("mode") or "不明"),
+        "event_count": len(events),
+        "expected_question_count": expected_question_count,
+        "session_complete": session_complete,
         "question_count": len(details),
-        "unique_question_count": len({item["question_id"] for item in details}),
+        "unique_question_count": unique_question_count,
         "audit_fields_complete": bool(details) and all(
             not item["missing_audit_fields"] for item in details
         ),
@@ -316,7 +328,7 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         shadow_judgment,
     )
     saved_adaptive_daily_audit = build_saved_adaptive_daily_audit(
-        get_latest_adaptive_daily_learning_event(user_id)
+        get_latest_adaptive_daily_learning_session_events(user_id)
     )
 
     return {
