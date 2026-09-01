@@ -240,6 +240,7 @@ def home():
         dashboard_token=token,
         dashboard_title="合格への道",
         read_only=False,
+        learner_preview=False,
         subjects_url=url_for("goukaku_ui.subjects", token=token),
         line_official_account_id=os.getenv("LINE_OFFICIAL_ACCOUNT_ID", "").strip(),
         liff_id=os.getenv("LIFF_ID", "").strip(),
@@ -343,6 +344,7 @@ def supporter_goukaku_home():
         dashboard_title=f"{learner_name}さんの合格への道",
         learner_name=learner_name,
         read_only=True,
+        learner_preview=False,
         subjects_url=url_for(
             "goukaku_ui.supporter_goukaku_subjects",
             token=token,
@@ -353,6 +355,27 @@ def supporter_goukaku_home():
             token=token,
             learner_user_id=learner_id,
         ),
+        line_official_account_id="",
+        liff_id="",
+    )
+
+
+@goukaku_ui.route("/supporter/goukaku-no-michi/learner-preview")
+def supporter_learner_preview():
+    token = request.args.get("token")
+    _, learner_id = authorized_supporter_learner(
+        token,
+        request.args.get("learner_user_id"),
+    )
+    return render_template(
+        "goukaku/home.html",
+        dashboard=build_dashboard(learner_id),
+        dashboard_token=None,
+        dashboard_title="合格への道",
+        read_only=False,
+        learner_preview=True,
+        subjects_url=None,
+        supporter_return_url=None,
         line_official_account_id="",
         liff_id="",
     )

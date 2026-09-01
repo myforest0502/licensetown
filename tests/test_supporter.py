@@ -328,7 +328,8 @@ def test_supporter_can_open_linked_learner_dashboard_read_only_without_state_cha
     supporter_page = client.get(f"/supporter?token={token}")
     supporter_text = supporter_page.get_data(as_text=True)
     assert supporter_page.status_code == 200
-    assert "本人の合格への道を見る" in supporter_text
+    assert "見守り用 合格への道" in supporter_text
+    assert "本人画面プレビュー" in supporter_text
     assert "learner_user_id=learner-user" in supporter_text
 
     database_before = (

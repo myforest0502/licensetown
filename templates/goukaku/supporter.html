@@ -4,7 +4,8 @@
 <header class="app-header title-only"><h1>学習見守り</h1></header>
 <div class="page-content supporter-page">
   <p class="supporter-lead"><b>{{ learner_name }}</b>さんの学習レポート</p>
-  <a class="supporter-dashboard-link" href="{{ url_for('goukaku_ui.supporter_goukaku_home', token=supporter_token, learner_user_id=learner_id) }}">本人の合格への道を見る <span>閲覧専用 ›</span></a>
+  <a class="supporter-dashboard-link" href="{{ url_for('goukaku_ui.supporter_goukaku_home', token=supporter_token, learner_user_id=learner_id) }}">見守り用 合格への道 <span>閲覧専用 ›</span></a>
+  <a class="supporter-dashboard-link" href="{{ url_for('goukaku_ui.supporter_learner_preview', token=supporter_token, learner_user_id=learner_id) }}">本人画面プレビュー <span>表示確認用・操作不可 ›</span></a>
   <a class="supporter-dashboard-link" href="{{ url_for('goukaku_ui.supporter_weekly_question_history', token=supporter_token, learner_user_id=learner_id) }}">今週の学習Q番号を見る <span>閲覧専用 ›</span></a>
   <a class="supporter-dashboard-link" href="{{ url_for('goukaku_ui.supporter_pilot_diagnostics', token=supporter_token, learner_user_id=learner_id) }}">LT学習診断 <span>開発診断 ›</span></a>
   <section class="supporter-today {{ 'studied' if report.latest_studied else 'resting' }}"><div><span>直近の学習</span><strong>{% if report.latest_studied %}最終学習 {{ report.latest.answered_at_label }}{% else %}まだ学習記録がありません{% endif %}</strong></div>{% if report.latest_studied %}<div class="supporter-today-kpis"><p><b>{{ report.latest.answered_count }}</b><small>回答</small></p><p><b>{{ report.latest.correct_count }}</b><small>正解</small></p><p><b>{{ report.latest.study_minutes }}</b><small>分</small></p><p><b>{{ report.latest.accuracy }}</b><small>%</small></p></div>{% endif %}</section>
