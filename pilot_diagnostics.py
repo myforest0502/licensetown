@@ -6,10 +6,13 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from adaptive_question_selector import select_node_adaptive_questions
-from database import get_question_attempts
+from database import get_dashboard_learning_data, get_question_attempts
+from field_evidence import build_field_evidence
+from judgment_shadow import build_shadow_comparison, build_shadow_judgment
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import STATES, derive_all_user_node_states, derive_state_timeline
 from knowledge_node_weakness_evidence import derive_repeated_weakness_evidence
+from learning_analysis import build_learning_guidance
 from question_bank import get_question_tag, question_ids
 
 
@@ -76,6 +79,15 @@ def _canonical_total():
     return len({canonicalize_knowledge_node_id(get_question_tag(q)["knowledge_node_id"]) for q in question_ids()})
 
 
+def _current_dashboard_guidance(user_id: str):
+    """Read the same deterministic guidance inputs used by the current dashboard."""
+    learning_data = get_dashboard_learning_data(user_id)
+    return build_learning_guidance(
+        int(learning_data["summary"].get("total_answers") or 0),
+        learning_data["fields"],
+    )
+
+
 def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
     now = now or datetime.now(timezone.utc)
     days = {"7": 7, "30": 30, "all": None}.get(period, 7)
@@ -109,6 +121,20 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
     weakness = [item for item in derive_repeated_weakness_evidence(all_attempts)
                 if item["evidence_level"] in {"CROSS_QUESTION_WRONG", "CROSS_QUESTION_CONFIDENT_WRONG"}]
     weakness.sort(key=lambda item: (item["wrong_question_count"], item["confident_wrong_count"]), reverse=True)
+
+    field_evidence = build_field_evidence(all_attempts, as_of=now)
+    current_guidance = _current_dashboard_guidance(user_id)
+    shadow_judgment = build_shadow_judgment(
+        all_attempts,
+        field_evidence,
+        current_guidance,
+        as_of=now,
+    )
+    shadow_judgment["comparison"] = build_shadow_comparison(
+        current_guidance,
+        shadow_judgment,
+    )
+
     return {
         "period": period, "start_at": start_at, "total_attempts": len(attempts),
         "unique_questions": len({a.get("question_id") for a in attempts}), "correct": correct,
@@ -126,4 +152,6 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         "adaptive_unique_nodes": len({x["canonical_node_id"] for x in adaptive}),
         "adaptive_groups": dict(adaptive_groups), "adaptive_details": adaptive_details,
         "adaptive_audit_text": adaptive_audit_text, "weakness": weakness[:10],
+        "current_guidance": current_guidance,
+        "shadow_judgment": shadow_judgment,
     }
