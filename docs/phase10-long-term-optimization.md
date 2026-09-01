@@ -1,7 +1,7 @@
 # LicenseTown ⑩ 長期最適化 — 正式仕様メモ
 
 Date: 2026-09-01
-Status: runtime invariants fixed; natural-use observation and static audit refresh remain before formal Phase 10 closure.
+Status: runtime invariants and static Q1-Q1594 audit fixed; natural-use observation remains before formal Phase 10 closure.
 
 This document records architecture and QA rules. It does not change runtime behavior.
 
@@ -36,16 +36,17 @@ Written confirmation and AI semantic confirmation remain diagnostic/research aid
 
 Historical Node IDs are preserved and resolved to canonical roots. State/evidence calculations operate on canonical Nodes rather than treating approved aliases as independent knowledge units.
 
-Current formal counts from Phase 10 research:
+Current Q1-Q1594 audit counts:
 
 - canonical Nodes: 1509
-- singleton canonical Nodes: 1462
-- multi-question canonical Nodes: 47
-- strong different-Q repair possible: 3
-- weak-only different-Q: 44
-- formally unrepairable under strong-evidence rule: 1506
+- singleton canonical Nodes: 1433
+- multi-question canonical Nodes: 76
 
-This high singleton rate is a structural fact of the current bank and must be considered in adaptive QA.
+The previous Q1-Q1564 snapshot was singleton 1462 / multi-question 47. The 29-node shift is expected because newly imported past-exam questions added a second question to 29 formerly-singleton canonical Nodes.
+
+The earlier Phase 10 repairability research (performed before the Q1565-Q1594 imports) found strong different-Q repair possible: 3, weak-only different-Q: 44, formally unrepairable under the then-current strong-evidence rule: 1506. Those repairability counts are historical research results and should be recomputed before treating them as current Q1-Q1594 supply counts.
+
+The bank remains singleton-heavy, which must be considered in adaptive QA.
 
 ## 3. Recent Question Cooldown v0.2
 
@@ -116,14 +117,16 @@ Observed overlap is not automatically a bug if the audit metadata proves a valid
 
 ## 7. Phase 10 closure gate
 
-Code-level work is structurally complete when:
+Code/static work is structurally complete when:
 
 - cooldown v0.2 is on main
 - audit-lite is on main
 - regression tests preserve state/repair/retention behavior
 - static Q1-Q1594 tag audit is current
 
-Operational closure additionally requires at least one natural post-deploy adaptive session showing that production history contains the audit fields and that any overlap is explainable.
+All four are complete as of the Q1-Q1594 audit commit `07fb8a028ea8de29b32cfcdfb63c249ae6951bed`.
+
+Operational closure still requires at least one natural post-deploy adaptive session showing that production history contains the audit fields and that any overlap is explainable.
 
 Do not create synthetic Production DB records solely to close the gate.
 

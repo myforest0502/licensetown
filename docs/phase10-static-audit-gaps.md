@@ -1,54 +1,122 @@
-# Phase 10 Static Audit Gaps
+# Phase 10 Static Audit Status
 
 Date: 2026-09-01
-Status: static QA note; no Render or Production DB required.
+Status: Q1-Q1594 static audit refreshed and committed.
 
-## Current snapshot gap
+## Current snapshot
 
-`data/question_bank/question_tags_audit.txt` currently describes only Q1-Q1564:
+`data/question_bank/question_tags_audit.txt` now describes Q1-Q1594.
 
-- records: 1564
+Verified totals:
+
+- records: 1594
 - duplicates: 0
 - missing: 0
-- errors: 0
+- schema errors: 0
+- Knowledge Node reference errors: 0
+- answers/explanations/tags inconsistencies: 0
 
-The formal Question Bank is now Q1-Q1594, so the committed audit snapshot is stale by 30 questions.
+Committed in:
 
-The three later import lots are already present in current `question_tags.json`, including Q1565 onward, but their aggregate task/ability/level/safety distributions have not yet been folded into the committed audit report.
+`07fb8a028ea8de29b32cfcdfb63c249ae6951bed`
 
-## Why this matters
+Question Bank validator: PASS.
+Static related tests: 38 passed.
 
-The stale report does not imply the current Question Bank is invalid. Recent validators have passed at 1594 questions. It means only that the human-readable distribution snapshot is not current enough to use for present-day totals or concentration analysis.
+## Current distributions
 
-Do not use the Q1564 report as evidence for current Q1594 percentages.
+Tag version:
 
-## Refresh requirement
+- 0.3 = 200
+- 1.0 = 1394
 
-Regenerate the audit from the current formal files and verify:
+Status:
 
-- Q range Q1-Q1594
-- records 1594
-- no duplicates
-- no missing IDs
-- no schema/reference errors
-- task distribution
-- primary/secondary ability distribution
-- level distribution
-- safety distribution
-- source distribution if the validator already exposes it cleanly
+- reviewed_sample = 200
+- reviewed = 1394
 
-The refresh is observational. Do not retag questions merely to make category distributions look balanced.
+Task:
+
+- assessment 170
+- device 44
+- fact recall 880
+- finding 186
+- goal 17
+- intervention 211
+- prognosis 5
+- safety 81
+
+Primary ability:
+
+- DECIDE 98
+- INTERPRET 186
+- KNOW 880
+- MEASURE 170
+- PREDICT 5
+- PRESCRIBE 255
+
+Secondary ability:
+
+- DECIDE 68
+- INTERPRET 275
+- KNOW 27
+- MEASURE 14
+- PREDICT 1
+- PRESCRIBE 20
+- null 1189
+
+Level:
+
+- 1 = 859
+- 2 = 185
+- 3 = 455
+- 4 = 95
+
+Safety:
+
+- critical 65 (4.1%)
+- moderate 216
+- none 1313
+
+Source:
+
+- original 500
+- past_exam 1094
+
+Compared with the previous Q1-Q1564 report:
+
+- records 1564 -> 1594
+- fact recall 850 -> 880
+- critical 65 -> 65
+- the added 30 questions are all past_exam
+
+## Canonical Node update
+
+Current audit:
+
+- canonical 1509
+- singleton 1433
+- multi-question 76
+
+Previous snapshot:
+
+- singleton 1462
+- multi-question 47
+
+The 29-node shift is expected because new questions turned 29 formerly-singleton canonical Nodes into multi-question Nodes.
+
+Earlier strong/weak different-Q repairability totals were produced before the Q1565-Q1594 imports. Recompute those totals before using them as current supply counts.
 
 ## Follow-on static checks
 
-After the refreshed snapshot exists, compute or inspect:
+Useful later QA includes:
 
 - Safety concentration by field
 - fact_recall concentration by field/source
 - level concentration by field/source
 - singleton vs multi-question canonical Node distribution
-- strong/weak different-Q availability
-- recently imported Q1565-Q1594 contribution to those distributions
+- refreshed strong/weak different-Q availability
+- Q1565-Q1594 contribution by field and repairability
 
 Any imbalance becomes a review candidate, not an automatic rewrite.
 

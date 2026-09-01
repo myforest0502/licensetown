@@ -1,7 +1,7 @@
 # Phase 10 Post-Reset Runbook
 
 Date: 2026-09-01
-Status: Stage A/B complete; Stage C/D remain observational/static QA.
+Status: Stage A/B/D complete; Stage C remains natural-use observation.
 
 This runbook records the Phase 10 closure sequence without requiring synthetic production activity.
 
@@ -36,7 +36,7 @@ The audit payload is metadata only and does not alter question_attempts or user_
 
 ## Stage B — merge/deploy — COMPLETE
 
-Main was fast-forwarded to the audit-lite commit. Render auto-deploy is the normal delivery path; no migration or synthetic Production DB write is required.
+Audit Lite is on main. Render auto-deploy is the normal delivery path; no migration or synthetic Production DB write is required.
 
 ## Stage C — natural post-deploy observation — PENDING REAL USE
 
@@ -50,29 +50,45 @@ After a learner naturally completes adaptive_daily learning, verify from persist
 
 Do not create fake production learning records merely to satisfy this gate.
 
-## Stage D — refresh static Question Bank audit
+## Stage D — refresh static Question Bank audit — COMPLETE
 
-The committed `question_tags_audit.txt` snapshot is stale at Q1564 while the formal bank is Q1-Q1594.
+Committed in:
 
-Regenerate against Q1-Q1594 and confirm:
+`07fb8a028ea8de29b32cfcdfb63c249ae6951bed`
+
+Verified Q1-Q1594 snapshot:
 
 - records 1594
-- no missing IDs
-- no duplicates
-- no schema/reference errors
-- refreshed task/ability/level/safety distributions
+- missing IDs 0
+- duplicates 0
+- schema errors 0
+- Knowledge Node reference errors 0
+- answers/explanations/tags inconsistencies 0
+- validator PASS
+- static related tests 38 passed
 
-Do not change tags merely to force prettier distributions.
+Current canonical summary from the refreshed audit:
+
+- canonical 1509
+- singleton 1433
+- multi-question 76
+
+No tag changes were made merely to force distributions.
 
 ## Stage E — Phase 10 closure gate
 
-Phase 10 closes after:
+Completed:
 
 - recent cooldown v0.2 deployed
 - audit-lite deployed
 - static Q1-Q1594 tag audit refreshed
+
+Remaining operational gate:
+
 - at least one natural adaptive use observed after deployment
 - unexpected consecutive-session overlap is absent, or every overlap is explained by Safety/bank-shortage metadata
+
+Therefore Phase 10 is code/static complete but not yet formally operationally closed.
 
 ## Stage F — Phase 11 start policy
 
