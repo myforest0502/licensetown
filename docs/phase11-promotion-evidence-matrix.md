@@ -28,7 +28,7 @@ Natural adaptive_daily observation confirmed:
 
 Phase 10 is operationally closed.
 
-## C. Question Bank repair supply — IMPROVED, NOT COMPLETE GLOBALLY
+## C. Question Bank repair supply — IMPROVED, CONTENT-QUALITY REVIEW STILL REQUIRED
 
 Initial Production repairability snapshot:
 
@@ -37,7 +37,7 @@ Initial Production repairability snapshot:
 - weak-only: 5
 - same-Q/formally blocked: 129
 
-Q1595-Q1605 then added strong different-Q supply to 11 existing Safety Nodes.
+Q1595-Q1605 added strong different-Q supply to 11 existing Safety Nodes.
 
 Current bank:
 
@@ -47,7 +47,16 @@ Current bank:
 - multi-question: 87
 - validator PASS
 
-All 11 pilot source/new pairs classify as `different_question_strong`.
+All 11 pilot source/new pairs classify structurally as `different_question_strong`.
+
+A manual medical review found no obvious incorrect keyed answer in Q1595-Q1605. However structural STRONG classification does not guarantee sufficient **discriminative quality** for formal repair confirmation. Several items, especially Q1600/Q1602/Q1603, contain very weak or obviously implausible distractors.
+
+Therefore:
+
+- the 11 questions may be used as available strong alternate supply under the current formal engine
+- but a future rise in `repaired` caused by these pilot questions must not automatically be treated as proof that the repair model is educationally validated
+- before using pilot-driven `repairing -> repaired` transitions as strong product evidence, complete the item-quality audit tracked in GitHub Issue #7
+- if any deployed Q has already produced learner evidence, do not silently rewrite it without preserving historical interpretation
 
 This improves Safety repair supply but does not make the whole bank repairable. Global supply expansion remains a separate content task.
 
@@ -66,10 +75,12 @@ J1→J7:
 Confirmed:
 
 - one ordinary wrong does not automatically commandeer a field
-- unknown answers do not create confirmed weakness
+- unknown answers do not create confirmed weakness inside Phase 11 judgment
 - sparse fields are treated conservatively
 - high same-day volume is an observation, not a blocker
 - Shadow does not select exact Q IDs
+
+A separate shared-evidence inconsistency is tracked in Issue #6: `field_evidence` currently allows unknown attempts to enter repeated-weakness aggregation even though Phase 11 itself filters them. Do not consume that field-level repeated-weakness value as confirmed evidence until the inconsistency is fixed.
 
 ## E. Current-vs-Shadow comparison — COMPLETE AS DIAGNOSTIC
 
@@ -82,6 +93,8 @@ Different-target labels:
 - `insufficient_evidence_to_judge`
 
 A stronger formal rank at one snapshot is not proof of better future learning outcome.
+
+Supporter profile accuracy is internally a 0–1 ratio; Issue #5 tracks percentage formatting so QA readers do not misread `0.8` as 0.8%. This is presentation-only and does not alter ranking.
 
 ## F. Known natural disagreement — OBSERVED
 
@@ -192,9 +205,19 @@ After the diagnostic fix:
 - confirm true recent repeat without bypass is absent or individually explained
 - do not treat legitimate spaced checking/recheck as regression
 
+### I9. Repair-transition evidence quality
+
+If Q1595-Q1605 begin producing `repairing -> repaired` transitions:
+
+- confirm the formal transition mechanics are correct
+- separately confirm the pilot question itself is a meaningful independent knowledge check
+- do not count a trivially easy strong-tagged item as full educational validation merely because the formal state changed
+
+Issue #7 owns the content-quality review.
+
 ## J. Promotion decision rule
 
-Do not promote from one screenshot or one favorable disagreement.
+Do not promote from one screenshot, one favorable disagreement, or one burst of pilot repair transitions.
 
 Promotion requires:
 
@@ -207,6 +230,7 @@ Promotion requires:
 - recheck_due behavior observed when naturally available
 - symmetric disagreement review includes Current wins/losses
 - eligible retrospective replay reveals no policy-consistency regression
+- pilot repair evidence is interpreted with item-quality review rather than structural STRONG status alone
 - prospective natural evidence is at least clearly no worse than Baseline
 
 If evidence is mixed, remain Shadow-only rather than changing ranking weights prematurely.
@@ -215,11 +239,14 @@ If evidence is mixed, remain Shadow-only rather than changing ranking weights pr
 
 1. Fix Repeat Structure false-positive classification (Issue #4).
 2. Re-read Production Repeat Structure Audit with corrected semantics.
-3. Implement Phase11 retrospective historical replay (Issue #3).
-4. Read current symmetric Baseline-vs-Shadow profiles.
-5. Review historical/current disagreement winners including Current wins.
-6. Check Safety / sparse coverage / recheck candidates.
-7. Continue prospective natural sampling.
-8. Only then decide on a limited learner-facing pilot.
+3. Fix shared unknown/repeated-weakness field evidence inconsistency (Issue #6) before future consumers rely on it.
+4. Implement Phase11 retrospective historical replay (Issue #3).
+5. Review Q1595-Q1605 discriminative quality before treating pilot repair transitions as strong educational evidence (Issue #7).
+6. Format symmetric profile accuracy clearly in Supporter diagnostics (Issue #5).
+7. Read current symmetric Baseline-vs-Shadow profiles.
+8. Review historical/current disagreement winners including Current wins.
+9. Check Safety / sparse coverage / recheck candidates.
+10. Continue prospective natural sampling.
+11. Only then decide on a limited learner-facing pilot.
 
 Diagnostics robustness Issue #2 (30-question session set-sequence validation) should also be fixed, but it is not a Phase 11 ranking change and does not reopen the already verified Phase 10 natural-use session.
