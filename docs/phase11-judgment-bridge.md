@@ -1,7 +1,7 @@
 # LicenseTown ⑪ 判断システムへの橋渡し設計
 
-Date: 2026-09-01
-Status: design / shadow-only until promotion gate.
+Date: 2026-09-02
+Status: architecture implemented / Shadow diagnostics active / learner-facing promotion pending
 
 ## 目的
 
@@ -19,7 +19,7 @@ Outputs include question_id and selector audit metadata.
 
 ### ⑪ — intent/scope judgment
 
-Inputs may include:
+Inputs include approved formal evidence such as:
 
 - field coverage/accuracy evidence
 - Node-state distribution
@@ -37,9 +37,9 @@ Outputs:
 - question_count
 - recommended_route
 - reason_code
-- user-facing explanation later, after promotion
+- rationale evidence
 
-## Initial intents
+## Implemented intents
 
 - repair
 - recheck
@@ -47,17 +47,19 @@ Outputs:
 - stabilization
 - maintenance
 
-## Design rule
+## Architectural rule
 
 Choose field/purpose first, then let Phase 10 choose exact questions inside the permitted scope.
 
-Do not let Phase 11 duplicate Recent Cooldown, strong/weak/same classification, or formal Node-state transitions.
+Phase 11 does not duplicate Recent Cooldown, strong/weak/same repair classification, or formal Node-state transitions.
 
 ## Recommendation activity
 
 Recommendation plan/progress is context. Completion is based on formal answers in the target field, regardless of which route produced them.
 
 An incomplete plan is not evidence of poor motivation or compliance.
+
+Persisted daily `recommendation_plan` activity is also suitable as a read-only historical Baseline anchor for retrospective Shadow QA. Historical replay must use only attempts available before that plan timestamp.
 
 ## Selection audit use
 
@@ -71,7 +73,7 @@ Audit metadata is not direct mastery evidence and must not mutate Node state.
 
 ## Explanation policy
 
-Internal reason codes should map to short learner-facing explanations only after promotion. Do not expose internal scores.
+Internal reason codes map to short learner-friendly wording in the Phase 12 preview, but the Shadow recommendation is not yet authoritative.
 
 Examples:
 
@@ -80,6 +82,8 @@ Examples:
 - repeated_wrong_cluster -> 同じ知識領域でつまずきが続いているため
 - recheck_due -> 一度できた内容が定着しているか確認するため
 - uncertain_correct_cluster -> 正解できているが迷いが残っているため
+
+Do not expose internal priority scores or developer comparison labels to the learner.
 
 ## Privacy
 
@@ -91,17 +95,28 @@ Consultation usage may be an activity fact. Consultation text/content is never a
 - no consultation-text analysis
 - no pass-probability assertion
 - no strong field weakness claim from one ordinary wrong
-- no fixed demo values
+- no fixed demo values as learner evidence
 - no exact Q IDs from the judgment layer
 - no Node-state mutation
 
-## Implementation order
+## Implementation state
 
-1. deterministic decision table
-2. pure read-only shadow module
-3. diagnostics-only integration
-4. current-vs-shadow comparison
-5. natural-use review
-6. separate explicit promotion change only if evidence supports it
+Completed:
 
-Learner-facing recommendation must remain unchanged during initial shadow implementation.
+1. deterministic J1→J7 decision table
+2. pure read-only Shadow module
+3. supporter diagnostics integration
+4. current-vs-Shadow comparison
+5. symmetric formal evidence profiles allowing either Current or Shadow to be stronger
+6. Phase 12 additive preview presentation
+7. supporting diagnostics for adaptive audit, repairability, repair-supply priority and repeat structure
+
+Pending before learner-facing authority:
+
+1. retrospective historical replay implementation
+2. continuing natural-use review
+3. review of Safety misses / single-wrong overreaction / sparse coverage / recheck_due handling
+4. Phase 11 intent vs Phase 10 exact-selection consistency
+5. explicit limited-pilot promotion decision only if evidence supports it
+
+Learner-facing Baseline recommendation remains authoritative until that separate promotion decision.
