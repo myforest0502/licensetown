@@ -15,6 +15,23 @@
   <section class="card pilot-diagnostic-card"><h2>学習範囲</h2><p>取り組んだNode {{ diagnostics.touched_nodes }} / {{ diagnostics.canonical_node_total }}（{{ diagnostics.coverage }}%）</p></section>
   <section class="card pilot-diagnostic-card"><h2>理解状態</h2><p>未着手 {{ diagnostics.state_counts.unseen }} / 確認中 {{ diagnostics.state_counts.checking }} / 修復中 {{ diagnostics.state_counts.repairing }} / 修復済み {{ diagnostics.state_counts.repaired }} / 定着 {{ diagnostics.state_counts.stable }} / 再確認待ち {{ diagnostics.state_counts.recheck_due }}</p></section>
   <section class="card pilot-diagnostic-card"><h2>修復・定着</h2><p>修復中→修復済み {{ diagnostics.repair_to_repaired }} / 修復済み→修復中 {{ diagnostics.repaired_to_repairing }} / 再確認待ち→定着 {{ diagnostics.due_to_stable }} / 再確認待ち→修復中 {{ diagnostics.due_to_repairing }}</p></section>
+
+  <section class="card pilot-diagnostic-card phase11-shadow-card">
+    <h2>⑪ Shadow判断（開発中）</h2>
+    <p><b>現行おすすめ：</b>{{ diagnostics.shadow_judgment.comparison.current_target or 'なし' }}</p>
+    <p><b>Shadow intent：</b>{{ diagnostics.shadow_judgment.learning_intent }}</p>
+    <p><b>対象分野：</b>{{ diagnostics.shadow_judgment.target_field or '全体' }}</p>
+    <p><b>問題数：</b>{{ diagnostics.shadow_judgment.question_count }}問</p>
+    <p><b>理由：</b>{{ diagnostics.shadow_judgment.reason_label }}（{{ diagnostics.shadow_judgment.reason_code }}）</p>
+    <p><b>判断確度：</b>{{ diagnostics.shadow_judgment.confidence }}</p>
+    <p><b>現行比較：</b>{{ diagnostics.shadow_judgment.comparison.label }}</p>
+    <details class="shadow-evidence"><summary>判断根拠を見る</summary>
+      <ul>{% for item in diagnostics.shadow_judgment.evidence %}<li>{{ item }}</li>{% endfor %}</ul>
+      {% if diagnostics.shadow_judgment.observations %}<p><b>観測フラグ：</b>{{ diagnostics.shadow_judgment.observations|join(', ') }}</p>{% endif %}
+    </details>
+    <p><strong>この判断は学習者画面には反映されていません。</strong></p>
+  </section>
+
   <section class="card pilot-diagnostic-card"><h2>最新のおすすめ30問シミュレーション</h2>
     <p>選定問題数 {{ diagnostics.adaptive_count }} / 重複なし {{ diagnostics.adaptive_unique_questions }} / 対象Node数 {{ diagnostics.adaptive_unique_nodes }}</p>
     <p>修復 {{ diagnostics.adaptive_groups.get('repair', 0) }} / 確認 {{ diagnostics.adaptive_groups.get('checking', 0) }} / 探索 {{ diagnostics.adaptive_groups.get('exploration', 0) }} / 定着維持 {{ diagnostics.adaptive_groups.get('maintenance', 0) }}</p>
