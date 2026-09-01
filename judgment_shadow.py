@@ -132,10 +132,15 @@ def build_shadow_judgment(
             ],
         )
 
-    # Map formal weakness evidence to every field containing the canonical Node.
+    # Map only currently unresolved formal weakness to member fields. Historical
+    # weakness that has already reached repaired/stable/recheck_due must not keep
+    # commandeering the daily recommendation forever.
     weakness_by_field: dict[int, list[dict[str, Any]]] = defaultdict(list)
     for item in weakness:
-        for field_id in fields_by_node.get(item["canonical_node_id"], set()):
+        node_id = item["canonical_node_id"]
+        if states.get(node_id, {}).get("state") != "repairing":
+            continue
+        for field_id in fields_by_node.get(node_id, set()):
             weakness_by_field[field_id].append(item)
 
     # J2: cross-question confident wrong, or >=2 confident-wrong repairing Nodes.
