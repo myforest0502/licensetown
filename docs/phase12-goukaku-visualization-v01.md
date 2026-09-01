@@ -1,13 +1,13 @@
 # LicenseTown Phase 12 — 「合格への道」見える化 v0.1
 
-Date: 2026-09-01
-Status: design fixed / implementation not yet started
+Date: 2026-09-02
+Status: implementation complete / preview pilot active / learner-facing replacement not promoted
 
 ## 1. Purpose
 
 Phase 12 turns LicenseTown's formal learning evidence and Phase 11 judgment into a learner-facing navigation view.
 
-The page must answer, at a glance:
+The page should answer, at a glance:
 
 1. 今どこまで進んでいるか
 2. 何が安定しているか
@@ -16,11 +16,11 @@ The page must answer, at a glance:
 5. 今日、次に何をやるべきか
 6. その理由は何か
 
-This is not an examination pass probability screen. It must never claim a percentage probability of passing.
+This is not an examination pass-probability screen. It must never claim a percentage probability of passing.
 
-## 2. Existing dashboard assets to preserve
+## 2. Existing dashboard assets preserved
 
-The current `/goukaku-no-michi` already has useful production UI and must not be rebuilt unnecessarily:
+`/goukaku-no-michi` continues to preserve the existing production surface:
 
 - exam date / countdown
 - overall progress preview
@@ -32,31 +32,30 @@ The current `/goukaku-no-michi` already has useful production UI and must not be
 - Gensan comment
 - reward / footprint / LINE actions
 
-Phase 12 extends this surface rather than replacing it wholesale.
+Phase 12 is additive during preview. It does not replace the baseline recommendation.
 
-## 3. Evidence sources
+## 3. Approved evidence sources
 
-Learner-facing Phase 12 may only use evidence already approved for formal learning state:
+Phase 12 uses only approved formal evidence:
 
 - question attempts
 - canonical Knowledge Node state
 - field evidence
-- field progress
 - retention / recheck_due state
 - repeated weakness evidence
 - Safety classification
 - Phase 11 deterministic judgment
-- current recommendation plan/progress
+- current recommendation data already present on the dashboard
 
 Do not use consultation text.
 Do not use selector score as mastery.
-Do not infer weakness from Question Bank distribution.
+Do not infer learner weakness from Question Bank distribution.
 
-## 4. Phase 11 boundary
+## 4. Phase boundaries
 
-Phase 11 decides learning intent and scope.
-Phase 10 continues to decide exact Q IDs.
-Phase 12 visualizes the result.
+- Phase 11 decides learning intent and scope.
+- Phase 10 decides exact Q IDs and owns Recent Cooldown.
+- Phase 12 presents the result in learner-friendly language.
 
 Phase 12 must not:
 
@@ -64,203 +63,181 @@ Phase 12 must not:
 - mutate Node state
 - bypass Recent Cooldown
 - create a second weakness/state model
-- reinterpret AI text as formal repair evidence
+- reinterpret AI prose as formal repair evidence
 
-## 5. v0.1 learner-facing information model
+## 5. Implemented v0.1 information model
 
-### A. Overall progress
+### A. State summary
 
-Keep the existing overall progress model based on formal field/Node progress.
+`phase12_presentation.py` presents the six formal states deterministically:
 
-Display:
-
-- overall progress
-- coverage
-- repair completed
+- unseen
+- checking
+- repairing
+- repaired
+- recheck_due
 - stable
 
-Wording must clearly state this is learning progress, not pass probability.
+Internal Node IDs are not exposed to the learner.
 
-### B. Current learning state summary
+### B. 「いま直すところ」
 
-Add a compact state summary derived from formal canonical Node states:
+The presentation adapter maps formal Phase 11 reasons into learner-friendly attention wording for:
 
-- 未確認 / unseen
-- 確認中 / checking
-- 修復中 / repairing
-- 修復済み / repaired
-- 再確認待ち / recheck_due
-- 定着 / stable
+- safety_repair
+- confident_wrong_cluster
+- repeated_wrong_cluster
+- recheck_due
+- uncertain_correct_cluster
 
-The learner does not need raw internal Node IDs.
+No field is labeled weak merely because of one ordinary wrong answer.
 
-### C. "いま直すところ"
+### C. 「今日やること」
 
-Show up to three high-value current issues, prioritized by formal evidence:
+The preview uses Phase 11 output to display:
 
-1. critical Safety unresolved
-2. confident wrong cluster
-3. repeated wrong cluster
-4. recheck_due
-5. uncertain-correct stabilization
-
-Do not label a field as weak from one ordinary wrong answer.
-
-### D. "今日やること"
-
-Phase 11 judgment becomes a learner-friendly action card.
-
-Show:
-
-- target field, or broad adaptive learning when target is None
-- recommended question count
+- target field, or broad recommended learning if no target field exists
+- question count
 - learner-friendly reason
-- action button using existing learning route
+- recommended route identifier
 
-Internal reason codes and scores are not shown.
+The existing baseline recommendation remains authoritative during preview.
 
-### E. "なぜこれをやるの？"
+### D. 「なぜこれをやるの？」
 
-Expose a short evidence explanation without technical internals.
+Current wording is deterministic and deliberately non-technical, for example:
 
-Examples:
+- 「安全に関わる重要な内容を優先して確認します。」
+- 「自信を持って間違えた内容が複数確認されています。」
+- 「一度直した内容を、時間を空けて確認する時期です。」
+- 「まだ十分に取り組めていない分野を広げます。」
 
-- 「自信を持って間違えた内容が複数回確認されています」
-- 「一度直した内容を、時間を空けて確認する時期です」
-- 「まだ十分に取り組めていない分野です」
-- 「迷いながら正解した問題が多く、定着確認が必要です」
+Priority scores, Node IDs, comparison labels, and developer evidence are not exposed.
 
-Never expose priority_score, internal Node IDs, or developer comparison labels.
+## 6. Implementation status
 
-## 6. Promotion safety gate
+### Stage A — presentation adapter — COMPLETE
 
-Phase 11 Shadow is currently diagnostics-only.
-Therefore Phase 12 v0.1 must be implemented behind a default-OFF feature flag before learner-facing promotion.
-
-Proposed flag:
-
-`ENABLE_PHASE12_GUIDANCE_PREVIEW`
-
-Default: OFF.
-
-When OFF:
-
-- current learner dashboard behavior remains exactly unchanged
-- current `build_learning_guidance()` recommendation remains authoritative
-
-When ON in QA/explicit pilot:
-
-- render Phase 12 preview card
-- do not overwrite or delete current recommendation until promotion criteria are met
-- clearly distinguish preview during pilot if necessary
-
-## 7. Promotion criteria
-
-Do not replace current learner-facing recommendation until all are true:
-
-- Phase 10 natural-use audit persistence confirmed
-- no unexplained recent-Q overlap
-- no critical Safety miss in Phase 11 comparison set
-- no repeated overreaction to single ordinary wrong answers
-- recheck_due is not starved
-- sparse learners receive appropriate coverage guidance
-- Phase 11 intent is compatible with Phase 10 selector behavior
-- natural-use comparison shows Phase 11 is at least as relevant and safer than current guidance
-
-## 8. Implementation sequence
-
-### Stage A — data adapter
-
-Create a presentation adapter that converts Phase 11 output + field evidence into learner-facing data.
-
-Suggested module:
+Implemented module:
 
 `phase12_presentation.py`
 
-Pure/read-only. No Flask, DB write, LLM, or exact Q selection.
+Properties:
 
-Suggested output:
+- pure/read-only
+- no Flask dependency
+- no DB write
+- no LLM
+- no exact-Q selection
+- deterministic wording
 
-```python
-{
-    "enabled": True,
-    "intent": "repair",
-    "headline": "今日は精神医学を10問",
-    "reason": "自信を持って間違えた内容を優先して確認します。",
-    "target_field": "精神医学",
-    "question_count": 10,
-    "route": "dashboard_recommendation",
-    "state_summary": {
-        "checking": 12,
-        "repairing": 4,
-        "repaired": 20,
-        "recheck_due": 3,
-        "stable": 8,
-        "unseen": 1462
-    },
-    "attention_items": [...]
-}
-```
+### Stage B — dashboard wiring behind flag — COMPLETE
 
-### Stage B — dashboard wiring behind flag
+`goukaku_ui.build_dashboard()` supports:
 
-In `goukaku_ui.build_dashboard()`:
+`ENABLE_PHASE12_GUIDANCE_PREVIEW`
 
-- reuse attempts/evidence already loaded for progress where practical
-- build current guidance as today
-- build Phase 11 shadow judgment read-only
-- build Phase 12 presentation only when preview flag is enabled
+When the flag is OFF:
 
-Avoid duplicate expensive full-bank calculations where possible.
+- Phase 12 preview payload is absent
+- baseline recommendation remains unchanged
 
-### Stage C — template preview
+When the flag is ON:
 
-Add one self-contained card to `templates/goukaku/home.html`.
+- attempts and field evidence are read
+- Phase 11 shadow judgment is built read-only
+- Phase 12 presentation is added to the dashboard
+- baseline recommendation remains in place
 
-Do not redesign the whole dashboard in v0.1.
-Do not remove current recommendation card.
-Do not alter existing action paths when flag is OFF.
+### Stage C — template preview — COMPLETE
 
-### Stage D — supporter visibility
+Phase 12 is rendered additively in the existing dashboard template. It does not replace the existing recommendation card during pilot.
 
-Read-only supporter view may show the same Phase 12 preview when the flag is enabled, because it uses `build_dashboard()`.
-No action button in read-only mode.
+### Stage D — supporter visibility — COMPLETE
 
-## 9. Minimum tests
+Supporter views reuse the same `build_dashboard()` path in read-only form.
 
-Presentation unit tests:
+A dedicated supporter learner-preview route also exists:
 
-1. safety_repair -> correct learner wording
-2. confident_wrong_cluster -> repair wording
-3. repeated_wrong_cluster -> repair wording
-4. recheck_due -> retention wording
-5. insufficient_coverage -> coverage wording
-6. uncertain_correct_cluster -> stabilization wording
-7. maintenance_only -> broad adaptive wording
-8. internal score/Node ID never exposed
-9. state summary totals are deterministic
+`/supporter/goukaku-no-michi/learner-preview`
 
-Integration/regression:
+This allows display QA without impersonating the learner or writing learning activity.
 
-10. feature flag OFF => existing dashboard payload/render unchanged
-11. feature flag ON => preview payload present
-12. learner recommendation logic remains current baseline during preview
-13. supporter read-only has no start control
-14. no DB write added
-15. no Node-state mutation
-16. no selector/cooldown change
-17. existing Phase 10/11 tests pass
-18. full pytest
-19. Question Bank validator
+## 7. QA completed so far
 
-## 10. Definition of Phase 12 complete
+Completed checks include:
 
-Phase 12 is complete when:
+- feature flag OFF preserves baseline behavior
+- feature flag ON adds preview data
+- presentation reason mappings are deterministic
+- internal Node IDs / selector scores are not exposed
+- no DB migration
+- no Production DB write added by Phase 12
+- no selector change
+- no Node-state change
+- no Phase 10 policy change
+- supporter read-only rendering
+- supporter learner-view preview for display QA
 
-- the learner can understand current learning progress without interpreting raw scores
-- stable / repairing / recheck / unseen state is visible in understandable language
-- the system tells the learner what to do next and why
-- the recommended action routes into the existing study flow
+PC supporter and smartphone visual QA have been completed for the preview surface.
+
+## 8. Current limitation discovered by real diagnostics
+
+Phase 12 correctly reflected the formal state model, but diagnostics showed that `repairing -> repaired` was structurally difficult because strong different-Q evidence supply was extremely sparse.
+
+Before the repair-supply pilot, a Production learner snapshot showed:
+
+- repairing Nodes: 135
+- strong different-Q available: 1
+- weak different-Q only: 5
+- same-Q / formally blocked: 129
+
+This was a Question Bank evidence-supply limitation, not a Phase 12 rendering bug.
+
+Q1595-Q1605 subsequently added eleven strong different-Q Safety repair alternatives. Static validation confirms all eleven source/new pairs are formal strong candidates. Actual `repaired` progress still depends on natural learner responses; Phase 12 must not infer repair merely because supply exists.
+
+## 9. Phase 10 / Phase 11 gate status
+
+Phase 10 is now operationally closed:
+
+- Recent Cooldown v0.2 is on main
+- adaptive audit persistence was confirmed in natural use
+- observed recent overlaps were explained by legitimate Safety singleton supply shortage
+- those eight Safety Nodes were verified to have no non-recent strong alternate at the time
+- current Question Bank audit is valid through Q1605
+
+Phase 11 remains diagnostics-only for learner recommendation authority. Its comparison is now symmetric: the baseline target and Shadow target receive the same formal J1→J7 evidence profile, and either side can have stronger formal evidence.
+
+Phase 12 therefore remains a preview presentation of Shadow guidance; it is not yet the authoritative replacement for the baseline recommendation.
+
+## 10. Promotion criteria still required
+
+Do not replace the current learner-facing recommendation until natural-use evidence supports all of the following:
+
+- no critical Safety miss
+- no repeated overreaction to one ordinary wrong answer
+- sparse learners receive appropriate coverage guidance
+- recheck_due is not starved when such Nodes naturally exist
+- Phase 11 intent is compatible with Phase 10 exact selection
+- disagreements are reviewed symmetrically, including cases where current guidance is stronger
+- adaptive unexplained repeats remain absent or are understood and corrected
+- limited pilot shows Phase 11 guidance is at least as relevant and safe as baseline guidance
+
+A single favorable Shadow example is insufficient for promotion.
+
+See:
+
+`docs/phase11-promotion-evidence-matrix.md`
+
+## 11. Definition of Phase 12 v0.1 implementation complete
+
+The implementation portion of Phase 12 v0.1 is complete because:
+
+- formal state is translated into understandable learner language
+- the system can show what to do next and why
+- the preview is additive and feature-flagged
+- it remains auditable from formal stored evidence
 - no pass-probability claim is made
-- learner-facing promotion has passed the Phase 10/11 natural-use gate
-- the result remains explainable and auditable from formal stored evidence
+- supporter/read-only QA paths exist
+
+Learner-facing recommendation replacement is a separate Phase 11 promotion decision and is not implied by Phase 12 implementation completeness.
