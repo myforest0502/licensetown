@@ -1,7 +1,7 @@
 # Phase 12 Preview QA Runbook
 
 Date: 2026-09-01
-Status: implementation merged to main; visual QA pending with preview flag enabled.
+Status: implementation merged to main; PC presentation surface observed; mobile/owner/supporter visual QA still pending.
 
 ## Current implementation
 
@@ -12,6 +12,28 @@ Main contains Phase 12 v0.1 Preview behind:
 Default is OFF.
 
 When OFF, the learner-facing dashboard remains on the existing recommendation path.
+
+## QA progress recorded on 2026-09-01
+
+Completed/static:
+
+- Preview implementation is on main
+- focused tests passed before merge
+- full suite passes except the known unmanaged `questions_master_candidate_v2_q1_q100.json` fixture absence
+- Question Bank validator passes at Q1-Q1594
+- no DB migration / Production DB write / selector change / Node-state change
+- feature flag is enabled for the explicit QA window
+- PC screenshot confirms the Preview card renders without clipping or horizontal layout break
+- headline/reason/six-state counters/attention row are readable on the observed PC surface
+- no raw Knowledge Node ID, priority score, or developer comparison label is visible in the observed Preview card
+- code inspection confirms the Preview reuses the existing `[data-recommendation-start-url]` JavaScript handler and existing recommendation POST path; no Phase 12-only learning API was added
+
+Still requires visual confirmation:
+
+- learner-owner view action button presence and placement
+- smartphone layout
+- supporter read-only view protections
+- baseline restoration after flag OFF at the end of the QA window
 
 ## Purpose of visual QA
 
