@@ -28,18 +28,22 @@ def build_active_repair_weakness(
     is derived only from evaluable non-unknown attempts in that current run.
     Completed historical repair cycles are excluded.
     """
-    histories: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
-    for source in attempts:
-        item = dict(source)
+    attempts = [dict(item) for item in attempts]
+    user_ids = {str(item.get("user_id") or "") for item in attempts}
+    if len(user_ids) > 1:
+        raise ValueError("attempts must belong to one user")
+
+    histories: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for item in attempts:
         node = canonicalize_knowledge_node_id(
             str(item.get("knowledge_node_id") or "")
         )
         if not node or not item.get("question_id"):
             continue
-        histories[(str(item.get("user_id") or ""), node)].append(item)
+        histories[node].append(item)
 
     result: dict[str, dict[str, Any]] = {}
-    for (_user, node), history in sorted(histories.items()):
+    for node, history in sorted(histories.items()):
         active_cycle = current_repair_cycle(history, as_of=as_of)
         if not active_cycle:
             continue
