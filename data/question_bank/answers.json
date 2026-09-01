@@ -16176,5 +16176,71 @@
       ]
     ],
     "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1595",
+    "display_answer": "D",
+    "accepted_answer_sets": [["D"]],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1596",
+    "display_answer": "B",
+    "accepted_answer_sets": [["B"]],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1597",
+    "display_answer": "C",
+    "accepted_answer_sets": [["C"]],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1598",
+    "display_answer": "C",
+    "accepted_answer_sets": [["C"]],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1599",
+    "display_answer": "C",
+    "accepted_answer_sets": [["C"]],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1600",
+    "display_answer": "A",
+    "accepted_answer_sets": [["A"]],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1601",
+    "display_answer": "D",
+    "accepted_answer_sets": [["D"]],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1602",
+    "display_answer": "C",
+    "accepted_answer_sets": [["C"]],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1603",
+    "display_answer": "C",
+    "accepted_answer_sets": [["C"]],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1604",
+    "display_answer": "B",
+    "accepted_answer_sets": [["B"]],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1605",
+    "display_answer": "B",
+    "accepted_answer_sets": [["B"]],
+    "answer_basis": "LT_original"
   }
 ]

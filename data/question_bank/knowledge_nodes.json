@@ -74,9 +74,10 @@
   {
     "knowledge_node_id": "KN0008",
     "label": "透析患者の運動耐容能評価時期",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q8"
+      "Q8",
+      "Q1595"
     ],
     "aliases": [],
     "successor_ids": []
@@ -244,9 +245,10 @@
   {
     "knowledge_node_id": "KN0025",
     "label": "箸操作の不器用さ、階段での手すり使用、上下肢腱反射亢進、両側Babinski反射陽性から、頸髄症による上肢巧緻運動と歩行機能の障害がみられるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q25"
+      "Q25",
+      "Q1596"
     ],
     "aliases": [],
     "successor_ids": []
@@ -354,9 +356,10 @@
   {
     "knowledge_node_id": "KN0036",
     "label": "すくみ足への外的キュー",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q36"
+      "Q36",
+      "Q1597"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1086,9 +1089,10 @@
   {
     "knowledge_node_id": "KN0109",
     "label": "疲労下の二重課題歩行訓練",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q109"
+      "Q109",
+      "Q1598"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1939,9 +1943,10 @@
   {
     "knowledge_node_id": "KN0194",
     "label": "玄関上がり框への手すり",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q195"
+      "Q195",
+      "Q1599"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3301,9 +3306,10 @@
   {
     "knowledge_node_id": "KN0329",
     "label": "前頸部熱傷瘢痕拘縮を予防する頸部伸展位",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q331"
+      "Q331",
+      "Q1600"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3752,9 +3758,10 @@
   {
     "knowledge_node_id": "KN0374",
     "label": "高CO2血症リスクCOPD急性増悪時の目標SpO2 88〜92％",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q379"
+      "Q379",
+      "Q1601"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6789,9 +6796,10 @@
   {
     "knowledge_node_id": "KN0676",
     "label": "神経原性ショックにおける低血圧・徐脈などの特徴",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q684"
+      "Q684",
+      "Q1602"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7000,9 +7008,10 @@
   {
     "knowledge_node_id": "KN0697",
     "label": "重症COPDに対する有酸素運動強度の設定",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q705"
+      "Q705",
+      "Q1603"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12928,9 +12937,10 @@
   {
     "knowledge_node_id": "KN1288",
     "label": "大腿切断後の股関節屈曲拘縮を予防する肢位管理",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1305"
+      "Q1305",
+      "Q1604"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14838,9 +14848,10 @@
   {
     "knowledge_node_id": "KN1479",
     "label": "ベンゾジアゼピン睡眠薬の自己中断を避け不安を聴取し主治医連携を促す",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1504"
+      "Q1504",
+      "Q1605"
     ],
     "aliases": [],
     "successor_ids": []
