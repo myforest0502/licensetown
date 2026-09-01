@@ -1,7 +1,7 @@
 # LicenseTown ⑩ 実利用QAマトリクス
 
-Date: 2026-09-01
-Status: regression + natural-use observation checklist.
+Date: 2026-09-02
+Status: natural-use closure evidence obtained / permanent regression + observation matrix
 
 ## A. 自動テストで固定する項目
 
@@ -37,7 +37,7 @@ Status: regression + natural-use observation checklist.
 
 ### Audit
 
-adaptive_daily Node-adaptive results may persist exactly:
+adaptive_daily Node-adaptive results may persist exactly these six adaptive audit fields:
 
 - selection_reason
 - selection_group
@@ -46,13 +46,35 @@ adaptive_daily Node-adaptive results may persist exactly:
 - recent_question_repeat
 - recent_cooldown_bypassed
 
-Non-adaptive flows must not persist this adaptive audit payload.
+Non-adaptive flows must not persist this adaptive audit extension.
 
-## B. Natural-use observation
+## B. Natural-use closure evidence obtained
+
+A natural post-deploy adaptive_daily 30-question session confirmed:
+
+- 6 learning events
+- 30 question results
+- 30 unique Q IDs
+- all six adaptive audit fields present
+- 15 repair / 10 checking / 5 exploration in the observed session
+- 8 recent repeats
+- 8 cooldown bypasses
+
+The eight repeat/bypass Qs were:
+
+Q8, Q379, Q1305, Q705, Q109, Q1504, Q195, Q25.
+
+All eight were saved as Safety repair selections with same-question repair evidence. Static repairability review confirmed that all eight affected moderate-Safety singleton Nodes lacked a non-recent strong alternate at that time.
+
+Therefore those observed bypasses were explained by the intended Safety/supply exception. Ordinary repair/checking/exploration selections did not show unexplained cooldown bypass in that audited session.
+
+This evidence closed the Phase 10 operational gate. It does not remove the need for ongoing regressions below.
+
+## C. Continued natural-use observation
 
 ### Consecutive adaptive sessions
 
-Observe:
+Continue observing:
 
 - Q overlap count
 - canonical Node reappearance
@@ -75,6 +97,8 @@ Do not confuse this with the solved recent-Q bug.
 
 Observe whether confident wrong and repeated wrong evidence lead to useful non-recent different-Q repair when supply exists. For singleton Nodes, temporary deferral caused by cooldown is expected and is not equivalent to forgetting the weakness.
 
+Q1595-Q1605 now provide strong alternate supply for 11 previously blocked Safety Nodes, so later natural use can test whether formal `repairing -> repaired` transitions occur when the learner answers those alternate questions correctly with confidence 1.
+
 ### Confidence consistency
 
 Watch especially:
@@ -88,7 +112,7 @@ Watch especially:
 
 For patterns such as recommendation10 + adaptive30 + adaptive30, inspect whether later sessions show rising fallback or concentration.
 
-## C. Red flags
+## D. Red flags
 
 - enough non-recent bank but consecutive-session Q overlap > 0
 - unexplained recent_cooldown_bypassed
@@ -103,7 +127,7 @@ Yellow flags for review, not automatic bugs:
 - coverage intent dominated by old questions
 - long same-day use sharply increases maintenance/fallback
 
-## D. Minimum log fields for later review
+## E. Minimum log fields for later review
 
 - question_id
 - knowledge_node_id
@@ -120,15 +144,22 @@ Yellow flags for review, not automatic bugs:
 - recent_cooldown_bypassed
 - answered_at
 
-## E. Permanent Phase 10 regressions
+## F. Diagnostics robustness note
 
-Keep these even after Phase 11:
+The saved-session diagnostic currently identifies a complete 30-question session primarily from event/result counts and uniqueness. A separate diagnostics-only hardening issue is open to also validate the expected six set suffixes/session identity so malformed event sequences cannot theoretically receive a false PASS.
+
+This is a QA-display robustness task and does not reopen the already established Phase 10 natural-use closure.
+
+## G. Permanent Phase 10 regressions
+
+Keep these even after Phase 11/12:
 
 1. consecutive adaptive overlap=0 with sufficient bank
 2. singleton-heavy overlap=0
-3. Safety singleton fallback
+3. Safety singleton fallback only when alternate supply is unavailable
 4. strong > weak > recent same-Q
 5. exclude_ids absolute exclusion
 6. Node diversity
 7. repaired/recheck_due/stable transitions
 8. adaptive audit persistence
+9. unexplained adaptive repeat/bypass remains a red flag
