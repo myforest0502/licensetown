@@ -1,40 +1,44 @@
 # Phase 11 Shadow Implementation Plan
 
-Date: 2026-09-01
-Status: ready for diagnostics-only implementation; learner-facing promotion remains gated by Phase 10 natural-use observation.
+Date: 2026-09-02
+Status: diagnostics implementation complete / symmetric comparison complete / learner-facing promotion pending natural-use evidence
 
-## First integration target
+## Implemented integration target
 
-Do not connect Phase 11 v0.1 to the learner dashboard first.
-
-The safest initial integration point is the existing read-only supporter pilot diagnostics page:
+Phase 11 v0.1 is integrated into the existing read-only supporter pilot diagnostics page:
 
 `/supporter/pilot-diagnostics`
 
-Reason:
+This remains the correct primary evaluation surface because it:
 
-- development diagnostics already exists
-- it reads formal attempt history
-- it can compare existing recommendation and a shadow result
-- it does not change learner study flow
-- it provides a place to inspect evidence before promotion
+- reads formal attempt history
+- shows the current recommendation and Shadow judgment side by side
+- exposes evidence for developer review
+- does not replace learner study flow
+- adds no learning write path
 
-## Proposed module
+## Implemented module
 
-Create `judgment_shadow.py` as a pure/read-only deterministic module.
+`judgment_shadow.py`
 
-Suggested function:
+Primary API:
 
 ```python
 def build_shadow_judgment(attempts, field_evidence, current_guidance, *, as_of=None):
     ...
 ```
 
-No Flask/UI logic, no DB write, no LLM call.
+The module remains deterministic and read-only:
 
-## Decision policy
+- no Flask dependency for judgment logic
+- no DB write
+- no LLM call
+- no exact-Q selection
+- no Node-state mutation
 
-Use the deterministic order in `phase11-v01-decision-table.md`:
+## Decision policy — COMPLETE
+
+The deterministic order is implemented as J1→J7:
 
 1. critical Safety repair
 2. confident wrong cluster
@@ -44,24 +48,26 @@ Use the deterministic order in `phase11-v01-decision-table.md`:
 6. uncertain-correct stabilization
 7. maintenance
 
-The output explains the recommendation using explicit reason codes and evidence values.
+Unknown answers do not create confirmed weakness evidence.
 
-## Reuse existing evidence
+## Evidence reuse — COMPLETE
 
-Prefer current read-only helpers rather than new aggregation tables:
+Phase 11 reuses existing formal evidence rather than creating a parallel state system:
 
-- get_question_attempts
-- field evidence/progress helpers
+- question attempts
+- field evidence
 - repeated weakness evidence
-- formal Node state / retention evidence
+- canonical Node state / retention evidence
 - current production guidance as control
-- question tags / canonical Node mapping for Safety and field membership
+- question tags / canonical mapping for Safety and field membership
 
-Do not consume consultation content.
+Consultation content is not consumed.
 
-## Current-vs-shadow comparison
+## Current-vs-shadow comparison — COMPLETE AND SYMMETRIC
 
-Return a comparison block containing current and shadow targets/reasons plus one label:
+The first comparison implementation was intentionally diagnostics-only. It has since been strengthened so the current target field and Shadow target field receive the same formal J1→J7 evidence profile.
+
+Supported labels:
 
 - same_target_same_reason
 - same_target_stronger_reason
@@ -69,60 +75,83 @@ Return a comparison block containing current and shadow targets/reasons plus one
 - different_target_current_has_stronger_evidence
 - insufficient_evidence_to_judge
 
-Do not auto-score which system is better yet.
+Important interpretation:
 
-## Diagnostics UI
+- the current target can have stronger formal evidence
+- the Shadow target can have stronger formal evidence
+- equal ranks remain inconclusive
+- the current target profile describes evidence present in that field; it does not claim the baseline algorithm selected the field for that formal reason
+- comparison is diagnostic evidence, not proof of future learning outcome
 
-If `/supporter/pilot-diagnostics` is used, add a clearly development-only card:
+No weighted winner score is used.
 
-`⑪ Shadow判断（開発中）`
+## Diagnostics UI — COMPLETE
 
-Display:
+`/supporter/pilot-diagnostics` includes the development-only Phase 11 Shadow section.
 
-- current recommendation
-- shadow intent
-- target field
-- question count
-- reason code / Japanese label
-- confidence in rationale
-- evidence list
+It can display:
+
+- current recommendation target
+- Shadow intent / target / count
+- reason code and learner-independent rationale confidence
+- evidence values
+- symmetric current-vs-Shadow formal evidence profiles
 - comparison label
+- Shadow reason/profile consistency
 
-Prominent warning:
+The diagnostic result does not write or mutate learner state.
 
-`この判断は学習者画面には反映されていません。`
+## Additional diagnostics now supporting Phase 11 evaluation
 
-No write/mutation controls.
+The supporter diagnostic surface also includes:
 
-## Minimum tests
+- confident-wrong Node detail
+- saved adaptive_daily 30-question audit
+- repairing-Node repairability
+- strong repair-supply priority
+- repeat structure audit
 
-Pure judgment:
+These diagnostics were added to answer concrete natural-use questions before promotion rather than changing behavior prematurely.
 
-1. sparse/new learner -> coverage
-2. one ordinary wrong does not commandeer field recommendation
-3. critical Safety wrong -> safety repair
-4. cross-question confident wrong -> repair
-5. cross-question wrong -> repair
-6. lone repeated same-Q wrong does not commandeer field
-7. recheck_due -> recheck when no urgent repair
-8. uncertain-correct cluster -> stabilization
-9. no higher evidence -> maintenance
-10. ties deterministic
-11. consultation content not accepted as judgment input
+## Question Bank repair-supply pilot
 
-Integration/regression:
+Natural diagnostics found that formal repair supply was a major constraint: a snapshot of 135 repairing Nodes had only one strong different-Q candidate, five weak-only Nodes, and 129 same-Q/formally blocked Nodes.
 
-12. diagnostics can include shadow result
-13. development-only warning renders
-14. learner dashboard recommendation remains unchanged
-15. judgment module imports/calls no write helper
-16. no Node-state mutation
-17. existing adaptive/field/pilot tests pass
-18. full pytest
-19. Question Bank validator
+Q1595-Q1605 therefore added eleven targeted strong different-Q alternatives for Safety repairing Nodes. All eleven source/new pairs pass formal strong classification. This changes available evidence supply only; it does not itself mark any learner Node repaired.
 
-## Promotion policy
+## Phase 10 dependency — CLOSED
 
-Passing tests is not enough to switch the learner dashboard.
+Phase 10 is now operationally closed:
 
-Keep the first implementation diagnostics-only. Promotion requires a later explicit feature-flagged change after natural-use comparison shows it is safer/more relevant than the baseline.
+- Recent Cooldown v0.2 is on main
+- adaptive audit metadata persistence was confirmed in natural use
+- observed recent overlap/bypass was fully explained by legitimate Safety singleton supply shortage
+- no unexplained ordinary adaptive overlap remained in the audited session
+- Question Bank validator is current through Q1605
+
+Phase 11 promotion therefore no longer waits on Phase 10 closure. It waits on Phase 11 natural-use promotion evidence.
+
+## Promotion policy — STILL GATED
+
+Passing tests and shipping diagnostics to main are not enough to replace the learner-facing recommendation.
+
+Promotion requires natural-use review showing, at minimum:
+
+- no critical Safety miss
+- no recurring overreaction to a single ordinary wrong
+- appropriate sparse-learner coverage
+- no starvation of naturally occurring recheck_due work
+- compatibility between Phase 11 intent and Phase 10 exact selection
+- symmetric review of disagreements, including current-guidance wins
+- no unexplained adaptive repeat pattern
+- enough natural examples to justify a limited learner-facing pilot
+
+See:
+
+`docs/phase11-promotion-evidence-matrix.md`
+
+## Current next step
+
+Do not redesign J1→J7 simply because one Shadow/current disagreement is observed.
+
+Continue collecting natural-use diagnostics. When enough disagreement and agreement examples exist, use the promotion evidence matrix to decide whether a limited feature-flagged learner-facing pilot is justified.
