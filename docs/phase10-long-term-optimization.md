@@ -1,9 +1,9 @@
 # LicenseTown ⑩ 長期最適化 — 正式仕様メモ
 
-Date: 2026-09-01
-Status: runtime invariants and static Q1-Q1594 audit fixed; natural-use observation remains before formal Phase 10 closure.
+Date: 2026-09-02
+Status: runtime/static/natural-use closure COMPLETE through Q1605; permanent regressions retained
 
-This document records architecture and QA rules. It does not change runtime behavior.
+This document records Phase 10 architecture and QA rules. It does not change runtime behavior.
 
 ## 1. Formal Node-state invariants
 
@@ -32,21 +32,37 @@ Retention:
 
 Written confirmation and AI semantic confirmation remain diagnostic/research aids only; they are not formal repair evidence.
 
-## 2. Canonical Knowledge Node rule
+## 2. Canonical Knowledge Node and current bank
 
 Historical Node IDs are preserved and resolved to canonical roots. State/evidence calculations operate on canonical Nodes rather than treating approved aliases as independent knowledge units.
 
-Current Q1-Q1594 audit counts:
+Current formal bank snapshot:
 
+- Q range: Q1-Q1605
+- records: 1605
 - canonical Nodes: 1509
-- singleton canonical Nodes: 1433
-- multi-question canonical Nodes: 76
+- singleton canonical Nodes: 1422
+- multi-question canonical Nodes: 87
+- validator: PASS
 
-The previous Q1-Q1564 snapshot was singleton 1462 / multi-question 47. The 29-node shift is expected because newly imported past-exam questions added a second question to 29 formerly-singleton canonical Nodes.
+Historical snapshots:
 
-The earlier Phase 10 repairability research (performed before the Q1565-Q1594 imports) found strong different-Q repair possible: 3, weak-only different-Q: 44, formally unrepairable under the then-current strong-evidence rule: 1506. Those repairability counts are historical research results and should be recomputed before treating them as current Q1-Q1594 supply counts.
+- Q1-Q1564: singleton 1462 / multi 47
+- Q1-Q1594: singleton 1433 / multi 76
+- Q1-Q1605: singleton 1422 / multi 87
 
-The bank remains singleton-heavy, which must be considered in adaptive QA.
+The bank remains singleton-heavy, so adaptive QA must continue to account for repair-evidence supply.
+
+The old pre-Q1565 research totals (strong different-Q 3 / weak-only 44 / formally unrepairable 1506) are historical only and must not be used as current supply counts.
+
+A later Production learner diagnostic found a much more decision-relevant snapshot among currently repairing Nodes:
+
+- repairing: 135
+- strong different-Q available: 1
+- weak-only: 5
+- same-Q/formally blocked: 129
+
+This exposed a real repair-supply constraint. Q1595-Q1605 then added 11 targeted strong different-Q alternatives for existing moderate-Safety Nodes. All 11 source/new pairs classify as formal strong. Availability does not itself mark learner Nodes repaired.
 
 ## 3. Recent Question Cooldown v0.2
 
@@ -63,7 +79,7 @@ The 15/10/5 repair/checking/exploration composition for a 30-question session is
 
 Explicit `exclude_ids` are absolute and never return through fallback.
 
-Safety singleton exception:
+Safety same-Q exception:
 
 - prefer non-recent strong different-Q
 - then non-recent weak different-Q
@@ -71,13 +87,9 @@ Safety singleton exception:
 
 A cooldown bypass must be auditable.
 
-## 4. Adaptive selection audit — merged
+## 4. Adaptive selection audit — COMPLETE
 
-Merged on main in:
-
-`9a0d4a0dbf3c087808040a7c2722862be4cc9c40`
-
-For adaptive_daily Node-adaptive selections, the learning event result may persist exactly these lightweight fields:
+Audit-lite is on main. Adaptive_daily Node-adaptive results may persist:
 
 - selection_reason
 - selection_group
@@ -86,53 +98,68 @@ For adaptive_daily Node-adaptive selections, the learning event result may persi
 - recent_question_repeat
 - recent_cooldown_bypassed
 
-This metadata is for post-selection explanation and QA. It does not mutate Node state and does not become question-attempt evidence.
+The result payload also contains normal learning metadata such as `learning_source`; the six fields above are the adaptive audit extension.
 
-Non-adaptive random/manual/dashboard/nekketsu flows do not receive this adaptive selection metadata.
+This metadata is for post-selection explanation and QA. It does not become formal Node-state evidence by itself.
+
+Non-adaptive flows must not receive the six adaptive audit fields.
 
 ## 5. Responsibility boundary
 
-Phase 10 selector decides exact candidate questions. It owns:
+Phase 10 owns exact candidate selection:
 
 - Safety ordering within candidate selection
 - repair evidence preference
 - Node diversity
-- recent cooldown
+- Recent Cooldown
 - fallback behavior
 - exact Q selection
 
-The future Phase 11 judgment layer decides intent and scope, not Q IDs. It must not duplicate or override Phase 10's formal Node-state rules.
+Phase 11 is now implemented as a deterministic read-only judgment layer for intent and scope. It must not duplicate or override Phase 10's exact-Q/cooldown/state responsibilities.
 
-## 6. Real-use QA invariants
+Phase 12 is presentation only.
 
-Red flags:
+## 6. Natural-use closure evidence — COMPLETE
 
-- consecutive adaptive sessions overlap when enough non-recent bank exists
-- recent_cooldown_bypassed without Safety or true supply shortage
-- duplicate Q inside one session
-- excluded Q returns
-- recent same-Q chosen while usable non-recent different-Q exists
+A natural adaptive_daily 30-question session confirmed:
 
-Observed overlap is not automatically a bug if the audit metadata proves a valid Safety/supply fallback.
+- 6 saved learning events
+- 30 question results
+- 30 unique Q IDs
+- all six adaptive audit fields present
+- observed recent repeats/bypasses: 8
+- all 8 were `safety_wrong` repair cases with same-question evidence
 
-## 7. Phase 10 closure gate
+The eight affected Qs were:
 
-Code/static work is structurally complete when:
+Q8, Q379, Q1305, Q705, Q109, Q1504, Q195, Q25.
 
-- cooldown v0.2 is on main
-- audit-lite is on main
-- regression tests preserve state/repair/retention behavior
-- static Q1-Q1594 tag audit is current
+Static repairability review confirmed that all eight affected Safety Nodes had no non-recent strong alternate at that time. The observed bypasses were therefore explained by the intended Safety/supply exception rather than ordinary cooldown failure.
 
-All four are complete as of the Q1-Q1594 audit commit `07fb8a028ea8de29b32cfcdfb63c249ae6951bed`.
+No synthetic Production learning events were created to close this gate.
 
-Operational closure still requires at least one natural post-deploy adaptive session showing that production history contains the audit fields and that any overlap is explainable.
+Phase 10 is operationally closed.
 
-Do not create synthetic Production DB records solely to close the gate.
+## 7. Permanent Phase 10 regressions
 
-## 8. Phase 11 handoff
+Keep these checks even after Phase 11/12:
 
-Phase 11 begins as deterministic, read-only shadow judgment. It may use:
+- enough non-recent supply -> no unnecessary recent Q
+- consecutive adaptive sessions avoid recent overlap when supply permits
+- Safety exception is explainable
+- strong different-Q > weak different-Q > recent same-Q
+- exclude_ids remains absolute
+- no duplicate Q within a session
+- Node diversity remains controlled
+- formal repaired/recheck_due/stable transitions remain intact
+- adaptive audit persistence remains intact
+- unexplained `recent_cooldown_bypassed` is a red flag
+
+A diagnostics hardening item remains open: the 30-question audit completeness check should eventually verify the expected session-set sequence rather than counts alone. This is QA robustness only and does not reopen Phase 10 closure.
+
+## 8. Phase 11 handoff — ACTIVE
+
+Phase 11 diagnostics are on main and may use:
 
 - field evidence
 - formal Node-state distribution
@@ -150,4 +177,6 @@ It must not:
 - infer mastery from selector score
 - mutate Node state
 - hard-code exact question IDs
-- replace learner-facing guidance until shadow evidence supports promotion
+- replace learner-facing guidance until promotion evidence supports a limited pilot
+
+Current Phase 11 evaluation adds symmetric Current-vs-Shadow evidence profiles and is preparing retrospective replay of persisted historical recommendation plans.
