@@ -7,9 +7,12 @@ from zoneinfo import ZoneInfo
 
 from adaptive_question_selector import select_node_adaptive_questions
 from database import get_question_attempts
+from field_evidence import build_field_evidence
+from judgment_shadow import build_shadow_judgment, compare_current_and_shadow
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import STATES, derive_all_user_node_states, derive_state_timeline
 from knowledge_node_weakness_evidence import derive_repeated_weakness_evidence
+from learning_analysis import build_learning_guidance
 from question_bank import get_question_tag, question_ids
 
 
@@ -56,6 +59,10 @@ def build_adaptive_selection_audit(adaptive):
             reason_parts.append("strong別問題の修復確認候補")
         if item.get("same_question_repeat"):
             reason_parts.append("同一問題の再出題（減点済み）")
+        if item.get("recent_question_repeat"):
+            reason_parts.append("直近30回答のQ")
+        if item.get("recent_cooldown_bypassed"):
+            reason_parts.append("Recent Cooldown例外")
         details.append({
             **item,
             "rank": rank,
@@ -74,6 +81,23 @@ def build_adaptive_selection_audit(adaptive):
 
 def _canonical_total():
     return len({canonicalize_knowledge_node_id(get_question_tag(q)["knowledge_node_id"]) for q in question_ids()})
+
+
+def _legacy_fields_from_evidence(evidence):
+    """Adapt read-only field evidence to the existing guidance input shape."""
+    return [
+        {
+            "category_small": int(field["field_id"]),
+            "name": field["field_name"],
+            "answered_count": int(field.get("question_answer_count") or 0),
+            "correct_count": int(field.get("question_correct_count") or 0),
+            "accuracy": (
+                round(float(field["question_accuracy"]) * 100)
+                if field.get("question_accuracy") is not None else None
+            ),
+        }
+        for field in evidence.get("fields", [])
+    ]
 
 
 def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
@@ -109,6 +133,15 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
     weakness = [item for item in derive_repeated_weakness_evidence(all_attempts)
                 if item["evidence_level"] in {"CROSS_QUESTION_WRONG", "CROSS_QUESTION_CONFIDENT_WRONG"}]
     weakness.sort(key=lambda item: (item["wrong_question_count"], item["confident_wrong_count"]), reverse=True)
+
+    evidence = build_field_evidence(all_attempts, as_of=now)
+    legacy_fields = _legacy_fields_from_evidence(evidence)
+    current_guidance = build_learning_guidance(len(all_attempts), legacy_fields)
+    shadow_judgment = build_shadow_judgment(
+        all_attempts, evidence, current_guidance, as_of=now
+    )
+    shadow_comparison = compare_current_and_shadow(current_guidance, shadow_judgment)
+
     return {
         "period": period, "start_at": start_at, "total_attempts": len(attempts),
         "unique_questions": len({a.get("question_id") for a in attempts}), "correct": correct,
@@ -126,4 +159,6 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         "adaptive_unique_nodes": len({x["canonical_node_id"] for x in adaptive}),
         "adaptive_groups": dict(adaptive_groups), "adaptive_details": adaptive_details,
         "adaptive_audit_text": adaptive_audit_text, "weakness": weakness[:10],
+        "shadow_judgment": shadow_judgment,
+        "shadow_comparison": shadow_comparison,
     }
