@@ -7,6 +7,20 @@ Phase 11 shadow exists to compare deterministic learning-intent judgments with t
 
 For every eligible snapshot, capture current target/reason and shadow intent/target/question_count/reason_code/confidence/evidence plus a comparison label.
 
+Comparison is symmetric. Both the current target field and the shadow target
+field receive the same formal J1→J7 evidence profile from the same attempt and
+field-evidence snapshot. The profile records its strongest applicable reason and
+lexicographic rank plus the underlying Safety, weakness, retention, coverage,
+uncertain-correct, and state counts. No weighted score is used. A different
+shadow target is stronger only when its formal reason rank is strictly higher;
+the current target can win by the same rule. Equal ranks or unavailable profiles
+remain `insufficient_evidence_to_judge`.
+
+The current target profile describes evidence actually present in that field.
+It must not copy the baseline phase or recommendation reason. The shadow profile
+is built independently and its strongest reason is checked against the actual
+shadow decision reason as a diagnostic consistency signal.
+
 Review labels:
 
 - same_target_same_reason

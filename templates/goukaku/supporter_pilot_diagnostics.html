@@ -94,6 +94,19 @@
     <p><b>理由：</b>{{ diagnostics.shadow_judgment.reason_label }}（{{ diagnostics.shadow_judgment.reason_code }}）</p>
     <p><b>判断確度：</b>{{ diagnostics.shadow_judgment.confidence }}</p>
     <p><b>現行比較：</b>{{ diagnostics.shadow_judgment.comparison.label }}</p>
+    {% set comparison = diagnostics.shadow_judgment.comparison %}
+    <div class="phase11-symmetric-comparison">
+      <h3>対称的な根拠比較</h3>
+      {% for title, profile in [('現行対象分野', comparison.current_target_formal_evidence), ('Shadow対象分野', comparison.shadow_target_formal_evidence)] %}
+      <div class="phase11-field-profile">
+        <h4>{{ title }}：{{ profile.field_name if profile else '根拠データなし' }}</h4>
+        {% if profile %}<p>最強根拠：{{ profile.strongest_reason_label }}（{{ profile.strongest_reason_code }} / J{{ profile.reason_rank }}）</p>
+        <p>Safety未解決 {{ profile.critical_safety_unresolved_count }} / 別Q自信あり誤答Node {{ profile.cross_question_confident_wrong_node_count }} / 自信あり修復中Node {{ profile.distinct_confident_wrong_repairing_node_count }}</p>
+        <p>別Q誤答Node {{ profile.cross_question_wrong_node_count }} / 反復弱点Node {{ profile.repeated_weakness_node_count }} / 再確認待ち {{ profile.recheck_due_node_count }}</p>
+        <p>回答 {{ profile.answered_count }} / 正答率 {{ profile.accuracy if profile.accuracy is not none else 'なし' }} / Node coverage {{ profile.node_coverage_percent }}%</p>{% endif %}
+      </div>{% endfor %}
+      <p><b>Shadow理由とprofileの整合：</b>{{ 'PASS' if comparison.shadow_reason_profile_consistent else '要確認' }}</p>
+    </div>
     <details class="shadow-evidence"><summary>判断根拠を見る</summary>
       <ul>{% for item in diagnostics.shadow_judgment.evidence %}<li>{{ item }}</li>{% endfor %}</ul>
       {% if diagnostics.shadow_judgment.observations %}<p><b>観測フラグ：</b>{{ diagnostics.shadow_judgment.observations|join(', ') }}</p>{% endif %}

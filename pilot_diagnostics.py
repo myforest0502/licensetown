@@ -13,7 +13,11 @@ from database import (
     get_question_attempts,
 )
 from field_evidence import build_field_evidence
-from judgment_shadow import build_shadow_comparison, build_shadow_judgment
+from judgment_shadow import (
+    build_field_judgment_evidence_profiles,
+    build_shadow_comparison,
+    build_shadow_judgment,
+)
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import STATES, derive_all_user_node_states, derive_state_timeline
 from knowledge_node_weakness_evidence import derive_repeated_weakness_evidence
@@ -489,9 +493,14 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         current_guidance,
         as_of=now,
     )
+    field_judgment_profiles = build_field_judgment_evidence_profiles(
+        all_attempts,
+        field_evidence,
+    )
     shadow_judgment["comparison"] = build_shadow_comparison(
         current_guidance,
         shadow_judgment,
+        field_judgment_profiles,
     )
     confident_wrong_node_details = build_confident_wrong_node_details(
         all_attempts,

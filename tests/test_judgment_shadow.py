@@ -1,7 +1,11 @@
 from datetime import datetime, timedelta, timezone
 
 import judgment_shadow
-from judgment_shadow import build_shadow_comparison, build_shadow_judgment
+from judgment_shadow import (
+    build_field_judgment_evidence_profiles,
+    build_shadow_comparison,
+    build_shadow_judgment,
+)
 
 
 NOW = datetime(2026, 9, 1, 9, 0, tzinfo=timezone.utc)
@@ -220,3 +224,74 @@ def test_comparison_labels_same_foundation_target_without_auto_scoring():
     }
     comparison = build_shadow_comparison(current("解剖学", "foundation"), shadow)
     assert comparison["label"] == "same_target_same_reason"
+
+
+def test_symmetric_comparison_can_find_current_target_stronger():
+    profiles = {
+        "内科学": {"reason_rank": 1, "strongest_reason_code": "safety_repair"},
+        "神経学": {"reason_rank": 3, "strongest_reason_code": "repeated_wrong_cluster"},
+    }
+    comparison = build_shadow_comparison(
+        current("内科学", "analysis"),
+        {"target_field": "神経学", "reason_code": "repeated_wrong_cluster"},
+        profiles,
+    )
+    assert comparison["label"] == "different_target_current_has_stronger_evidence"
+    assert comparison["shadow_reason_profile_consistent"] is True
+
+
+def test_symmetric_comparison_can_find_shadow_target_stronger():
+    profiles = {
+        "内科学": {"reason_rank": 5, "strongest_reason_code": "insufficient_coverage"},
+        "神経学": {"reason_rank": 2, "strongest_reason_code": "confident_wrong_cluster"},
+    }
+    comparison = build_shadow_comparison(
+        current("内科学", "analysis"),
+        {"target_field": "神経学", "reason_code": "confident_wrong_cluster"},
+        profiles,
+    )
+    assert comparison["label"] == "different_target_shadow_has_stronger_evidence"
+
+
+def test_equal_rank_different_targets_stays_insufficient():
+    profiles = {
+        "内科学": {"reason_rank": 5, "strongest_reason_code": "insufficient_coverage"},
+        "神経学": {"reason_rank": 5, "strongest_reason_code": "insufficient_coverage"},
+    }
+    comparison = build_shadow_comparison(
+        current("内科学", "analysis"),
+        {"target_field": "神経学", "reason_code": "insufficient_coverage"},
+        profiles,
+    )
+    assert comparison["label"] == "insufficient_evidence_to_judge"
+
+
+def test_profiles_use_formal_safety_and_exclude_unknown(monkeypatch):
+    catalog(monkeypatch, {"Q1": ("KN0001", 8)}, critical={"KN0001"})
+    ev = evidence(states={"KN0001": "repairing"})
+    unknown_profiles = build_field_judgment_evidence_profiles(
+        [attempt("Q1", "KN0001", correct=False, confidence=None, unknown=True)], ev
+    )
+    assert unknown_profiles["F8"]["critical_safety_unresolved_count"] == 0
+    profiles = build_field_judgment_evidence_profiles(
+        [attempt("Q1", "KN0001", correct=False, confidence=1)], ev
+    )
+    assert profiles["F8"]["strongest_reason_code"] == "safety_repair"
+    assert profiles["F8"]["reason_rank"] == 1
+
+
+def test_profile_confident_wrong_requires_same_formal_threshold(monkeypatch):
+    catalog(monkeypatch, {"Q1": ("KN0001", 10), "Q2": ("KN0002", 10)})
+    attempts = [
+        attempt("Q1", "KN0001", correct=False, confidence=1),
+        attempt("Q2", "KN0002", correct=False, confidence=1),
+    ]
+    profiles = build_field_judgment_evidence_profiles(
+        attempts,
+        evidence(
+            states={"KN0001": "repairing", "KN0002": "repairing"},
+            overrides={10: {"repairing_node_count": 2}},
+        ),
+    )
+    assert profiles["F10"]["distinct_confident_wrong_repairing_node_count"] == 2
+    assert profiles["F10"]["strongest_reason_code"] == "confident_wrong_cluster"

@@ -48,6 +48,15 @@ CONFIDENCE_RATIONALES = {
     "high": "Safetyまたは複数の誤答証拠があり、優先理由が明確です。",
     "medium": "決定表の条件には一致していますが、緊急修復より弱い根拠です。",
 }
+REASON_RANKS = {
+    "safety_repair": 1,
+    "confident_wrong_cluster": 2,
+    "repeated_wrong_cluster": 3,
+    "recheck_due": 4,
+    "insufficient_coverage": 5,
+    "uncertain_correct_cluster": 6,
+    "maintenance_only": 7,
+}
 
 
 def _catalog() -> dict[str, Any]:
@@ -141,11 +150,125 @@ def _current_target(current_guidance: dict[str, Any] | None) -> str | None:
     return str(first[0]) if isinstance(first, (list, tuple)) and first else None
 
 
+def build_field_judgment_evidence_profiles(
+    attempts: Iterable[dict[str, Any]],
+    field_evidence: dict[str, Any],
+) -> dict[str, dict[str, Any]]:
+    """Build symmetric, read-only J1→J7 evidence profiles for every field."""
+    attempts = [dict(item) for item in attempts]
+    fields = _field_map(field_evidence)
+    states = _node_states(field_evidence)
+    evaluable = [item for item in attempts if item.get("answer_status") != "unknown"]
+    weakness = {
+        item["canonical_node_id"]: item
+        for item in derive_repeated_weakness_evidence(evaluable)
+    }
+    attempts_by_node: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    uncertain_correct_by_field: Counter[int] = Counter()
+    for item in attempts:
+        q_id = _normalize_question_id(item.get("question_id"))
+        node_id = _CATALOG["node_by_question"].get(q_id)
+        field_id = _CATALOG["field_by_question"].get(q_id)
+        if node_id:
+            attempts_by_node[node_id].append(item)
+        if (
+            field_id is not None
+            and item.get("is_correct") is True
+            and item.get("answer_status") != "unknown"
+            and item.get("confidence") in {2, 3}
+        ):
+            uncertain_correct_by_field[field_id] += 1
+
+    total_answers = len(attempts)
+    profiles: dict[str, dict[str, Any]] = {}
+    for field_id, field in fields.items():
+        node_ids = {
+            node_id
+            for node_id, member_fields in _CATALOG["fields_by_node"].items()
+            if field_id in member_fields
+        }
+        field_weakness = [weakness[node_id] for node_id in node_ids if node_id in weakness]
+        confident_repair_nodes = {
+            node_id
+            for node_id in node_ids
+            if states.get(node_id, {}).get("state") == "repairing"
+            and any(
+                item.get("is_correct") is False
+                and item.get("answer_status") != "unknown"
+                and item.get("confidence") == 1
+                for item in attempts_by_node.get(node_id, [])
+            )
+        }
+        critical_unresolved = sum(
+            node_id in _CATALOG["critical_nodes"]
+            and states.get(node_id, {}).get("state", "unseen") in UNRESOLVED_STATES
+            and any(
+                item.get("is_correct") is False
+                and item.get("answer_status") != "unknown"
+                for item in attempts_by_node.get(node_id, [])
+            )
+            for node_id in node_ids
+        )
+        cross_confident = sum(
+            item.get("evidence_level") == CROSS_QUESTION_CONFIDENT_WRONG
+            for item in field_weakness
+        )
+        cross_wrong = sum(
+            item.get("evidence_level") == CROSS_QUESTION_WRONG
+            for item in field_weakness
+        )
+        repeated = sum(
+            item.get("evidence_level") in REPEATED_LEVELS for item in field_weakness
+        )
+        recheck_due = sum(
+            item.get("state") == "recheck_due"
+            for item in field.get("retention_nodes", [])
+        )
+        answered = int(field.get("question_answer_count") or 0)
+        uncertain_correct = int(uncertain_correct_by_field[field_id])
+        if critical_unresolved:
+            reason = "safety_repair"
+        elif cross_confident or len(confident_repair_nodes) >= 2:
+            reason = "confident_wrong_cluster"
+        elif cross_wrong or repeated >= 2:
+            reason = "repeated_wrong_cluster"
+        elif recheck_due:
+            reason = "recheck_due"
+        elif total_answers < 100 or answered < 10:
+            reason = "insufficient_coverage"
+        elif uncertain_correct >= 3 and answered >= 5:
+            reason = "uncertain_correct_cluster"
+        else:
+            reason = "maintenance_only"
+        name = str(field.get("field_name") or CATEGORY_NAMES.get(field_id) or field_id)
+        profiles[name] = {
+            "field_id": field_id,
+            "field_name": name,
+            "strongest_reason_code": reason,
+            "strongest_reason_label": REASON_LABELS[reason],
+            "reason_rank": REASON_RANKS[reason],
+            "critical_safety_unresolved_count": critical_unresolved,
+            "cross_question_confident_wrong_node_count": cross_confident,
+            "distinct_confident_wrong_repairing_node_count": len(confident_repair_nodes),
+            "cross_question_wrong_node_count": cross_wrong,
+            "repeated_weakness_node_count": repeated,
+            "recheck_due_node_count": recheck_due,
+            "uncertain_correct_count": uncertain_correct,
+            "answered_count": answered,
+            "accuracy": field.get("question_accuracy"),
+            "node_coverage_percent": float((field.get("node_coverage") or {}).get("percent") or 0),
+            "repairing_node_count": int(field.get("repairing_node_count") or 0),
+            "checking_node_count": int(field.get("checking_node_count") or 0),
+        }
+    return profiles
+
+
 def build_shadow_comparison(
     current_guidance: dict[str, Any] | None,
     shadow: dict[str, Any],
+    field_profiles: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """Compare current and shadow targets without declaring a winner."""
+    """Compare current and shadow targets using symmetric formal profiles."""
     current_target = _current_target(current_guidance)
     shadow_target = shadow.get("target_field")
     current_phase = (current_guidance or {}).get("phase")
@@ -156,21 +279,31 @@ def build_shadow_comparison(
             and current_phase == "foundation"
             else "same_target_stronger_reason"
         )
-    elif shadow.get("reason_code") in {
-        "safety_repair",
-        "confident_wrong_cluster",
-        "repeated_wrong_cluster",
-        "recheck_due",
-    }:
-        label = "different_target_shadow_has_stronger_evidence"
     else:
-        label = "insufficient_evidence_to_judge"
+        current_profile = (field_profiles or {}).get(str(current_target))
+        shadow_profile = (field_profiles or {}).get(str(shadow_target))
+        current_rank = current_profile.get("reason_rank") if current_profile else None
+        shadow_rank = shadow_profile.get("reason_rank") if shadow_profile else None
+        if current_rank is not None and shadow_rank is not None and shadow_rank < current_rank:
+            label = "different_target_shadow_has_stronger_evidence"
+        elif current_rank is not None and shadow_rank is not None and current_rank < shadow_rank:
+            label = "different_target_current_has_stronger_evidence"
+        else:
+            label = "insufficient_evidence_to_judge"
+    current_profile = (field_profiles or {}).get(str(current_target))
+    shadow_profile = (field_profiles or {}).get(str(shadow_target))
     return {
         "current_target": current_target,
         "current_phase": current_phase,
         "shadow_target": shadow_target,
         "shadow_reason_code": shadow.get("reason_code"),
         "label": label,
+        "current_target_formal_evidence": current_profile,
+        "shadow_target_formal_evidence": shadow_profile,
+        "shadow_reason_profile_consistent": bool(
+            shadow_profile
+            and shadow_profile.get("strongest_reason_code") == shadow.get("reason_code")
+        ),
     }
 
 
