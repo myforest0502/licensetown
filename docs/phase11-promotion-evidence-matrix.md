@@ -3,7 +3,7 @@
 Date: 2026-09-02
 Status: diagnostics-only implementation complete; learner-facing promotion not yet approved.
 
-This document separates evidence already established from evidence that still requires learner evidence. It is a promotion decision aid, not a learner-facing score.
+This document separates established evidence from evidence still required before promotion. It is a developer decision aid, not a learner-facing score.
 
 ## A. Architecture and safety — COMPLETE
 
@@ -30,30 +30,30 @@ Phase 10 is operationally closed.
 
 ## C. Question Bank repair supply — IMPROVED, NOT COMPLETE GLOBALLY
 
-The initial Production repairability diagnostic showed:
+Initial Production repairability snapshot:
 
 - repairing Nodes: 135
 - strong different-Q available: 1
 - weak-only: 5
 - same-Q/formally blocked: 129
 
-A Safety strong-repair pilot then added Q1595-Q1605 to 11 existing Safety Nodes.
+Q1595-Q1605 then added strong different-Q supply to 11 existing Safety Nodes.
 
-Current formal bank snapshot after the pilot:
+Current bank:
 
 - Q1-Q1605
 - canonical Nodes: 1509
-- singleton canonical Nodes: 1422
-- multi-question canonical Nodes: 87
+- singleton: 1422
+- multi-question: 87
 - validator PASS
 
-The 11 pilot source/new pairs all classify as `different_question_strong`.
+All 11 pilot source/new pairs classify as `different_question_strong`.
 
-This materially improves Safety repair supply but does not make the entire bank repairable. Global repair-supply expansion remains a separate content-development task and is not itself a reason to alter Phase 11 ranking logic.
+This improves Safety repair supply but does not make the whole bank repairable. Global supply expansion remains a separate content task.
 
 ## D. Shadow judgment static behavior — COMPLETE
 
-J1→J7 order:
+J1→J7:
 
 1. safety_repair
 2. confident_wrong_cluster
@@ -63,179 +63,163 @@ J1→J7 order:
 6. uncertain_correct_cluster
 7. maintenance_only
 
-Confirmed properties:
+Confirmed:
 
 - one ordinary wrong does not automatically commandeer a field
 - unknown answers do not create confirmed weakness
 - sparse fields are treated conservatively
-- high same-day volume is an observation, not an automatic blocker
+- high same-day volume is an observation, not a blocker
 - Shadow does not select exact Q IDs
 
 ## E. Current-vs-Shadow comparison — COMPLETE AS DIAGNOSTIC
 
 Both target fields receive the same formal evidence profile.
 
-Possible disagreement labels:
+Different-target labels:
 
 - `different_target_shadow_has_stronger_evidence`
 - `different_target_current_has_stronger_evidence`
 - `insufficient_evidence_to_judge`
 
-Same-target labels remain available.
+A stronger formal rank at one snapshot is not proof of better future learning outcome.
 
-Important limitation:
+## F. Known natural disagreement — OBSERVED
 
-A stronger formal evidence rank at one snapshot does not prove better future learning outcome. Promotion still requires learner evidence across multiple examples.
+Previously observed:
 
-## F. Known natural disagreement example — OBSERVED
-
-Previously observed Production snapshot:
-
-- Baseline target: 小児学 10問
-- Shadow target: 内科学 10問
+- Baseline: 小児学 10問
+- Shadow: 内科学 10問
 - Shadow reason: confident_wrong_cluster
-- Shadow confidence: high
+- confidence: high
 
-Internal-medicine diagnostics showed five confident-wrong repairing Nodes, including one cross-question confident-wrong Node. This supports the existence of a genuine repair signal, but the example alone is insufficient for promotion.
+Internal-medicine diagnostics showed five confident-wrong repairing Nodes including one cross-question confident-wrong Node. This is real repair evidence, but one example is insufficient for promotion.
 
-The symmetric comparison diagnostic should be used on current and historical snapshots before drawing a winner conclusion.
+## G. Repeat structure audit — IMPLEMENTED, PROMOTION INTERPRETATION TEMPORARILY PAUSED
 
-## G. Repeat structure audit — IMPLEMENTED, PRODUCTION INTERPRETATION PENDING
+Repeat Structure Diagnostics is on main, but a diagnostics-only false-positive risk has been confirmed and tracked in GitHub Issue #4.
 
-Repeat Structure Diagnostics is on main.
+Current classifier can incorrectly label a legitimate **non-recent** adaptive same-Q checking/recheck as `adaptive_unexplained_repeat` because:
 
-It separates same-Q repeats into:
+- actual `recheck_due` selections use `selection_group='checking'`
+- uncertain-correct/checking selections also use group `checking`
+- a same-Q that is outside the newest-30 recent window can legitimately be selected without cooldown bypass
 
-- justified_cooldown_bypass
-- adaptive_repair_or_recheck
-- adaptive_unexplained_repeat
-- nonadaptive_repeat
-- audit_metadata_unavailable
+Therefore:
 
-It also separates same-node different-question encounters from same-Q repeats.
+**Do not use the current `adaptive_unexplained_repeat` count as a Phase 11 promotion pass/fail gate until Issue #4 is fixed and Production data is re-read.**
 
-Promotion-relevant target:
+The invariant that still matters is narrower:
 
-- `adaptive_unexplained_repeat` should be zero or individually explained before Phase 11 learner-facing promotion.
+- saved `recent_question_repeat=True`
+- saved `recent_cooldown_bypassed=False`
 
-Historical/legacy attempts with unavailable audit metadata must not be mislabeled as selector failures.
+is a red-flag recent repeat and must remain visible after the diagnostic fix.
+
+Other repeat categories and elapsed-time observations remain useful, but the promotion interpretation of the unexplained count is paused.
 
 ## H. Retrospective historical replay — DESIGNED, IMPLEMENTATION PENDING
 
-Existing data already stores one daily `recommendation_plan` activity event when the dashboard is opened with a baseline recommendation. The event includes:
+The learner-facing dashboard stores at most one daily `recommendation_plan` anchor containing the first persisted Baseline field/goal for that JST day.
 
-- persisted baseline target field
-- question goal
-- event timestamp
+Historical Baseline phase can be reconstructed from the same source production uses:
 
-Together with timestamped `question_attempts` and `build_field_evidence(..., as_of=...)`, this makes a read-only historical replay possible.
+`SUM(learning_events.answered_count)` before the plan timestamp.
 
-For each historical plan snapshot:
+Shadow replay is eligible only when cumulative question-level history coverage is complete. Legacy learning events must not be assumed to have complete `question_attempts` coverage.
 
-1. truncate attempts to before the plan timestamp
-2. reconstruct formal field evidence at that time
-3. replay Phase 11 with `as_of` set to the plan time
-4. compare the persisted baseline target with the historical Shadow target using the symmetric evidence profile
-5. inspect later activity observationally without claiming causality
+For an eligible snapshot:
 
-This can increase the number of Safety, coverage, disagreement, and recheck examples available for evaluation without manufacturing Production activity or adding a write path.
+1. reconstruct Baseline total answers/phase from events before T
+2. verify formal result-to-attempt history coverage
+3. truncate attempts to `< T`
+4. build field evidence with `as_of=T`
+5. apply the **current Phase 11 v0.1 policy** at T
+6. compare persisted Baseline target vs replayed Shadow target symmetrically
 
-Retrospective replay is supporting evidence only. It cannot prove what the learner would have done if Shadow had actually been shown.
+This is current-policy historical replay, not historical code time-travel and not causal evidence.
 
-See:
-
-`docs/phase11-retrospective-shadow-audit-v01.md`
+See `docs/phase11-retrospective-shadow-audit-v01.md` and GitHub Issue #3.
 
 ## I. Natural-use promotion checks — PENDING
 
-The following still require real learner evidence and must not be manufactured.
-
 ### I1. Critical Safety misses
 
-Target:
+Target: zero cases where stronger unresolved Critical Safety evidence exists while Phase 11 selects a weaker field.
 
-- zero cases where a stronger unresolved Critical Safety signal exists but Phase 11 selects a weaker field.
-
-Historical replay may help find past candidate cases; prospective use is still valuable.
+Historical replay may expand the sample if coverage is complete.
 
 ### I2. Single-wrong overreaction
 
-Target:
-
-- no repeated pattern of ordinary single wrongs causing unnecessary field takeover.
-
-Retrospective replay can expand the sample beyond current-day screenshots.
+Target: no repeated pattern of one ordinary wrong causing unnecessary field takeover.
 
 ### I3. Sparse learner coverage
 
-Target:
-
-- Phase 11 continues to prefer coverage when weakness evidence is insufficient.
-
-Historical under-100-answer snapshots are particularly useful if stored plans exist.
+Target: continue coverage when weakness evidence is insufficient.
 
 ### I4. Recheck due handling
 
-Target:
-
-- once natural `recheck_due` Nodes exist, they are not starved by weaker J5-J7 signals.
-
-Historical replay may reveal an earlier valid recheck_due snapshot. If none exists, no conclusion should be forced.
+Target: naturally occurring `recheck_due` work is not starved by J5-J7.
 
 ### I5. Phase 11 intent vs Phase 10 exact-Q behavior
 
-Target:
-
-- when Phase 11 says repair/recheck/coverage, the Phase 10 selected set should be directionally consistent without violating cooldown or Safety rules.
+Target: repair/recheck/coverage intent is directionally compatible with Phase 10 exact selection without violating cooldown or Safety.
 
 ### I6. Baseline disagreement quality
 
-Review both wins and losses.
-
-For each natural or retrospectively reconstructed disagreement capture:
+Review both wins and losses:
 
 - Baseline target
 - Shadow target
-- current target formal evidence profile
-- Shadow target formal evidence profile
+- both formal evidence profiles
 - symmetric comparison label
-- whether later learner activity sampled either target
+- later target sampling when observable
 
-Do not review only examples favorable to Shadow.
+Do not review only Shadow-favorable cases.
 
 ### I7. Recommendation relevance
 
-Target:
+Prospective natural examples should show Shadow is no less relevant/safe than Baseline and preferably better.
 
-- across prospective natural examples, Shadow produces fewer obviously irrelevant recommendations than Baseline without introducing Safety misses, repetition problems, or coverage starvation.
+Retrospective replay can support consistency review but cannot substitute for prospective relevance evidence.
 
-Retrospective replay may support consistency review but cannot substitute for the prospective relevance judgment because the learner did not actually receive Shadow guidance.
+### I8. Repeat behavior
+
+This gate is **temporarily not evaluable from the current `adaptive_unexplained_repeat` aggregate** until Issue #4 is fixed.
+
+After the diagnostic fix:
+
+- re-read Production history
+- confirm true recent repeat without bypass is absent or individually explained
+- do not treat legitimate spaced checking/recheck as regression
 
 ## J. Promotion decision rule
 
-Do not promote based on one strong screenshot or one favorable disagreement.
+Do not promote from one screenshot or one favorable disagreement.
 
-A learner-facing promotion decision should require:
+Promotion requires:
 
 - architecture/safety gates remain green
-- no unexplained adaptive repeat regression
+- repeat diagnostic false-positive issue resolved before using repeat count as evidence
+- no true unexplained recent adaptive repeat regression
 - no Critical Safety miss
 - no systematic single-wrong overreaction
 - acceptable sparse-coverage behavior
 - recheck_due behavior observed when naturally available
-- symmetric disagreement review contains both favorable and unfavorable examples
-- retrospective replay, where available, does not reveal rule-consistency regressions
-- prospective natural-use evidence remains at least clearly no worse than Baseline and preferably better
+- symmetric disagreement review includes Current wins/losses
+- eligible retrospective replay reveals no policy-consistency regression
+- prospective natural evidence is at least clearly no worse than Baseline
 
-If evidence is mixed, remain Shadow-only and collect more learner evidence rather than changing ranking weights prematurely.
+If evidence is mixed, remain Shadow-only rather than changing ranking weights prematurely.
 
-## K. Next review order
+## K. Next implementation/review order
 
-1. Implement/read the retrospective historical replay diagnostic.
-2. Read current Production Repeat Structure Audit.
-3. Read current symmetric Baseline-vs-Shadow evidence profiles.
-4. Record any adaptive unexplained repeats.
-5. Review historical and current disagreement winners, including current-guidance wins.
-6. Check historical Safety / coverage / recheck candidates.
-7. Continue prospective natural-use sampling.
-8. Only then decide whether Phase 11 is ready for a limited learner-facing pilot.
+1. Fix Repeat Structure false-positive classification (Issue #4).
+2. Re-read Production Repeat Structure Audit with corrected semantics.
+3. Implement Phase11 retrospective historical replay (Issue #3).
+4. Read current symmetric Baseline-vs-Shadow profiles.
+5. Review historical/current disagreement winners including Current wins.
+6. Check Safety / sparse coverage / recheck candidates.
+7. Continue prospective natural sampling.
+8. Only then decide on a limited learner-facing pilot.
+
+Diagnostics robustness Issue #2 (30-question session set-sequence validation) should also be fixed, but it is not a Phase 11 ranking change and does not reopen the already verified Phase 10 natural-use session.
