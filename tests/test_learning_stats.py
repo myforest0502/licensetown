@@ -92,7 +92,7 @@ def test_confirmed_batch_and_signed_dashboard_render_real_values():
     assert response.status_code == 200
     assert ">5<small>問</small>" in text
     assert text.count(">60<small>%</small>") >= 2
-    assert "5 / 30問" in text
+    assert "おすすめ進捗 0 / 10問" in text
     assert "KN0001" not in text
 
 

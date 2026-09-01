@@ -8,7 +8,8 @@ import app as app_module
 from app import app
 import database
 from database import record_learning_batch
-from goukaku_ui import create_dashboard_token
+import goukaku_ui as goukaku_ui_module
+from goukaku_ui import build_dashboard, create_dashboard_token
 from question_bank import CATEGORY_NAMES, get_category_small, get_quiz_question, question_ids
 
 
@@ -28,6 +29,7 @@ def test_goukaku_home_renders(monkeypatch):
     assert 'class="app-header title-only"' in text
     assert "data-close" not in text
     assert "今日のおすすめ学習" in text
+    assert "おすすめ進捗" not in text
     assert "（暫定）" in text
     assert "まだデータがありません。勉強するとここに表示されます＾＾" in text
     assert "2027/02/20" in text
@@ -170,6 +172,94 @@ def test_dashboard_and_subjects_render_real_field_history_without_demo_values(mo
     assert "126問" not in detail_text
     assert "184分" not in detail_text
     database._local_learning_events.clear()
+
+
+def test_recommendation_progress_uses_recommended_field_today_count(monkeypatch):
+    fields = [
+        {"name": "人間発達学", "learned": True, "today_answered_count": 3},
+        {"name": "解剖学", "learned": True, "today_answered_count": 5},
+    ]
+    monkeypatch.setattr(
+        goukaku_ui_module,
+        "get_dashboard_learning_data",
+        lambda user_id: {
+            "summary": {},
+            "activity": {},
+            "unique_question_count": 0,
+            "fields": fields,
+        },
+    )
+    monkeypatch.setattr(
+        goukaku_ui_module,
+        "build_learning_guidance",
+        lambda total_answers, field_data: {
+            "recommended_study": [("人間発達学", 10)],
+            "recommendation_reason": "test",
+            "weak_fields": [],
+        },
+    )
+    monkeypatch.setattr(goukaku_ui_module, "build_gensan_comment", lambda *args: "test")
+
+    dashboard = build_dashboard("recommendation-progress-user")
+
+    assert dashboard["recommendation_progress"] == 3
+    assert dashboard["recommendation_goal"] == 10
+    assert "today_goal" in dashboard
+    assert "today_progress" in dashboard
+
+
+def test_recommendation_progress_is_capped_and_ignores_other_fields(monkeypatch):
+    def dashboard_for(recommended_count, other_count=0):
+        fields = [
+            {"name": "人間発達学", "learned": True, "today_answered_count": recommended_count},
+            {"name": "解剖学", "learned": True, "today_answered_count": other_count},
+        ]
+        monkeypatch.setattr(
+            goukaku_ui_module,
+            "get_dashboard_learning_data",
+            lambda user_id: {
+                "summary": {},
+                "activity": {},
+                "unique_question_count": 0,
+                "fields": fields,
+            },
+        )
+        monkeypatch.setattr(
+            goukaku_ui_module,
+            "build_learning_guidance",
+            lambda total_answers, field_data: {
+                "recommended_study": [("人間発達学", 10)],
+                "recommendation_reason": "test",
+                "weak_fields": [],
+            },
+        )
+        monkeypatch.setattr(goukaku_ui_module, "build_gensan_comment", lambda *args: "test")
+        return build_dashboard("recommendation-progress-user")
+
+    assert dashboard_for(0, other_count=5)["recommendation_progress"] == 0
+    assert dashboard_for(10)["recommendation_progress"] == 10
+    assert dashboard_for(15)["recommendation_progress"] == 10
+
+
+def test_recommendation_card_renders_recommendation_goal_not_daily_goal(monkeypatch):
+    dashboard = build_dashboard()
+    dashboard.update({
+        "recommended_study": [("人間発達学", 10)],
+        "recommendation_reason": "test",
+        "recommendation_progress": 0,
+        "recommendation_goal": 10,
+    })
+    monkeypatch.setattr(
+        goukaku_ui_module,
+        "build_dashboard",
+        lambda user_id: dashboard,
+    )
+
+    text = app.test_client().get("/goukaku-no-michi").get_data(as_text=True)
+
+    assert "おすすめ進捗 0 / 10問" in text
+    assert "今日の進捗" not in text
+    assert "/ 30問" not in text
 
 
 def test_footprints_show_safe_empty_state_without_demo_events():

@@ -130,6 +130,8 @@ def build_dashboard(user_id=None):
         "weak_analysis_message": "まずは100問を目標に基礎を固めましょう。",
         "recommended_study": [],
         "recommendation_reason": None,
+        "recommendation_progress": 0,
+        "recommendation_goal": 0,
         "today_goal": get_daily_question_goal(user_id),
         "today_progress": 0,
         "streak_days": 0,
@@ -164,6 +166,22 @@ def build_dashboard(user_id=None):
                 progress, overall_accuracy_percent=dashboard["average_accuracy"]
             )
         dashboard.update(build_learning_guidance(dashboard["total_answers"], fields))
+        if dashboard["recommended_study"]:
+            recommended_name, recommended_count = dashboard["recommended_study"][0]
+            recommended_field = next(
+                (field for field in fields if field["name"] == recommended_name),
+                None,
+            )
+            today_answered_count = (
+                recommended_field.get("today_answered_count", 0)
+                if recommended_field
+                else 0
+            )
+            dashboard["recommendation_goal"] = recommended_count
+            dashboard["recommendation_progress"] = min(
+                today_answered_count,
+                recommended_count,
+            )
         dashboard.update(get_reward_progress(dashboard["total_answers"]))
         dashboard["gensan_comment"] = build_gensan_comment(
             dashboard["total_answers"],
