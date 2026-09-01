@@ -1,7 +1,7 @@
 # Phase 12 Preview QA Runbook
 
 Date: 2026-09-01
-Status: implementation merged to main; PC presentation surface observed; mobile/owner/supporter visual QA still pending.
+Status: implementation merged to main; PC and supporter visual QA observed; learner-owner mobile/action and final flag-OFF restoration still pending.
 
 ## Current implementation
 
@@ -25,14 +25,19 @@ Completed/static:
 - feature flag is enabled for the explicit QA window
 - PC screenshot confirms the Preview card renders without clipping or horizontal layout break
 - headline/reason/six-state counters/attention row are readable on the observed PC surface
+- observed state counts sum to 1509 Canonical Nodes
 - no raw Knowledge Node ID, priority score, or developer comparison label is visible in the observed Preview card
 - code inspection confirms the Preview reuses the existing `[data-recommendation-start-url]` JavaScript handler and existing recommendation POST path; no Phase 12-only learning API was added
+- supporter read-only screenshot confirms `閲覧専用` remains visible
+- supporter Preview renders without material clipping or overlap
+- supporter Preview contains no learner start action, as designed
+- existing supporter read-only layout remains intact on the observed surface
 
 Still requires visual confirmation:
 
 - learner-owner view action button presence and placement
-- smartphone layout
-- supporter read-only view protections
+- smartphone learner-owner layout
+- Preview action displays the same field/count that it starts
 - baseline restoration after flag OFF at the end of the QA window
 
 ## Purpose of visual QA
