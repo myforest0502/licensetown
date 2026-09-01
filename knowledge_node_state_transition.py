@@ -122,7 +122,7 @@ def derive_knowledge_node_state(
             previous_state = state
             state = "repairing"
             reason = "A wrong answer requires repair, regardless of the previous state."
-            if not has_prior_wrong or previous_state in {"repaired", "stable"}:
+            if not has_prior_wrong or previous_state in {"repaired", "stable", "recheck_due"}:
                 repair_wrong_questions = {question_id}
             else:
                 repair_wrong_questions.add(question_id)
