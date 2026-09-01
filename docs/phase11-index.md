@@ -5,6 +5,7 @@
 - phase11-v01-decision-table.md — deterministic decision order
 - phase11-shadow-implementation-plan.md — diagnostics-only first implementation
 - phase11-shadow-evaluation.md — current-vs-shadow review policy
-- phase11-readiness-gate.md — conditions for starting shadow code
+- phase11-readiness-gate.md — conditions for starting shadow code and current readiness state
 - phase11-policy-fallbacks.md — conservative fallback rules
 - phase11-ship-checklist.md — QA/promotion separation
+- phase11-promotion-evidence-matrix.md — current completed evidence, pending natural-use gates, and promotion decision rule
