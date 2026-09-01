@@ -12,6 +12,30 @@
     <p>回答 {{ diagnostics.total_attempts }} / ユニーク問題数 {{ diagnostics.unique_questions }} / 正解 {{ diagnostics.correct }} / 誤答 {{ diagnostics.incorrect }} / 正答率 {{ diagnostics.accuracy }}%</p>
     <p>自信あり {{ diagnostics.confidence['1'] }} / 少し迷った {{ diagnostics.confidence['2'] }} / あてずっぽう {{ diagnostics.confidence['3'] }} / 0回答 {{ diagnostics.unknown }} / 自信あり誤答 {{ diagnostics.confident_wrong }}</p>
   </section>
+  <section class="card pilot-diagnostic-card repeat-structure-audit-card">
+    {% set repeat = diagnostics.repeat_structure_audit %}
+    <h2>Repeat構造監査</h2>
+    <p>回答 {{ repeat.total_attempts }} / unique Q {{ repeat.unique_questions }} / same-Q repeat {{ repeat.same_question_repeats }}</p>
+    <p>同一Node別Q {{ repeat.same_node_different_question_confirmations }} / 0回答 {{ repeat.unknown_attempts }}</p>
+    <p>正当cooldown bypass {{ repeat.category_counts.justified_cooldown_bypass }} / adaptive repair・recheck {{ repeat.category_counts.adaptive_repair_or_recheck }} / adaptive説明不能repeat {{ repeat.category_counts.adaptive_unexplained_repeat }} / non-adaptive repeat {{ repeat.category_counts.nonadaptive_repeat }} / 監査情報なし・判定不能 {{ repeat.category_counts.audit_metadata_unavailable }}</p>
+    <p>同日 {{ repeat.same_day_count }} / &lt;24h {{ repeat.distance_counts.under_24h }} / 1d–&lt;7d {{ repeat.distance_counts.one_to_under_seven_days }} / &gt;=7d {{ repeat.distance_counts.seven_days_or_more }}{% if repeat.distance_counts.unknown %} / 時間不明 {{ repeat.distance_counts.unknown }}{% endif %}</p>
+    {% if repeat.nonadaptive_modes %}<p>non-adaptive内訳：{% for mode,count in repeat.nonadaptive_modes.items() %}{{ mode }} {{ count }}{% if not loop.last %} / {% endif %}{% endfor %}</p>{% endif %}
+    <h3>要調査same-Q repeat</h3>
+    {% if repeat.unexplained_repeat_count == 0 %}<p class="repeat-audit-pass"><strong>PASS：adaptive説明不能repeat 0件</strong></p>
+    {% else %}<p class="repeat-audit-fail"><strong>要調査 {{ repeat.unexplained_repeat_count }}件</strong></p>
+    <ol class="repeat-unexplained-list">{% for item in repeat.unexplained_repeats %}<li class="repeat-unexplained-item">
+      <h4>{{ item.question_id }}（{{ item.canonical_node_id }}）</h4>
+      <p>日時：{{ item.answered_at }} / 直前：{{ item.previous_answered_at }} / 差：{{ item.elapsed_label }}</p>
+      <p>selection_reason: {{ item.selection_reason or 'なし' }} / selection_group: {{ item.selection_group or 'なし' }} / repair_evidence_quality: {{ item.repair_evidence_quality or 'なし' }}</p>
+      <p>recent_question_repeat: {{ item.recent_question_repeat }} / recent_cooldown_bypassed: {{ item.recent_cooldown_bypassed }}</p>
+    </li>{% endfor %}</ol>{% endif %}
+    <details><summary>全repeatの分類理由を見る</summary><ol class="repeat-detail-list">
+      {% for item in repeat.repeat_details %}<li>
+        {{ item.question_id }} / {{ item.category }} / {{ item.answered_at }} / 前回との差 {{ item.elapsed_label }}<br>
+        source {{ item.learning_source }} / reason {{ item.selection_reason or '監査情報なし' }} / group {{ item.selection_group or '監査情報なし' }} / evidence {{ item.repair_evidence_quality or '監査情報なし' }} / bypass {{ item.recent_cooldown_bypassed }}
+      </li>{% else %}<li>same-Q repeatはありません。</li>{% endfor %}
+    </ol></details>
+  </section>
   <section class="card pilot-diagnostic-card"><h2>学習範囲</h2><p>取り組んだNode {{ diagnostics.touched_nodes }} / {{ diagnostics.canonical_node_total }}（{{ diagnostics.coverage }}%）</p></section>
   <section class="card pilot-diagnostic-card"><h2>理解状態</h2><p>未着手 {{ diagnostics.state_counts.unseen }} / 確認中 {{ diagnostics.state_counts.checking }} / 修復中 {{ diagnostics.state_counts.repairing }} / 修復済み {{ diagnostics.state_counts.repaired }} / 定着 {{ diagnostics.state_counts.stable }} / 再確認待ち {{ diagnostics.state_counts.recheck_due }}</p></section>
   <section class="card pilot-diagnostic-card"><h2>修復・定着</h2><p>修復中→修復済み {{ diagnostics.repair_to_repaired }} / 修復済み→修復中 {{ diagnostics.repaired_to_repairing }} / 再確認待ち→定着 {{ diagnostics.due_to_stable }} / 再確認待ち→修復中 {{ diagnostics.due_to_repairing }}</p></section>

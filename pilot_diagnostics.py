@@ -8,6 +8,7 @@ from zoneinfo import ZoneInfo
 from adaptive_question_selector import select_node_adaptive_questions
 from database import (
     get_dashboard_learning_data,
+    get_learning_events_by_event_keys,
     get_latest_adaptive_daily_learning_session_events,
     get_question_attempts,
 )
@@ -52,6 +53,13 @@ _SAVED_ADAPTIVE_AUDIT_FIELDS = (
     "repair_evidence_quality",
     "recent_question_repeat",
     "recent_cooldown_bypassed",
+)
+_REPEAT_CATEGORIES = (
+    "justified_cooldown_bypass",
+    "adaptive_repair_or_recheck",
+    "adaptive_unexplained_repeat",
+    "nonadaptive_repeat",
+    "audit_metadata_unavailable",
 )
 
 
@@ -280,6 +288,165 @@ def build_saved_adaptive_daily_audit(events):
     }
 
 
+def _event_result_lookup(learning_events):
+    lookup = {}
+    for event in learning_events or ():
+        event_key = str(event.get("event_key") or "")
+        results = event.get("question_results")
+        if isinstance(results, str):
+            try:
+                results = json.loads(results)
+            except (TypeError, ValueError):
+                results = []
+        if not isinstance(results, list):
+            continue
+        for result in results:
+            if not isinstance(result, dict) or not result.get("question_id"):
+                continue
+            lookup[(event_key, str(result["question_id"]))] = dict(result)
+    return lookup
+
+
+def _repeat_time_label(value):
+    parsed = _wrong_time(value)
+    return (
+        parsed.astimezone(ZoneInfo("Asia/Tokyo")).strftime("%Y/%m/%d %H:%M")
+        if parsed else "日時不明"
+    )
+
+
+def build_repeat_structure_audit(attempts, learning_events):
+    """Classify saved same-Q repeats without reconstructing selection intent."""
+    ordered = sorted(
+        (dict(item) for item in attempts or ()),
+        key=lambda item: (
+            _wrong_time(item.get("answered_at") or item.get("attempted_at"))
+            or datetime.min.replace(tzinfo=timezone.utc),
+            str(item.get("event_key") or ""),
+            int(item.get("attempt_position") or 0),
+        ),
+    )
+    result_lookup = _event_result_lookup(learning_events)
+    prior_by_question = {}
+    prior_questions_by_node = defaultdict(set)
+    repeats = []
+    same_node_different_question = 0
+    unknown_count = 0
+
+    for attempt in ordered:
+        user_id = str(attempt.get("user_id") or "")
+        question_id = str(attempt.get("question_id") or "")
+        raw_node_id = str(attempt.get("knowledge_node_id") or "")
+        node_id = canonicalize_knowledge_node_id(raw_node_id) if raw_node_id else ""
+        current_at = _wrong_time(attempt.get("answered_at") or attempt.get("attempted_at"))
+        question_key = (user_id, question_id)
+        node_key = (user_id, node_id)
+        if (
+            attempt.get("answer_status") == "unknown"
+            or (attempt.get("selected_answers") == [] and attempt.get("confidence") is None)
+        ):
+            unknown_count += 1
+
+        previous = prior_by_question.get(question_key)
+        if previous is None:
+            if question_id and prior_questions_by_node[node_key] - {question_id}:
+                same_node_different_question += 1
+        else:
+            previous_at = previous[0]
+            delta = current_at - previous_at if current_at and previous_at else None
+            metadata = result_lookup.get((str(attempt.get("event_key") or ""), question_id))
+            audit_available = bool(metadata) and all(
+                name in metadata for name in _SAVED_ADAPTIVE_AUDIT_FIELDS
+            )
+            source = str((metadata or {}).get("learning_source") or "")
+            group = str((metadata or {}).get("selection_group") or "")
+            recent_repeat = (metadata or {}).get("recent_question_repeat")
+            bypassed = (metadata or {}).get("recent_cooldown_bypassed")
+
+            if metadata and source and source != "adaptive_daily":
+                category = "nonadaptive_repeat"
+            elif not metadata or source != "adaptive_daily" or not audit_available:
+                category = "audit_metadata_unavailable"
+            elif recent_repeat is True and bypassed is True:
+                category = "justified_cooldown_bypass"
+            elif group in {"repair", "recheck", "maintenance"}:
+                category = "adaptive_repair_or_recheck"
+            else:
+                category = "adaptive_unexplained_repeat"
+
+            seconds = delta.total_seconds() if delta is not None else None
+            if seconds is None:
+                distance_bucket = "unknown"
+            elif seconds < 24 * 60 * 60:
+                distance_bucket = "<24h"
+            elif seconds < 7 * 24 * 60 * 60:
+                distance_bucket = "1d–<7d"
+            else:
+                distance_bucket = ">=7d"
+            same_day = bool(
+                current_at and previous_at
+                and current_at.astimezone(ZoneInfo("Asia/Tokyo")).date()
+                == previous_at.astimezone(ZoneInfo("Asia/Tokyo")).date()
+            )
+            repeats.append({
+                "question_id": question_id,
+                "canonical_node_id": node_id,
+                "answered_at": _repeat_time_label(current_at),
+                "previous_answered_at": _repeat_time_label(previous_at),
+                "elapsed_seconds": seconds,
+                "elapsed_label": (
+                    f"{seconds / 3600:.1f}時間" if seconds is not None and seconds < 86400
+                    else f"{seconds / 86400:.1f}日" if seconds is not None else "不明"
+                ),
+                "same_day": same_day,
+                "distance_bucket": distance_bucket,
+                "category": category,
+                "learning_source": source or "不明",
+                "selection_reason": (metadata or {}).get("selection_reason"),
+                "selection_group": (metadata or {}).get("selection_group"),
+                "repair_evidence_quality": (metadata or {}).get("repair_evidence_quality"),
+                "recent_question_repeat": recent_repeat,
+                "recent_cooldown_bypassed": bypassed,
+            })
+
+        if question_id:
+            prior_by_question[question_key] = (current_at, attempt)
+            prior_questions_by_node[node_key].add(question_id)
+
+    category_counts = Counter(item["category"] for item in repeats)
+    distance_counts = Counter(item["distance_bucket"] for item in repeats)
+    nonadaptive_modes = Counter(
+        item["learning_source"] for item in repeats
+        if item["category"] == "nonadaptive_repeat"
+    )
+    unique_questions = len({
+        str(item.get("question_id")) for item in ordered if item.get("question_id")
+    })
+    unexplained = [
+        item for item in repeats if item["category"] == "adaptive_unexplained_repeat"
+    ]
+    return {
+        "total_attempts": len(ordered),
+        "unique_questions": unique_questions,
+        "repeat_occurrences": len(repeats),
+        "same_question_repeats": len(repeats),
+        "same_node_different_question_confirmations": same_node_different_question,
+        "unknown_attempts": unknown_count,
+        "category_counts": {name: category_counts[name] for name in _REPEAT_CATEGORIES},
+        "distance_counts": {
+            "under_24h": distance_counts["<24h"],
+            "one_to_under_seven_days": distance_counts["1d–<7d"],
+            "seven_days_or_more": distance_counts[">=7d"],
+            "unknown": distance_counts["unknown"],
+        },
+        "same_day_count": sum(item["same_day"] for item in repeats),
+        "nonadaptive_modes": dict(sorted(nonadaptive_modes.items())),
+        "unexplained_repeat_count": len(unexplained),
+        "unexplained_repeats": unexplained,
+        "repeat_details": repeats,
+    }
+
+
 def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
     now = now or datetime.now(timezone.utc)
     days = {"7": 7, "30": 30, "all": None}.get(period, 7)
@@ -341,6 +508,13 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
     strong_repair_supply_priorities = build_strong_repair_supply_priorities(
         repairing_node_repairability
     )
+    repeat_structure_audit = build_repeat_structure_audit(
+        attempts,
+        get_learning_events_by_event_keys(
+            user_id,
+            {str(item.get("event_key") or "") for item in attempts},
+        ),
+    )
 
     return {
         "period": period, "start_at": start_at, "total_attempts": len(attempts),
@@ -365,4 +539,5 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         "saved_adaptive_daily_audit": saved_adaptive_daily_audit,
         "repairing_node_repairability": repairing_node_repairability,
         "strong_repair_supply_priorities": strong_repair_supply_priorities,
+        "repeat_structure_audit": repeat_structure_audit,
     }

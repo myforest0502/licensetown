@@ -593,6 +593,40 @@ def get_question_attempts(user_id: str, start_at: datetime | None = None) -> lis
             return attempts
 
 
+def get_learning_events_by_event_keys(
+    user_id: str,
+    event_keys: list[str] | tuple[str, ...] | set[str],
+) -> list[dict[str, Any]]:
+    """Return persisted learning events for exact attempt event keys (SELECT only)."""
+    keys = sorted({str(value) for value in event_keys if value})
+    if not keys:
+        return []
+    if not database_is_available():
+        return [
+            {"event_key": key, **copy.deepcopy(_local_learning_events[key])}
+            for key in keys
+            if key in _local_learning_events
+            and _local_learning_events[key].get("user_id") == user_id
+        ]
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT event_key, user_id, mode, answered_count, correct_count,
+                       answered_at, question_results
+                FROM learning_events
+                WHERE user_id = %s AND event_key = ANY(%s)
+                ORDER BY answered_at, event_key
+                """,
+                (user_id, keys),
+            )
+            columns = (
+                "event_key", "user_id", "mode", "answered_count", "correct_count",
+                "answered_at", "question_results",
+            )
+            return [dict(zip(columns, row)) for row in cur.fetchall()]
+
+
 def get_latest_adaptive_daily_learning_event(user_id: str) -> dict[str, Any] | None:
     """Return the latest persisted adaptive_daily event without modifying it."""
     if not database_is_available():
