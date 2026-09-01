@@ -5,13 +5,19 @@ from __future__ import annotations
 from typing import Any, Mapping
 
 
+def _evaluable_count(field: Mapping[str, Any]) -> int:
+    if "evaluable_answer_count" in field:
+        return int(field.get("evaluable_answer_count") or 0)
+    return int(field.get("question_answer_count") or 0)
+
+
 def build_j5_sparse_field_candidates(
     field_records: Mapping[int, Mapping[str, Any]],
 ) -> list[dict[str, Any]]:
     """Return post-foundation J5 sparse fields using evaluable answers only."""
     candidates: list[dict[str, Any]] = []
     for field_id, field in field_records.items():
-        evaluable_count = int(field.get("evaluable_answer_count") or 0)
+        evaluable_count = _evaluable_count(field)
         if evaluable_count >= 10:
             continue
         node_coverage = float((field.get("node_coverage") or {}).get("percent") or 0)
@@ -40,7 +46,7 @@ def build_j6_uncertain_correct_candidates(
     """Return J6 candidates with evaluable denominators."""
     candidates: list[dict[str, Any]] = []
     for field_id, field in field_records.items():
-        evaluable_count = int(field.get("evaluable_answer_count") or 0)
+        evaluable_count = _evaluable_count(field)
         uncertain_correct = int(uncertain_correct_by_field.get(int(field_id), 0))
         if evaluable_count < 5 or uncertain_correct < 3:
             continue
