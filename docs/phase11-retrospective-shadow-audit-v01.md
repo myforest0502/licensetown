@@ -7,36 +7,36 @@ Status: design fixed / implementation pending
 
 Accelerate Phase 11 promotion evaluation without manufacturing Production activity or adding a new write path.
 
-The learner-facing `/goukaku-no-michi` route persists a `recommendation_plan` activity event when a Baseline recommendation exists. The event contains the Baseline target field, question goal, and timestamp.
+The learner-facing `/goukaku-no-michi` route persists a `recommendation_plan` activity event when a Baseline recommendation exists. For each trustworthy historical plan anchor, replay the **current Phase 11 v0.1 policy** using only learner evidence available before that timestamp and compare it with the Baseline target that was actually stored.
 
-For each trustworthy historical recommendation anchor, replay the **current Phase 11 v0.1 policy** using only learner evidence that existed at that time and compare it with the Baseline recommendation that was actually stored.
+This is retrospective observational QA. It is not proof that Shadow would have caused a better outcome.
 
-This is retrospective observational QA, not proof that Shadow would have caused a better learning outcome.
-
-### Replay semantics
+## 2. Replay semantics
 
 This is not full code time-travel.
 
-The audit asks:
+The question is:
 
 > If the current J1→J7 Shadow policy were evaluated against the learner evidence available at historical time T, what would it decide?
 
-It does not attempt to restore every historical version of application code, Question Bank files, or category metadata. Current canonicalization/formal policy is used unless a future implementation explicitly supplies versioned historical metadata.
+Current canonicalization/formal policy is used. The audit does not restore every historical version of application code, Question Bank files, or category metadata.
 
-Therefore the UI and reports must label the result as a **current-policy historical replay**, not “the recommendation Phase 11 made at that time.” Phase 11 may not have existed at that time.
+Every result must therefore be labeled as a **current-policy historical replay**, never as “the Phase 11 recommendation made at that time.”
 
-## 2. What is actually persisted
+## 3. What is actually persisted
 
-`record_activity_event()` creates a JST-date-scoped event key and uses conflict-safe insertion. Therefore:
+`record_activity_event()` creates a JST-date-scoped key and uses conflict-safe insertion.
 
-- at most one `recommendation_plan` event is persisted per learner per JST day
-- it represents the first successfully persisted learner-facing plan for that day
-- later same-day recommendation changes are not historical snapshots because the daily event key already exists
-- supporter/read-only dashboard views do not create `recommendation_plan` events
+Therefore:
 
-Do not describe these events as a complete history of every recommendation shown that day.
+- at most one `recommendation_plan` anchor is persisted per learner per JST day
+- it represents the first successfully persisted learner-facing Baseline plan that day
+- later same-day recommendation changes are not stored as additional anchors
+- supporter/read-only dashboard views do not create plan anchors
 
-## 3. Valid snapshot anchor
+Do not treat these events as a complete history of every recommendation shown during a day.
+
+## 4. Valid plan anchor
 
 Use only events where:
 
@@ -44,125 +44,169 @@ Use only events where:
 - `question_results` is an object
 - `question_results.activity_type = 'recommendation_plan'`
 - `question_results.field` is a usable field name
-- `question_results.goal` is a usable positive question count
-- `answered_at` is present and parseable
+- `question_results.goal` is a positive usable question count
+- `answered_at` is parseable
 
-If any required value is missing, mark the snapshot unavailable rather than guessing.
+Malformed anchors are unavailable; do not guess missing values.
 
-## 4. Historical evidence coverage gate
+## 5. Historical Baseline phase
 
-A historical replay is valid only if the formal attempt history available at snapshot time is sufficiently complete.
+The stored target and goal are authoritative. The phase is not persisted, but its source is known.
 
-Legacy `learning_events` may contain question-result lists that are not guaranteed, from code inspection alone, to have a corresponding `question_attempts` row for every historical result. Therefore do not assume `question_attempts` is complete merely because rows exist.
+Production Baseline `total_answers` comes from:
 
-For each snapshot time `T`, calculate a history-coverage audit from records before `T`:
+`SUM(learning_events.answered_count)`
 
-- count valid formal question-result items in `learning_events`
-- count corresponding `question_attempts`
-- where possible match by `(event_key, attempt_position)` and verify question ID / correctness / confidence consistency
-- exclude activity-event objects such as `recommendation_plan` from formal-answer counts
-
-Snapshot eligibility:
-
-- complete/matched history -> replay eligible
-- missing/conflicting attempt coverage -> `history_coverage_incomplete`
-- malformed historical question-result data -> `history_coverage_unreliable`
-
-Do not use an incomplete snapshot to claim a Phase 11 win/loss or Safety miss.
-
-A reusable pure audit helper is preferred over copying backfill logic into the template.
-
-## 5. Historical attempt cutoff
-
-For eligible snapshot timestamp `T`:
-
-- include formal attempts with `answered_at < T`
-- exclude attempts at or after `T`
-- preserve unknown attempts in the history
-- unknown attempts remain excluded from confirmed weakness
-- use `as_of=T` for Node-state retention calculations
-
-This prevents future evidence from leaking backward.
-
-## 6. Historical Baseline control
-
-The stored plan target is authoritative.
-
-Do not rerun today's Baseline algorithm and pretend the result was the historical recommendation.
-
-Minimum control object:
+Therefore for snapshot timestamp `T`, reconstruct:
 
 ```python
-{
-    "phase": historical_phase_or_none,
-    "recommended_study": [(stored_field, stored_goal)],
-}
+historical_total_answers = sum(
+    event["answered_count"]
+    for event in learning_events
+    if event["answered_at"] < T
+)
 ```
 
-### Phase handling
+Activity events such as `recommendation_plan` naturally add zero because their `answered_count` is 0.
 
-The Baseline target is persisted; the Baseline phase is not.
-
-Do not silently assert an exact historical phase unless it can be reconstructed from complete historical answer totals consistent with the Baseline's own data source.
-
-If trustworthy historical total-answer reconstruction is available:
+Then:
 
 - `< 100` -> `foundation`
 - `>= 100` -> `analysis`
 
-Otherwise set phase to unavailable/unknown for retrospective display.
+This mirrors the Baseline phase threshold.
 
-Important: current `build_shadow_comparison()` uses Baseline phase to distinguish some same-target labels. Therefore when historical phase is unknown, the retrospective audit must not interpret `same_target_same_reason` vs `same_target_stronger_reason` as trustworthy. Treat the snapshot simply as `target_agreement_phase_unknown` for retrospective review.
+If historical event timestamps/counts are malformed or unavailable, mark phase unknown rather than guessing.
 
-## 7. Historical Shadow replay
+## 6. Formal history coverage gate
 
-For each eligible snapshot:
+Knowing Baseline total answers is not enough to replay Shadow. Shadow needs trustworthy question-level formal history.
 
-1. verify history coverage before `T`
-2. truncate attempts at `T`
-3. build field evidence with `as_of=T`
-4. build current-policy Shadow judgment with `as_of=T`
-5. build symmetric formal field profiles from the same truncated evidence
-6. compare stored Baseline target vs reconstructed Shadow target
+Legacy `learning_events` can contain answered activity that is not guaranteed, from code inspection alone, to have a complete corresponding `question_attempts` stream.
+
+For all events before `T`:
+
+- if `answered_count == 0`, the event does not require formal attempt rows
+- if `answered_count > 0`, require a list-style `question_results` payload that can account for the formal answers
+- count valid formal result items with Q IDs
+- match expected formal results to `question_attempts` by `(event_key, attempt_position)` where possible
+- verify question ID / correctness / confidence consistency
+- activity-event objects are not formal answer rows
+
+Snapshot statuses:
+
+- `history_coverage_complete`
+- `history_coverage_incomplete`
+- `history_coverage_unreliable`
+
+A snapshot is replay-eligible only when history coverage is complete.
+
+Important: a snapshot may have a reconstructable Baseline phase while still being ineligible for Shadow replay because formal question-level history is incomplete.
+
+## 7. Historical attempt cutoff
+
+For eligible timestamp `T`:
+
+- include attempts with `answered_at < T`
+- exclude attempts at or after `T`
+- preserve unknown attempts
+- unknown attempts still do not create confirmed weakness
+- use `as_of=T` for formal retention/state calculations
+
+No future evidence may leak backward.
+
+## 8. Historical Baseline control object
+
+Do not rerun today's Baseline algorithm and pretend it was the historical recommendation.
+
+Use:
+
+```python
+{
+    "phase": historical_phase,
+    "recommended_study": [(stored_field, stored_goal)],
+}
+```
+
+The persisted field remains authoritative even if rerunning today's Baseline logic would choose something else.
+
+## 9. Current-policy Shadow replay
+
+For every eligible plan anchor:
+
+1. reconstruct Baseline phase from `learning_events.answered_count`
+2. validate cumulative formal history coverage before `T`
+3. truncate `question_attempts` at `T`
+4. build field evidence with `as_of=T`
+5. run current `build_shadow_judgment(..., as_of=T)`
+6. build symmetric formal field profiles from the same historical evidence
+7. compare stored Baseline target vs reconstructed Shadow target
 
 Capture:
 
-- snapshot JST date/time
+- snapshot JST timestamp
+- policy label, e.g. `phase11_v0.1_current_policy`
 - coverage status
-- replay policy/version label, e.g. `phase11_v0.1_current_policy`
-- historical formal-attempt count
-- Baseline target / goal / phase if known
-- Shadow intent / target / question count
+- historical total answers
+- historical formal attempt count
+- Baseline target / goal / phase
+- Shadow intent / target / count
 - Shadow reason code / confidence
-- Current-target formal profile
+- Baseline-target formal profile
 - Shadow-target formal profile
-- symmetric comparison label when safe to interpret
+- comparison label
 - Shadow reason/profile consistency
 
-## 8. Outcome observation window
+## 10. Review categories
 
-Later activity is observational only.
+### Agreement
+
+Stored Baseline target equals replayed Shadow target.
+
+### Shadow stronger disagreement
+
+Targets differ and symmetric formal evidence rank favors Shadow.
+
+### Current stronger disagreement
+
+Targets differ and symmetric formal evidence rank favors stored Baseline target.
+
+### Inconclusive disagreement
+
+Targets differ but ranks are equal or evidence/profile is insufficient.
+
+### Excluded snapshot
+
+History coverage or anchor integrity is insufficient.
+
+Excluded snapshots must not be counted as Shadow wins/losses or Safety misses.
+
+Never hide Current-guidance wins.
+
+## 11. Outcome observation window
+
+Later learner activity is observational only.
 
 Suggested window:
 
-- after snapshot timestamp
-- until the next persisted recommendation-plan snapshot
-- cap at 24 hours if no next snapshot exists
+- after plan timestamp
+- up to the next persisted plan anchor
+- cap at 24 hours if needed
 
-Because only the first plan per JST day is persisted, the absence of a later same-day plan event does not prove the Baseline recommendation never changed later that day.
+Because only one plan/day is persisted, absence of another same-day anchor does not prove that the Baseline recommendation remained unchanged all day.
 
-Capture:
+Capture observationally:
 
 - subsequent formal attempt count
-- fields actually attempted
-- whether Baseline target was attempted
-- whether Shadow target was also sampled
-- correct/wrong/confidence counts in those target fields
+- fields attempted
+- whether Baseline target was sampled
+- whether Shadow target was sampled
+- correct/wrong/confidence counts in those fields
 - same-Q repeats
 - same-Node different-Q encounters
-- formal Node transitions observed
+- formal Node transitions
 
-Safe observational labels include:
+Safe labels:
 
 - `baseline_target_followed`
 - `shadow_target_also_sampled`
@@ -170,103 +214,99 @@ Safe observational labels include:
 - `neither_target_sampled`
 - `outcome_not_observable`
 
-Never write `Shadow would have improved the learner`.
+Do not claim causality.
 
-## 9. Review categories
+## 12. Promotion-focused historical checks
 
-### Agreement
+Eligible snapshots can test whether the current Phase 11 policy would:
 
-Stored Baseline target equals reconstructed Shadow target.
+- miss unresolved Critical Safety evidence
+- overreact to one ordinary wrong
+- behave conservatively under sparse coverage
+- prioritize historical `recheck_due` over J5-J7 when such evidence exists
+- produce systematic or mixed disagreement patterns against Baseline
 
-If historical Baseline phase is known, the normal same-target comparison details may be shown.
+A Safety miss candidate requires complete historical formal coverage.
 
-If phase is unknown, record agreement but do not claim same reason. Use a conservative retrospective label such as:
-
-`target_agreement_phase_unknown`
-
-### Shadow stronger disagreement
-
-Different target and symmetric formal profile ranks favor Shadow.
-
-### Current stronger disagreement
-
-Different target and symmetric formal profile ranks favor the stored Baseline target.
-
-### Inconclusive disagreement
-
-Different target but ranks are equal, profile data is unavailable, historical interpretation is unsafe, or history coverage is incomplete.
-
-Never hide Current-guidance wins.
-
-## 10. Promotion-focused historical checks
-
-Eligible snapshots can help test whether:
-
-- unresolved Critical Safety evidence was missed by the current Phase 11 policy
-- one ordinary wrong would cause unjustified field takeover under the current policy
-- sparse evidence would remain in coverage behavior
-- historical recheck_due work, if any, would outrank J5-J7
-- disagreement patterns systematically favor one side or remain mixed
-
-A candidate Safety miss requires complete historical evidence coverage. Incomplete history cannot be counted as a miss.
-
-## 11. Limits
+## 13. Limits
 
 Retrospective replay cannot establish:
 
-- what the learner would have done if Shadow had actually been shown
-- causal superiority of Shadow
-- long-term pass probability
-- whether an unattempted Shadow target would have produced better learning
-- every recommendation the learner saw during a day
-- the exact decision an older, historical version of Phase 11 code would have made
+- what the learner would have done if Shadow had been shown
+- causal superiority
+- pass probability
+- benefit of an unattempted Shadow target
+- every recommendation shown during a day
+- the output of an older historical version of Phase 11 code
 
-It is evidence for current-policy rule consistency and safety, not an A/B experiment or historical code reconstruction.
+It evaluates current-policy consistency against historical evidence.
 
-## 12. Read-only implementation boundary
+## 14. Read-only implementation boundary
 
 Allowed:
 
-- SELECT recommendation-plan events
-- SELECT historical learning events needed for coverage audit
+- SELECT learning events
 - SELECT question attempts
-- pure historical reconstruction
+- pure historical coverage/replay logic
 - supporter diagnostics rendering
 
 Forbidden:
 
 - Production DB writes
 - migration
-- editing historical events
+- editing historical data
 - selector changes
+- Recent Cooldown changes
 - Node-state changes
-- Baseline recommendation changes
+- Baseline algorithm changes
 - learner-facing changes
 
-## 13. Suggested implementation
+## 15. Recommended implementation contract
 
-Prefer pure helpers such as:
+Database helper:
 
 ```python
-def audit_historical_attempt_coverage(learning_events, attempts, *, before):
-    ...
-
-def build_retrospective_shadow_audit(attempts, learning_events, plan_events):
+def get_learning_events(
+    user_id: str,
+    before: datetime | None = None,
+) -> list[dict]:
     ...
 ```
 
-Recommended SELECT-only database helper shape:
+Return chronologically:
+
+- event_key
+- user_id
+- mode
+- answered_count
+- correct_count
+- answered_at
+- question_results
+
+Mirror the local/Neon behavior style of `get_question_attempts()`.
+
+Pure helpers:
 
 ```python
-def get_learning_events(user_id: str, before: datetime | None = None) -> list[dict]:
+def audit_historical_attempt_coverage(
+    learning_events,
+    attempts,
+    *,
+    before,
+):
+    ...
+
+
+def build_retrospective_shadow_audit(
+    attempts,
+    learning_events,
+):
     ...
 ```
 
-It should mirror the local/Neon behavior style of `get_question_attempts()` and return event_key, user_id, mode, answered_count, correct_count, answered_at, and question_results ordered chronologically.
+Do not place replay logic in the template.
 
-Do not put replay or eligibility logic into the template.
-
-## 14. Supporter UI
+## 16. Supporter UI
 
 Add development-only section:
 
@@ -276,7 +316,7 @@ Summary:
 
 - plan anchors found
 - replay-eligible snapshots
-- history-coverage excluded snapshots
+- coverage-excluded snapshots
 - agreements
 - Shadow stronger disagreements
 - Current stronger disagreements
@@ -284,44 +324,44 @@ Summary:
 - Critical Safety miss candidates
 - ordinary-single-wrong takeover candidates
 
-Show latest 10-20 eligible/recent snapshots with expandable evidence. Excluded snapshots should show the exclusion reason rather than disappear silently.
+Show latest 10-20 snapshots. Excluded snapshots should display an exclusion reason rather than vanish silently.
 
-Every replay result should visibly state that it uses the current Phase 11 policy against historical learner evidence.
+Every replay must visibly state that it applies the **current Phase 11 policy to historical learner evidence**.
 
-## 15. Minimum tests
+## 17. Minimum tests
 
-1. later same-day Baseline changes are not invented from one daily plan anchor
-2. supporter/read-only rendering does not create plan anchors
-3. future attempts do not leak backward
-4. persisted Baseline field is used rather than current recalculation
-5. incomplete question_attempt coverage excludes the snapshot
-6. matching historical learning-event results and attempts makes snapshot eligible
-7. activity-event dicts are not counted as formal answers
-8. historical phase stays unknown when trustworthy total reconstruction is unavailable
-9. trustworthy `<100` and `>=100` phase reconstruction works when coverage is complete
-10. phase-unknown agreement does not claim same Baseline reason
-11. replay output identifies the current-policy version
-12. unknown attempts do not create confirmed weakness
-13. same-target agreement
-14. Shadow-stronger disagreement
-15. Current-stronger disagreement
-16. equal evidence -> inconclusive
-17. Critical Safety candidate requires complete history coverage
-18. ordinary single wrong does not become false weakness
+1. only one daily persisted plan anchor is assumed
+2. supporter/read-only views create no plan anchor
+3. stored Baseline field/goal are used
+4. Baseline phase uses historical `SUM(answered_count)`
+5. activity events with answered_count 0 do not alter phase
+6. answered_count>0 with missing formal results makes coverage incomplete
+7. missing attempt rows make coverage incomplete
+8. matching results/attempts make coverage complete
+9. activity-event dicts are not formal attempts
+10. future attempts do not leak backward
+11. current-policy replay label is present
+12. unknown does not create confirmed weakness
+13. agreement
+14. Shadow stronger disagreement
+15. Current stronger disagreement
+16. equal-rank disagreement is inconclusive
+17. Safety miss candidate requires complete history coverage
+18. one ordinary wrong does not become false confirmed weakness
 19. future recheck state does not leak backward
 20. no DB write helper
 21. no exact-Q selector call
 22. learner-facing unchanged
 23. existing Phase 11 tests remain green
 
-## 16. Promotion use
+## 18. Promotion use
 
-Retrospective evidence can reduce uncertainty before a limited learner-facing pilot, particularly for Safety and rule-consistency review.
+Retrospective evidence can reduce uncertainty before a limited learner-facing pilot, especially for safety and rule consistency.
 
 It does not replace prospective natural-use evidence. Final promotion should combine:
 
-- retrospective eligible historical replay using clearly identified current policy
+- eligible current-policy historical replay
 - current natural-use diagnostics
 - prospective limited-pilot evidence when approved
 
-This gains evidence faster without fabricating Production learning activity, overstating incomplete historical data, or pretending to reproduce old code versions.
+This gains evidence faster without fabricating learning activity or overstating incomplete history.
