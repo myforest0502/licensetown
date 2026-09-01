@@ -232,12 +232,6 @@ def select_node_adaptive_questions(
         take(normal_candidates, group, limit, node_cap=1)
         take(normal_candidates, group, limit, node_cap=2)
 
-    # A repairing singleton may fill a repair shortage, but never displaces a
-    # non-recent repair candidate. Other recent groups remain cooled down until
-    # the entire question set would otherwise be short.
-    take(recent_candidates, "repair", targets["repair"], node_cap=1)
-    take(recent_candidates, "repair", targets["repair"], node_cap=2)
-
     # Maintenance and unused groups fill natural shortages with the same two-pass rule.
     for cap in (1, 2, 3, question_count):
         for item in normal_candidates:

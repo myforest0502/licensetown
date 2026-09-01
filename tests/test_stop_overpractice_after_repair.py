@@ -116,7 +116,9 @@ def test_new_wrong_or_unknown_returns_repaired_node_to_repair(monkeypatch):
         selected = selector.select_node_adaptive_questions(
             history, 30, rng=random.Random(13), as_of=NOW + timedelta(minutes=4)
         )
-        assert selected_by_node(selected, "KN0001")[0]["priority_group"] == "repair"
+        # The formal state still regresses to repairing, while all three Qs for
+        # this Node remain under recent cooldown when enough other Qs exist.
+        assert selected_by_node(selected, "KN0001") == []
 
 
 def test_repaired_returns_as_recheck_due_after_seven_days(monkeypatch):

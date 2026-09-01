@@ -81,7 +81,9 @@ def test_one_node_one_question_first_pass_preserves_repair_diversity(monkeypatch
         attempt("Q6", "KN0006", False, minute=5),
     ], 10, rng=random.Random(31))
     repair = [item for item in selected if item["priority_group"] == "repair"]
-    assert {item["canonical_node_id"] for item in repair} >= {"KN0001", "KN0003"}
+    # Recent singleton repair Qs stay cooled down; only the non-recent
+    # different-Q confirmation for KN0001 remains eligible.
+    assert {item["canonical_node_id"] for item in repair} == {"KN0001"}
     assert sum(item["canonical_node_id"] == "KN0001" for item in repair) == 1
 
 
@@ -202,7 +204,12 @@ def test_recheck_due_prefers_strong_question_without_duplicates(monkeypatch):
 
 
 def test_priority_order_safety_confident_and_cross_wrong(monkeypatch):
-    fake_bank(monkeypatch, safety_by_node={"KN0001": "critical"})
+    fake_bank(monkeypatch, count=61, safety_by_node={"KN0001": "critical"})
+    original_get_tag = selector.get_question_tag
+    monkeypatch.setattr(selector, "get_question_tag", lambda q: (
+        {"knowledge_node_id": "KN0003", "safety": "none"}
+        if q == "Q61" else original_get_tag(q)
+    ))
     attempts = [
         attempt("Q1", "KN0001", False, 2, minute=1),
         attempt("Q3", "KN0002", False, 1, minute=2),
@@ -319,6 +326,42 @@ def test_two_consecutive_adaptive_sessions_have_zero_overlap(monkeypatch):
     assert overlap == set()
 
 
+def test_fifteen_recent_repairing_singletons_do_not_override_cooldown(monkeypatch):
+    node_by_q = {f"Q{i}": f"KN{i:04d}" for i in range(1, 121)}
+    custom_bank(monkeypatch, node_by_q)
+    attempts = [
+        attempt(f"Q{i}", f"KN{i:04d}", i > 15, 1, minute=i)
+        for i in range(1, 31)
+    ]
+    selected = selector.select_node_adaptive_questions(
+        attempts, 30, rng=random.Random(53)
+    )
+    overlap = {f"Q{i}" for i in range(1, 31)} & {
+        item["question_id"] for item in selected
+    }
+    assert overlap == set()
+    assert len(selected) == 30
+    assert sum(item["priority_group"] == "repair" for item in selected) < 15
+
+
+def test_thirty_recent_repairing_singletons_do_not_override_cooldown(monkeypatch):
+    node_by_q = {f"Q{i}": f"KN{i:04d}" for i in range(1, 121)}
+    custom_bank(monkeypatch, node_by_q)
+    attempts = [
+        attempt(f"Q{i}", f"KN{i:04d}", False, 2, minute=i)
+        for i in range(1, 31)
+    ]
+    selected = selector.select_node_adaptive_questions(
+        attempts, 30, rng=random.Random(54)
+    )
+    overlap = {f"Q{i}" for i in range(1, 31)} & {
+        item["question_id"] for item in selected
+    }
+    assert overlap == set()
+    assert len(selected) == 30
+    assert all(item["recent_question_repeat"] is False for item in selected)
+
+
 def test_recent_wrong_prefers_non_recent_strong_then_weak(monkeypatch):
     node_by_q = {"Q1": "KN0001", "Q2": "KN0001", "Q3": "KN0001"}
     node_by_q.update({f"Q{i}": f"KN{i:04d}" for i in range(4, 45)})
@@ -362,7 +405,7 @@ def test_safety_singleton_can_bypass_recent_cooldown(monkeypatch):
     assert q1["recent_cooldown_bypassed"] is True
 
 
-def test_recent_repair_singleton_only_fills_repair_shortage(monkeypatch):
+def test_recent_repair_singleton_does_not_fill_soft_repair_shortage(monkeypatch):
     node_by_q = {f"Q{i}": f"KN{i:04d}" for i in range(1, 31)}
     node_by_q.update({f"Q{i + 6}": f"KN{i:04d}" for i in range(1, 7)})
     custom_bank(monkeypatch, node_by_q)
@@ -381,8 +424,8 @@ def test_recent_repair_singleton_only_fills_repair_shortage(monkeypatch):
     selected = selector.select_node_adaptive_questions(
         [attempt("Q1", "KN0001", False)], 10, rng=random.Random(48)
     )
-    q1 = next(item for item in selected if item["question_id"] == "Q1")
-    assert q1["recent_cooldown_bypassed"] is True
+    assert "Q1" not in {item["question_id"] for item in selected}
+    assert len(selected) == 10
 
 
 def test_small_bank_uses_recent_only_as_final_fallback(monkeypatch):
@@ -397,6 +440,23 @@ def test_small_bank_uses_recent_only_as_final_fallback(monkeypatch):
     assert len(selected) == 10
     assert len({item["question_id"] for item in selected}) == 10
     assert sum(item["recent_cooldown_bypassed"] for item in selected) == 4
+
+
+def test_twenty_five_non_recent_candidates_use_exactly_five_recent_fallbacks(monkeypatch):
+    fake_bank(monkeypatch, count=30)
+    attempts = [
+        attempt(f"Q{i}", f"KN{((i - 1) // 2) + 1:04d}", True, 1, minute=i)
+        for i in range(1, 6)
+    ]
+    selected = selector.select_node_adaptive_questions(
+        attempts, 30, rng=random.Random(55)
+    )
+    assert len(selected) == 30
+    bypassed = [item for item in selected if item["recent_cooldown_bypassed"]]
+    assert len(bypassed) == 5
+    assert {item["question_id"] for item in bypassed} == {
+        "Q1", "Q2", "Q3", "Q4", "Q5"
+    }
 
 
 def test_recent_and_same_question_flags_are_independent(monkeypatch):
