@@ -1,7 +1,7 @@
 # Phase 11 v0.1 Deterministic Decision Table
 
-Date: 2026-09-01
-Status: design only / diagnostics shadow mode
+Date: 2026-09-02
+Status: implemented in diagnostics-only Shadow mode / learner-facing promotion pending
 
 ## Principle
 
@@ -46,8 +46,10 @@ Tie-break:
 1. cross-question confident-wrong Node count
 2. distinct confident-wrong repairing Nodes
 3. repairing Node count
-4. lower field accuracy when evidence is sufficient
+4. lower field accuracy only when that field has at least 10 answers
 5. field_id
+
+Sparse accuracy is not allowed to win the J2 tie-break merely because it is numerically extreme.
 
 ## J3 — Repeated weakness cluster
 
@@ -86,15 +88,31 @@ Tie-break:
 
 ## J5 — Foundation / insufficient coverage
 
-If total answers < 100 and J1-J4 do not apply, preserve the current deterministic foundation-field ordering.
+### Before 100 total answers
+
+If total answers < 100 and J1-J4 do not apply, preserve the current deterministic foundation target.
 
 - intent: coverage
 - reason_code: insufficient_coverage
 - question_count: 10
 
-After 100 answers, coverage may still trigger conservatively when evidence is insufficient, e.g. field answered_count < 10 or materially lower Node coverage than peer fields.
+The persisted/current baseline target is reused when available. If no usable current target exists, choose conservatively from the basic fields by least exposure.
 
-Do not choose a field just because the bank contains many questions there.
+### From 100 total answers onward
+
+v0.1 intentionally uses only the conservative trigger:
+
+- field `question_answer_count < 10`
+
+If multiple sparse fields qualify, tie-break by:
+
+1. fewer answered questions
+2. lower Node coverage percentage
+3. field_id
+
+Node coverage percentage is a tie-break signal here, not an independent J5 trigger in v0.1.
+
+Do not choose a field merely because the Question Bank contains many questions there.
 
 ## J6 — Uncertain-correct stabilization
 
@@ -130,9 +148,11 @@ Phase 10 then selects exact questions.
 
 An incomplete recommendation plan is context, not an automatic priority rule. Do not infer motivation/compliance failure from incompletion.
 
+Persisted `recommendation_plan` events may be used as read-only historical Baseline anchors for retrospective QA. They must not be rewritten or treated as proof that the learner followed the plan.
+
 ## Same-day volume observation
 
-Record `high_same_day_volume` when today answered_count >= 60, but v0.1 shadow must not yet block further learning from this threshold. Observe first.
+Record `high_same_day_volume` when today answered_count >= 60 in Asia/Tokyo, but v0.1 Shadow must not block further learning solely from this threshold. Observe first.
 
 ## Output contract
 
@@ -154,6 +174,16 @@ Record `high_same_day_volume` when today answered_count >= 60, but v0.1 shadow m
 ```
 
 Confidence describes confidence in the recommendation rationale, never examination pass probability.
+
+## Symmetric diagnostic comparison
+
+For current-vs-Shadow QA, both target fields receive the same J1→J7 evidence profile.
+
+- lower reason rank = stronger formal evidence
+- either Current or Shadow may be stronger
+- equal rank or unavailable profile = insufficient evidence to judge
+
+This comparison is diagnostic only. It does not prove future learning outcome superiority.
 
 ## Non-negotiable exclusions
 
@@ -177,4 +207,8 @@ Learner-facing replacement requires evidence of:
 3. appropriate sparse-learner coverage
 4. recheck_due not starved indefinitely
 5. Phase 11 intent consistent with Phase 10 audit
-6. real-user comparisons showing fewer obviously irrelevant recommendations than baseline
+6. symmetric Baseline-vs-Shadow review including Current wins
+7. no unexplained adaptive repeat regression
+8. natural-use evidence showing recommendation relevance is at least no worse than Baseline
+
+Retrospective replay can support safety and consistency review, but it does not replace prospective natural-use evidence.
