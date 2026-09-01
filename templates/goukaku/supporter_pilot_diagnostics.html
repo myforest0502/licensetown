@@ -48,6 +48,29 @@
     <p><strong>この判断は学習者画面には反映されていません。</strong></p>
   </section>
 
+  <section class="card pilot-diagnostic-card saved-adaptive-audit-card"><h2>実出題 adaptive_daily 監査</h2>
+    {% set saved = diagnostics.saved_adaptive_daily_audit %}
+    {% if saved.exists %}
+    <p>日時 {{ saved.event_at or '日時不明' }} / source {{ saved.source }} / mode {{ saved.mode }}</p>
+    <p>問題数 {{ saved.question_count }} / unique Q {{ saved.unique_question_count }}</p>
+    <p><b>audit fields complete:</b> {{ 'PASS' if saved.audit_fields_complete else 'FAIL' }} / recent repeats: {{ saved.recent_repeat_count }} / cooldown bypasses: {{ saved.cooldown_bypass_count }}</p>
+    {% if saved.recent_repeat_question_ids %}<p>recent repeat対象Q：{{ saved.recent_repeat_question_ids|join(', ') }}</p>{% endif %}
+    {% if saved.cooldown_bypass_question_ids %}<p>cooldown bypass対象Q：{{ saved.cooldown_bypass_question_ids|join(', ') }}</p>{% endif %}
+    <details><summary>保存済み監査値を見る</summary><ol class="saved-adaptive-audit-list">
+      {% for item in saved.results %}<li class="saved-adaptive-audit-item">
+        <h3>{{ item.question_id }}</h3>
+        <p>selection_reason: {{ item.selection_reason }}</p>
+        <p>selection_group: {{ item.selection_group }}</p>
+        <p>selection_score: {{ item.selection_score }}</p>
+        <p>repair_evidence_quality: {{ item.repair_evidence_quality }}</p>
+        <p>recent_question_repeat: {{ item.recent_question_repeat }}</p>
+        <p>recent_cooldown_bypassed: {{ item.recent_cooldown_bypassed }}</p>
+        {% if item.missing_audit_fields %}<p class="audit-missing">欠損：{{ item.missing_audit_fields|join(', ') }}</p>{% endif %}
+      </li>{% endfor %}
+    </ol></details>
+    {% else %}<p>保存済みadaptive_dailyイベントはまだありません</p>{% endif %}
+  </section>
+
   <section class="card pilot-diagnostic-card"><h2>最新のおすすめ30問シミュレーション</h2>
     <p>選定問題数 {{ diagnostics.adaptive_count }} / 重複なし {{ diagnostics.adaptive_unique_questions }} / 対象Node数 {{ diagnostics.adaptive_unique_nodes }}</p>
     <p>修復 {{ diagnostics.adaptive_groups.get('repair', 0) }} / 確認 {{ diagnostics.adaptive_groups.get('checking', 0) }} / 探索 {{ diagnostics.adaptive_groups.get('exploration', 0) }} / 定着維持 {{ diagnostics.adaptive_groups.get('maintenance', 0) }}</p>

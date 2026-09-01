@@ -593,6 +593,62 @@ def get_question_attempts(user_id: str, start_at: datetime | None = None) -> lis
             return attempts
 
 
+def get_latest_adaptive_daily_learning_event(user_id: str) -> dict[str, Any] | None:
+    """Return the latest persisted adaptive_daily event without modifying it."""
+    if not database_is_available():
+        candidates = []
+        for event_key, event in _local_learning_events.items():
+            if event.get("user_id") != user_id:
+                continue
+            results = event.get("question_results")
+            if isinstance(results, str):
+                try:
+                    results = json.loads(results)
+                except (TypeError, ValueError):
+                    continue
+            if not isinstance(results, list) or not any(
+                isinstance(item, dict)
+                and item.get("learning_source") == "adaptive_daily"
+                for item in results
+            ):
+                continue
+            candidates.append((event_key, event))
+        if not candidates:
+            return None
+        event_key, event = max(
+            candidates,
+            key=lambda item: (_as_utc(item[1]["answered_at"]), item[0]),
+        )
+        return {"event_key": event_key, **copy.deepcopy(event)}
+
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT event_key, user_id, mode, answered_count, correct_count,
+                       answered_at, question_results
+                FROM learning_events
+                WHERE user_id = %s
+                  AND question_results @> '[{"learning_source": "adaptive_daily"}]'::jsonb
+                ORDER BY answered_at DESC, event_key DESC
+                LIMIT 1
+                """,
+                (user_id,),
+            )
+            row = cur.fetchone()
+    if row is None:
+        return None
+    return {
+        "event_key": row[0],
+        "user_id": row[1],
+        "mode": row[2],
+        "answered_count": row[3],
+        "correct_count": row[4],
+        "answered_at": row[5],
+        "question_results": row[6],
+    }
+
+
 def get_weekly_question_history(user_id: str, now: datetime | None = None) -> dict[str, Any]:
     """Return seven JST calendar days from bounded question_attempts reads."""
     jst = ZoneInfo("Asia/Tokyo")

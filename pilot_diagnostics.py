@@ -6,7 +6,11 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from adaptive_question_selector import select_node_adaptive_questions
-from database import get_dashboard_learning_data, get_question_attempts
+from database import (
+    get_dashboard_learning_data,
+    get_latest_adaptive_daily_learning_event,
+    get_question_attempts,
+)
 from field_evidence import build_field_evidence
 from judgment_shadow import build_shadow_comparison, build_shadow_judgment
 from knowledge_node_canonical import canonicalize_knowledge_node_id
@@ -37,6 +41,14 @@ _REASON_LABELS = {
     "repaired": "修復済みNodeの維持",
     "stable_maintenance": "定着Nodeの維持",
 }
+_SAVED_ADAPTIVE_AUDIT_FIELDS = (
+    "selection_reason",
+    "selection_group",
+    "selection_score",
+    "repair_evidence_quality",
+    "recent_question_repeat",
+    "recent_cooldown_bypassed",
+)
 
 
 def _knowledge_node_labels():
@@ -197,6 +209,61 @@ def _current_dashboard_guidance(user_id: str):
     )
 
 
+def build_saved_adaptive_daily_audit(event):
+    """Summarize only the audit values already persisted in learning_events."""
+    if not event:
+        return {
+            "exists": False,
+            "results": [],
+            "audit_fields_complete": False,
+            "recent_repeat_count": 0,
+            "cooldown_bypass_count": 0,
+        }
+    results = event.get("question_results")
+    if isinstance(results, str):
+        try:
+            results = json.loads(results)
+        except (TypeError, ValueError):
+            results = []
+    if not isinstance(results, list):
+        results = []
+    details = []
+    for result in results:
+        if not isinstance(result, dict):
+            continue
+        missing = [name for name in _SAVED_ADAPTIVE_AUDIT_FIELDS if name not in result]
+        item = {
+            "question_id": str(result.get("question_id") or "不明"),
+            "missing_audit_fields": missing,
+        }
+        item.update({name: result.get(name) for name in _SAVED_ADAPTIVE_AUDIT_FIELDS})
+        details.append(item)
+    answered_at = _wrong_time(event.get("answered_at"))
+    return {
+        "exists": True,
+        "event_at": (
+            answered_at.astimezone(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M:%S")
+            if answered_at else None
+        ),
+        "source": "adaptive_daily",
+        "mode": str(event.get("mode") or "不明"),
+        "question_count": len(details),
+        "unique_question_count": len({item["question_id"] for item in details}),
+        "audit_fields_complete": bool(details) and all(
+            not item["missing_audit_fields"] for item in details
+        ),
+        "recent_repeat_count": sum(item["recent_question_repeat"] is True for item in details),
+        "cooldown_bypass_count": sum(item["recent_cooldown_bypassed"] is True for item in details),
+        "recent_repeat_question_ids": [
+            item["question_id"] for item in details if item["recent_question_repeat"] is True
+        ],
+        "cooldown_bypass_question_ids": [
+            item["question_id"] for item in details if item["recent_cooldown_bypassed"] is True
+        ],
+        "results": details,
+    }
+
+
 def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
     now = now or datetime.now(timezone.utc)
     days = {"7": 7, "30": 30, "all": None}.get(period, 7)
@@ -248,6 +315,9 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         field_evidence,
         shadow_judgment,
     )
+    saved_adaptive_daily_audit = build_saved_adaptive_daily_audit(
+        get_latest_adaptive_daily_learning_event(user_id)
+    )
 
     return {
         "period": period, "start_at": start_at, "total_attempts": len(attempts),
@@ -269,4 +339,5 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         "current_guidance": current_guidance,
         "shadow_judgment": shadow_judgment,
         "confident_wrong_node_details": confident_wrong_node_details,
+        "saved_adaptive_daily_audit": saved_adaptive_daily_audit,
     }
