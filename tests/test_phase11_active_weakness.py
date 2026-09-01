@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta, timezone
 
+import pytest
 import knowledge_node_state_transition as transition
 from knowledge_node_repair_evidence import DIFFERENT_QUESTION_STRONG, DIFFERENT_QUESTION_WEAK
 from knowledge_node_weakness_evidence import (
@@ -14,11 +15,11 @@ from phase11_active_weakness import build_active_repair_weakness
 BASE = datetime(2026, 9, 1, tzinfo=timezone.utc)
 
 
-def attempt(q, *, correct, confidence, minute=0, days=0, unknown=False):
+def attempt(q, *, correct, confidence, minute=0, days=0, unknown=False, user="u"):
     return {
         "id": days * 1000 + minute + 1,
-        "event_key": f"e-{q}-{days}-{minute}",
-        "user_id": "u",
+        "event_key": f"e-{user}-{q}-{days}-{minute}",
+        "user_id": user,
         "question_id": q,
         "knowledge_node_id": "KN0268",
         "selected_answers": [] if unknown else ["A"],
@@ -79,7 +80,7 @@ def test_two_current_cycle_wrong_questions_are_cross_question_wrong():
     assert facts["active_weakness_evidence_level"] == CROSS_QUESTION_WRONG
 
 
-def test_current_cycle_confident_cross_wrong_is_confident(monkeypatch):
+def test_current_cycle_confident_cross_wrong_is_confident():
     facts = build_active_repair_weakness([
         attempt("Q1", correct=False, confidence=1),
         attempt("Q2", correct=False, confidence=2, minute=1),
@@ -140,3 +141,11 @@ def test_failed_due_recheck_uses_only_new_cycle(monkeypatch):
     assert facts["active_evaluable_wrong_question_count"] == 1
     assert facts["active_has_confident_wrong"] is False
     assert facts["active_weakness_evidence_level"] == SINGLE_WRONG
+
+
+def test_mixed_users_fail_closed():
+    with pytest.raises(ValueError, match="one user"):
+        build_active_repair_weakness([
+            attempt("Q1", correct=False, confidence=2, user="a"),
+            attempt("Q2", correct=False, confidence=2, minute=1, user="b"),
+        ])
