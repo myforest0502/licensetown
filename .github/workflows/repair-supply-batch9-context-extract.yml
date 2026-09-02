@@ -1,0 +1,26 @@
+name: Repair Supply Batch9 Context Extract
+on:
+  push:
+    branches:
+      - analysis/repair-supply-phase2-batch9-context
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analysis/repair-supply-phase2-batch9-context
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python scripts/summarize_repair_supply_batch9_top5.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/repair-supply-phase2-batch9-top5-source-context.md
+          if ! git diff --cached --quiet; then
+            git commit -m "docs: extract Repair Supply batch9 source context"
+            git push origin HEAD:analysis/repair-supply-phase2-batch9-context
+          fi
