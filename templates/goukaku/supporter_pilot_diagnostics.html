@@ -103,7 +103,7 @@
         {% if profile %}<p>最強根拠：{{ profile.strongest_reason_label }}（{{ profile.strongest_reason_code }} / J{{ profile.reason_rank }}）</p>
         <p>Safety未解決 {{ profile.critical_safety_unresolved_count }} / 別Q自信あり誤答Node {{ profile.cross_question_confident_wrong_node_count }} / 自信あり修復中Node {{ profile.distinct_confident_wrong_repairing_node_count }}</p>
         <p>別Q誤答Node {{ profile.cross_question_wrong_node_count }} / 反復弱点Node {{ profile.repeated_weakness_node_count }} / 再確認待ち {{ profile.recheck_due_node_count }}</p>
-        <p>回答 {{ profile.answered_count }} / 正答率 {{ profile.accuracy if profile.accuracy is not none else 'なし' }} / Node coverage {{ profile.node_coverage_percent }}%</p>{% endif %}
+        <p>回答 {{ profile.answered_count }} / 正答率 {{ (profile.accuracy_percent ~ '%') if profile.accuracy_percent is not none else 'なし' }} / Node coverage {{ profile.node_coverage_percent }}%</p>{% endif %}
       </div>{% endfor %}
       <p><b>Shadow理由とprofileの整合：</b>{{ 'PASS' if comparison.shadow_reason_profile_consistent else '要確認' }}</p>
     </div>
