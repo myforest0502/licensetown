@@ -8,6 +8,10 @@
     <a class="pilot-period-tab{{ ' active' if diagnostics.period==value }}"{% if diagnostics.period==value %} aria-current="page"{% endif %} href="{{ url_for('goukaku_ui.supporter_pilot_diagnostics',token=supporter_token,learner_user_id=learner_id,period=value) }}">{{ label }}</a>
     {% endfor %}
   </nav>
+  <div class="adaptive-audit-actions phase11-promotion-evidence-copy">
+    <button type="button" data-copy-q-ids="{{ diagnostics.promotion_evidence_text }}">Phase11 Promotion evidenceをコピー</button>
+    <span aria-live="polite"></span>
+  </div>
   <section class="card pilot-diagnostic-card"><h2>学習量</h2>
     <p><strong>表示範囲：選択期間</strong></p>
     <p>回答 {{ diagnostics.total_attempts }} / ユニーク問題数 {{ diagnostics.unique_questions }} / 正解 {{ diagnostics.correct }} / 誤答 {{ diagnostics.incorrect }} / 正答率 {{ diagnostics.accuracy }}%</p>
