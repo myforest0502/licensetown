@@ -29449,5 +29449,10 @@
     "tag_version": "1.0",
     "tag_status": "reviewed",
     "source": "original"
-  }
+  },
+  {"id":"Q1606","theme":"上がり框手すり設置前の動作・環境評価","knowledge_node":"玄関上がり框への手すり","knowledge_node_id":"KN0194","task":"assessment_selection","primary_ability":"MEASURE","secondary_ability":"PRESCRIBE","level":3,"safety":"moderate","prerequisite_nodes":["上がり框寸法","段差昇降観察","上肢到達範囲"],"tag_version":"1.0","tag_status":"reviewed","source":"original"},
+  {"id":"Q1607","theme":"神経原性ショックの鑑別に必要な循環所見","knowledge_node":"神経原性ショックにおける低血圧・徐脈などの特徴","knowledge_node_id":"KN0676","task":"assessment_selection","primary_ability":"MEASURE","secondary_ability":"INTERPRET","level":3,"safety":"moderate","prerequisite_nodes":["低血圧","徐脈","末梢血管拡張"],"tag_version":"1.0","tag_status":"reviewed","source":"original"},
+  {"id":"Q1608","theme":"頸髄症の神経学的悪化に対する安全判断","knowledge_node":"頸髄症による上肢巧緻運動・歩行障害と上位運動ニューロン徴候","knowledge_node_id":"KN0025","task":"safety_priority","primary_ability":"DECIDE","secondary_ability":"INTERPRET","level":4,"safety":"moderate","prerequisite_nodes":["手指巧緻性低下","歩行障害","錐体路徴候","膀胱機能変化"],"tag_version":"1.0","tag_status":"reviewed","source":"original"},
+  {"id":"Q1609","theme":"前頸部熱傷の抗拘縮ポジショニング効果の評価","knowledge_node":"前頸部熱傷瘢痕拘縮を予防する頸部伸展位","knowledge_node_id":"KN0329","task":"assessment_selection","primary_ability":"MEASURE","secondary_ability":"INTERPRET","level":3,"safety":"moderate","prerequisite_nodes":["頸部伸展可動域","前頸部瘢痕","抗拘縮ポジショニング"],"tag_version":"1.0","tag_status":"reviewed","source":"original"},
+  {"id":"Q1610","theme":"重症COPD運動中の酸素化低下に対する安全判断","knowledge_node":"重症COPDに対する有酸素運動強度の設定","knowledge_node_id":"KN0697","task":"safety_priority","primary_ability":"DECIDE","secondary_ability":"PRESCRIBE","level":4,"safety":"moderate","prerequisite_nodes":["運動時SpO2","修正Borg息切れ","運動負荷調整"],"tag_version":"1.0","tag_status":"reviewed","source":"original"}
 ]

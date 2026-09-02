@@ -79,7 +79,7 @@ def test_normal_history_becomes_candidate_and_joins_formal_node():
 def test_missing_question_invalid_confidence_and_count_mismatches_are_reported():
     results = [
         {"selected_answers": ["A"], "is_correct": True, "confidence": 7},
-        result("Q1606", False, None),
+        result("Q1611", False, None),
     ]
     report, candidates = backfill.audit_learning_history(
         [event(results, answered=3, correct=2)], [], resolver
