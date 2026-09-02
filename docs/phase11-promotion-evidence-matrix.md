@@ -16,6 +16,7 @@ This document separates established evidence from the remaining Production/natur
 - Learner-facing recommendation is unchanged.
 - Phase 12 consumes Phase 11 output for presentation only and does not redefine mastery.
 - Current-vs-Shadow target comparison is symmetric and uses the same formal J1→J7 hierarchy for both targets.
+- Supporter diagnostics can export the current review facts as `PHASE11_PROMOTION_EVIDENCE_V1` without manual transcription.
 
 ## B. Phase 10 dependency — COMPLETE
 
@@ -133,7 +134,9 @@ A legitimate non-recent checking/recheck repeat is not treated as a regression m
 
 ### Remaining evidence requirement
 
-Production history must still be re-read with the corrected classifier before repeat behavior can be marked promotion-green. The current Neon connector is blocked before SQL execution by a connector argument-schema mismatch, so this read remains pending without any Production DB write.
+Production history must still be re-read with the corrected classifier before repeat behavior can be marked promotion-green.
+
+That re-read does not have to wait for direct Neon SQL access. The Production Supporter diagnostic page can export the current repeat counts inside `PHASE11_PROMOTION_EVIDENCE_V1`. Direct Neon read remains useful for deeper DB-level forensic inspection, but the current connector argument-schema mismatch is no longer a blocker for collecting the page-level Promotion evidence.
 
 ## H. Retrospective historical replay — IMPLEMENTED
 
@@ -155,6 +158,8 @@ This is current-policy retrospective replay, not historical-code time travel and
 ### Remaining evidence requirement
 
 Production replay results still need to be read and reviewed. Implementation alone does not satisfy the promotion gate.
+
+`PHASE11_PROMOTION_EVIDENCE_V1` includes every current retrospective snapshot so review can include eligible snapshots, Current/Baseline wins, Shadow wins, agreements, inconclusive comparisons, and coverage-excluded fail-closed cases without manual transcription.
 
 ## I. Known natural disagreement — OBSERVED, INSUFFICIENT ALONE
 
@@ -218,7 +223,26 @@ Review all eligible Production replay snapshots, including Current wins/losses a
 
 If Q1595-Q1605 produce formal `repairing -> repaired` transitions, verify mechanics separately from item discrimination. A structurally STRONG but trivial item is not full educational validation.
 
-## K. Promotion decision rule
+## K. Promotion evidence capture rule
+
+The Production Supporter page `/supporter/pilot-diagnostics` exposes `Phase11 Promotion evidenceをコピー`, which exports a deterministic `PHASE11_PROMOTION_EVIDENCE_V1` bundle generated from the same already-built diagnostic values displayed on the page.
+
+Use it as a collection/transport aid, not as an independent score.
+
+Preserve its scope split:
+
+- selected-period metrics: period-scoped learning/repeat evidence
+- current formal state: all formal history
+- retrospective replay: all history with fail-closed exclusions
+- saved adaptive audit: latest persisted adaptive_daily session
+
+A copied bundle must be reviewed as a whole. Do not cherry-pick only `shadow_stronger` snapshots. The copied text is authoritative only insofar as it came from the Production Supporter page.
+
+Direct Neon SQL read remains valuable for deeper forensic queries and cross-checking when the connector is available. No Production DB write is required for this evidence-capture workflow.
+
+See `docs/phase11-evidence-bundle-ops-v01.md`.
+
+## L. Promotion decision rule
 
 Do not promote from one screenshot, one favorable disagreement, or one burst of pilot repair transitions.
 
@@ -238,12 +262,13 @@ A limited feature-flagged learner-facing pilot may be considered only when:
 
 If evidence is mixed or insufficient, remain Shadow-only. Do not compensate by changing ranking weights prematurely.
 
-## L. Current next order
+## M. Current next order
 
-1. Re-read Production Repeat Structure Audit with the corrected classifier when DB read access is available.
-2. Read Production retrospective replay output and symmetric current profiles.
-3. Review eligible historical disagreement winners/losses.
+1. Capture the current Production `PHASE11_PROMOTION_EVIDENCE_V1` bundle from the Supporter diagnostic page.
+2. Review corrected Repeat Structure Audit and every retrospective replay snapshot in that bundle.
+3. Review eligible historical disagreement winners/losses and fail-closed exclusions.
 4. Observe prospective natural Safety / sparse-coverage / recheck_due / intent-vs-selection cases.
-5. Decide whether evidence supports a **limited feature-flagged learner-facing pilot**, not full replacement.
+5. Use direct Neon SQL later for deeper forensic cross-checks when connector access is restored.
+6. Decide whether evidence supports a **limited feature-flagged learner-facing pilot**, not full replacement.
 
 Open GitHub implementation Issues for the previously identified diagnostics/formal-policy defects are currently cleared. Remaining blockers are evidence-gathering gates, not known unimplemented Phase 11 ranking defects.
