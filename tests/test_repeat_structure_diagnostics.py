@@ -71,15 +71,20 @@ def test_same_canonical_node_different_question_is_not_same_q_repeat():
     assert audit["same_node_different_question_confirmations"] == 1
 
 
-def test_repeat_categories_follow_priority_and_saved_metadata_only(monkeypatch):
+def test_repeat_categories_follow_saved_recent_metadata_matrix_and_never_call_selector(monkeypatch):
     attempts = []
     events = []
     cases = [
-        ("Q1", "justified", {**AUDIT, "recent_cooldown_bypassed": True}),
-        ("Q2", "repair", AUDIT),
-        ("Q3", "unexplained", {**AUDIT, "selection_group": "exploration"}),
-        ("Q4", "random", None),
-        ("Q5", "missing", "missing"),
+        ("Q1", "justified", {**AUDIT, "recent_question_repeat": True, "recent_cooldown_bypassed": True}),
+        ("Q2", "recent-repair", {**AUDIT, "recent_question_repeat": True, "recent_cooldown_bypassed": False, "selection_group": "repair"}),
+        ("Q3", "recent-checking", {**AUDIT, "recent_question_repeat": True, "recent_cooldown_bypassed": False, "selection_group": "checking"}),
+        ("Q4", "spaced-checking", {**AUDIT, "recent_question_repeat": False, "recent_cooldown_bypassed": False, "selection_group": "checking"}),
+        ("Q5", "spaced-uncertain", {**AUDIT, "recent_question_repeat": False, "recent_cooldown_bypassed": False, "selection_reason": "uncertain_correct", "selection_group": "checking"}),
+        ("Q6", "spaced-recheck", {**AUDIT, "recent_question_repeat": False, "recent_cooldown_bypassed": False, "selection_reason": "recheck_due", "selection_group": "checking"}),
+        ("Q7", "spaced-repair", {**AUDIT, "recent_question_repeat": False, "recent_cooldown_bypassed": False, "selection_group": "repair"}),
+        ("Q8", "inconsistent", {**AUDIT, "recent_question_repeat": False, "recent_cooldown_bypassed": True}),
+        ("Q9", "random", None),
+        ("Q10", "missing", "missing"),
     ]
     for index, (q, key, metadata) in enumerate(cases):
         attempts.extend([attempt(q, index * 2), attempt(q, index * 2 + 1, event=key)])
@@ -96,13 +101,27 @@ def test_repeat_categories_follow_priority_and_saved_metadata_only(monkeypatch):
     audit = build_repeat_structure_audit(attempts, events)
     assert audit["category_counts"] == {
         "justified_cooldown_bypass": 1,
-        "adaptive_repair_or_recheck": 1,
-        "adaptive_unexplained_repeat": 1,
+        "adaptive_spaced_repeat": 4,
+        "adaptive_unexplained_repeat": 2,
+        "adaptive_metadata_inconsistent": 1,
         "nonadaptive_repeat": 1,
         "audit_metadata_unavailable": 1,
     }
     assert audit["nonadaptive_modes"] == {"random": 1}
-    assert [item["question_id"] for item in audit["unexplained_repeats"]] == ["Q3"]
+    assert [item["question_id"] for item in audit["unexplained_repeats"]] == ["Q2", "Q3"]
+
+
+def test_incomplete_boolean_audit_values_are_unavailable_not_selector_failures():
+    attempts = [attempt("Q1", 0), attempt("Q1", 1, event="partial")]
+    events = [event(
+        "partial",
+        "Q1",
+        "adaptive_daily",
+        **{**AUDIT, "recent_question_repeat": None, "recent_cooldown_bypassed": False},
+    )]
+    audit = build_repeat_structure_audit(attempts, events)
+    assert audit["category_counts"]["audit_metadata_unavailable"] == 1
+    assert audit["unexplained_repeat_count"] == 0
 
 
 def test_elapsed_buckets_use_non_overlapping_24_hour_and_7_day_boundaries():
@@ -169,7 +188,7 @@ def test_supporter_diagnostics_renders_repeat_section_but_learner_page_does_not(
     html = response.get_data(as_text=True)
     assert response.status_code == 200
     assert "Repeat構造監査" in html
-    assert "adaptive説明不能repeat 1" in html
+    assert "adaptive説明不能recent repeat 1" in html
     assert "Q1（KN0001）" in html
     assert "reason safety_wrong" in html
     learner_html = client.get(
