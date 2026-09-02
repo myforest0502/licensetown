@@ -12,9 +12,10 @@
   {
     "knowledge_node_id": "KN0002",
     "label": "動的膝外反と股関節外旋筋制御",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q2"
+      "Q2",
+      "Q1623"
     ],
     "aliases": [],
     "successor_ids": []
@@ -649,9 +650,10 @@
   {
     "knowledge_node_id": "KN0065",
     "label": "身体活動＋社会参加支援",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q65"
+      "Q65",
+      "Q1625"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6823,9 +6825,10 @@
   {
     "knowledge_node_id": "KN0678",
     "label": "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q686"
+      "Q686",
+      "Q1622"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14022,9 +14025,10 @@
   {
     "knowledge_node_id": "KN1395",
     "label": "運動単位は1個のα運動ニューロンとその支配筋線維群で、同一運動単位の筋線維は同時に興奮する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1420"
+      "Q1420",
+      "Q1621"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14753,9 +14757,10 @@
   {
     "knowledge_node_id": "KN1468",
     "label": "心理療法の目的は陽性転移を生じさせることではなく、転移を理解・解釈して葛藤を扱うこと",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1493"
+      "Q1493",
+      "Q1624"
     ],
     "aliases": [],
     "successor_ids": []
