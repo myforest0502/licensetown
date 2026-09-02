@@ -43,6 +43,34 @@ Production/natural-use review must still confirm:
 
 The Q1595-Q1605 repair-content audit is complete. Their formal STRONG status remains valid, but weaker distractor discrimination in several pilot items means pilot-driven `repairing -> repaired` growth is not by itself educational validation.
 
+## Production evidence review v0.1 — 2026-09-02
+
+The first full Production `PHASE11_PROMOTION_EVIDENCE_V1` review is complete. Current decision: **HOLD / remain Shadow-only**.
+
+Observed positive evidence:
+
+- current Shadow target `動作分析学` is J2 `confident_wrong_cluster` with 2 active cross-question confident-wrong Nodes and 5 active confident-wrong repairing Nodes; the current disagreement is not a one-wrong takeover
+- corrected Repeat Structure Audit shows 0 true unexplained recent repeats and 0 metadata inconsistencies among classifiable history
+- 2/2 retrospective anchors are eligible with complete history coverage and profile consistency
+- 0 Phase11 Critical Safety miss candidates across the 2 eligible snapshots
+- 0 J2/J3 formal-trigger mismatches across the 2 eligible snapshots
+- both retrospective disagreements favor Shadow on formal evidence
+- formal `repairing -> repaired` transitions are now present in Production (4 observed)
+- latest 30-question adaptive simulation remains 30 unique Q / 30 unique Nodes / 15 repair / 10 checking / 5 exploration
+
+Remaining evidence gaps:
+
+- `recheck_due=0` and `stable=0`, so J4 retention behavior is not naturally observable yet
+- retrospective evidence is one-sided: 2 Shadow wins, 0 Current/Baseline wins, 0 same-target agreements
+- broader prospective relevance still needs additional natural-use examples
+- repair supply remains constrained: 3 STRONG-available repairing Nodes out of 131 (2.3%)
+
+Historical `metadata_unavailable=251` is retained as unknown/unclassifiable legacy repeat metadata and is not treated as evidence of a current cooldown regression.
+
+The latest saved adaptive session at capture time was one 5-question set (`event_count_incomplete`), which is an in-progress session rather than a malformed completed 30-question session.
+
+See `docs/phase11-production-evidence-review-20260902-v01.md` for the full review.
+
 ## Production evidence capture
 
 Direct Neon SQL read remains useful for deeper forensic inspection, but it is no longer the only path for capturing the Promotion evidence used by this gate. The Production Supporter page `/supporter/pilot-diagnostics` can export a deterministic `PHASE11_PROMOTION_EVIDENCE_V1` bundle from the same diagnostic values displayed on the page.
