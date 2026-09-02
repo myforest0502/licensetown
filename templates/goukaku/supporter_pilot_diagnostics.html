@@ -130,6 +130,25 @@
     <p><strong>この判断は学習者画面には反映されていません。</strong></p>
   </section>
 
+  <section class="card pilot-diagnostic-card retrospective-shadow-audit-card">
+    {% set replay = diagnostics.retrospective_shadow_audit %}
+    <h2>Phase11 過去推薦リプレイ</h2>
+    <p><strong>現在のPhase11ポリシーを、当時までの学習証拠に適用したread-only再評価です。</strong></p>
+    <p>plan anchor {{ replay.plan_anchor_count }} / replay可能 {{ replay.eligible_snapshot_count }} / coverage除外 {{ replay.coverage_excluded_count }}</p>
+    <p>一致 {{ replay.agreement_count }} / Shadow根拠優位 {{ replay.shadow_stronger_disagreement_count }} / Current根拠優位 {{ replay.current_stronger_disagreement_count }} / 判定保留 {{ replay.inconclusive_disagreement_count }}</p>
+    <p>Critical Safety見逃し候補 {{ replay.critical_safety_miss_candidate_count }} / ordinary single-wrong takeover候補 {{ replay.ordinary_single_wrong_takeover_candidate_count }}</p>
+    <details><summary>最新スナップショットを見る</summary><ol class="retrospective-shadow-list">
+      {% for item in replay.snapshots[:20] %}<li>
+        <h3>{{ item.snapshot_jst }}</h3>
+        <p>coverage: {{ item.coverage_status }} / historical answers {{ item.historical_total_answers if item.historical_total_answers is not none else '不明' }} / formal attempts {{ item.historical_formal_attempt_count }}</p>
+        <p>Baseline: {{ item.baseline_target }} {{ item.baseline_goal }}問 / phase {{ item.baseline_phase or '不明' }}</p>
+        {% if item.eligible %}<p>Shadow: {{ item.shadow_target or '全体' }} {{ item.shadow_count }}問 / {{ item.shadow_reason_code }} / {{ item.review_category }}</p>
+        <p>comparison: {{ item.comparison_label }} / profile整合 {{ 'PASS' if item.shadow_reason_profile_consistent else '要確認' }}</p>
+        {% else %}<p>除外理由：{{ item.coverage_issues|join(', ') or item.coverage_status }}</p>{% endif %}
+      </li>{% else %}<li>保存済みrecommendation_plan anchorはありません。</li>{% endfor %}
+    </ol></details>
+  </section>
+
   <section class="card pilot-diagnostic-card saved-adaptive-audit-card"><h2>最新 adaptive_daily 30問セッション監査</h2>
     {% set saved = diagnostics.saved_adaptive_daily_audit %}
     {% if saved.exists %}

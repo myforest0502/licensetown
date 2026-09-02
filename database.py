@@ -593,6 +593,53 @@ def get_question_attempts(user_id: str, start_at: datetime | None = None) -> lis
             return attempts
 
 
+def get_learning_events(
+    user_id: str,
+    before: datetime | None = None,
+) -> list[dict[str, Any]]:
+    """Return persisted learning events chronologically (SELECT only)."""
+    cutoff = _as_utc(before) if before is not None else None
+    if not database_is_available():
+        events = []
+        for event_key, event in _local_learning_events.items():
+            if event.get("user_id") != user_id:
+                continue
+            answered_at = _as_utc(event.get("answered_at"))
+            if cutoff is not None and answered_at >= cutoff:
+                continue
+            events.append({"event_key": event_key, **copy.deepcopy(event)})
+        return sorted(events, key=lambda item: (_as_utc(item.get("answered_at")), item["event_key"]))
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            if cutoff is None:
+                cur.execute(
+                    """
+                    SELECT event_key, user_id, mode, answered_count, correct_count,
+                           answered_at, question_results
+                    FROM learning_events
+                    WHERE user_id = %s
+                    ORDER BY answered_at, event_key
+                    """,
+                    (user_id,),
+                )
+            else:
+                cur.execute(
+                    """
+                    SELECT event_key, user_id, mode, answered_count, correct_count,
+                           answered_at, question_results
+                    FROM learning_events
+                    WHERE user_id = %s AND answered_at < %s
+                    ORDER BY answered_at, event_key
+                    """,
+                    (user_id, cutoff),
+                )
+            columns = (
+                "event_key", "user_id", "mode", "answered_count", "correct_count",
+                "answered_at", "question_results",
+            )
+            return [dict(zip(columns, row)) for row in cur.fetchall()]
+
+
 def get_learning_events_by_event_keys(
     user_id: str,
     event_keys: list[str] | tuple[str, ...] | set[str],

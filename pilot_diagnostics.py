@@ -8,6 +8,7 @@ from zoneinfo import ZoneInfo
 from adaptive_question_selector import select_node_adaptive_questions
 from database import (
     get_dashboard_learning_data,
+    get_learning_events,
     get_learning_events_by_event_keys,
     get_latest_adaptive_daily_learning_session_events,
     get_question_attempts,
@@ -23,6 +24,7 @@ from knowledge_node_state_transition import STATES, derive_all_user_node_states,
 from knowledge_node_weakness_evidence import derive_repeated_weakness_evidence
 from learning_analysis import build_learning_guidance
 from question_bank import CATEGORY_NAMES, get_category_small, get_question_tag, question_ids
+from phase11_retrospective_shadow_audit import build_retrospective_shadow_audit
 from repairability_diagnostics import (
     build_repairing_node_repairability,
     build_strong_repair_supply_priorities,
@@ -530,6 +532,10 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
             {str(item.get("event_key") or "") for item in attempts},
         ),
     )
+    retrospective_shadow_audit = build_retrospective_shadow_audit(
+        all_attempts,
+        get_learning_events(user_id),
+    )
 
     return {
         "period": period, "start_at": start_at, "total_attempts": len(attempts),
@@ -555,4 +561,5 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         "repairing_node_repairability": repairing_node_repairability,
         "strong_repair_supply_priorities": strong_repair_supply_priorities,
         "repeat_structure_audit": repeat_structure_audit,
+        "retrospective_shadow_audit": retrospective_shadow_audit,
     }
