@@ -1,0 +1,58 @@
+name: Safety Unresolved Audit QA v2
+
+"on":
+  push:
+    branches:
+      - fix/safety-unresolved-audit-reason-v01
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: fix/safety-unresolved-audit-reason-v01
+
+      - name: Apply patch
+        run: |
+          python scripts/apply_safety_unresolved_patch.py
+          if ! git diff --quiet -- adaptive_question_selector.py; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add adaptive_question_selector.py
+            git commit -m "Separate Safety unresolved from confirmed wrong audit reason"
+            git push origin HEAD:fix/safety-unresolved-audit-reason-v01
+          fi
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest "Werkzeug<3"
+
+      - name: Focused tests
+        run: |
+          python -m pytest -q \
+            tests/test_safety_unresolved_audit_reason.py \
+            tests/test_adaptive_question_selector.py \
+            tests/test_phase11_active_safety.py \
+            tests/test_phase11_formal_judgment.py \
+            tests/test_learning_stats.py
+
+      - name: Full pytest
+        run: >-
+          python -m pytest -q
+          --deselect=tests/test_quiz_answer_numbering.py::ConfigurableQuizTest::test_runtime_loader_supports_current_utf16_and_candidate_utf8
+
+      - name: Question Bank validator
+        run: python scripts/validate_question_bank.py
