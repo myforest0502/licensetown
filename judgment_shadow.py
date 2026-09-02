@@ -57,6 +57,11 @@ def _compat_profile_aliases(profile: dict[str, Any]) -> dict[str, Any]:
     )
     item.setdefault("answered_count", int(item.get("raw_answer_count") or 0))
     item.setdefault("accuracy", item.get("raw_accuracy"))
+    accuracy = item.get("accuracy")
+    item.setdefault(
+        "accuracy_percent",
+        round(float(accuracy) * 100, 1) if accuracy is not None else None,
+    )
     return item
 
 
