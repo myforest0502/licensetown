@@ -203,6 +203,34 @@ def _comparison_category(label: str) -> str:
     }.get(label, "inconclusive_disagreement")
 
 
+def _safety_miss_flags(
+    shadow: dict[str, Any],
+    field_profiles: dict[str, dict[str, Any]],
+    baseline_target: str | None,
+) -> dict[str, bool]:
+    """Separate Phase11 Safety miss from a weaker Baseline Safety target."""
+    any_critical = any(
+        int(profile.get("critical_safety_unresolved_count") or 0) > 0
+        for profile in field_profiles.values()
+    )
+    shadow_target = str(shadow.get("target_field") or "")
+    shadow_profile = field_profiles.get(shadow_target) or {}
+    baseline_profile = field_profiles.get(str(baseline_target or "")) or {}
+    shadow_critical = int(shadow_profile.get("critical_safety_unresolved_count") or 0)
+    baseline_critical = int(baseline_profile.get("critical_safety_unresolved_count") or 0)
+    phase11_miss = bool(any_critical and shadow.get("reason_code") != "safety_repair")
+    baseline_miss = bool(
+        shadow.get("reason_code") == "safety_repair"
+        and shadow_critical > 0
+        and baseline_target != shadow.get("target_field")
+        and baseline_critical == 0
+    )
+    return {
+        "phase11_critical_safety_miss_candidate": phase11_miss,
+        "baseline_stronger_safety_miss_candidate": baseline_miss,
+    }
+
+
 def build_retrospective_shadow_audit(
     attempts: Iterable[dict[str, Any]],
     learning_events: Iterable[dict[str, Any]],
@@ -265,10 +293,9 @@ def build_retrospective_shadow_audit(
         comparison = build_shadow_comparison(current_guidance, shadow, profiles)
         category = _comparison_category(str(comparison.get("label") or ""))
         counts[category] += 1
-        critical_safety_miss = bool(
-            shadow.get("reason_code") == "safety_repair"
-            and anchor["field"] != shadow.get("target_field")
-        )
+        safety_flags = _safety_miss_flags(shadow, profiles, anchor["field"])
+        critical_safety_miss = safety_flags["phase11_critical_safety_miss_candidate"]
+        baseline_safety_miss = safety_flags["baseline_stronger_safety_miss_candidate"]
         ordinary_single_wrong_takeover = bool(
             shadow.get("reason_code") in {"confident_wrong_cluster", "repeated_wrong_cluster"}
             and comparison.get("shadow_target_formal_evidence", {}).get("active_repeated_weakness_node_count", 0) == 0
@@ -276,6 +303,8 @@ def build_retrospective_shadow_audit(
         )
         if critical_safety_miss:
             counts["critical_safety_miss_candidates"] += 1
+        if baseline_safety_miss:
+            counts["baseline_stronger_safety_miss_candidates"] += 1
         if ordinary_single_wrong_takeover:
             counts["ordinary_single_wrong_takeover_candidates"] += 1
         snapshots.append({
@@ -292,6 +321,8 @@ def build_retrospective_shadow_audit(
             "baseline_target_formal_evidence": comparison.get("current_target_formal_evidence"),
             "shadow_target_formal_evidence": comparison.get("shadow_target_formal_evidence"),
             "critical_safety_miss_candidate": critical_safety_miss,
+            "phase11_critical_safety_miss_candidate": critical_safety_miss,
+            "baseline_stronger_safety_miss_candidate": baseline_safety_miss,
             "ordinary_single_wrong_takeover_candidate": ordinary_single_wrong_takeover,
         })
 
@@ -305,6 +336,8 @@ def build_retrospective_shadow_audit(
         "current_stronger_disagreement_count": counts["current_stronger_disagreement"],
         "inconclusive_disagreement_count": counts["inconclusive_disagreement"],
         "critical_safety_miss_candidate_count": counts["critical_safety_miss_candidates"],
+        "phase11_critical_safety_miss_candidate_count": counts["critical_safety_miss_candidates"],
+        "baseline_stronger_safety_miss_candidate_count": counts["baseline_stronger_safety_miss_candidates"],
         "ordinary_single_wrong_takeover_candidate_count": counts["ordinary_single_wrong_takeover_candidates"],
         "snapshots": list(reversed(snapshots)),
     }
