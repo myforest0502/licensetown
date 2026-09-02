@@ -37,7 +37,7 @@ def test_q1_through_q1645_content_is_unchanged():
 
 
 def test_batch9_records_match_v03_and_v02_design_contracts():
-    assert question_count() == 1655
+    assert question_count() == 1660
     for q_id, (node, sources, key, category, small, task, primary, secondary) in ITEMS.items():
         question = get_question(q_id)
         answer = get_answer(q_id)
