@@ -1,7 +1,7 @@
 LicenseTown question_tags.json audit
-source: current formal Question Bank through Q1605
-records: 1605
-Q range: Q1-Q1605
+source: current formal Question Bank through Q1610
+records: 1610
+Q range: Q1-Q1610
 duplicates: 0
 missing: 0
 schema errors: 0
@@ -10,16 +10,16 @@ cross-file ID mismatches: 0
 errors: 0
 
 tag_version:
-  1.0: 1405
+  1.0: 1410
   0.3: 200
 
 tag_status:
-  reviewed: 1405
+  reviewed: 1410
   reviewed_sample: 200
   provisional_bulk: 0
 
 task:
-  assessment_selection: 172
+  assessment_selection: 175
   cause_identification: 0
   device_selection: 44
   fact_recall: 880
@@ -27,42 +27,54 @@ task:
   functional_goal_decision: 17
   intervention_selection: 212
   prognosis_prediction: 5
-  safety_priority: 84
+  safety_priority: 86
 
 primary ability:
-  DECIDE: 101
+  DECIDE: 103
   INTERPRET: 191
   KNOW: 880
-  MEASURE: 172
+  MEASURE: 175
   PREDICT: 5
   PRESCRIBE: 256
 
 secondary ability:
   DECIDE: 72
-  INTERPRET: 277
+  INTERPRET: 280
   KNOW: 27
   MEASURE: 15
   PREDICT: 1
-  PRESCRIBE: 24
+  PRESCRIBE: 26
   null: 1189
 
 level:
   1: 859
   2: 185
-  3: 466
-  4: 95
+  3: 469
+  4: 97
 
 safety:
   critical: 65 (4.0%)
-  moderate: 227 (14.1%)
-  none: 1313 (81.8%)
+  moderate: 232 (14.4%)
+  none: 1313 (81.6%)
 
 source:
-  original: 511 (31.8%)
-  past_exam: 1094 (68.2%)
+  original: 516 (32.0%)
+  past_exam: 1094 (68.0%)
 
 candidate metric highlights:
-  fact_recall: 880 (54.8%)
+  fact_recall: 880 (54.7%)
+
+Q1606-Q1610 Repair Supply Phase2 batch1 additions:
+  records: 5
+  source original: 5
+  task assessment_selection: 3
+  task safety_priority: 2
+  primary MEASURE: 3
+  primary DECIDE: 2
+  safety moderate: 5
+  target canonical nodes: 5 existing multi-question nodes
+  formal strong source/new checks: 10 / 10 (each new Q STRONG vs both active-wrong source Qs)
+  manual medical/content review: PASS after terminology corrections
 
 Q1595-Q1605 Safety strong-repair pilot additions:
   records: 11
@@ -91,11 +103,24 @@ canonical Knowledge Node coverage:
   canonical nodes: 1509
   singleton canonical nodes: 1422
   multi-question canonical nodes: 87
-  note: Q1565-Q1594 map to 30 existing canonical nodes. Of those,
-        29 were singleton nodes through Q1564 and became multi-question nodes;
-        one was already multi-question. Canonical node count remains 1509.
+  note: Q1606-Q1610 attach to five nodes that were already multi-question,
+        so canonical/singleton/multi counts do not change.
 
-current Q1594 audit delta:
+current Q1605 audit delta:
+  records: 1605 -> 1610 (+5)
+  tag_version 1.0: 1405 -> 1410 (+5)
+  tag_status reviewed: 1405 -> 1410 (+5)
+  task assessment_selection: 172 -> 175 (+3)
+  task safety_priority: 84 -> 86 (+2)
+  primary MEASURE: 172 -> 175 (+3)
+  primary DECIDE: 101 -> 103 (+2)
+  safety moderate: 227 -> 232 (+5)
+  source original: 511 -> 516 (+5)
+  canonical nodes: 1509 -> 1509 (+0)
+  singleton canonical nodes: 1422 -> 1422 (+0)
+  multi-question canonical nodes: 87 -> 87 (+0)
+
+previous Q1594 audit delta:
   records: 1594 -> 1605 (+11)
   tag_version 1.0: 1394 -> 1405 (+11)
   tag_status reviewed: 1394 -> 1405 (+11)
@@ -104,17 +129,3 @@ current Q1594 audit delta:
   canonical nodes: 1509 -> 1509 (+0)
   singleton canonical nodes: 1433 -> 1422 (-11)
   multi-question canonical nodes: 76 -> 87 (+11)
-
-previous Q1564 audit delta:
-  records: 1564 -> 1594 (+30)
-  tag_version 1.0: 1364 -> 1394 (+30)
-  tag_status reviewed: 1364 -> 1394 (+30)
-  fact_recall: 850 -> 880 (+30)
-  safety critical: 65 -> 65 (+0)
-  safety moderate: 218 -> 216 (-2)
-  safety none: 1281 -> 1313 (+32)
-  canonical nodes: 1509 -> 1509 (+0)
-  singleton canonical nodes: 1462 -> 1433 (-29)
-  multi-question canonical nodes: 47 -> 76 (+29)
-  note: task/ability/safety deltas include both the 30 formal additions and
-        formal tag refinements made after the previous audit snapshot.
