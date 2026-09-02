@@ -496,6 +496,7 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
     field_judgment_profiles = build_field_judgment_evidence_profiles(
         all_attempts,
         field_evidence,
+        as_of=now,
     )
     shadow_judgment["comparison"] = build_shadow_comparison(
         current_guidance,
