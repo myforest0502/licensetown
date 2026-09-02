@@ -231,6 +231,28 @@ def _safety_miss_flags(
     }
 
 
+def _ordinary_single_wrong_takeover_candidate(
+    shadow: dict[str, Any],
+    shadow_profile: dict[str, Any] | None,
+) -> bool:
+    """Flag only a J2/J3 decision whose own formal trigger is absent."""
+    profile = shadow_profile or {}
+    reason = str(shadow.get("reason_code") or "")
+    if reason == "confident_wrong_cluster":
+        supported = (
+            int(profile.get("active_cross_question_confident_wrong_node_count") or 0) >= 1
+            or int(profile.get("active_confident_wrong_repairing_node_count") or 0) >= 2
+        )
+        return not supported
+    if reason == "repeated_wrong_cluster":
+        supported = (
+            int(profile.get("active_cross_question_wrong_node_count") or 0) >= 1
+            or int(profile.get("active_repeated_weakness_node_count") or 0) >= 2
+        )
+        return not supported
+    return False
+
+
 def build_retrospective_shadow_audit(
     attempts: Iterable[dict[str, Any]],
     learning_events: Iterable[dict[str, Any]],
@@ -296,10 +318,8 @@ def build_retrospective_shadow_audit(
         safety_flags = _safety_miss_flags(shadow, profiles, anchor["field"])
         critical_safety_miss = safety_flags["phase11_critical_safety_miss_candidate"]
         baseline_safety_miss = safety_flags["baseline_stronger_safety_miss_candidate"]
-        ordinary_single_wrong_takeover = bool(
-            shadow.get("reason_code") in {"confident_wrong_cluster", "repeated_wrong_cluster"}
-            and comparison.get("shadow_target_formal_evidence", {}).get("active_repeated_weakness_node_count", 0) == 0
-            and comparison.get("shadow_target_formal_evidence", {}).get("active_cross_question_wrong_node_count", 0) == 0
+        ordinary_single_wrong_takeover = _ordinary_single_wrong_takeover_candidate(
+            shadow, comparison.get("shadow_target_formal_evidence")
         )
         if critical_safety_miss:
             counts["critical_safety_miss_candidates"] += 1
