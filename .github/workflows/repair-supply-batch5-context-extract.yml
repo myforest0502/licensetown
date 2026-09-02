@@ -19,10 +19,11 @@ jobs:
           python scripts/extract_repair_supply_batch5_context.py
           python scripts/summarize_repair_supply_batch5_top5.py
           python scripts/summarize_repair_supply_batch6_top5.py
+          python scripts/summarize_repair_supply_batch7_top5.py
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/repair-supply-phase2-batch5-source-context.json docs/repair-supply-phase2-batch5-top5-source-context.md docs/repair-supply-phase2-batch6-top5-source-context.md
+          git add docs/repair-supply-phase2-batch5-source-context.json docs/repair-supply-phase2-batch5-top5-source-context.md docs/repair-supply-phase2-batch6-top5-source-context.md docs/repair-supply-phase2-batch7-top5-source-context.md
           if ! git diff --cached --quiet; then
-            git commit -m "docs: extract Repair Supply batch6 source context"
+            git commit -m "docs: extract Repair Supply batch7 source context"
             git push origin HEAD:analysis/repair-supply-phase2-batch5-context
           fi
