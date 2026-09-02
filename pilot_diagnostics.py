@@ -539,6 +539,7 @@ def build_phase11_promotion_evidence_text(
     adaptive_unique_questions,
     adaptive_unique_nodes,
     adaptive_groups,
+    strong_repair_supply_priorities=None,
 ):
     """Build a deterministic Supporter-only Phase11 review bundle from existing facts."""
     period_label = {"7": "直近7日", "30": "直近30日", "all": "全期間"}.get(
@@ -551,6 +552,7 @@ def build_phase11_promotion_evidence_text(
     saved = saved_adaptive_daily_audit or {}
     replay = retrospective_shadow_audit or {}
     repairability = repairing_node_repairability or {}
+    repair_supply = strong_repair_supply_priorities or {}
     groups = adaptive_groups or {}
     states = state_counts or {}
     transition_counts = transitions or {}
@@ -638,6 +640,16 @@ def build_phase11_promotion_evidence_text(
             f"repairable_rate:{repairability.get('repairable_rate') if repairability.get('repairable_rate') is not None else 'none'}"
         ),
         (
+            "repair_supply="
+            f"targets:{int(repair_supply.get('target_node_total') or 0)},"
+            f"priority_A:{int((repair_supply.get('priority_counts') or {}).get('A') or 0)},"
+            f"priority_B:{int((repair_supply.get('priority_counts') or {}).get('B') or 0)},"
+            f"priority_C:{int((repair_supply.get('priority_counts') or {}).get('C') or 0)},"
+            f"priority_D:{int((repair_supply.get('priority_counts') or {}).get('D') or 0)},"
+            f"weak_pair_review:{int(repair_supply.get('weak_pair_review_count') or 0)},"
+            f"create_strong_alternate:{int(repair_supply.get('create_strong_alternate_count') or 0)}"
+        ),
+        (
             "adaptive_simulation="
             f"count:{int(adaptive_count or 0)},"
             f"unique_q:{int(adaptive_unique_questions or 0)},"
@@ -648,6 +660,26 @@ def build_phase11_promotion_evidence_text(
             f"maintenance:{int(groups.get('maintenance') or 0)}"
         ),
     ]
+    for item in repair_supply.get("top") or []:
+        def _csv(values):
+            return "|".join(str(value) for value in (values or [])) or "none"
+
+        lines.append(
+            "repair_supply_top_" + str(int(item.get("rank") or 0)) + "=" + ",".join([
+                f"node:{item.get('canonical_node_id') or 'none'}",
+                f"label:{item.get('formal_label') or 'none'}",
+                f"tier:{item.get('supply_priority_tier') or 'none'}",
+                f"action:{item.get('supply_action') or 'none'}",
+                f"safety:{_csv(item.get('safety_levels'))}",
+                f"cycle_wrong:{int(item.get('current_cycle_wrong_count') or 0)}",
+                f"confident_wrong:{int(item.get('confident_wrong_count') or 0)}",
+                f"distinct_wrong_q:{int(item.get('distinct_wrong_question_count') or 0)}",
+                f"wrong_q:{_csv(item.get('wrong_question_ids'))}",
+                f"all_q:{_csv(item.get('all_question_ids'))}",
+                f"weak_candidates:{_csv(item.get('weak_repair_candidate_question_ids'))}",
+                f"unseen_different_q:{_csv(item.get('unseen_different_question_ids'))}",
+            ])
+        )
     for index, snapshot in enumerate(replay.get("snapshots") or [], start=1):
         eligible = bool(snapshot.get("eligible"))
         issues = " | ".join(str(item) for item in (snapshot.get("coverage_issues") or [])) or "none"
@@ -766,6 +798,7 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
             "recheck_due_to_repairing": transitions[("recheck_due", "repairing")],
         },
         repairing_node_repairability=repairing_node_repairability,
+        strong_repair_supply_priorities=strong_repair_supply_priorities,
         adaptive_count=len(adaptive),
         adaptive_unique_questions=len({x["question_id"] for x in adaptive}),
         adaptive_unique_nodes=len({x["canonical_node_id"] for x in adaptive}),
