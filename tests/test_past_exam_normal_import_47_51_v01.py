@@ -39,7 +39,7 @@ def _load(name):
 
 
 def test_imported_questions_keep_official_exam_answer_and_reviewed_node():
-    assert question_count() == 1610
+    assert question_count() == 1615
     for question_id, (exam_no, session, question_no, answer, node_id, _, category) in EXPECTED.items():
         question = get_question(question_id)
         assert question["source"] == "P"
@@ -95,11 +95,11 @@ def test_question_ids_are_contiguous_and_cross_file_ids_match():
         "explanations.json",
         "question_tags.json",
     )]
-    expected_ids = [f"Q{number}" for number in range(1, 1611)]
+    expected_ids = [f"Q{number}" for number in range(1, 1616)]
     for rows in collections:
         ids = [row["id"] for row in rows]
         assert ids == expected_ids
-        assert len(ids) == len(set(ids)) == 1610
+        assert len(ids) == len(set(ids)) == 1615
 
 
 def test_frontotemporal_dementia_node_uses_psychiatry_category_consistently():

@@ -6103,9 +6103,10 @@
   {
     "knowledge_node_id": "KN0607",
     "label": "成人の安静開脚立位の基本事項",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q615"
+      "Q615",
+      "Q1615"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11573,7 +11574,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1164",
-      "Q1221"
+      "Q1221",
+      "Q1612"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12622,9 +12624,10 @@
   {
     "knowledge_node_id": "KN1256",
     "label": "矢状面の重心線は耳垂付近、肩峰付近、大転子や膝関節のやや前方、外果のやや前方を通る",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1272"
+      "Q1272",
+      "Q1613"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12692,9 +12695,10 @@
   {
     "knowledge_node_id": "KN1263",
     "label": "C6まで機能残存ならC5の肘屈筋とC6の手関節伸筋が使用できる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1279"
+      "Q1279",
+      "Q1614"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14053,9 +14057,10 @@
   {
     "knowledge_node_id": "KN1399",
     "label": "安静立位では重心線が膝関節中心のやや前方を通ることで少ない筋活動で安定する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1424"
+      "Q1424",
+      "Q1611"
     ],
     "aliases": [],
     "successor_ids": []
