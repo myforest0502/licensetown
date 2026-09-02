@@ -2415,9 +2415,10 @@
   {
     "knowledge_node_id": "KN0240",
     "label": "RER 0.70から脂質優位のエネルギー代謝を判断する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q241"
+      "Q241",
+      "Q1661"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2435,9 +2436,10 @@
   {
     "knowledge_node_id": "KN0242",
     "label": "荷重応答期の外的膝屈曲モーメントと大腿四頭筋遠心性収縮",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q243"
+      "Q243",
+      "Q1662"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2607,9 +2609,10 @@
   {
     "knowledge_node_id": "KN0259",
     "label": "MIPが反映する吸気筋力",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q260"
+      "Q260",
+      "Q1663"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2850,9 +2853,10 @@
   {
     "knowledge_node_id": "KN0283",
     "label": "力×モーメントアームによる関節モーメント算出",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q285"
+      "Q285",
+      "Q1664"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3173,9 +3177,10 @@
   {
     "knowledge_node_id": "KN0315",
     "label": "肺気腫で低下しやすい肺拡散能",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q317"
+      "Q317",
+      "Q1665"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3183,9 +3188,10 @@
   {
     "knowledge_node_id": "KN0316",
     "label": "発熱・アシドーシスによる酸素解離曲線右方移動",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q318"
+      "Q318",
+      "Q1666"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3616,9 +3622,10 @@
   {
     "knowledge_node_id": "KN0359",
     "label": "遠位脛腓靱帯結合損傷を誘発する外旋ストレス系検査",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q363"
+      "Q363",
+      "Q1667"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3788,9 +3795,10 @@
   {
     "knowledge_node_id": "KN0376",
     "label": "ISNCSCIにおけるC7 key muscle",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q381"
+      "Q381",
+      "Q1668"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3838,9 +3846,10 @@
   {
     "knowledge_node_id": "KN0381",
     "label": "MIPの30％を用いた吸気筋トレーニング初期負荷計算",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q386"
+      "Q386",
+      "Q1669"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4100,9 +4109,10 @@
   {
     "knowledge_node_id": "KN0407",
     "label": "BODE indexのBMI・気流制限・呼吸困難・運動耐容能",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q414"
+      "Q414",
+      "Q1670"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4392,9 +4402,10 @@
   {
     "knowledge_node_id": "KN0436",
     "label": "Guyon管での尺骨神経圧迫の感覚分布",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q444"
+      "Q444",
+      "Q1671"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4492,9 +4503,10 @@
   {
     "knowledge_node_id": "KN0446",
     "label": "Klumpke麻痺に関与するC8-T1神経根",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q454"
+      "Q454",
+      "Q1672"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4982,10 +4994,11 @@
   },
   {
     "knowledge_node_id": "KN0495",
-    "label": "74歳の男性から病態・機能障害を解釈",
-    "status": "singleton_initial",
+    "label": "Barthel Indexにおける移乗・移動能力の採点",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q503"
+      "Q503",
+      "Q1673"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5103,9 +5116,10 @@
   {
     "knowledge_node_id": "KN0507",
     "label": "関節を他動的に動かしたときの正常な最終域感と関節運動の組合せの基本事項",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q515"
+      "Q515",
+      "Q1674"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5153,9 +5167,10 @@
   {
     "knowledge_node_id": "KN0512",
     "label": "Fugl-Meyer Assessmentは脳卒中後の運動機能だけでなく、感覚、関節可動域、疼痛なども含む包括的評価である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q520"
+      "Q520",
+      "Q1675"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5354,9 +5369,10 @@
   {
     "knowledge_node_id": "KN0532",
     "label": "大脳辺縁系とその働きの組合せの基本事項",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q540"
+      "Q540",
+      "Q1676"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5437,9 +5453,10 @@
   {
     "knowledge_node_id": "KN0540",
     "label": "腎小体の糸球体で血液が濾過され、尿細管で再吸収・分泌が行われる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q548"
+      "Q548",
+      "Q1677"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5498,9 +5515,10 @@
   {
     "knowledge_node_id": "KN0546",
     "label": "内側縦アーチは中足指節関節を伸展すると足底腱膜が巻き上げられるwindlass機構によって高くなる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q554"
+      "Q554",
+      "Q1678"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5519,9 +5537,10 @@
   {
     "knowledge_node_id": "KN0548",
     "label": "神経膠芽腫は悪性度の高い原発性脳腫瘍で、浸潤性が強く予後不良である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q556"
+      "Q556",
+      "Q1679"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5529,9 +5548,10 @@
   {
     "knowledge_node_id": "KN0549",
     "label": "炎症が長期化し、単核球浸潤と組織破壊に加えて修復反応が並行するため線維化が特徴となる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q557"
+      "Q557",
+      "Q1680"
     ],
     "aliases": [],
     "successor_ids": []

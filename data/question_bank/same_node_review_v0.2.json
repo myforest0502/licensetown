@@ -36,5 +36,6 @@
   {"candidate_id":"SNC0035","original_recommendation":"RELATED_ONLY","aoi_decision":"RELATED_ONLY","canonical_node_id":null,"alias_node_ids":[],"reason":"現分類を維持。","review_status":"reviewed"},
   {"candidate_id":"SNC0036","original_recommendation":"RELATED_ONLY","aoi_decision":"RELATED_ONLY","canonical_node_id":null,"alias_node_ids":[],"reason":"現分類を維持。","review_status":"reviewed"},
   {"candidate_id":"SNC0037","original_recommendation":"UNRELATED","aoi_decision":"UNRELATED","canonical_node_id":null,"alias_node_ids":[],"reason":"現分類を維持。","review_status":"reviewed"},
-  {"candidate_id":"SNC0038","original_recommendation":"UNRELATED","aoi_decision":"UNRELATED","canonical_node_id":null,"alias_node_ids":[],"reason":"現分類を維持。","review_status":"reviewed"}
+  {"candidate_id":"SNC0038","original_recommendation":"UNRELATED","aoi_decision":"UNRELATED","canonical_node_id":null,"alias_node_ids":[],"reason":"現分類を維持。","review_status":"reviewed"},
+  {"candidate_id":"RSP12-CANONICAL-001","original_recommendation":"SAME_NODE","aoi_decision":"SAME_NODE_APPROVED","canonical_node_id":"KN0549","alias_node_ids":["KN1401"],"reason":"78 Node一括監査で、Q557とQ1426は慢性炎症における組織破壊・血管新生・線維化という同一最小修復対象として正式確認された。","review_status":"reviewed"}
 ]

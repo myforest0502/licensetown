@@ -21,7 +21,7 @@ ITEMS = {
 
 
 def test_phase2_batch1_records_are_complete_and_mapped():
-    assert question_count() == 1660
+    assert question_count() == 1680
     for q_id, (node_id, _sources, task, ability, correct) in ITEMS.items():
         question = get_question(q_id)
         answer = get_answer(q_id)

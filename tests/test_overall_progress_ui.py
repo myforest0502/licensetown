@@ -59,11 +59,11 @@ def test_overall_presentation_state_fixtures_and_ratios():
 def test_one_checking_node_is_unique_low_progress():
     progress = build_field_progress(build_field_evidence([_attempt()]))
     result = build_overall_progress_presentation(progress)
-    assert result["total_unique_canonical_nodes"] == 1509
+    assert result["total_unique_canonical_nodes"] == 1508
     assert result["touched_unique_canonical_nodes"] == 1
     assert 0 < result["progress_raw"] < 0.01
     assert result["progress_display"] == "1%未満"
-    assert result["coverage_raw"] == 1 / 1509
+    assert result["coverage_raw"] == 1 / 1508
 
 
 def test_flag_off_preserves_legacy_overall_and_has_no_attempt_read(monkeypatch):
