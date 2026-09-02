@@ -228,6 +228,43 @@ def _current_dashboard_guidance(user_id: str):
     )
 
 
+def _parse_adaptive_session_event_key(event_key):
+    """Return (session_id, set_no) for the persisted ``{session_id}:{set_no}`` form."""
+    head, separator, tail = str(event_key or "").rpartition(":")
+    if not separator or not head or not tail.isdigit():
+        return None
+    set_no = int(tail)
+    if set_no < 1:
+        return None
+    return head, set_no
+
+
+def _adaptive_session_completion_status(events, question_count, unique_question_count):
+    parsed = [_parse_adaptive_session_event_key(event.get("event_key")) for event in events]
+    parsed_set_numbers = [item[1] for item in parsed if item is not None]
+    parsed_session_ids = [item[0] for item in parsed if item is not None]
+    if len(events) != 6:
+        status = "event_count_incomplete"
+    elif any(item is None for item in parsed):
+        status = "event_key_unparseable"
+    elif len(set(parsed_session_ids)) != 1:
+        status = "mixed_session_ids"
+    elif len(set(parsed_set_numbers)) != len(parsed_set_numbers) or set(parsed_set_numbers) != set(range(1, 7)):
+        status = "set_sequence_invalid"
+    elif question_count != 30:
+        status = "question_count_incomplete"
+    elif unique_question_count != 30:
+        status = "duplicate_question_ids"
+    else:
+        status = "complete"
+    return {
+        "session_status": status,
+        "parsed_session_ids": parsed_session_ids,
+        "parsed_set_numbers": parsed_set_numbers,
+        "event_key_parse_failure_count": sum(item is None for item in parsed),
+    }
+
+
 def build_saved_adaptive_daily_audit(events):
     """Summarize only the audit values already persisted in learning_events."""
     if not events:
@@ -264,11 +301,10 @@ def build_saved_adaptive_daily_audit(events):
     event_times = [value for value in event_times if value is not None]
     unique_question_count = len({item["question_id"] for item in details})
     expected_question_count = 30
-    session_complete = (
-        len(events) == 6
-        and len(details) == expected_question_count
-        and unique_question_count == expected_question_count
+    completion = _adaptive_session_completion_status(
+        events, len(details), unique_question_count
     )
+    session_complete = completion["session_status"] == "complete"
     return {
         "exists": True,
         "first_event_at": min(event_times).astimezone(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M:%S") if event_times else None,
@@ -278,6 +314,10 @@ def build_saved_adaptive_daily_audit(events):
         "event_count": len(events),
         "expected_question_count": expected_question_count,
         "session_complete": session_complete,
+        "session_status": completion["session_status"],
+        "parsed_session_ids": completion["parsed_session_ids"],
+        "parsed_set_numbers": completion["parsed_set_numbers"],
+        "event_key_parse_failure_count": completion["event_key_parse_failure_count"],
         "question_count": len(details),
         "unique_question_count": unique_question_count,
         "audit_fields_complete": bool(details) and all(
