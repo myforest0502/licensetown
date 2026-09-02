@@ -98,10 +98,14 @@ def audit_historical_attempt_coverage(
     if cutoff is None:
         raise ValueError("before must be a parseable timestamp")
     events = []
+    malformed_event_timestamps = []
     for raw in learning_events:
         event = dict(raw)
         timestamp = _parse_time(event.get("answered_at"))
-        if timestamp is not None and timestamp < cutoff:
+        if timestamp is None:
+            malformed_event_timestamps.append(str(event.get("event_key") or "unknown"))
+            continue
+        if timestamp < cutoff:
             events.append((timestamp, event))
     attempts_before = []
     for raw in attempts:
@@ -116,7 +120,8 @@ def audit_historical_attempt_coverage(
     expected = 0
     matched = 0
     issues: list[str] = []
-    unreliable = False
+    unreliable = bool(malformed_event_timestamps)
+    issues.extend(f"invalid_event_timestamp:{key}" for key in malformed_event_timestamps)
     for _timestamp, event in sorted(events, key=lambda pair: (pair[0], str(pair[1].get("event_key") or ""))):
         answered_count = _as_int(event.get("answered_count"))
         if answered_count is None or answered_count < 0:
@@ -178,7 +183,9 @@ def _historical_total_answers(learning_events: Iterable[dict[str, Any]], before:
     total = 0
     for event in learning_events:
         timestamp = _parse_time(event.get("answered_at"))
-        if timestamp is None or timestamp >= before:
+        if timestamp is None:
+            return None
+        if timestamp >= before:
             continue
         answered_count = _as_int(event.get("answered_count"))
         if answered_count is None or answered_count < 0:

@@ -158,3 +158,38 @@ def test_get_learning_events_local_is_chronological_and_read_only():
     assert [row["event_key"] for row in rows] == ["earlier", "later"]
     rows[0]["mode"] = "changed"
     assert database._local_learning_events["earlier"]["mode"] != "changed"
+
+
+def test_malformed_historical_event_timestamp_fails_closed():
+    broken = learning_event("broken", 1, answered_count=0)
+    broken["answered_at"] = "not-a-time"
+    coverage = audit_historical_attempt_coverage(
+        [broken], [], before=T0 + timedelta(hours=2)
+    )
+    assert coverage["status"] == "history_coverage_unreliable"
+    audit = build_retrospective_shadow_audit([], [broken, plan("plan", 2)])
+    snapshot = audit["snapshots"][0]
+    assert snapshot["eligible"] is False
+    assert snapshot["baseline_phase"] is None
+
+
+def test_get_learning_events_db_path_is_select_only(monkeypatch):
+    class Cursor:
+        def __init__(self): self.sql = ""; self.args = None
+        def __enter__(self): return self
+        def __exit__(self, *_args): return False
+        def execute(self, sql, args): self.sql = " ".join(sql.split()); self.args = args
+        def fetchall(self): return []
+    class Connection:
+        def __init__(self): self.cursor_value = Cursor()
+        def __enter__(self): return self
+        def __exit__(self, *_args): return False
+        def cursor(self): return self.cursor_value
+    connection = Connection()
+    monkeypatch.setattr(database, "database_is_available", lambda: True)
+    monkeypatch.setattr(database, "get_db_connection", lambda: connection)
+    assert get_learning_events("learner") == []
+    assert connection.cursor_value.sql.startswith("SELECT ")
+    assert not any(word in connection.cursor_value.sql.upper() for word in (
+        "INSERT", "UPDATE", "DELETE", "TRUNCATE", "ALTER", "CREATE", "DROP",
+    ))
