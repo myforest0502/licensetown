@@ -10,7 +10,7 @@ Design rule: same canonical Knowledge Node, materially different demand from the
 - Active wrong: Q1420
 - Existing concept: one motor unit = one alpha motor neuron plus all muscle fibers it innervates; fibers of one motor unit are activated together.
 - New demand: `finding_interpretation / INTERPRET`
-- Stem: During needle EMG mapping, loss of one alpha motor neuron's axon is known to have occurred. Which muscle fibers would directly lose neural input from that lesion?
+- Stem: Assume that only the axon of one alpha motor neuron is selectively injured. Which muscle fibers would directly lose neural input from that lesion?
 - Choices:
   A. All fibers in the entire muscle
   B. Only the single fiber nearest the motor end plate
