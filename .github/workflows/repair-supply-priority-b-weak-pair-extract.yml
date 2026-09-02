@@ -1,0 +1,29 @@
+name: Repair Supply Priority B Weak Pair Extract
+
+on:
+  push:
+    branches:
+      - analysis/repair-supply-phase2-priority-b-weak-pairs
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analysis/repair-supply-phase2-priority-b-weak-pairs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python scripts/extract_priority_b_weak_pairs.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/repair-supply-phase2-priority-b-weak-pair-context.json
+          if ! git diff --cached --quiet; then
+            git commit -m "docs: extract Priority B weak-pair source context"
+            git push origin HEAD:analysis/repair-supply-phase2-priority-b-weak-pairs
+          fi
