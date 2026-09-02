@@ -829,10 +829,30 @@ def get_weekly_question_history(user_id: str, now: datetime | None = None) -> di
             text = str(value)
             return (int(text[1:]) if text.startswith("Q") and text[1:].isdigit() else 10**9, text)
         return sorted(values, key=key)
+    def is_unknown_attempt(item):
+        return (
+            item.get("answer_status") == "unknown"
+            or (not item.get("selected_answers") and item.get("confidence") is None)
+        )
+
     attempted = {str(item.get("question_id")) for item in attempts}
-    wrong = {str(item.get("question_id")) for item in attempts if item.get("is_correct") is False}
-    unknown = {str(item.get("question_id")) for item in attempts if item.get("answer_status") == "unknown" or (not item.get("selected_answers") and item.get("confidence") is None)}
-    confident_wrong = {str(item.get("question_id")) for item in attempts if item.get("is_correct") is False and item.get("confidence") == 1 and str(item.get("question_id")) not in unknown}
+    wrong = {
+        str(item.get("question_id"))
+        for item in attempts
+        if item.get("is_correct") is False and not is_unknown_attempt(item)
+    }
+    unknown = {
+        str(item.get("question_id"))
+        for item in attempts
+        if is_unknown_attempt(item)
+    }
+    confident_wrong = {
+        str(item.get("question_id"))
+        for item in attempts
+        if item.get("is_correct") is False
+        and item.get("confidence") == 1
+        and not is_unknown_attempt(item)
+    }
     return {"start_date": start_date, "end_date": end_date, "total_attempts": len(attempts),
             "unique_questions": len(attempted), "attempted_question_ids": ordered(attempted),
             "wrong_question_ids": ordered(wrong), "unknown_question_ids": ordered(unknown),
