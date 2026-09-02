@@ -19,6 +19,7 @@ All implementation safeguards are satisfied:
 - repeat diagnostics distinguish spaced adaptive repeat from true recent repeat-without-bypass
 - saved adaptive_daily session completeness validates one session, set numbers 1..6, 30 result rows, and 30 unique Q
 - Supporter diagnostics exposes the relevant completion/repeat/replay evidence
+- Supporter diagnostics can export `PHASE11_PROMOTION_EVIDENCE_V1` with the same review facts and every retrospective snapshot
 - learner dashboard recommendation remains unchanged
 - no Phase 11 Production DB write is introduced
 - no adaptive selector ownership transfer occurs
@@ -58,7 +59,22 @@ Remaining gates are evidence gates:
 - prospective natural recommendations are clearly no worse than Baseline
 - formal pilot repair transitions are interpreted with the completed Q1595-Q1605 content-quality caution
 
-Production repeat/replay re-reading is currently blocked by the Neon connector argument-schema mismatch before SQL execution; this is not a LicenseTown DB/schema defect and no Production SQL/write occurred from the failed connector attempts.
+### Evidence collection path
+
+Production evidence does not have to wait for direct Neon SQL access. The Production Supporter page `/supporter/pilot-diagnostics` can export the deterministic `PHASE11_PROMOTION_EVIDENCE_V1` bundle using `Phase11 Promotion evidenceをコピー`.
+
+Use that bundle to review the same diagnostic facts without manual transcription. Preserve the source scopes:
+
+- selected-period metrics
+- all-history current formal state
+- all-history retrospective replay
+- latest persisted adaptive_daily session
+
+Review all replay snapshots, including Current/Baseline wins, agreements, inconclusive comparisons, and coverage-excluded fail-closed snapshots. Do not use only favorable Shadow cases.
+
+The bundle is a collection/transport aid, not an independent Promotion score and not a policy change.
+
+Direct Neon read remains useful for deeper DB-level forensic inspection. The current connector argument-schema mismatch can still block such SQL before execution; this is not a LicenseTown DB/schema defect and no Production SQL/write occurred from the failed connector attempts.
 
 ## D. Promotion decision
 
@@ -75,4 +91,5 @@ See:
 - `docs/phase11-shadow-evaluation.md`
 - `docs/phase11-promotion-evidence-matrix.md`
 - `docs/phase11-retrospective-shadow-audit-v01.md`
+- `docs/phase11-evidence-bundle-ops-v01.md`
 - `docs/strong-repair-pilot-content-audit-v01.md`
