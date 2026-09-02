@@ -17,11 +17,11 @@
     <h2>Repeat構造監査</h2>
     <p>回答 {{ repeat.total_attempts }} / unique Q {{ repeat.unique_questions }} / same-Q repeat {{ repeat.same_question_repeats }}</p>
     <p>同一Node別Q {{ repeat.same_node_different_question_confirmations }} / 0回答 {{ repeat.unknown_attempts }}</p>
-    <p>正当cooldown bypass {{ repeat.category_counts.justified_cooldown_bypass }} / adaptive repair・recheck {{ repeat.category_counts.adaptive_repair_or_recheck }} / adaptive説明不能repeat {{ repeat.category_counts.adaptive_unexplained_repeat }} / non-adaptive repeat {{ repeat.category_counts.nonadaptive_repeat }} / 監査情報なし・判定不能 {{ repeat.category_counts.audit_metadata_unavailable }}</p>
+    <p>正当cooldown bypass {{ repeat.category_counts.justified_cooldown_bypass }} / adaptive spaced repeat {{ repeat.category_counts.adaptive_spaced_repeat }} / adaptive説明不能recent repeat {{ repeat.category_counts.adaptive_unexplained_repeat }} / adaptive metadata不整合 {{ repeat.category_counts.adaptive_metadata_inconsistent }} / non-adaptive repeat {{ repeat.category_counts.nonadaptive_repeat }} / 監査情報なし・判定不能 {{ repeat.category_counts.audit_metadata_unavailable }}</p>
     <p>同日 {{ repeat.same_day_count }} / &lt;24h {{ repeat.distance_counts.under_24h }} / 1d–&lt;7d {{ repeat.distance_counts.one_to_under_seven_days }} / &gt;=7d {{ repeat.distance_counts.seven_days_or_more }}{% if repeat.distance_counts.unknown %} / 時間不明 {{ repeat.distance_counts.unknown }}{% endif %}</p>
     {% if repeat.nonadaptive_modes %}<p>non-adaptive内訳：{% for mode,count in repeat.nonadaptive_modes.items() %}{{ mode }} {{ count }}{% if not loop.last %} / {% endif %}{% endfor %}</p>{% endif %}
-    <h3>要調査same-Q repeat</h3>
-    {% if repeat.unexplained_repeat_count == 0 %}<p class="repeat-audit-pass"><strong>PASS：adaptive説明不能repeat 0件</strong></p>
+    <h3>要調査recent same-Q repeat</h3>
+    {% if repeat.unexplained_repeat_count == 0 %}<p class="repeat-audit-pass"><strong>PASS：adaptive説明不能recent repeat 0件</strong></p>
     {% else %}<p class="repeat-audit-fail"><strong>要調査 {{ repeat.unexplained_repeat_count }}件</strong></p>
     <ol class="repeat-unexplained-list">{% for item in repeat.unexplained_repeats %}<li class="repeat-unexplained-item">
       <h4>{{ item.question_id }}（{{ item.canonical_node_id }}）</h4>
