@@ -203,7 +203,7 @@ E. 中足骨頭部への局所荷重を分散する除圧効果が得られた
 E
 
 ### Rationale
-足底圧で第2・3中足骨頭部のピーク圧が低下し、周囲へ荷重が分散していれば、対象部位への局所荷重を減らす除圧効果が得られたと解釈できる。足底圧データだけで足趾把持力や足関節可動域の改善、疼痛原因の確定まではできない。本問はQ199の装具・パッドの目的選択から、介入前後の足底圧データを解釈する要求へ変える。
+足底圧で第2・3中足骨頭部のピーク圧が低下し、周囲へ荷重が分散していれば、対象部位への局所荷重を減らす除圧効果が得られたと解釈できる。足底圧データだけで足趾把持力や足関節可動域の改善、疼痛原因の確定まではできない。パッドの除圧効果は設置位置や個人差によって変わるため、作製・適合後には対象部位の足底圧分布を再評価し、固定した効果を前提にしない。本問はQ199の装具・パッドの目的選択から、介入前後の足底圧データを解釈する要求へ変える。
 
 ### Choice notes
 - A: 測定結果と逆である。
@@ -225,7 +225,7 @@ Required safeguards:
 - Q1657: do not diagnose a delusion from health concern alone. The item must retain the criterion-like emphasis on fixed/poorly correctable conviction despite adequate contrary evidence.
 - Q1658: do not equate ankle power with a direct isolated muscle force measurement. It is the most direct gait-analysis proxy among the choices for late-stance push-off function.
 - Q1659: do not infer tendon structural failure from heel-rise endurance findings alone; interpret as plantarflexor functional deficit.
-- Q1660: do not infer pain etiology or unrelated ROM/strength changes from plantar-pressure redistribution alone.
+- Q1660: do not infer pain etiology or unrelated ROM/strength changes from plantar-pressure redistribution alone. Metatarsal-pad effects vary with pad position and between individuals, so reassess the target plantar-pressure distribution after fabrication/fitting rather than assuming a fixed effect.
 
 ## Implementation / QA contract
 - Extend canonical Question Bank stores consistently through Q1660.

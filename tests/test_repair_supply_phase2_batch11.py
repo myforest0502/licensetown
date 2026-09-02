@@ -63,3 +63,4 @@ def test_content_safeguards_are_preserved():
     assert "構造的破綻" in get_explanation("Q1659")["explanation"]
     pressure = get_explanation("Q1660")["explanation"]
     assert "疼痛原因の確定" in pressure and "可動域の改善" in pressure
+    assert "設置位置や個人差" in pressure and "足底圧分布を再評価" in pressure
