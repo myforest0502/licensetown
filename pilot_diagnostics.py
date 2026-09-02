@@ -24,6 +24,7 @@ from knowledge_node_state_transition import STATES, derive_all_user_node_states,
 from knowledge_node_weakness_evidence import derive_repeated_weakness_evidence
 from learning_analysis import build_learning_guidance
 from question_bank import CATEGORY_NAMES, get_category_small, get_question_tag, question_ids
+from phase11_active_weakness import build_active_repair_weakness
 from phase11_retrospective_shadow_audit import build_retrospective_shadow_audit
 from repairability_diagnostics import (
     build_repairing_node_repairability,
@@ -107,8 +108,10 @@ def _wrong_time(value):
     return parsed
 
 
-def build_confident_wrong_node_details(attempts, field_evidence, shadow_judgment):
-    """Expose the existing J2 evidence as read-only developer diagnostics."""
+def build_confident_wrong_node_details(
+    attempts, field_evidence, shadow_judgment, *, as_of=None
+):
+    """Expose only the active current-cycle evidence that contributes to J2."""
     if shadow_judgment.get("reason_code") != "confident_wrong_cluster":
         return []
     target_field = shadow_judgment.get("target_field")
@@ -124,60 +127,65 @@ def build_confident_wrong_node_details(attempts, field_evidence, shadow_judgment
         for item in field_evidence.get("canonical_node_evidence", [])
         if item.get("canonical_node_id")
     }
-    evaluable = [
-        dict(item)
-        for item in attempts
-        if item.get("answer_status") != "unknown"
-    ]
-    weakness = {
-        item["canonical_node_id"]: item
-        for item in derive_repeated_weakness_evidence(evaluable)
-    }
-    wrong_by_node = defaultdict(list)
-    for item in evaluable:
-        if item.get("is_correct") is not False:
-            continue
-        raw_node_id = str(item.get("knowledge_node_id") or "")
-        if not raw_node_id:
-            continue
-        node_id = canonicalize_knowledge_node_id(raw_node_id)
-        if target_field_id not in _NODE_FIELDS.get(node_id, set()):
-            continue
-        wrong_by_node[node_id].append(item)
+    active_by_node = build_active_repair_weakness(attempts, as_of=as_of)
+
+    def field_for_question(question_id):
+        try:
+            return get_category_small(str(question_id))
+        except (KeyError, TypeError, ValueError):
+            return None
+
+    def question_sort_key(value):
+        return (
+            (0, int(value[1:]))
+            if value.startswith("Q") and value[1:].isdigit()
+            else (1, value)
+        )
 
     details = []
-    for node_id, wrong in wrong_by_node.items():
-        confident_wrong = [item for item in wrong if item.get("confidence") == 1]
-        if states.get(node_id) != "repairing" or not confident_wrong:
+    for node_id, source in active_by_node.items():
+        if states.get(node_id) != "repairing":
             continue
-        question_ids_for_node = sorted(
-            {str(item.get("question_id") or "") for item in wrong if item.get("question_id")},
-            key=lambda value: (
-                0, int(value[1:])
-            ) if value.startswith("Q") and value[1:].isdigit() else (1, value),
-        )
-        wrong_times = [
-            parsed
-            for parsed in (
-                _wrong_time(item.get("answered_at") or item.get("attempted_at"))
-                for item in wrong
-            )
-            if parsed is not None
+        wrong_qs = [
+            str(q)
+            for q in source.get("active_evaluable_wrong_question_ids", [])
+            if q
         ]
-        evidence = weakness.get(node_id, {})
+        confident_qs = [
+            str(q)
+            for q in source.get("active_confident_wrong_question_ids", [])
+            if q
+        ]
+        target_wrong_qs = [q for q in wrong_qs if field_for_question(q) == target_field_id]
+        target_confident_qs = [
+            q for q in confident_qs if field_for_question(q) == target_field_id
+        ]
+        cross_confident = (
+            source.get("active_weakness_evidence_level")
+            == "CROSS_QUESTION_CONFIDENT_WRONG"
+        )
+        contributes_to_target_j2 = bool(target_confident_qs) or bool(
+            target_wrong_qs and cross_confident
+        )
+        if not contributes_to_target_j2:
+            continue
+
+        last_wrong = _wrong_time(source.get("active_last_evaluable_wrong_at"))
+        question_ids_for_node = sorted(set(wrong_qs), key=question_sort_key)
         details.append({
             "canonical_node_id": node_id,
             "knowledge_text": _NODE_LABELS.get(node_id, "名称未登録"),
             "question_ids": question_ids_for_node,
-            "confident_wrong_count": len(confident_wrong),
-            "distinct_question_count": len(question_ids_for_node),
-            "cross_question": evidence.get("evidence_level")
-            == "CROSS_QUESTION_CONFIDENT_WRONG",
+            "confident_wrong_count": int(source.get("active_confident_wrong_count") or 0),
+            "distinct_question_count": int(
+                source.get("active_evaluable_wrong_question_count") or 0
+            ),
+            "cross_question": cross_confident,
             "node_state": states[node_id],
             "node_state_label": _STATE_LABELS.get(states[node_id], states[node_id]),
             "last_wrong_at": (
-                max(wrong_times).astimezone(ZoneInfo("Asia/Tokyo")).strftime("%Y/%m/%d %H:%M")
-                if wrong_times else None
+                last_wrong.astimezone(ZoneInfo("Asia/Tokyo")).strftime("%Y/%m/%d %H:%M")
+                if last_wrong else None
             ),
         })
     details.sort(key=lambda item: (
@@ -554,6 +562,7 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         all_attempts,
         field_evidence,
         shadow_judgment,
+        as_of=now,
     )
     saved_adaptive_daily_audit = build_saved_adaptive_daily_audit(
         get_latest_adaptive_daily_learning_session_events(user_id)
