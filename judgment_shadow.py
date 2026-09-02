@@ -174,8 +174,14 @@ def build_shadow_comparison(
         "current_target_formal_evidence": current_profile,
         "shadow_target_formal_evidence": shadow_profile,
         "shadow_reason_profile_consistent": bool(
-            shadow_profile
-            and shadow_profile.get("strongest_reason_code") == shadow.get("reason_code")
+            (
+                shadow.get("reason_code") == "maintenance_only"
+                and shadow_target is None
+            )
+            or (
+                shadow_profile
+                and shadow_profile.get("strongest_reason_code") == shadow.get("reason_code")
+            )
         ),
     }
 
