@@ -4065,9 +4065,10 @@
   {
     "knowledge_node_id": "KN0404",
     "label": "STNR頸部屈曲時の上肢屈曲・下肢伸展反応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q410"
+      "Q410",
+      "Q1626"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4148,7 +4149,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q419",
-      "Q1580"
+      "Q1580",
+      "Q1627"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4856,9 +4858,10 @@
   {
     "knowledge_node_id": "KN0483",
     "label": "在胎32週で出生しており、満期40週より8週早い",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q491"
+      "Q491",
+      "Q1628"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6129,7 +6132,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q617",
-      "Q1363"
+      "Q1363",
+      "Q1629"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8046,9 +8050,10 @@
   {
     "knowledge_node_id": "KN0799",
     "label": "尺側手根屈筋腱は手根管を通らず、豆状骨などへ付着する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q807"
+      "Q807",
+      "Q1630"
     ],
     "aliases": [],
     "successor_ids": []
