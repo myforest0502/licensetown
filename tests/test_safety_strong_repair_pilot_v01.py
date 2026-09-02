@@ -39,7 +39,7 @@ def attempt(q_id, node_id, correct, confidence, at, status="answered"):
 
 
 def test_all_eleven_original_questions_have_complete_records_and_formal_strong_pairs():
-    assert question_count() == 1630
+    assert question_count() == 1635
     for new_q, (source_q, node_id, task, ability) in PAIRS.items():
         question = get_question(new_q)
         answer = get_answer(new_q)
@@ -65,7 +65,7 @@ def test_new_ids_are_contiguous_and_nodes_are_confirmed_shared():
     for filename in files:
         records = json.loads((BANK / filename).read_text(encoding="utf-8-sig"))
         ids = [item["id"] for item in records]
-        assert len(ids) == len(set(ids)) == 1630
+        assert len(ids) == len(set(ids)) == 1635
         assert expected.issubset(ids)
     nodes = {
         item["knowledge_node_id"]: item

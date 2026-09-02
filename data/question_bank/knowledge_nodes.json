@@ -8172,9 +8172,10 @@
   {
     "knowledge_node_id": "KN0811",
     "label": "体温調節中枢は視床下部にあり、皮膚や中枢の温度情報を統合して発汗・血管反応・ふるえなどを調節する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q820"
+      "Q820",
+      "Q1631"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9004,9 +9005,10 @@
   {
     "knowledge_node_id": "KN0894",
     "label": "成人中期の課題は生殖性（世代性）対停滞である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q903"
+      "Q903",
+      "Q1632"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10510,9 +10512,10 @@
   {
     "knowledge_node_id": "KN1044",
     "label": "歩行導入初期における反復・ハンドリング・フィードバックを用いた運動学習",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1054"
+      "Q1054",
+      "Q1633"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10540,9 +10543,10 @@
   {
     "knowledge_node_id": "KN1047",
     "label": "振戦は規則的・律動的な不随意運動",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1057"
+      "Q1057",
+      "Q1634"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10851,9 +10855,10 @@
   {
     "knowledge_node_id": "KN1078",
     "label": "手関節橈屈に作用する筋",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1089"
+      "Q1089",
+      "Q1635"
     ],
     "aliases": [],
     "successor_ids": []
