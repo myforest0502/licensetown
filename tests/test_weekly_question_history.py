@@ -39,7 +39,7 @@ def test_weekly_summary_boundaries_duplicates_unknown_and_natural_sort():
     assert result["total_attempts"] == 4
     assert result["unique_questions"] == 3
     assert result["attempted_question_ids"] == ["Q2", "Q3", "Q10"]
-    assert result["wrong_question_ids"] == ["Q2", "Q3", "Q10"]
+    assert result["wrong_question_ids"] == ["Q2", "Q10"]
     assert result["unknown_question_ids"] == ["Q3"]
     assert result["confident_wrong_question_ids"] == ["Q10"]
 
