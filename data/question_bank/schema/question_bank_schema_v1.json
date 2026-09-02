@@ -5,7 +5,7 @@
   "$defs": {
     "qid": {
       "type": "string",
-      "pattern": "^Q(?:[1-9]|[1-9][0-9]{1,2}|1[0-5][0-9]{2}|160[0-9]|161[0-9]|162[0-9]|163[0-9]|164[0-5])$"
+      "pattern": "^Q(?:[1-9]|[1-9][0-9]{1,2}|1[0-5][0-9]{2}|160[0-9]|161[0-9]|162[0-9]|163[0-9]|164[0-9]|1650)$"
     },
     "ability": {
       "enum": [
@@ -40,8 +40,8 @@
   "properties": {
     "questions": {
       "type": "array",
-      "minItems": 1645,
-      "maxItems": 1645,
+      "minItems": 1650,
+      "maxItems": 1650,
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -108,8 +108,8 @@
     },
     "answers": {
       "type": "array",
-      "minItems": 1645,
-      "maxItems": 1645,
+      "minItems": 1650,
+      "maxItems": 1650,
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -148,8 +148,8 @@
     },
     "explanations": {
       "type": "array",
-      "minItems": 1645,
-      "maxItems": 1645,
+      "minItems": 1650,
+      "maxItems": 1650,
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -179,8 +179,8 @@
     },
     "question_tags": {
       "type": "array",
-      "minItems": 1645,
-      "maxItems": 1645,
+      "minItems": 1650,
+      "maxItems": 1650,
       "items": {
         "type": "object",
         "additionalProperties": false,

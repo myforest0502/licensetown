@@ -674,7 +674,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q67",
-      "Q1567"
+      "Q1567",
+      "Q1647"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5374,7 +5375,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q542",
-      "Q1591"
+      "Q1591",
+      "Q1648"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5482,9 +5484,10 @@
   {
     "knowledge_node_id": "KN0545",
     "label": "股関節の運動とそれに作用する筋の組合せの基本事項",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q553"
+      "Q553",
+      "Q1650"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6567,7 +6570,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q660",
-      "Q1308"
+      "Q1308",
+      "Q1649"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11595,7 +11599,8 @@
     "question_ids": [
       "Q1164",
       "Q1221",
-      "Q1612"
+      "Q1612",
+      "Q1646"
     ],
     "aliases": [],
     "successor_ids": []
