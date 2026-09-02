@@ -12,7 +12,7 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 QUESTION_BANK_DIR = Path(__file__).resolve().parent / "data" / "question_bank"
-EXPECTED_QUESTION_COUNT = 1640
+EXPECTED_QUESTION_COUNT = 1645
 EXPECTED_QUESTION_IDS = {
     f"Q{number}" for number in range(1, EXPECTED_QUESTION_COUNT + 1)
 }

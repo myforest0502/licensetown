@@ -10876,9 +10876,10 @@
   {
     "knowledge_node_id": "KN1080",
     "label": "遠心性収縮は筋が張力を出しながら伸張される収縮",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1091"
+      "Q1091",
+      "Q1644"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12324,9 +12325,10 @@
   {
     "knowledge_node_id": "KN1224",
     "label": "正常歩行で単脚支持となるのは立脚中期から立脚終期",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1239"
+      "Q1239",
+      "Q1645"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13460,9 +13462,10 @@
   {
     "knowledge_node_id": "KN1337",
     "label": "半規管は内リンパ流と膨大部稜で頭部の角加速度を感知する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1358"
+      "Q1358",
+      "Q1641"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15034,9 +15037,10 @@
   {
     "knowledge_node_id": "KN1494",
     "label": "基本チェックリストを用いたフレイル判定項目の理解",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1519"
+      "Q1519",
+      "Q1642"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15234,9 +15238,10 @@
   {
     "knowledge_node_id": "KN1514",
     "label": "射精は主に交感神経活動で精管・精囊・前立腺が収縮し、同時に膀胱頸部（内尿道括約筋）が収縮して精液の膀胱内逆流を防ぐ",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1540"
+      "Q1540",
+      "Q1643"
     ],
     "aliases": [],
     "successor_ids": []
