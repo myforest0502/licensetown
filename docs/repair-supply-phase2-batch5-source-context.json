@@ -1,0 +1,1463 @@
+{
+  "targets": [
+    {
+      "question_id": "Q410",
+      "question": {
+        "id": "Q410",
+        "management_code": "Q410-A-4-O",
+        "category_large": "A",
+        "category_small": 4,
+        "source": "O",
+        "title": null,
+        "question_text": "対称性緊張性頸反射〈STNR〉で頸部を屈曲したときに生じる反応はどれか。",
+        "choices": {
+          "A": "上肢伸展、下肢屈曲",
+          "B": "上肢・下肢とも伸展",
+          "C": "上肢・下肢とも屈曲",
+          "D": "顔側上下肢伸展、後頭側上下肢屈曲",
+          "E": "上肢屈曲、下肢伸展"
+        },
+        "exam": null
+      },
+      "answer": {
+        "id": "Q410",
+        "display_answer": "E",
+        "accepted_answer_sets": [
+          [
+            "E"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanation": {
+        "id": "Q410",
+        "explanation": "STNRでは頸部屈曲により上肢は屈曲、下肢は伸展する。逆に頸部伸展では上肢伸展・下肢屈曲が誘発される。四つ這い位で頭頸部の動きに応じて上下肢の筋緊張が変化する原始反射として整理する。",
+        "choice_explanations": {
+          "A": "上肢伸展・下肢屈曲は頸部伸展時の反応である。",
+          "B": "上下肢とも伸展する反応ではない。",
+          "C": "上下肢とも屈曲する反応ではない。",
+          "D": "顔側・後頭側で分かれるのは非対称性緊張性頸反射の特徴である。",
+          "E": "頸部屈曲で上肢屈曲・下肢伸展となる。 ━━━━━━━━━━━━━━━━━━━━━━"
+        }
+      },
+      "tag": {
+        "id": "Q410",
+        "theme": "神経生理・スポーツ・骨粗鬆症・車椅子",
+        "knowledge_node": "STNR頸部屈曲時の上肢屈曲・下肢伸展反応",
+        "knowledge_node_id": "KN0404",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "小児の正常発達",
+          "疾患・年齢特有の所見",
+          "発達支援と安全管理"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "original"
+      }
+    },
+    {
+      "question_id": "Q419",
+      "question": {
+        "id": "Q419",
+        "management_code": "Q419-C-18-O",
+        "category_large": "C",
+        "category_small": 18,
+        "source": "O",
+        "title": null,
+        "question_text": "腹部手術後患者にインセンティブスパイロメトリを指導する主な目的はどれか。",
+        "choices": {
+          "A": "努力性呼気を反復して残気量を増やす。",
+          "B": "声門を閉じたまま胸腔内圧を高める。",
+          "C": "最大咳嗽だけを繰り返して吸気を抑える。",
+          "D": "ゆっくり深く吸気し、持続最大吸気を促す。",
+          "E": "呼吸数を増やして浅い呼吸を維持する。"
+        },
+        "exam": null
+      },
+      "answer": {
+        "id": "Q419",
+        "display_answer": "D",
+        "accepted_answer_sets": [
+          [
+            "D"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanation": {
+        "id": "Q419",
+        "explanation": "腹部手術後のインセンティブスパイロメトリは、患者自身にゆっくり深い吸気を行わせ、持続最大吸気を促すことで肺胞の再膨張を図る。浅い呼吸や無気肺の予防を目的に用い、努力性呼気や息こらえを主目的とする器具ではない。",
+        "choice_explanations": {
+          "A": "残気量を増やす努力性呼気が目的ではない。",
+          "B": "声門閉鎖による胸腔内圧上昇を目的としない。",
+          "C": "咳だけを反復し吸気を抑える方法ではない。",
+          "D": "ゆっくり深い吸気と持続最大吸気を促すのが主目的である。",
+          "E": "浅く速い呼吸を維持するのではなく深吸気を促す。 ━━━━━━━━━━━━━━━━━━━━━━"
+        }
+      },
+      "tag": {
+        "id": "Q419",
+        "theme": "呼吸・脊髄・運動器・統計",
+        "knowledge_node": "インセンティブスパイロメトリによる深吸気・肺胞拡張の促進",
+        "knowledge_node_id": "KN0412",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "浅い呼吸や無気肺の予防を目的に用い、努力性呼気や息こらえを主目的とする器具ではない。",
+          "ゆっくり深い吸気と持続最大吸気を促すのが主目的である。",
+          "腹部手術後のインセンティブスパイロメトリは、患者自身にゆっくり深い吸気を行わせ、持続最大吸気を促すことで肺胞の再膨張を図る。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "original"
+      }
+    },
+    {
+      "question_id": "Q1580",
+      "question": {
+        "id": "Q1580",
+        "management_code": "Q1580-C-18-P",
+        "category_large": "C",
+        "category_small": 18,
+        "source": "P",
+        "title": null,
+        "question_text": "呼吸リハビリテーションで正しいのはどれか。",
+        "choices": {
+          "1": "ハッフィングは胸郭の伸張を目的とする。",
+          "2": "横隔膜呼吸は、呼吸補助筋の活動を促進する。",
+          "3": "呼吸困難時の症状改善には、腹臥位が有効である。",
+          "4": "インセンティブスパイロメトリは長く吸気を持続させる。",
+          "5": "口すぼめ呼吸は、呼気よりも吸気を長くするように指導する。"
+        },
+        "exam": {
+          "exam_no": 47,
+          "session": "午後",
+          "question_no": 47
+        }
+      },
+      "answer": {
+        "id": "Q1580",
+        "display_answer": "4",
+        "accepted_answer_sets": [
+          [
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1580",
+        "explanation": "インセンティブスパイロメトリは、ゆっくり深い吸気を持続させて肺胞拡張を促す。",
+        "choice_explanations": {
+          "1": "ハッフィングは主に分泌物排出を促す。",
+          "2": "横隔膜呼吸は呼吸補助筋の過剰活動を抑え、横隔膜活動を促す。",
+          "3": "呼吸困難時には一般に前傾座位などが用いられる。",
+          "4": "正しい。持続的な深吸気を視覚的フィードバックとともに促す。",
+          "5": "口すぼめ呼吸は吸気ではなく呼気を延長する。"
+        }
+      },
+      "tag": {
+        "id": "Q1580",
+        "theme": "呼吸リハビリテーションで正しいのはどれか。",
+        "knowledge_node": "インセンティブスパイロメトリによる深吸気・肺胞拡張の促進",
+        "knowledge_node_id": "KN0412",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "浅い呼吸や無気肺の予防を目的に用い、努力性呼気や息こらえを主目的とする器具ではない。",
+          "ゆっくり深い吸気と持続最大吸気を促すのが主目的である。",
+          "腹部手術後のインセンティブスパイロメトリは、患者自身にゆっくり深い吸気を行わせ、持続最大吸気を促すことで肺胞の再膨張を図る。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q491",
+      "question": {
+        "id": "Q491",
+        "management_code": "Q491-A-4-O",
+        "category_large": "A",
+        "category_small": 4,
+        "source": "O",
+        "title": null,
+        "question_text": "在胎32週で出生した乳児が、生後6か月で発達評価を受けた。修正月齢はどれか。",
+        "choices": {
+          "A": "4か月",
+          "B": "5か月",
+          "C": "6か月",
+          "D": "8か月",
+          "E": "10か月"
+        },
+        "exam": null
+      },
+      "answer": {
+        "id": "Q491",
+        "display_answer": "A",
+        "accepted_answer_sets": [
+          [
+            "A"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanation": {
+        "id": "Q491",
+        "explanation": "在胎32週で出生しており、満期40週より8週早い。修正月齢は暦月齢から早産した期間を差し引いて求めるため、生後6か月から約2か月を差し引き4か月となる。早産児の発達評価では修正月齢を考慮する。",
+        "choice_explanations": {
+          "A": "正しい。6か月−約2か月＝修正月齢4か月である。",
+          "B": "早産期間の差し引きが1か月では不足する。",
+          "C": "6か月は暦月齢であり修正されていない。",
+          "D": "修正月齢が暦月齢より大きくなることはない。",
+          "E": "10か月も修正月齢の計算と合わない。"
+        }
+      },
+      "tag": {
+        "id": "Q491",
+        "theme": "在胎32週で出生した乳児が、生後6か月で発達評価を受けた",
+        "knowledge_node": "在胎32週で出生しており、満期40週より8週早い",
+        "knowledge_node_id": "KN0483",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "在胎32週で出生した乳児が、生後6か月で発達評価を受けたの基本概念"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "original"
+      }
+    },
+    {
+      "question_id": "Q617",
+      "question": {
+        "id": "Q617",
+        "management_code": "Q617-B-7-P",
+        "category_large": "B",
+        "category_small": 7,
+        "source": "P",
+        "title": null,
+        "question_text": "ワルファリンの作用を減弱させるのはどれか。",
+        "choices": {
+          "1": "ビタミン A",
+          "2": "ビタミン B6",
+          "3": "ビタミン B12",
+          "4": "ビタミン C",
+          "5": "ビタミン K"
+        },
+        "exam": {
+          "exam_no": 52,
+          "session": "午後",
+          "question_no": 77
+        }
+      },
+      "answer": {
+        "id": "Q617",
+        "display_answer": "5",
+        "accepted_answer_sets": [
+          [
+            "5"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q617",
+        "explanation": "ワルファリンはビタミンK依存性凝固因子の合成を阻害する。ビタミンK摂取が増えるとその作用が拮抗され、抗凝固作用が減弱するため5が正しい。",
+        "choice_explanations": {
+          "1": "ビタミンAはワルファリン作用を直接拮抗しない。",
+          "2": "ビタミンB6は直接拮抗しない。",
+          "3": "ビタミンB12は直接拮抗しない。",
+          "4": "ビタミンCは主要な拮抗因子ではない。",
+          "5": "○。ビタミンKはワルファリンの抗凝固作用を減弱させる。"
+        }
+      },
+      "tag": {
+        "id": "Q617",
+        "theme": "ワルファリンの作用を減弱させるのはどれか",
+        "knowledge_node": "ワルファリンはビタミンK依存性凝固因子の合成を阻害する",
+        "knowledge_node_id": "KN0609",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "ワルファリンの作用を減弱させるのはどれかの基本概念"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1225",
+      "question": {
+        "id": "Q1225",
+        "management_code": "Q1225-B-8-P",
+        "category_large": "B",
+        "category_small": 8,
+        "source": "P",
+        "title": null,
+        "question_text": "ワルファリンの作用を減弱させるのはどれか。",
+        "choices": {
+          "1": "ビタミンA",
+          "2": "ビタミンB1",
+          "3": "ビタミンC",
+          "4": "ビタミンE",
+          "5": "ビタミンK"
+        },
+        "exam": {
+          "exam_no": 58,
+          "session": "午前",
+          "question_no": 85
+        }
+      },
+      "answer": {
+        "id": "Q1225",
+        "display_answer": "5",
+        "accepted_answer_sets": [
+          [
+            "5"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1225",
+        "explanation": "ワルファリンはビタミンK依存性凝固因子合成を阻害するため、ビタミンK摂取・投与で作用が減弱する。",
+        "choice_explanations": {
+          "1": "VitAは直接拮抗しない。",
+          "2": "VitB1は関係しない。",
+          "3": "VitCは主要な拮抗因子ではない。",
+          "4": "VitEはむしろ出血傾向を助長することがある。",
+          "5": "○。VitKで作用減弱。"
+        }
+      },
+      "tag": {
+        "id": "Q1225",
+        "theme": "ワルファリンの作用を減弱させるのはどれか",
+        "knowledge_node": "ワルファリンはビタミンK依存性凝固因子合成を阻害するため、ビタミンK摂取・投与で作用が減弱する",
+        "knowledge_node_id": "KN1210",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "ワルファリンはビタミンK依存性凝固因子合成を阻害するため、ビタミンK摂取・投与で作用が減弱する。",
+          "VitKで作用減弱。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1363",
+      "question": {
+        "id": "Q1363",
+        "management_code": "Q1363-A-2-P",
+        "category_large": "A",
+        "category_small": 2,
+        "source": "P",
+        "title": null,
+        "question_text": "ワルファリンの抗凝固作用に拮抗するのはどれか。",
+        "choices": {
+          "1": "ビタミン A",
+          "2": "ビタミン C",
+          "3": "ビタミン D",
+          "4": "ビタミン E",
+          "5": "ビタミン K"
+        },
+        "exam": {
+          "exam_no": 59,
+          "session": "午後",
+          "question_no": 65
+        }
+      },
+      "answer": {
+        "id": "Q1363",
+        "display_answer": "5",
+        "accepted_answer_sets": [
+          [
+            "5"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1363",
+        "explanation": "ワルファリンはビタミンK依存性凝固因子の合成を阻害する。ビタミンK投与で抗凝固作用は拮抗される。",
+        "choice_explanations": {
+          "1": "VitAは拮抗薬でない。",
+          "2": "VitCも拮抗しない。",
+          "3": "VitDも拮抗しない。",
+          "4": "VitEはむしろ出血傾向を助長することがある。",
+          "5": "○。VitKがワルファリン作用を拮抗。"
+        }
+      },
+      "tag": {
+        "id": "Q1363",
+        "theme": "ワルファリンの抗凝固作用に拮抗するのはどれか",
+        "knowledge_node": "ワルファリンはビタミンK依存性凝固因子の合成を阻害する",
+        "knowledge_node_id": "KN0609",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "ビタミンK投与で抗凝固作用は拮抗される。",
+          "ワルファリンはビタミンK依存性凝固因子の合成を阻害する。",
+          "VitKがワルファリン作用を拮抗。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q807",
+      "question": {
+        "id": "Q807",
+        "management_code": "Q807-A-1-P",
+        "category_large": "A",
+        "category_small": 1,
+        "source": "P",
+        "title": null,
+        "question_text": "手根管を通過しないのはどれか。",
+        "choices": {
+          "1": "深指屈筋腱",
+          "2": "浅指屈筋腱",
+          "3": "長母指屈筋腱",
+          "4": "尺側手根屈筋腱",
+          "5": "橈側手根屈筋腱"
+        },
+        "exam": {
+          "exam_no": 55,
+          "session": "午前",
+          "question_no": 54
+        }
+      },
+      "answer": {
+        "id": "Q807",
+        "display_answer": "4",
+        "accepted_answer_sets": [
+          [
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q807",
+        "explanation": "尺側手根屈筋腱は手根管を通らず、豆状骨などへ付着する。屈筋腱群と正中神経は手根管を通過するため4が正しい。",
+        "choice_explanations": {
+          "1": "深指屈筋腱は通る。",
+          "2": "浅指屈筋腱は通る。",
+          "3": "長母指屈筋腱は通る。",
+          "4": "○。尺側手根屈筋腱は通らない。",
+          "5": "橈側手根屈筋腱は独自の線維性管を通るが手根管領域を走行する。"
+        }
+      },
+      "tag": {
+        "id": "Q807",
+        "theme": "手根管を通過しないのはどれか",
+        "knowledge_node": "尺側手根屈筋腱は手根管を通らず、豆状骨などへ付着する",
+        "knowledge_node_id": "KN0799",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "屈筋腱群と正中神経は手根管を通過するため4が正しい。",
+          "尺側手根屈筋腱は手根管を通らず、豆状骨などへ付着する。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q820",
+      "question": {
+        "id": "Q820",
+        "management_code": "Q820-A-2-P",
+        "category_large": "A",
+        "category_small": 2,
+        "source": "P",
+        "title": null,
+        "question_text": "体温調節の中枢で正しいのはどれか。",
+        "choices": {
+          "1": "中脳",
+          "2": "扁桃体",
+          "3": "視床下部",
+          "4": "小脳虫部",
+          "5": "補足運動野"
+        },
+        "exam": {
+          "exam_no": 55,
+          "session": "午前",
+          "question_no": 68
+        }
+      },
+      "answer": {
+        "id": "Q820",
+        "display_answer": "3",
+        "accepted_answer_sets": [
+          [
+            "3"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q820",
+        "explanation": "体温調節中枢は視床下部にあり、皮膚や中枢の温度情報を統合して発汗・血管反応・ふるえなどを調節する。3が正しい。",
+        "choice_explanations": {
+          "1": "中脳は主座ではない。",
+          "2": "扁桃体は情動に関与。",
+          "3": "○。視床下部が体温調節中枢。",
+          "4": "小脳虫部は姿勢・体幹協調。",
+          "5": "補足運動野は運動計画。"
+        }
+      },
+      "tag": {
+        "id": "Q820",
+        "theme": "体温調節の中枢で正しいのはどれか",
+        "knowledge_node": "体温調節中枢は視床下部にあり、皮膚や中枢の温度情報を統合して発汗・血管反応・ふるえなどを調節する",
+        "knowledge_node_id": "KN0811",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "体温調節中枢は視床下部にあり、皮膚や中枢の温度情報を統合して発汗・血管反応・ふるえなどを調節する。",
+          "体温調節の中枢で正しいのはどれか。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q903",
+      "question": {
+        "id": "Q903",
+        "management_code": "Q903-A-3-P",
+        "category_large": "A",
+        "category_small": 3,
+        "source": "P",
+        "title": null,
+        "question_text": "Eriksonによる成人中期の心理的発達課題はどれか。",
+        "choices": {
+          "1": "勤勉性",
+          "2": "同一性",
+          "3": "親密性",
+          "4": "生殖性",
+          "5": "自我の統合"
+        },
+        "exam": {
+          "exam_no": 55,
+          "session": "午後",
+          "question_no": 80
+        }
+      },
+      "answer": {
+        "id": "Q903",
+        "display_answer": "4",
+        "accepted_answer_sets": [
+          [
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q903",
+        "explanation": "Eriksonでは成人中期の課題は生殖性（世代性）対停滞である。次世代を育て社会へ貢献することが中心となるため4が正しい。",
+        "choice_explanations": {
+          "1": "勤勉性は学童期。",
+          "2": "同一性は青年期。",
+          "3": "親密性は成人前期。",
+          "4": "○。生殖性は成人中期。",
+          "5": "自我統合は老年期。"
+        }
+      },
+      "tag": {
+        "id": "Q903",
+        "theme": "Eriksonによる成人中期の心理的発達課題はどれか",
+        "knowledge_node": "成人中期の課題は生殖性（世代性）対停滞である",
+        "knowledge_node_id": "KN0894",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "Eriksonでは成人中期の課題は生殖性（世代性）対停滞である。",
+          "次世代を育て社会へ貢献することが中心となるため4が正しい。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1054",
+      "question": {
+        "id": "Q1054",
+        "management_code": "Q1054-C-13-P",
+        "category_large": "C",
+        "category_small": 13,
+        "source": "P",
+        "title": null,
+        "question_text": "歩行導入初期における運動学習の方法として適切なのはどれか。2つ選べ。",
+        "choices": {
+          "1": "ハンドリングを行う。",
+          "2": "休憩を入れずに練習する。",
+          "3": "踵接地の練習を繰り返し行う。",
+          "4": "後ろ歩きや横歩きの練習を取り入れる。",
+          "5": "フィードバックを与える頻度は少なくする。"
+        },
+        "exam": {
+          "exam_no": 57,
+          "session": "午前",
+          "question_no": 22
+        }
+      },
+      "answer": {
+        "id": "Q1054",
+        "display_answer": "1・3",
+        "accepted_answer_sets": [
+          [
+            "1",
+            "3"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1054",
+        "explanation": "正答は1「ハンドリングを行う。」、3「踵接地の練習を繰り返し行う。」の2つである。本問では関節運動と筋作用・力学を基準に5選択肢を照合する。複数選択問題では、一方が正しくてもそこで止めず、残る選択肢も同じ基準で確認して2項目をそろえることが重要である。",
+        "choice_explanations": {
+          "1": "○。「ハンドリングを行う。」が、設問条件で選択すべき適切な対応である。",
+          "2": "「休憩を入れずに練習する。」は、設問の条件で優先・選択する対応としては適切でない。",
+          "3": "○。「踵接地の練習を繰り返し行う。」が、設問条件で選択すべき適切な対応である。",
+          "4": "「後ろ歩きや横歩きの練習を取り入れる。」は、設問の条件で優先・選択する対応としては適切でない。",
+          "5": "「フィードバックを与える頻度は少なくする。」は、設問の条件で優先・選択する対応としては適切でない。"
+        }
+      },
+      "tag": {
+        "id": "Q1054",
+        "theme": "歩行導入初期における運動学習の方法として適切なのはどれか",
+        "knowledge_node": "歩行導入初期における反復・ハンドリング・フィードバックを用いた運動学習",
+        "knowledge_node_id": "KN1044",
+        "task": "intervention_selection",
+        "primary_ability": "PRESCRIBE",
+        "secondary_ability": "INTERPRET",
+        "level": 3,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "」、3「踵接地の練習を繰り返し行う。",
+          "関節運動と筋作用・力学を基準に5選択肢を照合する。",
+          "複数選択問題では、一方が正しくてもそこで止めず、残る選択肢も同じ基準で確認して2項目をそろえることが重要である。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1057",
+      "question": {
+        "id": "Q1057",
+        "management_code": "Q1057-C-18-P",
+        "category_large": "C",
+        "category_small": 18,
+        "source": "P",
+        "title": null,
+        "question_text": "律動的な不随意運動はどれか。",
+        "choices": {
+          "1": "振戦",
+          "2": "チック",
+          "3": "バリスム",
+          "4": "アテトーゼ",
+          "5": "ミオクローヌス"
+        },
+        "exam": {
+          "exam_no": 57,
+          "session": "午前",
+          "question_no": 27
+        }
+      },
+      "answer": {
+        "id": "Q1057",
+        "display_answer": "1",
+        "accepted_answer_sets": [
+          [
+            "1"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1057",
+        "explanation": "振戦は規則的・律動的な不随意運動。チック、バリスム、アテトーゼ、ミオクローヌスは通常より不規則である。",
+        "choice_explanations": {
+          "1": "〇。振戦は拮抗筋群などの周期的活動による律動的な不随意運動。",
+          "2": "チックは突然で反復性はあるが、一定周期の律動運動ではない。",
+          "3": "バリスムは粗大で投げ出すような不規則運動。",
+          "4": "アテトーゼはゆっくりねじれるような不規則運動。",
+          "5": "ミオクローヌスは瞬間的な筋収縮で通常は律動的ではない。"
+        }
+      },
+      "tag": {
+        "id": "Q1057",
+        "theme": "律動的な不随意運動はどれか",
+        "knowledge_node": "振戦は規則的・律動的な不随意運動",
+        "knowledge_node_id": "KN1047",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "チック、バリスム、アテトーゼ、ミオクローヌスは通常より不規則である。",
+          "振戦は規則的・律動的な不随意運動。",
+          "振戦は拮抗筋群などの周期的活動による律動的な不随意運動。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1089",
+      "question": {
+        "id": "Q1089",
+        "management_code": "Q1089-C-13-P",
+        "category_large": "C",
+        "category_small": 13,
+        "source": "P",
+        "title": null,
+        "question_text": "手関節橈屈に作用する筋はどれか。",
+        "choices": {
+          "1": "長掌筋",
+          "2": "短母指屈筋",
+          "3": "長母指屈筋",
+          "4": "短母指外転筋",
+          "5": "長母指外転筋"
+        },
+        "exam": {
+          "exam_no": 57,
+          "session": "午前",
+          "question_no": 71
+        }
+      },
+      "answer": {
+        "id": "Q1089",
+        "display_answer": "3／5（いずれも正答扱い）",
+        "accepted_answer_sets": [
+          [
+            "3"
+          ],
+          [
+            "5"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1089",
+        "explanation": "厚生労働省の第57回国家試験では、複数の選択肢を正解として採点している。国家試験対策としてLTも公式採点に従う。\n手関節橈屈の主働筋は橈側手根屈筋・長短橈側手根伸筋だが、選択肢にはない。長母指屈筋と長母指外転筋はいずれも腱が手関節橈側を通り、橈屈を補助するため、3・5を正答として扱う。",
+        "choice_explanations": {
+          "1": "長掌筋は主に手関節掌屈に作用し、橈屈作用は乏しい。",
+          "2": "短母指屈筋は母指MP関節屈曲筋で、手関節をまたがない。",
+          "3": "○（厚生労働省公式で正答扱い）。長母指屈筋は手関節橈側を通り、橈屈を補助する。",
+          "4": "短母指外転筋は手関節をまたがない。",
+          "5": "○（厚生労働省公式で正答扱い）。長母指外転筋は母指外転に加えて手関節橈屈を補助する。"
+        }
+      },
+      "tag": {
+        "id": "Q1089",
+        "theme": "手関節橈屈に作用する筋はどれか",
+        "knowledge_node": "手関節橈屈に作用する筋",
+        "knowledge_node_id": "KN1078",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "厚生労働省の第57回国家試験では、複数の選択肢を正解として採点している。",
+          "長母指屈筋と長母指外転筋はいずれも腱が手関節橈側を通り、橈屈を補助するため、3・5を正答として扱う。",
+          "手関節橈屈の主働筋は橈側手根屈筋・長短橈側手根伸筋だが、選択肢にはない。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1111",
+      "question": {
+        "id": "Q1111",
+        "management_code": "Q1111-B-8-P",
+        "category_large": "B",
+        "category_small": 8,
+        "source": "P",
+        "title": null,
+        "question_text": "ベンゾジアゼピン系睡眠薬の副作用はどれか。",
+        "choices": {
+          "1": "下痢",
+          "2": "運動失調",
+          "3": "アカシジア",
+          "4": "逆行性健忘",
+          "5": "Parkinson症候群"
+        },
+        "exam": {
+          "exam_no": 57,
+          "session": "午前",
+          "question_no": 100
+        }
+      },
+      "answer": {
+        "id": "Q1111",
+        "display_answer": "1／2（いずれも正答扱い）",
+        "accepted_answer_sets": [
+          [
+            "1"
+          ],
+          [
+            "2"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1111",
+        "explanation": "厚生労働省の第57回国家試験では、複数の選択肢を正解として採点している。国家試験対策としてLTも公式採点に従う。\nベンゾジアゼピン系睡眠薬では筋弛緩作用によるふらつき・運動失調、持ち越し効果、依存などに注意する。",
+        "choice_explanations": {
+          "1": "○（厚生労働省公式で正答扱い）。下痢は代表的副作用ではない。",
+          "2": "○（厚生労働省公式で正答扱い）。運動失調・ふらつきを生じうる。",
+          "3": "アカシジアは抗精神病薬などで問題となる。",
+          "4": "健忘は前向性健忘が典型で、逆行性健忘ではない。",
+          "5": "Parkinson症候群は抗精神病薬などでみられる。"
+        }
+      },
+      "tag": {
+        "id": "Q1111",
+        "theme": "ベンゾジアゼピン系睡眠薬の副作用はどれか",
+        "knowledge_node": "筋弛緩作用によるふらつき・運動失調、持ち越し効果、依存などに注意する",
+        "knowledge_node_id": "KN1100",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "厚生労働省の第57回国家試験では、複数の選択肢を正解として採点している。",
+          "ベンゾジアゼピン系睡眠薬では筋弛緩作用によるふらつき・運動失調、持ち越し効果、依存などに注意する。",
+          "下痢は代表的副作用ではない。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1156",
+      "question": {
+        "id": "Q1156",
+        "management_code": "Q1156-C-13-P",
+        "category_large": "C",
+        "category_small": 13,
+        "source": "P",
+        "title": null,
+        "question_text": "肩甲骨の上方回旋に作用する筋はどれか。",
+        "choices": {
+          "1": "広背筋",
+          "2": "前鋸筋",
+          "3": "菱形筋",
+          "4": "肩甲下筋",
+          "5": "肩甲挙筋"
+        },
+        "exam": {
+          "exam_no": 57,
+          "session": "午後",
+          "question_no": 71
+        }
+      },
+      "answer": {
+        "id": "Q1156",
+        "display_answer": "2",
+        "accepted_answer_sets": [
+          [
+            "2"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1156",
+        "explanation": "前鋸筋は僧帽筋と協働して肩甲骨を上方回旋させ、上肢挙上を可能にする。",
+        "choice_explanations": {
+          "1": "広背筋は肩関節伸展・内転など。",
+          "2": "○。前鋸筋は肩甲骨上方回旋。",
+          "3": "菱形筋は下方回旋。",
+          "4": "肩甲下筋は上腕骨内旋。",
+          "5": "肩甲挙筋は肩甲骨挙上・下方回旋。"
+        }
+      },
+      "tag": {
+        "id": "Q1156",
+        "theme": "肩甲骨の上方回旋に作用する筋はどれか",
+        "knowledge_node": "前鋸筋は僧帽筋と協働して肩甲骨を上方回旋させ、上肢挙上を可能にする",
+        "knowledge_node_id": "KN1143",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "前鋸筋は僧帽筋と協働して肩甲骨を上方回旋させ、上肢挙上を可能にする。",
+          "前鋸筋は肩甲骨上方回旋。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1162",
+      "question": {
+        "id": "Q1162",
+        "management_code": "Q1162-A-1-P",
+        "category_large": "A",
+        "category_small": 1,
+        "source": "P",
+        "title": null,
+        "question_text": "下肢の深部静脈血栓症により塞栓をきたすことが最も多い臓器はどれか。",
+        "choices": {
+          "1": "脳",
+          "2": "肺",
+          "3": "肝臓",
+          "4": "心臓",
+          "5": "腎臓"
+        },
+        "exam": {
+          "exam_no": 57,
+          "session": "午後",
+          "question_no": 78
+        }
+      },
+      "answer": {
+        "id": "Q1162",
+        "display_answer": "2",
+        "accepted_answer_sets": [
+          [
+            "2"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1162",
+        "explanation": "下肢深部静脈血栓が遊離すると下大静脈から右心系を経て肺動脈へ到達し、肺塞栓症を起こす。",
+        "choice_explanations": {
+          "1": "脳へは通常到達しない。",
+          "2": "○。肺塞栓が最も多い。",
+          "3": "肝臓ではない。",
+          "4": "心臓内を通過するが塞栓の主臓器ではない。",
+          "5": "腎臓ではない。"
+        }
+      },
+      "tag": {
+        "id": "Q1162",
+        "theme": "下肢の深部静脈血栓症により塞栓をきたすことが最も多い臓器はどれか",
+        "knowledge_node": "下肢深部静脈血栓が遊離すると下大静脈から右心系を経て肺動脈へ到達し、肺塞栓症を起こす",
+        "knowledge_node_id": "KN1149",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "下肢深部静脈血栓が遊離すると下大静脈から右心系を経て肺動脈へ到達し、肺塞栓症を起こす。",
+          "肺塞栓が最も多い。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1281",
+      "question": {
+        "id": "Q1281",
+        "management_code": "Q1281-A-4-P",
+        "category_large": "A",
+        "category_small": 4,
+        "source": "P",
+        "title": null,
+        "question_text": "遠城寺式乳幼児分析的発達検査において、生後12か月以前に観察されるのはどれか。2つ選べ。",
+        "choices": {
+          "1": "走る。",
+          "2": "3語言える。",
+          "3": "人見知りをする。",
+          "4": "積み木を二つ重ねる。",
+          "5": "コップを自分で持って飲む。"
+        },
+        "exam": {
+          "exam_no": 58,
+          "session": "午後",
+          "question_no": 86
+        }
+      },
+      "answer": {
+        "id": "Q1281",
+        "display_answer": "3・5",
+        "accepted_answer_sets": [
+          [
+            "3",
+            "5"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1281",
+        "explanation": "生後12か月以前には人見知りが出現し、コップを自分で持って飲む行動もみられるようになる。",
+        "choice_explanations": {
+          "1": "走行は1歳以降。",
+          "2": "3語発語も通常1歳以降。",
+          "3": "○。人見知りは乳児後半に出現。",
+          "4": "積木2個積みは1歳以降が目安。",
+          "5": "○。コップを持って飲む行動は1歳前にみられる。"
+        }
+      },
+      "tag": {
+        "id": "Q1281",
+        "theme": "遠城寺式乳幼児分析的発達検査において、生後12か月以前に観察されるのはどれか",
+        "knowledge_node": "生後12か月以前には人見知りが出現し、コップを自分で持って飲む行動もみられるようになる",
+        "knowledge_node_id": "KN1265",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "生後12か月以前には人見知りが出現し、コップを自分で持って飲む行動もみられるようになる。",
+          "遠城寺式乳幼児分析的発達検査において、生後12か月以前に観察されるのはどれか。2つ選べ。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1341",
+      "question": {
+        "id": "Q1341",
+        "management_code": "Q1341-C-13-P",
+        "category_large": "C",
+        "category_small": 13,
+        "source": "P",
+        "title": null,
+        "question_text": "運動制御における内部モデル形成で重要な役割をもつ中枢神経系はどれか。",
+        "choices": {
+          "1": "小脳",
+          "2": "中脳",
+          "3": "視床下部",
+          "4": "大脳皮質",
+          "5": "大脳辺縁系"
+        },
+        "exam": {
+          "exam_no": 59,
+          "session": "午後",
+          "question_no": 23
+        }
+      },
+      "answer": {
+        "id": "Q1341",
+        "display_answer": "1",
+        "accepted_answer_sets": [
+          [
+            "1"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1341",
+        "explanation": "小脳は運動指令と感覚フィードバックを比較し、予測的制御に用いる内部モデル形成に重要な役割を担う。",
+        "choice_explanations": {
+          "1": "○。小脳が内部モデル形成に重要。",
+          "2": "中脳は眼球運動・姿勢反射など。",
+          "3": "視床下部は自律・内分泌調節。",
+          "4": "大脳皮質も運動計画に関与するが内部モデルの中心は小脳。",
+          "5": "辺縁系は情動・記憶。"
+        }
+      },
+      "tag": {
+        "id": "Q1341",
+        "theme": "運動制御における内部モデル形成で重要な役割をもつ中枢神経系はどれか",
+        "knowledge_node": "小脳は運動指令と感覚フィードバックを比較し、予測的制御に用いる内部モデル形成に重要な役割を担う",
+        "knowledge_node_id": "KN1321",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "小脳は運動指令と感覚フィードバックを比較し、予測的制御に用いる内部モデル形成に重要な役割を担う。",
+          "運動制御における内部モデル形成で重要な役割をもつ中枢神経系はどれか。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q954",
+      "question": {
+        "id": "Q954",
+        "management_code": "Q954-A-2-P",
+        "category_large": "A",
+        "category_small": 2,
+        "source": "P",
+        "title": null,
+        "question_text": "平衡聴覚器について正しいのはどれか。",
+        "choices": {
+          "1": "三半規管は重力に反応する。",
+          "2": "球形囊斑に聴覚受容器がある。",
+          "3": "卵形囊は角加速度に反応する。",
+          "4": "三半規管の受容器は膨大部稜にある。",
+          "5": "三半規管のクプラは耳石膜で覆われている。"
+        },
+        "exam": {
+          "exam_no": 56,
+          "session": "午前",
+          "question_no": 64
+        }
+      },
+      "answer": {
+        "id": "Q954",
+        "display_answer": "4",
+        "accepted_answer_sets": [
+          [
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q954",
+        "explanation": "半規管の感覚受容器は膨大部稜にあり、角加速度を感知する。4が正しい。",
+        "choice_explanations": {
+          "1": "重力・直線加速度は耳石器。",
+          "2": "球形嚢斑は平衡受容器。",
+          "3": "卵形嚢は直線加速度・重力。",
+          "4": "○。半規管の受容器は膨大部稜。",
+          "5": "クプラには耳石は付着しない。"
+        }
+      },
+      "tag": {
+        "id": "Q954",
+        "theme": "平衡聴覚器について正しいのはどれか",
+        "knowledge_node": "半規管の感覚受容器は膨大部稜にあり、角加速度を感知する",
+        "knowledge_node_id": "KN0945",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "半規管の感覚受容器は膨大部稜にあり、角加速度を感知する。",
+          "平衡聴覚器について正しいのはどれか。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1358",
+      "question": {
+        "id": "Q1358",
+        "management_code": "Q1358-A-1-P",
+        "category_large": "A",
+        "category_small": 1,
+        "source": "P",
+        "title": null,
+        "question_text": "平衡聴覚器で正しいのはどれか。",
+        "choices": {
+          "1": "耳石器は鼓室にある。",
+          "2": "蝸牛神経は耳管を通る。",
+          "3": "半規管は角加速度を知覚する。",
+          "4": "アブミ骨筋は前庭神経に支配される。",
+          "5": "内耳道は内リンパ液で満たされている。"
+        },
+        "exam": {
+          "exam_no": 59,
+          "session": "午後",
+          "question_no": 59
+        }
+      },
+      "answer": {
+        "id": "Q1358",
+        "display_answer": "3",
+        "accepted_answer_sets": [
+          [
+            "3"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1358",
+        "explanation": "半規管は内リンパ流と膨大部稜で頭部の角加速度を感知する。",
+        "choice_explanations": {
+          "1": "耳石器は内耳。",
+          "2": "蝸牛神経は内耳道を通る。",
+          "3": "○。半規管は角加速度を知覚。",
+          "4": "アブミ骨筋は顔面神経支配。",
+          "5": "内耳道が内リンパで満たされているわけではない。"
+        }
+      },
+      "tag": {
+        "id": "Q1358",
+        "theme": "平衡聴覚器で正しいのはどれか",
+        "knowledge_node": "半規管は内リンパ流と膨大部稜で頭部の角加速度を感知する",
+        "knowledge_node_id": "KN1337",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "半規管は内リンパ流と膨大部稜で頭部の角加速度を感知する。",
+          "平衡聴覚器で正しいのはどれか。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1535",
+      "question": {
+        "id": "Q1535",
+        "management_code": "Q1535-A-1-P",
+        "category_large": "A",
+        "category_small": 1,
+        "source": "P",
+        "title": null,
+        "question_text": "平衡聴覚器で正しいのはどれか。",
+        "choices": {
+          "1": "蝸牛管には耳石が存在する。",
+          "2": "半規管にはコルチ器が存在する。",
+          "3": "半規管は蝸牛神経の支配を受ける。",
+          "4": "半規管は頭部の回転運動を感知する。",
+          "5": "蝸牛管は内リンパの流れが受容器の刺激となる。"
+        },
+        "exam": {
+          "exam_no": 61,
+          "session": "午後",
+          "question_no": 59
+        }
+      },
+      "answer": {
+        "id": "Q1535",
+        "display_answer": "4",
+        "accepted_answer_sets": [
+          [
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1535",
+        "explanation": "半規管は頭部の回転による角加速度を感知する。",
+        "choice_explanations": {
+          "1": "耳石は卵形嚢・球形嚢。",
+          "2": "コルチ器は蝸牛。",
+          "3": "半規管は前庭神経支配。",
+          "4": "○。回転運動を感知。",
+          "5": "蝸牛管は音振動で基底膜・内リンパが動くが選択肢4が明確。"
+        }
+      },
+      "tag": {
+        "id": "Q1535",
+        "theme": "平衡聴覚器で正しいのはどれか",
+        "knowledge_node": "半規管は頭部の回転による角加速度を感知する",
+        "knowledge_node_id": "KN1509",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "半規管は頭部の回転による角加速度を感知する。",
+          "回転運動を感知。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1519",
+      "question": {
+        "id": "Q1519",
+        "management_code": "Q1519-C-17-P",
+        "category_large": "C",
+        "category_small": 17,
+        "source": "P",
+        "title": null,
+        "question_text": "フレイルの判定に用いる基本チェックリストで正しいのはどれか。",
+        "choices": {
+          "1": "経済状況を含む。",
+          "2": "指輪っかテストを含む。",
+          "3": "反復唾液嚥下テストを含む。",
+          "4": "対象者に対面せず評価できる。",
+          "5": "二次予防事業対象者を選定する。"
+        },
+        "exam": {
+          "exam_no": 61,
+          "session": "午後",
+          "question_no": 30
+        }
+      },
+      "answer": {
+        "id": "Q1519",
+        "display_answer": "4／5（いずれも正答扱い）",
+        "accepted_answer_sets": [
+          [
+            "4"
+          ],
+          [
+            "5"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1519",
+        "explanation": "厚生労働省の第61回国家試験では、複数の選択肢を正解として採点している。国家試験対策としてLTも公式採点に従う。\n基本チェックリストは質問票形式で、必ずしも対面せず評価できる。また、旧介護予防制度では二次予防事業対象者の選定にも用いられた。したがって4・5を正答とする。",
+        "choice_explanations": {
+          "1": "経済状況は項目に含まれない。",
+          "2": "指輪っかテストは含まれない。",
+          "3": "反復唾液嚥下テストは含まれない。",
+          "4": "○（厚生労働省公式で正答扱い）。質問票なので非対面で回答を得ることも可能。",
+          "5": "○（厚生労働省公式で正答扱い）。旧制度では二次予防事業対象者選定に使用された。"
+        }
+      },
+      "tag": {
+        "id": "Q1519",
+        "theme": "フレイルの判定に用いる基本チェックリストで正しいのはどれか",
+        "knowledge_node": "基本チェックリストを用いたフレイル判定項目の理解",
+        "knowledge_node_id": "KN1494",
+        "task": "assessment_selection",
+        "primary_ability": "MEASURE",
+        "secondary_ability": null,
+        "level": 3,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "基本チェックリストは質問票形式で、必ずしも対面せず評価できる。",
+          "また、旧介護予防制度では二次予防事業対象者の選定にも用いられた。",
+          "厚生労働省の第61回国家試験では、複数の選択肢を正解として採点している。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1540",
+      "question": {
+        "id": "Q1540",
+        "management_code": "Q1540-A-1-P",
+        "category_large": "A",
+        "category_small": 1,
+        "source": "P",
+        "title": null,
+        "question_text": "男性生殖器で正しいのはどれか。",
+        "choices": {
+          "1": "勃起中枢は腰髄にある。",
+          "2": "射精は交感神経の作用による。",
+          "3": "機能的な精子形成は 50 日かかる。",
+          "4": "射精時は膀胱内括約筋が収縮する。",
+          "5": "精子の射精後腟内での寿命は 12 時間である。"
+        },
+        "exam": {
+          "exam_no": 61,
+          "session": "午後",
+          "question_no": 68
+        }
+      },
+      "answer": {
+        "id": "Q1540",
+        "display_answer": "2／4（いずれも正答扱い）",
+        "accepted_answer_sets": [
+          [
+            "2"
+          ],
+          [
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1540",
+        "explanation": "厚生労働省の第61回国家試験では、複数の選択肢を正解として採点している。国家試験対策としてLTも公式採点に従う。\n射精は主に交感神経活動で精管・精囊・前立腺が収縮し、同時に膀胱頸部（内尿道括約筋）が収縮して精液の膀胱内逆流を防ぐ。したがって2・4が正しい。",
+        "choice_explanations": {
+          "1": "勃起中枢は仙髄S2〜4にある。",
+          "2": "○（厚生労働省公式で正答扱い）。射精は交感神経の作用が主体。",
+          "3": "精子形成には約64〜74日を要する。",
+          "4": "○（厚生労働省公式で正答扱い）。射精時には膀胱頸部が収縮する。",
+          "5": "精子は女性生殖路内で通常数日生存可能。"
+        }
+      },
+      "tag": {
+        "id": "Q1540",
+        "theme": "男性生殖器で正しいのはどれか",
+        "knowledge_node": "射精は主に交感神経活動で精管・精囊・前立腺が収縮し、同時に膀胱頸部（内尿道括約筋）が収縮して精液の膀胱内逆流を防ぐ",
+        "knowledge_node_id": "KN1514",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "厚生労働省の第61回国家試験では、複数の選択肢を正解として採点している。",
+          "したがって2・4が正しい。",
+          "射精は主に交感神経活動で精管・精囊・前立腺が収縮し、同時に膀胱頸部（内尿道括約筋）が収縮して精液の膀胱内逆流を防ぐ。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    }
+  ]
+}
