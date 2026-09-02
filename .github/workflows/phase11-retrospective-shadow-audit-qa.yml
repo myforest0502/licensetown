@@ -1,0 +1,110 @@
+name: Phase11 Retrospective Shadow Audit QA
+
+on:
+  push:
+    branches:
+      - feature/phase11-retrospective-shadow-audit-v01
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: feature/phase11-retrospective-shadow-audit-v01
+
+      - name: Apply exact read-only integration patches
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          # database.py: add SELECT-only chronological learning-events helper.
+          path = Path("database.py")
+          text = path.read_text(encoding="utf-8")
+          marker = '''\n\ndef get_learning_events_by_event_keys(\n    user_id: str,\n    event_keys: list[str] | tuple[str, ...] | set[str],\n) -> list[dict[str, Any]]:\n'''
+          helper = '''\n\ndef get_learning_events(\n    user_id: str,\n    before: datetime | None = None,\n) -> list[dict[str, Any]]:\n    """Return persisted learning events chronologically (SELECT only)."""\n    cutoff = _as_utc(before) if before is not None else None\n    if not database_is_available():\n        events = []\n        for event_key, event in _local_learning_events.items():\n            if event.get("user_id") != user_id:\n                continue\n            answered_at = _as_utc(event.get("answered_at"))\n            if cutoff is not None and answered_at >= cutoff:\n                continue\n            events.append({"event_key": event_key, **copy.deepcopy(event)})\n        return sorted(events, key=lambda item: (_as_utc(item.get("answered_at")), item["event_key"]))\n    with get_db_connection() as conn:\n        with conn.cursor() as cur:\n            if cutoff is None:\n                cur.execute(\n                    """\n                    SELECT event_key, user_id, mode, answered_count, correct_count,\n                           answered_at, question_results\n                    FROM learning_events\n                    WHERE user_id = %s\n                    ORDER BY answered_at, event_key\n                    """,\n                    (user_id,),\n                )\n            else:\n                cur.execute(\n                    """\n                    SELECT event_key, user_id, mode, answered_count, correct_count,\n                           answered_at, question_results\n                    FROM learning_events\n                    WHERE user_id = %s AND answered_at < %s\n                    ORDER BY answered_at, event_key\n                    """,\n                    (user_id, cutoff),\n                )\n            columns = (\n                "event_key", "user_id", "mode", "answered_count", "correct_count",\n                "answered_at", "question_results",\n            )\n            return [dict(zip(columns, row)) for row in cur.fetchall()]\n'''
+          if "def get_learning_events(\n" not in text:
+              if text.count(marker) != 1:
+                  raise SystemExit(f"database marker count={text.count(marker)}")
+              text = text.replace(marker, helper + marker)
+              path.write_text(text, encoding="utf-8")
+
+          # pilot_diagnostics.py: import helper/core, build once, return diagnostics.
+          path = Path("pilot_diagnostics.py")
+          text = path.read_text(encoding="utf-8")
+          old_import = '''    get_dashboard_learning_data,\n    get_learning_events_by_event_keys,\n    get_latest_adaptive_daily_learning_session_events,\n    get_question_attempts,\n)'''
+          new_import = '''    get_dashboard_learning_data,\n    get_learning_events,\n    get_learning_events_by_event_keys,\n    get_latest_adaptive_daily_learning_session_events,\n    get_question_attempts,\n)'''
+          if new_import not in text:
+              if text.count(old_import) != 1:
+                  raise SystemExit(f"pilot db import target count={text.count(old_import)}")
+              text = text.replace(old_import, new_import)
+          module_import = '''from phase11_retrospective_shadow_audit import build_retrospective_shadow_audit\n'''
+          import_marker = '''from question_bank import CATEGORY_NAMES, get_category_small, get_question_tag, question_ids\n'''
+          if module_import not in text:
+              if text.count(import_marker) != 1:
+                  raise SystemExit(f"pilot module import marker count={text.count(import_marker)}")
+              text = text.replace(import_marker, import_marker + module_import)
+          old_build = '''    repeat_structure_audit = build_repeat_structure_audit(\n        attempts,\n        get_learning_events_by_event_keys(\n            user_id,\n            {str(item.get("event_key") or "") for item in attempts},\n        ),\n    )\n\n    return {'''
+          new_build = '''    repeat_structure_audit = build_repeat_structure_audit(\n        attempts,\n        get_learning_events_by_event_keys(\n            user_id,\n            {str(item.get("event_key") or "") for item in attempts},\n        ),\n    )\n    retrospective_shadow_audit = build_retrospective_shadow_audit(\n        all_attempts,\n        get_learning_events(user_id),\n    )\n\n    return {'''
+          if new_build not in text:
+              if text.count(old_build) != 1:
+                  raise SystemExit(f"pilot build target count={text.count(old_build)}")
+              text = text.replace(old_build, new_build)
+          old_return = '''        "repeat_structure_audit": repeat_structure_audit,\n    }'''
+          new_return = '''        "repeat_structure_audit": repeat_structure_audit,\n        "retrospective_shadow_audit": retrospective_shadow_audit,\n    }'''
+          if new_return not in text:
+              if text.count(old_return) != 1:
+                  raise SystemExit(f"pilot return target count={text.count(old_return)}")
+              text = text.replace(old_return, new_return)
+          path.write_text(text, encoding="utf-8")
+
+          # Supporter-only template section.
+          path = Path("templates/goukaku/supporter_pilot_diagnostics.html")
+          html = path.read_text(encoding="utf-8")
+          section = '''\n  <section class="card pilot-diagnostic-card retrospective-shadow-audit-card">\n    {% set replay = diagnostics.retrospective_shadow_audit %}\n    <h2>Phase11 過去推薦リプレイ</h2>\n    <p><strong>現在のPhase11ポリシーを、当時までの学習証拠に適用したread-only再評価です。</strong></p>\n    <p>plan anchor {{ replay.plan_anchor_count }} / replay可能 {{ replay.eligible_snapshot_count }} / coverage除外 {{ replay.coverage_excluded_count }}</p>\n    <p>一致 {{ replay.agreement_count }} / Shadow根拠優位 {{ replay.shadow_stronger_disagreement_count }} / Current根拠優位 {{ replay.current_stronger_disagreement_count }} / 判定保留 {{ replay.inconclusive_disagreement_count }}</p>\n    <p>Critical Safety見逃し候補 {{ replay.critical_safety_miss_candidate_count }} / ordinary single-wrong takeover候補 {{ replay.ordinary_single_wrong_takeover_candidate_count }}</p>\n    <details><summary>最新スナップショットを見る</summary><ol class="retrospective-shadow-list">\n      {% for item in replay.snapshots[:20] %}<li>\n        <h3>{{ item.snapshot_jst }}</h3>\n        <p>coverage: {{ item.coverage_status }} / historical answers {{ item.historical_total_answers if item.historical_total_answers is not none else '不明' }} / formal attempts {{ item.historical_formal_attempt_count }}</p>\n        <p>Baseline: {{ item.baseline_target }} {{ item.baseline_goal }}問 / phase {{ item.baseline_phase or '不明' }}</p>\n        {% if item.eligible %}<p>Shadow: {{ item.shadow_target or '全体' }} {{ item.shadow_count }}問 / {{ item.shadow_reason_code }} / {{ item.review_category }}</p>\n        <p>comparison: {{ item.comparison_label }} / profile整合 {{ 'PASS' if item.shadow_reason_profile_consistent else '要確認' }}</p>\n        {% else %}<p>除外理由：{{ item.coverage_issues|join(', ') or item.coverage_status }}</p>{% endif %}\n      </li>{% else %}<li>保存済みrecommendation_plan anchorはありません。</li>{% endfor %}\n    </ol></details>\n  </section>\n'''
+          marker = '''\n  <section class="card pilot-diagnostic-card saved-adaptive-audit-card"><h2>最新 adaptive_daily 30問セッション監査</h2>'''
+          if "retrospective-shadow-audit-card" not in html:
+              if html.count(marker) != 1:
+                  raise SystemExit(f"template insertion marker count={html.count(marker)}")
+              html = html.replace(marker, section + marker)
+              path.write_text(html, encoding="utf-8")
+          PY
+          if ! git diff --quiet -- database.py pilot_diagnostics.py templates/goukaku/supporter_pilot_diagnostics.html; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add database.py pilot_diagnostics.py templates/goukaku/supporter_pilot_diagnostics.html
+            git commit -m "Integrate read-only Phase11 retrospective replay"
+            git push origin HEAD:feature/phase11-retrospective-shadow-audit-v01
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest "Werkzeug<3"
+
+      - name: Focused retrospective tests
+        run: |
+          python -m pytest -q \
+            tests/test_phase11_retrospective_shadow_audit.py \
+            tests/test_repeat_structure_diagnostics.py \
+            tests/test_phase11_shadow_integration.py \
+            tests/test_supporter.py
+
+      - name: Full pytest except known unmanaged fixture
+        run: >-
+          python -m pytest -q
+          --deselect=tests/test_quiz_answer_numbering.py::ConfigurableQuizTest::test_runtime_loader_supports_current_utf16_and_candidate_utf8
+
+      - name: Question Bank validator
+        run: python scripts/validate_question_bank.py
