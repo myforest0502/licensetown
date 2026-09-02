@@ -65,9 +65,25 @@ def _result(
             "wrong_question_count": 0,
             "confident_correct_after_wrong_count": 0,
             "evidence_level": "NO_WRONG_EVIDENCE",
+            "confirmed_weakness_evidence_level": "NO_WRONG_EVIDENCE",
+            "evaluable_wrong_question_count": 0,
+            "unknown_attempt_count": 0,
             "retention_reference_question_id": None,
         }
     evidence = _evidence(history)
+    evaluable_history = [
+        item for item in history
+        if item.get("answer_status") != "unknown"
+    ]
+    confirmed = (
+        _evidence(evaluable_history)
+        if evaluable_history
+        else {"evidence_level": "NO_WRONG_EVIDENCE", "wrong_question_count": 0}
+    )
+    unknown_attempt_count = sum(
+        item.get("answer_status") == "unknown"
+        for item in history
+    )
     return {
         "canonical_node_id": canonical_node_id,
         "state": state,
@@ -76,6 +92,9 @@ def _result(
         "wrong_question_count": evidence["wrong_question_count"],
         "confident_correct_after_wrong_count": confident_correct_after_wrong_count,
         "evidence_level": evidence["evidence_level"],
+        "confirmed_weakness_evidence_level": confirmed["evidence_level"],
+        "evaluable_wrong_question_count": confirmed["wrong_question_count"],
+        "unknown_attempt_count": unknown_attempt_count,
         "retention_reference_question_id": retention_reference_question_id,
     }
 
