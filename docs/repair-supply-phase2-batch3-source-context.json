@@ -1,0 +1,385 @@
+{
+  "targets": [
+    {
+      "question_id": "Q1200",
+      "question": {
+        "id": "Q1200",
+        "management_code": "Q1200-A-1-P",
+        "category_large": "A",
+        "category_small": 1,
+        "source": "P",
+        "title": null,
+        "question_text": "手の外来筋はどれか。",
+        "choices": {
+          "1": "短母指外転筋",
+          "2": "短小指屈筋",
+          "3": "短母指屈筋",
+          "4": "短母指伸筋",
+          "5": "短掌筋"
+        },
+        "exam": {
+          "exam_no": 58,
+          "session": "午前",
+          "question_no": 51
+        }
+      },
+      "answer": {
+        "id": "Q1200",
+        "display_answer": "4",
+        "accepted_answer_sets": [
+          [
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1200",
+        "explanation": "手の外来筋は前腕から起こり腱が手に入る筋。短母指伸筋は前腕起始で母指へ停止するため外来筋。",
+        "choice_explanations": {
+          "1": "短母指外転筋は内在筋。",
+          "2": "短小指屈筋は内在筋。",
+          "3": "短母指屈筋は内在筋。",
+          "4": "○。短母指伸筋は外来筋。",
+          "5": "短掌筋は内在筋。"
+        }
+      },
+      "tag": {
+        "id": "Q1200",
+        "theme": "手の外来筋はどれか",
+        "knowledge_node": "手の外来筋は前腕から起こり腱が手に入る筋",
+        "knowledge_node_id": "KN1186",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "短母指伸筋は前腕起始で母指へ停止するため外来筋。",
+          "手の外来筋は前腕から起こり腱が手に入る筋。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q619",
+      "question": {
+        "id": "Q619",
+        "management_code": "Q619-A-3-P",
+        "category_large": "A",
+        "category_small": 3,
+        "source": "P",
+        "title": null,
+        "question_text": "意識することなく再生される記憶はどれか。",
+        "choices": {
+          "1": "即時記憶",
+          "2": "意味記憶",
+          "3": "近時記憶",
+          "4": "手続き記憶",
+          "5": "エピソード記憶"
+        },
+        "exam": {
+          "exam_no": 52,
+          "session": "午後",
+          "question_no": 79
+        }
+      },
+      "answer": {
+        "id": "Q619",
+        "display_answer": "4",
+        "accepted_answer_sets": [
+          [
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q619",
+        "explanation": "意識せずに技能や習慣として再生される記憶は手続き記憶で、非陳述記憶に分類される。自転車操作や楽器演奏などが代表例である。",
+        "choice_explanations": {
+          "1": "即時記憶は短時間保持する顕在的記憶である。",
+          "2": "意味記憶は知識に関する陳述記憶である。",
+          "3": "近時記憶は最近の出来事を意識的に想起する。",
+          "4": "○。手続き記憶は意識せず技能として再生される。",
+          "5": "エピソード記憶は個人的体験の陳述記憶である。"
+        }
+      },
+      "tag": {
+        "id": "Q619",
+        "theme": "意識することなく再生される記憶はどれか",
+        "knowledge_node": "意識せずに技能や習慣として再生される記憶は手続き記憶で、非陳述記憶に分類される",
+        "knowledge_node_id": "KN0611",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "意識することなく再生される記憶はどれかの基本概念"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q722",
+      "question": {
+        "id": "Q722",
+        "management_code": "Q722-C-17-P",
+        "category_large": "C",
+        "category_small": 17,
+        "source": "P",
+        "title": null,
+        "question_text": "痛の評価に用いられるのはどれか。2つ選べ。",
+        "choices": {
+          "1": "facescale",
+          "2": "MAS",
+          "3": "SLTA",
+          "4": "VAS",
+          "5": "WCST"
+        },
+        "exam": {
+          "exam_no": 54,
+          "session": "午後",
+          "question_no": 36
+        }
+      },
+      "answer": {
+        "id": "Q722",
+        "display_answer": "1・4",
+        "accepted_answer_sets": [
+          [
+            "1",
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q722",
+        "explanation": "疼痛強度の評価には表情図から選ぶface scaleと、線上の位置で強度を示すVASが用いられる。したがって1・4が正しい。",
+        "choice_explanations": {
+          "1": "○。face scaleは痛みの強さを表情で評価する。",
+          "2": "MASは痙縮評価尺度である。",
+          "3": "SLTAは失語症検査である。",
+          "4": "○。VASは痛みの強度評価に用いる。",
+          "5": "WCSTは遂行機能検査である。"
+        }
+      },
+      "tag": {
+        "id": "Q722",
+        "theme": "痛の評価に用いられるのはどれか",
+        "knowledge_node": "疼痛強度の評価には表情図から選ぶface scaleと、線上の位置で強度を示すVASが用いられる",
+        "knowledge_node_id": "KN0714",
+        "task": "assessment_selection",
+        "primary_ability": "MEASURE",
+        "secondary_ability": null,
+        "level": 3,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "疼痛強度の評価には表情図から選ぶface scaleと、線上の位置で強度を示すVASが用いられる。",
+          "VASは痛みの強度評価に用いる。",
+          "したがって1・4が正しい。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q733",
+      "question": {
+        "id": "Q733",
+        "management_code": "Q733-A-1-P",
+        "category_large": "A",
+        "category_small": 1,
+        "source": "P",
+        "title": null,
+        "question_text": "外眼筋の中で動眼神経の支配でないのはどれか。",
+        "choices": {
+          "1": "上斜筋",
+          "2": "下斜筋",
+          "3": "上直筋",
+          "4": "下直筋",
+          "5": "上眼瞼挙筋"
+        },
+        "exam": {
+          "exam_no": 54,
+          "session": "午後",
+          "question_no": 53
+        }
+      },
+      "answer": {
+        "id": "Q733",
+        "display_answer": "1",
+        "accepted_answer_sets": [
+          [
+            "1"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q733",
+        "explanation": "上斜筋は滑車神経支配である。動眼神経は上直筋、下直筋、内直筋、下斜筋、上眼瞼挙筋を支配するため1が正しい。",
+        "choice_explanations": {
+          "1": "○。上斜筋は滑車神経支配である。",
+          "2": "下斜筋は動眼神経支配である。",
+          "3": "上直筋は動眼神経支配である。",
+          "4": "下直筋は動眼神経支配である。",
+          "5": "上眼瞼挙筋は動眼神経支配である。"
+        }
+      },
+      "tag": {
+        "id": "Q733",
+        "theme": "外眼筋の中で動眼神経の支配でないのはどれか",
+        "knowledge_node": "上斜筋は滑車神経支配である",
+        "knowledge_node_id": "KN0725",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "上斜筋は滑車神経支配である。",
+          "動眼神経は上直筋、下直筋、内直筋、下斜筋、上眼瞼挙筋を支配するため1が正しい。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q949",
+      "question": {
+        "id": "Q949",
+        "management_code": "Q949-A-1-P",
+        "category_large": "A",
+        "category_small": 1,
+        "source": "P",
+        "title": null,
+        "question_text": "筋と支配神経の組合せで正しいのはどれか。2つ選べ。",
+        "choices": {
+          "1": "下斜筋　外転神経",
+          "2": "下直筋　視神経",
+          "3": "上眼瞼挙筋　動眼神経",
+          "4": "上斜筋　滑車神経",
+          "5": "内側直筋　眼神経"
+        },
+        "exam": {
+          "exam_no": 56,
+          "session": "午前",
+          "question_no": 58
+        }
+      },
+      "answer": {
+        "id": "Q949",
+        "display_answer": "3・4",
+        "accepted_answer_sets": [
+          [
+            "3",
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q949",
+        "explanation": "上眼瞼挙筋は動眼神経、上斜筋は滑車神経支配である。3・4が正しい。",
+        "choice_explanations": {
+          "1": "下斜筋は動眼神経。",
+          "2": "下直筋も動眼神経。",
+          "3": "○。上眼瞼挙筋―動眼神経。",
+          "4": "○。上斜筋―滑車神経。",
+          "5": "内側直筋は動眼神経。"
+        }
+      },
+      "tag": {
+        "id": "Q949",
+        "theme": "筋と支配神経の組合せで正しいのはどれか",
+        "knowledge_node": "上眼瞼挙筋は動眼神経、上斜筋は滑車神経支配である",
+        "knowledge_node_id": "KN0940",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "上眼瞼挙筋は動眼神経、上斜筋は滑車神経支配である。",
+          "3・4が正しい。",
+          "上斜筋―滑車神経。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1297",
+      "question": {
+        "id": "Q1297",
+        "management_code": "Q1297-A-3-P",
+        "category_large": "A",
+        "category_small": 3,
+        "source": "P",
+        "title": null,
+        "question_text": "課題と記憶の組合せで正しいのはどれか。",
+        "choices": {
+          "1": "自転車に乗る エピソード記憶",
+          "2": "海外旅行の思い出を語る 展望記憶",
+          "3": "紙や鉛筆を使わず暗算する ワーキングメモリー",
+          "4": "教師になったきっかけを説明する 意味記憶",
+          "5": "建物の建築方法について説明する 手続き記憶"
+        },
+        "exam": {
+          "exam_no": 59,
+          "session": "午前",
+          "question_no": 24
+        }
+      },
+      "answer": {
+        "id": "Q1297",
+        "display_answer": "3",
+        "accepted_answer_sets": [
+          [
+            "3"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1297",
+        "explanation": "紙や鉛筆を使わず暗算するには、数値を一時保持しながら操作するワーキングメモリーが必要である。",
+        "choice_explanations": {
+          "1": "自転車に乗るのは手続き記憶。",
+          "2": "旅行の思い出はエピソード記憶。",
+          "3": "○。暗算はワーキングメモリー。",
+          "4": "教師になったきっかけはエピソード記憶。",
+          "5": "建築方法の知識は意味記憶。"
+        }
+      },
+      "tag": {
+        "id": "Q1297",
+        "theme": "課題と記憶の組合せで正しいのはどれか",
+        "knowledge_node": "紙や鉛筆を使わず暗算するには、数値を一時保持しながら操作するワーキングメモリーが必要である",
+        "knowledge_node_id": "KN1281",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "紙や鉛筆を使わず暗算するには、数値を一時保持しながら操作するワーキングメモリーが必要である。",
+          "課題と記憶の組合せで正しいのはどれか。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    }
+  ]
+}
