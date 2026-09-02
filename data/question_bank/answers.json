@@ -16257,5 +16257,10 @@
   {"id":"Q1617","display_answer":"C","accepted_answer_sets":[["C"]],"answer_basis":"LT_original"},
   {"id":"Q1618","display_answer":"B","accepted_answer_sets":[["B"]],"answer_basis":"LT_original"},
   {"id":"Q1619","display_answer":"A","accepted_answer_sets":[["A"]],"answer_basis":"LT_original"},
-  {"id":"Q1620","display_answer":"C","accepted_answer_sets":[["C"]],"answer_basis":"LT_original"}
+  {"id":"Q1620","display_answer":"C","accepted_answer_sets":[["C"]],"answer_basis":"LT_original"},
+  {"id":"Q1621","display_answer":"C","accepted_answer_sets":[["C"]],"answer_basis":"LT_original"},
+  {"id":"Q1622","display_answer":"A","accepted_answer_sets":[["A"]],"answer_basis":"LT_original"},
+  {"id":"Q1623","display_answer":"A","accepted_answer_sets":[["A"]],"answer_basis":"LT_original"},
+  {"id":"Q1624","display_answer":"B","accepted_answer_sets":[["B"]],"answer_basis":"LT_original"},
+  {"id":"Q1625","display_answer":"B","accepted_answer_sets":[["B"]],"answer_basis":"LT_original"}
 ]
