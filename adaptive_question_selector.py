@@ -23,8 +23,8 @@ from prerequisite_backtrack_pilot import (
 
 
 REPAIR_REASONS = {
-    "safety_wrong", "confident_wrong", "cross_question_wrong", "repairing",
-    "previous_wrong_unconfirmed",
+    "safety_wrong", "safety_unresolved", "confident_wrong",
+    "cross_question_wrong", "repairing", "previous_wrong_unconfirmed",
 }
 
 
@@ -48,8 +48,9 @@ def _attempt_time(item: dict[str, Any]):
 
 def _node_attempt_summary(attempts: Iterable[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     summaries: dict[str, dict[str, Any]] = defaultdict(lambda: {
-        "wrong_questions": set(), "correct_questions": set(),
-        "confident_wrong": False, "uncertain_correct": False, "unknown": False,
+        "wrong_questions": set(), "evaluable_wrong_questions": set(),
+        "correct_questions": set(), "confident_wrong": False,
+        "uncertain_correct": False, "unknown": False,
     })
     for item in sorted((dict(value) for value in attempts), key=_attempt_time):
         node = canonicalize_knowledge_node_id(str(item.get("knowledge_node_id") or ""))
@@ -65,23 +66,28 @@ def _node_attempt_summary(attempts: Iterable[dict[str, Any]]) -> dict[str, dict[
                 summary["uncertain_correct"] = True
         else:
             summary["wrong_questions"].add(question_id)
+            if not is_unknown:
+                summary["evaluable_wrong_questions"].add(question_id)
             summary["unknown"] = summary["unknown"] or is_unknown
             summary["confident_wrong"] = (
-                summary["confident_wrong"] or item.get("confidence") == 1
+                summary["confident_wrong"] or (not is_unknown and item.get("confidence") == 1)
             )
     return summaries
 
 
 def _priority(state: str, summary: dict[str, Any], safety: str) -> tuple[int, str, str]:
     has_wrong = bool(summary["wrong_questions"])
+    has_evaluable_wrong = bool(summary.get("evaluable_wrong_questions", summary["wrong_questions"]))
     if state == "repaired":
         return 150, "repaired", "maintenance"
     if state == "stable":
         return 100, "stable_maintenance", "maintenance"
     if state == "recheck_due":
         return 700, "recheck_due", "checking"
-    if has_wrong and safety in {"critical", "high", "moderate"}:
+    if has_evaluable_wrong and safety in {"critical", "high", "moderate"}:
         return 1000, "safety_wrong", "repair"
+    if summary["unknown"] and safety in {"critical", "high", "moderate"}:
+        return 1000, "safety_unresolved", "repair"
     if summary["confident_wrong"]:
         return 950, "confident_wrong", "repair"
     if len(summary["wrong_questions"]) >= 2:
@@ -133,8 +139,9 @@ def select_node_adaptive_questions(
         node = canonicalize_knowledge_node_id(tag["knowledge_node_id"])
         state = states.get(node, "unseen")
         summary = summaries.get(node, {
-            "wrong_questions": set(), "correct_questions": set(),
-            "confident_wrong": False, "uncertain_correct": False, "unknown": False,
+            "wrong_questions": set(), "evaluable_wrong_questions": set(),
+            "correct_questions": set(), "confident_wrong": False,
+            "uncertain_correct": False, "unknown": False,
         })
         score, reason, group = _priority(state, summary, str(tag.get("safety", "none")))
         if state == "recheck_due":
@@ -191,7 +198,7 @@ def select_node_adaptive_questions(
         item for item in candidates
         if not item["recent_question_repeat"]
         or (
-            item["priority_reason"] == "safety_wrong"
+            item["priority_reason"] in {"safety_wrong", "safety_unresolved"}
             and item["canonical_node_id"] not in non_recent_nodes
         )
     ]
