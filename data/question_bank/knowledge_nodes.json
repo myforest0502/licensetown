@@ -9734,9 +9734,10 @@
   {
     "knowledge_node_id": "KN0966",
     "label": "急性心筋梗塞の発症後の血液検査所見で上昇がみられないのはどれかから病態・機能・原因を解釈する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q976"
+      "Q976",
+      "Q1651"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9955,9 +9956,10 @@
   {
     "knowledge_node_id": "KN0988",
     "label": "鶏歩（steppage gait）は足関節背屈筋麻痺で生じ、総腓骨神経麻痺が代表的原因",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q998"
+      "Q998",
+      "Q1652"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10366,9 +10368,10 @@
   {
     "knowledge_node_id": "KN1029",
     "label": "障害受容過程はショック期の後に否認期が続くと整理されるため、一般的に2番目は否認期である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1039"
+      "Q1039",
+      "Q1653"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14801,9 +14804,10 @@
   {
     "knowledge_node_id": "KN1470",
     "label": "BDI-IIはうつ症状について本人が回答する自己記入式質問紙を評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1495"
+      "Q1495",
+      "Q1654"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14851,9 +14855,10 @@
   {
     "knowledge_node_id": "KN1475",
     "label": "多発性硬化症は中枢神経の感覚路障害、CIDPは末梢神経障害で感覚障害を伴う",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1500"
+      "Q1500",
+      "Q1655"
     ],
     "aliases": [],
     "successor_ids": []
