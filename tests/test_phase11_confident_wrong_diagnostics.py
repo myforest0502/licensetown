@@ -41,10 +41,22 @@ def _evidence(nodes):
 
 def test_five_target_field_nodes_are_exposed_without_changing_shadow(monkeypatch):
     nodes = [f"KN9{index:03d}" for index in range(1, 6)]
+    # Match production J2 attribution: field comes from each active wrong Q.
+    field_by_question = {
+        "Q101": 8,
+        "Q102": 8,
+        "Q103": 8,
+        "Q104": 8,
+        "Q105": 8,
+        "Q106": 8,
+        "Q200": 9,
+        "Q201": 8,
+        "Q202": 8,
+    }
     monkeypatch.setattr(
         pilot_diagnostics,
-        "_NODE_FIELDS",
-        {**{node: {8} for node in nodes}, "KN9998": {9}, "KN9997": {8}},
+        "get_category_small",
+        lambda question_id: field_by_question[str(question_id)],
     )
     monkeypatch.setattr(
         pilot_diagnostics,
@@ -65,6 +77,7 @@ def test_five_target_field_nodes_are_exposed_without_changing_shadow(monkeypatch
         attempts,
         _evidence(nodes + ["KN9997", "KN9998"]),
         shadow,
+        as_of=NOW,
     )
     assert shadow == shadow_before
     assert len(details) == 5
@@ -81,6 +94,7 @@ def test_details_are_empty_for_other_shadow_reasons():
         [_attempt("KN9001", "Q101")],
         _evidence(["KN9001"]),
         {"reason_code": "repeated_wrong_cluster", "target_field": "内科学"},
+        as_of=NOW,
     ) == []
 
 
