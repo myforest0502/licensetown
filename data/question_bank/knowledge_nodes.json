@@ -248,7 +248,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q25",
-      "Q1596"
+      "Q1596",
+      "Q1608"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1946,7 +1947,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q195",
-      "Q1599"
+      "Q1599",
+      "Q1606"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3309,7 +3311,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q331",
-      "Q1600"
+      "Q1600",
+      "Q1609"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6799,7 +6802,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q684",
-      "Q1602"
+      "Q1602",
+      "Q1607"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7011,7 +7015,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q705",
-      "Q1603"
+      "Q1603",
+      "Q1610"
     ],
     "aliases": [],
     "successor_ids": []

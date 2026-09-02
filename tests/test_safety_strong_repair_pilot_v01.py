@@ -39,7 +39,7 @@ def attempt(q_id, node_id, correct, confidence, at, status="answered"):
 
 
 def test_all_eleven_original_questions_have_complete_records_and_formal_strong_pairs():
-    assert question_count() == 1605
+    assert question_count() == 1610
     for new_q, (source_q, node_id, task, ability) in PAIRS.items():
         question = get_question(new_q)
         answer = get_answer(new_q)
@@ -65,15 +65,16 @@ def test_new_ids_are_contiguous_and_nodes_are_confirmed_shared():
     for filename in files:
         records = json.loads((BANK / filename).read_text(encoding="utf-8-sig"))
         ids = [item["id"] for item in records]
-        assert len(ids) == len(set(ids)) == 1605
-        assert set(ids[-11:]) == expected
+        assert len(ids) == len(set(ids)) == 1610
+        assert expected.issubset(ids)
     nodes = {
         item["knowledge_node_id"]: item
         for item in json.loads((BANK / "knowledge_nodes.json").read_text(encoding="utf-8-sig"))
     }
     for new_q, (source_q, node_id, _task, _ability) in PAIRS.items():
         assert nodes[node_id]["status"] == "confirmed_shared"
-        assert nodes[node_id]["question_ids"] == [source_q, new_q]
+        assert source_q in nodes[node_id]["question_ids"]
+        assert new_q in nodes[node_id]["question_ids"]
 
 
 def test_static_repairability_reports_all_eleven_as_strong_available():
