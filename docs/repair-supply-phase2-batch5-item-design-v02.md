@@ -70,7 +70,7 @@ Design rule: same canonical Knowledge Node, materially different demand from the
   E. PT-INR低下はワルファリン作用増強を示す。
 - Correct: A
 - Rationale: ワルファリンはビタミンK依存性凝固因子の合成を阻害するため、ビタミンK摂取が増えると作用が減弱しPT-INRが低下し得る。Q617/Q1363/Q1225の「拮抗するビタミンは何か」という暗記ではなく、服薬中の検査値変化と食事歴を結び付けて解釈する。実臨床では食事内容を一律禁止するのではなく、摂取量の急変を避け、処方医等と連携して管理する。
-- Tag target: KN0609; task=finding_interpretation; primary_ability=INTERPRET; secondary_ability=KNOW; level=3; safety=moderate; source=original.
+- Tag target: KN0609; task=finding_interpretation; primary_ability=INTERPRET; secondary_ability=KNOW; level=3; safety=none; source=original.
 
 ## Q1630 — KN0799
 - Active wrong: Q807
