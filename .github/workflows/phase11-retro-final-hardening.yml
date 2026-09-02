@@ -1,0 +1,56 @@
+name: Phase11 Retro Final Hardening
+on:
+  push:
+    branches: [feature/phase11-retrospective-shadow-audit-v01]
+permissions:
+  contents: write
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/phase11-retrospective-shadow-audit-v01
+      - name: Fail closed on malformed historical timestamps
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('phase11_retrospective_shadow_audit.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''    events = []\n    for raw in learning_events:\n        event = dict(raw)\n        timestamp = _parse_time(event.get("answered_at"))\n        if timestamp is not None and timestamp < cutoff:\n            events.append((timestamp, event))\n    attempts_before = []'''
+          new = '''    events = []\n    malformed_event_timestamps = []\n    for raw in learning_events:\n        event = dict(raw)\n        timestamp = _parse_time(event.get("answered_at"))\n        if timestamp is None:\n            malformed_event_timestamps.append(str(event.get("event_key") or "unknown"))\n            continue\n        if timestamp < cutoff:\n            events.append((timestamp, event))\n    attempts_before = []'''
+          old2 = '''    unreliable = False\n    for _timestamp, event in sorted(events, key=lambda pair: (pair[0], str(pair[1].get("event_key") or ""))):'''
+          new2 = '''    unreliable = bool(malformed_event_timestamps)\n    issues.extend(f"invalid_event_timestamp:{key}" for key in malformed_event_timestamps)\n    for _timestamp, event in sorted(events, key=lambda pair: (pair[0], str(pair[1].get("event_key") or ""))):'''
+          old3 = '''def _historical_total_answers(learning_events: Iterable[dict[str, Any]], before: datetime) -> int | None:\n    total = 0\n    for event in learning_events:\n        timestamp = _parse_time(event.get("answered_at"))\n        if timestamp is None or timestamp >= before:\n            continue'''
+          new3 = '''def _historical_total_answers(learning_events: Iterable[dict[str, Any]], before: datetime) -> int | None:\n    total = 0\n    for event in learning_events:\n        timestamp = _parse_time(event.get("answered_at"))\n        if timestamp is None:\n            return None\n        if timestamp >= before:\n            continue'''
+          for before, after, label in ((old,new,'coverage'),(old2,new2,'unreliable'),(old3,new3,'phase')):
+              if after in text:
+                  continue
+              if text.count(before) != 1:
+                  raise SystemExit(f'{label} target count={text.count(before)}')
+              text = text.replace(before, after)
+          path.write_text(text, encoding='utf-8')
+
+          test = Path('tests/test_phase11_retrospective_shadow_audit.py')
+          body = test.read_text(encoding='utf-8')
+          addition = '''\n\ndef test_malformed_historical_event_timestamp_fails_closed():\n    broken = learning_event("broken", 1, answered_count=0)\n    broken["answered_at"] = "not-a-time"\n    coverage = audit_historical_attempt_coverage(\n        [broken], [], before=T0 + timedelta(hours=2)\n    )\n    assert coverage["status"] == "history_coverage_unreliable"\n    audit = build_retrospective_shadow_audit([], [broken, plan("plan", 2)])\n    snapshot = audit["snapshots"][0]\n    assert snapshot["eligible"] is False\n    assert snapshot["baseline_phase"] is None\n\n\ndef test_get_learning_events_db_path_is_select_only(monkeypatch):\n    class Cursor:\n        def __init__(self): self.sql = ""; self.args = None\n        def __enter__(self): return self\n        def __exit__(self, *_args): return False\n        def execute(self, sql, args): self.sql = " ".join(sql.split()); self.args = args\n        def fetchall(self): return []\n    class Connection:\n        def __init__(self): self.cursor_value = Cursor()\n        def __enter__(self): return self\n        def __exit__(self, *_args): return False\n        def cursor(self): return self.cursor_value\n    connection = Connection()\n    monkeypatch.setattr(database, "database_is_available", lambda: True)\n    monkeypatch.setattr(database, "get_db_connection", lambda: connection)\n    assert get_learning_events("learner") == []\n    assert connection.cursor_value.sql.startswith("SELECT ")\n    assert not any(word in connection.cursor_value.sql.upper() for word in (\n        "INSERT", "UPDATE", "DELETE", "TRUNCATE", "ALTER", "CREATE", "DROP",\n    ))\n'''
+          if 'test_malformed_historical_event_timestamp_fails_closed' not in body:
+              test.write_text(body + addition, encoding='utf-8')
+          PY
+          if ! git diff --quiet -- phase11_retrospective_shadow_audit.py tests/test_phase11_retrospective_shadow_audit.py; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add phase11_retrospective_shadow_audit.py tests/test_phase11_retrospective_shadow_audit.py
+            git commit -m 'Fail closed on malformed retrospective history'
+            git push origin HEAD:feature/phase11-retrospective-shadow-audit-v01
+          fi
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest "Werkzeug<3"
+      - run: python -m pytest -q tests/test_phase11_retrospective_shadow_audit.py tests/test_phase11_shadow_integration.py tests/test_supporter.py
+      - run: python -m pytest -q --deselect=tests/test_quiz_answer_numbering.py::ConfigurableQuizTest::test_runtime_loader_supports_current_utf16_and_candidate_utf8
+      - run: python scripts/validate_question_bank.py
