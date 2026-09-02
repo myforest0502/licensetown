@@ -12,11 +12,11 @@ def test_all_1509_canonical_nodes_are_classified_and_counts_balance():
     records = build_repairability_audit()
     summary = summarize_repairability(records)
     assert summary["canonical_node_count"] == 1509
-    assert summary["singleton_node_count"] == 1419
-    assert summary["multi_question_node_count"] == 90
+    assert summary["singleton_node_count"] == 1415
+    assert summary["multi_question_node_count"] == 94
     assert summary["singleton_node_count"] + summary["multi_question_node_count"] == 1509
-    assert summary["strong_alt_question_available_node_count"] == 30
-    assert summary["weak_alt_question_only_node_count"] == 60
+    assert summary["strong_alt_question_available_node_count"] == 35
+    assert summary["weak_alt_question_only_node_count"] == 59
 
 
 def test_multi_question_classification_uses_formal_evidence_not_question_count_only():
