@@ -2,9 +2,10 @@
   {
     "knowledge_node_id": "KN0001",
     "label": "左立脚後期では下腿三頭筋による底屈モーメントが前方推進力を生み、反対側下肢の歩幅確保に重要な役割を果たすを識別する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1"
+      "Q1",
+      "Q1658"
     ],
     "aliases": [],
     "successor_ids": []
@@ -723,9 +724,10 @@
   {
     "knowledge_node_id": "KN0072",
     "label": "術後14週で歩行は自立しているが、小走りでは立脚終期の蹴り出しが弱く、片脚つま先立ちは5回で疲労するを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q72"
+      "Q72",
+      "Q1659"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1989,9 +1991,10 @@
   {
     "knowledge_node_id": "KN0198",
     "label": "第2・3中足骨頭部に胼胝があり、長時間歩行で同部の前足部痛が増強していることから、中足骨頭へ荷重が集中しているに対する機器選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q199"
+      "Q199",
+      "Q1660"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15339,9 +15342,10 @@
   {
     "knowledge_node_id": "KN1523",
     "label": "交感神経性血管収縮により末梢血管抵抗が上昇する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1549"
+      "Q1549",
+      "Q1656"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15359,9 +15363,10 @@
   {
     "knowledge_node_id": "KN1525",
     "label": "重い身体疾患にかかっていると確信する妄想は心気妄想",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1551"
+      "Q1551",
+      "Q1657"
     ],
     "aliases": [],
     "successor_ids": []

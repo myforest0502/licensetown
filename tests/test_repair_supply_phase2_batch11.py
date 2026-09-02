@@ -8,31 +8,31 @@ from question_bank import get_answer, get_explanation, get_question, get_questio
 
 
 ITEMS = {
-    "Q1651": ("KN0966", "Q976", "B", "B", 8, "assessment_selection", "MEASURE", "INTERPRET"),
-    "Q1652": ("KN0988", "Q998", "C", "C", 15, "finding_interpretation", "INTERPRET", "KNOW"),
-    "Q1653": ("KN1029", "Q1039", "B", "A", 3, "finding_interpretation", "INTERPRET", "KNOW"),
-    "Q1654": ("KN1470", "Q1495", "D", "A", 3, "finding_interpretation", "INTERPRET", "MEASURE"),
-    "Q1655": ("KN1475", "Q1500", "A", "B", 8, "finding_interpretation", "INTERPRET", "KNOW"),
+    "Q1656": ("KN1523", "Q1549", "D", "B", 7, "finding_interpretation", "INTERPRET", "KNOW"),
+    "Q1657": ("KN1525", "Q1551", "B", "B", 10, "assessment_selection", "MEASURE", "INTERPRET"),
+    "Q1658": ("KN0001", "Q1", "C", "C", 15, "assessment_selection", "MEASURE", "INTERPRET"),
+    "Q1659": ("KN0072", "Q72", "A", "C", 15, "finding_interpretation", "INTERPRET", "MEASURE"),
+    "Q1660": ("KN0198", "Q199", "E", "C", 15, "finding_interpretation", "INTERPRET", "MEASURE"),
 }
 BANK = Path(__file__).resolve().parents[1] / "data" / "question_bank"
 HISTORICAL_DIGESTS = {
-    "questions.json": "f9587737f962b33df4ac4d936e8e4bb0e683aeb790f8403ba1a7acee4b104319",
-    "answers.json": "9ef9e7de28ba9c230c1c34eef28d16985b9076ba5d83b3cdb7b407de532ac551",
-    "explanations.json": "1eebe8e81b056859df2404d5ff45a802fb0ffe8c365ab8964408136579468baf",
-    "question_tags.json": "52adbff1c8b4500016c30122d19f9d2c81e742d2354746822ea2d17ec8b92af7",
+    "questions.json": "60572f7eb863adb6b853677fd84910431095ca38f45124ddf6b6334ed787b894",
+    "answers.json": "b8cd97883093af562a2b921e2bf16bcd5625ee62ca5e6007dd0e5cafa78ac771",
+    "explanations.json": "84eb7697d81f2e34ef300e16ff576f790fe1adb58c82d0cb4ad468d6aed39168",
+    "question_tags.json": "76f3d865eee0180087e2154fbe875b329d949ff3e12625d924461f47d14077c7",
 }
 
 
-def test_q1_through_q1650_content_is_unchanged():
+def test_q1_through_q1655_content_is_unchanged():
     for filename, expected in HISTORICAL_DIGESTS.items():
         records = json.loads((BANK / filename).read_text(encoding="utf-8-sig"))
         historical = json.dumps(
-            records[:1650], ensure_ascii=False, sort_keys=True, separators=(",", ":")
+            records[:1655], ensure_ascii=False, sort_keys=True, separators=(",", ":")
         ).encode()
         assert hashlib.sha256(historical).hexdigest() == expected
 
 
-def test_batch10_records_match_formal_design():
+def test_batch11_records_match_formal_design():
     assert question_count() == 1660
     for q_id, (node, source, key, category, small, task, primary, secondary) in ITEMS.items():
         question = get_question(q_id)
@@ -50,27 +50,17 @@ def test_batch10_records_match_formal_design():
         assert canonicalize_knowledge_node_id(get_question_tag(source)["knowledge_node_id"]) == node
 
 
-def test_all_required_batch10_pairs_are_formally_strong_bidirectionally():
+def test_all_required_batch11_pairs_are_formally_strong_bidirectionally():
     for q_id, (_node, source, *_rest) in ITEMS.items():
         assert classify_repair_confirmation(source, q_id) == DIFFERENT_QUESTION_STRONG
         assert classify_repair_confirmation(q_id, source) == DIFFERENT_QUESTION_STRONG
 
 
-def test_official_multiple_answer_contracts_are_unchanged():
-    assert get_answer("Q998") == {
-        "id": "Q998", "display_answer": "3・4",
-        "accepted_answer_sets": [["3", "4"]], "answer_basis": "MHLW_official",
-    }
-    assert get_answer("Q1500") == {
-        "id": "Q1500", "display_answer": "2・5",
-        "accepted_answer_sets": [["2", "5"]], "answer_basis": "MHLW_official",
-    }
-
-
 def test_content_safeguards_are_preserved():
-    ami = get_explanation("Q1651")["explanation"]
-    assert "心筋壊死を直接評価" in ami and "別の理由" in ami
-    assert "総腓骨神経麻痺" in get_explanation("Q1652")["explanation"]
-    assert "必ずしも直線的" in get_explanation("Q1653")["explanation"]
-    assert "確定診断" in get_explanation("Q1654")["explanation"]
-    assert "全症例で感覚障害が必須" in get_explanation("Q1655")["explanation"]
+    assert "すべての病期" in get_explanation("Q1656")["explanation"]
+    assert "健康への不安だけで妄想と診断せず" in get_explanation("Q1657")["explanation"]
+    assert "孤立した筋力を直接測定" in get_explanation("Q1658")["explanation"]
+    assert "構造的破綻" in get_explanation("Q1659")["explanation"]
+    pressure = get_explanation("Q1660")["explanation"]
+    assert "疼痛原因の確定" in pressure and "可動域の改善" in pressure
+    assert "設置位置や個人差" in pressure and "足底圧分布を再評価" in pressure
