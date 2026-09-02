@@ -60,8 +60,9 @@ _SAVED_ADAPTIVE_AUDIT_FIELDS = (
 )
 _REPEAT_CATEGORIES = (
     "justified_cooldown_bypass",
-    "adaptive_repair_or_recheck",
+    "adaptive_spaced_repeat",
     "adaptive_unexplained_repeat",
+    "adaptive_metadata_inconsistent",
     "nonadaptive_repeat",
     "audit_metadata_unavailable",
 )
@@ -371,12 +372,16 @@ def build_repeat_structure_audit(attempts, learning_events):
                 category = "nonadaptive_repeat"
             elif not metadata or source != "adaptive_daily" or not audit_available:
                 category = "audit_metadata_unavailable"
+            elif not isinstance(recent_repeat, bool) or not isinstance(bypassed, bool):
+                category = "audit_metadata_unavailable"
             elif recent_repeat is True and bypassed is True:
                 category = "justified_cooldown_bypass"
-            elif group in {"repair", "recheck", "maintenance"}:
-                category = "adaptive_repair_or_recheck"
-            else:
+            elif recent_repeat is True and bypassed is False:
                 category = "adaptive_unexplained_repeat"
+            elif recent_repeat is False and bypassed is True:
+                category = "adaptive_metadata_inconsistent"
+            else:
+                category = "adaptive_spaced_repeat"
 
             seconds = delta.total_seconds() if delta is not None else None
             if seconds is None:
