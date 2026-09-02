@@ -1,6 +1,195 @@
 {
   "targets": [
     {
+      "question_id": "Q1424",
+      "question": {
+        "id": "Q1424",
+        "management_code": "Q1424-C-13-P",
+        "category_large": "C",
+        "category_small": 13,
+        "source": "P",
+        "title": null,
+        "question_text": "立位姿勢が安定しているのはどれか。",
+        "choices": {
+          "1": "支持基底面が狭い。",
+          "2": "重心の位置が高い。",
+          "3": "重心線は膝関節中心の前方を通る。",
+          "4": "床と足底の接触面の摩擦抵抗が小さい。",
+          "5": "重心線の位置が支持基底面の中心から離れている。"
+        },
+        "exam": {
+          "exam_no": 60,
+          "session": "午前",
+          "question_no": 73
+        }
+      },
+      "answer": {
+        "id": "Q1424",
+        "display_answer": "3",
+        "accepted_answer_sets": [
+          [
+            "3"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1424",
+        "explanation": "安静立位では重心線が膝関節中心のやや前方を通ることで少ない筋活動で安定する。",
+        "choice_explanations": {
+          "1": "支持基底面は広い方が安定。",
+          "2": "重心は低い方が安定。",
+          "3": "○。膝関節中心の前方を通る。",
+          "4": "摩擦は大きい方が安定。",
+          "5": "重心線は中心に近い方が安定。"
+        }
+      },
+      "tag": {
+        "id": "Q1424",
+        "theme": "立位姿勢が安定しているのはどれか",
+        "knowledge_node": "安静立位では重心線が膝関節中心のやや前方を通ることで少ない筋活動で安定する",
+        "knowledge_node_id": "KN1399",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "安静立位では重心線が膝関節中心のやや前方を通ることで少ない筋活動で安定する。",
+          "立位姿勢が安定しているのはどれか。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1164",
+      "question": {
+        "id": "Q1164",
+        "management_code": "Q1164-B-8-P",
+        "category_large": "B",
+        "category_small": 8,
+        "source": "P",
+        "title": null,
+        "question_text": "障害受容に至る5つの過程において3番目に現れるのはどれか。",
+        "choices": {
+          "1": "解決への努力期",
+          "2": "ショック期",
+          "3": "混乱期",
+          "4": "受容期",
+          "5": "否認期"
+        },
+        "exam": {
+          "exam_no": 57,
+          "session": "午後",
+          "question_no": 81
+        }
+      },
+      "answer": {
+        "id": "Q1164",
+        "display_answer": "3",
+        "accepted_answer_sets": [
+          [
+            "3"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1164",
+        "explanation": "障害受容の代表的な5段階はショック、否認、混乱、解決への努力、受容の順で整理される。3番目は混乱期。",
+        "choice_explanations": {
+          "1": "解決への努力期は4番目。",
+          "2": "ショック期は最初。",
+          "3": "○。混乱期が3番目。",
+          "4": "受容期は最終。",
+          "5": "否認期は2番目。"
+        }
+      },
+      "tag": {
+        "id": "Q1164",
+        "theme": "障害受容に至る5つの過程において3番目に現れるのはどれか",
+        "knowledge_node": "障害受容の代表的な5段階はショック、否認、混乱、解決への努力、受容の順で整理される",
+        "knowledge_node_id": "KN1151",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "3番目は混乱期。",
+          "障害受容の代表的な5段階はショック、否認、混乱、解決への努力、受容の順で整理される。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1221",
+      "question": {
+        "id": "Q1221",
+        "management_code": "Q1221-A-3-P",
+        "category_large": "A",
+        "category_small": 3,
+        "source": "P",
+        "title": null,
+        "question_text": "障害受容に至る5つの過程において2番目に現れるのはどれか。",
+        "choices": {
+          "1": "解決への努力期",
+          "2": "ショック期",
+          "3": "混乱期",
+          "4": "受容期",
+          "5": "否認期"
+        },
+        "exam": {
+          "exam_no": 58,
+          "session": "午前",
+          "question_no": 80
+        }
+      },
+      "answer": {
+        "id": "Q1221",
+        "display_answer": "5",
+        "accepted_answer_sets": [
+          [
+            "5"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1221",
+        "explanation": "障害受容の5段階はショック、否認、混乱、解決への努力、受容の順。2番目は否認期。",
+        "choice_explanations": {
+          "1": "解決への努力は4番目。",
+          "2": "ショックは1番目。",
+          "3": "混乱は3番目。",
+          "4": "受容は5番目。",
+          "5": "○。否認は2番目。"
+        }
+      },
+      "tag": {
+        "id": "Q1221",
+        "theme": "障害受容に至る5つの過程において2番目に現れるのはどれか",
+        "knowledge_node": "障害受容の5段階はショック、否認、混乱、解決への努力、受容の順",
+        "knowledge_node_id": "KN1151",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "2番目は否認期。",
+          "障害受容の5段階はショック、否認、混乱、解決への努力、受容の順。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
       "question_id": "Q1272",
       "question": {
         "id": "Q1272",
@@ -121,6 +310,133 @@
           "矢状面の重心線は外果のやや前方を通る。",
           "耳垂付近を通る。",
           "膝関節軸のやや前方。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q1279",
+      "question": {
+        "id": "Q1279",
+        "management_code": "Q1279-B-8-P",
+        "category_large": "B",
+        "category_small": 8,
+        "source": "P",
+        "title": null,
+        "question_text": "頸髄損傷完全麻痺（第6頸髄節まで機能残存）の上肢機能で可能なのはどれか。2 つ選べ。",
+        "choices": {
+          "1": "小指の外転",
+          "2": "母指の内転",
+          "3": "手関節の背屈",
+          "4": "肘関節の屈曲",
+          "5": "中指DIP関節の屈曲"
+        },
+        "exam": {
+          "exam_no": 58,
+          "session": "午後",
+          "question_no": 83
+        }
+      },
+      "answer": {
+        "id": "Q1279",
+        "display_answer": "3・4",
+        "accepted_answer_sets": [
+          [
+            "3",
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1279",
+        "explanation": "C6まで機能残存ならC5の肘屈筋とC6の手関節伸筋が使用できる。手指内在筋や指屈筋はより下位髄節。",
+        "choice_explanations": {
+          "1": "小指外転はT1。",
+          "2": "母指内転も主にC8-T1。",
+          "3": "○。手関節背屈はC6。",
+          "4": "○。肘屈曲はC5-6。",
+          "5": "中指DIP屈曲はC8。"
+        }
+      },
+      "tag": {
+        "id": "Q1279",
+        "theme": "頸髄損傷完全麻痺（第6頸髄節まで機能残存）の上肢機能で可能なのはどれか",
+        "knowledge_node": "C6まで機能残存ならC5の肘屈筋とC6の手関節伸筋が使用できる",
+        "knowledge_node_id": "KN1263",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "手指内在筋や指屈筋はより下位髄節。",
+          "C6まで機能残存ならC5の肘屈筋とC6の手関節伸筋が使用できる。",
+          "手関節背屈はC6。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "question_id": "Q615",
+      "question": {
+        "id": "Q615",
+        "management_code": "Q615-C-13-P",
+        "category_large": "C",
+        "category_small": 13,
+        "source": "P",
+        "title": null,
+        "question_text": "成人の安静開脚立位で正しいのはどれか。",
+        "choices": {
+          "1": "頭部は静止している。",
+          "2": "腓腹筋は持続的に活動している。",
+          "3": "腹直筋は持続的に活動している。",
+          "4": "大腿直筋は持続的に活動している。",
+          "5": "重心動揺は左右より前後方向が小さい。"
+        },
+        "exam": {
+          "exam_no": 52,
+          "session": "午後",
+          "question_no": 74
+        }
+      },
+      "answer": {
+        "id": "Q615",
+        "display_answer": "2",
+        "accepted_answer_sets": [
+          [
+            "2"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q615",
+        "explanation": "安静立位でも身体は完全静止せず、重心動揺を制御するため下腿三頭筋、とくにヒラメ筋・腓腹筋が持続的に低活動する。したがって2が正しい。",
+        "choice_explanations": {
+          "1": "頭部も微小な姿勢動揺を示す。",
+          "2": "○。腓腹筋は立位姿勢制御に持続的に関与する。",
+          "3": "腹直筋は通常持続的な強活動をしない。",
+          "4": "大腿直筋は膝が安定していれば持続的強活動を要しない。",
+          "5": "重心動揺は前後方向の方が大きいことが多い。"
+        }
+      },
+      "tag": {
+        "id": "Q615",
+        "theme": "の安静開脚立位で正しいのはどれか",
+        "knowledge_node": "成人の安静開脚立位の基本事項",
+        "knowledge_node_id": "KN0607",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "の安静開脚立位で正しいのはどれかの基本概念"
         ],
         "tag_version": "1.0",
         "tag_status": "reviewed",
