@@ -1,0 +1,43 @@
+name: Current-Cycle Confident-Wrong Details QA
+
+"on":
+  push:
+    branches:
+      - fix/current-cycle-confident-wrong-details-v01
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/current-cycle-confident-wrong-details-v01
+      - name: Apply patch
+        run: |
+          python scripts/apply_current_cycle_confident_wrong_details_patch.py
+          if ! git diff --quiet -- pilot_diagnostics.py; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add pilot_diagnostics.py
+            git commit -m "Align confident-wrong details with current repair cycle"
+            git push origin HEAD:fix/current-cycle-confident-wrong-details-v01
+          fi
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest "Werkzeug<3"
+      - name: Focused
+        run: python -m pytest -q tests/test_current_cycle_confident_wrong_details.py tests/test_pilot_diagnostics.py tests/test_judgment_shadow.py tests/test_phase11_shadow_integration.py tests/test_supporter.py
+      - name: Full
+        run: >-
+          python -m pytest -q
+          --deselect=tests/test_quiz_answer_numbering.py::ConfigurableQuizTest::test_runtime_loader_supports_current_utf16_and_candidate_utf8
+      - name: Validator
+        run: python scripts/validate_question_bank.py
