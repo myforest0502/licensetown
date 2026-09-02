@@ -25,7 +25,7 @@ def _load(name):
 
 
 def test_lot2_imports_keep_official_answers_and_reviewed_nodes():
-    assert question_count() == 1635
+    assert question_count() == 1640
     for question_id, (exam_no, session, question_no, answer, _, final_node, _, category) in EXPECTED.items():
         question = get_question(question_id)
         assert question["source"] == "P"
@@ -86,8 +86,8 @@ def test_lot2_does_not_change_strong_different_question_pairs():
 
 
 def test_lot2_question_ids_are_contiguous_and_cross_file_ids_match():
-    expected_ids = [f"Q{number}" for number in range(1, 1636)]
+    expected_ids = [f"Q{number}" for number in range(1, 1641)]
     for name in ("questions.json", "answers.json", "explanations.json", "question_tags.json"):
         ids = [row["id"] for row in _load(name)]
         assert ids == expected_ids
-        assert len(ids) == len(set(ids)) == 1635
+        assert len(ids) == len(set(ids)) == 1640
