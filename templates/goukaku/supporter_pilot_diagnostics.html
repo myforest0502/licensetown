@@ -9,12 +9,14 @@
     {% endfor %}
   </nav>
   <section class="card pilot-diagnostic-card"><h2>学習量</h2>
+    <p><strong>表示範囲：選択期間</strong></p>
     <p>回答 {{ diagnostics.total_attempts }} / ユニーク問題数 {{ diagnostics.unique_questions }} / 正解 {{ diagnostics.correct }} / 誤答 {{ diagnostics.incorrect }} / 正答率 {{ diagnostics.accuracy }}%</p>
     <p>自信あり {{ diagnostics.confidence['1'] }} / 少し迷った {{ diagnostics.confidence['2'] }} / あてずっぽう {{ diagnostics.confidence['3'] }} / 0回答 {{ diagnostics.unknown }} / 自信あり誤答 {{ diagnostics.confident_wrong }}</p>
   </section>
   <section class="card pilot-diagnostic-card repeat-structure-audit-card">
     {% set repeat = diagnostics.repeat_structure_audit %}
     <h2>Repeat構造監査</h2>
+    <p><strong>表示範囲：選択期間</strong></p>
     <p>回答 {{ repeat.total_attempts }} / unique Q {{ repeat.unique_questions }} / same-Q repeat {{ repeat.same_question_repeats }}</p>
     <p>同一Node別Q {{ repeat.same_node_different_question_confirmations }} / 0回答 {{ repeat.unknown_attempts }}</p>
     <p>正当cooldown bypass {{ repeat.category_counts.justified_cooldown_bypass }} / adaptive spaced repeat {{ repeat.category_counts.adaptive_spaced_repeat }} / adaptive説明不能recent repeat {{ repeat.category_counts.adaptive_unexplained_repeat }} / adaptive metadata不整合 {{ repeat.category_counts.adaptive_metadata_inconsistent }} / non-adaptive repeat {{ repeat.category_counts.nonadaptive_repeat }} / 監査情報なし・判定不能 {{ repeat.category_counts.audit_metadata_unavailable }}</p>
@@ -36,13 +38,14 @@
       </li>{% else %}<li>same-Q repeatはありません。</li>{% endfor %}
     </ol></details>
   </section>
-  <section class="card pilot-diagnostic-card"><h2>学習範囲</h2><p>取り組んだNode {{ diagnostics.touched_nodes }} / {{ diagnostics.canonical_node_total }}（{{ diagnostics.coverage }}%）</p></section>
-  <section class="card pilot-diagnostic-card"><h2>理解状態</h2><p>未着手 {{ diagnostics.state_counts.unseen }} / 確認中 {{ diagnostics.state_counts.checking }} / 修復中 {{ diagnostics.state_counts.repairing }} / 修復済み {{ diagnostics.state_counts.repaired }} / 定着 {{ diagnostics.state_counts.stable }} / 再確認待ち {{ diagnostics.state_counts.recheck_due }}</p></section>
-  <section class="card pilot-diagnostic-card"><h2>修復・定着</h2><p>修復中→修復済み {{ diagnostics.repair_to_repaired }} / 修復済み→修復中 {{ diagnostics.repaired_to_repairing }} / 再確認待ち→定着 {{ diagnostics.due_to_stable }} / 再確認待ち→修復中 {{ diagnostics.due_to_repairing }}</p></section>
+  <section class="card pilot-diagnostic-card"><h2>学習範囲</h2><p><strong>表示範囲：現在状態（全履歴の正式証拠から算出）</strong></p><p>取り組んだNode {{ diagnostics.touched_nodes }} / {{ diagnostics.canonical_node_total }}（{{ diagnostics.coverage }}%）</p></section>
+  <section class="card pilot-diagnostic-card"><h2>理解状態</h2><p><strong>表示範囲：現在状態（全履歴の正式証拠から算出）</strong></p><p>未着手 {{ diagnostics.state_counts.unseen }} / 確認中 {{ diagnostics.state_counts.checking }} / 修復中 {{ diagnostics.state_counts.repairing }} / 修復済み {{ diagnostics.state_counts.repaired }} / 定着 {{ diagnostics.state_counts.stable }} / 再確認待ち {{ diagnostics.state_counts.recheck_due }}</p></section>
+  <section class="card pilot-diagnostic-card"><h2>修復・定着</h2><p><strong>表示範囲：全履歴の正式状態遷移</strong></p><p>修復中→修復済み {{ diagnostics.repair_to_repaired }} / 修復済み→修復中 {{ diagnostics.repaired_to_repairing }} / 再確認待ち→定着 {{ diagnostics.due_to_stable }} / 再確認待ち→修復中 {{ diagnostics.due_to_repairing }}</p></section>
 
   <section class="card pilot-diagnostic-card repairing-node-repairability-card">
     {% set repairability = diagnostics.repairing_node_repairability %}
     <h2>修復中Nodeの修復可能性</h2>
+    <p><strong>表示範囲：現在状態（全履歴の正式証拠から算出）</strong></p>
     <p>修復中Node {{ repairability.repairing_node_total }} / strong別Qあり {{ repairability.strong_available_count }} / weak別Qのみ {{ repairability.weak_only_count }} / same-Qのみ・formal blocked {{ repairability.same_or_blocked_count }}</p>
     <p>repair可能率 {{ repairability.repairable_rate }}%</p>
     <details><summary>Node詳細を見る</summary><ol class="repairability-node-list">
@@ -64,6 +67,7 @@
   <section class="card pilot-diagnostic-card strong-repair-supply-card">
     {% set supply = diagnostics.strong_repair_supply_priorities %}
     <h2>strong repair問題 整備優先順位</h2>
+    <p><strong>表示範囲：現在状態（全履歴の正式証拠から算出）</strong></p>
     <p>整備対象Node {{ supply.target_node_total }} / Priority A {{ supply.priority_counts.A }} / Priority B {{ supply.priority_counts.B }} / Priority C {{ supply.priority_counts.C }} / Priority D {{ supply.priority_counts.D }}</p>
     <p>weak pair review候補 {{ supply.weak_pair_review_count }} / strong新規問題作成候補 {{ supply.create_strong_alternate_count }}</p>
     <h3>TOP20</h3>
@@ -87,6 +91,7 @@
 
   <section class="card pilot-diagnostic-card phase11-shadow-card">
     <h2>⑪ Shadow判断（開発中）</h2>
+    <p><strong>表示範囲：現在状態（全履歴の正式証拠から算出）</strong></p>
     <p><b>現行おすすめ：</b>{{ diagnostics.shadow_judgment.comparison.current_target or 'なし' }}</p>
     <p><b>Shadow intent：</b>{{ diagnostics.shadow_judgment.learning_intent }}</p>
     <p><b>対象分野：</b>{{ diagnostics.shadow_judgment.target_field or '全体' }}</p>
@@ -133,6 +138,7 @@
   <section class="card pilot-diagnostic-card retrospective-shadow-audit-card">
     {% set replay = diagnostics.retrospective_shadow_audit %}
     <h2>Phase11 過去推薦リプレイ</h2>
+    <p><strong>表示範囲：全履歴</strong></p>
     <p><strong>現在のPhase11ポリシーを、当時までの学習証拠に適用したread-only再評価です。</strong></p>
     <p>plan anchor {{ replay.plan_anchor_count }} / replay可能 {{ replay.eligible_snapshot_count }} / coverage除外 {{ replay.coverage_excluded_count }}</p>
     <p>一致 {{ replay.agreement_count }} / Shadow根拠優位 {{ replay.shadow_stronger_disagreement_count }} / Current根拠優位 {{ replay.current_stronger_disagreement_count }} / 判定保留 {{ replay.inconclusive_disagreement_count }}</p>
@@ -150,6 +156,7 @@
   </section>
 
   <section class="card pilot-diagnostic-card saved-adaptive-audit-card"><h2>最新 adaptive_daily 30問セッション監査</h2>
+    <p><strong>表示範囲：最新の保存済みadaptive_dailyセッション</strong></p>
     {% set saved = diagnostics.saved_adaptive_daily_audit %}
     {% if saved.exists %}
     <p>最初の保存日時 {{ saved.first_event_at or '日時不明' }} / 最終保存日時 {{ saved.last_event_at or '日時不明' }}</p>
@@ -176,6 +183,7 @@
   </section>
 
   <section class="card pilot-diagnostic-card"><h2>最新のおすすめ30問シミュレーション</h2>
+    <p><strong>表示範囲：現在状態（全履歴の正式証拠から算出）</strong></p>
     <p>選定問題数 {{ diagnostics.adaptive_count }} / 重複なし {{ diagnostics.adaptive_unique_questions }} / 対象Node数 {{ diagnostics.adaptive_unique_nodes }}</p>
     <p>修復 {{ diagnostics.adaptive_groups.get('repair', 0) }} / 確認 {{ diagnostics.adaptive_groups.get('checking', 0) }} / 探索 {{ diagnostics.adaptive_groups.get('exploration', 0) }} / 定着維持 {{ diagnostics.adaptive_groups.get('maintenance', 0) }}</p>
     <details class="adaptive-audit"><summary>30問の選定理由を見る</summary>
@@ -190,7 +198,7 @@
       </li>{% endfor %}</ol>
     </details>
   </section>
-  <section class="card pilot-diagnostic-card"><h2>分野横断の弱点候補</h2>{% for item in diagnostics.weakness %}<p>知識項目 {{ item.canonical_node_id }}：異なる問題での誤答 {{ item.wrong_question_count }} / 自信あり誤答 {{ item.confident_wrong_count }}</p>{% else %}<p>該当なし</p>{% endfor %}</section>
+  <section class="card pilot-diagnostic-card"><h2>分野横断の弱点候補</h2><p><strong>表示範囲：全履歴の参考表示（Phase11 formal判断には未使用）</strong></p>{% for item in diagnostics.weakness %}<p>知識項目 {{ item.canonical_node_id }}：異なる問題での誤答 {{ item.wrong_question_count }} / 自信あり誤答 {{ item.confident_wrong_count }}</p>{% else %}<p>該当なし</p>{% endfor %}</section>
   <a class="back-to-top" href="{{ url_for('goukaku_ui.supporter_dashboard',token=supporter_token,learner_user_id=learner_id) }}">学習見守りへ戻る</a>
 </main>
 {% endblock %}
