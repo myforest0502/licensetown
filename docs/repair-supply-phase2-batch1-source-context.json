@@ -1,0 +1,683 @@
+{
+  "targets": [
+    {
+      "question_id": "Q195",
+      "questions": {
+        "id": "Q195",
+        "management_code": "Q195-C-15-O",
+        "category_large": "C",
+        "category_small": 15,
+        "source": "O",
+        "title": "地域・住宅改修",
+        "question_text": "81歳の女性。要介護1。脳梗塞後の軽度左片麻痺がある。屋内歩行はT字杖で自立しており、居室・廊下・トイレ内での歩行は安定している。玄関には18cmの上がり框があり、昇降時には右手で壁に手をつきながら動作しているが、左下肢へ荷重する場面でふらつきを認める。玄関以外の段差では大きな問題はない。本人は「これまで通り一人で買い物に行きたい」と希望している。\n転倒予防と外出継続を目的とした住宅改修として最も適切なのはどれか。",
+        "choices": {
+          "A": "玄関の上がり框付近に、昇降時に使用できる手すりを設置する。",
+          "B": "玄関の段差をなくすため、屋内から屋外までスロープを設置する。",
+          "C": "玄関での方向転換を減らすため、上がり框の前に椅子を常設する。",
+          "D": "屋内歩行時の安定性を高めるため、廊下全体に連続手すりを設置する。",
+          "E": "左下肢への荷重を減らすため、玄関昇降時のみ歩行器を使用する。"
+        },
+        "exam": null
+      },
+      "answers": {
+        "id": "Q195",
+        "display_answer": "A",
+        "accepted_answer_sets": [
+          [
+            "A"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanations": {
+        "id": "Q195",
+        "explanation": "居室・廊下・トイレの歩行は安定し、問題は18cmの玄関上がり框で左下肢へ荷重する際のふらつきに限定されている。本人の一人で買い物へ行きたい希望を生かすには、玄関に固定された手すりを設置し、段差昇降時の支持点を確保することが適切である。",
+        "choice_explanations": {
+          "A": "正しい。ふらつきが生じる玄関昇降場面へ直接対応し、外出継続も支援できる。",
+          "B": "玄関以外の段差に大きな問題はなく、大規模なスロープ設置を最優先とする根拠は乏しい。",
+          "C": "椅子を常設しても、左下肢へ荷重する昇降時の安定した支持点にはならない。",
+          "D": "廊下歩行は安定しているため、廊下全体への手すり設置は問題箇所と一致しない。",
+          "E": "玄関だけ歩行器を使用するより、現在壁に手をついている動作へ固定手すりを導入する方が適している。"
+        }
+      },
+      "tags": {
+        "id": "Q195",
+        "theme": "地域・住宅改修",
+        "knowledge_node": "玄関上がり框への手すり",
+        "knowledge_node_id": "KN0194",
+        "task": "device_selection",
+        "primary_ability": "PRESCRIBE",
+        "secondary_ability": "MEASURE",
+        "level": 3,
+        "safety": "moderate",
+        "prerequisite_nodes": [
+          "step",
+          "handrail",
+          "home modification"
+        ],
+        "tag_version": "0.3",
+        "tag_status": "reviewed_sample",
+        "source": "original"
+      },
+      "demand_pair": {
+        "task": "device_selection",
+        "primary_ability": "PRESCRIBE",
+        "knowledge_node_id": "KN0194",
+        "safety": "moderate",
+        "category_small": null
+      }
+    },
+    {
+      "question_id": "Q1599",
+      "questions": {
+        "id": "Q1599",
+        "management_code": "Q1599-C-15-O",
+        "category_large": "C",
+        "category_small": 15,
+        "source": "O",
+        "title": "地域・住宅改修",
+        "question_text": "片麻痺患者は屋内歩行が安定しているが、玄関の上がり框を昇降するときだけ壁に手をつき、麻痺側下肢へ荷重する場面でふらつく。この所見から支持を優先して整備すべき場所はどれか。",
+        "choices": {
+          "A": "寝室のベッド周囲",
+          "B": "廊下全体",
+          "C": "玄関の上がり框付近",
+          "D": "浴槽内",
+          "E": "食卓周囲"
+        },
+        "exam": null
+      },
+      "answers": {
+        "id": "Q1599",
+        "display_answer": "C",
+        "accepted_answer_sets": [
+          [
+            "C"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanations": {
+        "id": "Q1599",
+        "explanation": "ふらつきが玄関の上がり框昇降に限定され、壁へ手をついて支持を求めているため、同部位に安定した支持を整備する必要がある。",
+        "choice_explanations": {
+          "A": "寝室での問題は示されていない。",
+          "B": "廊下歩行は安定しており全体整備の根拠はない。",
+          "C": "〇。問題が生じる上がり框付近に支持が必要である。",
+          "D": "浴槽内の動作障害は示されていない。",
+          "E": "食卓周囲の問題は示されていない。"
+        }
+      },
+      "tags": {
+        "id": "Q1599",
+        "theme": "玄関上がり框で必要な支持場所の解釈",
+        "knowledge_node": "玄関上がり框への手すり",
+        "knowledge_node_id": "KN0194",
+        "task": "finding_interpretation",
+        "primary_ability": "INTERPRET",
+        "secondary_ability": "PRESCRIBE",
+        "level": 3,
+        "safety": "moderate",
+        "prerequisite_nodes": [
+          "上がり框",
+          "支持点",
+          "住宅環境評価"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "original"
+      },
+      "demand_pair": {
+        "task": "finding_interpretation",
+        "primary_ability": "INTERPRET",
+        "knowledge_node_id": "KN0194",
+        "safety": "moderate",
+        "category_small": null
+      }
+    },
+    {
+      "question_id": "Q684",
+      "questions": {
+        "id": "Q684",
+        "management_code": "Q684-B-7-P",
+        "category_large": "B",
+        "category_small": 7,
+        "source": "P",
+        "title": null,
+        "question_text": "神経原性ショックの特徴はどれか。",
+        "choices": {
+          "1": "交感神経の緊張",
+          "2": "徐脈",
+          "3": "心拍出量の増加",
+          "4": "中心静脈圧の上昇",
+          "5": "皮膚温の低下"
+        },
+        "exam": {
+          "exam_no": 54,
+          "session": "午前",
+          "question_no": 76
+        }
+      },
+      "answers": {
+        "id": "Q684",
+        "display_answer": "2",
+        "accepted_answer_sets": [
+          [
+            "2"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanations": {
+        "id": "Q684",
+        "explanation": "神経原性ショックでは交感神経活動低下により末梢血管拡張と低血圧を生じ、迷走神経優位となって徐脈を伴うのが特徴である。したがって2が正しい。",
+        "choice_explanations": {
+          "1": "交感神経緊張は低下する。",
+          "2": "○。徐脈が特徴的である。",
+          "3": "心拍出量は低下しやすい。",
+          "4": "静脈還流低下で中心静脈圧は上昇しにくい。",
+          "5": "皮膚は血管拡張により温かくなることがある。"
+        }
+      },
+      "tags": {
+        "id": "Q684",
+        "theme": "神経原性ショックの特徴はどれか",
+        "knowledge_node": "神経原性ショックにおける低血圧・徐脈などの特徴",
+        "knowledge_node_id": "KN0676",
+        "task": "finding_interpretation",
+        "primary_ability": "INTERPRET",
+        "secondary_ability": null,
+        "level": 2,
+        "safety": "moderate",
+        "prerequisite_nodes": [
+          "神経原性ショックでは交感神経活動低下により末梢血管拡張と低血圧を生じ、迷走神経優位となって徐脈を伴うのが特徴である。",
+          "したがって2が正しい。",
+          "徐脈が特徴的である。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      },
+      "demand_pair": {
+        "task": "finding_interpretation",
+        "primary_ability": "INTERPRET",
+        "knowledge_node_id": "KN0676",
+        "safety": "moderate",
+        "category_small": null
+      }
+    },
+    {
+      "question_id": "Q1602",
+      "questions": {
+        "id": "Q1602",
+        "management_code": "Q1602-B-7-O",
+        "category_large": "B",
+        "category_small": 7,
+        "source": "O",
+        "title": "救急・ショック",
+        "question_text": "頸髄損傷後の患者に低血圧と徐脈が出現し、皮膚は温かい。神経原性ショックを疑うときの安全判断として最も適切なのはどれか。",
+        "choices": {
+          "A": "通常の訓練を継続する。",
+          "B": "運動負荷を増やして血圧上昇を待つ。",
+          "C": "直ちに訓練を中止し、循環状態の緊急評価を求める。",
+          "D": "徐脈は問題ないため経過観察だけにする。",
+          "E": "冷却して皮膚温を下げる。"
+        },
+        "exam": null
+      },
+      "answers": {
+        "id": "Q1602",
+        "display_answer": "C",
+        "accepted_answer_sets": [
+          [
+            "C"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanations": {
+        "id": "Q1602",
+        "explanation": "頸髄損傷後の低血圧、徐脈、温かい皮膚は交感神経活動低下による神経原性ショックを示唆する。訓練を中止し、循環状態の緊急評価を優先する。",
+        "choice_explanations": {
+          "A": "ショックを疑う状態で訓練を継続しない。",
+          "B": "運動負荷で対応せず緊急評価を優先する。",
+          "C": "〇。安全確保と循環状態の評価を直ちに求める。",
+          "D": "徐脈を伴う低血圧は重要な危険徴候である。",
+          "E": "皮膚温だけを下げても循環障害への対応にならない。"
+        }
+      },
+      "tags": {
+        "id": "Q1602",
+        "theme": "神経原性ショックを疑う場面の安全判断",
+        "knowledge_node": "神経原性ショックにおける低血圧・徐脈などの特徴",
+        "knowledge_node_id": "KN0676",
+        "task": "safety_priority",
+        "primary_ability": "DECIDE",
+        "secondary_ability": "INTERPRET",
+        "level": 3,
+        "safety": "moderate",
+        "prerequisite_nodes": [
+          "脊髄損傷",
+          "低血圧",
+          "徐脈"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "original"
+      },
+      "demand_pair": {
+        "task": "safety_priority",
+        "primary_ability": "DECIDE",
+        "knowledge_node_id": "KN0676",
+        "safety": "moderate",
+        "category_small": null
+      }
+    },
+    {
+      "question_id": "Q25",
+      "questions": {
+        "id": "Q25",
+        "management_code": "Q25-C-15-O",
+        "category_large": "C",
+        "category_small": 15,
+        "source": "O",
+        "title": "頸椎疾患",
+        "question_text": "68歳の男性。頸椎症性脊髄症。最近6か月で箸の操作が不器用となり、階段では手すりを使用するようになった。上肢MMTは5、下肢MMTは4+である。巧緻運動障害を認め、腱反射は上下肢とも亢進している。Babinski反射は両側陽性。頸部伸展で肩甲間部にしびれが増強する。膀胱直腸障害は認めない。\n病態進行を把握するため、理学療法評価として最も有用なのはどれか。",
+        "choices": {
+          "A": "握力のみを定期的に測定する。",
+          "B": "10m歩行時間のみを評価する。",
+          "C": "上肢巧緻動作と歩行能力を含めた脊髄症機能評価を継続的に実施する。",
+          "D": "頸部可動域のみを毎回測定する。",
+          "E": "肩関節周囲筋MMTのみを詳細に評価する。"
+        },
+        "exam": null
+      },
+      "answers": {
+        "id": "Q25",
+        "display_answer": "C",
+        "accepted_answer_sets": [
+          [
+            "C"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanations": {
+        "id": "Q25",
+        "explanation": "箸操作の不器用さ、階段での手すり使用、上下肢腱反射亢進、両側Babinski反射陽性から、頸髄症による上肢巧緻運動と歩行機能の障害がみられる。進行を把握するには、単一の筋力や可動域ではなく、手指巧緻性と下肢・歩行能力を含む脊髄症機能評価を継続し、複数領域の変化を追う必要がある。",
+        "choice_explanations": {
+          "A": "握力が正常でも巧緻運動障害は進行し得るため、握力のみでは病態を十分に把握できない。",
+          "B": "10m歩行時間は歩行機能の一部しか評価できず、上肢巧緻障害を反映しない。",
+          "C": "〇。上肢巧緻動作と歩行を含む包括的評価により、頸髄症の進行を多面的に確認できる。",
+          "D": "頸部可動域は症状誘発と関連しても、脊髄症による機能低下の程度を直接示さない。",
+          "E": "肩周囲筋力は保たれており、箸操作や錐体路徴候の進行評価には不十分である。"
+        }
+      },
+      "tags": {
+        "id": "Q25",
+        "theme": "頸椎疾患",
+        "knowledge_node": "箸操作の不器用さ、階段での手すり使用、上下肢腱反射亢進、両側Babinski反射陽性から、頸髄症による上肢巧緻運動と歩行機能の障害がみられるを評価する",
+        "knowledge_node_id": "KN0025",
+        "task": "assessment_selection",
+        "primary_ability": "MEASURE",
+        "secondary_ability": "INTERPRET",
+        "level": 3,
+        "safety": "moderate",
+        "prerequisite_nodes": [
+          "脊髄症徴候",
+          "巧緻動作",
+          "歩行"
+        ],
+        "tag_version": "0.3",
+        "tag_status": "reviewed_sample",
+        "source": "original"
+      },
+      "demand_pair": {
+        "task": "assessment_selection",
+        "primary_ability": "MEASURE",
+        "knowledge_node_id": "KN0025",
+        "safety": "moderate",
+        "category_small": null
+      }
+    },
+    {
+      "question_id": "Q1596",
+      "questions": {
+        "id": "Q1596",
+        "management_code": "Q1596-C-15-O",
+        "category_large": "C",
+        "category_small": 15,
+        "source": "O",
+        "title": "頸椎疾患",
+        "question_text": "高齢者に箸操作の不器用さと歩行障害があり、上下肢腱反射亢進とBabinski反射陽性を認める。この障害像として最も考えられるのはどれか。",
+        "choices": {
+          "A": "末梢神経障害",
+          "B": "頸髄症による錐体路障害",
+          "C": "肩関節周囲炎",
+          "D": "筋原性疾患",
+          "E": "小脳性運動失調"
+        },
+        "exam": null
+      },
+      "answers": {
+        "id": "Q1596",
+        "display_answer": "B",
+        "accepted_answer_sets": [
+          [
+            "B"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanations": {
+        "id": "Q1596",
+        "explanation": "上肢巧緻運動障害と歩行障害に、上下肢腱反射亢進およびBabinski反射を伴うため、頸髄症による錐体路障害を示唆する。",
+        "choice_explanations": {
+          "A": "末梢神経障害では一般に腱反射は低下する。",
+          "B": "〇。上肢巧緻障害、歩行障害、錐体路徴候の組合せに合う。",
+          "C": "肩関節周囲炎ではBabinski反射陽性を説明できない。",
+          "D": "筋原性疾患では錐体路徴候を認めない。",
+          "E": "小脳性運動失調では錐体路徴候は中核所見ではない。"
+        }
+      },
+      "tags": {
+        "id": "Q1596",
+        "theme": "頸髄症の障害像の解釈",
+        "knowledge_node": "頸髄症による上肢巧緻運動・歩行障害と上位運動ニューロン徴候",
+        "knowledge_node_id": "KN0025",
+        "task": "finding_interpretation",
+        "primary_ability": "INTERPRET",
+        "secondary_ability": "DECIDE",
+        "level": 3,
+        "safety": "moderate",
+        "prerequisite_nodes": [
+          "脊髄症徴候",
+          "巧緻動作",
+          "錐体路徴候"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "original"
+      },
+      "demand_pair": {
+        "task": "finding_interpretation",
+        "primary_ability": "INTERPRET",
+        "knowledge_node_id": "KN0025",
+        "safety": "moderate",
+        "category_small": null
+      }
+    },
+    {
+      "question_id": "Q331",
+      "questions": {
+        "id": "Q331",
+        "management_code": "Q331-C-16-O",
+        "category_large": "C",
+        "category_small": 16,
+        "source": "O",
+        "title": null,
+        "question_text": "前頸部熱傷後の瘢痕拘縮を予防するための基本肢位はどれか。",
+        "choices": {
+          "A": "頸部屈曲位",
+          "B": "頸部伸展位",
+          "C": "頸部側屈位",
+          "D": "頸部回旋位",
+          "E": "頸部中間位"
+        },
+        "exam": null
+      },
+      "answers": {
+        "id": "Q331",
+        "display_answer": "B",
+        "accepted_answer_sets": [
+          [
+            "B"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanations": {
+        "id": "Q331",
+        "explanation": "前頸部熱傷では創の収縮により頸部屈曲拘縮が生じやすい。拘縮予防の基本は、短縮しやすい前頸部組織を伸張する反対方向、すなわち頸部伸展位を保持することである。必要に応じて枕を避け、体幹上部や後頭部を支持して安全に伸展位を調整する。熱傷部位と予想される拘縮方向を対応させて考える。",
+        "choice_explanations": {
+          "A": "頸部屈曲位は前頸部の瘢痕を短縮させ、屈曲拘縮を助長する。",
+          "B": "〇。前頸部を伸張する頸部伸展位が、屈曲方向の瘢痕拘縮予防に適する。",
+          "C": "側屈位では前頸部全体の屈曲拘縮を十分に予防できず、左右差も生じやすい。",
+          "D": "回旋位は片側組織への偏った伸張となり、前頸部の基本肢位ではない。",
+          "E": "中間位では短縮しやすい前頸部組織に十分な伸張を与えられない。"
+        }
+      },
+      "tags": {
+        "id": "Q331",
+        "theme": "小児・熱傷・脊髄",
+        "knowledge_node": "前頸部熱傷瘢痕拘縮を予防する頸部伸展位",
+        "knowledge_node_id": "KN0329",
+        "task": "intervention_selection",
+        "primary_ability": "PRESCRIBE",
+        "secondary_ability": "DECIDE",
+        "level": 3,
+        "safety": "moderate",
+        "prerequisite_nodes": [
+          "創傷治癒と組織病態",
+          "深達度・循環・感染の評価",
+          "除圧・ポジショニング・禁忌"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "original"
+      },
+      "demand_pair": {
+        "task": "intervention_selection",
+        "primary_ability": "PRESCRIBE",
+        "knowledge_node_id": "KN0329",
+        "safety": "moderate",
+        "category_small": null
+      }
+    },
+    {
+      "question_id": "Q1600",
+      "questions": {
+        "id": "Q1600",
+        "management_code": "Q1600-C-16-O",
+        "category_large": "C",
+        "category_small": 16,
+        "source": "O",
+        "title": "熱傷",
+        "question_text": "前頸部熱傷後、瘢痕の短縮に伴って顎が胸部へ近づき、頸部伸展が制限され始めた。頸部伸展位で管理する理由として最も適切なのはどれか。",
+        "choices": {
+          "A": "短縮しやすい前頸部組織を伸張するため",
+          "B": "後頸部組織の短縮を促すため",
+          "C": "頸部回旋拘縮だけを防ぐため",
+          "D": "瘢痕部を弛緩位に保つため",
+          "E": "頸部屈曲拘縮を完成させるため"
+        },
+        "exam": null
+      },
+      "answers": {
+        "id": "Q1600",
+        "display_answer": "A",
+        "accepted_answer_sets": [
+          [
+            "A"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanations": {
+        "id": "Q1600",
+        "explanation": "前頸部瘢痕は短縮すると頸部屈曲拘縮を生じる。反対方向の頸部伸展位は、短縮しやすい前頸部組織を伸張して拘縮を予防する。",
+        "choice_explanations": {
+          "A": "〇。前頸部を伸張し屈曲拘縮を予防する。",
+          "B": "目的は後頸部組織の短縮ではない。",
+          "C": "主に予防するのは屈曲拘縮である。",
+          "D": "瘢痕を弛緩させると短縮を助長する。",
+          "E": "屈曲拘縮を促す管理ではない。"
+        }
+      },
+      "tags": {
+        "id": "Q1600",
+        "theme": "前頸部熱傷瘢痕拘縮と頸部伸展位",
+        "knowledge_node": "前頸部熱傷瘢痕拘縮を予防する頸部伸展位",
+        "knowledge_node_id": "KN0329",
+        "task": "finding_interpretation",
+        "primary_ability": "INTERPRET",
+        "secondary_ability": "DECIDE",
+        "level": 3,
+        "safety": "moderate",
+        "prerequisite_nodes": [
+          "前頸部瘢痕短縮",
+          "頸部屈曲拘縮",
+          "反対方向への伸張"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "original"
+      },
+      "demand_pair": {
+        "task": "finding_interpretation",
+        "primary_ability": "INTERPRET",
+        "knowledge_node_id": "KN0329",
+        "safety": "moderate",
+        "category_small": null
+      }
+    },
+    {
+      "question_id": "Q705",
+      "questions": {
+        "id": "Q705",
+        "management_code": "Q705-C-17-P",
+        "category_large": "C",
+        "category_small": 17,
+        "source": "P",
+        "title": null,
+        "question_text": "82歳の男性。15年前から動作時の息切れ及び咳や痰の増加がみられ、自宅近くの医療機関にて加療していた。徐々に動作時の呼吸困難感が強くなり、入浴動作で息切れを感じるようになっている。2年前から在宅酸素療法が開始されている。動脈血ガス分析はPaO265Torr、PaCO247Torr、HCO3安 29.5mEq/L、肺機能検査は、%VC62%、FEV1%42%であった。吸入薬として長時間作用性β2刺激薬、長時間作用性抗コリン薬が処方されている。本症例に有酸素運動を行う場合の運動強度として最も適切なのはどれか。",
+        "choices": {
+          "1": "7METs",
+          "2": "修正Borg指数7",
+          "3": "最大仕事量の75%",
+          "4": "目標心拍数130/分",
+          "5": "最大酸素摂取量の40%"
+        },
+        "exam": {
+          "exam_no": 54,
+          "session": "午後",
+          "question_no": 17
+        }
+      },
+      "answers": {
+        "id": "Q705",
+        "display_answer": "5",
+        "accepted_answer_sets": [
+          [
+            "5"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanations": {
+        "id": "Q705",
+        "explanation": "COPDで在宅酸素療法中の高齢者では低〜中強度から開始し、自覚症状とSpO2を監視する。最大酸素摂取量40％程度は安全な開始強度として妥当であり、5が正しい。",
+        "choice_explanations": {
+          "1": "7METsは本症例には高強度である。",
+          "2": "修正Borg7は強い息切れで過負荷である。",
+          "3": "最大仕事量75％は高めである。",
+          "4": "β2刺激薬使用や個人差もあり心拍数130固定は不適切。",
+          "5": "○。VO2max40％程度は低〜中強度の目安となる。"
+        }
+      },
+      "tags": {
+        "id": "Q705",
+        "theme": "15年前から動作時の息切れ及び咳や痰の増加がみられ、自宅近くの医療機関にて加療してい",
+        "knowledge_node": "重症COPDに対する有酸素運動強度の設定",
+        "knowledge_node_id": "KN0697",
+        "task": "intervention_selection",
+        "primary_ability": "PRESCRIBE",
+        "secondary_ability": "INTERPRET",
+        "level": 3,
+        "safety": "moderate",
+        "prerequisite_nodes": [
+          "COPDの運動療法",
+          "最大酸素摂取量・仕事量による強度設定",
+          "呼吸困難・低酸素血症のモニタリング"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      },
+      "demand_pair": {
+        "task": "intervention_selection",
+        "primary_ability": "PRESCRIBE",
+        "knowledge_node_id": "KN0697",
+        "safety": "moderate",
+        "category_small": null
+      }
+    },
+    {
+      "question_id": "Q1603",
+      "questions": {
+        "id": "Q1603",
+        "management_code": "Q1603-C-17-O",
+        "category_large": "C",
+        "category_small": 17,
+        "source": "O",
+        "title": "内部障害・呼吸器疾患",
+        "question_text": "在宅酸素療法中の重症COPD患者に有酸素運動を開始する。安全な開始強度を決めるための評価として最も適切なのはどれか。",
+        "choices": {
+          "A": "年齢だけで運動強度を決める。",
+          "B": "安静時心拍数だけで決める。",
+          "C": "運動負荷時の自覚症状とSpO₂を監視し、運動耐容能を評価する。",
+          "D": "下肢長だけを測定する。",
+          "E": "呼吸状態を確認せず最大負荷を行う。"
+        },
+        "exam": null
+      },
+      "answers": {
+        "id": "Q1603",
+        "display_answer": "C",
+        "accepted_answer_sets": [
+          [
+            "C"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanations": {
+        "id": "Q1603",
+        "explanation": "重症COPDの運動強度は、運動耐容能を評価し、自覚症状とSpO₂を監視しながら低～中強度から個別に設定する。",
+        "choice_explanations": {
+          "A": "年齢だけでは運動耐容能を判断できない。",
+          "B": "安静時心拍数だけでは運動時反応を把握できない。",
+          "C": "〇。症状と酸素化を監視した運動負荷評価が強度設定に必要である。",
+          "D": "下肢長は運動強度決定の指標ではない。",
+          "E": "呼吸状態を確認しない最大負荷は危険である。"
+        }
+      },
+      "tags": {
+        "id": "Q1603",
+        "theme": "重症COPDの有酸素運動強度設定に必要な評価",
+        "knowledge_node": "重症COPDに対する有酸素運動強度の設定",
+        "knowledge_node_id": "KN0697",
+        "task": "assessment_selection",
+        "primary_ability": "MEASURE",
+        "secondary_ability": "PRESCRIBE",
+        "level": 3,
+        "safety": "moderate",
+        "prerequisite_nodes": [
+          "運動耐容能",
+          "自覚症状",
+          "SpO2監視"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "original"
+      },
+      "demand_pair": {
+        "task": "assessment_selection",
+        "primary_ability": "MEASURE",
+        "knowledge_node_id": "KN0697",
+        "safety": "moderate",
+        "category_small": null
+      }
+    }
+  ],
+  "reviewed_strong_pairs_touching_targets": []
+}
