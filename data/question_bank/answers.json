@@ -16247,5 +16247,10 @@
   {"id": "Q1607", "display_answer": "A", "accepted_answer_sets": [["A"]], "answer_basis": "LT_original"},
   {"id": "Q1608", "display_answer": "D", "accepted_answer_sets": [["D"]], "answer_basis": "LT_original"},
   {"id": "Q1609", "display_answer": "A", "accepted_answer_sets": [["A"]], "answer_basis": "LT_original"},
-  {"id": "Q1610", "display_answer": "C", "accepted_answer_sets": [["C"]], "answer_basis": "LT_original"}
+  {"id": "Q1610", "display_answer": "C", "accepted_answer_sets": [["C"]], "answer_basis": "LT_original"},
+  {"id":"Q1611","display_answer":"B","accepted_answer_sets":[["B"]],"answer_basis":"LT_original"},
+  {"id":"Q1612","display_answer":"D","accepted_answer_sets":[["D"]],"answer_basis":"LT_original"},
+  {"id":"Q1613","display_answer":"B","accepted_answer_sets":[["B"]],"answer_basis":"LT_original"},
+  {"id":"Q1614","display_answer":"A","accepted_answer_sets":[["A"]],"answer_basis":"LT_original"},
+  {"id":"Q1615","display_answer":"A","accepted_answer_sets":[["A"]],"answer_basis":"LT_original"}
 ]
