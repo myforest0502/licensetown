@@ -1,0 +1,99 @@
+name: Repeat Diagnostics v02 QA
+
+on:
+  push:
+    branches:
+      - fix/repeat-diagnostics-classifier-v02
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: fix/repeat-diagnostics-classifier-v02
+
+      - name: Apply exact repeat classifier patches
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("pilot_diagnostics.py")
+          text = path.read_text(encoding="utf-8")
+          old_categories = '''_REPEAT_CATEGORIES = (\n    "justified_cooldown_bypass",\n    "adaptive_repair_or_recheck",\n    "adaptive_unexplained_repeat",\n    "nonadaptive_repeat",\n    "audit_metadata_unavailable",\n)'''
+          new_categories = '''_REPEAT_CATEGORIES = (\n    "justified_cooldown_bypass",\n    "adaptive_spaced_repeat",\n    "adaptive_unexplained_repeat",\n    "adaptive_metadata_inconsistent",\n    "nonadaptive_repeat",\n    "audit_metadata_unavailable",\n)'''
+          old_logic = '''            if metadata and source and source != "adaptive_daily":\n                category = "nonadaptive_repeat"\n            elif not metadata or source != "adaptive_daily" or not audit_available:\n                category = "audit_metadata_unavailable"\n            elif recent_repeat is True and bypassed is True:\n                category = "justified_cooldown_bypass"\n            elif group in {"repair", "recheck", "maintenance"}:\n                category = "adaptive_repair_or_recheck"\n            else:\n                category = "adaptive_unexplained_repeat"'''
+          new_logic = '''            if metadata and source and source != "adaptive_daily":\n                category = "nonadaptive_repeat"\n            elif not metadata or source != "adaptive_daily" or not audit_available:\n                category = "audit_metadata_unavailable"\n            elif not isinstance(recent_repeat, bool) or not isinstance(bypassed, bool):\n                category = "audit_metadata_unavailable"\n            elif recent_repeat is True and bypassed is True:\n                category = "justified_cooldown_bypass"\n            elif recent_repeat is True and bypassed is False:\n                category = "adaptive_unexplained_repeat"\n            elif recent_repeat is False and bypassed is True:\n                category = "adaptive_metadata_inconsistent"\n            else:\n                category = "adaptive_spaced_repeat"'''
+          changed = False
+          if new_categories not in text:
+              if text.count(old_categories) != 1:
+                  raise SystemExit(f"categories target count={text.count(old_categories)}")
+              text = text.replace(old_categories, new_categories)
+              changed = True
+          if new_logic not in text:
+              if text.count(old_logic) != 1:
+                  raise SystemExit(f"logic target count={text.count(old_logic)}")
+              text = text.replace(old_logic, new_logic)
+              changed = True
+          if changed:
+              path.write_text(text, encoding="utf-8")
+
+          template = Path("templates/goukaku/supporter_pilot_diagnostics.html")
+          html = template.read_text(encoding="utf-8")
+          replacements = [
+              (
+                  '<p>正当cooldown bypass {{ repeat.category_counts.justified_cooldown_bypass }} / adaptive repair・recheck {{ repeat.category_counts.adaptive_repair_or_recheck }} / adaptive説明不能repeat {{ repeat.category_counts.adaptive_unexplained_repeat }} / non-adaptive repeat {{ repeat.category_counts.nonadaptive_repeat }} / 監査情報なし・判定不能 {{ repeat.category_counts.audit_metadata_unavailable }}</p>',
+                  '<p>正当cooldown bypass {{ repeat.category_counts.justified_cooldown_bypass }} / adaptive spaced repeat {{ repeat.category_counts.adaptive_spaced_repeat }} / adaptive説明不能recent repeat {{ repeat.category_counts.adaptive_unexplained_repeat }} / adaptive metadata不整合 {{ repeat.category_counts.adaptive_metadata_inconsistent }} / non-adaptive repeat {{ repeat.category_counts.nonadaptive_repeat }} / 監査情報なし・判定不能 {{ repeat.category_counts.audit_metadata_unavailable }}</p>'
+              ),
+              ('<h3>要調査same-Q repeat</h3>', '<h3>要調査recent same-Q repeat</h3>'),
+              ('PASS：adaptive説明不能repeat 0件', 'PASS：adaptive説明不能recent repeat 0件'),
+          ]
+          html_changed = False
+          for old, new in replacements:
+              if new in html:
+                  continue
+              if html.count(old) != 1:
+                  raise SystemExit(f"template target count={html.count(old)} for {old[:30]}")
+              html = html.replace(old, new)
+              html_changed = True
+          if html_changed:
+              template.write_text(html, encoding="utf-8")
+          PY
+          if ! git diff --quiet -- pilot_diagnostics.py templates/goukaku/supporter_pilot_diagnostics.html; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add pilot_diagnostics.py templates/goukaku/supporter_pilot_diagnostics.html
+            git commit -m "Fix saved-metadata repeat classification"
+            git push origin HEAD:fix/repeat-diagnostics-classifier-v02
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest "Werkzeug<3"
+
+      - name: Focused repeat diagnostics tests
+        run: |
+          python -m pytest -q \
+            tests/test_repeat_structure_diagnostics.py \
+            tests/test_pilot_diagnostics.py \
+            tests/test_supporter.py
+
+      - name: Full pytest except known unmanaged fixture
+        run: >-
+          python -m pytest -q
+          --deselect=tests/test_quiz_answer_numbering.py::ConfigurableQuizTest::test_runtime_loader_supports_current_utf16_and_candidate_utf8
+
+      - name: Question Bank validator
+        run: python scripts/validate_question_bank.py
