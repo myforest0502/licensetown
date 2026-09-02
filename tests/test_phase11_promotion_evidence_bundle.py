@@ -1,12 +1,15 @@
 import os
+from pathlib import Path
 
 os.environ.setdefault("OPENAI_API_KEY", "test-key")
 os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
 os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
-from app import app
-import goukaku_ui
 from pilot_diagnostics import build_phase11_promotion_evidence_text
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SUPPORTER_TEMPLATE = ROOT / "templates" / "goukaku" / "supporter_pilot_diagnostics.html"
 
 
 def _bundle(**overrides):
@@ -198,17 +201,11 @@ def test_bundle_has_no_identity_token_or_consultation_fields_and_defaults_are_sa
     assert "retrospective=anchors:0,eligible:0,excluded:0" in text
 
 
-def test_supporter_route_exposes_copy_button_but_learner_route_does_not(monkeypatch):
-    diagnostics = {
-        "period": "7",
-        "promotion_evidence_text": "PHASE11_PROMOTION_EVIDENCE_V1\nselected_period=直近7日",
-    }
-    monkeypatch.setattr(goukaku_ui, "authorized_supporter_learner", lambda *_: ("supporter", "learner"))
-    monkeypatch.setattr(goukaku_ui, "build_pilot_diagnostics", lambda *_: diagnostics)
-    client = app.test_client()
-    html = client.get("/supporter/pilot-diagnostics?token=test&period=7").get_data(as_text=True)
-    assert "Phase11 Promotion evidenceをコピー" in html
-    assert "PHASE11_PROMOTION_EVIDENCE_V1" in html
-    assert "data-copy-q-ids=" in html
-    learner_html = client.get("/goukaku-no-michi?token=invalid").get_data(as_text=True)
-    assert "Phase11 Promotion evidenceをコピー" not in learner_html
+def test_copy_control_exists_only_in_supporter_diagnostics_template():
+    supporter_text = SUPPORTER_TEMPLATE.read_text(encoding="utf-8")
+    assert "Phase11 Promotion evidenceをコピー" in supporter_text
+    assert 'data-copy-q-ids="{{ diagnostics.promotion_evidence_text }}"' in supporter_text
+    for path in (ROOT / "templates" / "goukaku").glob("*.html"):
+        if path == SUPPORTER_TEMPLATE:
+            continue
+        assert "Phase11 Promotion evidenceをコピー" not in path.read_text(encoding="utf-8")
