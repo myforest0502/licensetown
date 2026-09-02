@@ -19,6 +19,7 @@ Phase 11 shadow is allowed on main because the architecture safeguards are satis
 - recheck_due repair-cycle reset and retention-reference semantics are explicit
 - retrospective Shadow replay is implemented fail-closed for incomplete history
 - repeat diagnostics distinguish legitimate spaced repeats from true recent repeats without bypass
+- Supporter diagnostics can export the current Promotion evidence as `PHASE11_PROMOTION_EVIDENCE_V1` without manual transcription
 
 The formal Question Bank is Q1-Q1605 and passes validation with duplicate, missing-ID, schema, reference, Safety, and task-primary inconsistencies at zero.
 
@@ -42,6 +43,20 @@ Production/natural-use review must still confirm:
 
 The Q1595-Q1605 repair-content audit is complete. Their formal STRONG status remains valid, but weaker distractor discrimination in several pilot items means pilot-driven `repairing -> repaired` growth is not by itself educational validation.
 
-The current Neon connector cannot complete the pending Production re-read because its exposed argument schema and execution schema disagree before SQL execution. This is a tooling blocker only; no Production SQL/write occurred from the failed connector attempts.
+## Production evidence capture
+
+Direct Neon SQL read remains useful for deeper forensic inspection, but it is no longer the only path for capturing the Promotion evidence used by this gate. The Production Supporter page `/supporter/pilot-diagnostics` can export a deterministic `PHASE11_PROMOTION_EVIDENCE_V1` bundle from the same diagnostic values displayed on the page.
+
+The bundle is a transport/review aid only. It does not change J1→J7 policy, promotion thresholds, Phase 10 selector behavior, Node-state semantics, or learner-facing recommendation.
+
+When reviewing a copied bundle:
+
+- preserve the scope split between selected-period metrics, all-history current formal state, all-history retrospective replay, and the latest saved adaptive session
+- review every eligible replay snapshot and every fail-closed/excluded snapshot rather than selecting only Shadow wins
+- treat the copied text as evidence only insofar as it was generated from the Production Supporter diagnostic page
+
+The current Neon connector still cannot complete ad-hoc Production SQL reads because its exposed argument schema and execution schema disagree before SQL execution. This remains a tooling blocker for DB-level forensic queries only; no Production SQL/write occurred from the failed connector attempts.
 
 Learner-facing replacement remains blocked until the remaining evidence is sufficient for an explicit promotion decision. The first allowed promotion step is a limited feature-flagged pilot, not full replacement.
+
+See `docs/phase11-evidence-bundle-ops-v01.md` for the evidence-capture workflow.
