@@ -154,7 +154,8 @@
     {% if saved.exists %}
     <p>最初の保存日時 {{ saved.first_event_at or '日時不明' }} / 最終保存日時 {{ saved.last_event_at or '日時不明' }}</p>
     <p>source {{ saved.source }} / mode {{ saved.mode }} / event数 {{ saved.event_count }}</p>
-    {% if saved.session_complete %}<p><b>30問監査完了</b></p>{% else %}<p><b>進行中: {{ saved.question_count }}/{{ saved.expected_question_count }}問</b></p>{% endif %}
+    <p><b>session status:</b> {{ saved.session_status or '不明' }} / set番号 {{ saved.parsed_set_numbers|join(', ') if saved.parsed_set_numbers else '解析不可' }}{% if saved.event_key_parse_failure_count %} / key parse failure {{ saved.event_key_parse_failure_count }}{% endif %}</p>
+    {% if saved.session_complete %}<p><b>30問監査完了</b></p>{% else %}<p><b>未完了: {{ saved.question_count }}/{{ saved.expected_question_count }}問</b></p>{% endif %}
     <p>問題数 {{ saved.question_count }} / unique Q {{ saved.unique_question_count }}</p>
     <p><b>audit fields complete:</b> {{ 'PASS' if saved.audit_fields_complete else 'FAIL' }} / recent repeats: {{ saved.recent_repeat_count }} / cooldown bypasses: {{ saved.cooldown_bypass_count }}</p>
     {% if saved.recent_repeat_question_ids %}<p>recent repeat対象Q：{{ saved.recent_repeat_question_ids|join(', ') }}</p>{% endif %}
