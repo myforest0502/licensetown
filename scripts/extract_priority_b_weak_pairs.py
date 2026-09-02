@@ -1,7 +1,15 @@
 import json
 from pathlib import Path
 
-ids = ['Q1272', 'Q1457', 'Q733', 'Q949']
+# Priority B first five nodes plus two additional weak-pair review sources.
+ids = [
+    'Q1424',
+    'Q1164', 'Q1221',
+    'Q1272', 'Q1457',
+    'Q1279',
+    'Q615',
+    'Q733', 'Q949',
+]
 base = Path('data/question_bank')
 files = ['questions.json', 'answers.json', 'explanations.json', 'question_tags.json']
 loaded = {name: json.loads((base / name).read_text(encoding='utf-8-sig')) for name in files}
