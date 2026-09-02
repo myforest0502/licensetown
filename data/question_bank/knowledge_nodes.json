@@ -6145,9 +6145,10 @@
   {
     "knowledge_node_id": "KN0611",
     "label": "意識せずに技能や習慣として再生される記憶は手続き記憶で、非陳述記憶に分類される",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q619"
+      "Q619",
+      "Q1617"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7186,9 +7187,10 @@
   {
     "knowledge_node_id": "KN0714",
     "label": "疼痛強度の評価には表情図から選ぶface scaleと、線上の位置で強度を示すVASが用いられる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q722"
+      "Q722",
+      "Q1618"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7297,9 +7299,10 @@
   {
     "knowledge_node_id": "KN0725",
     "label": "上斜筋は滑車神経支配である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q733"
+      "Q733",
+      "Q1619"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11923,9 +11926,10 @@
   {
     "knowledge_node_id": "KN1186",
     "label": "手の外来筋は前腕から起こり腱が手に入る筋",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1200"
+      "Q1200",
+      "Q1616"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12876,9 +12880,10 @@
   {
     "knowledge_node_id": "KN1281",
     "label": "紙や鉛筆を使わず暗算するには、数値を一時保持しながら操作するワーキングメモリーが必要である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1297"
+      "Q1297",
+      "Q1620"
     ],
     "aliases": [],
     "successor_ids": []
