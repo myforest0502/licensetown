@@ -87,25 +87,43 @@ For every eligible recommendation_plan anchor, record:
 - symmetric comparison label
 - coverage status
 - exclusion reason if ineligible
+- Phase11 Critical Safety miss candidate count
+- Baseline stronger-Safety miss candidate count
+- J2/J3 formal-trigger inconsistency count
 
 Review all eligible snapshots, not only Shadow-favorable cases.
+
+The two Safety miss concepts are deliberately separate:
+
+- **Phase11 Critical Safety miss candidate**: formal Critical Safety evidence exists but Shadow did not choose `safety_repair`.
+- **Baseline stronger-Safety miss candidate**: Shadow chose J1 Safety while Baseline targeted a formally weaker non-Safety field.
+
+If both target fields contain J1 Safety evidence, treat it as a Safety disagreement rather than a miss.
 
 ### E. Safety
 
 Check for any case where:
 
-- unresolved Critical Safety evidence exists
+- formal unresolved Critical Safety **evaluable wrong** evidence exists
 - but Phase 11 chooses a lower-priority field
 
-Target for a limited pilot: no recurring Critical Safety miss pattern.
+Target for a limited pilot: no recurring Phase11 Critical Safety miss pattern.
 
-Safety unknown remains unresolved evidence and may retain high priority, but it must not be labeled as confirmed `safety_wrong` unless an evaluable wrong exists.
+Important unknown boundary:
+
+- Phase10 selector intentionally keeps Safety unknown/unresolved evidence at high repair priority and may use the Safety singleton cooldown exception.
+- Phase11 J1 intentionally remains limited to non-unknown/evaluable Critical Safety wrong evidence; unknown does not become confirmed weakness.
+- therefore Safety unknown must not be labeled `safety_wrong` unless an evaluable wrong exists.
 
 ### F. Single-wrong overreaction
 
-Look for ordinary non-Safety single wrongs that cause field takeover without cluster/cycle evidence.
+There are two separate checks.
 
-Target: no repeated pattern.
+**Formal invariant:** retrospective `J2/J3 formal trigger不整合候補` should be zero. The flag is raised only if Shadow claims J2 or J3 while its target profile lacks that rule's formal trigger. A legitimate two-Node confident-wrong J2 cluster is not a single-wrong failure.
+
+**Natural behavior review:** separately inspect ordinary non-Safety single wrongs and confirm they do not repeatedly cause unnecessary field takeover over time. This cannot be proven solely from the formal-inconsistency flag.
+
+Target: no repeated natural overreaction pattern and zero formal J2/J3 trigger inconsistencies.
 
 ### G. Sparse coverage
 
@@ -125,7 +143,7 @@ Compare Phase 11 intent with Phase 10 exact selection:
 - recheck intent should preserve retention work
 - coverage intent should not violate Safety/cooldown
 
-Phase 11 does not own exact Q IDs.
+Phase 11 does not own exact Q IDs. The Phase10/Phase11 unknown boundary above is intentional and should not be misclassified as confirmed-weakness evidence.
 
 ### J. Repair-transition quality
 
@@ -139,8 +157,8 @@ If Q1595-Q1605 produce `repairing -> repaired`:
 
 For each reviewed natural or retrospective case, capture:
 
-| Timestamp | Baseline | Shadow | Shadow reason | Comparison | Safety issue | Single-wrong issue | Coverage issue | recheck_due | Intent-vs-Q | Repeat red flag | Verdict |
-|---|---|---|---|---|---|---|---|---|---|---|---|
+| Timestamp | Baseline | Shadow | Shadow reason | Comparison | Phase11 Safety miss | Baseline Safety miss | J2/J3 trigger mismatch | Natural single-wrong issue | Coverage issue | recheck_due | Intent-vs-Q | Repeat red flag | Verdict |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 
 Verdict values:
 
@@ -154,11 +172,12 @@ Verdict values:
 A limited feature-flagged learner-facing pilot may be considered only if:
 
 - corrected Production repeat audit shows no unexplained recent-repeat regression
-- no Critical Safety miss pattern appears
-- no systematic single-wrong overreaction appears
+- no Phase11 Critical Safety miss pattern appears
+- J2/J3 formal-trigger inconsistency count is zero
+- no systematic natural single-wrong overreaction appears
 - sparse coverage is acceptable
 - recheck_due behavior has been observed and is not starved
-- Phase 11 intent and Phase 10 selection are compatible
+- Phase 11 intent and Phase 10 selection are compatible under their documented evidence boundaries
 - retrospective review includes Current/Baseline wins as well as Shadow wins
 - prospective natural examples are clearly no worse than Baseline
 - repair transitions are interpreted with item-quality caution
