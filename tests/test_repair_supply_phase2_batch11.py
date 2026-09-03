@@ -33,7 +33,7 @@ def test_q1_through_q1655_content_is_unchanged():
 
 
 def test_batch11_records_match_formal_design():
-    assert question_count() == 1660
+    assert question_count() == 1680
     for q_id, (node, source, key, category, small, task, primary, secondary) in ITEMS.items():
         question = get_question(q_id)
         answer = get_answer(q_id)

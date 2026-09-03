@@ -44,7 +44,7 @@ def test_q1_through_q1625_content_is_unchanged():
 
 
 def test_batch5_records_match_approved_v02_design_and_source_categories():
-    assert question_count() == 1660
+    assert question_count() == 1680
     for q_id, (node, source_ids, task, ability, key, category, category_small) in ITEMS.items():
         question = get_question(q_id)
         answer = get_answer(q_id)

@@ -137,5 +137,6 @@
     "candidate_id": "SNC0025", "canonical_node_id": "KN0725", "alias_node_ids": ["KN0940"],
     "canonical_label": "上斜筋と滑車神経", "selection_rule": "lowest_numeric_existing_node_id",
     "reason": "Aoi承認済みの同一最小修復対象。"
-  }
+  },
+{"candidate_id":"RSP12-CANONICAL-001","canonical_node_id":"KN0549","alias_node_ids":["KN1401"],"canonical_label":"慢性炎症における組織破壊と修復反応（血管新生・線維化）","selection_rule":"lowest_numeric_existing_node_id","reason":"Q557とQ1426は慢性炎症で並行する組織破壊・血管新生・線維化という同一最小修復対象であり、既存IDを保持してKN0549へ直接canonical化する。"}
 ]

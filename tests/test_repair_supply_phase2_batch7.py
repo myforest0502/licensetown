@@ -41,7 +41,7 @@ def test_q1_through_q1635_content_is_unchanged():
 
 
 def test_batch7_records_match_v02_design_and_source_contracts():
-    assert question_count() == 1660
+    assert question_count() == 1680
     for q_id, (node, source_q, key, category, category_small) in ITEMS.items():
         question = get_question(q_id)
         source = get_question(source_q)

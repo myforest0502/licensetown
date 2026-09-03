@@ -35,10 +35,10 @@ def attempt(question_id, node_id, user_id="user-a"):
 
 def test_v02_keeps_original_aliases_and_adds_reviewed_clusters():
     records, aliases = load_and_validate_canonical_map()
-    assert len(records) == 24
-    assert len(aliases) == 29
+    assert len(records) == 25
+    assert len(aliases) == 30
     assert all(aliases[alias] == canonical for alias, canonical in EXPECTED.items())
-    assert len(get_knowledge_node_canonical_map()) == 24
+    assert len(get_knowledge_node_canonical_map()) == 25
 
 
 def test_alias_canonical_and_unknown_resolution():
@@ -89,7 +89,7 @@ def test_aoi_review_preserves_boundaries_without_canonicalizing_snc0024():
     reviews = json.loads(
         (BANK_DIR / "same_node_review_v0.2.json").read_text(encoding="utf-8-sig")
     )
-    assert len(reviews) == 38
+    assert len(reviews) == 39
     assert all(item["review_status"] == "reviewed" for item in reviews)
     rejected_same = next(item for item in reviews if item["candidate_id"] == "SNC0024")
     assert rejected_same["aoi_decision"] == "PREREQUISITE_CANDIDATE"

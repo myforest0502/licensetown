@@ -25,7 +25,7 @@ def attempt(q, correct=True, confidence=1, minute=0, *, user="u"):
 def test_no_history_is_safe_and_returns_all_fields():
     report = audit.build_progress_shadow_audit(build_field_evidence([]))
     assert len(report["fields"]) == 18
-    assert report["overall"]["total_unique_canonical_nodes"] == 1509
+    assert report["overall"]["total_unique_canonical_nodes"] == 1508
     assert report["overall"]["touched_unique_canonical_nodes"] == 0
     assert report["overall"]["overall_progress_score"] == 0
     assert report["legacy"]["overall_progress_percent"] is None
@@ -78,10 +78,10 @@ def test_multi_field_node_is_unique_overall():
         attempt("Q1363", False, 2, minute=2),
     ])
     report = audit.build_progress_shadow_audit(evidence)
-    assert report["overall"]["total_unique_canonical_nodes"] == 1509
+    assert report["overall"]["total_unique_canonical_nodes"] == 1508
     assert report["overall"]["touched_unique_canonical_nodes"] == 1
     assert report["multi_field_node_count"] == 14
-    assert report["canonical_node_membership_total"] == 1525
+    assert report["canonical_node_membership_total"] == 1524
 
 
 def test_user_adapter_reads_one_user_and_never_returns_identifier(monkeypatch):
