@@ -66,7 +66,7 @@ def test_one_checking_node_is_unique_low_progress():
     assert result["coverage_raw"] == 1 / 1508
 
 
-def test_flag_off_preserves_legacy_overall_and_has_no_attempt_read(monkeypatch):
+def test_flag_off_preserves_direct_builder_but_learner_route_uses_formal_overall(monkeypatch):
     monkeypatch.delenv("ENABLE_OVERALL_PROGRESS_UI", raising=False)
     monkeypatch.delenv("ENABLE_FIELD_PROGRESS_UI", raising=False)
     monkeypatch.setattr(goukaku_ui, "get_question_attempts", lambda *_: (_ for _ in ()).throw(AssertionError("unexpected read")))
@@ -79,8 +79,8 @@ def test_flag_off_preserves_legacy_overall_and_has_no_attempt_read(monkeypatch):
     monkeypatch.setattr(goukaku_ui, "get_question_attempts", lambda *_: [])
     token = create_dashboard_token("overall-flag-off")
     text = app.test_client().get(f"/goukaku-no-michi?token={token}").get_data(as_text=True)
-    assert "総合到達度" in text
-    assert "合格への到達度" not in text
+    assert "合格への到達度" in text
+    assert "総合到達度" not in text
 
 
 def test_overall_flag_on_is_independent_and_shares_replay_with_field(monkeypatch):
@@ -118,9 +118,11 @@ def test_invalid_token_does_not_read_or_expose_overall_preview(monkeypatch):
     monkeypatch.setenv("ENABLE_OVERALL_PROGRESS_UI", "true")
     monkeypatch.setattr(goukaku_ui, "get_question_attempts", lambda *_: (_ for _ in ()).throw(AssertionError("unexpected read")))
     for query in ("", "?token=invalid"):
-        text = app.test_client().get(f"/goukaku-no-michi{query}").get_data(as_text=True)
+        response = app.test_client().get(f"/goukaku-no-michi{query}")
+        text = response.get_data(as_text=True)
+        assert response.status_code == 403
         assert "overall-progress-preview" not in text
-        assert "総合到達度" in text
+        assert "総合到達度" not in text
 
 
 def test_overall_preview_css_is_scoped_and_responsive():

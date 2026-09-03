@@ -16,11 +16,12 @@ from question_bank import CATEGORY_NAMES, get_category_small, get_quiz_question,
 def test_goukaku_home_renders(monkeypatch):
     monkeypatch.setenv("LINE_OFFICIAL_ACCOUNT_ID", "@licensetown-test")
     monkeypatch.setenv("LIFF_ID", "1234567890-test")
-    response = app.test_client().get("/goukaku-no-michi")
+    token = create_dashboard_token("empty-dashboard-user")
+    response = app.test_client().get(f"/goukaku-no-michi?token={token}")
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert "合格への道" in text
-    assert "総合到達度" in text
+    assert "合格への到達度" in text
     assert "すべて見る" in text
     assert "学習時間" in text
     assert "累計学習時間" in text
@@ -29,7 +30,7 @@ def test_goukaku_home_renders(monkeypatch):
     assert 'class="app-header title-only"' in text
     assert "data-close" not in text
     assert "今日のおすすめ学習" in text
-    assert "おすすめ進捗" not in text
+    assert "おすすめ進捗" in text
     assert "（暫定）" in text
     assert "まだデータがありません。勉強するとここに表示されます＾＾" in text
     assert "2027/02/20" in text
@@ -52,10 +53,8 @@ def test_goukaku_home_renders(monkeypatch):
     assert [text.index(label) for label in guidance_labels] == sorted(text.index(label) for label in guidance_labels)
     assert text.index("分野別 到達度") < text.index("次の報酬まで")
     assert text.index("源さんの一言") < text.index("次の報酬まで")
-    assert 'class="motivation-card target-progress-card"' in text
-    assert text.count("目標学習量まで") >= 2
-    assert "あと <b>100</b>%" in text
-    assert 'class="target-progress"' in text
+    assert 'class="motivation-card target-progress-card"' not in text
+    assert "目標学習量まで" not in text
     assert "あと 96%" not in (__import__("pathlib").Path(__file__).resolve().parents[1] / "templates" / "goukaku" / "home.html").read_text(encoding="utf-8")
     template = (__import__("pathlib").Path(__file__).resolve().parents[1] / "templates" / "goukaku" / "home.html").read_text(encoding="utf-8")
     assert "回答数が少ないため、まだ実力判定できません" in template
@@ -102,12 +101,14 @@ def test_mobile_actions_use_official_account_chat_not_line_share():
     assert "window.liff.init({ liffId })" in js
     assert "window.liff.sendMessages([{ type: 'text', text: message }])" in js
     assert "window.liff.closeWindow()" in js
+    token = create_dashboard_token("mobile-action-user")
     for command in ("ホームに戻る", "勉強する", "相談する", "熱血モード"):
-        assert f'data-line-message="{command}"' in app.test_client().get("/goukaku-no-michi").get_data(as_text=True)
+        assert f'data-line-message="{command}"' in app.test_client().get(f"/goukaku-no-michi?token={token}").get_data(as_text=True)
 
 
 def test_goukaku_subjects_renders_official_tab_label():
-    response = app.test_client().get("/goukaku-no-michi/subjects")
+    token = create_dashboard_token("empty-subject-user")
+    response = app.test_client().get(f"/goukaku-no-michi/subjects?token={token}")
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert "分野別 詳細" in text
@@ -255,7 +256,8 @@ def test_recommendation_card_renders_recommendation_goal_not_daily_goal(monkeypa
         lambda user_id, **kwargs: dashboard,
     )
 
-    text = app.test_client().get("/goukaku-no-michi").get_data(as_text=True)
+    token = create_dashboard_token("recommendation-card-user")
+    text = app.test_client().get(f"/goukaku-no-michi?token={token}").get_data(as_text=True)
 
     assert "おすすめ進捗 0 / 10問" in text
     assert "今日の進捗" not in text
@@ -263,7 +265,8 @@ def test_recommendation_card_renders_recommendation_goal_not_daily_goal(monkeypa
 
 
 def test_footprints_show_safe_empty_state_without_demo_events():
-    response = app.test_client().get("/goukaku-no-michi/footprints?name=たろう")
+    token = create_dashboard_token("empty-footprint-user")
+    response = app.test_client().get(f"/goukaku-no-michi/footprints?token={token}")
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert "あなたの足跡" in text
@@ -272,14 +275,15 @@ def test_footprints_show_safe_empty_state_without_demo_events():
     assert "初めて相談モード" not in text
 
 
-def test_learning_selection_shows_selected_field():
-    response = app.test_client().get("/goukaku-no-michi/learning?field=精神医学&count=10")
-    assert response.status_code == 200
-    text = response.get_data(as_text=True)
-    assert "選択した分野" in text
-    assert "精神医学" in text
-    assert "10問" in text
-    assert "この分野の学習へ進む" in text
+def test_legacy_learning_route_requires_token_and_redirects_to_formal_dashboard():
+    client = app.test_client()
+    assert client.get("/goukaku-no-michi/learning?field=精神医学&count=10").status_code == 403
+    token = create_dashboard_token("legacy-learning-user")
+    response = client.get(
+        f"/goukaku-no-michi/learning?token={token}&field=精神医学&count=10"
+    )
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith(f"/goukaku-no-michi?token={token}")
 
 
 def test_recommendation_challenge_has_scoped_responsive_cta_css():

@@ -1,6 +1,6 @@
 import os
 
-from flask import Blueprint, abort, render_template, request, url_for
+from flask import Blueprint, abort, redirect, render_template, request, url_for
 from itsdangerous import BadSignature, URLSafeSerializer, URLSafeTimedSerializer
 
 from database import (
@@ -83,6 +83,14 @@ def dashboard_user_id(token):
         return serializer.loads(token).get("user_id")
     except (BadSignature, AttributeError):
         return None
+
+
+def authorized_dashboard_learner(token):
+    """Resolve a signed learner dashboard token or fail closed."""
+    user_id = dashboard_user_id(token)
+    if not user_id:
+        abort(403)
+    return user_id
 
 
 def create_supporter_token(supporter_user_id):
@@ -191,7 +199,7 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
             dashboard["field_progress_fields"] = build_field_progress_presentation_from_calculation(
                 evidence, progress, legacy_fields=fields
             )
-        if overall_preview:
+        if overall_preview or include_learner_navigation:
             dashboard["overall_progress_ui_enabled"] = True
             dashboard["overall_progress_preview"] = build_overall_progress_presentation(
                 progress, overall_accuracy_percent=dashboard["average_accuracy"]
@@ -267,30 +275,29 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
 @goukaku_ui.route("/goukaku-no-michi")
 def home():
     token = request.args.get("token")
-    user_id = dashboard_user_id(token)
-    dashboard = build_dashboard(user_id, include_learner_navigation=bool(user_id))
-    if user_id:
-        navigation = dashboard.get("learner_navigation") or {}
-        action = navigation.get("today_action") or {}
-        if action.get("field"):
-            record_activity_event(
-                user_id,
-                "recommendation_plan",
-                {
-                    "field": action["field"],
-                    "goal": action["count"],
-                    "learning_intent": action["learning_intent"],
-                    "reason_code": action["reason_code"],
-                    "source": "learner_navigation",
-                },
-            )
-        elif dashboard["recommended_study"]:
-            recommended_name, recommended_count = dashboard["recommended_study"][0]
-            record_activity_event(
-                user_id,
-                "recommendation_plan",
-                {"field": recommended_name, "goal": recommended_count},
-            )
+    user_id = authorized_dashboard_learner(token)
+    dashboard = build_dashboard(user_id, include_learner_navigation=True)
+    navigation = dashboard.get("learner_navigation") or {}
+    action = navigation.get("today_action") or {}
+    if action.get("field"):
+        record_activity_event(
+            user_id,
+            "recommendation_plan",
+            {
+                "field": action["field"],
+                "goal": action["count"],
+                "learning_intent": action["learning_intent"],
+                "reason_code": action["reason_code"],
+                "source": "learner_navigation",
+            },
+        )
+    elif dashboard["recommended_study"]:
+        recommended_name, recommended_count = dashboard["recommended_study"][0]
+        record_activity_event(
+            user_id,
+            "recommendation_plan",
+            {"field": recommended_name, "goal": recommended_count},
+        )
     return render_template(
         "goukaku/home.html",
         dashboard=dashboard,
@@ -307,9 +314,9 @@ def home():
 @goukaku_ui.route("/goukaku-no-michi/subjects")
 def subjects():
     token = request.args.get("token")
-    user_id = dashboard_user_id(token)
-    subjects = get_field_learning_summary(user_id) if user_id else get_field_learning_summary("")
-    activity = get_learning_activity(user_id) if user_id else get_learning_activity("")
+    user_id = authorized_dashboard_learner(token)
+    subjects = get_field_learning_summary(user_id)
+    activity = get_learning_activity(user_id)
     recent_fields = [item for item in subjects if item["recent_7d_answered_count"]]
     top_recent_field = max(
         recent_fields, key=lambda item: item["recent_7d_answered_count"], default=None
@@ -328,8 +335,8 @@ def subjects():
 @goukaku_ui.route("/goukaku-no-michi/footprints")
 def footprints():
     token = request.args.get("token")
-    user_id = dashboard_user_id(token)
-    events = build_learning_milestones(get_question_attempts(user_id), limit=5) if user_id else []
+    user_id = authorized_dashboard_learner(token)
+    events = build_learning_milestones(get_question_attempts(user_id), limit=5)
     return render_template(
         "goukaku/footprints.html",
         events=events,
@@ -339,11 +346,9 @@ def footprints():
 
 @goukaku_ui.route("/goukaku-no-michi/learning")
 def learning():
-    field_name = request.args.get("field", "おすすめ分野").strip()[:30] or "おすすめ分野"
-    question_count = request.args.get("count", "10").strip()[:3]
-    if not question_count.isdigit():
-        question_count = "10"
-    return render_template("goukaku/learning.html", field_name=field_name, question_count=question_count)
+    token = request.args.get("token")
+    authorized_dashboard_learner(token)
+    return redirect(url_for("goukaku_ui.home", token=token))
 
 
 @goukaku_ui.route("/supporter")

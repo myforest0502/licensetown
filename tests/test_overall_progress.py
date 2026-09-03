@@ -101,7 +101,7 @@ def test_dashboard_calculates_progress_below_one_hundred_answers(monkeypatch):
     assert dashboard["phase"] == "foundation"
 
 
-def test_personal_and_readonly_dashboards_show_same_progress_and_safe_copy(monkeypatch):
+def test_personal_uses_formal_progress_while_readonly_keeps_safe_legacy_copy(monkeypatch):
     clear_local_data()
     monkeypatch.setattr(database, "database_is_available", lambda: False)
     learner_id = "overall-learner"
@@ -119,12 +119,17 @@ def test_personal_and_readonly_dashboards_show_same_progress_and_safe_copy(monke
         f"&learner_user_id={learner_id}"
     ).get_data(as_text=True)
 
-    for text in (personal, readonly):
-        assert 'class="ring" style="--value:1"' in text
-        assert "目標学習量まで あと 99%" in text
-        assert "合格ラインまで" not in text
-        assert "LTで記録された学習時間と問題演習量から算出" in text
-        assert "合格を保証する数値ではありません" in text
+    assert "合格への到達度" in personal
+    assert "必要な知識をどこまで学習・修復・定着できたか" in personal
+    assert "合格確率ではなく" in personal
+    assert "総合到達度" not in personal
+    assert "LTで記録された学習時間と問題演習量から算出" not in personal
+
+    assert 'class="ring" style="--value:1"' in readonly
+    assert "目標学習量まで あと 99%" in readonly
+    assert "合格ラインまで" not in readonly
+    assert "LTで記録された学習時間と問題演習量から算出" in readonly
+    assert "合格を保証する数値ではありません" in readonly
     assert "閲覧専用" in readonly
 
 
