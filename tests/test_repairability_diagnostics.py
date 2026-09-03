@@ -8,7 +8,6 @@ os.environ.setdefault("CHANNEL_SECRET", "x")
 import database
 from adaptive_question_selector import select_node_adaptive_questions
 from app import app
-from goukaku_ui import create_supporter_token
 from knowledge_node_repairability import build_repairability_audit
 from repairability_diagnostics import (
     FORMALLY_BLOCKED,
@@ -113,16 +112,15 @@ def test_helper_does_not_mutate_attempts_or_selector_results():
     assert before == after
 
 
-def test_supporter_route_displays_details_but_learner_route_does_not():
+def test_internal_route_displays_details_but_learner_route_does_not(monkeypatch):
     records, strong, _weak, _same = _records_by_classification()
     database._local_question_attempts.append(
         _wrong(strong["question_ids"][0], strong["canonical_node_id"])
     )
-    database.set_supporter_link("supporter", "learner")
-    token = create_supporter_token("supporter")
+    monkeypatch.setenv("LT_INTERNAL_ADMIN_TOKEN", "admin-secret")
     client = app.test_client()
     html = client.get(
-        f"/supporter/pilot-diagnostics?token={token}&learner_user_id=learner"
+        "/internal/pilot-diagnostics?token=admin-secret&learner_user_id=learner"
     ).get_data(as_text=True)
     assert "修復中Nodeの修復可能性" in html
     assert "strong repair問題 整備優先順位" in html

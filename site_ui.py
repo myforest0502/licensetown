@@ -77,3 +77,11 @@ def mobile_asset(filename):
 @site_ui.get("/site/preview-responsive/<path:filename>")
 def responsive_asset(filename):
     return send_from_directory(PREVIEW_RESPONSIVE_DIR, filename)
+
+
+# ``app.py`` already registers site_ui. Attach the developer-only boundary here
+# so the Flask entrypoint remains unchanged and the route/data concerns stay
+# outside the supporter blueprint.
+from developer_ui import register_developer_routes
+
+register_developer_routes(site_ui)
