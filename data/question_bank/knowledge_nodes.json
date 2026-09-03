@@ -5921,9 +5921,10 @@
   {
     "knowledge_node_id": "KN0586",
     "label": "長腓骨筋は下腿外側の比較的浅層にあり、皮下直下で筋腹を触知しやすい",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q594"
+      "Q594",
+      "Q1681"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6703,9 +6704,10 @@
   {
     "knowledge_node_id": "KN0663",
     "label": "痛覚は脊髄後角で二次ニューロンに交代し、対側へ交叉して脊髄側索の外側脊髄視床路を上行する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q671"
+      "Q671",
+      "Q1682"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7028,9 +7030,10 @@
   {
     "knowledge_node_id": "KN0695",
     "label": "筋強直性ジストロフィーにみられるミオトニアの識別",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q703"
+      "Q703",
+      "Q1683"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7140,9 +7143,10 @@
   {
     "knowledge_node_id": "KN0706",
     "label": "歩行速度・歩幅が低下し、両脚支持期が延長、腕振りも減少する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q714"
+      "Q714",
+      "Q1684"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7506,9 +7510,10 @@
   {
     "knowledge_node_id": "KN0742",
     "label": "多発性硬化症は中枢神経系の炎症性脱髄疾患で、脳・脊髄・視神経などに時間的・空間的に多発する脱髄病変を形成する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q750"
+      "Q750",
+      "Q1685"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7546,9 +7551,10 @@
   {
     "knowledge_node_id": "KN0746",
     "label": "「少数の事実から、すべて同じ結果になる」と一般化する認知の歪みが極端な一般化である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q754"
+      "Q754",
+      "Q1686"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8128,9 +8134,10 @@
   {
     "knowledge_node_id": "KN0804",
     "label": "卵管粘膜には線毛上皮があり、卵子・受精卵の輸送に関与する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q812"
+      "Q812",
+      "Q1687"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8271,9 +8278,10 @@
   {
     "knowledge_node_id": "KN0818",
     "label": "妊娠中の風疹感染は先天性風疹症候群を起こし、心疾患・白内障・難聴などの先天異常を生じうる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q827"
+      "Q827",
+      "Q1688"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8281,9 +8289,10 @@
   {
     "knowledge_node_id": "KN0819",
     "label": "小脳橋角部腫瘍で最も多いのは前庭神経鞘腫（聴神経腫瘍）であるため、5が正しい",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q828"
+      "Q828",
+      "Q1689"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8481,9 +8490,10 @@
   {
     "knowledge_node_id": "KN0839",
     "label": "対応のない2群で、連続変数が正規分布する場合は独立2標本のStudentのt検定を用いる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q848"
+      "Q848",
+      "Q1690"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9022,9 +9032,10 @@
   {
     "knowledge_node_id": "KN0893",
     "label": "患者の転移感情は治療者側の感情反応である逆転移を誘発しうる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q902"
+      "Q902",
+      "Q1691"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9376,9 +9387,10 @@
   {
     "knowledge_node_id": "KN0928",
     "label": "疑核・嚥下中枢障害により咽頭期嚥下障害を生じ、食道入口部開大不全が起こりやすい",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q937"
+      "Q937",
+      "Q1692"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9696,9 +9708,10 @@
   {
     "knowledge_node_id": "KN0960",
     "label": "Chopart関節離断では背屈筋の付着が失われ、底屈・内反筋が優位となって尖足内反変形を生じやすい",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q970"
+      "Q970",
+      "Q1693"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9706,9 +9719,10 @@
   {
     "knowledge_node_id": "KN0961",
     "label": "悪性リンパ腫はリンパ球を発生母体とする悪性腫瘍である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q971"
+      "Q971",
+      "Q1694"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9918,9 +9932,10 @@
   {
     "knowledge_node_id": "KN0982",
     "label": "前遊脚期は反対側の初期接地から同側の足趾離地までである",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q992"
+      "Q992",
+      "Q1695"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10040,9 +10055,10 @@
   {
     "knowledge_node_id": "KN0994",
     "label": "僧帽弁閉鎖不全では左心系の容量負荷から肺うっ血を生じ、労作時呼吸困難など左心不全症状が早期に出やすい",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1004"
+      "Q1004",
+      "Q1696"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10251,9 +10267,10 @@
   {
     "knowledge_node_id": "KN1015",
     "label": "痙縮では伸張反射は亢進する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1025"
+      "Q1025",
+      "Q1697"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10614,9 +10631,10 @@
   {
     "knowledge_node_id": "KN1051",
     "label": "Drehmann徴候で股関節屈曲時に生じる外転・外旋の解釈",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1061"
+      "Q1061",
+      "Q1698"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10654,9 +10672,10 @@
   {
     "knowledge_node_id": "KN1055",
     "label": "SOMI装具は頸椎を固定する装具で、環軸椎など上位頸椎の不安定性・骨折に用いられる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1065"
+      "Q1065",
+      "Q1699"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10735,9 +10754,10 @@
   {
     "knowledge_node_id": "KN1063",
     "label": "半月板の外縁（red zone）は血行があり、内縁は無血管に近い",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1073"
+      "Q1073",
+      "Q1700"
     ],
     "aliases": [],
     "successor_ids": []

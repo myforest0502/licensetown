@@ -25,7 +25,7 @@ QUESTION_BANK_FILES = {
     "explanations": "explanations.json",
     "question_tags": "question_tags.json",
 }
-EXPECTED_QUESTION_COUNT = 1680
+EXPECTED_QUESTION_COUNT = 1700
 EXPECTED_IDS = {f"Q{number}" for number in range(1, EXPECTED_QUESTION_COUNT + 1)}
 TASK_PRIMARY_ABILITIES = {
     "fact_recall": "KNOW",
