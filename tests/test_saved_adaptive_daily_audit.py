@@ -10,9 +10,7 @@ from app import app
 from database import (
     get_latest_adaptive_daily_learning_event,
     get_latest_adaptive_daily_learning_session_events,
-    set_supporter_link,
 )
-from goukaku_ui import create_supporter_token
 from pilot_diagnostics import build_saved_adaptive_daily_audit
 
 
@@ -78,7 +76,7 @@ def test_missing_audit_field_is_fail_and_empty_is_safe():
     assert build_saved_adaptive_daily_audit(None)["exists"] is False
 
 
-def test_supporter_route_displays_persisted_fields_and_keeps_simulation():
+def test_internal_route_displays_persisted_fields_and_keeps_simulation(monkeypatch):
     results = [_result(number) for number in range(1, 31)]
     results[0]["recent_question_repeat"] = True
     for index in range(6):
@@ -88,10 +86,10 @@ def test_supporter_route_displays_persisted_fields_and_keeps_simulation():
             "question_results": results[index * 5:(index + 1) * 5],
         }
     before = dict(database._local_learning_events)
-    set_supporter_link("supporter", "learner")
-    token = create_supporter_token("supporter")
+    monkeypatch.setenv("LT_INTERNAL_ADMIN_TOKEN", "developer-token")
     response = app.test_client().get(
-        f"/supporter/pilot-diagnostics?token={token}&learner_user_id=learner"
+        "/internal/pilot-diagnostics"
+        "?token=developer-token&learner_user_id=learner&period=7"
     )
     html = response.get_data(as_text=True)
     assert response.status_code == 200
