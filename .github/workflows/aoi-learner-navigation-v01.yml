@@ -21,7 +21,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Apply integration patch
-        run: PYTHONPATH="$PWD" python scripts/apply_learner_navigation_v01.py
+        run: |
+          PYTHONPATH="$PWD" python scripts/apply_learner_navigation_v01.py
+          PYTHONPATH="$PWD" python scripts/patch_learner_navigation_regression_tests.py
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -34,7 +36,10 @@ jobs:
             tests/test_dashboard_real_data_shadow.py \
             tests/test_pass_readiness.py \
             tests/test_field_progress_ui.py \
-            tests/test_dashboard_recommendation_cooldown.py
+            tests/test_dashboard_recommendation_cooldown.py \
+            tests/test_goukaku_ui.py \
+            tests/test_overall_progress_ui.py \
+            tests/test_supporter_activity_phase2.py
       - name: Full suite
         run: |
           PYTHONPATH="$PWD" python -m pytest -q \
@@ -43,7 +48,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add goukaku_ui.py app.py templates/goukaku/home.html static/goukaku/goukaku.js static/goukaku/goukaku.css
+          git add goukaku_ui.py app.py templates/goukaku/home.html static/goukaku/goukaku.js static/goukaku/goukaku.css tests/test_goukaku_ui.py tests/test_overall_progress_ui.py tests/test_supporter_activity_phase2.py
           if git diff --cached --quiet; then
             echo 'Integration already applied.'
             exit 0
