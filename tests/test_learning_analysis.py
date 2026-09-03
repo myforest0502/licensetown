@@ -6,6 +6,7 @@ from database import get_field_learning_summary, get_learning_summary, record_le
 from learning_analysis import (
     GENSAN_FEEDBACK_TEMPLATES,
     MIN_RELIABLE_ANSWERS,
+    TARGET_FIELD_ACCURACY,
     build_gensan_comment,
     build_learning_guidance,
     build_recommendation_reason,
@@ -86,16 +87,27 @@ def test_reliable_low_accuracy_and_relative_deficit_rank_first_and_drive_recomme
     guidance = build_learning_guidance(100, fields)
     top = guidance["weak_fields"][0]
     assert top["name"] == "病理学"
-    assert top["reason"] in {"正答率が低い", "他分野より正答率が低い"}
+    assert top["reason"] == "正答率が低い"
     assert guidance["recommended_study"] == [("病理学", 10)]
 
 
-def test_unlearned_is_one_candidate_only_after_broad_learning():
+def test_reliable_69_percent_field_is_priority_even_after_100_answers():
+    assert TARGET_FIELD_ACCURACY == 70
+    fields = make_fields({13: (100, 69)})
+    guidance = build_learning_guidance(100, fields)
+    assert guidance["weak_fields"][0]["name"] == "基礎運動学"
+    assert guidance["weak_fields"][0]["score"] == 69
+    assert guidance["weak_fields"][0]["reason"] == "正答率が低い"
+
+
+def test_unlearned_fields_fill_priority_top3_after_broad_learning():
     fields = make_fields({number: (10, 8) for number in range(1, 7)})
     guidance = build_learning_guidance(100, fields)
-    unlearned = [item for item in guidance["weak_fields"] if item["reason"] == "未学習"]
-    assert len(unlearned) == 1
-    assert unlearned[0]["name"] == "病理学"
+    assert len(guidance["weak_fields"]) == 3
+    assert all(item["reason"] == "未学習" for item in guidance["weak_fields"])
+    assert [item["name"] for item in guidance["weak_fields"]] == [
+        "病理学", "内科学", "神経医学"
+    ]
 
 
 def test_low_engagement_is_a_candidate_after_broad_learning():
@@ -159,10 +171,10 @@ def test_gensan_feedback_uses_safe_fallback_without_field_history():
     assert comment == "まだ始まったばかりだな＾＾\nまずは5問だけやってみるか？"
 
 
-def test_recommendation_reasons_follow_existing_weakness_reason():
+def test_recommendation_reasons_follow_existing_priority_reason():
     cases = {
         "取り組み不足": "実力判定のデータが足りません",
-        "正答率が低い": "優先して復習したい分野",
+        "正答率が低い": "正答率が70%未満",
         "他分野より正答率が低い": "他の分野と比べて",
         "未学習": "まだ取り組んでいない分野",
         None: "次に取り組む優先度が高い分野",
