@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LicenseTown Internal</title></head>
+<body>
+  <main>
+    <h1>LicenseTown Internal</h1>
+    <p>開発・診断専用。学習者・見守り画面とは分離されています。</p>
+    <form method="get">
+      <input type="hidden" name="token" value="{{ internal_token }}">
+      <label>learner_user_id <input name="learner_user_id" value="{{ learner_id }}" autocomplete="off"></label>
+      <button type="submit">対象を開く</button>
+    </form>
+    {% if learner_id %}
+    <nav>
+      <p><a href="{{ pilot_url }}">学習診断 / Phase11・repeat・cooldown</a></p>
+      <p><a href="{{ preview_url }}">本人画面プレビュー（開発QA）</a></p>
+    </nav>
+    {% endif %}
+  </main>
+</body>
+</html>
