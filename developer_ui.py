@@ -1,9 +1,9 @@
 """Internal developer-only diagnostics routes.
 
-The public app already registers ``site_ui``.  To avoid touching the large Flask
+The public app already registers ``site_ui``. To avoid touching the large Flask
 entrypoint, these routes are attached to that existing blueprint before it is
-registered.  Legacy supporter diagnostics/preview URLs are blocked globally so
-a supporter token cannot reach developer-only screens.
+registered. Legacy supporter diagnostics/preview URLs never accept supporter
+authorization; an already-authorized developer URL is redirected into /internal.
 """
 
 from __future__ import annotations
@@ -11,16 +11,15 @@ from __future__ import annotations
 import hmac
 import os
 
-from flask import abort, render_template, request, url_for
+from flask import abort, redirect, render_template, request, url_for
 
 from goukaku_ui import build_dashboard
 from pilot_diagnostics import build_pilot_diagnostics
 
 
-LEGACY_DEVELOPER_PATHS = {
-    "/supporter/pilot-diagnostics",
-    "/supporter/goukaku-no-michi/learner-preview",
-}
+LEGACY_DIAGNOSTICS_PATH = "/supporter/pilot-diagnostics"
+LEGACY_PREVIEW_PATH = "/supporter/goukaku-no-michi/learner-preview"
+LEGACY_DEVELOPER_PATHS = {LEGACY_DIAGNOSTICS_PATH, LEGACY_PREVIEW_PATH}
 
 
 def _configured_token() -> str:
@@ -46,9 +45,29 @@ def register_developer_routes(blueprint) -> None:
     """Attach developer-only routes and legacy-route guard to ``blueprint``."""
 
     @blueprint.before_app_request
-    def _block_legacy_developer_routes():
-        if request.path in LEGACY_DEVELOPER_PATHS:
+    def _guard_legacy_developer_routes():
+        if request.path not in LEGACY_DEVELOPER_PATHS:
+            return None
+        token = request.headers.get("X-LT-Developer-Token") or request.args.get("token")
+        if not developer_authorized(token):
             abort(404)
+        learner_id = request.args.get("learner_user_id", "").strip()
+        if request.path == LEGACY_DIAGNOSTICS_PATH:
+            return redirect(
+                url_for(
+                    "site_ui.internal_pilot_diagnostics",
+                    token=token,
+                    learner_user_id=learner_id,
+                    period=request.args.get("period", "7"),
+                )
+            )
+        return redirect(
+            url_for(
+                "site_ui.internal_learner_preview",
+                token=token,
+                learner_user_id=learner_id,
+            )
+        )
 
     @blueprint.route("/internal", endpoint="internal_index")
     @blueprint.route("/internal/", endpoint="internal_index_slash")
@@ -91,10 +110,12 @@ def register_developer_routes(blueprint) -> None:
         if period not in {"7", "30", "all"}:
             period = "7"
         return render_template(
-            "internal/pilot_diagnostics.html",
+            "goukaku/supporter_pilot_diagnostics.html",
             diagnostics=build_pilot_diagnostics(learner_id, period),
             learner_id=learner_id,
+            supporter_token=token,
             internal_token=token,
+            internal_mode=True,
         )
 
     @blueprint.route("/internal/learner-preview", endpoint="internal_learner_preview")
