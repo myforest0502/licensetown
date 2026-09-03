@@ -8,7 +8,7 @@ os.environ.setdefault("CHANNEL_SECRET", "x")
 import database
 import pilot_diagnostics
 from app import app
-from database import set_supporter_link, deactivate_supporter_link
+from database import set_supporter_link
 from goukaku_ui import create_supporter_token
 from pilot_diagnostics import build_adaptive_selection_audit, build_pilot_diagnostics
 
@@ -38,11 +38,15 @@ def test_period_behavior_confidence_unknown_and_user_isolation():
     assert [item["question_id"] for item in seven["adaptive_details"]]
     assert Counter(item["priority_group"] for item in seven["adaptive_details"]) == Counter(seven["adaptive_groups"])
 
-def test_diagnostics_route_requires_active_supporter_and_not_on_personal_dashboard():
-    set_supporter_link("supporter","learner"); token=create_supporter_token("supporter"); client=app.test_client()
-    path=f"/supporter/pilot-diagnostics?token={token}&learner_user_id=learner&period=7"
-    assert client.get("/supporter/pilot-diagnostics").status_code == 403
-    assert client.get(f"/supporter/pilot-diagnostics?token={token}&learner_user_id=other").status_code == 403
+def test_diagnostics_route_requires_internal_admin_and_not_on_personal_dashboard(monkeypatch):
+    set_supporter_link("supporter","learner")
+    supporter_token=create_supporter_token("supporter")
+    monkeypatch.setenv("LT_INTERNAL_ADMIN_TOKEN", "admin-secret")
+    client=app.test_client()
+    assert client.get("/internal/pilot-diagnostics?learner_user_id=learner").status_code == 403
+    assert client.get("/internal/pilot-diagnostics?token=wrong&learner_user_id=learner").status_code == 403
+    assert client.get(f"/supporter/pilot-diagnostics?token={supporter_token}&learner_user_id=learner").status_code == 404
+    path="/internal/pilot-diagnostics?token=admin-secret&learner_user_id=learner&period=7"
     response=client.get(path); assert response.status_code == 200
     html = response.get_data(as_text=True)
     assert "LT学習診断" in html
@@ -54,7 +58,6 @@ def test_diagnostics_route_requires_active_supporter_and_not_on_personal_dashboa
     assert "30問監査データをコピー" in html
     assert html.count('class="adaptive-audit-item"') == 30
     assert "LT学習診断" not in client.get(f"/goukaku-no-michi?token=invalid").get_data(as_text=True)
-    deactivate_supporter_link("supporter","learner"); assert client.get(path).status_code == 403
 
 
 def test_state_and_repair_retention_counts_use_pure_replay(monkeypatch):
