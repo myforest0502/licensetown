@@ -45,3 +45,56 @@ def test_dashboard_route_remains_fail_closed():
     client = app.test_client()
     assert client.get("/goukaku-no-michi").status_code == 403
     assert client.get("/goukaku-no-michi?token=invalid").status_code == 403
+
+
+def test_liff_state_recovers_signed_dashboard_token():
+    token = app_module.create_dashboard_token("liff-state-user")
+
+    response = app.test_client().get(
+        "/goukaku-no-michi",
+        query_string={"liff.state": f"?token={token}"},
+    )
+
+    assert response.status_code == 200
+    assert f'data-dashboard-token="{token}"' in response.get_data(as_text=True)
+
+
+def test_liff_state_remains_fail_closed_for_invalid_missing_and_malformed_token():
+    client = app.test_client()
+    states = (
+        "?token=invalid",
+        "?foo=bar",
+        "not-a-query",
+        "?token",
+        "?token=",
+        "?token=one&token=two",
+    )
+
+    for state in states:
+        assert client.get(
+            "/goukaku-no-michi",
+            query_string={"liff.state": state},
+        ).status_code == 403
+
+
+def test_top_level_token_has_priority_over_invalid_liff_state():
+    token = app_module.create_dashboard_token("top-level-user")
+
+    response = app.test_client().get(
+        "/goukaku-no-michi",
+        query_string={"token": token, "liff.state": "?token=invalid&broken"},
+    )
+
+    assert response.status_code == 200
+    assert f'data-dashboard-token="{token}"' in response.get_data(as_text=True)
+
+
+def test_invalid_top_level_token_is_not_replaced_by_valid_liff_state():
+    liff_token = app_module.create_dashboard_token("liff-state-user")
+
+    response = app.test_client().get(
+        "/goukaku-no-michi",
+        query_string={"token": "invalid", "liff.state": f"?token={liff_token}"},
+    )
+
+    assert response.status_code == 403
