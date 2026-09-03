@@ -22,8 +22,12 @@
     <p>未着手 {{ diagnostics.state_counts.unseen }} / 確認中 {{ diagnostics.state_counts.checking }} / 修復中 {{ diagnostics.state_counts.repairing }} / 修復済み {{ diagnostics.state_counts.repaired }} / 定着 {{ diagnostics.state_counts.stable }} / 再確認待ち {{ diagnostics.state_counts.recheck_due }}</p>
   </section>
   <section class="card pilot-diagnostic-card">
-    <h2>診断JSON</h2>
-    <details><summary>全文を見る</summary><pre>{{ diagnostics|tojson(indent=2) }}</pre></details>
+    <h2>Repeat監査</h2>
+    <p>same-Q repeat {{ diagnostics.repeat_structure_audit.same_question_repeats }} / 要調査 {{ diagnostics.repeat_structure_audit.unexplained_repeat_count }}</p>
+  </section>
+  <section class="card pilot-diagnostic-card">
+    <h2>Repair Supply</h2>
+    <p>修復中Node {{ diagnostics.repairing_node_repairability.repairing_node_total }} / strong別Qあり {{ diagnostics.repairing_node_repairability.strong_available_count }} / weak別Qのみ {{ diagnostics.repairing_node_repairability.weak_only_count }} / formal blocked {{ diagnostics.repairing_node_repairability.same_or_blocked_count }}</p>
   </section>
 </main>
 {% endblock %}
