@@ -1,4 +1,5 @@
 import os
+from urllib.parse import parse_qs
 
 from flask import Blueprint, abort, redirect, render_template, request, url_for
 from itsdangerous import BadSignature, URLSafeSerializer, URLSafeTimedSerializer
@@ -91,6 +92,28 @@ def authorized_dashboard_learner(token):
     if not user_id:
         abort(403)
     return user_id
+
+
+def learner_dashboard_token(args):
+    """Resolve the signed token carrier used by direct and LIFF dashboard entry."""
+    if "token" in args:
+        return args.get("token")
+
+    liff_state = args.get("liff.state")
+    if not isinstance(liff_state, str) or not liff_state.startswith("?"):
+        return None
+    try:
+        state_params = parse_qs(
+            liff_state[1:],
+            keep_blank_values=True,
+            strict_parsing=True,
+        )
+    except ValueError:
+        return None
+    tokens = state_params.get("token", [])
+    if len(tokens) != 1 or not tokens[0]:
+        return None
+    return tokens[0]
 
 
 def create_supporter_token(supporter_user_id):
@@ -274,7 +297,7 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
 
 @goukaku_ui.route("/goukaku-no-michi")
 def home():
-    token = request.args.get("token")
+    token = learner_dashboard_token(request.args)
     user_id = authorized_dashboard_learner(token)
     dashboard = build_dashboard(user_id, include_learner_navigation=True)
     navigation = dashboard.get("learner_navigation") or {}
