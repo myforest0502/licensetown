@@ -169,6 +169,30 @@ def _rank_candidates(candidates: Iterable[dict[str, Any]]) -> list[dict[str, Any
     )
 
 
+def _priority_top3(
+    weakness_candidates: Iterable[dict[str, Any]],
+    evidence: Mapping[str, Any],
+    progress: Mapping[str, Any],
+) -> list[dict[str, Any]]:
+    """Return exactly three highest-value field priorities when three fields exist.
+
+    Proven weaknesses keep their formal priority order. Any remaining slots are
+    filled by the least-covered fields, while never duplicating a field already
+    selected as a weakness. This keeps `weakness` and `not yet checked` distinct
+    in the data even though both can be learner-facing priorities.
+    """
+    selected = _rank_candidates(weakness_candidates)[:3]
+    selected_ids = {int(item["field_id"]) for item in selected}
+    for candidate in _coverage_candidates(evidence, progress):
+        if len(selected) >= 3:
+            break
+        if int(candidate["field_id"]) in selected_ids:
+            continue
+        selected.append(candidate)
+        selected_ids.add(int(candidate["field_id"]))
+    return selected
+
+
 def _comparison(
     result: Mapping[str, Any],
     *,
@@ -238,11 +262,7 @@ def build_dashboard_real_data_shadow(
         if candidate:
             weakness_candidates.append(candidate)
 
-    ranked = _rank_candidates(weakness_candidates)
-    if ranked:
-        weakness_top3 = ranked[:3]
-    else:
-        weakness_top3 = _coverage_candidates(evidence, progress)[:3]
+    weakness_top3 = _priority_top3(weakness_candidates, evidence, progress)
 
     primary = weakness_top3[0] if weakness_top3 else None
     if primary:

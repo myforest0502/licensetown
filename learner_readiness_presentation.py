@@ -58,6 +58,10 @@ ATTENTION_LABELS = {
 }
 
 
+def _priority_items(shadow: Mapping[str, Any]) -> list[Mapping[str, Any]]:
+    return list(shadow.get("priority_top3") or shadow.get("weakness_top3") or [])
+
+
 def _stable_areas(shadow: Mapping[str, Any]) -> list[dict[str, Any]]:
     rows = []
     for field in shadow.get("fields", []):
@@ -74,7 +78,7 @@ def _stable_areas(shadow: Mapping[str, Any]) -> list[dict[str, Any]]:
 
 def _repair_areas(shadow: Mapping[str, Any]) -> list[dict[str, Any]]:
     result = []
-    for item in shadow.get("weakness_top3", []):
+    for item in _priority_items(shadow):
         if not item.get("is_proven_weakness"):
             continue
         result.append({
@@ -112,7 +116,7 @@ def build_learner_readiness_presentation(
     learning_intent = str(recommendation.get("learning_intent") or "exploration")
 
     attention = []
-    for item in shadow.get("weakness_top3", [])[:3]:
+    for item in _priority_items(shadow)[:3]:
         code = str(item.get("reason_code") or "coverage_expand")
         attention.append({
             "field": item.get("field_name"),
