@@ -13,6 +13,7 @@ from zoneinfo import ZoneInfo
 
 from database import (
     get_dashboard_learning_data,
+    get_db_connection,
     get_latest_activity_day_summary,
     get_latest_learning_day_summary,
     get_question_attempts,
@@ -165,10 +166,15 @@ def build_supporter_report(learner_user_id: str) -> dict:
         learned_fields = [item for item in all_fields if item["learned"]]
         with measure("python.learning_guidance"):
             guidance = build_learning_guidance(summary["total_answers"], all_fields)
-        with measure("db.latest_learning_day_summary"):
-            latest = _format_latest(get_latest_learning_day_summary(learner_user_id))
-        with measure("db.latest_activity_day_summary"):
-            latest_activity = _format_latest_activity(get_latest_activity_day_summary(learner_user_id))
+        with get_db_connection() as conn:
+            with measure("db.latest_learning_day_summary"):
+                latest = _format_latest(
+                    get_latest_learning_day_summary(learner_user_id, _connection=conn)
+                )
+            with measure("db.latest_activity_day_summary"):
+                latest_activity = _format_latest_activity(
+                    get_latest_activity_day_summary(learner_user_id, _connection=conn)
+                )
         with measure("db.question_attempts"):
             attempts = get_question_attempts(learner_user_id)
         with measure("python.parent_summary"):
