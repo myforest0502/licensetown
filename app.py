@@ -2148,7 +2148,14 @@ def create_web_recommendation_session(user_id, category_small, question_count, t
                 and not session.get("completed")
             ):
                 return session_id, False
-        questions = select_category_questions(category_small, question_count)
+        attempts = get_question_attempts(user_id)
+        selection_audit = {}
+        questions = build_node_adaptive_session(
+            attempts,
+            question_count=question_count,
+            category_small=category_small,
+            audit_out=selection_audit,
+        )
         session_id = secrets.token_urlsafe(24)
         web_recommendation_sessions[session_id] = {
             "user_id": user_id,
@@ -2156,6 +2163,7 @@ def create_web_recommendation_session(user_id, category_small, question_count, t
             "category_small": category_small,
             "question_count": question_count,
             "questions": questions,
+            "selection_audit": selection_audit,
             "current_index": 0,
             "correct_count": 0,
             "completed": False,
@@ -2271,6 +2279,7 @@ def answer_web_recommendation(session_id):
         "answer_status": "unknown" if unknown else "answered",
         "learning_source": "dashboard_recommendation",
     }
+    result.update(session.get("selection_audit", {}).get(question_id, {}))
     answer_number = session["current_index"] + 1
     record_learning_batch(
         user_id=session["user_id"],
