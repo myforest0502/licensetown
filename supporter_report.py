@@ -12,12 +12,17 @@ from datetime import timezone
 from zoneinfo import ZoneInfo
 
 from database import (
+    _get_question_result_rows,
     database_is_available,
     get_dashboard_learning_data,
     get_db_connection,
+    get_field_learning_summary,
     get_latest_activity_day_summary,
     get_latest_learning_day_summary,
+    get_learning_activity,
+    get_learning_summary,
     get_question_attempts,
+    get_unique_answered_question_count,
 )
 from field_evidence import build_field_evidence
 from field_progress import build_field_progress
@@ -156,19 +161,38 @@ def _parent_summary(summary: dict, activity: dict, fields: list[dict], latest: d
     }
 
 
+def _shared_dashboard_learning_data(learner_user_id: str, conn) -> dict:
+    """Build the existing dashboard aggregate on a caller-owned DB connection."""
+    question_rows = _get_question_result_rows(learner_user_id, conn)
+    return {
+        "summary": get_learning_summary(learner_user_id, _connection=conn),
+        "activity": get_learning_activity(learner_user_id, _connection=conn),
+        "fields": get_field_learning_summary(
+            learner_user_id,
+            _connection=conn,
+            _question_result_rows=question_rows,
+        ),
+        "unique_question_count": get_unique_answered_question_count(
+            learner_user_id,
+            _connection=conn,
+            _question_result_rows=question_rows,
+        ),
+    }
+
+
 def build_supporter_report(learner_user_id: str) -> dict:
     """Return parent-facing data only; never consultation text or dev diagnostics."""
     with measure("build_supporter_report.total"):
-        with measure("db.dashboard_learning_data"):
-            learning_data = get_dashboard_learning_data(learner_user_id)
-        summary = learning_data["summary"]
-        activity = learning_data["activity"]
-        all_fields = learning_data["fields"]
-        learned_fields = [item for item in all_fields if item["learned"]]
-        with measure("python.learning_guidance"):
-            guidance = build_learning_guidance(summary["total_answers"], all_fields)
         if database_is_available():
             with get_db_connection() as conn:
+                with measure("db.dashboard_learning_data"):
+                    learning_data = _shared_dashboard_learning_data(learner_user_id, conn)
+                summary = learning_data["summary"]
+                activity = learning_data["activity"]
+                all_fields = learning_data["fields"]
+                learned_fields = [item for item in all_fields if item["learned"]]
+                with measure("python.learning_guidance"):
+                    guidance = build_learning_guidance(summary["total_answers"], all_fields)
                 with measure("db.latest_learning_day_summary"):
                     latest = _format_latest(
                         get_latest_learning_day_summary(learner_user_id, _connection=conn)
@@ -178,6 +202,14 @@ def build_supporter_report(learner_user_id: str) -> dict:
                         get_latest_activity_day_summary(learner_user_id, _connection=conn)
                     )
         else:
+            with measure("db.dashboard_learning_data"):
+                learning_data = get_dashboard_learning_data(learner_user_id)
+            summary = learning_data["summary"]
+            activity = learning_data["activity"]
+            all_fields = learning_data["fields"]
+            learned_fields = [item for item in all_fields if item["learned"]]
+            with measure("python.learning_guidance"):
+                guidance = build_learning_guidance(summary["total_answers"], all_fields)
             with measure("db.latest_learning_day_summary"):
                 latest = _format_latest(get_latest_learning_day_summary(learner_user_id))
             with measure("db.latest_activity_day_summary"):
