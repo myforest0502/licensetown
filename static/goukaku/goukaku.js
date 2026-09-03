@@ -71,7 +71,8 @@ document.querySelectorAll('[data-recommendation-start-url]').forEach((button) =>
   button.disabled = true;
   if (status) status.textContent = '学習を準備しています…';
   try {
-    if (await liffReady) {
+    const structuredNavigation = button.dataset.recommendationSource === 'learner_navigation';
+    if (!structuredNavigation && await liffReady) {
       await window.liff.sendMessages([{
         type: 'text',
         text: button.dataset.recommendationLineCommand,
@@ -87,6 +88,9 @@ document.querySelectorAll('[data-recommendation-start-url]').forEach((button) =>
         token: button.dataset.dashboardToken,
         field: button.dataset.recommendationField,
         count: Number(button.dataset.recommendationCount),
+        source: button.dataset.recommendationSource || '',
+        intent: button.dataset.recommendationIntent || '',
+        reason: button.dataset.recommendationReason || '',
       }),
     });
     const result = await response.json().catch(() => ({}));

@@ -2204,12 +2204,34 @@ def start_dashboard_recommendation():
     if question_count != 10:
         return {"ok": False, "message": "おすすめ問題数を確認できませんでした。"}, 400
 
-    current_recommendations = build_dashboard(user_id).get("recommended_study", [])
-    if (field_name, question_count) not in current_recommendations:
-        return {
-            "ok": False,
-            "message": "おすすめ内容が更新されました。画面を再読み込みしてください。",
-        }, 409
+    source = str(payload.get("source", "")).strip()
+    if source == "learner_navigation":
+        dashboard = build_dashboard(user_id, include_learner_navigation=True)
+        action = ((dashboard.get("learner_navigation") or {}).get("today_action") or {})
+        expected = (
+            action.get("field"),
+            int(action.get("count") or 0),
+            action.get("learning_intent"),
+            action.get("reason_code"),
+        )
+        received = (
+            field_name,
+            question_count,
+            str(payload.get("intent", "")).strip(),
+            str(payload.get("reason", "")).strip(),
+        )
+        if received != expected:
+            return {
+                "ok": False,
+                "message": "おすすめ内容が更新されました。画面を再読み込みしてください。",
+            }, 409
+    else:
+        current_recommendations = build_dashboard(user_id).get("recommended_study", [])
+        if (field_name, question_count) not in current_recommendations:
+            return {
+                "ok": False,
+                "message": "おすすめ内容が更新されました。画面を再読み込みしてください。",
+            }, 409
 
     try:
         session_id, started = create_web_recommendation_session(

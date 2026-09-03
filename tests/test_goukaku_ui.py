@@ -252,7 +252,7 @@ def test_recommendation_card_renders_recommendation_goal_not_daily_goal(monkeypa
     monkeypatch.setattr(
         goukaku_ui_module,
         "build_dashboard",
-        lambda user_id: dashboard,
+        lambda user_id, **kwargs: dashboard,
     )
 
     text = app.test_client().get("/goukaku-no-michi").get_data(as_text=True)
