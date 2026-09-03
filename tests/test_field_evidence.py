@@ -33,7 +33,7 @@ def test_empty_user_returns_all_fields_and_formal_totals():
     assert report["status"] == "evidence_only"
     assert report["official_mastery_score"] is None
     assert report["field_count"] == len(report["fields"]) == 18
-    assert report["question_total"] == sum(x["total_question_count"] for x in report["fields"]) == 1700
+    assert report["question_total"] == sum(x["total_question_count"] for x in report["fields"]) == 1720
     assert report["canonical_node_total"] == 1508
     assert report["multi_field_node_count"] == 14
     assert report["canonical_node_membership_total"] > report["canonical_node_total"]
