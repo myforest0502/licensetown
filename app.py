@@ -1555,19 +1555,19 @@ def is_complete_reset_command(message_text):
 # =========================================================
 
 def build_dashboard_url(user_id):
-    """LIFF設定済みならLIFFブラウザ、未設定なら通常Web URLを返す。"""
+    """Return an authenticated learner URL without relying on LIFF query forwarding."""
     dashboard_token = create_dashboard_token(user_id) if user_id else ""
+    public_dashboard_url = (
+        os.getenv("PUBLIC_BASE_URL", "https://line-bot-project-bxjq.onrender.com").rstrip("/")
+        + "/goukaku-no-michi"
+    )
+    if dashboard_token:
+        return public_dashboard_url + "?token=" + dashboard_token
+
     liff_id = os.getenv("LIFF_ID", "").strip()
     if liff_id:
-        dashboard_url = f"https://liff.line.me/{liff_id}"
-    else:
-        dashboard_url = (
-            os.getenv("PUBLIC_BASE_URL", "https://line-bot-project-bxjq.onrender.com").rstrip("/")
-            + "/goukaku-no-michi"
-        )
-    if dashboard_token:
-        dashboard_url += "?token=" + dashboard_token
-    return dashboard_url
+        return f"https://liff.line.me/{liff_id}"
+    return public_dashboard_url
 
 
 def create_home_message(user_id=None):

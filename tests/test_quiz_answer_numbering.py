@@ -1201,18 +1201,23 @@ class NewUserWelcomeTest(unittest.TestCase):
 
         self.assertEqual([("test-reply-token", user_id)], calls)
 
-    def test_dashboard_link_uses_liff_url_when_liff_id_is_configured(self) -> None:
+    def test_authenticated_dashboard_link_keeps_token_when_liff_id_is_configured(self) -> None:
         function_globals = app.build_dashboard_url.__globals__
         original_getenv = function_globals["os"].getenv
-        function_globals["os"].getenv = lambda key, default="": (
-            "1234567890-test" if key == "LIFF_ID" else original_getenv(key, default)
+        values = {
+            "LIFF_ID": "1234567890-test",
+            "PUBLIC_BASE_URL": "https://example.test",
+        }
+        function_globals["os"].getenv = lambda key, default="": values.get(
+            key, original_getenv(key, default)
         )
         try:
             url = app.build_dashboard_url("liff-dashboard-user")
         finally:
             function_globals["os"].getenv = original_getenv
 
-        self.assertTrue(url.startswith("https://liff.line.me/1234567890-test?token="))
+        self.assertTrue(url.startswith("https://example.test/goukaku-no-michi?token="))
+        self.assertTrue(url.split("?token=", 1)[1])
 
     def test_teach_me_gensan_enters_dedicated_term_explanation_mode(self) -> None:
         user_id = "gensan-term-user"
