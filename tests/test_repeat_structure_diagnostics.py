@@ -8,8 +8,8 @@ os.environ.setdefault("CHANNEL_SECRET", "x")
 import database
 import pilot_diagnostics
 from app import app
-from database import get_learning_events_by_event_keys, set_supporter_link
-from goukaku_ui import create_dashboard_token, create_supporter_token
+from database import get_learning_events_by_event_keys
+from goukaku_ui import create_dashboard_token
 from pilot_diagnostics import build_repeat_structure_audit
 
 
@@ -163,7 +163,7 @@ def test_learning_event_helper_is_select_only(monkeypatch):
     ))
 
 
-def test_supporter_diagnostics_renders_repeat_section_but_learner_page_does_not():
+def test_internal_diagnostics_renders_repeat_section_but_learner_page_does_not(monkeypatch):
     first = attempt("Q1", 0)
     repeated = attempt("Q1", 1, event="adaptive-repeat")
     database._local_question_attempts.extend([first, repeated])
@@ -178,12 +178,10 @@ def test_supporter_diagnostics_renders_repeat_section_but_learner_page_does_not(
             **{**AUDIT, "selection_group": "exploration", "selection_reason": "safety_wrong"},
         }],
     }
-    set_supporter_link("supporter", "learner")
-    supporter_token = create_supporter_token("supporter")
+    monkeypatch.setenv("LT_INTERNAL_ADMIN_TOKEN", "admin-secret")
     client = app.test_client()
     response = client.get(
-        "/supporter/pilot-diagnostics"
-        f"?token={supporter_token}&learner_user_id=learner&period=7"
+        "/internal/pilot-diagnostics?token=admin-secret&learner_user_id=learner&period=7"
     )
     html = response.get_data(as_text=True)
     assert response.status_code == 200
