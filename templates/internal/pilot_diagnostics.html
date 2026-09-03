@@ -1,0 +1,29 @@
+{% extends "goukaku/base.html" %}
+{% block title %}LT Internal Diagnostics{% endblock %}
+{% block content %}
+<header class="app-header title-only"><h1>LT Internal Diagnostics</h1></header>
+<main class="page-content weekly-question-page pilot-diagnostics-page">
+  <p><a href="{{ url_for('site_ui.internal_index', token=internal_token, learner_user_id=learner_id) }}">← Internal console</a></p>
+  <nav class="pilot-period-tabs" aria-label="診断期間">
+    {% for value,label in [('all','全期間'),('7','直近7日'),('30','直近30日')] %}
+    <a class="pilot-period-tab{{ ' active' if diagnostics.period==value }}"{% if diagnostics.period==value %} aria-current="page"{% endif %} href="{{ url_for('site_ui.internal_pilot_diagnostics', token=internal_token, learner_user_id=learner_id, period=value) }}">{{ label }}</a>
+    {% endfor %}
+  </nav>
+  <section class="card pilot-diagnostic-card">
+    <h2>学習量</h2>
+    <p>回答 {{ diagnostics.total_attempts }} / ユニーク問題数 {{ diagnostics.unique_questions }} / 正解 {{ diagnostics.correct }} / 誤答 {{ diagnostics.incorrect }} / 正答率 {{ diagnostics.accuracy }}%</p>
+  </section>
+  <section class="card pilot-diagnostic-card">
+    <h2>学習範囲</h2>
+    <p>取り組んだNode {{ diagnostics.touched_nodes }} / {{ diagnostics.canonical_node_total }}（{{ diagnostics.coverage }}%）</p>
+  </section>
+  <section class="card pilot-diagnostic-card">
+    <h2>理解状態</h2>
+    <p>未着手 {{ diagnostics.state_counts.unseen }} / 確認中 {{ diagnostics.state_counts.checking }} / 修復中 {{ diagnostics.state_counts.repairing }} / 修復済み {{ diagnostics.state_counts.repaired }} / 定着 {{ diagnostics.state_counts.stable }} / 再確認待ち {{ diagnostics.state_counts.recheck_due }}</p>
+  </section>
+  <section class="card pilot-diagnostic-card">
+    <h2>診断JSON</h2>
+    <details><summary>全文を見る</summary><pre>{{ diagnostics|tojson(indent=2) }}</pre></details>
+  </section>
+</main>
+{% endblock %}
