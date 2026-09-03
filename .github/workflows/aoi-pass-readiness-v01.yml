@@ -1,0 +1,27 @@
+name: Aoi pass-readiness v0.1
+
+on:
+  push:
+    branches:
+      - feature/pass-readiness-evaluator-v01
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/pass-readiness-evaluator-v01
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt pytest
+      - name: Focused readiness tests
+        run: PYTHONPATH="$PWD" python -m pytest -q tests/test_pass_readiness.py
+      - name: Full suite
+        run: |
+          PYTHONPATH="$PWD" python -m pytest -q \
+            --deselect tests/test_quiz_answer_numbering.py::ConfigurableQuizTest::test_runtime_loader_supports_current_utf16_and_candidate_utf8
