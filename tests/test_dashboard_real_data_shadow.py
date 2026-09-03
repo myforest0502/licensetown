@@ -125,6 +125,7 @@ def test_high_accuracy_low_coverage_remains_coverage_when_sample_is_small(monkey
     evidence["fields"][0]["question_accuracy"] = 1.0
     evidence["fields"][0]["evaluable_accuracy"] = 1.0
     evidence["fields"][0]["evaluable_answer_count"] = 3
+    progress["fields"][0]["node_coverage"] = 0.01
     result = build(monkeypatch, evidence, progress, profiles)
     first = next(item for item in result["weakness_top3"] if item["field_id"] == 1)
     assert first["reason_code"] == "coverage_expand"
