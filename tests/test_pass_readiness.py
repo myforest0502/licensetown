@@ -170,7 +170,6 @@ def test_recheck_due_requires_retention_confirmation(monkeypatch):
 
 def test_mixed_ability_blind_spot_keeps_building_coverage(monkeypatch):
     evidence, progress, ability = _fixture(touched=65, stable=30, evaluable=400)
-    # Make PREDICT opportunity Nodes live almost entirely outside the touched set.
     ability = deepcopy(ability)
     ability["PREDICT"] = {f"N{i}" for i in range(91, 101)}
     result = _run(monkeypatch, evidence=evidence, progress=progress, ability=ability)
@@ -220,7 +219,8 @@ def test_shuffled_attempt_order_is_deterministic_for_status(monkeypatch):
     assert first["components"]["activity_context"] == second["components"]["activity_context"]
 
 
-def test_evaluator_does_not_import_persisted_user_node_state_as_authority():
+def test_evaluator_does_not_import_persisted_node_state_database_api():
     source = (Path(__file__).resolve().parents[1] / "pass_readiness.py").read_text(encoding="utf-8")
     assert "get_user_node_states" not in source
-    assert "user_node_state" not in source
+    assert "from database import" not in source
+    assert "import database" not in source
