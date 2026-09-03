@@ -1,0 +1,49 @@
+name: Aoi learner field route restart-safe v0.1
+
+on:
+  push:
+    branches:
+      - fix/learner-field-route-restart-safe-v01
+
+permissions:
+  contents: write
+
+jobs:
+  integrate-test:
+    if: ${{ !contains(github.event.head_commit.message, 'aoi-field-route-auto') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/learner-field-route-restart-safe-v01
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply route patch
+        run: PYTHONPATH="$PWD" python scripts/apply_restart_safe_field_route_v01.py
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt pytest
+      - name: Focused route tests
+        run: |
+          PYTHONPATH="$PWD" python -m pytest -q \
+            tests/test_learner_field_route_restart_safe.py \
+            tests/test_learner_goukaku_navigation_ui.py \
+            tests/test_dashboard_recommendation_cooldown.py
+      - name: Full suite
+        run: |
+          PYTHONPATH="$PWD" python -m pytest -q \
+            --deselect tests/test_quiz_answer_numbering.py::ConfigurableQuizTest::test_runtime_loader_supports_current_utf16_and_candidate_utf8
+      - name: Commit integrated route
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add app.py tests/test_learner_field_route_restart_safe.py
+          if git diff --cached --quiet; then
+            echo 'Integration already applied.'
+            exit 0
+          fi
+          git commit -m 'fix: make learner field route restart-safe [aoi-field-route-auto]'
+          git push origin HEAD:fix/learner-field-route-restart-safe-v01
