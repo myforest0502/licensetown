@@ -15,7 +15,7 @@ from knowledge_node_repair_evidence import (
     SAME_QUESTION,
     classify_repair_confirmation,
 )
-from question_bank import get_question_tag, get_quiz_question, question_ids
+from question_bank import get_category_small, get_question_tag, get_quiz_question, question_ids
 from prerequisite_backtrack_pilot import (
     is_prerequisite_backtrack_pilot_enabled,
     parse_prerequisite_backtrack_pilot_user_ids,
@@ -112,6 +112,7 @@ def select_node_adaptive_questions(
     exclude_ids=(),
     rng=None,
     as_of: datetime | None = None,
+    category_small: int | None = None,
 ) -> list[dict[str, Any]]:
     """Return unique recommendation records with balanced repair/exploration."""
     attempts = [dict(item) for item in attempts]
@@ -134,6 +135,8 @@ def select_node_adaptive_questions(
     candidates = []
     for question_id in question_ids():
         if question_id in excluded:
+            continue
+        if category_small is not None and get_category_small(question_id) != category_small:
             continue
         tag = get_question_tag(question_id)
         node = canonicalize_knowledge_node_id(tag["knowledge_node_id"])
@@ -265,10 +268,12 @@ def select_node_adaptive_questions(
 
 
 def build_node_adaptive_session(
-    attempts, question_count=30, exclude_ids=(), rng=None, *, audit_out=None
+    attempts, question_count=30, exclude_ids=(), rng=None, *, audit_out=None,
+    category_small: int | None = None,
 ):
     records = select_node_adaptive_questions(
-        attempts, question_count, exclude_ids=exclude_ids, rng=rng
+        attempts, question_count, exclude_ids=exclude_ids, rng=rng,
+        category_small=category_small,
     )
     if len(records) < question_count:
         raise ValueError("Not enough questions for Node adaptive session")
