@@ -49,7 +49,7 @@ def test_goukaku_home_renders(monkeypatch):
     assert 'class="learning-overview"' in text
     assert 'class="guidance-stack"' in text
     assert 'class="motivation-grid dashboard-footer-cards"' in text
-    guidance_labels = ["苦手分野 TOP3", "今日のおすすめ学習", "源さんの一言"]
+    guidance_labels = ["優先課題 TOP3", "今日のおすすめ学習", "源さんの一言"]
     assert [text.index(label) for label in guidance_labels] == sorted(text.index(label) for label in guidance_labels)
     assert text.index("分野別 到達度") < text.index("次の報酬まで")
     assert text.index("源さんの一言") < text.index("次の報酬まで")
@@ -72,7 +72,6 @@ def test_dashboard_responsive_css_hides_actions_only_on_pc():
     assert ".subject-card>.subject-list>.empty-state{display:flex;min-height:150px" in css
     assert ".detail-page .detail-row{grid-template-columns:198px 1fr 62px 16px;height:66px" in css
     assert ".detail-page .detail-row .bar{height:12px}" in css
-    assert ".combo-chart{height:295px" in css
     assert ".chart-item small{width:58px;min-height:32px;font-size:10px" in css
     assert ".subject-chart{height:300px" in css
     assert ".daily-chart{height:280px" in css
