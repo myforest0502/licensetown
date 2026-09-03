@@ -2,6 +2,8 @@ import os
 from types import SimpleNamespace
 
 os.environ.setdefault("OPENAI_API_KEY", "test-openai-key")
+os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-line-token")
+os.environ.setdefault("CHANNEL_SECRET", "test-line-secret")
 os.environ.setdefault("LINE_CHANNEL_ACCESS_TOKEN", "test-line-token")
 os.environ.setdefault("LINE_CHANNEL_SECRET", "test-line-secret")
 
