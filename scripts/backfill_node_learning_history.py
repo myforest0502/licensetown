@@ -21,7 +21,10 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 import database
-from question_bank import get_question_tag
+from question_bank import get_question_tag, question_ids
+
+
+FORMAL_QUESTION_IDS = frozenset(question_ids())
 
 
 LEARNING_EVENT_COLUMNS = (
@@ -100,7 +103,7 @@ def _question_number(question_id: Any) -> int | None:
     if not match:
         return None
     number = int(match.group(1))
-    return number if 1 <= number <= 1737 else None
+    return number if f"Q{number}" in FORMAL_QUESTION_IDS else None
 
 
 def _normalise_json_value(value: Any) -> Any:
