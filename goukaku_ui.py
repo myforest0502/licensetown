@@ -19,6 +19,7 @@ from supporter_report import build_supporter_report
 from pilot_diagnostics import build_pilot_diagnostics
 from field_evidence import build_field_evidence
 from field_progress import build_field_progress
+from dashboard_real_data_shadow import build_dashboard_real_data_shadow
 from field_progress_presentation import build_field_progress_presentation_from_calculation
 from overall_progress_presentation import build_overall_progress_presentation
 from dashboard_settings import (
@@ -45,6 +46,12 @@ def field_progress_ui_enabled():
 
 def overall_progress_ui_enabled():
     return os.getenv("ENABLE_OVERALL_PROGRESS_UI", "").strip().lower() in {
+        "1", "true", "yes", "on",
+    }
+
+
+def dashboard_real_data_shadow_enabled():
+    return os.getenv("ENABLE_DASHBOARD_REAL_DATA_SHADOW", "").strip().lower() in {
         "1", "true", "yes", "on",
     }
 
@@ -135,6 +142,8 @@ def build_dashboard(user_id=None):
         "field_progress_fields": [],
         "overall_progress_ui_enabled": False,
         "overall_progress_preview": None,
+        "dashboard_real_data_shadow_enabled": False,
+        "dashboard_real_data_shadow": None,
         "phase12_guidance_preview_enabled": False,
         "phase12_guidance_preview": None,
         "weak_fields": [],
@@ -163,13 +172,15 @@ def build_dashboard(user_id=None):
         dashboard["field_stats"] = [item for item in fields if item["learned"]]
         field_preview = field_progress_ui_enabled()
         overall_preview = overall_progress_ui_enabled()
+        shadow_preview = dashboard_real_data_shadow_enabled()
         phase12_preview = phase12_guidance_preview_enabled()
         attempts = None
         evidence = None
-        if field_preview or overall_preview or phase12_preview:
+        progress = None
+        if field_preview or overall_preview or shadow_preview or phase12_preview:
             attempts = get_question_attempts(user_id)
             evidence = build_field_evidence(attempts)
-        if field_preview or overall_preview:
+        if field_preview or overall_preview or shadow_preview:
             progress = build_field_progress(evidence)
         if field_preview:
             dashboard["field_progress_ui_enabled"] = True
@@ -183,6 +194,20 @@ def build_dashboard(user_id=None):
             )
         current_guidance = build_learning_guidance(dashboard["total_answers"], fields)
         dashboard.update(current_guidance)
+        if shadow_preview:
+            legacy_recommended_field = (
+                dashboard["recommended_study"][0][0]
+                if dashboard["recommended_study"] else None
+            )
+            dashboard["dashboard_real_data_shadow_enabled"] = True
+            dashboard["dashboard_real_data_shadow"] = build_dashboard_real_data_shadow(
+                attempts,
+                evidence=evidence,
+                progress=progress,
+                legacy_overall_progress_percent=dashboard["overall_progress"],
+                legacy_weak_fields=dashboard["weak_fields"],
+                legacy_recommended_field=legacy_recommended_field,
+            )
         if phase12_preview:
             shadow_judgment = build_shadow_judgment(
                 attempts,
