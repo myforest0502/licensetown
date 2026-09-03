@@ -1698,26 +1698,71 @@ def reply_question_type_choice(reply_token, mode):
     )
 
 
-def reply_quiz_category_group_choice(reply_token):
+def _category_route_mode_label(mode):
+    return "熱血" if mode == "nekketsu" else "学習"
+
+
+def build_category_group_command(mode, group_name):
+    return f"{_category_route_mode_label(mode)}：分野：{group_name}"
+
+
+def build_category_small_command(mode, group_name, field_name):
+    return f"{_category_route_mode_label(mode)}：分野：{group_name}：{field_name}"
+
+
+def parse_category_route_command(message):
+    parts = str(message or "").strip().split("：")
+    if len(parts) not in {3, 4} or parts[1] != "分野":
+        return None
+    if parts[0] == "学習":
+        mode = "study"
+    elif parts[0] == "熱血":
+        mode = "nekketsu"
+    else:
+        return None
+    group_name = parts[2]
+    if group_name not in get_category_group_names():
+        return None
+    if len(parts) == 3:
+        return {"kind": "group", "mode": mode, "group_name": group_name}
+    field_name = parts[3]
+    try:
+        category_small = resolve_category_small(field_name, group_name)
+    except QuestionBankError:
+        return None
+    return {
+        "kind": "small",
+        "mode": mode,
+        "group_name": group_name,
+        "field_name": field_name,
+        "category_small": category_small,
+    }
+
+
+def reply_quiz_category_group_choice(reply_token, mode="study"):
     line_bot_api.reply_message(
         reply_token,
         TextSendMessage(
             text="まず大きな分野を選んでくれ＾＾",
             quick_reply=QuickReply(items=[
-                QuickReplyButton(action=MessageAction(label=name, text=name))
+                QuickReplyButton(action=MessageAction(
+                    label=name, text=build_category_group_command(mode, name)
+                ))
                 for name in get_category_group_names()
             ]),
         ),
     )
 
 
-def reply_quiz_category_choice(reply_token, group_name):
+def reply_quiz_category_choice(reply_token, group_name, mode="study"):
     line_bot_api.reply_message(
         reply_token,
         TextSendMessage(
             text=f"{group_name}の中から分野を選んでくれ＾＾",
             quick_reply=QuickReply(items=[
-                QuickReplyButton(action=MessageAction(label=name, text=name))
+                QuickReplyButton(action=MessageAction(
+                    label=name, text=build_category_small_command(mode, group_name, name)
+                ))
                 for name in get_category_names_for_group(group_name)
             ]),
         ),
@@ -4026,27 +4071,61 @@ def handle_text_message(event):
         user_modes[user_id] = mode
         user_states[user_id] = "waiting_quiz_category_group"
         quiz_category_selections[user_id] = {"mode": mode}
-        reply_quiz_category_group_choice(event.reply_token)
+        reply_quiz_category_group_choice(event.reply_token, mode=mode)
         return
-    if current_state == "waiting_quiz_category_group":
-        if user_message not in get_category_group_names():
-            reply_quiz_category_group_choice(event.reply_token)
+
+    category_route = parse_category_route_command(user_message)
+    if category_route:
+        logging.info(
+            "quiz_category_route kind=%s mode=%s group=%r field=%r state_before=%s",
+            category_route["kind"],
+            category_route["mode"],
+            category_route["group_name"],
+            category_route.get("field_name"),
+            current_state,
+        )
+        mode = category_route["mode"]
+        group_name = category_route["group_name"]
+        user_modes[user_id] = mode
+        if category_route["kind"] == "group":
+            quiz_category_selections[user_id] = {
+                "mode": mode,
+                "group_name": group_name,
+            }
+            user_states[user_id] = "waiting_quiz_category_small"
+            reply_quiz_category_choice(event.reply_token, group_name, mode=mode)
             return
-        quiz_category_selections.setdefault(user_id, {})["group_name"] = user_message
+        quiz_category_selections[user_id] = {
+            "mode": mode,
+            "group_name": group_name,
+            "category_small": category_route["category_small"],
+        }
+        user_states.pop(user_id, None)
+        start_and_reply_quiz(event.reply_token, user_id)
+        return
+
+    if current_state == "waiting_quiz_category_group":
+        category_selection = quiz_category_selections.setdefault(user_id, {})
+        mode = category_selection.get("mode", user_modes.get(user_id, "study"))
+        if user_message not in get_category_group_names():
+            reply_quiz_category_group_choice(event.reply_token, mode=mode)
+            return
+        category_selection["group_name"] = user_message
         user_states[user_id] = "waiting_quiz_category_small"
-        reply_quiz_category_choice(event.reply_token, user_message)
+        reply_quiz_category_choice(event.reply_token, user_message, mode=mode)
         return
     if current_state == "waiting_quiz_category_small":
         category_selection = quiz_category_selections.get(user_id, {})
         group_name = category_selection.get("group_name")
+        mode = category_selection.get("mode", user_modes.get(user_id, "study"))
         try:
             category_small = resolve_category_small(user_message, group_name)
         except QuestionBankError:
             if group_name:
-                reply_quiz_category_choice(event.reply_token, group_name)
+                reply_quiz_category_choice(event.reply_token, group_name, mode=mode)
             else:
                 user_states[user_id] = "waiting_quiz_category_group"
-                reply_quiz_category_group_choice(event.reply_token)
+                reply_quiz_category_group_choice(event.reply_token, mode=mode)
             return
         category_selection["category_small"] = category_small
         user_states.pop(user_id, None)
