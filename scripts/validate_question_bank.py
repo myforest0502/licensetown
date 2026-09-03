@@ -19,14 +19,43 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BANK_DIR = REPOSITORY_ROOT / "data" / "question_bank"
 DEFAULT_SCHEMA_PATH = DEFAULT_BANK_DIR / "schema" / "question_bank_schema_v1.json"
 DEFAULT_REGISTRY_PATH = DEFAULT_BANK_DIR / "knowledge_nodes.json"
+DEFAULT_MANIFEST_PATH = DEFAULT_BANK_DIR / "bank_manifest.json"
 QUESTION_BANK_FILES = {
     "questions": "questions.json",
     "answers": "answers.json",
     "explanations": "explanations.json",
     "question_tags": "question_tags.json",
 }
-EXPECTED_QUESTION_COUNT = 1737
-EXPECTED_IDS = {f"Q{number}" for number in range(1, EXPECTED_QUESTION_COUNT + 1)}
+
+def _load_declared_manifest(path: Path = DEFAULT_MANIFEST_PATH) -> dict[str, Any]:
+    data = json.loads(path.read_text(encoding="utf-8-sig"))
+    if not isinstance(data, dict):
+        raise ValueError("bank_manifest.json must contain a JSON object")
+    required = {
+        "bank_version", "first_question_number", "last_question_number", "question_count"
+    }
+    missing = required - set(data)
+    if missing:
+        raise ValueError(f"bank_manifest.json missing: {sorted(missing)}")
+    first = data["first_question_number"]
+    last = data["last_question_number"]
+    count = data["question_count"]
+    if not isinstance(data["bank_version"], str) or not data["bank_version"].strip():
+        raise ValueError("bank_manifest.json bank_version must be a non-empty string")
+    if not all(type(value) is int for value in (first, last, count)):
+        raise ValueError("bank_manifest.json range/count values must be integers")
+    if first < 1 or last < first or count != last - first + 1:
+        raise ValueError("bank_manifest.json range/count contract is inconsistent")
+    return data
+
+
+_DECLARED_MANIFEST = _load_declared_manifest()
+FIRST_QUESTION_NUMBER = _DECLARED_MANIFEST["first_question_number"]
+LAST_QUESTION_NUMBER = _DECLARED_MANIFEST["last_question_number"]
+EXPECTED_QUESTION_COUNT = _DECLARED_MANIFEST["question_count"]
+EXPECTED_IDS = {
+    f"Q{number}" for number in range(FIRST_QUESTION_NUMBER, LAST_QUESTION_NUMBER + 1)
+}
 TASK_PRIMARY_ABILITIES = {
     "fact_recall": "KNOW",
     "finding_interpretation": "INTERPRET",

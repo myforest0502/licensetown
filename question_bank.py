@@ -12,9 +12,38 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 QUESTION_BANK_DIR = Path(__file__).resolve().parent / "data" / "question_bank"
-EXPECTED_QUESTION_COUNT = 1737
+BANK_MANIFEST_PATH = QUESTION_BANK_DIR / "bank_manifest.json"
+
+
+def _load_bank_manifest() -> dict:
+    data = json.loads(BANK_MANIFEST_PATH.read_text(encoding="utf-8-sig"))
+    if not isinstance(data, dict):
+        raise ValueError("bank_manifest.json must contain a JSON object")
+    required = {
+        "bank_version", "first_question_number", "last_question_number", "question_count"
+    }
+    missing = required - set(data)
+    if missing:
+        raise ValueError(f"bank_manifest.json missing: {sorted(missing)}")
+    first = data["first_question_number"]
+    last = data["last_question_number"]
+    count = data["question_count"]
+    if not isinstance(data["bank_version"], str) or not data["bank_version"].strip():
+        raise ValueError("bank_manifest.json bank_version must be a non-empty string")
+    if not all(type(value) is int for value in (first, last, count)):
+        raise ValueError("bank_manifest.json range/count values must be integers")
+    if first < 1 or last < first or count != last - first + 1:
+        raise ValueError("bank_manifest.json range/count contract is inconsistent")
+    return data
+
+
+_BANK_MANIFEST = _load_bank_manifest()
+QUESTION_BANK_VERSION = _BANK_MANIFEST["bank_version"]
+FIRST_QUESTION_NUMBER = _BANK_MANIFEST["first_question_number"]
+LAST_QUESTION_NUMBER = _BANK_MANIFEST["last_question_number"]
+EXPECTED_QUESTION_COUNT = _BANK_MANIFEST["question_count"]
 EXPECTED_QUESTION_IDS = {
-    f"Q{number}" for number in range(1, EXPECTED_QUESTION_COUNT + 1)
+    f"Q{number}" for number in range(FIRST_QUESTION_NUMBER, LAST_QUESTION_NUMBER + 1)
 }
 QUESTION_BANK_ERROR_MESSAGE = (
     "おう、悪い。今は正式問題バンクを読み込めない状態だ。\n"
