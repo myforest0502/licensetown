@@ -15,6 +15,7 @@ from flask import abort, redirect, render_template, request, url_for
 
 from goukaku_ui import build_dashboard
 from pilot_diagnostics import build_pilot_diagnostics
+from supporter_performance import begin_request, finish_request
 
 
 LEGACY_DIAGNOSTICS_PATH = "/supporter/pilot-diagnostics"
@@ -43,6 +44,18 @@ def require_developer_authorization() -> str:
 
 def register_developer_routes(blueprint) -> None:
     """Attach developer-only routes and legacy-route guard to ``blueprint``."""
+
+    @blueprint.before_app_request
+    def _begin_supporter_perf_probe():
+        if request.path == "/supporter":
+            begin_request()
+        return None
+
+    @blueprint.after_app_request
+    def _finish_supporter_perf_probe(response):
+        if request.path == "/supporter":
+            finish_request(response.status_code)
+        return response
 
     @blueprint.before_app_request
     def _guard_legacy_developer_routes():
