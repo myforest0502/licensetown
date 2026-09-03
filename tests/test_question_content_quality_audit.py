@@ -52,3 +52,24 @@ def test_prerequisite_sentence_leak_is_visible_without_mutation():
     data[3][0]["prerequisite_nodes"] = ["これは説明文として長すぎる前提知識であり、そのまま保存すべきではありません。"]
     report = audit.audit_content_records(*data)
     assert any(item["rule_id"] == "PREREQUISITE_SENTENCE_LEAK" for item in report["findings"])
+
+
+def test_learner_internal_metadata_and_generic_choice_rationale_fail():
+    data = records("ABCDEABCDE")
+    data[0][0]["question_text"] += " These amendments preserve frozen Node metadata."
+    data[2][0]["choice_explanations"] = {
+        letter: ("正しい。" if letter == "A" else f"誤り。「{letter}」ではなく、この設問の条件では「A」を選ぶ。")
+        for letter in "ABCDE"
+    }
+    report = audit.audit_content_records(*data)
+    assert any(item["rule_id"] == "LEARNER_TEXT_INTERNAL_METADATA" and item["severity"] == "FAIL" for item in report["findings"])
+    assert any(item["rule_id"] == "GENERIC_CHOICE_RATIONALE" and item["severity"] == "FAIL" for item in report["findings"])
+
+
+def test_repeated_stem_template_warns_and_source_alt_is_formally_deferred():
+    data = records("ABCDEABCDE")
+    for question in data[0][:3]:
+        question["question_text"] = f"{question['id']}について、次の判断を行う。最も適切なのはどれか。"
+    report = audit.audit_content_records(*data)
+    assert any(item["rule_id"] == "REPEATED_STEM_TEMPLATE" and item["severity"] == "WARN" for item in report["findings"])
+    assert audit.SOURCE_ALT_DEMAND_DEFERRED_TO_FORMAL_PAIR_TESTS is True
