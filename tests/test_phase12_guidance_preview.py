@@ -92,7 +92,9 @@ def test_missing_or_invalid_dashboard_token_never_reads_or_exposes_preview(monke
         lambda *_: (_ for _ in ()).throw(AssertionError("unexpected read")),
     )
     for query in ("", "?token=invalid"):
-        text = app.test_client().get(f"/goukaku-no-michi{query}").get_data(as_text=True)
+        response = app.test_client().get(f"/goukaku-no-michi{query}")
+        text = response.get_data(as_text=True)
+        assert response.status_code == 403
         assert "phase12-guidance-preview" not in text
 
 

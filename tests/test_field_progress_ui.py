@@ -73,7 +73,7 @@ def test_enabled_home_separates_three_metrics_and_keeps_overall_and_cta(monkeypa
     assert "学習範囲" in text
     assert "正答率" in text
     assert "1%未満" in text
-    assert "総合到達度" in text
+    assert "合格への到達度" in text
     assert "今日のおすすめ学習" in text
     assert "チャレンジする！" in text
 
@@ -102,5 +102,7 @@ def test_invalid_or_missing_token_does_not_expose_preview_data(monkeypatch):
     monkeypatch.setenv("ENABLE_FIELD_PROGRESS_UI", "true")
     monkeypatch.setattr(goukaku_ui, "get_question_attempts", lambda *_: (_ for _ in ()).throw(AssertionError("unexpected read")))
     for query in ("", "?token=invalid"):
-        text = app.test_client().get(f"/goukaku-no-michi{query}").get_data(as_text=True)
+        response = app.test_client().get(f"/goukaku-no-michi{query}")
+        text = response.get_data(as_text=True)
+        assert response.status_code == 403
         assert "field-progress-row" not in text

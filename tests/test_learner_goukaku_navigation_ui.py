@@ -105,6 +105,62 @@ def test_home_enables_learner_navigation_for_authenticated_learner(monkeypatch):
     assert "STRONG" not in text
 
 
+def test_learner_data_routes_fail_closed_and_keep_signed_token_navigation(monkeypatch):
+    client = app_module.app.test_client()
+    for path in (
+        "/goukaku-no-michi",
+        "/goukaku-no-michi/subjects",
+        "/goukaku-no-michi/footprints",
+        "/goukaku-no-michi/learning",
+    ):
+        assert client.get(path).status_code == 403
+        assert client.get(f"{path}?token=invalid").status_code == 403
+
+    token = goukaku_ui.create_dashboard_token("learner")
+    monkeypatch.setattr(goukaku_ui, "record_activity_event", lambda *args, **kwargs: None)
+    home = client.get(f"/goukaku-no-michi?token={token}")
+    assert home.status_code == 200
+    text = home.get_data(as_text=True)
+    assert f"/goukaku-no-michi/subjects?token={token}" in text
+    assert f"/goukaku-no-michi/footprints?token={token}" in text
+    assert client.get(f"/goukaku-no-michi/subjects?token={token}").status_code == 200
+    assert client.get(f"/goukaku-no-michi/footprints?token={token}").status_code == 200
+
+
+def test_legacy_weak_field_action_is_removed_from_formal_learner_path(monkeypatch):
+    dashboard = _dashboard()
+    dashboard["weak_fields"] = [
+        {"name": "内科学", "reason": "要強化", "score": 40},
+    ]
+    monkeypatch.setattr(goukaku_ui, "dashboard_user_id", lambda token: "learner")
+    monkeypatch.setattr(goukaku_ui, "build_dashboard", lambda *args, **kwargs: dashboard)
+    monkeypatch.setattr(goukaku_ui, "record_activity_event", lambda *args, **kwargs: None)
+
+    text = app_module.app.test_client().get("/goukaku-no-michi?token=ok").get_data(as_text=True)
+
+    assert "/goukaku-no-michi/learning?" not in text
+    assert "Ver.1では選択内容の確認まで利用できます" not in text
+    assert "今日の学習ナビで確認" in text
+    assert 'data-recommendation-source="learner_navigation"' in text
+
+
+def test_formal_overall_reuses_single_learner_navigation_attempt_read(monkeypatch):
+    calls = []
+    monkeypatch.delenv("ENABLE_OVERALL_PROGRESS_UI", raising=False)
+    monkeypatch.delenv("ENABLE_FIELD_PROGRESS_UI", raising=False)
+    monkeypatch.setattr(
+        goukaku_ui,
+        "get_question_attempts",
+        lambda user_id: calls.append(user_id) or [],
+    )
+
+    dashboard = goukaku_ui.build_dashboard("learner", include_learner_navigation=True)
+
+    assert calls == ["learner"]
+    assert dashboard["overall_progress_ui_enabled"] is True
+    assert dashboard["overall_progress_preview"] is not None
+
+
 def test_supporter_view_does_not_enable_learner_navigation(monkeypatch):
     calls = []
     monkeypatch.setattr(goukaku_ui, "authorized_supporter_learner", lambda *args: ("supporter", "learner"))
