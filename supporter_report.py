@@ -21,6 +21,7 @@ from field_evidence import build_field_evidence
 from field_progress import build_field_progress
 from learning_analysis import build_learning_guidance
 from pass_readiness import build_pass_readiness
+from supporter_performance import measure
 
 
 _POSITION_TEXT = {
@@ -102,9 +103,11 @@ def _pace(activity: dict) -> dict:
 
 
 def _parent_summary(summary: dict, activity: dict, fields: list[dict], latest: dict, attempts: list[dict]) -> dict:
-    evidence = build_field_evidence(attempts)
-    progress = build_field_progress(evidence)
-    readiness = build_pass_readiness(attempts, field_evidence=evidence, progress=progress)
+    with measure("parent_summary.evidence"):
+        evidence = build_field_evidence(attempts)
+        progress = build_field_progress(evidence)
+    with measure("parent_summary.readiness"):
+        readiness = build_pass_readiness(attempts, field_evidence=evidence, progress=progress)
     readiness_status = readiness["status"]
     coverage = float(readiness["components"]["coverage"].get("node_coverage") or 0.0)
     trajectory_status, trajectory_reason = _TRAJECTORY.get(
@@ -153,32 +156,40 @@ def _parent_summary(summary: dict, activity: dict, fields: list[dict], latest: d
 
 def build_supporter_report(learner_user_id: str) -> dict:
     """Return parent-facing data only; never consultation text or dev diagnostics."""
-    learning_data = get_dashboard_learning_data(learner_user_id)
-    summary = learning_data["summary"]
-    activity = learning_data["activity"]
-    all_fields = learning_data["fields"]
-    learned_fields = [item for item in all_fields if item["learned"]]
-    guidance = build_learning_guidance(summary["total_answers"], all_fields)
-    latest = _format_latest(get_latest_learning_day_summary(learner_user_id))
-    latest_activity = _format_latest_activity(get_latest_activity_day_summary(learner_user_id))
-    attempts = get_question_attempts(learner_user_id)
+    with measure("build_supporter_report.total"):
+        with measure("db.dashboard_learning_data"):
+            learning_data = get_dashboard_learning_data(learner_user_id)
+        summary = learning_data["summary"]
+        activity = learning_data["activity"]
+        all_fields = learning_data["fields"]
+        learned_fields = [item for item in all_fields if item["learned"]]
+        with measure("python.learning_guidance"):
+            guidance = build_learning_guidance(summary["total_answers"], all_fields)
+        with measure("db.latest_learning_day_summary"):
+            latest = _format_latest(get_latest_learning_day_summary(learner_user_id))
+        with measure("db.latest_activity_day_summary"):
+            latest_activity = _format_latest_activity(get_latest_activity_day_summary(learner_user_id))
+        with measure("db.question_attempts"):
+            attempts = get_question_attempts(learner_user_id)
+        with measure("python.parent_summary"):
+            parent_summary = _parent_summary(summary, activity, learned_fields, latest, attempts)
 
-    return {
-        # vNext stable contract
-        "parent_summary": _parent_summary(summary, activity, learned_fields, latest, attempts),
-        # temporary compatibility contract for the current supporter template/tests
-        "latest": latest,
-        "latest_studied": latest["has_learning"],
-        "latest_fields": latest["fields"],
-        "latest_activity": latest_activity,
-        "weekly_learning_days": activity["weekly_learning_days"],
-        "weekly_answers": activity["weekly_answers"],
-        "weekly_study_minutes": activity["weekly_study_minutes"],
-        "weekly_accuracy": activity["weekly_accuracy"],
-        "streak_days": activity["streak_days"],
-        "fields": learned_fields,
-        "weak_fields": guidance["weak_fields"],
-        "weak_analysis_message": guidance["weak_analysis_message"],
-        "recommended_study": guidance["recommended_study"],
-        "comment": _supporter_comment(latest, activity["streak_days"]),
-    }
+        return {
+            # vNext stable contract
+            "parent_summary": parent_summary,
+            # temporary compatibility contract for the current supporter template/tests
+            "latest": latest,
+            "latest_studied": latest["has_learning"],
+            "latest_fields": latest["fields"],
+            "latest_activity": latest_activity,
+            "weekly_learning_days": activity["weekly_learning_days"],
+            "weekly_answers": activity["weekly_answers"],
+            "weekly_study_minutes": activity["weekly_study_minutes"],
+            "weekly_accuracy": activity["weekly_accuracy"],
+            "streak_days": activity["streak_days"],
+            "fields": learned_fields,
+            "weak_fields": guidance["weak_fields"],
+            "weak_analysis_message": guidance["weak_analysis_message"],
+            "recommended_study": guidance["recommended_study"],
+            "comment": _supporter_comment(latest, activity["streak_days"]),
+        }
