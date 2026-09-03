@@ -95,6 +95,7 @@ def load_current_app_functions() -> SimpleNamespace:
         "start_quiz",
         "start_next_quiz",
         "parse_dashboard_recommendation_command",
+        "parse_category_route_command",
         "reply_new_user_welcome",
         "reply_gen_first_greeting",
         "build_dashboard_url",
@@ -1524,10 +1525,10 @@ class ConfigurableQuizTest(unittest.TestCase):
         started = []
 
         function_globals["reply_quiz_category_group_choice"] = (
-            lambda token: group_replies.append(token)
+            lambda token, mode="study": group_replies.append((token, mode))
         )
         function_globals["reply_quiz_category_choice"] = (
-            lambda token, group_name: category_replies.append((token, group_name))
+            lambda token, group_name, mode="study": category_replies.append((token, group_name, mode))
         )
         function_globals["start_and_reply_quiz"] = (
             lambda token, user_id: started.append((token, user_id))
@@ -1556,8 +1557,9 @@ class ConfigurableQuizTest(unittest.TestCase):
             function_globals["reply_quiz_category_choice"] = original_category_reply
             function_globals["start_and_reply_quiz"] = original_start_reply
 
-        self.assertEqual(2, len(group_replies))
-        self.assertEqual(["基礎", "専門基礎"], [group for _, group in category_replies])
+        self.assertEqual(["study", "nekketsu"], [mode for _, mode in group_replies])
+        self.assertEqual(["基礎", "専門基礎"], [group for _, group, _ in category_replies])
+        self.assertEqual(["study", "nekketsu"], [mode for _, _, mode in category_replies])
         self.assertEqual(2, len(started))
 
     def test_30_40_50_question_settings_select_once_without_duplicates(self) -> None:
