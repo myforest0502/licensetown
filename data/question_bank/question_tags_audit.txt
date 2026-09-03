@@ -1,7 +1,8 @@
 LicenseTown question_tags.json audit
-source: current formal Question Bank through Q1610
-records: 1610
-Q range: Q1-Q1610
+bank_version: 2026-09-b12
+source: current formal Question Bank through Q1737
+records: 1737
+Q range: Q1-Q1737
 duplicates: 0
 missing: 0
 schema errors: 0
@@ -10,122 +11,76 @@ cross-file ID mismatches: 0
 errors: 0
 
 tag_version:
-  1.0: 1410
   0.3: 200
+  1.0: 1537
 
 tag_status:
-  reviewed: 1410
+  reviewed: 1537
   reviewed_sample: 200
-  provisional_bulk: 0
 
 task:
-  assessment_selection: 175
-  cause_identification: 0
+  assessment_selection: 197
   device_selection: 44
-  fact_recall: 880
-  finding_interpretation: 191
+  fact_recall: 881
+  finding_interpretation: 288
   functional_goal_decision: 17
-  intervention_selection: 212
+  intervention_selection: 219
   prognosis_prediction: 5
   safety_priority: 86
 
 primary ability:
   DECIDE: 103
-  INTERPRET: 191
-  KNOW: 880
-  MEASURE: 175
+  INTERPRET: 288
+  KNOW: 881
+  MEASURE: 197
   PREDICT: 5
-  PRESCRIBE: 256
+  PRESCRIBE: 263
 
 secondary ability:
-  DECIDE: 72
-  INTERPRET: 280
-  KNOW: 27
-  MEASURE: 15
+  DECIDE: 76
+  INTERPRET: 299
+  KNOW: 104
+  MEASURE: 41
   PREDICT: 1
-  PRESCRIBE: 26
+  PRESCRIBE: 27
   null: 1189
 
 level:
   1: 859
-  2: 185
-  3: 469
+  2: 188
+  3: 593
   4: 97
 
 safety:
-  critical: 65 (4.0%)
-  moderate: 232 (14.4%)
-  none: 1313 (81.6%)
+  critical: 65 (3.7%)
+  moderate: 232 (13.4%)
+  none: 1440 (82.9%)
 
 source:
-  original: 516 (32.0%)
-  past_exam: 1094 (68.0%)
+  original: 643 (37.0%)
+  past_exam: 1094 (63.0%)
 
 candidate metric highlights:
-  fact_recall: 880 (54.7%)
-
-Q1606-Q1610 Repair Supply Phase2 batch1 additions:
-  records: 5
-  source original: 5
-  task assessment_selection: 3
-  task safety_priority: 2
-  primary MEASURE: 3
-  primary DECIDE: 2
-  safety moderate: 5
-  target canonical nodes: 5 existing multi-question nodes
-  formal strong source/new checks: 10 / 10 (each new Q STRONG vs both active-wrong source Qs)
-  manual medical/content review: PASS after terminology corrections
-
-Q1595-Q1605 Safety strong-repair pilot additions:
-  records: 11
-  source original: 11
-  task assessment_selection: 2
-  task finding_interpretation: 5
-  task intervention_selection: 1
-  task safety_priority: 3
-  safety moderate: 11
-  formal strong source/new pairs: 11
-
-Q1565-Q1594 additions:
-  records: 30
-  source past_exam: 30
-  source original: 0
-  task assessment_selection: 2
-  task fact_recall: 22
-  task finding_interpretation: 2
-  task intervention_selection: 3
-  task safety_priority: 1
-  safety critical: 1
-  safety moderate: 3
-  safety none: 26
+  fact_recall: 881 (50.7%)
 
 canonical Knowledge Node coverage:
-  canonical nodes: 1509
-  singleton canonical nodes: 1422
-  multi-question canonical nodes: 87
-  note: Q1606-Q1610 attach to five nodes that were already multi-question,
-        so canonical/singleton/multi counts do not change.
+  registry nodes: 1538
+  canonical nodes represented by questions: 1508
+  singleton canonical nodes: 1305
+  multi-question canonical nodes: 203
+  confirmed-shared registry groups: 186
+  confirmed-shared registry questions: 385
 
-current Q1605 audit delta:
-  records: 1605 -> 1610 (+5)
-  tag_version 1.0: 1405 -> 1410 (+5)
-  tag_status reviewed: 1405 -> 1410 (+5)
-  task assessment_selection: 172 -> 175 (+3)
-  task safety_priority: 84 -> 86 (+2)
-  primary MEASURE: 172 -> 175 (+3)
-  primary DECIDE: 101 -> 103 (+2)
-  safety moderate: 227 -> 232 (+5)
-  source original: 511 -> 516 (+5)
-  canonical nodes: 1509 -> 1509 (+0)
-  singleton canonical nodes: 1422 -> 1422 (+0)
-  multi-question canonical nodes: 87 -> 87 (+0)
+B12 final range Q1661-Q1737:
+  records: 77
+  content-quality gate: tracked by scripts/audit_question_content_quality.py
+  repair-evidence gate: tracked by formal STRONG pair tests
+  known exception: KN0779 remains intentional WEAK; no Q1738
 
-previous Q1594 audit delta:
-  records: 1594 -> 1605 (+11)
-  tag_version 1.0: 1394 -> 1405 (+11)
-  tag_status reviewed: 1394 -> 1405 (+11)
-  safety moderate: 216 -> 227 (+11)
-  source original: 500 -> 511 (+11)
-  canonical nodes: 1509 -> 1509 (+0)
-  singleton canonical nodes: 1433 -> 1422 (-11)
-  multi-question canonical nodes: 76 -> 87 (+11)
+validation summary:
+  four-store counts: {'questions': 1737, 'answers': 1737, 'explanations': 1737, 'question_tags': 1737}
+  four-store missing: {'questions': 0, 'answers': 0, 'explanations': 0, 'question_tags': 0}
+  four-store duplicates: {'questions': 0, 'answers': 0, 'explanations': 0, 'question_tags': 0}
+  invalid accepted answers: 0
+  task/primary mismatches: 0
+  safety contradictions: 0
