@@ -7,8 +7,6 @@ os.environ.setdefault("CHANNEL_SECRET", "x")
 
 import database
 from app import app
-from database import set_supporter_link
-from goukaku_ui import create_supporter_token
 
 
 def setup_function():
@@ -18,16 +16,15 @@ def setup_function():
     database._local_supporter_links.clear()
 
 
-def test_shadow_diagnostics_is_supporter_only_and_read_only():
-    set_supporter_link("supporter", "learner")
-    token = create_supporter_token("supporter")
+def test_shadow_diagnostics_is_internal_only_and_read_only(monkeypatch):
+    monkeypatch.setenv("LT_INTERNAL_ADMIN_TOKEN", "admin-secret")
     before_events = copy.deepcopy(database._local_learning_events)
     before_attempts = copy.deepcopy(database._local_question_attempts)
     before_states = copy.deepcopy(database._local_user_node_states)
 
     client = app.test_client()
     response = client.get(
-        f"/supporter/pilot-diagnostics?token={token}&learner_user_id=learner&period=7"
+        "/internal/pilot-diagnostics?token=admin-secret&learner_user_id=learner&period=7"
     )
     assert response.status_code == 200
     html = response.get_data(as_text=True)
