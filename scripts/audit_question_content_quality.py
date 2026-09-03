@@ -18,6 +18,32 @@ META_WRONG_PHRASES = (
     "条件を無視", "単一所見から診断", "関連しない機能", "逆方向の判断",
 )
 PLACEHOLDER_TOKENS = ("TODO", "TBD", "PLACEHOLDER", "ここに", "ダミー")
+INTERNAL_METADATA_PATTERNS = (
+    r"\bQ\d+\b",
+    r"\bNode\b",
+    r"\bfrozen\b",
+    r"\bamendment(?:s)?\b",
+    r"\bkey distribution\b",
+    r"these amendments",
+    r"these replacements",
+    r"all other b12d frozen items",
+    r"implementation(?: note| review)?",
+    r"現行Node",
+    r"正式ラベル",
+)
+GENERIC_RATIONALE_PATTERNS = (
+    r"誤り。?「?.+?」?ではなく、?この設問の条件では「?.+?」?を選ぶ",
+    r"この設問の条件では「?.+?」?が該当する",
+)
+STEM_TEMPLATE_PATTERNS = (
+    r"について、次の判断を行う。最も適切なのはどれか",
+    r"次のうち最も適切なのはどれか",
+)
+# SOURCE_ALT_DEMAND is intentionally not inferred by this text linter: source-Q
+# pairing is not stored in learner-facing records, and guessing it from wording
+# would duplicate the formal classifier.  Batch tests call
+# classify_repair_confirmation() for every reviewed pair instead.
+SOURCE_ALT_DEMAND_DEFERRED_TO_FORMAL_PAIR_TESTS = True
 
 
 def _norm(value: str) -> str:
@@ -73,6 +99,24 @@ def audit_content_records(
         explanation = str(explanation_by_id.get(qid, {}).get("explanation", ""))
         explanations_by_text[_norm(explanation)].append(qid)
 
+        learner_fields = [stem, explanation]
+        choice_explanations = explanation_by_id.get(qid, {}).get("choice_explanations") or {}
+        learner_fields.extend(str(value) for value in choice_explanations.values())
+        learner_text = "\n".join(learner_fields)
+        matched_internal = [pattern for pattern in INTERNAL_METADATA_PATTERNS if re.search(pattern, learner_text, re.I)]
+        if matched_internal:
+            findings.append(_finding("FAIL", "LEARNER_TEXT_INTERNAL_METADATA", [qid], "学習者向け本文に内部管理情報を検出"))
+
+        generic = [
+            letter for letter, value in choice_explanations.items()
+            if letter != key and any(re.search(pattern, str(value), re.I) for pattern in GENERIC_RATIONALE_PATTERNS)
+        ]
+        if len(generic) >= 3:
+            findings.append(_finding("FAIL", "GENERIC_CHOICE_RATIONALE", [qid], "3選択肢以上で差替え型の汎用誤答理由を検出"))
+        elif generic:
+            findings.append(_finding("WARN", "GENERIC_CHOICE_RATIONALE", [qid], "差替え型の汎用誤答理由を検出"))
+
+
         malformed = not stem or set(choices) != set("ABCDE") or any(not str(value).strip() for value in choices.values())
         malformed = malformed or any(token.lower() in (stem + json.dumps(choices, ensure_ascii=False)).lower() for token in PLACEHOLDER_TOKENS)
         if malformed:
@@ -90,6 +134,10 @@ def audit_content_records(
         for related in values.values():
             if len(related) > 1:
                 findings.append(_finding("FAIL", rule, related, reason))
+    for pattern in STEM_TEMPLATE_PATTERNS:
+        related = [q["id"] for q in questions if re.search(pattern, str(q.get("question_text", "")), re.I)]
+        if len(related) >= 3:
+            findings.append(_finding("WARN", "REPEATED_STEM_TEMPLATE", related, "汎用問題文テンプレートを3問以上で検出"))
 
     for normalized, related in distractors.items():
         nodes = {node_by_q[qid] for qid in related}
