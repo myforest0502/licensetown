@@ -10765,9 +10765,10 @@
   {
     "knowledge_node_id": "KN1064",
     "label": "腕橈骨筋反射の反射中枢は主にC5・C6であり、C8・T1ではない",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1074"
+      "Q1074",
+      "Q1701"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10885,9 +10886,10 @@
   {
     "knowledge_node_id": "KN1076",
     "label": "月経期は黄体ホルモン低下に伴い基礎体温が低温相へ移行するため、「高温相になる」が誤り",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1087"
+      "Q1087",
+      "Q1702"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10937,9 +10939,10 @@
   {
     "knowledge_node_id": "KN1081",
     "label": "異形成は細胞の大きさ・形態・配列などに異常を生じる進行性変化で、前癌病変として扱われる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1092"
+      "Q1092",
+      "Q1703"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11087,9 +11090,10 @@
   {
     "knowledge_node_id": "KN1096",
     "label": "感染性心内膜炎では弁上の疣贅が剝離して動脈塞栓を起こし、脳塞栓症を生じることがある",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1107"
+      "Q1107",
+      "Q1704"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11428,9 +11432,10 @@
   {
     "knowledge_node_id": "KN1130",
     "label": "純運動性脳神経は滑車神経、外転神経、舌下神経など",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1141"
+      "Q1141",
+      "Q1705"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11458,9 +11463,10 @@
   {
     "knowledge_node_id": "KN1133",
     "label": "臓側胸膜と壁側胸膜は肺門部で連続している",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1145"
+      "Q1145",
+      "Q1706"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11734,9 +11740,10 @@
   {
     "knowledge_node_id": "KN1160",
     "label": "糸球体基底膜肥厚や糸球体硬化が進み、末期腎不全へ至る",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1173"
+      "Q1173",
+      "Q1707"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11874,9 +11881,10 @@
   {
     "knowledge_node_id": "KN1174",
     "label": "純感覚性脳神経は嗅神経、視神経、内耳神経",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1187"
+      "Q1187",
+      "Q1708"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12316,9 +12324,10 @@
   {
     "knowledge_node_id": "KN1218",
     "label": "肺塞栓症は下肢深部静脈血栓由来が多く、下肢・骨盤手術後や長期臥床で多い",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1233"
+      "Q1233",
+      "Q1709"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12397,9 +12406,10 @@
   {
     "knowledge_node_id": "KN1226",
     "label": "GCSのE2は疼痛刺激で開眼する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1241"
+      "Q1241",
+      "Q1710"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12547,9 +12557,10 @@
   {
     "knowledge_node_id": "KN1241",
     "label": "前骨間神経は正中神経の運動枝で、長母指屈筋、方形回内筋、深指屈筋橈側部などを支配する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1256"
+      "Q1256",
+      "Q1711"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12567,9 +12578,10 @@
   {
     "knowledge_node_id": "KN1243",
     "label": "脊髄神経後根には脊髄神経節があり感覚ニューロン細胞体を含む",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1258"
+      "Q1258",
+      "Q1712"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12738,9 +12750,10 @@
   {
     "knowledge_node_id": "KN1260",
     "label": "即時記憶は数秒〜数十秒程度情報を保持する機能で、数字の順唱が代表的検査",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1276"
+      "Q1276",
+      "Q1713"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12889,10 +12902,11 @@
   },
   {
     "knowledge_node_id": "KN1275",
-    "label": "親しい人間関係を構築できず、奇異な考え方や風変わりな行動が継続してみられ、パーソナリティ障害を指摘さから病態・機能・原因を解釈する",
-    "status": "singleton_initial",
+    "label": "統合失調型パーソナリティ障害の長期的な対人関係困難・奇異な認知行動",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1291"
+      "Q1291",
+      "Q1714"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12900,9 +12914,10 @@
   {
     "knowledge_node_id": "KN1276",
     "label": "鉄欠乏はむずむず脚症候群の重要な関連因子で、夜間安静時に下肢の不快感と動かしたい衝動が出現する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1292"
+      "Q1292",
+      "Q1715"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13192,9 +13207,10 @@
   {
     "knowledge_node_id": "KN1305",
     "label": "血管拡張により末梢血管抵抗が低下する分布異常性ショックとなる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1325"
+      "Q1325",
+      "Q1716"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13212,9 +13228,10 @@
   {
     "knowledge_node_id": "KN1307",
     "label": "JDDST-Rで母指と示指によるつまみ動作の75%通過時期はおよそ12〜13か月に含まれる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1327"
+      "Q1327",
+      "Q1717"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13272,9 +13289,10 @@
   {
     "knowledge_node_id": "KN1313",
     "label": "具体的で反復する幻視が初期からみられやすい",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1333"
+      "Q1333",
+      "Q1718"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13433,9 +13451,10 @@
   {
     "knowledge_node_id": "KN1329",
     "label": "立脚相後半に最大活動を示すのは下腿三頭筋で、立脚終期の前方推進と脛骨前傾制御に強く活動する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1349"
+      "Q1349",
+      "Q1719"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13584,9 +13603,10 @@
   {
     "knowledge_node_id": "KN1344",
     "label": "成人立位の身体重心は第2仙椎前方付近にあり、矢状面の重心線は大転子近傍を通る",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1367"
+      "Q1367",
+      "Q1720"
     ],
     "aliases": [],
     "successor_ids": []
