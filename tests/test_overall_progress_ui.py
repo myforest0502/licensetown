@@ -73,6 +73,10 @@ def test_flag_off_preserves_legacy_overall_and_has_no_attempt_read(monkeypatch):
     dashboard = goukaku_ui.build_dashboard("overall-flag-off")
     assert not dashboard["overall_progress_ui_enabled"]
     assert dashboard["overall_progress_preview"] is None
+    # The legacy preview flags remain off and direct dashboard construction still
+    # avoids the attempt ledger. The authenticated learner route now intentionally
+    # reads attempts for the always-on learner navigation layer.
+    monkeypatch.setattr(goukaku_ui, "get_question_attempts", lambda *_: [])
     token = create_dashboard_token("overall-flag-off")
     text = app.test_client().get(f"/goukaku-no-michi?token={token}").get_data(as_text=True)
     assert "総合到達度" in text

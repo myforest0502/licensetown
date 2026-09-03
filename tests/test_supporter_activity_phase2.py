@@ -168,7 +168,7 @@ def test_personal_dashboard_records_one_plan_but_supporter_dashboard_records_non
         "recommendation_progress": 0,
         "recommendation_goal": 10,
     })
-    monkeypatch.setattr(goukaku_ui_module, "build_dashboard", lambda user_id: dashboard)
+    monkeypatch.setattr(goukaku_ui_module, "build_dashboard", lambda user_id, **kwargs: dashboard)
     token = create_dashboard_token("learner")
     client = app.test_client()
 

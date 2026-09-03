@@ -6,6 +6,53 @@
 <div class="page-content dashboard-grid{% if learner_preview %} learner-preview-mode{% endif %}"{% if learner_preview %} inert{% endif %}>
   {% if learner_preview %}<div class="learner-preview-banner"><b>本人画面プレビュー（操作はできません）</b></div>{% endif %}
   {% if read_only %}<div class="readonly-banner"><b>閲覧専用</b><span>保存済みの学習データを表示しています</span></div>{% endif %}
+  {% if dashboard.learner_navigation_enabled and not read_only %}
+  {% set nav = dashboard.learner_navigation %}
+  <section class="learner-navigation" aria-label="今日の学習ナビ">
+    <article class="learner-current-card">
+      <span class="learner-nav-kicker">現在地</span>
+      <h2>{{ nav.headline }}</h2>
+      <p>{{ nav.summary }}</p>
+    </article>
+    <article class="learner-today-card">
+      <span class="learner-nav-kicker">今日やること</span>
+      {% if nav.today_action.field %}
+      <h2>{{ nav.today_action.field }}を{{ nav.today_action.count }}問</h2>
+      <p>{{ nav.today_action.reason }}</p>
+      {% if learner_preview %}
+      <button type="button" class="learner-nav-action learner-preview-inert" aria-disabled="true" tabindex="-1">{{ nav.today_action.button_label }}</button>
+      {% else %}
+      <button class="learner-nav-action recommend-challenge"
+        data-recommendation-start-url="{{ url_for('start_dashboard_recommendation') }}"
+        data-dashboard-token="{{ dashboard_token }}"
+        data-recommendation-field="{{ nav.today_action.field }}"
+        data-recommendation-count="{{ nav.today_action.count }}"
+        data-recommendation-source="learner_navigation"
+        data-recommendation-intent="{{ nav.today_action.learning_intent }}"
+        data-recommendation-reason="{{ nav.today_action.reason_code }}">{{ nav.today_action.button_label }}</button>
+      <p class="recommend-challenge-status" data-recommendation-status role="status" aria-live="polite"></p>
+      {% endif %}
+      {% else %}
+      <h2>まず5問から始めよう</h2><p>学習データが増えると、今日の優先分野が見えてきます。</p>
+      {% endif %}
+    </article>
+    {% if nav.attention_items %}
+    <article class="learner-attention-card">
+      <span class="learner-nav-kicker">注意が必要なところ</span>
+      <div class="learner-attention-list">{% for item in nav.attention_items %}<div><b>{{ item.field }}</b><span>{{ item.label }}</span><p>{{ item.message }}</p></div>{% endfor %}</div>
+    </article>
+    {% endif %}
+    <details class="learner-nav-details">
+      <summary>今の学習状況を詳しく見る</summary>
+      <div class="learner-nav-detail-grid">
+        <section><h3>できていること</h3>{% for item in nav.stable_areas %}<p><b>{{ item.field }}</b><br>{{ item.message }}</p>{% else %}<p>時間を空けても確認できた記録は、これから増えていきます。</p>{% endfor %}</section>
+        <section><h3>直していること</h3>{% for item in nav.repair_areas %}<p><b>{{ item.field }}</b><br>{{ item.message }}</p>{% else %}<p>今すぐ優先する修復項目は目立っていません。</p>{% endfor %}</section>
+        <section><h3>まだ確認できていないこと</h3>{% for item in nav.coverage_gaps %}<p><b>{{ item.field }}</b><br>{{ item.message }}</p>{% endfor %}</section>
+        <section><h3>次の確認</h3><p>{{ nav.retention_message }}</p><p>{{ nav.trial100_message }}</p></section>
+      </div>
+    </details>
+  </section>
+  {% endif %}
   <section class="date-card">
     <div class="date-list">
       <div><span class="line-icon">▣</span><p><b>今日</b><strong>{{ dashboard.current_date.strftime('%Y/%m/%d') }}</strong></p></div>

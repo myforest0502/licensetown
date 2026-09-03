@@ -20,6 +20,8 @@ from pilot_diagnostics import build_pilot_diagnostics
 from field_evidence import build_field_evidence
 from field_progress import build_field_progress
 from dashboard_real_data_shadow import build_dashboard_real_data_shadow
+from pass_readiness import build_pass_readiness
+from learner_readiness_presentation import build_learner_readiness_presentation
 from field_progress_presentation import build_field_progress_presentation_from_calculation
 from overall_progress_presentation import build_overall_progress_presentation
 from dashboard_settings import (
@@ -122,7 +124,7 @@ def authorized_supporter_learner(token, requested_learner_id=None):
     return supporter_id, learner_ids[0]
 
 
-def build_dashboard(user_id=None):
+def build_dashboard(user_id=None, include_learner_navigation=False):
     today = tokyo_today()
     exam_date = get_effective_exam_date(user_id)
     dashboard = {
@@ -144,6 +146,8 @@ def build_dashboard(user_id=None):
         "overall_progress_preview": None,
         "dashboard_real_data_shadow_enabled": False,
         "dashboard_real_data_shadow": None,
+        "learner_navigation_enabled": False,
+        "learner_navigation": None,
         "phase12_guidance_preview_enabled": False,
         "phase12_guidance_preview": None,
         "weak_fields": [],
@@ -177,10 +181,10 @@ def build_dashboard(user_id=None):
         attempts = None
         evidence = None
         progress = None
-        if field_preview or overall_preview or shadow_preview or phase12_preview:
+        if field_preview or overall_preview or shadow_preview or phase12_preview or include_learner_navigation:
             attempts = get_question_attempts(user_id)
             evidence = build_field_evidence(attempts)
-        if field_preview or overall_preview or shadow_preview:
+        if field_preview or overall_preview or shadow_preview or include_learner_navigation:
             progress = build_field_progress(evidence)
         if field_preview:
             dashboard["field_progress_ui_enabled"] = True
@@ -194,19 +198,32 @@ def build_dashboard(user_id=None):
             )
         current_guidance = build_learning_guidance(dashboard["total_answers"], fields)
         dashboard.update(current_guidance)
-        if shadow_preview:
+        shadow_result = None
+        if shadow_preview or include_learner_navigation:
             legacy_recommended_field = (
                 dashboard["recommended_study"][0][0]
                 if dashboard["recommended_study"] else None
             )
-            dashboard["dashboard_real_data_shadow_enabled"] = True
-            dashboard["dashboard_real_data_shadow"] = build_dashboard_real_data_shadow(
+            shadow_result = build_dashboard_real_data_shadow(
                 attempts,
                 evidence=evidence,
                 progress=progress,
                 legacy_overall_progress_percent=dashboard["overall_progress"],
                 legacy_weak_fields=dashboard["weak_fields"],
                 legacy_recommended_field=legacy_recommended_field,
+            )
+            if shadow_preview:
+                dashboard["dashboard_real_data_shadow_enabled"] = True
+                dashboard["dashboard_real_data_shadow"] = shadow_result
+        if include_learner_navigation:
+            readiness = build_pass_readiness(
+                attempts,
+                field_evidence=evidence,
+                progress=progress,
+            )
+            dashboard["learner_navigation_enabled"] = True
+            dashboard["learner_navigation"] = build_learner_readiness_presentation(
+                readiness, shadow_result
             )
         if phase12_preview:
             shadow_judgment = build_shadow_judgment(
@@ -251,14 +268,29 @@ def build_dashboard(user_id=None):
 def home():
     token = request.args.get("token")
     user_id = dashboard_user_id(token)
-    dashboard = build_dashboard(user_id)
-    if user_id and dashboard["recommended_study"]:
-        recommended_name, recommended_count = dashboard["recommended_study"][0]
-        record_activity_event(
-            user_id,
-            "recommendation_plan",
-            {"field": recommended_name, "goal": recommended_count},
-        )
+    dashboard = build_dashboard(user_id, include_learner_navigation=bool(user_id))
+    if user_id:
+        navigation = dashboard.get("learner_navigation") or {}
+        action = navigation.get("today_action") or {}
+        if action.get("field"):
+            record_activity_event(
+                user_id,
+                "recommendation_plan",
+                {
+                    "field": action["field"],
+                    "goal": action["count"],
+                    "learning_intent": action["learning_intent"],
+                    "reason_code": action["reason_code"],
+                    "source": "learner_navigation",
+                },
+            )
+        elif dashboard["recommended_study"]:
+            recommended_name, recommended_count = dashboard["recommended_study"][0]
+            record_activity_event(
+                user_id,
+                "recommendation_plan",
+                {"field": recommended_name, "goal": recommended_count},
+            )
     return render_template(
         "goukaku/home.html",
         dashboard=dashboard,
