@@ -1,0 +1,47 @@
+name: Aoi post-B12 freeze check one-shot
+
+on:
+  push:
+    branches:
+      - feature/question-bank-manifest-v01
+
+permissions:
+  contents: write
+
+jobs:
+  freeze-check:
+    if: ${{ !contains(github.event.head_commit.message, 'aoi-freeze-auto') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/question-bank-manifest-v01
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt pytest
+      - name: Regenerate deterministic tag audit
+        run: PYTHONPATH="$PWD" python scripts/generate_question_tags_audit.py
+      - name: Verify formal bank and B12 content quality
+        run: |
+          PYTHONPATH="$PWD" python scripts/check_question_bank_schema_manifest.py
+          PYTHONPATH="$PWD" python scripts/validate_question_bank.py
+          PYTHONPATH="$PWD" python scripts/audit_question_content_quality.py --start 1661 --end 1737
+      - name: Run full test suite
+        run: PYTHONPATH="$PWD" python -m pytest -q
+      - name: Commit regenerated audit
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/question_bank/question_tags_audit.txt
+          if git diff --cached --quiet; then
+            echo 'Audit already current.'
+            exit 0
+          fi
+          git commit -m 'audit: regenerate question tags through Q1737 [aoi-freeze-auto]'
+          git push origin HEAD:feature/question-bank-manifest-v01
