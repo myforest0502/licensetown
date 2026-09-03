@@ -19,7 +19,7 @@ def test_historical_content_is_unchanged():
         assert hashlib.sha256(payload).hexdigest() == expected
 
 def test_batch_records_match_frozen_matrix():
-    assert question_count() == END
+    assert question_count() >= END
     for qid, (node, sources, category, small, task, primary, secondary) in ITEMS.items():
         q, a, e, t = get_question(qid), get_answer(qid), get_explanation(qid), get_question_tag(qid)
         assert q["management_code"] == f"{qid}-{category}-{small}-O"
