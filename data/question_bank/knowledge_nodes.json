@@ -4574,9 +4574,10 @@
   {
     "knowledge_node_id": "KN0453",
     "label": "person-timeを用いた発生率計算",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q461"
+      "Q461",
+      "Q1736"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8712,9 +8713,10 @@
   {
     "knowledge_node_id": "KN0861",
     "label": "GMFCS-E&Rの6〜12歳では、レベルⅡは手すりを使って階段昇降し、長距離や不整地・狭い場所で制限や介助を要することがあるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q870"
+      "Q870",
+      "Q1737"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13734,9 +13736,10 @@
   {
     "knowledge_node_id": "KN1357",
     "label": "前立腺癌は造骨性転移が多い",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1380"
+      "Q1380",
+      "Q1721"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13774,9 +13777,10 @@
   {
     "knowledge_node_id": "KN1361",
     "label": "振戦せん妄はアルコール離脱の重症型で、ベンゾジアゼピン系薬が第一選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1384"
+      "Q1384",
+      "Q1722"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13934,9 +13938,10 @@
   {
     "knowledge_node_id": "KN1377",
     "label": "登はん性起立（Gowers徴候）はDuchenne型筋ジストロフィーに典型的",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1401"
+      "Q1401",
+      "Q1723"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14054,9 +14059,10 @@
   {
     "knowledge_node_id": "KN1389",
     "label": "被殻へは中大脳動脈のレンズ核線条体動脈が分布する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1413"
+      "Q1413",
+      "Q1724"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14216,9 +14222,10 @@
   {
     "knowledge_node_id": "KN1405",
     "label": "Piagetで0〜2歳頃は感覚運動期",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1430"
+      "Q1430",
+      "Q1725"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14475,10 +14482,11 @@
   },
   {
     "knowledge_node_id": "KN1431",
-    "label": "短期入院後のADL低下をHospitalization-Associated Disabilityとして識別する",
-    "status": "singleton_initial",
+    "label": "Hospitalization-Associated Disability（入院関連機能障害）の評価",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1456"
+      "Q1456",
+      "Q1726"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14606,9 +14614,10 @@
   {
     "knowledge_node_id": "KN1444",
     "label": "外的視覚・聴覚刺激に応じた運動準備には運動前野が重要",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1469"
+      "Q1469",
+      "Q1727"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14706,9 +14715,10 @@
   {
     "knowledge_node_id": "KN1454",
     "label": "動脈壁は内膜・中膜・外膜の3層からなる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1479"
+      "Q1479",
+      "Q1728"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14806,9 +14816,10 @@
   {
     "knowledge_node_id": "KN1464",
     "label": "食事誘発性熱産生は蛋白質で最も大きく、脂質で小さい",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1489"
+      "Q1489",
+      "Q1729"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15090,9 +15101,10 @@
   {
     "knowledge_node_id": "KN1492",
     "label": "疼痛と廃用により大腿四頭筋萎縮を認める",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1517"
+      "Q1517",
+      "Q1730"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15211,9 +15223,10 @@
   {
     "knowledge_node_id": "KN1504",
     "label": "後索内側毛帯路の内側毛帯は脳幹を上行し視床VPLへ投射する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1530"
+      "Q1530",
+      "Q1731"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15291,9 +15304,10 @@
   {
     "knowledge_node_id": "KN1512",
     "label": "食事で胃が拡張すると胃大腸反射が起こり、大腸蠕動が促進される",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1538"
+      "Q1538",
+      "Q1732"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15382,9 +15396,10 @@
   {
     "knowledge_node_id": "KN1521",
     "label": "ノロウイルスは汚染食品・水や接触を介して経口感染する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1547"
+      "Q1547",
+      "Q1733"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15454,9 +15469,10 @@
   {
     "knowledge_node_id": "KN1528",
     "label": "TNM分類は原発腫瘍T、所属リンパ節N、遠隔転移Mで病期を表す国際的な共通枠組みである",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1554"
+      "Q1554",
+      "Q1734"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15524,9 +15540,10 @@
   {
     "knowledge_node_id": "KN1535",
     "label": "転移性脊椎腫瘍の部位別安定性を脊椎バイオメカニクスから判断する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1561"
+      "Q1561",
+      "Q1735"
     ],
     "aliases": [],
     "successor_ids": []
