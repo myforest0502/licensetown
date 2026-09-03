@@ -1,4 +1,7 @@
+from pathlib import Path
+
 import dashboard_real_data_shadow as shadow
+import learner_readiness_presentation as presentation
 
 
 def _coverage_inputs():
@@ -66,3 +69,15 @@ def test_three_proven_priorities_are_not_displaced_by_coverage():
     result = shadow._priority_top3(proven, evidence, progress)
 
     assert [item["field_id"] for item in result] == [1, 2, 4]
+
+
+def test_presentation_prefers_priority_top3_when_new_key_is_available():
+    items = [{"field_name": "未確認分野", "reason_code": "coverage_expand", "is_proven_weakness": False}]
+    legacy = [{"field_name": "旧弱点", "reason_code": "repairing_continue", "is_proven_weakness": True}]
+    assert presentation._priority_items({"priority_top3": items, "weakness_top3": legacy}) == items
+
+
+def test_template_uses_priority_top3_wording_not_legacy_weakness_heading():
+    source = (Path(__file__).resolve().parents[1] / "templates" / "goukaku" / "home.html").read_text(encoding="utf-8")
+    assert source.count("優先課題 TOP3") >= 2
+    assert "苦手分野 TOP3" not in source
