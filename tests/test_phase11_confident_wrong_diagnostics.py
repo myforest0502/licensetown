@@ -7,7 +7,7 @@ os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
 os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
 from app import app
-import goukaku_ui
+import developer_ui
 import pilot_diagnostics
 from pilot_diagnostics import build_confident_wrong_node_details
 
@@ -41,17 +41,9 @@ def _evidence(nodes):
 
 def test_five_target_field_nodes_are_exposed_without_changing_shadow(monkeypatch):
     nodes = [f"KN9{index:03d}" for index in range(1, 6)]
-    # Match production J2 attribution: field comes from each active wrong Q.
     field_by_question = {
-        "Q101": 8,
-        "Q102": 8,
-        "Q103": 8,
-        "Q104": 8,
-        "Q105": 8,
-        "Q106": 8,
-        "Q200": 9,
-        "Q201": 8,
-        "Q202": 8,
+        "Q101": 8, "Q102": 8, "Q103": 8, "Q104": 8, "Q105": 8,
+        "Q106": 8, "Q200": 9, "Q201": 8, "Q202": 8,
     }
     monkeypatch.setattr(
         pilot_diagnostics,
@@ -98,7 +90,7 @@ def test_details_are_empty_for_other_shadow_reasons():
     ) == []
 
 
-def test_supporter_template_lists_all_details_but_learner_page_never_does(monkeypatch):
+def test_internal_template_lists_all_details_but_learner_page_never_does(monkeypatch):
     details = [
         {
             "canonical_node_id": f"KN9{index:03d}",
@@ -120,10 +112,12 @@ def test_supporter_template_lists_all_details_but_learner_page_never_does(monkey
         "target_field": "内科学",
     })
     diagnostics["confident_wrong_node_details"] = details
-    monkeypatch.setattr(goukaku_ui, "authorized_supporter_learner", lambda *_: ("supporter", "learner"))
-    monkeypatch.setattr(goukaku_ui, "build_pilot_diagnostics", lambda *_: diagnostics)
+    monkeypatch.setenv("LT_INTERNAL_ADMIN_TOKEN", "admin-secret")
+    monkeypatch.setattr(developer_ui, "build_pilot_diagnostics", lambda *_: diagnostics)
     client = app.test_client()
-    html = client.get("/supporter/pilot-diagnostics?token=test&period=all").get_data(as_text=True)
+    html = client.get(
+        "/internal/pilot-diagnostics?token=admin-secret&learner_user_id=learner&period=all"
+    ).get_data(as_text=True)
     assert "自信あり誤答Node詳細" in html
     assert "対象 5 Node" in html
     assert html.count("内科学知識") == 5
