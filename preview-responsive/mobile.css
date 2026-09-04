@@ -1,1 +1,20 @@
 /* The completed 724px layout is scaled as a single fixed canvas. */
+
+/* Public mobile parity pass: add the approved trust/support message without
+   modifying the frozen 724px design source itself. */
+.page{height:2562px!important}
+.mobile-trust-support{position:relative;width:724px;height:390px;border-top:1px solid #e9e7e2;background:#fff;overflow:hidden}
+.mobile-principles-card,.mobile-support-card{position:absolute;left:42px;width:640px;border:1px solid #dce8de;border-radius:10px;background:#fff;padding:13px 18px;box-shadow:0 2px 7px rgba(44,55,46,.04)}
+.mobile-principles-card{top:12px;height:166px;background:linear-gradient(135deg,#f7fbf7,#fff)}
+.mobile-support-card{top:188px;height:188px}
+.mobile-principles-card>span,.mobile-support-card>span{display:block;margin-bottom:5px;color:#176f50;font-size:10px;font-weight:700;letter-spacing:.02em}
+.mobile-principles-card h2,.mobile-support-card h2{margin:0 0 7px;font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:18px;line-height:24px;letter-spacing:.02em}
+.mobile-principles-card p,.mobile-support-card p{margin:0 0 6px;color:#2f3932;font-size:9px;font-weight:600;line-height:15px}
+.mobile-support-card p strong{font-weight:800}
+.mobile-principle-points{display:flex;gap:7px;margin-top:6px;white-space:nowrap}
+.mobile-principle-points b{padding:5px 8px;border-radius:12px;background:#eaf6eb;color:#155724;font-size:8px}
+.mobile-support-amounts{position:absolute;left:18px;top:115px;display:grid;grid-template-columns:repeat(4,83px);gap:7px}
+.mobile-support-amounts b{display:grid;place-items:center;height:26px;border:1px solid #b7d7bc;border-radius:6px;color:#176f50;font-size:9px}
+.mobile-support-cap{position:absolute;left:382px;top:112px;width:238px!important;margin:0!important;font-size:7px!important;line-height:12px!important}
+.mobile-support-card>a{position:absolute;left:18px;bottom:13px;display:grid;place-items:center;width:185px;height:29px;border:1px solid #168735;border-radius:6px;color:#176f50;font-size:9px;font-weight:700}
+.mobile-support-card>small{position:absolute;left:216px;bottom:18px;color:#69736b;font-size:7px;line-height:11px}
