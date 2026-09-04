@@ -42,6 +42,14 @@ def _subscription_event(
     }
 
 
+class _StripeEventLike:
+    def __init__(self, payload):
+        self.payload = payload
+
+    def to_dict_recursive(self):
+        return self.payload
+
+
 def test_normalize_sandbox_subscription_event_uses_separate_provider_namespace():
     normalized = adapter.normalize_verified_stripe_event(_subscription_event())
 
@@ -156,6 +164,22 @@ def test_process_verified_event_updates_provider_agnostic_entitlement(monkeypatc
         payment_entitlement.CORE_PAID_FEATURE,
         now=datetime.fromtimestamp(1_788_487_200, tz=timezone.utc),
     )
+
+
+def test_process_accepts_stripe_event_resource_object(monkeypatch):
+    monkeypatch.setattr(
+        adapter,
+        "verify_stripe_webhook",
+        lambda payload, signature_header, webhook_secret=None: _StripeEventLike(
+            _subscription_event(cancel_at_period_end=True)
+        ),
+    )
+
+    result = adapter.process_stripe_webhook(b"{}", "sig", webhook_secret="whsec_test")
+
+    assert result["handled"] is True
+    assert result["entitlement"]["provider"] == adapter.STRIPE_SANDBOX_PROVIDER
+    assert result["entitlement"]["status"] == "cancel_at_period_end"
 
 
 def test_duplicate_webhook_is_idempotent(monkeypatch):
