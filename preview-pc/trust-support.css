@@ -79,3 +79,41 @@
   .topics{min-width:220px}
   .preview-grid,.trust-support-grid{gap:16px}
 }
+
+/* Readability pass after real-device review. */
+.monitor-card .card-copy{left:16px;width:155px!important}
+.monitor-card .card-copy h2{width:155px!important;font-size:16px!important;line-height:1.35;white-space:normal!important}
+.monitor-card .card-copy p{width:150px!important;font-size:12px!important;line-height:1.65!important}
+.monitor-card .mini-board{right:10px!important;width:148px!important;padding:10px!important}
+.monitor-card .mini-board small{font-size:10px!important;line-height:1.35}
+.monitor-card .mini-bars{left:10px!important;gap:4px!important}
+.monitor-card .mini-board>b{right:8px!important}
+.monitor-card .mini-board p{left:9px!important;right:6px!important;font-size:9px!important}
+
+/* Remove the fragile › glyph from FAQ rows and use one plain arrow consistently. */
+.faq-panel p b{font-size:0!important}
+.faq-panel p b::after{content:"→";font-size:13px;font-weight:700;color:var(--green)}
+.faq-panel p{font-size:13px!important;line-height:1.45;height:auto!important;min-height:25px;padding:5px 4px!important}
+.faq-panel>a{font-size:12px!important;font-weight:600;line-height:1.5}
+
+/* Make explanatory copy readable without making the page feel heavy. */
+.preview-heading p{font-size:14px!important;line-height:1.75;font-weight:600;color:#2f3932}
+.preview-heading>span{font-size:11px}
+.preview-card>small{font-size:11px;line-height:1.5;font-weight:500}
+.chat-sample p{font-size:13px!important;line-height:1.7;font-weight:500}
+.gensan-bubble b{font-size:13px}
+.road-detail-sample p{grid-template-columns:135px 1fr;font-size:13px!important;line-height:1.55;padding:9px 0}
+.road-detail-sample p span{font-weight:700}
+.road-detail-sample>div b{font-size:13px}
+.road-detail-sample strong{font-size:27px}
+
+.principles-card p,.support-card p{font-size:15px!important;line-height:1.85;font-weight:500;color:#2f3932}
+.eyebrow{font-size:13px}
+.principle-points span{font-size:12px}
+.support-card .support-cap{font-size:13px!important;line-height:1.6}
+.support-card>a{font-size:13px}
+.support-card>small{font-size:11px;line-height:1.5}
+
+/* Give the larger copy enough vertical room. */
+.preview-card{min-height:310px}
+.principles-card,.support-card{min-height:325px}
