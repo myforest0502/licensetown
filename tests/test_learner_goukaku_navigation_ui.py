@@ -177,11 +177,24 @@ def test_supporter_view_does_not_enable_learner_navigation(monkeypatch):
 
 
 def test_navigation_cta_rejects_stale_or_tampered_intent(monkeypatch):
+    attempts = [{"question_id": "Q1"}]
     monkeypatch.setattr(app_module, "dashboard_user_id", lambda token: "learner")
     monkeypatch.setattr(
         app_module,
         "build_dashboard",
-        lambda user_id, include_learner_navigation=False: _dashboard(),
+        lambda *args, **kwargs: (_ for _ in ()).throw(
+            AssertionError("full dashboard must not validate learner-navigation CTA")
+        ),
+    )
+    monkeypatch.setattr(
+        app_module,
+        "get_learner_navigation_formal_inputs",
+        lambda user_id: {"attempts": attempts, "trial100_records": []},
+    )
+    monkeypatch.setattr(
+        app_module,
+        "build_learner_navigation_from_formal_inputs",
+        lambda rows, trial100: _navigation(),
     )
     client = app_module.app.test_client()
     response = client.post(
@@ -198,18 +211,66 @@ def test_navigation_cta_rejects_stale_or_tampered_intent(monkeypatch):
     assert response.status_code == 409
 
 
+def test_navigation_cta_rejects_action_that_became_stale(monkeypatch):
+    current_navigation = _navigation()
+    current_navigation["today_action"] = {
+        **current_navigation["today_action"],
+        "field": "心理学",
+    }
+    monkeypatch.setattr(app_module, "dashboard_user_id", lambda token: "learner")
+    monkeypatch.setattr(
+        app_module,
+        "get_learner_navigation_formal_inputs",
+        lambda user_id: {"attempts": [], "trial100_records": []},
+    )
+    monkeypatch.setattr(
+        app_module,
+        "build_learner_navigation_from_formal_inputs",
+        lambda rows, trial100: current_navigation,
+    )
+
+    response = app_module.app.test_client().post(
+        "/goukaku-no-michi/recommendation/start",
+        json={
+            "token": "ok",
+            "field": "神経医学",
+            "count": 10,
+            "source": "learner_navigation",
+            "intent": "exploration",
+            "reason": "coverage_expand",
+        },
+    )
+
+    assert response.status_code == 409
+
+
 def test_navigation_cta_accepts_validated_intent_then_uses_central_session_creator(monkeypatch):
     calls = []
+    attempts = [{"question_id": "Q1"}]
     monkeypatch.setattr(app_module, "dashboard_user_id", lambda token: "learner")
     monkeypatch.setattr(
         app_module,
         "build_dashboard",
-        lambda user_id, include_learner_navigation=False: _dashboard(),
+        lambda *args, **kwargs: (_ for _ in ()).throw(
+            AssertionError("full dashboard must not validate learner-navigation CTA")
+        ),
+    )
+    monkeypatch.setattr(
+        app_module,
+        "get_learner_navigation_formal_inputs",
+        lambda user_id: {"attempts": attempts, "trial100_records": []},
+    )
+    monkeypatch.setattr(
+        app_module,
+        "build_learner_navigation_from_formal_inputs",
+        lambda rows, trial100: _navigation(),
     )
     monkeypatch.setattr(
         app_module,
         "create_web_recommendation_session",
-        lambda user_id, category_small, question_count, token: calls.append((user_id, category_small, question_count, token)) or ("session-1", True),
+        lambda user_id, category_small, question_count, token, attempts=None: calls.append(
+            (user_id, category_small, question_count, token, attempts)
+        ) or ("session-1", True),
     )
     response = app_module.app.test_client().post(
         "/goukaku-no-michi/recommendation/start",
@@ -225,6 +286,61 @@ def test_navigation_cta_accepts_validated_intent_then_uses_central_session_creat
     assert response.status_code == 200
     assert response.get_json()["redirect_url"] == "/goukaku-no-michi/learning/session-1"
     assert len(calls) == 1
+    assert calls[0][4] is attempts
+
+
+def test_web_session_uses_supplied_attempts_without_second_read(monkeypatch):
+    attempts = [{"question_id": "Q1"}]
+    selected = [{"id": "Q2", "question": "q", "choices": ["a"]}]
+    captured = []
+    app_module.web_recommendation_sessions.clear()
+    monkeypatch.setattr(
+        app_module,
+        "get_question_attempts",
+        lambda user_id: (_ for _ in ()).throw(AssertionError("duplicate attempt read")),
+    )
+    monkeypatch.setattr(
+        app_module,
+        "build_node_adaptive_session",
+        lambda rows, **kwargs: captured.append(rows) or selected,
+    )
+
+    session_id, started = app_module.create_web_recommendation_session(
+        "learner", "09", 10, "token", attempts=attempts
+    )
+
+    assert started is True
+    assert captured == [attempts]
+    assert app_module.web_recommendation_sessions[session_id]["questions"] is selected
+    app_module.web_recommendation_sessions.clear()
+
+
+def test_legacy_recommendation_keeps_dashboard_validation_and_legacy_attempt_read(monkeypatch):
+    calls = []
+    monkeypatch.setattr(app_module, "dashboard_user_id", lambda token: "learner")
+    monkeypatch.setattr(
+        app_module,
+        "build_dashboard",
+        lambda user_id: calls.append(("dashboard", user_id)) or {
+            "recommended_study": [("神経医学", 10)]
+        },
+    )
+    monkeypatch.setattr(
+        app_module,
+        "create_web_recommendation_session",
+        lambda user_id, category_small, question_count, token: calls.append(
+            ("session", user_id, category_small, question_count, token)
+        ) or ("legacy-session", True),
+    )
+
+    response = app_module.app.test_client().post(
+        "/goukaku-no-michi/recommendation/start",
+        json={"token": "ok", "field": "神経医学", "count": 10, "source": "dashboard"},
+    )
+
+    assert response.status_code == 200
+    assert calls[0] == ("dashboard", "learner")
+    assert calls[1][0] == "session"
 
 
 def test_javascript_forces_structured_web_post_for_learner_navigation():

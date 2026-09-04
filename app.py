@@ -51,7 +51,15 @@ from learning_engine import (
     summarize_initial_assessment,
     summarize_daily_session,
 )
-from goukaku_ui import build_dashboard, create_dashboard_token, dashboard_user_id, goukaku_ui
+from goukaku_ui import (
+    build_dashboard,
+    build_learner_navigation_from_formal_inputs,
+    create_dashboard_token,
+    dashboard_user_id,
+    get_learner_navigation_formal_inputs,
+    goukaku_ui,
+)
+from learner_navigation_performance import RequestTiming
 from site_ui import site_ui
 from question_bank import (
     get_category_group_names,
@@ -2182,7 +2190,13 @@ web_recommendation_sessions = {}
 web_recommendation_start_lock = threading.Lock()
 
 
-def create_web_recommendation_session(user_id, category_small, question_count, token):
+def create_web_recommendation_session(
+    user_id,
+    category_small,
+    question_count,
+    token,
+    attempts=None,
+):
     """正式分野のWeb学習セッションを作成する。LINEセッションとは共有しない。"""
     with web_recommendation_start_lock:
         for session_id, session in web_recommendation_sessions.items():
@@ -2193,7 +2207,8 @@ def create_web_recommendation_session(user_id, category_small, question_count, t
                 and not session.get("completed")
             ):
                 return session_id, False
-        attempts = get_question_attempts(user_id)
+        if attempts is None:
+            attempts = get_question_attempts(user_id)
         selection_audit = {}
         questions = build_node_adaptive_session(
             attempts,
@@ -2251,25 +2266,58 @@ def start_dashboard_recommendation():
 
     source = str(payload.get("source", "")).strip()
     if source == "learner_navigation":
-        dashboard = build_dashboard(user_id, include_learner_navigation=True)
-        action = ((dashboard.get("learner_navigation") or {}).get("today_action") or {})
-        expected = (
-            action.get("field"),
-            int(action.get("count") or 0),
-            action.get("learning_intent"),
-            action.get("reason_code"),
-        )
-        received = (
-            field_name,
-            question_count,
-            str(payload.get("intent", "")).strip(),
-            str(payload.get("reason", "")).strip(),
-        )
-        if received != expected:
+        timing = RequestTiming()
+        response_status = 500
+        try:
+            with timing.measure("cta_validation_total"):
+                with timing.measure("formal_input_read"):
+                    formal_inputs = get_learner_navigation_formal_inputs(user_id)
+                attempts = formal_inputs["attempts"]
+                with timing.measure("evidence_progress_readiness_presentation_build"):
+                    navigation = build_learner_navigation_from_formal_inputs(
+                        attempts,
+                        formal_inputs["trial100_records"],
+                    )
+                action = navigation.get("today_action") or {}
+                expected = (
+                    action.get("field"),
+                    int(action.get("count") or 0),
+                    action.get("learning_intent"),
+                    action.get("reason_code"),
+                )
+                received = (
+                    field_name,
+                    question_count,
+                    str(payload.get("intent", "")).strip(),
+                    str(payload.get("reason", "")).strip(),
+                )
+                if received != expected:
+                    response_status = 409
+                    return {
+                        "ok": False,
+                        "message": "おすすめ内容が更新されました。画面を再読み込みしてください。",
+                    }, response_status
+            try:
+                with timing.measure("selector_session_creation"):
+                    session_id, started = create_web_recommendation_session(
+                        user_id,
+                        category_small,
+                        question_count,
+                        payload.get("token"),
+                        attempts=attempts,
+                    )
+            except QuestionBankError:
+                logging.exception("Web recommendation session creation failed")
+                response_status = 503
+                return {"ok": False, "message": "問題を準備できませんでした。"}, response_status
+            response_status = 200
             return {
-                "ok": False,
-                "message": "おすすめ内容が更新されました。画面を再読み込みしてください。",
-            }, 409
+                "ok": True,
+                "already_started": not started,
+                "redirect_url": f"/goukaku-no-michi/learning/{session_id}",
+            }
+        finally:
+            timing.finish(response_status)
     else:
         current_recommendations = build_dashboard(user_id).get("recommended_study", [])
         if (field_name, question_count) not in current_recommendations:

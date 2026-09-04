@@ -48,6 +48,30 @@ def _attempts_with_connection(user_id: str, connection) -> list[dict[str, Any]]:
     return attempts
 
 
+def get_learner_navigation_read_bundle(user_id: str) -> dict[str, Any]:
+    """Return only the formal inputs needed to validate learner navigation.
+
+    Production intentionally shares one connection for attempts and Trial100.
+    Unlike the full dashboard bundle, this path does not calculate legacy
+    dashboard aggregates that cannot affect the structured CTA contract.
+    """
+    user_id = str(user_id or "").strip()
+    if not user_id:
+        return {"attempts": [], "trial100_records": []}
+    if not database.database_is_available():
+        return {
+            "attempts": database.get_question_attempts(user_id),
+            "trial100_records": get_trial100_records(user_id),
+        }
+    with database.get_db_connection() as conn:
+        attempts = _attempts_with_connection(user_id, conn)
+        trial100_records = get_trial100_records(user_id, connection=conn)
+    return {
+        "attempts": attempts,
+        "trial100_records": trial100_records,
+    }
+
+
 def get_dashboard_read_bundle(
     user_id: str,
     *,
