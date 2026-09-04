@@ -1,3 +1,5 @@
+from flask import Flask
+
 import site_legal_ui
 from site_ui import _sale_safe_html
 
@@ -27,13 +29,11 @@ def test_operator_brand_is_optional_and_rendered_when_configured(monkeypatch):
 
 
 def test_support_page_is_optional_and_sale_safe():
-    app = site_legal_ui.site_legal_ui
-    rules = {rule.rule: rule.endpoint for rule in app.url_map.iter_rules()}
-    assert "/site/support" in rules
-
-    with app.test_request_context("/site/support"):
-        response = site_legal_ui.support()
-    html = response if isinstance(response, str) else response.get_data(as_text=True)
+    app = Flask(__name__)
+    app.register_blueprint(site_legal_ui.site_legal_ui)
+    response = app.test_client().get("/site/support")
+    assert response.status_code == 200
+    html = response.get_data(as_text=True)
     assert "LicenseTownを応援する" in html
     assert "支援する・しないは完全に任意" in html
     assert "現在提供している学習機能に差をつける予定はありません" in html
