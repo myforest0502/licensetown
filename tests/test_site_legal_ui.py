@@ -36,7 +36,11 @@ def test_support_page_is_optional_and_sale_safe():
     html = response.get_data(as_text=True)
     assert "LicenseTownを応援する" in html
     assert "支援する・しないは完全に任意" in html
-    assert "現在提供している学習機能に差をつける予定はありません" in html
+    assert "現在提供している学習機能に差はつけません" in html
+    assert "100円・300円・500円・1,000円" in html
+    assert "1回あたり1,000円を上限" in html
+    assert "それ以上の金額は受け付けません" in html
+    assert "これからも「誠実」であることを大切にします" in html
     assert "現在は支援受付の準備中" in html
     assert "決済機能はまだ公開していません" in html
 
