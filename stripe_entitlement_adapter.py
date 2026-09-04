@@ -15,7 +15,8 @@ import stripe
 from payment_entitlement import CORE_PRODUCT_KEY, apply_verified_provider_event
 
 
-STRIPE_PROVIDER = "stripe"
+STRIPE_LIVE_PROVIDER = "stripe"
+STRIPE_SANDBOX_PROVIDER = "stripe_sandbox"
 _SUPPORTED_SUBSCRIPTION_EVENTS = {
     "customer.subscription.created",
     "customer.subscription.updated",
@@ -101,6 +102,15 @@ def _entitlement_status(event_type: str, subscription: Mapping[str, Any]) -> str
     return "inactive"
 
 
+def _provider_for_event(event: Mapping[str, Any]) -> str:
+    livemode = event.get("livemode")
+    if livemode is True:
+        return STRIPE_LIVE_PROVIDER
+    if livemode is False:
+        return STRIPE_SANDBOX_PROVIDER
+    raise ValueError("Stripe event livemode is required")
+
+
 def normalize_verified_stripe_event(event: Mapping[str, Any]) -> dict[str, Any] | None:
     """Normalize a verified Stripe subscription event for payment_entitlement.
 
@@ -115,6 +125,7 @@ def normalize_verified_stripe_event(event: Mapping[str, Any]) -> dict[str, Any] 
     if not event_id:
         raise ValueError("Stripe event id is required")
 
+    provider = _provider_for_event(event)
     data = event.get("data") or {}
     subscription = data.get("object") if isinstance(data, Mapping) else None
     if not isinstance(subscription, Mapping):
@@ -133,7 +144,7 @@ def normalize_verified_stripe_event(event: Mapping[str, Any]) -> dict[str, Any] 
 
     return {
         "verified": True,
-        "provider": STRIPE_PROVIDER,
+        "provider": provider,
         "provider_event_id": event_id,
         "event_type": event_type,
         "provider_event_created_at": _timestamp(event.get("created")),

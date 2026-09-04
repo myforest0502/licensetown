@@ -18,11 +18,13 @@ def _subscription_event(
     period_start=1_788_400_000,
     period_end=1_791_079_200,
     user_id="learner-1",
+    livemode=False,
 ):
     return {
         "id": event_id,
         "type": event_type,
         "created": created,
+        "livemode": livemode,
         "data": {
             "object": {
                 "id": "sub_1",
@@ -40,16 +42,32 @@ def _subscription_event(
     }
 
 
-def test_normalize_active_subscription_event():
+def test_normalize_sandbox_subscription_event_uses_separate_provider_namespace():
     normalized = adapter.normalize_verified_stripe_event(_subscription_event())
 
     assert normalized["verified"] is True
-    assert normalized["provider"] == "stripe"
+    assert normalized["provider"] == adapter.STRIPE_SANDBOX_PROVIDER
     assert normalized["user_id"] == "learner-1"
     assert normalized["provider_customer_id"] == "cus_1"
     assert normalized["provider_subscription_id"] == "sub_1"
     assert normalized["status"] == "active"
     assert normalized["current_period_end"].tzinfo == timezone.utc
+
+
+def test_normalize_live_subscription_event_uses_live_provider_namespace():
+    normalized = adapter.normalize_verified_stripe_event(_subscription_event(livemode=True))
+    assert normalized["provider"] == adapter.STRIPE_LIVE_PROVIDER
+
+
+def test_missing_livemode_fails_closed():
+    event = _subscription_event()
+    event.pop("livemode")
+    try:
+        adapter.normalize_verified_stripe_event(event)
+    except ValueError as exc:
+        assert "livemode" in str(exc)
+    else:
+        raise AssertionError("Stripe environment must be explicit")
 
 
 def test_cancel_at_period_end_maps_to_retained_paid_access_state():
@@ -132,6 +150,7 @@ def test_process_verified_event_updates_provider_agnostic_entitlement(monkeypatc
     assert result["handled"] is True
     entitlement = payment_entitlement.get_entitlement("learner-1")
     assert entitlement["status"] == "active"
+    assert entitlement["provider"] == adapter.STRIPE_SANDBOX_PROVIDER
     assert payment_entitlement.entitlement_allows(
         entitlement,
         payment_entitlement.CORE_PAID_FEATURE,
