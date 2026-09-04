@@ -8,6 +8,7 @@ from database import (
     calculate_overall_progress,
     database_is_available,
     get_dashboard_learning_data,
+    get_db_connection,
     get_field_learning_summary,
     get_learning_activity,
     get_question_attempts,
@@ -21,6 +22,7 @@ from dashboard_read_bundle import get_learner_navigation_read_bundle as _get_pro
 from trial100_store import get_trial100_records
 from learning_analysis import build_gensan_comment, build_learning_guidance
 from supporter_report import build_supporter_report
+from supporter_performance import measure
 from pilot_diagnostics import build_pilot_diagnostics
 from field_evidence import build_field_evidence
 from field_progress import build_field_progress
@@ -157,6 +159,44 @@ def authorized_supporter_learner(token, requested_learner_id=None):
             abort(403)
         return supporter_id, requested_learner_id
     return supporter_id, learner_ids[0]
+
+
+def _authorized_supporter_learner_with_connection(
+    token,
+    requested_learner_id,
+    connection,
+):
+    """Production /supporter用。既存認可意味を保ったままcaller connectionを使う。"""
+    supporter_id = supporter_user_id(token)
+    if not supporter_id:
+        abort(403)
+    with connection.cursor() as cur:
+        cur.execute(
+            """
+            SELECT learner_user_id FROM supporter_links
+            WHERE supporter_user_id = %s AND is_active = TRUE
+            ORDER BY created_at, id
+            """,
+            (supporter_id,),
+        )
+        learner_ids = [row[0] for row in cur.fetchall()]
+    if not learner_ids:
+        abort(403)
+    if requested_learner_id:
+        if requested_learner_id not in learner_ids:
+            abort(403)
+        return supporter_id, requested_learner_id
+    return supporter_id, learner_ids[0]
+
+
+def _user_name_with_connection(user_id, connection, default="学習者"):
+    """Production /supporterでプロフィール名を同じDB connectionから読む。"""
+    with connection.cursor() as cur:
+        cur.execute("SELECT name FROM user_profiles WHERE user_id = %s", (user_id,))
+        row = cur.fetchone()
+    if row is None or row[0] is None:
+        return default
+    return row[0]
 
 
 def _dashboard_read_bundle(user_id, *, include_attempts=False, include_trial100=False):
@@ -442,19 +482,36 @@ def learning():
 @goukaku_ui.route("/supporter")
 def supporter_dashboard():
     token = request.args.get("token")
-    _, learner_id = authorized_supporter_learner(
-        token,
-        request.args.get("learner_user_id"),
-    )
-    report = build_supporter_report(learner_id)
-    learner_name = user_names.get(learner_id, "学習者") or "学習者"
-    return render_template(
-        "goukaku/supporter.html",
-        learner_name=learner_name,
-        learner_id=learner_id,
-        supporter_token=token,
-        report=report,
-    )
+    requested_learner_id = request.args.get("learner_user_id")
+    if database_is_available():
+        with get_db_connection() as conn:
+            with measure("supporter.authorization"):
+                _, learner_id = _authorized_supporter_learner_with_connection(
+                    token,
+                    requested_learner_id,
+                    conn,
+                )
+            report = build_supporter_report(learner_id, _connection=conn)
+            with measure("supporter.learner_name"):
+                learner_name = _user_name_with_connection(learner_id, conn)
+    else:
+        with measure("supporter.authorization"):
+            _, learner_id = authorized_supporter_learner(
+                token,
+                requested_learner_id,
+            )
+        report = build_supporter_report(learner_id)
+        with measure("supporter.learner_name"):
+            learner_name = user_names.get(learner_id, "学習者") or "学習者"
+    with measure("supporter.template_render"):
+        response = render_template(
+            "goukaku/supporter.html",
+            learner_name=learner_name,
+            learner_id=learner_id,
+            supporter_token=token,
+            report=report,
+        )
+    return response
 
 
 @goukaku_ui.route("/supporter/weekly-question-history")
