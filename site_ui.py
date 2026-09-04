@@ -1,5 +1,9 @@
+import json
 import os
+import re
+from html import escape
 from pathlib import Path
+from urllib.parse import urlparse
 
 from flask import Blueprint, Response, render_template, send_from_directory, url_for
 
@@ -10,10 +14,39 @@ ROOT = Path(__file__).resolve().parent
 PREVIEW_PC_DIR = ROOT / "preview-pc"
 PREVIEW_724_DIR = ROOT / "preview-724"
 PREVIEW_RESPONSIVE_DIR = ROOT / "preview-responsive"
+QUESTION_BANK_PATH = ROOT / "data" / "question_bank" / "questions.json"
 
-# Public copy is deliberately centralized so the published figure can be
-# updated without editing the page layout.
-QUESTION_COUNT_LABEL = os.getenv("SITE_QUESTION_COUNT_LABEL", "1,500問以上収録")
+
+def _question_count_label() -> str:
+    """Return one factual public question-count label from the formal bank.
+
+    A deliberate environment override remains available for conservative public
+    copy, but the default cannot silently drift away from the formal bank.
+    """
+    override = os.getenv("SITE_QUESTION_COUNT_LABEL", "").strip()
+    if override:
+        return override
+    try:
+        payload = json.loads(QUESTION_BANK_PATH.read_text(encoding="utf-8"))
+        count = len(payload)
+    except (OSError, ValueError, TypeError):
+        return "問題を収録"
+    return f"{count}問収録"
+
+
+def _public_onboarding_url() -> str:
+    """Return a verified HTTPS onboarding URL or fail closed to contact.
+
+    Public CTA must never guess a LINE destination. Until the operator supplies
+    the intended HTTPS onboarding URL, the CTA resolves to LicenseTown contact.
+    """
+    candidate = os.getenv("SITE_ONBOARDING_URL", "").strip()
+    if not candidate:
+        return "/site/legal/contact"
+    parsed = urlparse(candidate)
+    if parsed.scheme != "https" or not parsed.netloc:
+        return "/site/legal/contact"
+    return candidate
 
 
 @site_ui.get("/site")
@@ -25,6 +58,25 @@ def home():
     )
 
 
+def _wire_primary_ctas(html: str) -> str:
+    target = escape(_public_onboarding_url(), quote=True)
+
+    def replace_anchor(match):
+        attrs = match.group("attrs") or ""
+        label = match.group("label")
+        if re.search(r'\shref="[^"]*"', attrs):
+            attrs = re.sub(r'\shref="[^"]*"', f' href="{target}"', attrs, count=1)
+        else:
+            attrs += f' href="{target}"'
+        return f"<a{attrs}>{label}</a>"
+
+    return re.sub(
+        r'<a(?P<attrs>[^>]*)>(?P<label>まずは使ってみる(?:　›)?)</a>',
+        replace_anchor,
+        html,
+    )
+
+
 def _sale_safe_html(html: str) -> str:
     """Remove prototype claims that must not appear as factual sale copy yet.
 
@@ -33,6 +85,7 @@ def _sale_safe_html(html: str) -> str:
     views cannot advertise stale counts, a nonexistent free period, or demo
     dashboard values without an explicit image label.
     """
+    count_label = _question_count_label()
     stats = (
         '<section class="stats"><div class="container"><div><i>▰</i><span><small>新規問題</small>'
         '<b>1000<em>問</em></b></span></div><div><i>▤</i><span><small>過去問</small>'
@@ -41,10 +94,18 @@ def _sale_safe_html(html: str) -> str:
     )
     safe_stats = (
         '<section class="stats"><div class="container"><div><i>▥</i><span>'
-        f'<small>問題演習</small><b>{QUESTION_COUNT_LABEL}</b>'
+        f'<small>問題演習</small><b>{count_label}</b>'
         '</span></div></div></section>'
     )
     html = html.replace(stats, safe_stats)
+    html = re.sub(
+        r'(合計</small><b>)\d+(<em>問収録</em>)',
+        lambda match: f"{match.group(1)}{count_label.removesuffix('問収録')}{match.group(2)}"
+        if count_label.endswith("問収録") and count_label[:-3].isdigit()
+        else f"{match.group(1)}{escape(count_label)}{match.group(2)}",
+        html,
+    )
+    html = html.replace("1,500問以上収録", count_label)
     html = html.replace('<li>現在無料</li>', '<li>提供条件を準備中</li>')
     html = html.replace('無料期間実施中！', '料金・提供条件は公開準備中')
     html = html.replace(
@@ -77,7 +138,7 @@ def _sale_safe_html(html: str) -> str:
         '<a>お問い合わせ</a>',
         '<a href="/site/legal/contact">お問い合わせ</a>',
     )
-    return html
+    return _wire_primary_ctas(html)
 
 
 def _preview_document(source_path, base_url, extra_stylesheet_url):
