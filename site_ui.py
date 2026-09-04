@@ -83,7 +83,7 @@ def _inject_mobile_trust_support(html: str) -> str:
     The original 724px design source stays frozen. Public rendering receives the
     same operating stance already approved on PC, stacked for the narrow canvas.
     """
-    if 'class="story-faq"' not in html or 'class="mobile-trust-support"' in html:
+    if 'class="section story-faq"' not in html or 'class="mobile-trust-support"' in html:
         return html
 
     section = (
