@@ -79,9 +79,10 @@ def responsive_asset(filename):
     return send_from_directory(PREVIEW_RESPONSIVE_DIR, filename)
 
 
-# ``app.py`` already registers site_ui. Attach the developer-only boundary here
-# so the Flask entrypoint remains unchanged and the route/data concerns stay
-# outside the supporter blueprint.
+# ``app.py`` already registers site_ui. Attach small auxiliary boundaries here
+# so the Flask entrypoint remains unchanged while their logic stays isolated.
 from developer_ui import register_developer_routes
+from stripe_webhook_ui import stripe_webhook_ui
 
 register_developer_routes(site_ui)
+site_ui.register_blueprint(stripe_webhook_ui)
