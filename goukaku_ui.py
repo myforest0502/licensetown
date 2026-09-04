@@ -6,6 +6,7 @@ from itsdangerous import BadSignature, URLSafeSerializer, URLSafeTimedSerializer
 
 from database import (
     calculate_overall_progress,
+    database_is_available,
     get_dashboard_learning_data,
     get_field_learning_summary,
     get_learning_activity,
@@ -15,6 +16,8 @@ from database import (
     get_supported_learner_ids,
     user_names,
 )
+from dashboard_read_bundle import get_dashboard_read_bundle as _get_production_dashboard_read_bundle
+from trial100_store import get_trial100_records
 from learning_analysis import build_gensan_comment, build_learning_guidance
 from supporter_report import build_supporter_report
 from pilot_diagnostics import build_pilot_diagnostics
@@ -155,6 +158,21 @@ def authorized_supporter_learner(token, requested_learner_id=None):
     return supporter_id, learner_ids[0]
 
 
+def _dashboard_read_bundle(user_id, *, include_attempts=False, include_trial100=False):
+    """Use the shared Production read path while preserving local/test hooks."""
+    if database_is_available():
+        return _get_production_dashboard_read_bundle(
+            user_id,
+            include_attempts=include_attempts,
+            include_trial100=include_trial100,
+        )
+    return {
+        "learning_data": get_dashboard_learning_data(user_id),
+        "attempts": get_question_attempts(user_id) if include_attempts else [],
+        "trial100_records": get_trial100_records(user_id) if include_trial100 else [],
+    }
+
+
 def build_dashboard(user_id=None, include_learner_navigation=False):
     today = tokyo_today()
     exam_date = get_effective_exam_date(user_id)
@@ -194,7 +212,23 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
         "gensan_comment": "今日はまだ来てねぇな。5問だけやるか？＾＾",
     }
     if user_id:
-        learning_data = get_dashboard_learning_data(user_id)
+        field_preview = field_progress_ui_enabled()
+        overall_preview = overall_progress_ui_enabled()
+        shadow_preview = dashboard_real_data_shadow_enabled()
+        phase12_preview = phase12_guidance_preview_enabled()
+        needs_attempts = bool(
+            field_preview
+            or overall_preview
+            or shadow_preview
+            or phase12_preview
+            or include_learner_navigation
+        )
+        bundle = _dashboard_read_bundle(
+            user_id,
+            include_attempts=needs_attempts,
+            include_trial100=include_learner_navigation,
+        )
+        learning_data = bundle["learning_data"]
         dashboard.update(learning_data["summary"])
         dashboard.update(learning_data["activity"])
         dashboard["unique_answered_questions"] = learning_data["unique_question_count"]
@@ -205,15 +239,10 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
         )
         fields = learning_data["fields"]
         dashboard["field_stats"] = [item for item in fields if item["learned"]]
-        field_preview = field_progress_ui_enabled()
-        overall_preview = overall_progress_ui_enabled()
-        shadow_preview = dashboard_real_data_shadow_enabled()
-        phase12_preview = phase12_guidance_preview_enabled()
-        attempts = None
+        attempts = bundle["attempts"] if needs_attempts else None
         evidence = None
         progress = None
-        if field_preview or overall_preview or shadow_preview or phase12_preview or include_learner_navigation:
-            attempts = get_question_attempts(user_id)
+        if needs_attempts:
             evidence = build_field_evidence(attempts)
         if field_preview or overall_preview or shadow_preview or include_learner_navigation:
             progress = build_field_progress(evidence)
@@ -251,6 +280,7 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
                 attempts,
                 field_evidence=evidence,
                 progress=progress,
+                trial100_records=bundle["trial100_records"],
             )
             dashboard["learner_navigation_enabled"] = True
             dashboard["learner_navigation"] = build_learner_readiness_presentation(
