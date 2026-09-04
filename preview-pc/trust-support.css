@@ -129,4 +129,6 @@
 /* Give the entire lower trio a little more vertical breathing room. */
 .bottom{min-height:210px!important;padding-top:14px!important;padding-bottom:24px!important}
 .brand-panel,.faq-panel,.try-panel{height:190px!important;min-height:190px!important}
-.faq-panel{overflow:visible!important;padding-bottom:12px!important}
+.brand-panel h2{font-size:17px!important;line-height:1.4;letter-spacing:-.01em;white-space:nowrap}
+.faq-panel{overflow:visible!important;padding-bottom:16px!important}
+.faq-panel>a{margin-top:6px!important;padding-bottom:2px}

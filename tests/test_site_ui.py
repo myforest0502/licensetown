@@ -5,6 +5,7 @@ os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
 os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
 from app import app
+from site_ui import PREVIEW_PC_DIR
 
 
 def test_site_route_renders_without_changing_existing_root():
@@ -79,6 +80,19 @@ def test_site_sources_match_completed_pc_and_mobile_pages():
     assert 'class="steps"' in mobile_html
     assert "寺子屋のような場所へ。" in mobile_html
     assert 'class="final-cta"' in mobile_html
+
+
+def test_pc_lower_cards_keep_heading_on_one_line_and_faq_link_visible():
+    html = (PREVIEW_PC_DIR / "index.html").read_text(encoding="utf-8")
+    css = (PREVIEW_PC_DIR / "trust-support.css").read_text(encoding="utf-8")
+
+    assert "ライセンスタウンは、あなたの「合格したい」を応援します。" in html
+    assert "「合格したい」を全力で応援します。" not in html
+    assert "その他の質問はこちら" in html
+    assert ".brand-panel h2{" in css
+    assert "white-space:nowrap" in css
+    assert ".faq-panel{overflow:visible!important;padding-bottom:16px!important}" in css
+    assert ".faq-panel>a{margin-top:6px!important;padding-bottom:2px}" in css
 
 
 def test_site_keeps_724_canvas_scaling_and_pc_mobile_switch():
