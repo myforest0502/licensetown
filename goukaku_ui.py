@@ -17,6 +17,7 @@ from database import (
     user_names,
 )
 from dashboard_read_bundle import get_dashboard_read_bundle as _get_production_dashboard_read_bundle
+from dashboard_read_bundle import get_learner_navigation_read_bundle as _get_production_learner_navigation_read_bundle
 from trial100_store import get_trial100_records
 from learning_analysis import build_gensan_comment, build_learning_guidance
 from supporter_report import build_supporter_report
@@ -173,6 +174,42 @@ def _dashboard_read_bundle(user_id, *, include_attempts=False, include_trial100=
     }
 
 
+def get_learner_navigation_formal_inputs(user_id):
+    """Read only the formal evidence needed to reproduce today's CTA."""
+    if database_is_available():
+        return _get_production_learner_navigation_read_bundle(user_id)
+    return {
+        "attempts": get_question_attempts(user_id),
+        "trial100_records": get_trial100_records(user_id),
+    }
+
+
+def build_learner_navigation_from_formal_inputs(
+    attempts,
+    trial100_records,
+    *,
+    evidence=None,
+    progress=None,
+    shadow_result=None,
+):
+    """Build the same structured learner CTA without legacy dashboard work."""
+    attempts = list(attempts or [])
+    evidence = evidence or build_field_evidence(attempts)
+    progress = progress or build_field_progress(evidence)
+    shadow_result = shadow_result or build_dashboard_real_data_shadow(
+        attempts,
+        evidence=evidence,
+        progress=progress,
+    )
+    readiness = build_pass_readiness(
+        attempts,
+        field_evidence=evidence,
+        progress=progress,
+        trial100_records=trial100_records,
+    )
+    return build_learner_readiness_presentation(readiness, shadow_result)
+
+
 def build_dashboard(user_id=None, include_learner_navigation=False):
     today = tokyo_today()
     exam_date = get_effective_exam_date(user_id)
@@ -276,15 +313,13 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
                 dashboard["dashboard_real_data_shadow_enabled"] = True
                 dashboard["dashboard_real_data_shadow"] = shadow_result
         if include_learner_navigation:
-            readiness = build_pass_readiness(
-                attempts,
-                field_evidence=evidence,
-                progress=progress,
-                trial100_records=bundle["trial100_records"],
-            )
             dashboard["learner_navigation_enabled"] = True
-            dashboard["learner_navigation"] = build_learner_readiness_presentation(
-                readiness, shadow_result
+            dashboard["learner_navigation"] = build_learner_navigation_from_formal_inputs(
+                attempts,
+                bundle["trial100_records"],
+                evidence=evidence,
+                progress=progress,
+                shadow_result=shadow_result,
             )
         if phase12_preview:
             shadow_judgment = build_shadow_judgment(

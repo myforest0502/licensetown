@@ -109,3 +109,77 @@ def test_attempt_rows_match_formal_database_shape():
 
     assert attempts[0]["question_id"] == "Q1"
     assert attempts[0]["answer_status"] == "unknown"
+
+
+def test_learner_navigation_bundle_shares_one_production_connection(monkeypatch):
+    connection_obj = object()
+    connection_entries = []
+    attempts = [{"question_id": "Q1"}]
+    trial100 = [{"source_version": "trial100-v1"}]
+
+    class ConnectionContext:
+        def __enter__(self):
+            connection_entries.append("enter")
+            return connection_obj
+
+        def __exit__(self, *args):
+            connection_entries.append("exit")
+            return False
+
+    monkeypatch.setattr(
+        dashboard_read_bundle.database, "database_is_available", lambda: True
+    )
+    monkeypatch.setattr(
+        dashboard_read_bundle.database, "get_db_connection", ConnectionContext
+    )
+    monkeypatch.setattr(
+        dashboard_read_bundle,
+        "_attempts_with_connection",
+        lambda user_id, conn: attempts if conn is connection_obj else None,
+    )
+    monkeypatch.setattr(
+        dashboard_read_bundle,
+        "get_trial100_records",
+        lambda user_id, connection=None: trial100 if connection is connection_obj else None,
+    )
+    monkeypatch.setattr(
+        dashboard_read_bundle.database,
+        "_get_question_result_rows",
+        lambda *args, **kwargs: (_ for _ in ()).throw(
+            AssertionError("legacy dashboard aggregates are not part of this read")
+        ),
+    )
+
+    result = dashboard_read_bundle.get_learner_navigation_read_bundle("learner")
+
+    assert result == {"attempts": attempts, "trial100_records": trial100}
+    assert connection_entries == ["enter", "exit"]
+
+
+def test_learner_navigation_bundle_preserves_local_fallback(monkeypatch):
+    attempts = [{"question_id": "Q1"}]
+    trial100 = [{"source_version": "trial100-v1"}]
+    monkeypatch.setattr(
+        dashboard_read_bundle.database, "database_is_available", lambda: False
+    )
+    monkeypatch.setattr(
+        dashboard_read_bundle.database,
+        "get_question_attempts",
+        lambda user_id: attempts,
+    )
+    monkeypatch.setattr(
+        dashboard_read_bundle,
+        "get_trial100_records",
+        lambda user_id: trial100,
+    )
+    monkeypatch.setattr(
+        dashboard_read_bundle.database,
+        "get_dashboard_learning_data",
+        lambda user_id: (_ for _ in ()).throw(
+            AssertionError("full dashboard read is not part of the fallback")
+        ),
+    )
+
+    result = dashboard_read_bundle.get_learner_navigation_read_bundle("learner")
+
+    assert result == {"attempts": attempts, "trial100_records": trial100}
