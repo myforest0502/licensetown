@@ -11,6 +11,7 @@ from __future__ import annotations
 from datetime import timezone
 from zoneinfo import ZoneInfo
 
+from dashboard_read_bundle import _attempts_with_connection
 from database import (
     _get_question_result_rows,
     database_is_available,
@@ -201,6 +202,8 @@ def build_supporter_report(learner_user_id: str) -> dict:
                     latest_activity = _format_latest_activity(
                         get_latest_activity_day_summary(learner_user_id, _connection=conn)
                     )
+                with measure("db.question_attempts"):
+                    attempts = _attempts_with_connection(learner_user_id, conn)
         else:
             with measure("db.dashboard_learning_data"):
                 learning_data = get_dashboard_learning_data(learner_user_id)
@@ -216,8 +219,8 @@ def build_supporter_report(learner_user_id: str) -> dict:
                 latest_activity = _format_latest_activity(
                     get_latest_activity_day_summary(learner_user_id)
                 )
-        with measure("db.question_attempts"):
-            attempts = get_question_attempts(learner_user_id)
+            with measure("db.question_attempts"):
+                attempts = get_question_attempts(learner_user_id)
         with measure("python.parent_summary"):
             parent_summary = _parent_summary(summary, activity, learned_fields, latest, attempts)
 
