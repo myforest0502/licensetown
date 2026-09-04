@@ -6,6 +6,8 @@ from itsdangerous import BadSignature, URLSafeSerializer, URLSafeTimedSerializer
 
 from database import (
     calculate_overall_progress,
+    database_is_available,
+    get_dashboard_learning_data,
     get_field_learning_summary,
     get_learning_activity,
     get_question_attempts,
@@ -14,7 +16,8 @@ from database import (
     get_supported_learner_ids,
     user_names,
 )
-from dashboard_read_bundle import get_dashboard_read_bundle
+from dashboard_read_bundle import get_dashboard_read_bundle as _get_production_dashboard_read_bundle
+from trial100_store import get_trial100_records
 from learning_analysis import build_gensan_comment, build_learning_guidance
 from supporter_report import build_supporter_report
 from pilot_diagnostics import build_pilot_diagnostics
@@ -155,6 +158,21 @@ def authorized_supporter_learner(token, requested_learner_id=None):
     return supporter_id, learner_ids[0]
 
 
+def _dashboard_read_bundle(user_id, *, include_attempts=False, include_trial100=False):
+    """Use the shared Production read path while preserving local/test hooks."""
+    if database_is_available():
+        return _get_production_dashboard_read_bundle(
+            user_id,
+            include_attempts=include_attempts,
+            include_trial100=include_trial100,
+        )
+    return {
+        "learning_data": get_dashboard_learning_data(user_id),
+        "attempts": get_question_attempts(user_id) if include_attempts else [],
+        "trial100_records": get_trial100_records(user_id) if include_trial100 else [],
+    }
+
+
 def build_dashboard(user_id=None, include_learner_navigation=False):
     today = tokyo_today()
     exam_date = get_effective_exam_date(user_id)
@@ -197,11 +215,7 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
         field_preview = field_progress_ui_enabled()
         overall_preview = overall_progress_ui_enabled()
         shadow_preview = dashboard_real_data_shadow_enabled()
-        # The legacy Phase12 preview is diagnostics-only once formal learner
-        # navigation is active.  This structurally prevents a second learner CTA.
-        phase12_preview = (
-            phase12_guidance_preview_enabled() and not include_learner_navigation
-        )
+        phase12_preview = phase12_guidance_preview_enabled()
         needs_attempts = bool(
             field_preview
             or overall_preview
@@ -209,7 +223,7 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
             or phase12_preview
             or include_learner_navigation
         )
-        bundle = get_dashboard_read_bundle(
+        bundle = _dashboard_read_bundle(
             user_id,
             include_attempts=needs_attempts,
             include_trial100=include_learner_navigation,
