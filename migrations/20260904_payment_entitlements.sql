@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS account_entitlements (
     current_period_end TIMESTAMPTZ,
     cancel_at_period_end BOOLEAN NOT NULL DEFAULT FALSE,
     last_provider_event_id TEXT,
+    last_provider_event_created_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UNIQUE (user_id, product_key)
@@ -30,6 +31,7 @@ CREATE TABLE IF NOT EXISTS payment_provider_events (
     provider TEXT NOT NULL,
     provider_event_id TEXT NOT NULL,
     event_type TEXT NOT NULL,
+    provider_event_created_at TIMESTAMPTZ,
     processing_result TEXT NOT NULL DEFAULT 'processed',
     received_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     processed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
