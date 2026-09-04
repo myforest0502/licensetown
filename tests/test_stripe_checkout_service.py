@@ -54,13 +54,13 @@ def test_checkout_uses_signed_account_mapping_metadata(monkeypatch):
     assert "customer" not in captured
 
 
-def test_checkout_reuses_existing_stripe_customer(monkeypatch):
+def test_checkout_reuses_existing_stripe_sandbox_customer(monkeypatch):
     monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_license_town")
     monkeypatch.setenv("STRIPE_SANDBOX_PRICE_ID", "price_test_monthly")
     payment_entitlement.apply_verified_provider_event(
         {
             "verified": True,
-            "provider": "stripe",
+            "provider": service.STRIPE_SANDBOX_PROVIDER,
             "provider_event_id": "evt_existing",
             "event_type": "customer.subscription.deleted",
             "user_id": "learner-1",
@@ -86,9 +86,42 @@ def test_checkout_reuses_existing_stripe_customer(monkeypatch):
     assert captured["customer"] == "cus_existing"
 
 
+def test_checkout_does_not_reuse_live_stripe_customer_in_sandbox(monkeypatch):
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_license_town")
+    monkeypatch.setenv("STRIPE_SANDBOX_PRICE_ID", "price_test_monthly")
+    payment_entitlement.apply_verified_provider_event(
+        {
+            "verified": True,
+            "provider": "stripe",
+            "provider_event_id": "evt_live_existing",
+            "event_type": "customer.subscription.deleted",
+            "user_id": "learner-1",
+            "product_key": payment_entitlement.CORE_PRODUCT_KEY,
+            "provider_customer_id": "cus_live",
+            "provider_subscription_id": "sub_live",
+            "status": "expired",
+        }
+    )
+    captured = {}
+    monkeypatch.setattr(
+        service.stripe.checkout.Session,
+        "create",
+        lambda **params: captured.update(params) or SimpleNamespace(id="cs_test_3", url="x"),
+    )
+
+    service.create_subscription_checkout_session(
+        "learner-1",
+        success_url="https://example.test/success",
+        cancel_url="https://example.test/cancel",
+    )
+
+    assert "customer" not in captured
+
+
 def test_checkout_requires_configured_price(monkeypatch):
     monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_license_town")
     monkeypatch.delenv("STRIPE_SANDBOX_PRICE_ID", raising=False)
+    monkeypatch.delenv("STRIPE_SANDBOX_MONTHLY_AMOUNT_JPY", raising=False)
     try:
         service.create_subscription_checkout_session(
             "learner-1",
@@ -114,12 +147,12 @@ def test_portal_requires_existing_stripe_customer(monkeypatch):
         raise AssertionError("portal must not guess a Stripe customer")
 
 
-def test_portal_uses_durable_customer_mapping(monkeypatch):
+def test_portal_uses_durable_sandbox_customer_mapping(monkeypatch):
     monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_license_town")
     payment_entitlement.apply_verified_provider_event(
         {
             "verified": True,
-            "provider": "stripe",
+            "provider": service.STRIPE_SANDBOX_PROVIDER,
             "provider_event_id": "evt_active",
             "event_type": "customer.subscription.updated",
             "user_id": "learner-1",
