@@ -47,6 +47,31 @@ def _existing_stripe_customer(user_id: str) -> str | None:
     return customer_id or None
 
 
+def _checkout_line_item(price_id: str | None = None) -> dict[str, Any]:
+    price = str(price_id or os.getenv("STRIPE_SANDBOX_PRICE_ID") or "").strip()
+    if price:
+        return {"price": price, "quantity": 1}
+
+    raw_amount = str(os.getenv("STRIPE_SANDBOX_MONTHLY_AMOUNT_JPY") or "").strip()
+    try:
+        amount = int(raw_amount)
+    except (TypeError, ValueError):
+        amount = 0
+    if amount <= 0:
+        raise RuntimeError(
+            "STRIPE_SANDBOX_PRICE_ID or STRIPE_SANDBOX_MONTHLY_AMOUNT_JPY is required"
+        )
+    return {
+        "price_data": {
+            "currency": "jpy",
+            "unit_amount": amount,
+            "recurring": {"interval": "month"},
+            "product_data": {"name": "LicenseTown sandbox monthly"},
+        },
+        "quantity": 1,
+    }
+
+
 def create_subscription_checkout_session(
     user_id: str,
     *,
@@ -58,14 +83,11 @@ def create_subscription_checkout_session(
     user_id = str(user_id or "").strip()
     if not user_id:
         raise ValueError("user_id is required")
-    price = str(price_id or os.getenv("STRIPE_SANDBOX_PRICE_ID") or "").strip()
-    if not price:
-        raise RuntimeError("STRIPE_SANDBOX_PRICE_ID is not configured")
 
     params = {
         "api_key": _stripe_secret_key(),
         "mode": "subscription",
-        "line_items": [{"price": price, "quantity": 1}],
+        "line_items": [_checkout_line_item(price_id)],
         "client_reference_id": user_id,
         "subscription_data": {
             "metadata": {
