@@ -136,7 +136,7 @@ def _sale_safe_html(html: str) -> str:
     )
     html = html.replace(
         '<a>お問い合わせ</a>',
-        '<a href="/site/legal/contact">お問い合わせ</a>',
+        '<a href="/site/legal/contact">お問い合わせ</a><a href="/site/support">LicenseTownを応援する</a>',
     )
     return _wire_primary_ctas(html)
 
