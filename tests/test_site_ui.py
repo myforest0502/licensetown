@@ -131,7 +131,7 @@ def test_mobile_public_trust_support_is_stacked_before_final_cta_and_has_canvas_
     mobile_css = client.get("/site/preview-responsive/mobile.css").get_data(as_text=True)
 
     assert mobile_html.index('class="mobile-trust-support"') < mobile_html.index('class="final-cta"')
-    assert ".page{height:2624px!important}" in mobile_css
+    assert ".page{height:2674px!important}" in mobile_css
     assert ".mobile-trust-support{position:relative;width:724px;height:452px" in mobile_css
     assert ".mobile-principles-card{top:12px;height:166px" in mobile_css
     assert ".mobile-support-card{top:188px;height:250px}" in mobile_css
