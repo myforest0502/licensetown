@@ -26,6 +26,21 @@ def test_operator_brand_is_optional_and_rendered_when_configured(monkeypatch):
     assert "myforest" in rows
 
 
+def test_support_page_is_optional_and_sale_safe():
+    app = site_legal_ui.site_legal_ui
+    rules = {rule.rule: rule.endpoint for rule in app.url_map.iter_rules()}
+    assert "/site/support" in rules
+
+    with app.test_request_context("/site/support"):
+        response = site_legal_ui.support()
+    html = response if isinstance(response, str) else response.get_data(as_text=True)
+    assert "LicenseTownを応援する" in html
+    assert "支援する・しないは完全に任意" in html
+    assert "現在提供している学習機能に差をつける予定はありません" in html
+    assert "現在は支援受付の準備中" in html
+    assert "決済機能はまだ公開していません" in html
+
+
 def test_public_footer_links_are_wired():
     html = "<a>特定商取引法に基づく表記</a><a>プライバシーポリシー</a><a>利用規約</a><a>運営会社</a><a>お問い合わせ</a>"
     safe = _sale_safe_html(html)
@@ -34,3 +49,5 @@ def test_public_footer_links_are_wired():
     assert '/site/legal/terms' in safe
     assert '/site/legal/operator' in safe
     assert '/site/legal/contact' in safe
+    assert '/site/support' in safe
+    assert 'LicenseTownを応援する' in safe
