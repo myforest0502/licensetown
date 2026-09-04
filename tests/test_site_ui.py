@@ -122,3 +122,8 @@ def test_site_keeps_724_canvas_scaling_and_pc_mobile_switch():
     assert "frame.srcdoc" not in js
     assert "fetch(" not in js
     assert "(min-width:724px) and (max-width:1179px)" in middle_css
+    assert ".brand-panel,.faq-panel,.try-panel{height:190px!important;min-height:190px!important}" in middle_css
+    assert ".faq-panel{padding:10px 14px 15px!important;overflow:visible!important}" in middle_css
+    assert ".faq-panel h2{font-size:18px!important" in middle_css
+    assert ".faq-panel p{min-height:24px!important;padding:4px!important;font-size:11px!important" in middle_css
+    assert ".faq-panel>a{display:block;margin-top:3px!important;padding-bottom:3px!important;font-size:11px!important" in middle_css

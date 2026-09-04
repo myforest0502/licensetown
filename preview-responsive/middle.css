@@ -11,10 +11,11 @@ html,body{min-width:0!important;overflow-x:hidden}.container{width:calc(100% - 3
 /* PC lower-page readability pass. Keep FAQ inside its card and avoid orphaned footer characters. */
 @media (min-width:1180px){
   .bottom-grid{grid-template-columns:1.45fr 1fr .8fr!important;gap:16px!important}
-  .brand-panel,.faq-panel,.try-panel{height:178px!important;min-height:178px!important}
-  .faq-panel{padding:11px 14px!important;overflow:hidden}
-  .faq-panel p{min-height:27px!important;padding:5px 4px!important;font-size:12px!important;white-space:nowrap}
-  .faq-panel>a{display:block;margin-top:5px!important;font-size:11px!important;white-space:nowrap}
+  .brand-panel,.faq-panel,.try-panel{height:190px!important;min-height:190px!important}
+  .faq-panel{padding:10px 14px 15px!important;overflow:visible!important}
+  .faq-panel h2{font-size:18px!important;line-height:1.25!important;margin-bottom:6px!important}
+  .faq-panel p{min-height:24px!important;padding:4px!important;font-size:11px!important;line-height:1.35!important;white-space:nowrap}
+  .faq-panel>a{display:block;margin-top:3px!important;padding-bottom:3px!important;font-size:11px!important;line-height:1.35!important;white-space:nowrap}
   .footer>.container{gap:16px}
   .footer-logo{flex:0 0 265px;width:265px!important}
   .footer nav{display:flex;flex:1 1 auto;gap:18px!important;margin-left:0!important;justify-content:center;white-space:nowrap}
