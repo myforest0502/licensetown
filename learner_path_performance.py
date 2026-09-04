@@ -1,14 +1,15 @@
 """Privacy-safe, feature-gated timing for learner-facing request paths."""
 
-from contextlib import contextmanager
 from functools import wraps
 import logging
 import os
+import sys
 from time import perf_counter
 
 
 logger = logging.getLogger(__name__)
 _TRUE_VALUES = {"1", "true", "yes", "on"}
+_SKIP_FALSE_RESULT_OPERATIONS = {"study_answer.total"}
 
 
 def enabled() -> bool:
@@ -31,20 +32,35 @@ def _log(operation: str, duration_seconds: float, outcome: str = "ok") -> None:
         pass
 
 
-@contextmanager
+class _Measurement:
+    """Context manager that keeps timing passive even when exited manually."""
+
+    def __init__(self, operation: str):
+        self.operation = operation
+        self.started_at = None
+
+    def __enter__(self):
+        if enabled():
+            self.started_at = perf_counter()
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if self.started_at is None:
+            return False
+
+        # Some legacy call sites manually pass (None, None, None) from a
+        # finally block.  During exception propagation sys.exc_info() still
+        # exposes the active exception, so preserve an accurate error outcome.
+        active_exc_type = exc_type
+        if active_exc_type is None:
+            active_exc_type = sys.exc_info()[0]
+        outcome = "error" if active_exc_type is not None else "ok"
+        _log(self.operation, perf_counter() - self.started_at, outcome)
+        return False
+
+
 def measure(operation: str):
-    if not enabled():
-        yield
-        return
-    started_at = perf_counter()
-    outcome = "ok"
-    try:
-        yield
-    except BaseException:
-        outcome = "error"
-        raise
-    finally:
-        _log(operation, perf_counter() - started_at, outcome)
+    return _Measurement(operation)
 
 
 def timed(operation: str):
@@ -52,7 +68,25 @@ def timed(operation: str):
     def decorator(function):
         @wraps(function)
         def wrapped(*args, **kwargs):
-            with measure(operation):
+            if not enabled():
                 return function(*args, **kwargs)
+
+            started_at = perf_counter()
+            try:
+                result = function(*args, **kwargs)
+            except BaseException:
+                _log(operation, perf_counter() - started_at, "error")
+                raise
+
+            # process_study_answer_input is also used as a dispatcher probe.
+            # False means this was not a real study-answer request, so do not
+            # emit a misleading study_answer.total sample.
+            if not (
+                operation in _SKIP_FALSE_RESULT_OPERATIONS
+                and result is False
+            ):
+                _log(operation, perf_counter() - started_at, "ok")
+            return result
+
         return wrapped
     return decorator
