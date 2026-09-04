@@ -92,6 +92,11 @@ def _preview_document(source_path, base_url, extra_stylesheet_url):
     return Response(html, mimetype="text/html")
 
 
+def _sale_safe_source(source_path):
+    html = source_path.read_text(encoding="utf-8")
+    return Response(_sale_safe_html(html), mimetype="text/html")
+
+
 @site_ui.get("/site/view/pc")
 def pc_view():
     return _preview_document(
@@ -112,12 +117,12 @@ def mobile_view():
 
 @site_ui.get("/site/source/pc")
 def pc_source():
-    return send_from_directory(PREVIEW_PC_DIR, "index.html")
+    return _sale_safe_source(PREVIEW_PC_DIR / "index.html")
 
 
 @site_ui.get("/site/source/mobile")
 def mobile_source():
-    return send_from_directory(PREVIEW_724_DIR, "index.html")
+    return _sale_safe_source(PREVIEW_724_DIR / "index.html")
 
 
 @site_ui.get("/site/preview-pc/<path:filename>")
