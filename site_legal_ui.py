@@ -22,6 +22,8 @@ _REQUIRED_OPERATOR_ENV = {
     "お問い合わせ先": "SITE_SUPPORT_EMAIL",
 }
 
+_OPERATOR_BRAND_ENV = "SITE_OPERATOR_BRAND"
+
 
 def _env(name: str) -> str:
     return str(os.getenv(name) or "").strip()
@@ -31,7 +33,23 @@ def operator_details() -> dict[str, str]:
     return {label: _env(env_name) for label, env_name in _REQUIRED_OPERATOR_ENV.items()}
 
 
+def operator_brand() -> str:
+    return _env(_OPERATOR_BRAND_ENV)
+
+
+def _operator_rows(*, include_brand: bool = True) -> str:
+    rows: list[tuple[str, str]] = []
+    if include_brand and operator_brand():
+        rows.append(("運営ブランド", operator_brand()))
+    rows.extend(operator_details().items())
+    return "".join(
+        f"<dt>{escape(label)}</dt><dd>{escape(value) if value else '販売開始前に掲載'}</dd>"
+        for label, value in rows
+    )
+
+
 def sale_legal_ready() -> bool:
+    # Brand is a public-facing operating name, not a required legal identity field.
     return all(operator_details().values())
 
 
@@ -63,11 +81,7 @@ a{color:#087d2c}.notice{padding:14px 16px;background:#eef8ef;border-radius:12px;
 
 @site_legal_ui.get("/site/legal/commercial-transactions")
 def commercial_transactions():
-    details = operator_details()
-    rows = "".join(
-        f"<dt>{escape(label)}</dt><dd>{escape(value) if value else '販売開始前に掲載'}</dd>"
-        for label, value in details.items()
-    )
+    rows = _operator_rows()
     body = f"""
 <p>特定商取引法に基づく表記の公開先です。販売開始前に必要事項を確定します。</p>
 <dl>{rows}
@@ -117,12 +131,8 @@ def terms():
 
 @site_legal_ui.get("/site/legal/operator")
 def operator():
-    details = operator_details()
-    rows = "".join(
-        f"<dt>{escape(label)}</dt><dd>{escape(value) if value else '販売開始前に掲載'}</dd>"
-        for label, value in details.items()
-    )
-    return _layout("運営者情報", f"<dl>{rows}</dl>")
+    rows = _operator_rows()
+    return _layout("運営者情報", f"<dl>{rows}<dt>サービス名</dt><dd>LicenseTown</dd></dl>")
 
 
 @site_legal_ui.get("/site/legal/contact")
