@@ -40,6 +40,7 @@ from dashboard_settings import (
 from learning_milestones import build_learning_milestones
 from judgment_shadow import build_shadow_judgment
 from phase12_presentation import build_phase12_presentation
+import learner_path_performance as learner_path_perf
 
 
 goukaku_ui = Blueprint("goukaku_ui", __name__)
@@ -401,42 +402,47 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
 
 
 @goukaku_ui.route("/goukaku-no-michi")
+@learner_path_perf.timed("dashboard.route_total")
 def home():
     token = learner_dashboard_token(request.args)
     user_id = authorized_dashboard_learner(token)
-    dashboard = build_dashboard(user_id, include_learner_navigation=True)
+    with learner_path_perf.measure("dashboard.build"):
+        dashboard = build_dashboard(user_id, include_learner_navigation=True)
     navigation = dashboard.get("learner_navigation") or {}
     action = navigation.get("today_action") or {}
     if action.get("field"):
-        record_activity_event(
-            user_id,
-            "recommendation_plan",
-            {
-                "field": action["field"],
-                "goal": action["count"],
-                "learning_intent": action["learning_intent"],
-                "reason_code": action["reason_code"],
-                "source": "learner_navigation",
-            },
-        )
+        with learner_path_perf.measure("dashboard.activity_record"):
+            record_activity_event(
+                user_id,
+                "recommendation_plan",
+                {
+                    "field": action["field"],
+                    "goal": action["count"],
+                    "learning_intent": action["learning_intent"],
+                    "reason_code": action["reason_code"],
+                    "source": "learner_navigation",
+                },
+            )
     elif dashboard["recommended_study"]:
         recommended_name, recommended_count = dashboard["recommended_study"][0]
-        record_activity_event(
-            user_id,
-            "recommendation_plan",
-            {"field": recommended_name, "goal": recommended_count},
+        with learner_path_perf.measure("dashboard.activity_record"):
+            record_activity_event(
+                user_id,
+                "recommendation_plan",
+                {"field": recommended_name, "goal": recommended_count},
+            )
+    with learner_path_perf.measure("dashboard.template_render"):
+        return render_template(
+            "goukaku/home.html",
+            dashboard=dashboard,
+            dashboard_token=token,
+            dashboard_title="合格への道",
+            read_only=False,
+            learner_preview=False,
+            subjects_url=url_for("goukaku_ui.subjects", token=token),
+            line_official_account_id=os.getenv("LINE_OFFICIAL_ACCOUNT_ID", "").strip(),
+            liff_id=os.getenv("LIFF_ID", "").strip(),
         )
-    return render_template(
-        "goukaku/home.html",
-        dashboard=dashboard,
-        dashboard_token=token,
-        dashboard_title="合格への道",
-        read_only=False,
-        learner_preview=False,
-        subjects_url=url_for("goukaku_ui.subjects", token=token),
-        line_official_account_id=os.getenv("LINE_OFFICIAL_ACCOUNT_ID", "").strip(),
-        liff_id=os.getenv("LIFF_ID", "").strip(),
-    )
 
 
 @goukaku_ui.route("/goukaku-no-michi/subjects")

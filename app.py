@@ -60,6 +60,7 @@ from goukaku_ui import (
     goukaku_ui,
 )
 from learner_navigation_performance import RequestTiming
+import learner_path_performance as learner_path_perf
 from site_ui import site_ui
 from question_bank import (
     get_category_group_names,
@@ -1048,23 +1049,28 @@ def start_next_quiz(user_id):
 # 小テストをバックグラウンドで生成・送信
 # =========================================================
 
+@learner_path_perf.timed("study_start_async.total")
 def prepare_and_send_quiz(user_id):
     """
     Webhookとは別の処理で問題を生成し、
     完成後にLINEへプッシュ送信する。
     """
 
+    import learner_path_performance as learner_path_perf
+
     try:
         show_loading_animation(user_id)
 
-        quiz_messages = start_quiz(user_id)
+        with learner_path_perf.measure("study_start_async.selector_build"):
+            quiz_messages = start_quiz(user_id)
         created_session = study_sessions.get(user_id)
 
         for quiz_message in quiz_messages:
             if study_sessions.get(user_id) is not created_session:
                 logging.info("Discarded stale initial quiz push: user_id=%s", user_id)
                 return
-            push_quiz_to_line(user_id, quiz_message)
+            with learner_path_perf.measure("study_start_async.line_send"):
+                push_quiz_to_line(user_id, quiz_message)
 
     except QuestionBankError:
         logging.exception("Formal question bank quiz preparation failed: user_id=%s", user_id)
@@ -2133,28 +2139,33 @@ def reply_current_quiz(reply_token, session, intro_text=None):
     line_bot_api.reply_message(reply_token, reply_messages)
 
 
+@learner_path_perf.timed("study_start.total")
 def start_and_reply_quiz(
     reply_token, user_id, intro_text=None, session_kind=None, question_count=None,
     exclude_ids=None,
 ):
     """正式問題バンクから初回5問を準備し、同じ返信内で直ちに表示する。"""
+    import learner_path_performance as learner_path_perf
+
     try:
-        start_quiz(
-            user_id,
-            session_kind=session_kind,
-            question_count=question_count,
-            exclude_ids=exclude_ids,
-        )
-        reply_current_quiz(
-            reply_token,
-            study_sessions[user_id],
-            intro_text=intro_text or (
-                "おう、任せろ＾＾\n"
-                "まず5問いくぞ（笑）\n"
-                "問題を解いてる最中に中断したくなったら、"
-                "入力欄に『中断する』って入れて教えてくれな＾＾"
-            ),
-        )
+        with learner_path_perf.measure("study_start.selector_build"):
+            start_quiz(
+                user_id,
+                session_kind=session_kind,
+                question_count=question_count,
+                exclude_ids=exclude_ids,
+            )
+        with learner_path_perf.measure("study_start.line_send"):
+            reply_current_quiz(
+                reply_token,
+                study_sessions[user_id],
+                intro_text=intro_text or (
+                    "おう、任せろ＾＾\n"
+                    "まず5問いくぞ（笑）\n"
+                    "問題を解いてる最中に中断したくなったら、"
+                    "入力欄に『中断する』って入れて教えてくれな＾＾"
+                ),
+            )
         return True
     except QuestionBankError:
         logging.exception("Formal question bank initial reply failed: user_id=%s", user_id)
@@ -3612,8 +3623,11 @@ def callback():
 # 通常のテキストメッセージ
 # =========================================================
 
+@learner_path_perf.timed("study_answer.total")
 def process_study_answer_input(reply_token, user_id, user_message):
     """通常学習の5問回答を固定処理し、自由会話へ流さない。"""
+    import learner_path_performance as learner_path_perf
+
     session = study_sessions.get(user_id)
     if not (
         session
@@ -3629,10 +3643,11 @@ def process_study_answer_input(reply_token, user_id, user_message):
         "expected_numbers",
         range(start_number, start_number + questions_per_set),
     ))
-    parsed_answers = parse_quiz_answers(
-        user_message,
-        expected_numbers=expected_numbers,
-    )
+    with learner_path_perf.measure("study_answer.parse"):
+        parsed_answers = parse_quiz_answers(
+            user_message,
+            expected_numbers=expected_numbers,
+        )
 
     if set(parsed_answers) != expected_numbers:
         reply_quiz_input_error(reply_token, start_number, questions_per_set)
@@ -3640,7 +3655,8 @@ def process_study_answer_input(reply_token, user_id, user_message):
 
     for question_number, answer_data in parsed_answers.items():
         session["all_answers"][question_number] = answer_data
-    record_confirmed_learning_batch(user_id, session)
+    with learner_path_perf.measure("study_answer.persist"):
+        record_confirmed_learning_batch(user_id, session)
     globals().get(
         "queue_prerequisite_backtrack_for_next_set", lambda *_args: None
     )(user_id, session)
@@ -3663,25 +3679,27 @@ def process_study_answer_input(reply_token, user_id, user_message):
                 session["question_count"] = 15
                 session["total_sets"] = 3
                 session["status"] = "waiting_for_continue"
-                reply_study_set_result(reply_token, session)
+                with learner_path_perf.measure("study_answer.reply"):
+                    reply_study_set_result(reply_token, session)
                 return True
             mark_initial_assessment_completed(user_id)
             finish_active_learning_time(user_id)
             session["status"] = "assessment_completed"
-            line_bot_api.reply_message(
-                reply_token,
-                TextSendMessage(
-                    text=summarize_initial_assessment(assessment_results),
-                    quick_reply=QuickReply(items=[
-                        QuickReplyButton(action=MessageAction(
-                            label="勉強を始める", text="勉強を始める"
-                        )),
-                        QuickReplyButton(action=MessageAction(
-                            label="ホームに戻る", text="ホームに戻る"
-                        )),
-                    ]),
-                ),
-            )
+            with learner_path_perf.measure("study_answer.reply"):
+                line_bot_api.reply_message(
+                    reply_token,
+                    TextSendMessage(
+                        text=summarize_initial_assessment(assessment_results),
+                        quick_reply=QuickReply(items=[
+                            QuickReplyButton(action=MessageAction(
+                                label="勉強を始める", text="勉強を始める"
+                            )),
+                            QuickReplyButton(action=MessageAction(
+                                label="ホームに戻る", text="ホームに戻る"
+                            )),
+                        ]),
+                    ),
+                )
             return True
         finish_active_learning_time(user_id)
         session["quiz_result"] = calculate_quiz_result(
@@ -3690,11 +3708,13 @@ def process_study_answer_input(reply_token, user_id, user_message):
         )
         session["explanation_set"] = 0
         session["status"] = "waiting_for_explanations"
-        reply_quiz_ready_for_explanations(reply_token, session)
+        with learner_path_perf.measure("study_answer.reply"):
+            reply_quiz_ready_for_explanations(reply_token, session)
         return True
 
     session["status"] = "waiting_for_continue"
-    reply_study_set_result(reply_token, session)
+    with learner_path_perf.measure("study_answer.reply"):
+        reply_study_set_result(reply_token, session)
     return True
 
 
@@ -4370,9 +4390,22 @@ def handle_text_message(event):
     # それ以外は、今までどおり普通に会話する
 
     # それ以外は、今までどおり普通に会話する
+    import learner_path_performance as learner_path_perf
+
+    current_mode = user_modes.get(user_id, "normal")
+    consultation_timing = (
+        learner_path_perf.measure("consult.total")
+        if current_mode == "chat"
+        else None
+    )
+    if consultation_timing is not None:
+        consultation_timing.__enter__()
     try:
-        current_mode = user_modes.get(user_id, "normal")
-        reply_message = create_text_response(user_message, current_mode)
+        if current_mode == "chat":
+            with learner_path_perf.measure("consult.openai"):
+                reply_message = create_text_response(user_message, current_mode)
+        else:
+            reply_message = create_text_response(user_message, current_mode)
 
     except Exception:
         logging.exception("OpenAI response generation failed.")
@@ -4384,9 +4417,13 @@ def handle_text_message(event):
         )
 
     if current_mode == "chat":
-        record_activity_event(user_id, "consultation")
-        consultation_contexts.setdefault(user_id, []).append(user_message)
-        reply_consultation_response(event.reply_token, reply_message)
+        try:
+            record_activity_event(user_id, "consultation")
+            consultation_contexts.setdefault(user_id, []).append(user_message)
+            with learner_path_perf.measure("consult.line_send"):
+                reply_consultation_response(event.reply_token, reply_message)
+        finally:
+            consultation_timing.__exit__(None, None, None)
     else:
         reply_to_line(event.reply_token, reply_message)
 
