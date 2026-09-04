@@ -132,3 +132,7 @@
 .brand-panel h2{font-size:17px!important;line-height:1.4;letter-spacing:-.01em;white-space:nowrap}
 .faq-panel{overflow:visible!important;padding-bottom:16px!important}
 .faq-panel>a{margin-top:6px!important;padding-bottom:2px}
+
+/* Preserve placeholder layout without presenting unavailable actions as live. */
+.public-static-control{cursor:default!important;text-decoration:none!important}
+.btn.login.public-static-control,.detail.public-static-control{border-color:#cbd4cd!important;background:#f4f6f4!important;color:#657068!important}

@@ -1,4 +1,5 @@
 import os
+import re
 
 os.environ.setdefault("OPENAI_API_KEY", "test-key")
 os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
@@ -53,3 +54,40 @@ def test_mobile_faq_has_answers_and_single_open_accordion_behavior():
     assert '.faq-list details[open] summary:after{content:"−"}' in css
     assert ".faq-answer{" in css
     assert ".story-faq{height:286px!important" in css
+
+
+def test_pc_public_document_has_no_href_less_anchor_affordances():
+    html = app.test_client().get("/site/view/pc").get_data(as_text=True)
+
+    assert not re.search(r"<a\b(?![^>]*\bhref=)[^>]*>", html)
+    assert "ログイン（準備中）" in html
+    assert '<span class="detail public-static-control"' in html
+    assert '表示イメージ</span>' in html
+    assert '<a href="/site/legal/contact">その他の質問はこちら' in html
+
+
+def test_mobile_public_video_is_static_and_clearly_not_ready():
+    html = app.test_client().get("/site/view/mobile").get_data(as_text=True)
+
+    assert '<button class="video-card"' not in html
+    assert '<div class="video-card video-card-static"' in html
+    assert '<span class="video-status">紹介動画<br>準備中</span>' in html
+    assert '<span class="play">▶</span>' not in html
+
+
+def test_mobile_dashboard_mock_controls_are_inert_but_keep_layout_classes():
+    html = app.test_client().get("/site/view/mobile").get_data(as_text=True)
+
+    assert '<span class="active public-static-control" aria-disabled="true">⌂ ダッシュボード</span>' in html
+    assert '<span class="public-static-control" aria-disabled="true">すべて見る ›</span>' in html
+    assert '<span class="public-static-control" aria-disabled="true">苦手を詳しく見る ›</span>' in html
+    assert '<span class="public-static-control" aria-disabled="true">おすすめをもっと見る ›</span>' in html
+    assert not re.search(r"<a\b(?![^>]*\bhref=)[^>]*>", html)
+
+
+def test_frozen_mobile_source_keeps_original_design_contract():
+    source = app.test_client().get("/site/preview-724/index.html").get_data(as_text=True)
+
+    assert '<button class="video-card" type="button"' in source
+    assert '<span class="play">▶</span>' in source
+    assert "紹介動画<br>準備中" not in source
