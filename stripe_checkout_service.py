@@ -39,6 +39,14 @@ def _stripe_secret_key() -> str:
     return key
 
 
+def _existing_stripe_customer(user_id: str) -> str | None:
+    entitlement = get_entitlement(user_id)
+    if str(entitlement.get("provider") or "").strip() != "stripe":
+        return None
+    customer_id = str(entitlement.get("provider_customer_id") or "").strip()
+    return customer_id or None
+
+
 def create_subscription_checkout_session(
     user_id: str,
     *,
@@ -54,24 +62,29 @@ def create_subscription_checkout_session(
     if not price:
         raise RuntimeError("STRIPE_SANDBOX_PRICE_ID is not configured")
 
-    return stripe.checkout.Session.create(
-        api_key=_stripe_secret_key(),
-        mode="subscription",
-        line_items=[{"price": price, "quantity": 1}],
-        client_reference_id=user_id,
-        subscription_data={
+    params = {
+        "api_key": _stripe_secret_key(),
+        "mode": "subscription",
+        "line_items": [{"price": price, "quantity": 1}],
+        "client_reference_id": user_id,
+        "subscription_data": {
             "metadata": {
                 "lt_user_id": user_id,
                 "lt_product_key": CORE_PRODUCT_KEY,
             }
         },
-        metadata={
+        "metadata": {
             "lt_user_id": user_id,
             "lt_product_key": CORE_PRODUCT_KEY,
         },
-        success_url=success_url,
-        cancel_url=cancel_url,
-    )
+        "success_url": success_url,
+        "cancel_url": cancel_url,
+    }
+    existing_customer = _existing_stripe_customer(user_id)
+    if existing_customer:
+        params["customer"] = existing_customer
+
+    return stripe.checkout.Session.create(**params)
 
 
 def create_customer_portal_session(user_id: str, *, return_url: str) -> Any:
@@ -79,10 +92,8 @@ def create_customer_portal_session(user_id: str, *, return_url: str) -> Any:
     user_id = str(user_id or "").strip()
     if not user_id:
         raise ValueError("user_id is required")
-    entitlement = get_entitlement(user_id)
-    customer_id = str(entitlement.get("provider_customer_id") or "").strip()
-    provider = str(entitlement.get("provider") or "").strip()
-    if provider != "stripe" or not customer_id:
+    customer_id = _existing_stripe_customer(user_id)
+    if not customer_id:
         raise ValueError("Stripe customer mapping is not available")
 
     return stripe.billing_portal.Session.create(
