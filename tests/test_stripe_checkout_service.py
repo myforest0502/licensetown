@@ -147,6 +147,63 @@ def test_portal_requires_existing_stripe_customer(monkeypatch):
         raise AssertionError("portal must not guess a Stripe customer")
 
 
+def test_portal_configuration_reuses_dedicated_active_configuration(monkeypatch):
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_license_town")
+    existing = SimpleNamespace(
+        id="bpc_existing",
+        metadata={service._PORTAL_CONFIG_METADATA_KEY: service._PORTAL_CONFIG_METADATA_VALUE},
+    )
+    monkeypatch.setattr(
+        service.stripe.billing_portal.Configuration,
+        "list",
+        lambda **params: SimpleNamespace(data=[existing]),
+    )
+
+    def unexpected_create(**params):
+        raise AssertionError("matching portal configuration should be reused")
+
+    monkeypatch.setattr(
+        service.stripe.billing_portal.Configuration,
+        "create",
+        unexpected_create,
+    )
+
+    assert service.ensure_sandbox_portal_configuration() == "bpc_existing"
+
+
+def test_portal_configuration_creates_period_end_cancel_contract(monkeypatch):
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_license_town")
+    monkeypatch.setattr(
+        service.stripe.billing_portal.Configuration,
+        "list",
+        lambda **params: SimpleNamespace(data=[]),
+    )
+    captured = {}
+
+    def fake_create(**params):
+        captured.update(params)
+        return SimpleNamespace(id="bpc_new")
+
+    monkeypatch.setattr(
+        service.stripe.billing_portal.Configuration,
+        "create",
+        fake_create,
+    )
+
+    assert service.ensure_sandbox_portal_configuration() == "bpc_new"
+    features = captured["features"]
+    assert features["subscription_cancel"] == {
+        "enabled": True,
+        "mode": "at_period_end",
+        "proration_behavior": "none",
+    }
+    assert features["subscription_update"]["enabled"] is False
+    assert features["payment_method_update"]["enabled"] is True
+    assert captured["metadata"] == {
+        service._PORTAL_CONFIG_METADATA_KEY: service._PORTAL_CONFIG_METADATA_VALUE
+    }
+
+
 def test_portal_uses_durable_sandbox_customer_mapping(monkeypatch):
     monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_license_town")
     payment_entitlement.apply_verified_provider_event(
@@ -162,6 +219,7 @@ def test_portal_uses_durable_sandbox_customer_mapping(monkeypatch):
             "status": "active",
         }
     )
+    monkeypatch.setattr(service, "ensure_sandbox_portal_configuration", lambda: "bpc_1")
     captured = {}
     monkeypatch.setattr(
         service.stripe.billing_portal.Session,
@@ -176,4 +234,5 @@ def test_portal_uses_durable_sandbox_customer_mapping(monkeypatch):
 
     assert portal.url == "https://billing.stripe.test/portal"
     assert captured["customer"] == "cus_1"
+    assert captured["configuration"] == "bpc_1"
     assert captured["return_url"] == "https://example.test/return"
