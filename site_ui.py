@@ -25,8 +25,44 @@ def home():
     )
 
 
+def _sale_safe_html(html: str) -> str:
+    """Remove prototype claims that must not appear as factual sale copy yet.
+
+    This is intentionally a presentation boundary only. The original preview
+    assets remain available for design regression, while the public rendered
+    views cannot advertise stale counts, a nonexistent free period, or demo
+    dashboard values without an explicit image label.
+    """
+    stats = (
+        '<section class="stats"><div class="container"><div><i>▰</i><span><small>新規問題</small>'
+        '<b>1000<em>問</em></b></span></div><div><i>▤</i><span><small>過去問</small>'
+        '<b>1000<em>問</em></b></span></div><div><i>▥</i><span><small>合計</small>'
+        '<b>2000<em>問収録</em></b></span></div></div></section>'
+    )
+    safe_stats = (
+        '<section class="stats"><div class="container"><div><i>▥</i><span>'
+        f'<small>問題演習</small><b>{QUESTION_COUNT_LABEL}</b>'
+        '</span></div></div></section>'
+    )
+    html = html.replace(stats, safe_stats)
+    html = html.replace('<li>現在無料</li>', '<li>提供条件を準備中</li>')
+    html = html.replace('無料期間実施中！', '料金・提供条件は公開準備中')
+    html = html.replace(
+        'すべての機能を無料で体験できます。',
+        '正式な料金・無料範囲は公開前にこのページで案内します。',
+    )
+    html = html.replace(
+        '金融内容（個別のやり取り）は共有されません。',
+        '相談内容（個別のやり取り）は共有されません。',
+    )
+    html = html.replace('総合達成度</small>', '総合達成度 <em>（画面イメージ）</em></small>')
+    html = html.replace('合格まで あと <b>123</b>日', '学習ナビ <em>（画面イメージ）</em>')
+    return html
+
+
 def _preview_document(source_path, base_url, extra_stylesheet_url):
     html = source_path.read_text(encoding="utf-8")
+    html = _sale_safe_html(html)
     html = html.replace("<head>", f'<head><base href="{base_url}">', 1)
     html = html.replace(
         "</head>",
