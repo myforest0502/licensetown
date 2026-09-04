@@ -7,3 +7,17 @@ html,body{min-width:0!important;overflow-x:hidden}.container{width:calc(100% - 3
 .watch-row{height:auto!important;min-height:150px;flex-wrap:wrap;gap:10px;padding:18px!important}.watch-copy{width:calc(100% - 170px)!important}.watch-row>.detail{margin-left:auto}.watch-metric{margin-left:0!important;flex:1 1 120px}.topics{width:auto!important;flex:2 1 300px;margin-left:0!important}
 .bottom-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px!important}.brand-panel{grid-column:1/-1}.brand-panel,.faq-panel,.try-panel{height:190px!important}.footer,.footer>.container{height:auto!important;min-height:88px}.footer>.container{flex-wrap:wrap;gap:12px;padding-block:16px}.footer nav{order:3;width:100%;justify-content:center;margin:0}.footer>.container>small{margin-left:auto}}
 @media (min-width:724px) and (max-width:850px){.line-card .card-copy p{width:150px}.line-card .line-visual{right:12px!important}}
+
+/* PC lower-page readability pass. Keep FAQ inside its card and avoid orphaned footer characters. */
+@media (min-width:1180px){
+  .bottom-grid{grid-template-columns:1.45fr 1fr .8fr!important;gap:16px!important}
+  .brand-panel,.faq-panel,.try-panel{height:178px!important;min-height:178px!important}
+  .faq-panel{padding:11px 14px!important;overflow:hidden}
+  .faq-panel p{min-height:27px!important;padding:5px 4px!important;font-size:12px!important;white-space:nowrap}
+  .faq-panel>a{display:block;margin-top:5px!important;font-size:11px!important;white-space:nowrap}
+  .footer>.container{gap:16px}
+  .footer-logo{flex:0 0 265px;width:265px!important}
+  .footer nav{display:flex;flex:1 1 auto;gap:18px!important;margin-left:0!important;justify-content:center;white-space:nowrap}
+  .footer nav a{white-space:nowrap}
+  .footer>.container>small{flex:0 0 auto;margin-left:0!important;white-space:nowrap}
+}
