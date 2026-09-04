@@ -12,6 +12,7 @@ from typing import Any
 import stripe
 
 from payment_entitlement import CORE_PRODUCT_KEY, get_entitlement
+from stripe_entitlement_adapter import STRIPE_SANDBOX_PROVIDER
 
 
 def _required_env(name: str) -> str:
@@ -41,7 +42,7 @@ def _stripe_secret_key() -> str:
 
 def _existing_stripe_customer(user_id: str) -> str | None:
     entitlement = get_entitlement(user_id)
-    if str(entitlement.get("provider") or "").strip() != "stripe":
+    if str(entitlement.get("provider") or "").strip() != STRIPE_SANDBOX_PROVIDER:
         return None
     customer_id = str(entitlement.get("provider_customer_id") or "").strip()
     return customer_id or None
@@ -110,13 +111,13 @@ def create_subscription_checkout_session(
 
 
 def create_customer_portal_session(user_id: str, *, return_url: str) -> Any:
-    """Create a self-service portal session for an entitled LT account."""
+    """Create a self-service portal session for an entitled LT sandbox account."""
     user_id = str(user_id or "").strip()
     if not user_id:
         raise ValueError("user_id is required")
     customer_id = _existing_stripe_customer(user_id)
     if not customer_id:
-        raise ValueError("Stripe customer mapping is not available")
+        raise ValueError("Stripe sandbox customer mapping is not available")
 
     return stripe.billing_portal.Session.create(
         api_key=_stripe_secret_key(),
