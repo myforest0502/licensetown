@@ -4,7 +4,7 @@ os.environ.setdefault("OPENAI_API_KEY", "test-key")
 os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
 os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
-from stripe.error import SignatureVerificationError
+import stripe
 
 from app import app
 import stripe_webhook_ui as webhook_module
@@ -38,7 +38,7 @@ def test_stripe_webhook_route_is_registered(monkeypatch):
 
 def test_invalid_stripe_signature_is_rejected(monkeypatch):
     def reject(payload, signature):
-        raise SignatureVerificationError("bad signature", signature)
+        raise stripe.SignatureVerificationError("bad signature", signature)
 
     monkeypatch.setattr(webhook_module, "process_stripe_webhook", reject)
 
