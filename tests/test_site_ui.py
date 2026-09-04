@@ -95,6 +95,19 @@ def test_pc_lower_cards_keep_heading_on_one_line_and_faq_link_visible():
     assert ".faq-panel>a{margin-top:6px!important;padding-bottom:2px}" in css
 
 
+def test_pc_trust_support_copy_states_current_free_and_optional_support_policy():
+    html = (PREVIEW_PC_DIR / "index.html").read_text(encoding="utf-8")
+
+    assert "まだ完成したサービスだとは考えていません" in html
+    assert "月額料金をお願いしません" in html
+    assert "もっとレスポンスを速くしたい" in html
+    assert "100円からの開発支援" in html
+    assert "1回あたり1,000円まで" in html
+    assert "支援は完全に任意です" in html
+    assert "支援の有無で、現在の学習機能に差はありません" in html
+    assert "LicenseTownの改善・運営・開発のために使います" in html
+
+
 def test_site_keeps_724_canvas_scaling_and_pc_mobile_switch():
     client = app.test_client()
     css = client.get("/static/site/site.css").get_data(as_text=True)
