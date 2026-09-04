@@ -5,7 +5,7 @@ os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
 os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
 from app import app
-from site_ui import PREVIEW_PC_DIR
+from site_ui import PREVIEW_724_DIR, PREVIEW_PC_DIR
 
 
 def test_site_route_renders_without_changing_existing_root():
@@ -106,6 +106,36 @@ def test_pc_trust_support_copy_states_current_free_and_optional_support_policy()
     assert "支援は完全に任意です" in html
     assert "支援の有無で、現在の学習機能に差はありません" in html
     assert "LicenseTownの改善・運営・開発のために使います" in html
+
+
+def test_mobile_public_view_gets_trust_support_copy_without_mutating_frozen_724_source():
+    client = app.test_client()
+    mobile_html = client.get("/site/view/mobile").get_data(as_text=True)
+    raw_724_html = (PREVIEW_724_DIR / "index.html").read_text(encoding="utf-8")
+
+    assert 'class="mobile-trust-support"' in mobile_html
+    assert "迷ったときは、「それは誠実か？」で考える。" in mobile_html
+    assert "まだ完成したサービスだとは考えていません" in mobile_html
+    assert "月額料金をお願いしません" in mobile_html
+    assert "100円からの開発支援" in mobile_html
+    assert "1回あたり1,000円まで" in mobile_html
+    assert "支援は完全に任意" in mobile_html
+    assert "支援の有無で現在の学習機能に差はありません" in mobile_html
+    assert "LicenseTownの改善・運営・開発のために使います" in mobile_html
+    assert 'class="mobile-trust-support"' not in raw_724_html
+
+
+def test_mobile_public_trust_support_is_stacked_before_final_cta_and_has_canvas_room():
+    client = app.test_client()
+    mobile_html = client.get("/site/view/mobile").get_data(as_text=True)
+    mobile_css = client.get("/site/preview-responsive/mobile.css").get_data(as_text=True)
+
+    assert mobile_html.index('class="mobile-trust-support"') < mobile_html.index('class="final-cta"')
+    assert ".page{height:2562px!important}" in mobile_css
+    assert ".mobile-trust-support{position:relative;width:724px;height:390px" in mobile_css
+    assert ".mobile-principles-card{top:12px;height:166px" in mobile_css
+    assert ".mobile-support-card{top:188px;height:188px}" in mobile_css
+    assert ".mobile-support-amounts" in mobile_css
 
 
 def test_site_keeps_724_canvas_scaling_and_pc_mobile_switch():
