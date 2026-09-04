@@ -82,7 +82,9 @@ def responsive_asset(filename):
 # ``app.py`` already registers site_ui. Attach small auxiliary boundaries here
 # so the Flask entrypoint remains unchanged while their logic stays isolated.
 from developer_ui import register_developer_routes
+from stripe_billing_ui import stripe_billing_ui
 from stripe_webhook_ui import stripe_webhook_ui
 
 register_developer_routes(site_ui)
+site_ui.register_blueprint(stripe_billing_ui)
 site_ui.register_blueprint(stripe_webhook_ui)
