@@ -57,6 +57,26 @@ def _sale_safe_html(html: str) -> str:
     )
     html = html.replace('総合達成度</small>', '総合達成度 <em>（画面イメージ）</em></small>')
     html = html.replace('合格まで あと <b>123</b>日', '学習ナビ <em>（画面イメージ）</em>')
+    html = html.replace(
+        '<a>特定商取引法に基づく表記</a>',
+        '<a href="/site/legal/commercial-transactions">特定商取引法に基づく表記</a>',
+    )
+    html = html.replace(
+        '<a>プライバシーポリシー</a>',
+        '<a href="/site/legal/privacy">プライバシーポリシー</a>',
+    )
+    html = html.replace(
+        '<a>利用規約</a>',
+        '<a href="/site/legal/terms">利用規約</a>',
+    )
+    html = html.replace(
+        '<a>運営会社</a>',
+        '<a href="/site/legal/operator">運営者情報</a>',
+    )
+    html = html.replace(
+        '<a>お問い合わせ</a>',
+        '<a href="/site/legal/contact">お問い合わせ</a>',
+    )
     return html
 
 
@@ -118,9 +138,11 @@ def responsive_asset(filename):
 # ``app.py`` already registers site_ui. Attach small auxiliary boundaries here
 # so the Flask entrypoint remains unchanged while their logic stays isolated.
 from developer_ui import register_developer_routes
+from site_legal_ui import site_legal_ui
 from stripe_billing_ui import stripe_billing_ui
 from stripe_webhook_ui import stripe_webhook_ui
 
 register_developer_routes(site_ui)
+site_ui.register_blueprint(site_legal_ui)
 site_ui.register_blueprint(stripe_billing_ui)
 site_ui.register_blueprint(stripe_webhook_ui)
