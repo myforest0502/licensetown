@@ -77,6 +77,44 @@ def _wire_primary_ctas(html: str) -> str:
     )
 
 
+def _inject_mobile_trust_support(html: str) -> str:
+    """Add the approved trust/support message to the public 724px mobile view.
+
+    The original 724px design source stays frozen. Public rendering receives the
+    same operating stance already approved on PC, stacked for the narrow canvas.
+    """
+    if 'class="story-faq"' not in html or 'class="mobile-trust-support"' in html:
+        return html
+
+    section = (
+        '<section class="mobile-trust-support" id="mobile-principles">'
+        '<article class="mobile-principles-card">'
+        '<span>LicenseTownが大切にしていること</span>'
+        '<h2>迷ったときは、「それは誠実か？」で考える。</h2>'
+        '<p>LicenseTownは、まだ完成したサービスだとは考えていません。'
+        'まずは実際に使っていただき、改善の声を集めながら少しずつ良くしていきます。</p>'
+        '<p>十分に胸を張って「料金をいただける」と思えるまでは、月額料金をお願いしません。'
+        '学ぶ人に本当に役に立つか、自分の家族にも勧められるか。これからも「誠実」を判断基準にします。</p>'
+        '<div class="mobile-principle-points"><b>利益より先に信頼</b><b>売るより先に役に立つ</b><b>胸を張れるものを届ける</b></div>'
+        '</article>'
+        '<article class="mobile-support-card">'
+        '<span>LicenseTownを応援する</span>'
+        '<h2>いまは、まず使ってもらい、良くしていく。</h2>'
+        '<p>もっとレスポンスを速くしたい。スマホでも、もっと使いやすくしたい。'
+        '学習機能や見守り機能も、もっと良くしたい。そのための開発費が必要なのも事実です。</p>'
+        '<p>「少し応援してもいいな」と思っていただけたら、100円からの開発支援で応援していただけると嬉しいです。'
+        '<strong>支援は完全に任意で、支援の有無で現在の学習機能に差はありません。</strong></p>'
+        '<div class="mobile-support-amounts"><b>100円</b><b>300円</b><b>500円</b><b>1,000円</b></div>'
+        '<p class="mobile-support-cap">1回あたり1,000円まで。それ以上の金額は、今は受け取りません。'
+        'いただいた支援は、LicenseTownの改善・運営・開発のために使います。</p>'
+        '<a href="/site/support">開発支援について詳しく見る　›</a>'
+        '<small>※現在は支援受付の準備中です。決済機能はまだ公開していません。</small>'
+        '</article>'
+        '</section>'
+    )
+    return html.replace('<section class="final-cta"', section + '<section class="final-cta"', 1)
+
+
 def _sale_safe_html(html: str) -> str:
     """Remove prototype claims that must not appear as factual sale copy yet.
 
@@ -138,6 +176,7 @@ def _sale_safe_html(html: str) -> str:
         '<a>お問い合わせ</a>',
         '<a href="/site/legal/contact">お問い合わせ</a><a href="/site/support">LicenseTownを応援する</a>',
     )
+    html = _inject_mobile_trust_support(html)
     return _wire_primary_ctas(html)
 
 
