@@ -2,6 +2,8 @@ import logging
 import os
 from types import SimpleNamespace
 
+import pytest
+
 os.environ.setdefault("OPENAI_API_KEY", "test-key")
 os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
 os.environ.setdefault("CHANNEL_SECRET", "test-secret")
@@ -95,6 +97,18 @@ def test_five_answer_path_keeps_parse_persist_and_reply(monkeypatch, caplog):
         assert f"op={operation}" in messages
 
 
+def test_non_study_dispatch_probe_does_not_emit_study_answer_total(monkeypatch, caplog):
+    monkeypatch.setenv("LT_LEARNER_PATH_PERF_LOG", "1")
+    user_id = "not-an-answer-user"
+    bot_app.study_sessions.pop(user_id, None)
+
+    with caplog.at_level(logging.INFO, logger=performance.__name__):
+        assert bot_app.process_study_answer_input("reply-token", user_id, "hello") is False
+
+    messages = "\n".join(_operations(caplog))
+    assert "op=study_answer.total" not in messages
+
+
 def test_consultation_times_one_ai_call_and_one_line_reply(monkeypatch, caplog):
     monkeypatch.setenv("LT_LEARNER_PATH_PERF_LOG", "1")
     user_id = "consult-user"
@@ -124,6 +138,38 @@ def test_consultation_times_one_ai_call_and_one_line_reply(monkeypatch, caplog):
         assert f"op={operation}" in messages
     assert "private consultation" not in messages
     assert "private reply token" not in messages
+
+
+def test_consultation_total_marks_propagating_error(monkeypatch, caplog):
+    monkeypatch.setenv("LT_LEARNER_PATH_PERF_LOG", "1")
+    user_id = "consult-error-user"
+    bot_app.user_names[user_id] = "learner"
+    bot_app.user_modes[user_id] = "chat"
+    bot_app.user_states[user_id] = "consultation_input"
+    monkeypatch.setattr(bot_app, "user_profile_exists", lambda _user_id: True)
+    monkeypatch.setattr(bot_app, "process_study_flow_command", lambda *_args: False)
+    monkeypatch.setattr(bot_app, "process_nekketsu_flow_command", lambda *_args: False)
+    monkeypatch.setattr(bot_app, "process_study_answer_input", lambda *_args: False)
+    monkeypatch.setattr(bot_app, "create_text_response", lambda *_args: "response")
+
+    def fail_activity(*_args):
+        raise RuntimeError("activity write failed")
+
+    monkeypatch.setattr(bot_app, "record_activity_event", fail_activity)
+    event = SimpleNamespace(
+        source=SimpleNamespace(user_id=user_id),
+        message=SimpleNamespace(text="private consultation"),
+        reply_token="private reply token",
+    )
+
+    with caplog.at_level(logging.INFO, logger=performance.__name__):
+        with pytest.raises(RuntimeError, match="activity write failed"):
+            bot_app.handle_text_message(event)
+
+    messages = _operations(caplog)
+    consult_total = [message for message in messages if "op=consult.total" in message]
+    assert len(consult_total) == 1
+    assert "outcome=error" in consult_total[0]
 
 
 def test_dashboard_times_existing_build_activity_and_render(monkeypatch, caplog):
