@@ -10,6 +10,39 @@ from goukaku_ui import create_dashboard_token
 import stripe_billing_ui as billing_ui
 
 
+def test_sandbox_test_page_is_hidden_by_default(monkeypatch):
+    monkeypatch.delenv("ENABLE_STRIPE_SANDBOX_CHECKOUT", raising=False)
+    token = create_dashboard_token("learner-1")
+    response = app.test_client().get(
+        "/stripe/sandbox/test",
+        query_string={"token": token},
+    )
+    assert response.status_code == 404
+
+
+def test_sandbox_test_page_requires_signed_learner_token(monkeypatch):
+    monkeypatch.setenv("ENABLE_STRIPE_SANDBOX_CHECKOUT", "1")
+    response = app.test_client().get("/stripe/sandbox/test")
+    assert response.status_code == 403
+
+
+def test_sandbox_test_page_renders_post_forms(monkeypatch):
+    monkeypatch.setenv("ENABLE_STRIPE_SANDBOX_CHECKOUT", "1")
+    token = create_dashboard_token("learner-1")
+    response = app.test_client().get(
+        "/stripe/sandbox/test",
+        query_string={"token": token},
+    )
+
+    assert response.status_code == 200
+    html = response.get_data(as_text=True)
+    assert "Stripe サンドボックス確認" in html
+    assert 'action="/stripe/sandbox/checkout"' in html
+    assert 'action="/stripe/sandbox/portal"' in html
+    assert f'value="{token}"' in html
+    assert "実際の請求は発生しません" in html
+
+
 def test_sandbox_checkout_route_is_hidden_by_default(monkeypatch):
     monkeypatch.delenv("ENABLE_STRIPE_SANDBOX_CHECKOUT", raising=False)
     token = create_dashboard_token("learner-1")

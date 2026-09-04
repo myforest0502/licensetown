@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import logging
 
-from flask import Blueprint, abort, redirect, request, url_for
+from flask import Blueprint, abort, redirect, render_template_string, request, url_for
 
 from goukaku_ui import authorized_dashboard_learner
 from stripe_checkout_service import (
@@ -20,6 +20,41 @@ from stripe_checkout_service import (
 
 logger = logging.getLogger(__name__)
 stripe_billing_ui = Blueprint("stripe_billing_ui", __name__)
+
+
+_SANDBOX_TEST_PAGE = """
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LicenseTown Stripe sandbox test</title>
+  <style>
+    body { font-family: sans-serif; max-width: 640px; margin: 48px auto; padding: 0 20px; line-height: 1.6; }
+    .box { border: 2px solid #6b5cff; border-radius: 16px; padding: 24px; }
+    button { width: 100%; padding: 14px; margin: 8px 0; border: 0; border-radius: 10px; font-weight: 700; cursor: pointer; }
+    .checkout { background: #635bff; color: white; }
+    .portal { background: #eee; color: #222; }
+    small { display: block; margin-top: 16px; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Stripe サンドボックス確認</h1>
+    <p>これは LicenseTown の決済テスト専用画面です。実際の請求は発生しません。</p>
+    <form method="post" action="{{ checkout_url }}">
+      <input type="hidden" name="token" value="{{ token }}">
+      <button class="checkout" type="submit">サンドボックス決済を開始</button>
+    </form>
+    <form method="post" action="{{ portal_url }}">
+      <input type="hidden" name="token" value="{{ token }}">
+      <button class="portal" type="submit">Customer Portal を開く</button>
+    </form>
+    <small>Customer Portal は、Checkout 完了後に Stripe customer の紐付けができてから使用します。</small>
+  </div>
+</body>
+</html>
+"""
 
 
 def _enabled_or_404() -> None:
@@ -34,6 +69,20 @@ def _object_url(value) -> str | None:
         result = getattr(value, "url", None)
     result = str(result or "").strip()
     return result or None
+
+
+@stripe_billing_ui.get("/stripe/sandbox/test")
+def sandbox_test_page():
+    """Authenticated human test page for the sandbox lifecycle only."""
+    _enabled_or_404()
+    token = request.args.get("token")
+    authorized_dashboard_learner(token)
+    return render_template_string(
+        _SANDBOX_TEST_PAGE,
+        token=token,
+        checkout_url=url_for(".sandbox_checkout"),
+        portal_url=url_for(".sandbox_portal"),
+    )
 
 
 @stripe_billing_ui.post("/stripe/sandbox/checkout")
