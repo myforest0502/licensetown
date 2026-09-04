@@ -125,3 +125,8 @@
 .monitor-card .mini-bars i{max-height:34px}
 .monitor-card .mini-board>b{top:48px!important;width:50px!important;height:50px!important;border-width:7px!important;font-size:14px!important}
 .monitor-card .mini-board p{bottom:8px!important;white-space:nowrap}
+
+/* Give the entire lower trio a little more vertical breathing room. */
+.bottom{min-height:210px!important;padding-top:14px!important;padding-bottom:24px!important}
+.brand-panel,.faq-panel,.try-panel{height:190px!important;min-height:190px!important}
+.faq-panel{overflow:visible!important;padding-bottom:12px!important}
