@@ -5,7 +5,7 @@ from html import escape
 from pathlib import Path
 from urllib.parse import urlparse
 
-from flask import Blueprint, Response, render_template, send_from_directory, url_for
+from flask import Blueprint, Response, render_template, request, send_from_directory, url_for
 
 
 site_ui = Blueprint("site_ui", __name__)
@@ -75,6 +75,53 @@ def _wire_primary_ctas(html: str) -> str:
         replace_anchor,
         html,
     )
+
+
+def _wire_same_document_fragments(html: str) -> str:
+    """Keep hash navigation on the rendered preview document, not its asset base.
+
+    The preview documents use ``<base>`` so relative image/CSS paths resolve to
+    their asset directories. Without this rewrite, ``href="#faq"`` also resolves
+    against that asset base and leaves the public document, which caused the
+    observed 403 navigation failures.
+    """
+    current_path = escape(request.path, quote=True)
+    return re.sub(
+        r'href="#([A-Za-z0-9_-]+)"',
+        lambda match: f'href="{current_path}#{match.group(1)}"',
+        html,
+    )
+
+
+def _inject_mobile_faq_answers(html: str) -> str:
+    """Turn the frozen mobile FAQ shell into a useful public accordion."""
+    if 'class="faq-list"' not in html or 'class="faq-answer"' in html:
+        return html
+
+    answers = {
+        "料金はかかりますか？": (
+            "現在は多くの方に使っていただき、改善する段階です。"
+            "月額料金はお願いしていません。正式な料金・提供条件を決める際は、このページでご案内します。"
+        ),
+        "LINEだけで使えますか？": (
+            "学習の中心はLINEで利用できます。合格への道や見守りなど、"
+            "一部の画面はブラウザで開いて確認します。"
+        ),
+        "見守り機能では何が見えますか？": (
+            "学習日数、回答数、学習時間、分野別の取り組み状況などを確認できます。"
+            "個別の相談内容は共有されません。"
+        ),
+        "どんな人に向いていますか？": (
+            "理学療法士国家試験に向けて、苦手や次にやることを整理しながら学びたい方と、"
+            "その学習を見守りたいご家族を想定しています。"
+        ),
+    }
+    for question, answer in answers.items():
+        html = html.replace(
+            f"<details><summary>{question}</summary></details>",
+            f'<details><summary>{question}</summary><p class="faq-answer">{answer}</p></details>',
+        )
+    return html
 
 
 def _inject_mobile_trust_support(html: str) -> str:
@@ -173,22 +220,46 @@ def _sale_safe_html(html: str) -> str:
         '<a href="/site/legal/operator">運営者情報</a>',
     )
     html = html.replace(
+        '<a>運営情報</a>',
+        '<a href="/site/legal/operator">運営情報</a>',
+    )
+    html = html.replace(
         '<a>お問い合わせ</a>',
         '<a href="/site/legal/contact">お問い合わせ</a><a href="/site/support">LicenseTownを応援する</a>',
     )
+    html = _inject_mobile_faq_answers(html)
     html = _inject_mobile_trust_support(html)
     return _wire_primary_ctas(html)
+
+
+def _preview_interaction_script() -> str:
+    """Small public-only behaviors for the frozen preview documents."""
+    return """<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var faqItems = document.querySelectorAll('.faq-list details');
+  faqItems.forEach(function (item) {
+    item.addEventListener('toggle', function () {
+      if (!item.open) return;
+      faqItems.forEach(function (other) {
+        if (other !== item) other.open = false;
+      });
+    });
+  });
+});
+</script>"""
 
 
 def _preview_document(source_path, base_url, extra_stylesheet_url):
     html = source_path.read_text(encoding="utf-8")
     html = _sale_safe_html(html)
+    html = _wire_same_document_fragments(html)
     html = html.replace("<head>", f'<head><base href="{base_url}">', 1)
     html = html.replace(
         "</head>",
         f'<link rel="stylesheet" href="{extra_stylesheet_url}"></head>',
         1,
     )
+    html = html.replace("</body>", _preview_interaction_script() + "</body>", 1)
     return Response(html, mimetype="text/html")
 
 
