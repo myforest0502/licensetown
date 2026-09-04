@@ -68,7 +68,7 @@ def _layout(title: str, body_html: str):
 <style>
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;background:#f7faf7;color:#18331f}
 main{max-width:820px;margin:40px auto;padding:0 20px 60px}.card{background:#fff;border:1px solid #dce8de;border-radius:18px;padding:28px}
-a{color:#087d2c}.notice{padding:14px 16px;background:#eef8ef;border-radius:12px;margin-bottom:24px}h1{font-size:28px}h2{margin-top:28px;font-size:20px}dt{font-weight:700;margin-top:14px}dd{margin:4px 0 0}footer{margin-top:32px;font-size:13px;color:#66756a}
+a{color:#087d2c}.notice{padding:14px 16px;background:#eef8ef;border-radius:12px;margin-bottom:24px}h1{font-size:28px}h2{margin-top:28px;font-size:20px}dt{font-weight:700;margin-top:14px}dd{margin:4px 0 0}footer{margin-top:32px;font-size:13px;color:#66756a}.support-note{padding:16px;background:#f3f8f3;border-radius:12px}.muted{color:#66756a}
 </style></head><body><main><div class="card"><div class="notice">{{ status }}</div>
 <h1>{{ title }}</h1>{{ body|safe }}<footer><a href="/site">LicenseTown公式サイトへ戻る</a></footer>
 </div></main></body></html>
@@ -133,6 +133,25 @@ def terms():
 def operator():
     rows = _operator_rows()
     return _layout("運営者情報", f"<dl>{rows}<dt>サービス名</dt><dd>LicenseTown</dd></dl>")
+
+
+@site_legal_ui.get("/site/support")
+def support():
+    body = """
+<p><strong>LicenseTownは現在、より多くの方に使っていただき、改善を重ねることを優先しています。</strong></p>
+<p>使いにくいところ、わかりにくいところ、もっとこうしてほしいという声を集めながら、少しずつ良いサービスに育てていきます。</p>
+<h2>もっと良くしたいこと</h2>
+<p>レスポンスをもっと速くすること。スマートフォンでもっと使いやすくすること。将来はアプリとして使えるようにすること。問題・分析・学習提案をさらに磨くこと。</p>
+<p>そのためには、サーバー代、AI利用料、開発や運営のための費用がかかります。</p>
+<div class="support-note">
+<strong>もし「これからも続いてほしい」「少し応援してもいい」と思っていただけたら、無理のない範囲で開発支援をいただけると嬉しいです。</strong>
+<p>支援する・しないは完全に任意です。支援の有無で、現在提供している学習機能に差をつける予定はありません。</p>
+</div>
+<h2>いただいた支援について</h2>
+<p>LicenseTownの運営、レスポンス改善、AI利用、機能改善、将来のアプリ化など、サービスを良くするために活用します。</p>
+<p class="muted">現在は支援受付の準備中です。決済機能はまだ公開していません。</p>
+"""
+    return _layout("LicenseTownを応援する", body)
 
 
 @site_legal_ui.get("/site/legal/contact")
