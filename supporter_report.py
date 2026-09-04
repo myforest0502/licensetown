@@ -8,6 +8,7 @@ performance simplification.
 
 from __future__ import annotations
 
+from contextlib import nullcontext
 from datetime import timezone
 from zoneinfo import ZoneInfo
 
@@ -181,11 +182,16 @@ def _shared_dashboard_learning_data(learner_user_id: str, conn) -> dict:
     }
 
 
-def build_supporter_report(learner_user_id: str) -> dict:
-    """Return parent-facing data only; never consultation text or dev diagnostics."""
+def build_supporter_report(learner_user_id: str, *, _connection=None) -> dict:
+    """Return parent-facing data only; reuse a caller-owned Production connection."""
     with measure("build_supporter_report.total"):
         if database_is_available():
-            with get_db_connection() as conn:
+            connection_context = (
+                nullcontext(_connection)
+                if _connection is not None
+                else get_db_connection()
+            )
+            with connection_context as conn:
                 with measure("db.dashboard_learning_data"):
                     learning_data = _shared_dashboard_learning_data(learner_user_id, conn)
                 summary = learning_data["summary"]
