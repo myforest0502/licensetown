@@ -10,7 +10,7 @@ from __future__ import annotations
 import logging
 
 from flask import Blueprint, jsonify, request
-from stripe.error import SignatureVerificationError
+import stripe
 
 from stripe_entitlement_adapter import process_stripe_webhook
 
@@ -25,7 +25,7 @@ def stripe_webhook():
     signature = request.headers.get("Stripe-Signature", "")
     try:
         result = process_stripe_webhook(payload, signature)
-    except (SignatureVerificationError, ValueError) as exc:
+    except (stripe.SignatureVerificationError, ValueError) as exc:
         logger.warning("Stripe webhook rejected: %s", type(exc).__name__)
         return jsonify({"ok": False}), 400
     except RuntimeError:
