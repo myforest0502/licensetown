@@ -38,12 +38,25 @@ def _text(value: Any) -> str | None:
     return text or None
 
 
+def _as_mapping(value: Any) -> Mapping[str, Any]:
+    """Convert Stripe SDK resources to plain mappings before normalization."""
+    if isinstance(value, Mapping):
+        return value
+    for method_name in ("to_dict_recursive", "to_dict"):
+        method = getattr(value, method_name, None)
+        if callable(method):
+            converted = method()
+            if isinstance(converted, Mapping):
+                return converted
+    raise ValueError("Stripe event payload is not mapping-compatible")
+
+
 def verify_stripe_webhook(
     payload: bytes,
     signature_header: str,
     *,
     webhook_secret: str | None = None,
-) -> Mapping[str, Any]:
+) -> Any:
     """Verify one Stripe webhook with Stripe's official signing helper.
 
     The webhook secret must be supplied explicitly or through
@@ -170,9 +183,10 @@ def process_stripe_webhook(
         signature_header,
         webhook_secret=webhook_secret,
     )
-    normalized = normalize_verified_stripe_event(verified_event)
+    event_mapping = _as_mapping(verified_event)
+    normalized = normalize_verified_stripe_event(event_mapping)
     if normalized is None:
-        return {"handled": False, "event_type": _text(verified_event.get("type"))}
+        return {"handled": False, "event_type": _text(event_mapping.get("type"))}
     result = apply_verified_provider_event(normalized)
     return {
         "handled": True,
