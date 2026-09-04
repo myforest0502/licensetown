@@ -117,3 +117,11 @@
 /* Give the larger copy enough vertical room. */
 .preview-card{min-height:310px}
 .principles-card,.support-card{min-height:325px}
+
+/* Keep the monitor mini-dashboard labels and graphics in separate zones. */
+.monitor-card .mini-board{height:142px!important;position:absolute}
+.monitor-card .mini-board small{display:block;width:92px!important;white-space:normal;position:relative;z-index:2}
+.monitor-card .mini-bars{top:66px!important;height:36px!important}
+.monitor-card .mini-bars i{max-height:34px}
+.monitor-card .mini-board>b{top:48px!important;width:50px!important;height:50px!important;border-width:7px!important;font-size:14px!important}
+.monitor-card .mini-board p{bottom:8px!important;white-space:nowrap}
