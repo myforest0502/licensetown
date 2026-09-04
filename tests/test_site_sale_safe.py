@@ -2,9 +2,17 @@ from site_ui import _sale_safe_html
 
 
 def test_pc_demo_claims_are_sanitized():
-    html = "新規問題</small><b>1000<em>問</em></b> 過去問</small><b>1000<em>問</em></b> 合計</small><b>2000<em>問収録</em></b> 無料期間実施中！ すべての機能を無料で体験できます。 合格まで あと <b>123</b>日 総合達成度"
+    html = (
+        '<section class="stats"><div class="container"><div><i>▰</i><span><small>新規問題</small>'
+        '<b>1000<em>問</em></b></span></div><div><i>▤</i><span><small>過去問</small>'
+        '<b>1000<em>問</em></b></span></div><div><i>▥</i><span><small>合計</small>'
+        '<b>2000<em>問収録</em></b></span></div></div></section>'
+        ' 無料期間実施中！ すべての機能を無料で体験できます。 '
+        '合格まで あと <b>123</b>日 総合達成度</small>'
+    )
     safe = _sale_safe_html(html)
     assert "2000<em>問収録</em>" not in safe
+    assert "1000<em>問</em>" not in safe
     assert "無料期間実施中！" not in safe
     assert "すべての機能を無料で体験できます。" not in safe
     assert "画面イメージ" in safe
