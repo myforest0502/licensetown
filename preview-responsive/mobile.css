@@ -2,7 +2,7 @@
 
 /* Public mobile parity pass: add the approved trust/support message without
    modifying the frozen 724px design source itself. */
-.page{height:2624px!important}
+.page{height:2674px!important}
 .mobile-trust-support{position:relative;width:724px;height:452px;border-top:1px solid #e9e7e2;background:#fff;overflow:hidden}
 .mobile-principles-card,.mobile-support-card{position:absolute;left:42px;width:640px;border:1px solid #dce8de;border-radius:10px;background:#fff;padding:13px 18px;box-shadow:0 2px 7px rgba(44,55,46,.04)}
 .mobile-principles-card{top:12px;height:166px;background:linear-gradient(135deg,#f7fbf7,#fff)}
@@ -18,3 +18,13 @@
 .mobile-support-cap{position:static;width:auto!important;margin:8px 0 0!important;font-size:7px!important;line-height:12px!important}
 .mobile-support-card>a{position:static;display:grid;place-items:center;width:185px;height:29px;margin-top:9px;border:1px solid #168735;border-radius:6px;color:#176f50;font-size:9px;font-weight:700}
 .mobile-support-card>small{position:static;display:block;margin-top:7px;color:#69736b;font-size:7px;line-height:11px}
+
+/* The frozen 724px FAQ only contained empty details shells. Public rendering
+   supplies real answers; keep one open item readable without clipping. */
+.story-faq{height:286px!important;overflow:visible!important}
+.faq-card{height:270px!important;overflow:visible!important}
+.faq-list{height:auto!important;overflow:visible!important}
+.faq-list details{height:auto!important;min-height:41px}
+.faq-list details[open]{padding-bottom:7px}
+.faq-list details[open] summary:after{content:"−"}
+.faq-answer{margin:0;padding:0 34px 8px 13px;color:#455049;font-size:8px;font-weight:600;line-height:13px}
