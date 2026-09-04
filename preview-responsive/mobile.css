@@ -28,3 +28,10 @@
 .faq-list details[open]{padding-bottom:7px}
 .faq-list details[open] summary:after{content:"−"}
 .faq-answer{margin:0;padding:0 34px 8px 13px;color:#455049;font-size:8px;font-weight:600;line-height:13px}
+
+/* Public-only inert states; the frozen 724px source remains untouched. */
+.video-card-static{cursor:default}
+.video-status{position:absolute;z-index:3;left:120px;top:31px;display:grid;place-items:center;width:62px;height:48px;border-radius:24px;background:rgba(35,35,35,.83);color:#fff;font-size:8px;font-weight:700;line-height:12px;text-align:center}
+.dash-nav>.public-static-control{display:block;height:32px;padding:7px 4px;border-radius:4px;font-size:7px;font-weight:700;cursor:default}
+.dash-nav>.public-static-control.active{background:#559b5a}
+.progress-card>.public-static-control,.rank-card>.public-static-control,.today-card>.public-static-control{position:absolute;right:9px;bottom:7px;color:#647068;font-size:6px;font-weight:700;cursor:default}

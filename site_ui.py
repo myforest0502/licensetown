@@ -162,6 +162,64 @@ def _inject_mobile_trust_support(html: str) -> str:
     return html.replace('<section class="final-cta"', section + '<section class="final-cta"', 1)
 
 
+def _add_static_control_class(attrs: str) -> str:
+    class_match = re.search(r'class="([^"]*)"', attrs)
+    if class_match:
+        classes = f'{class_match.group(1)} public-static-control'.strip()
+        return attrs[: class_match.start()] + f'class="{classes}"' + attrs[class_match.end() :]
+    return attrs + ' class="public-static-control"'
+
+
+def _make_public_dead_interactions_static(html: str) -> str:
+    """Make unavailable public-preview interactions explicitly inert."""
+    html = html.replace(
+        '<a class="btn login">ログイン</a>',
+        '<span class="btn login public-static-control" aria-disabled="true">'
+        'ログイン（準備中）</span>',
+    )
+    html = html.replace(
+        '<a class="detail">詳しく見る</a>',
+        '<span class="detail public-static-control" aria-disabled="true">'
+        '表示イメージ</span>',
+    )
+    html = html.replace(
+        '<a>その他の質問はこちら　›</a>',
+        '<a href="/site/legal/contact">その他の質問はこちら　›</a>',
+    )
+
+    video_pattern = re.compile(
+        r'<button class="video-card"[^>]*>(?P<body>.*?)</button>',
+        flags=re.DOTALL,
+    )
+
+    def replace_video(match):
+        body = match.group("body").replace(
+            '<span class="play">▶</span>',
+            '<span class="video-status">紹介動画<br>準備中</span>',
+        )
+        return (
+            '<div class="video-card video-card-static" '
+            'aria-label="30秒でわかるLicenseTown 紹介動画 準備中">'
+            f"{body}</div>"
+        )
+
+    html = video_pattern.sub(replace_video, html)
+
+    def replace_href_less_anchor(match):
+        attrs = match.group("attrs") or ""
+        if re.search(r"\bhref\s*=", attrs, flags=re.IGNORECASE):
+            return match.group(0)
+        attrs = _add_static_control_class(attrs)
+        return f'<span{attrs} aria-disabled="true">{match.group("body")}</span>'
+
+    return re.sub(
+        r'<a\b(?P<attrs>[^>]*)>(?P<body>.*?)</a>',
+        replace_href_less_anchor,
+        html,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+
+
 def _sale_safe_html(html: str) -> str:
     """Remove prototype claims that must not appear as factual sale copy yet.
 
@@ -229,7 +287,8 @@ def _sale_safe_html(html: str) -> str:
     )
     html = _inject_mobile_faq_answers(html)
     html = _inject_mobile_trust_support(html)
-    return _wire_primary_ctas(html)
+    html = _wire_primary_ctas(html)
+    return _make_public_dead_interactions_static(html)
 
 
 def _preview_interaction_script() -> str:
