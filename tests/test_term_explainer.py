@@ -53,28 +53,25 @@ def test_explain_term_does_not_claim_definition_without_bank_evidence(monkeypatc
 
 
 def test_definition_first_output_answers_what_is_question(monkeypatch):
-    monkeypatch.setattr(
-        "term_explainer._bank_records",
-        lambda: tuple(_records()),
-    )
+    monkeypatch.setattr("term_explainer._bank_records", lambda: tuple(_records()))
     message = explain_term("FIMって何？")
     assert "■FIMとは？" in message
-    assert "FIMは日常生活動作の自立度を評価する尺度である。" in message
+    assert "FIM（Functional Independence Measure：機能的自立度評価法）は" in message
+    assert "日常生活動作の自立度や介助量を評価する指標" in message
     assert message.index("■FIMとは？") < message.index("■関連問題")
 
 
 def test_formal_bank_supports_pc_public_example_terms():
-    # These exact queries are shown on the PC site. Keep public promises tied to
-    # actual formal-bank evidence rather than a generic AI answer.
     for term in ("FIM", "MMT", "Brunnstrom stage"):
         assert search_term_records(term), term
 
 
-def test_real_mmt_answer_is_definition_first_or_explicitly_noninvented():
+def test_real_mmt_answer_gives_plain_definition_before_case_examples():
     message = explain_term("MMTって何？")
     assert "■MMTとは？" in message
+    assert "MMT（Manual Muscle Testing：徒手筋力検査）は" in message
+    assert "徒手的に筋力を評価" in message
     assert "■関連問題" in message
-    # A patient-specific finding must not be presented as the definition itself.
     first_section = message.split("■国試で押さえるポイント", 1)[0]
     assert "Trendelenburg徴候は陰性" not in first_section
     assert "立ち上がりでは上肢支持" not in first_section
