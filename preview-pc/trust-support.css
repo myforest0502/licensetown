@@ -136,3 +136,7 @@
 /* Preserve placeholder layout without presenting unavailable actions as live. */
 .public-static-control{cursor:default!important;text-decoration:none!important}
 .btn.login.public-static-control,.detail.public-static-control{border-color:#cbd4cd!important;background:#f4f6f4!important;color:#657068!important}
+
+/* Keep the Gensan explanation inside the middle column instead of letting it sit underneath the question list. */
+.feature-two .gensan-copy{width:185px}
+.feature-two .gensan-copy p{max-width:185px;white-space:normal;overflow-wrap:anywhere}
