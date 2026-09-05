@@ -49,7 +49,7 @@ def test_explain_term_does_not_claim_definition_without_bank_evidence(monkeypatc
     monkeypatch.setattr("term_explainer.search_term_records", lambda _term: [])
     message = explain_term("未知用語")
     assert "意味を断定できるだけの記述を見つけられなかった" in message
-    assert "■問題・解説にあるポイント" not in message
+    assert "■一言でいうと" not in message
 
 
 def test_formal_bank_supports_pc_public_example_terms():
@@ -57,3 +57,20 @@ def test_formal_bank_supports_pc_public_example_terms():
     # actual formal-bank evidence rather than a generic AI answer.
     for term in ("FIM", "MMT", "Brunnstrom stage"):
         assert search_term_records(term), term
+
+
+def test_fim_answer_starts_with_actual_definition():
+    message = explain_term("FIMって何？")
+    assert "■一言でいうと" in message
+    assert "日常生活動作の自立度・介助量を評価する尺度" in message
+    assert "運動13項目と認知5項目" in message
+    assert "■関連問題" in message
+
+
+def test_mmt_answer_is_definition_not_case_snippet():
+    message = explain_term("MMTとは？")
+    assert "■一言でいうと" in message
+    assert "徒手筋力検査" in message
+    assert "0〜5の6段階" in message
+    assert "Trendelenburg徴候は陰性" not in message
+    assert "インプラント異常" not in message
