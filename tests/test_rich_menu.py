@@ -42,16 +42,18 @@ def test_rich_menu_image_meets_line_requirements():
     assert IMAGE_PATH.stat().st_size <= MAX_IMAGE_BYTES
 
 
-def test_rich_menu_areas_match_visual_rows_without_gaps():
-    assert sum(spec[4] for spec in AREA_SPECS[:5]) == IMAGE_WIDTH
-    assert [spec[2] for spec in AREA_SPECS[:5]] == [0, 562, 1033, 1495, 1969]
-    assert all(spec[3] == 0 and spec[5] == TOP_HEIGHT for spec in AREA_SPECS[:5])
-    assert AREA_SPECS[5][2:] == (0, TOP_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT - TOP_HEIGHT)
+def test_rich_menu_areas_are_four_equal_top_items_without_gaps():
+    top = AREA_SPECS[:4]
+    assert sum(spec[4] for spec in top) == IMAGE_WIDTH
+    assert [spec[2] for spec in top] == [0, 625, 1250, 1875]
+    assert all(spec[3] == 0 and spec[4] == 625 and spec[5] == TOP_HEIGHT for spec in top)
+    assert AREA_SPECS[4][2:] == (0, TOP_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT - TOP_HEIGHT)
 
 
-def test_rich_menu_actions_are_existing_commands_and_exclude_complete_reset():
-    expected = ["合格への道", "勉強する", "相談する", "熱血モード", "教えて源さん", "ホームへ戻る"]
+def test_rich_menu_actions_exclude_consultation_and_complete_reset():
+    expected = ["合格への道", "勉強する", "熱血モード", "教えて源さん", "ホームへ戻る"]
     assert [spec[1] for spec in AREA_SPECS] == expected
+    assert all("相談する" not in value for spec in AREA_SPECS for value in spec[:2])
     assert all("ふりだしにもどる" not in value for spec in AREA_SPECS for value in spec[:2])
     menu = build_rich_menu()
     assert [area.action.text for area in menu.areas] == expected
