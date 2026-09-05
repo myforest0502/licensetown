@@ -1,7 +1,8 @@
 """LicenseTown formal-bank term explainer without external AI calls.
 
-The learner-facing answer is built only from the saved formal question bank.
-It intentionally does not invent a definition when the bank has no supporting text.
+The learner-facing answer is built from a small vetted local glossary plus the
+saved formal question bank. It intentionally does not invent a definition when
+neither source has enough support.
 """
 
 from __future__ import annotations
@@ -42,6 +43,52 @@ _QUERY_SUFFIXES = (
 _SENTENCE_SPLIT_RE = re.compile(r"(?<=[。！？!?])\s*|[\r\n]+")
 _CACHE_LOCK = threading.Lock()
 _INDEX_CACHE: tuple[dict, ...] | None = None
+
+# Frequently used exam terms get a short, learner-facing definition first.
+# This stays local, deterministic and free of external AI calls. The related
+# points/questions shown afterwards are still taken from the formal bank.
+_LOCAL_GLOSSARY = {
+    "fim": {
+        "title": "FIM",
+        "definition": "FIM（Functional Independence Measure：機能的自立度評価法）は、日常生活動作の自立度・介助量を評価する尺度で、運動13項目と認知5項目の計18項目で構成されます。",
+        "points": (
+            "認知5項目は、理解・表出・社会的交流・問題解決・記憶です。",
+            "国試では『何を評価するか』『運動13＋認知5』をまず押さえると整理しやすいです。",
+        ),
+    },
+    "mmt": {
+        "title": "MMT",
+        "definition": "MMT（Manual Muscle Testing：徒手筋力検査）は、筋力を徒手的に0〜5の6段階で評価する検査です。",
+        "points": (
+            "0＝筋収縮なし、1＝筋収縮はあるが関節運動なし、2＝重力の影響を除けば全可動域を動かせます。",
+            "3＝重力に抗して全可動域、4＝抵抗に抗して運動可能、5＝正常筋力です。",
+        ),
+    },
+    "brunnstrom": {
+        "title": "Brunnstrom stage",
+        "definition": "Brunnstrom stage（ブルンストローム・ステージ）は、脳卒中などの片麻痺における運動麻痺の回復段階をⅠ〜Ⅵの6段階で示す評価です。",
+        "points": (
+            "Ⅰは弛緩、Ⅱ〜Ⅲで共同運動や痙縮が目立ち、Ⅳ以降は共同運動から分離した運動が増えていきます。",
+            "国試では、各Stageで『共同運動からどれだけ分離できているか』を整理すると覚えやすいです。",
+        ),
+    },
+    "brunnstrom stage": {
+        "title": "Brunnstrom stage",
+        "definition": "Brunnstrom stage（ブルンストローム・ステージ）は、脳卒中などの片麻痺における運動麻痺の回復段階をⅠ〜Ⅵの6段階で示す評価です。",
+        "points": (
+            "Ⅰは弛緩、Ⅱ〜Ⅲで共同運動や痙縮が目立ち、Ⅳ以降は共同運動から分離した運動が増えていきます。",
+            "国試では、各Stageで『共同運動からどれだけ分離できているか』を整理すると覚えやすいです。",
+        ),
+    },
+    "ブルンストローム": {
+        "title": "Brunnstrom stage",
+        "definition": "Brunnstrom stage（ブルンストローム・ステージ）は、脳卒中などの片麻痺における運動麻痺の回復段階をⅠ〜Ⅵの6段階で示す評価です。",
+        "points": (
+            "Ⅰは弛緩、Ⅱ〜Ⅲで共同運動や痙縮が目立ち、Ⅳ以降は共同運動から分離した運動が増えていきます。",
+            "国試では、各Stageで『共同運動からどれだけ分離できているか』を整理すると覚えやすいです。",
+        ),
+    },
+}
 
 
 @dataclass(frozen=True)
@@ -186,17 +233,87 @@ def search_term_records(
                 snippets=_matching_snippets(record, normalized),
             )
         )
-    ranked.sort(key=lambda item: (-item.score, int(item.question_id[1:]) if item.question_id[1:].isdigit() else 10**9))
+    ranked.sort(
+        key=lambda item: (
+            -item.score,
+            int(item.question_id[1:]) if item.question_id[1:].isdigit() else 10**9,
+        )
+    )
     return ranked[: max(1, int(limit))]
 
 
+def _definition_sentence_score(sentence: str, normalized_term: str) -> int:
+    normalized = _normalize(sentence)
+    if normalized_term not in normalized:
+        return -1
+    score = 0
+    if normalized.startswith(normalized_term + "は"):
+        score += 30
+    if normalized.startswith(normalized_term + "とは"):
+        score += 32
+    if f"{normalized_term}（" in normalized:
+        score += 18
+    for marker in ("評価する", "検査", "尺度", "指標", "方法", "分類", "段階", "構成", "測定"):
+        if marker in sentence:
+            score += 5
+    # Case-description sentences are poor answers to "what is X?".
+    for marker in ("歳", "患者", "症例", "歩行", "立脚", "rom", "mmt3", "mmt4", "mmt5"):
+        if marker in normalized:
+            score -= 8
+    return score
+
+
+def _find_definition_sentence(term: str) -> str | None:
+    normalized_term = _normalize(term)
+    best: tuple[int, str] | None = None
+    for record in _bank_records():
+        for source in (record.get("explanation", ""), *record.get("choice_explanations", ())):
+            for sentence in _sentences(source):
+                score = _definition_sentence_score(sentence, normalized_term)
+                if score < 12:
+                    continue
+                clipped = _clip(sentence, limit=220)
+                if best is None or score > best[0]:
+                    best = (score, clipped)
+    return best[1] if best else None
+
+
+def _local_glossary_entry(term: str) -> dict | None:
+    normalized = _normalize(term)
+    if normalized in _LOCAL_GLOSSARY:
+        return _LOCAL_GLOSSARY[normalized]
+    if "brunnstrom" in normalized:
+        return _LOCAL_GLOSSARY["brunnstrom"]
+    if "ブルンストローム" in normalized:
+        return _LOCAL_GLOSSARY["ブルンストローム"]
+    return None
+
+
+def _useful_bank_points(results: list[TermSearchResult], definition: str | None) -> list[str]:
+    points: list[str] = []
+    normalized_definition = _normalize(definition or "")
+    for result in results:
+        for snippet in result.snippets:
+            normalized = _normalize(snippet)
+            if normalized_definition and normalized == normalized_definition:
+                continue
+            # Avoid presenting individual case facts as a general definition/point.
+            if any(marker in normalized for marker in ("歳", "患者", "症例", "立脚", "歩幅", "インプラント")):
+                continue
+            if snippet not in points:
+                points.append(snippet)
+            if len(points) >= 2:
+                return points
+    return points
+
+
 def explain_term(term: object) -> str:
-    """Return a LINE-friendly evidence-grounded explanation without OpenAI API."""
+    """Return a LINE-friendly, definition-first explanation without OpenAI API."""
     cleaned = clean_term_query(term)
     if len(_normalize(cleaned)) < 2:
         return (
             "おう、調べたい言葉をもう少し具体的に入れてくれ＾＾\n"
-            "たとえば『FIM』『相反性抑制』『Brunnstrom stage』みたいな感じだ。"
+            "たとえば『FIM』『MMT』『Brunnstrom stage』みたいな感じだ。"
         )
 
     try:
@@ -214,29 +331,26 @@ def explain_term(term: object) -> str:
             "略語なら正式名称、長い質問なら調べたい用語だけにして、もう一度入れてみてくれ＾＾"
         )
 
-    snippets: list[str] = []
-    for result in results:
-        for snippet in result.snippets:
-            if snippet not in snippets:
-                snippets.append(snippet)
-            if len(snippets) >= 3:
-                break
-        if len(snippets) >= 3:
-            break
+    glossary = _local_glossary_entry(cleaned)
+    definition = glossary["definition"] if glossary else _find_definition_sentence(cleaned)
+    title = glossary["title"] if glossary else cleaned
 
-    lines = [
-        f"おう、『{cleaned}』な。",
-        "LicenseTownの正式な問題・解説から確認すると、ここを押さえるといいぞ。",
-    ]
-    if snippets:
-        lines.extend(["", "■問題・解説にあるポイント"])
-        lines.extend(f"・{snippet}" for snippet in snippets)
+    lines = [f"おう、『{title}』な。", "", "■一言でいうと"]
+    if definition:
+        lines.append(definition)
     else:
-        lines.extend([
-            "",
-            "この言葉が出てくる問題は見つかったが、保存済み解説の中に直接説明している文は見つからなかった。",
-            "意味を推測で作らず、まず関連問題を示しておくぞ。",
-        ])
+        lines.append(
+            "この用語が出てくる問題は見つかったが、保存済み解説の中に『これは何か』を断定できる定義文までは見つからなかった。"
+        )
+
+    if glossary and glossary.get("points"):
+        lines.extend(["", "■国試で押さえるポイント"])
+        lines.extend(f"・{point}" for point in glossary["points"])
+    else:
+        bank_points = _useful_bank_points(results, definition)
+        if bank_points:
+            lines.extend(["", "■国試で押さえるポイント"])
+            lines.extend(f"・{point}" for point in bank_points)
 
     lines.extend(["", "■関連問題"])
     lines.extend(
@@ -245,6 +359,6 @@ def explain_term(term: object) -> str:
     )
     lines.extend([
         "",
-        "※この回答はLicenseTownに保存してある正式問題・解説をもとにしている。",
+        "※定義はLicenseTown内の用語辞書または正式解説、関連ポイント・問題は正式Question Bankをもとに表示しています。",
     ])
     return "\n".join(lines)
