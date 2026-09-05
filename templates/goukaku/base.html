@@ -7,6 +7,7 @@
   <title>{% block title %}合格への道{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='goukaku/goukaku.css', v='20260830-fixed-demo-cleanup1-20260903-dashboard-layout1') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='goukaku/learner-navigation-v02.css', v='20260903-single-cta1') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='goukaku/dashboard-meaning-cards.css', v='20260905-v01') }}">
   <style>
     .dashboard-grid>.learner-navigation{grid-column:1/-1}
     .daily-target.lt-daily-summary{display:block;line-height:1.7}
@@ -22,10 +23,18 @@
         answered: {{ dashboard.recommendation_today_answered|default(0)|int }},
         correct: {{ dashboard.recommendation_today_correct|default(0)|int }}
       };
+      window.LT_WEEKLY_LEARNING_SNAPSHOT = {
+        learningDays: {{ dashboard.weekly_learning_days|default(0)|int }},
+        answers: {{ dashboard.weekly_answers|default(0)|int }},
+        correct: {{ dashboard.weekly_correct|default(0)|int }},
+        minutes: {{ dashboard.weekly_study_minutes|default(0)|int }},
+        daily: {{ dashboard.daily|default([])|tojson }}
+      };
     </script>
   {% endif %}
   {% if liff_id %}<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>{% endif %}
   <script src="{{ url_for('static', filename='goukaku/goukaku.js', v='20260830-weekly-history1') }}" defer></script>
   <script src="{{ url_for('static', filename='goukaku/recommendation-daily-summary.js', v='20260905-v02') }}" defer></script>
+  <script src="{{ url_for('static', filename='goukaku/dashboard-meaning-cards.js', v='20260905-v01') }}" defer></script>
 </body>
 </html>
