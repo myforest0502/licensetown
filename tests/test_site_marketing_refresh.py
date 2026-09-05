@@ -1,13 +1,19 @@
 from flask import Flask
 
-from site_marketing_refresh import FAQ_ITEMS, install_site_marketing_refresh, refresh_public_site_html
+from site_marketing_refresh import (
+    FAQ_ITEMS,
+    FAQ_PREVIEW_ITEMS,
+    install_site_marketing_refresh,
+    refresh_public_site_html,
+)
 
 
-def test_pc_refresh_removes_login_and_expands_faq_and_free_cta(monkeypatch):
+def test_pc_refresh_balances_bottom_cards_and_keeps_three_faq_items(monkeypatch):
     monkeypatch.setenv("SITE_ONBOARDING_URL", "https://example.com/line-start")
     source = '''
     <html><head></head><body>
       <div class="header-actions"><span class="btn login public-static-control" aria-disabled="true">ログイン（準備中）</span></div>
+      <article class="brand-panel"><h2>old brand</h2></article>
       <article class="faq-panel" id="faq"><h2>よくある質問</h2><p>古い質問</p><a>その他の質問はこちら　›</a></article>
       <article class="try-panel" id="try"><h2>サービス提供準備中</h2><p>正式な料金・提供条件は、公開前にこのページでご案内します。</p><a>まずは使ってみる　›</a></article>
     </body></html>
@@ -18,13 +24,15 @@ def test_pc_refresh_removes_login_and_expands_faq_and_free_cta(monkeypatch):
     assert "検証期間中 無料公開" in html
     assert "LINEで無料ではじめる" in html
     assert "/site/line-qr.svg" in html
-    assert "解決しない場合はお問い合わせください" in html
-    assert html.count("<details>") == len(FAQ_ITEMS) == 12
-    for question, _answer in FAQ_ITEMS:
-        assert question in html
+    assert 'href="/site/faq">その他の質問はこちら' in html
+    assert html.count("<details>") == len(FAQ_PREVIEW_ITEMS) == 3
+    assert "毎日の小さな学習を、合格へ向かう積み重ねに変えていきます" in html
+    assert "marketing-brand-values" in html
+    assert ".bottom{height:370px!important" in html
+    assert "height:330px!important" in html
 
 
-def test_mobile_refresh_replaces_existing_four_item_faq(monkeypatch):
+def test_mobile_refresh_keeps_three_preview_questions_and_full_faq_link(monkeypatch):
     monkeypatch.setenv("SITE_ONBOARDING_URL", "https://example.com/line-start")
     source = '''
     <html><head></head><body>
@@ -33,10 +41,26 @@ def test_mobile_refresh_replaces_existing_four_item_faq(monkeypatch):
     </body></html>
     '''
     html = refresh_public_site_html(source, mobile=True)
-    assert html.count("<details>") == 12
+    assert html.count("<details>") == 3
+    assert 'href="/site/faq">その他の質問はこちら' in html
     assert "検証期間中 無料公開" in html
     assert "marketing-mobile-free" in html
-    assert "あとから勝手に料金が発生することはありますか？" in html
+
+
+def test_full_faq_page_has_ten_questions_and_contact_link(monkeypatch):
+    monkeypatch.setenv("SITE_ONBOARDING_URL", "https://example.com/line-start")
+    app = Flask(__name__)
+    install_site_marketing_refresh(app)
+    response = app.test_client().get("/site/faq")
+    html = response.get_data(as_text=True)
+    assert response.status_code == 200
+    assert len(FAQ_ITEMS) == 10
+    assert html.count("<details>") == 10
+    for question, answer in FAQ_ITEMS:
+        assert question in html
+        assert answer in html
+    assert 'href="/site/legal/contact"' in html
+    assert 'href="/site">← LicenseTownへ戻る</a>' in html
 
 
 def test_missing_onboarding_url_fails_closed_without_broken_qr(monkeypatch):
