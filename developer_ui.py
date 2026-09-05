@@ -13,6 +13,7 @@ import os
 
 from flask import abort, redirect, render_template, request, url_for
 
+from developer_status import build_developer_system_status
 from goukaku_ui import build_dashboard
 from pilot_diagnostics import build_pilot_diagnostics
 from supporter_performance import begin_request, finish_request
@@ -91,6 +92,7 @@ def register_developer_routes(blueprint) -> None:
             "internal/index.html",
             internal_token=token,
             learner_id=learner_id,
+            system_status=build_developer_system_status(),
             pilot_url=(
                 url_for(
                     "site_ui.internal_pilot_diagnostics",

@@ -25,6 +25,24 @@ def test_internal_index_accepts_header_token(monkeypatch):
     text = response.get_data(as_text=True)
     assert "/internal/pilot-diagnostics" in text
     assert "/internal/learner-preview" in text
+    assert "システム概要" in text
+    assert "Question Bank" in text
+    assert "正式データ監査" in text
+    assert "Knowledge Node" in text
+    assert "一時機能・計測フラグ" in text
+
+
+def test_internal_index_does_not_render_admin_secret_as_status_value(monkeypatch):
+    monkeypatch.setenv("LT_INTERNAL_ADMIN_TOKEN", "do-not-display-this-token")
+    response = app.test_client().get(
+        "/internal",
+        headers={"X-LT-Developer-Token": "do-not-display-this-token"},
+    )
+    assert response.status_code == 200
+    text = response.get_data(as_text=True)
+    # The token is still carried only in the existing hidden navigation field;
+    # status cards must never describe or echo it as a monitored setting.
+    assert "LT_INTERNAL_ADMIN_TOKEN" not in text
 
 
 def test_developer_authorized_uses_constant_time_comparison(monkeypatch):
