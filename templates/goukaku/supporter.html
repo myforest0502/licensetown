@@ -6,6 +6,7 @@
   <p class="supporter-lead"><b>{{ learner_name }}</b>さんの学習レポート</p>
   <!-- 本人画面プレビュー / LT学習診断 は開発者専用consoleへ移動 -->
 
+  {% if report.parent_summary is defined %}
   <section class="card supporter-current-position">
     <h2>今の学習状況</h2>
     <p><strong>{{ report.parent_summary.current_position.text }}</strong></p>
@@ -13,6 +14,7 @@
     <p><b>取り組んだ分野：</b>{{ report.parent_summary.current_position.field_count }}分野</p>
     <p><b>これまでの正答率：</b>{{ report.parent_summary.current_position.average_accuracy }}%</p>
   </section>
+  {% endif %}
 
   <section class="supporter-today {{ 'studied' if report.latest_studied else 'resting' }}">
     <div>
@@ -58,8 +60,10 @@
   <section class="card supporter-comment">
     <h2>見守りメモ</h2>
     <p>{{ report.comment }}</p>
+    {% if report.parent_summary is defined %}
     <p><b>学習ペース：</b>{{ report.parent_summary.pace.status }} — {{ report.parent_summary.pace.reason }}</p>
     <p><b>今後の見通し：</b>{{ report.parent_summary.trajectory.status }} — {{ report.parent_summary.trajectory.reason }}</p>
+    {% endif %}
   </section>
 
   <section class="card supporter-fields">
