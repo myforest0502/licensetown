@@ -29,6 +29,10 @@ def test_overlay_clicks_are_intercepted_without_hash_navigation():
     assert "panel.classList.add('is-open')" in html
     assert "panel.scrollTop=0" in html
     assert "card.scrollTop=0" in html
+    assert "panel.showModal()" in html
+    assert "panel.close()" in html
+    assert "window.scrollTo(savedScrollX,savedScrollY)" in html
+    assert "dialog.marketing-modal-overlay{width:100vw!important;height:100dvh!important" in html
 
 
 def test_brand_headline_is_shrunk_without_truncating_text():

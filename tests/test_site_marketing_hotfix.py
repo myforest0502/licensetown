@@ -46,6 +46,8 @@ def test_hp_contains_all_ten_questions_in_same_page_overlay(monkeypatch):
     app = _app(monkeypatch)
     html = app.test_client().get("/site/view/pc").get_data(as_text=True)
     assert 'id="faq-all-panel"' in html
+    assert '<dialog id="faq-all-panel"' in html
+    assert '<dialog id="line-start-panel"' in html
     assert html.count('class="marketing-modal-faq-item"') == 10
     assert "会員登録やパスワードは必要ですか？" in html
     assert "「教えて源さん」では何ができますか？" in html
