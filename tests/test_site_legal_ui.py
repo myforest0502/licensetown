@@ -45,6 +45,30 @@ def test_support_page_is_optional_and_sale_safe():
     assert "決済機能はまだ公開していません" in html
 
 
+def test_all_public_info_pages_are_viewport_contained_and_scrollable():
+    app = Flask(__name__)
+    app.register_blueprint(site_legal_ui.site_legal_ui)
+    client = app.test_client()
+    paths = (
+        "/site/legal/commercial-transactions",
+        "/site/legal/privacy",
+        "/site/legal/terms",
+        "/site/legal/operator",
+        "/site/legal/contact",
+        "/site/support",
+    )
+    for path in paths:
+        response = client.get(path)
+        assert response.status_code == 200, path
+        html = response.get_data(as_text=True)
+        assert "height:100dvh" in html
+        assert "align-items:center" in html
+        assert "max-height:calc(100dvh - 32px)" in html
+        assert "overflow-y:auto" in html
+        assert "overscroll-behavior:contain" in html
+        assert "LicenseTown公式サイトへ戻る" in html
+
+
 def test_public_footer_links_are_wired():
     html = "<a>特定商取引法に基づく表記</a><a>プライバシーポリシー</a><a>利用規約</a><a>運営会社</a><a>お問い合わせ</a>"
     safe = _sale_safe_html(html)
