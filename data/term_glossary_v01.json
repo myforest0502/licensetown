@@ -1,0 +1,15 @@
+{
+  "version": "0.1",
+  "terms": {
+    "FIM": {
+      "aliases": ["Functional Independence Measure", "機能的自立度評価法"],
+      "definition": "FIM（Functional Independence Measure：機能的自立度評価法）は、日常生活動作の自立度や介助量を評価する指標で、運動13項目と認知5項目の計18項目で構成される。",
+      "evidence_question_ids": ["Q405", "Q1102", "Q348"]
+    },
+    "MMT": {
+      "aliases": ["Manual Muscle Testing", "徒手筋力検査"],
+      "definition": "MMT（Manual Muscle Testing：徒手筋力検査）は、徒手的に筋力を評価し、その程度を段階で表す検査である。",
+      "evidence_question_ids": ["Q67", "Q76", "Q2"]
+    }
+  }
+}
