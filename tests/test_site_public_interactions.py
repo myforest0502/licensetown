@@ -26,10 +26,10 @@ def test_mobile_footer_operator_and_legal_links_are_public_routes():
     client = app.test_client()
     html = client.get("/site/view/mobile").get_data(as_text=True)
 
-    assert '<a href="/site/legal/terms">利用規約</a>' in html
-    assert '<a href="/site/legal/privacy">プライバシーポリシー</a>' in html
-    assert '<a href="/site/legal/contact">お問い合わせ</a>' in html
-    assert '<a href="/site/legal/operator">運営情報</a>' in html
+    assert '<a href="/site/legal/terms#top" target="_top">利用規約</a>' in html
+    assert '<a href="/site/legal/privacy#top" target="_top">プライバシーポリシー</a>' in html
+    assert '<a href="/site/legal/contact#top" target="_top">お問い合わせ</a>' in html
+    assert '<a href="/site/legal/operator#top" target="_top">運営情報</a>' in html
 
     for path in (
         "/site/legal/terms",
@@ -58,6 +58,14 @@ def test_mobile_faq_has_compact_answer_preview_and_single_open_accordion_behavio
     assert '.faq-list details[open] summary:after{content:"−"}' in css
     assert ".faq-answer{" in css
     assert ".story-faq{height:286px!important" in css
+
+
+def test_line_start_leaves_preview_iframe_on_pc_and_mobile():
+    client = app.test_client()
+    for path in ("/site/view/pc", "/site/view/mobile"):
+        html = client.get(path).get_data(as_text=True)
+        assert 'class="marketing-line-button" href="/site/line-start#top" target="_top"' in html
+    assert client.get("/site/line-start").status_code == 200
 
 
 def test_pc_public_document_has_no_href_less_anchor_affordances():
