@@ -20,6 +20,7 @@ from linebot.models import (
     URIAction,
 )
 
+from prerequisite_attempt_cache import install_prerequisite_attempt_cache
 from term_explainer import explain_term
 
 
@@ -80,6 +81,7 @@ def _apply_rich_menu_v2_if_requested() -> None:
 
 # Registered LINE callbacks resolve these names from the legacy app module at
 # call time, so production behavior can be composed without rewriting app.py.
+install_prerequisite_attempt_cache(legacy)
 legacy.create_text_response = create_text_response
 legacy.create_home_message = create_home_message
 
