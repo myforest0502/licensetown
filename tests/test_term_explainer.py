@@ -49,4 +49,11 @@ def test_explain_term_does_not_claim_definition_without_bank_evidence(monkeypatc
     monkeypatch.setattr("term_explainer.search_term_records", lambda _term: [])
     message = explain_term("未知用語")
     assert "意味を断定できるだけの記述を見つけられなかった" in message
-    assert "推測" not in message or "推測では" not in message
+    assert "■問題・解説にあるポイント" not in message
+
+
+def test_formal_bank_supports_pc_public_example_terms():
+    # These are the examples shown on the PC site. Keep public promises tied to
+    # actual formal-bank evidence rather than a generic AI answer.
+    for term in ("FIM", "MMT", "Brunnstrom"):
+        assert search_term_records(term), term
