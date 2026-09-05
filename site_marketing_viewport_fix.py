@@ -65,7 +65,16 @@ dialog.marketing-modal-overlay::backdrop{background:transparent!important}
     return panel;
   }
 
+  function wireStandaloneLineStart(){
+    document.querySelectorAll('a.marketing-line-button').forEach(function(link){
+      link.setAttribute('href','/site/line-start#top');
+      link.setAttribute('target','_top');
+    });
+  }
+
   function bind(){
+    wireStandaloneLineStart();
+
     document.addEventListener('click',function(event){
       var link=event.target.closest && event.target.closest('a[href*="#"]');
       var panel=panelFromLink(link);
@@ -110,36 +119,20 @@ dialog.marketing-modal-overlay::backdrop{background:transparent!important}
 
 
 def _open_info_pages_in_top_context(html: str) -> str:
-    """Open standalone public pages outside the preview iframe.
+    """Open standalone public information pages outside the preview iframe.
 
     The official site renders the PC/mobile public view inside an iframe. Without
-    ``target=_top``, standalone pages can inherit the outer page's scroll position
-    and appear blank until the user scrolls. Legal/support links and the LINE-start
-    action therefore escape the iframe and carry ``#top`` as an explicit start.
+    ``target=_top``, legal/support pages inherit the outer page's scroll position
+    and can appear blank until the user scrolls back to the top. These links also
+    carry ``#top`` so the destination page has an explicit initial anchor.
     """
 
-    line_pattern = re.compile(
-        r'<a(?P<attrs>[^>]*\bclass="[^"]*marketing-line-button[^"]*"[^>]*\bhref="[^"]*#line-start-panel"[^>]*)>',
-        flags=re.IGNORECASE,
-    )
-
-    def replace_line(match):
-        attrs = match.group("attrs")
-        attrs = re.sub(r'\bhref="[^"]+"', 'href="/site/line-start#top"', attrs, count=1)
-        if re.search(r'\btarget="[^"]*"', attrs, flags=re.IGNORECASE):
-            attrs = re.sub(r'\btarget="[^"]*"', 'target="_top"', attrs, count=1, flags=re.IGNORECASE)
-        else:
-            attrs += ' target="_top"'
-        return f"<a{attrs}>"
-
-    html = line_pattern.sub(replace_line, html)
-
-    info_pattern = re.compile(
+    pattern = re.compile(
         r'<a(?P<attrs>[^>]*\bhref="(?P<href>/site/(?:support|legal/[^"#?]+))(?:#top)?"[^>]*)>',
         flags=re.IGNORECASE,
     )
 
-    def replace_info(match):
+    def replace(match):
         attrs = match.group("attrs")
         href = match.group("href")
         attrs = re.sub(r'\bhref="[^"]+"', f'href="{href}#top"', attrs, count=1)
@@ -149,7 +142,7 @@ def _open_info_pages_in_top_context(html: str) -> str:
             attrs += ' target="_top"'
         return f"<a{attrs}>"
 
-    return info_pattern.sub(replace_info, html)
+    return pattern.sub(replace, html)
 
 
 def install_site_marketing_viewport_fix(app) -> None:
