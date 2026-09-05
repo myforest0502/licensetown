@@ -12,6 +12,8 @@ def _app():
         <a class="marketing-contact-link" href="/site/view/pc#faq-all-panel">その他の質問はこちら</a>
         <a class="marketing-line-button" href="/site/view/pc#line-start-panel">LINEで無料ではじめる</a>
         <a class="future-modal-link" href="/site/view/pc#future-panel">将来の別画面</a>
+        <a class="support-link" href="/site/support">開発支援について詳しく見る</a>
+        <a class="terms-link" href="/site/legal/terms">利用規約</a>
         <dialog id="faq-all-panel" class="marketing-modal-overlay"><div class="marketing-modal-card"><a class="marketing-modal-close" href="/site/view/pc#faq">×</a>FAQ</div></dialog>
         <dialog id="line-start-panel" class="marketing-modal-overlay"><div class="marketing-modal-card"><a class="marketing-modal-close" href="/site/view/pc#try">×</a>LINE</div></dialog>
         <dialog id="future-panel" class="marketing-modal-overlay"><div class="marketing-modal-card"><a class="marketing-modal-close" href="/site/view/pc#top">×</a>FUTURE</div></dialog>
@@ -45,6 +47,12 @@ def test_all_overlays_are_anchored_to_viewport_bottom():
     assert 'margin:0 auto 16px!important' in html
     assert 'scroll-margin-bottom:0!important' in html
     assert 'future-panel' in html
+
+
+def test_standalone_info_links_escape_preview_iframe_and_start_at_top():
+    html = _app().test_client().get("/site/view/pc").get_data(as_text=True)
+    assert 'href="/site/support#top" target="_top"' in html
+    assert 'href="/site/legal/terms#top" target="_top"' in html
 
 
 def test_brand_headline_is_shrunk_without_truncating_text():
