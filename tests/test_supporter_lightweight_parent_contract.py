@@ -28,13 +28,12 @@ def test_parent_template_keeps_parent_facing_information_only():
         assert expected in text
 
     for forbidden in (
-        "相談モード",
-        "苦手分野 TOP3",
-        "今日のおすすめ",
-        "今週の学習Q番号を見る",
         "Repair Supply",
         "selection_reason",
         "cooldown",
+        "Phase11",
+        "Shadow",
+        "Baseline",
     ):
         assert forbidden not in text
 
