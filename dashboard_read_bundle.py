@@ -10,6 +10,7 @@ from __future__ import annotations
 from typing import Any
 
 import database
+from recommendation_daily_summary import build_today_recommendation_summary
 from trial100_store import get_trial100_records
 
 
@@ -93,17 +94,29 @@ def get_dashboard_read_bundle(
         }
 
     if not database.database_is_available():
+        learning_data = database.get_dashboard_learning_data(user_id)
+        learning_data.setdefault("activity", {}).update(
+            build_today_recommendation_summary(user_id)
+        )
         return {
-            "learning_data": database.get_dashboard_learning_data(user_id),
+            "learning_data": learning_data,
             "attempts": database.get_question_attempts(user_id) if include_attempts else [],
             "trial100_records": get_trial100_records(user_id) if include_trial100 else [],
         }
 
     with database.get_db_connection() as conn:
         question_rows = database._get_question_result_rows(user_id, conn)
+        activity = database.get_learning_activity(user_id, _connection=conn)
+        activity.update(
+            build_today_recommendation_summary(
+                user_id,
+                connection=conn,
+                question_result_rows=question_rows,
+            )
+        )
         learning_data = {
             "summary": database.get_learning_summary(user_id, _connection=conn),
-            "activity": database.get_learning_activity(user_id, _connection=conn),
+            "activity": activity,
             "fields": database.get_field_learning_summary(
                 user_id,
                 _connection=conn,
