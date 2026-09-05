@@ -16,13 +16,13 @@ IMAGE_WIDTH = 2500
 IMAGE_HEIGHT = 843
 MAX_IMAGE_BYTES = 1_000_000
 TOP_HEIGHT = 588
+TOP_ITEM_WIDTH = 625
 
 AREA_SPECS = (
-    ("合格への道", "合格への道", 0, 0, 562, TOP_HEIGHT),
-    ("勉強する", "勉強する", 562, 0, 471, TOP_HEIGHT),
-    ("相談する", "相談する", 1033, 0, 462, TOP_HEIGHT),
-    ("熱血モード", "熱血モード", 1495, 0, 474, TOP_HEIGHT),
-    ("教えて源さん", "教えて源さん", 1969, 0, 531, TOP_HEIGHT),
+    ("合格への道", "合格への道", 0, 0, TOP_ITEM_WIDTH, TOP_HEIGHT),
+    ("勉強する", "勉強する", TOP_ITEM_WIDTH, 0, TOP_ITEM_WIDTH, TOP_HEIGHT),
+    ("熱血モード", "熱血モード", TOP_ITEM_WIDTH * 2, 0, TOP_ITEM_WIDTH, TOP_HEIGHT),
+    ("教えて源さん", "教えて源さん", TOP_ITEM_WIDTH * 3, 0, TOP_ITEM_WIDTH, TOP_HEIGHT),
     ("ホームへ戻る", "ホームへ戻る", 0, TOP_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT - TOP_HEIGHT),
 )
 
