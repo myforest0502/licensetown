@@ -21,6 +21,7 @@ from linebot.models import (
 )
 
 from prerequisite_attempt_cache import install_prerequisite_attempt_cache
+from site_marketing_refresh import install_site_marketing_refresh
 from term_explainer import explain_term
 
 
@@ -84,6 +85,7 @@ def _apply_rich_menu_v2_if_requested() -> None:
 install_prerequisite_attempt_cache(legacy)
 legacy.create_text_response = create_text_response
 legacy.create_home_message = create_home_message
+install_site_marketing_refresh(legacy.app)
 
 _apply_rich_menu_v2_if_requested()
 
