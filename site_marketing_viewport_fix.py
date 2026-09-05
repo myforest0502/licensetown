@@ -5,8 +5,8 @@ import re
 from flask import request
 
 
-_STYLE = """<style id="marketing-viewport-fix-v10">
-/* All modal-like dialogs in the public HP use the browser top layer and open from the viewport bottom. */
+_STYLE = """<style id="marketing-viewport-fix-v11">
+/* Remaining modal-like dialogs in the public HP use the browser top layer and open from the viewport bottom. */
 dialog.marketing-modal-overlay{width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;border:0!important}
 dialog.marketing-modal-overlay::backdrop{background:transparent!important}
 .marketing-modal-overlay.is-open{display:flex!important;align-items:flex-end!important;justify-content:center!important;overflow-y:auto!important;overscroll-behavior:contain!important}
@@ -20,7 +20,7 @@ dialog.marketing-modal-overlay::backdrop{background:transparent!important}
   .marketing-modal-overlay.is-open>.marketing-modal-card,.marketing-modal-overlay:target>.marketing-modal-card{margin-bottom:8px!important;max-height:calc(100dvh - 16px)!important}
 }
 </style>
-<script id="marketing-viewport-fix-script-v10">
+<script id="marketing-viewport-fix-script-v11">
 (function(){
   var savedScrollX=0;
   var savedScrollY=0;
@@ -65,7 +65,16 @@ dialog.marketing-modal-overlay::backdrop{background:transparent!important}
     return panel;
   }
 
+  function wireStandaloneLineStart(){
+    document.querySelectorAll('a.marketing-line-button').forEach(function(link){
+      link.setAttribute('href','/site/line-start#top');
+      link.setAttribute('target','_top');
+    });
+  }
+
   function bind(){
+    wireStandaloneLineStart();
+
     document.addEventListener('click',function(event){
       var link=event.target.closest && event.target.closest('a[href*="#"]');
       var panel=panelFromLink(link);
@@ -145,7 +154,8 @@ def install_site_marketing_viewport_fix(app) -> None:
             return response
         html = response.get_data(as_text=True)
         html = _open_info_pages_in_top_context(html)
-        if 'id="marketing-viewport-fix-v10"' not in html:
+        if 'id="marketing-viewport-fix-v11"' not in html:
+            html = re.sub(r'<style id="marketing-viewport-fix-v10">.*?<script id="marketing-viewport-fix-script-v10">.*?</script>', "", html, count=1, flags=re.DOTALL)
             html = html.replace("</head>", _STYLE + "</head>", 1)
         response.set_data(html)
         response.headers["Content-Length"] = str(len(response.get_data()))
