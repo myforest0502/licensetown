@@ -89,21 +89,21 @@ def _overlay_html(page_path: str) -> str:
         line_qr = ""
     close_href = escape(page_path, quote=True)
     return (
-        '<section id="faq-all-panel" class="marketing-modal-overlay" aria-label="よくある質問一覧">'
+        '<dialog id="faq-all-panel" class="marketing-modal-overlay" aria-label="よくある質問一覧">'
         '<div class="marketing-modal-card marketing-modal-faq-card">'
         f'<a class="marketing-modal-close" href="{close_href}#faq" aria-label="閉じる">×</a>'
         '<h2>よくある質問</h2><p class="marketing-modal-lead">10問すべての回答をまとめて確認できます。</p>'
         f'<div class="marketing-modal-faq-list">{faq_items}</div>'
         '<p class="marketing-modal-contact">解決しない場合は <a href="/site/legal/contact">お問い合わせください　›</a></p>'
-        '</div></section>'
-        '<section id="line-start-panel" class="marketing-modal-overlay" aria-label="LINEで無料ではじめる">'
+        '</div></dialog>'
+        '<dialog id="line-start-panel" class="marketing-modal-overlay" aria-label="LINEで無料ではじめる">'
         '<div class="marketing-modal-card marketing-modal-line-card">'
         f'<a class="marketing-modal-close" href="{close_href}#try" aria-label="閉じる">×</a>'
         '<h2>LINEで無料ではじめる</h2>'
         '<p>LicenseTownは現在、検証期間中のため無料で利用できます。</p>'
         f'{line_qr}{line_action}'
         '<p class="marketing-modal-help">PCの方はQRコードをスマホで読み取ってください。スマホの方は「LINEを開く」から進めます。</p>'
-        '</div></section>'
+        '</div></dialog>'
     )
 
 

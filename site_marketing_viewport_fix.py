@@ -3,8 +3,10 @@ from __future__ import annotations
 from flask import request
 
 
-_STYLE = """<style id="marketing-viewport-fix-v06">
-/* Real-browser fixes: open overlays independently of the page scroll position. */
+_STYLE = """<style id="marketing-viewport-fix-v07">
+/* Use the browser top layer so overlays are always relative to the live viewport. */
+dialog.marketing-modal-overlay{width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;border:0!important}
+dialog.marketing-modal-overlay::backdrop{background:transparent!important}
 .marketing-modal-overlay.is-open{display:flex!important;align-items:flex-start!important;justify-content:center!important;overflow-y:auto!important;overscroll-behavior:contain!important}
 .marketing-modal-overlay.is-open>.marketing-modal-card{margin:0 auto!important;max-height:calc(100dvh - 32px)!important;scroll-margin-top:0!important}
 /* Keep hash-based :target as a no-JS fallback. */
@@ -16,8 +18,10 @@ _STYLE = """<style id="marketing-viewport-fix-v06">
   .marketing-modal-overlay.is-open>.marketing-modal-card,.marketing-modal-overlay:target>.marketing-modal-card{max-height:calc(100dvh - 16px)!important}
 }
 </style>
-<script id="marketing-viewport-fix-script-v06">
+<script id="marketing-viewport-fix-script-v07">
 (function(){
+  var savedScrollX=0;
+  var savedScrollY=0;
   function resetPanel(panel){
     if(!panel) return;
     panel.scrollTop=0;
@@ -26,6 +30,10 @@ _STYLE = """<style id="marketing-viewport-fix-v06">
   }
   function openPanel(panel){
     if(!panel) return;
+    savedScrollX=window.scrollX;
+    savedScrollY=window.scrollY;
+    if(panel.parentElement!==document.body) document.body.appendChild(panel);
+    if(typeof panel.showModal==='function' && !panel.open) panel.showModal();
     panel.classList.add('is-open');
     document.documentElement.classList.add('marketing-modal-open');
     document.body.style.overflow='hidden';
@@ -34,9 +42,11 @@ _STYLE = """<style id="marketing-viewport-fix-v06">
   function closePanels(){
     document.querySelectorAll('.marketing-modal-overlay.is-open').forEach(function(panel){
       panel.classList.remove('is-open');
+      if(typeof panel.close==='function' && panel.open) panel.close();
     });
     document.documentElement.classList.remove('marketing-modal-open');
     document.body.style.overflow='';
+    window.scrollTo(savedScrollX,savedScrollY);
   }
   function bind(){
     var faqLink=document.querySelector('.marketing-contact-link');
@@ -89,7 +99,7 @@ def install_site_marketing_viewport_fix(app) -> None:
         if request.path not in {"/site/view/pc", "/site/view/mobile"}:
             return response
         html = response.get_data(as_text=True)
-        if 'id="marketing-viewport-fix-v06"' not in html:
+        if 'id="marketing-viewport-fix-v07"' not in html:
             html = html.replace("</head>", _STYLE + "</head>", 1)
             response.set_data(html)
             response.headers["Content-Length"] = str(len(response.get_data()))
