@@ -60,11 +60,13 @@ def test_mobile_faq_has_compact_answer_preview_and_single_open_accordion_behavio
     assert ".story-faq{height:286px!important" in css
 
 
-def test_line_start_leaves_preview_iframe_on_pc_and_mobile():
+def test_line_start_is_rewired_to_leave_preview_iframe_on_pc_and_mobile():
     client = app.test_client()
     for path in ("/site/view/pc", "/site/view/mobile"):
         html = client.get(path).get_data(as_text=True)
-        assert 'class="marketing-line-button" href="/site/line-start#top" target="_top"' in html
+        assert "document.querySelectorAll('a.marketing-line-button')" in html
+        assert "link.setAttribute('href','/site/line-start#top')" in html
+        assert "link.setAttribute('target','_top')" in html
     assert client.get("/site/line-start").status_code == 200
 
 
