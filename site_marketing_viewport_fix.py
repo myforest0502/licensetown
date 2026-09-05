@@ -5,8 +5,8 @@ import re
 from flask import request
 
 
-_STYLE = """<style id="marketing-viewport-fix-v10">
-/* All modal-like dialogs in the public HP use the browser top layer and open from the viewport bottom. */
+_STYLE = """<style id="marketing-viewport-fix-v11">
+/* Remaining modal-like dialogs in the public HP use the browser top layer and open from the viewport bottom. */
 dialog.marketing-modal-overlay{width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;border:0!important}
 dialog.marketing-modal-overlay::backdrop{background:transparent!important}
 .marketing-modal-overlay.is-open{display:flex!important;align-items:flex-end!important;justify-content:center!important;overflow-y:auto!important;overscroll-behavior:contain!important}
@@ -20,7 +20,7 @@ dialog.marketing-modal-overlay::backdrop{background:transparent!important}
   .marketing-modal-overlay.is-open>.marketing-modal-card,.marketing-modal-overlay:target>.marketing-modal-card{margin-bottom:8px!important;max-height:calc(100dvh - 16px)!important}
 }
 </style>
-<script id="marketing-viewport-fix-script-v10">
+<script id="marketing-viewport-fix-script-v11">
 (function(){
   var savedScrollX=0;
   var savedScrollY=0;
@@ -110,20 +110,36 @@ dialog.marketing-modal-overlay::backdrop{background:transparent!important}
 
 
 def _open_info_pages_in_top_context(html: str) -> str:
-    """Open standalone public information pages outside the preview iframe.
+    """Open standalone public pages outside the preview iframe.
 
     The official site renders the PC/mobile public view inside an iframe. Without
-    ``target=_top``, legal/support pages inherit the outer page's scroll position
-    and can appear blank until the user scrolls back to the top. These links also
-    carry ``#top`` so the destination page has an explicit initial anchor.
+    ``target=_top``, standalone pages can inherit the outer page's scroll position
+    and appear blank until the user scrolls. Legal/support links and the LINE-start
+    action therefore escape the iframe and carry ``#top`` as an explicit start.
     """
 
-    pattern = re.compile(
+    line_pattern = re.compile(
+        r'<a(?P<attrs>[^>]*\bclass="[^"]*marketing-line-button[^"]*"[^>]*\bhref="[^"]*#line-start-panel"[^>]*)>',
+        flags=re.IGNORECASE,
+    )
+
+    def replace_line(match):
+        attrs = match.group("attrs")
+        attrs = re.sub(r'\bhref="[^"]+"', 'href="/site/line-start#top"', attrs, count=1)
+        if re.search(r'\btarget="[^"]*"', attrs, flags=re.IGNORECASE):
+            attrs = re.sub(r'\btarget="[^"]*"', 'target="_top"', attrs, count=1, flags=re.IGNORECASE)
+        else:
+            attrs += ' target="_top"'
+        return f"<a{attrs}>"
+
+    html = line_pattern.sub(replace_line, html)
+
+    info_pattern = re.compile(
         r'<a(?P<attrs>[^>]*\bhref="(?P<href>/site/(?:support|legal/[^"#?]+))(?:#top)?"[^>]*)>',
         flags=re.IGNORECASE,
     )
 
-    def replace(match):
+    def replace_info(match):
         attrs = match.group("attrs")
         href = match.group("href")
         attrs = re.sub(r'\bhref="[^"]+"', f'href="{href}#top"', attrs, count=1)
@@ -133,7 +149,7 @@ def _open_info_pages_in_top_context(html: str) -> str:
             attrs += ' target="_top"'
         return f"<a{attrs}>"
 
-    return pattern.sub(replace, html)
+    return info_pattern.sub(replace_info, html)
 
 
 def install_site_marketing_viewport_fix(app) -> None:
@@ -145,7 +161,8 @@ def install_site_marketing_viewport_fix(app) -> None:
             return response
         html = response.get_data(as_text=True)
         html = _open_info_pages_in_top_context(html)
-        if 'id="marketing-viewport-fix-v10"' not in html:
+        if 'id="marketing-viewport-fix-v11"' not in html:
+            html = re.sub(r'<style id="marketing-viewport-fix-v10">.*?<script id="marketing-viewport-fix-script-v10">.*?</script>', "", html, count=1, flags=re.DOTALL)
             html = html.replace("</head>", _STYLE + "</head>", 1)
         response.set_data(html)
         response.headers["Content-Length"] = str(len(response.get_data()))
