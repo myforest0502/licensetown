@@ -171,6 +171,46 @@ def test_gensan_feedback_uses_safe_fallback_without_field_history():
     assert comment == "まだ始まったばかりだな＾＾\nまずは5問だけやってみるか？"
 
 
+def test_gensan_does_not_praise_one_question_100_percent_as_strength():
+    fields = make_fields({
+        1: (168, 109),
+        2: (116, 79),
+        3: (90, 71),
+        5: (1, 1),
+        8: (96, 59),
+        13: (123, 87),
+    })
+    comment = build_gensan_comment(
+        700,
+        fields,
+        [{"name": "内科学", "reason": "正答率が低い"}],
+        [("内科学", 10)],
+        streak_days=14,
+        today_progress=8,
+    )
+    assert "14日続けてる" in comment
+    assert "教育学は1問で正答率100%" not in comment or "まだ『得意』と決めるには早い" in comment
+    assert "教育学はよう頑張ってんなぁ" not in comment
+    assert "内科学" in comment
+    assert "61%" in comment
+
+
+def test_gensan_explicitly_labels_low_sample_perfect_score_as_too_early_when_no_reliable_strength():
+    fields = make_fields({5: (1, 1), 8: (20, 8)})
+    comment = build_gensan_comment(
+        120,
+        fields,
+        [{"name": "内科学", "reason": "正答率が低い"}],
+        [("内科学", 10)],
+        streak_days=0,
+        today_progress=0,
+    )
+    assert "教育学は1問で正答率100%" in comment
+    assert "まだ『得意』と決めるには早い" in comment
+    assert "内科学" in comment
+    assert "40%" in comment
+
+
 def test_recommendation_reasons_follow_existing_priority_reason():
     cases = {
         "取り組み不足": "実力判定のデータが足りません",
