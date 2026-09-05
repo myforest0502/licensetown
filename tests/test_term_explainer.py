@@ -53,7 +53,7 @@ def test_explain_term_does_not_claim_definition_without_bank_evidence(monkeypatc
 
 
 def test_formal_bank_supports_pc_public_example_terms():
-    # These are the examples shown on the PC site. Keep public promises tied to
+    # These exact queries are shown on the PC site. Keep public promises tied to
     # actual formal-bank evidence rather than a generic AI answer.
-    for term in ("FIM", "MMT", "Brunnstrom"):
+    for term in ("FIM", "MMT", "Brunnstrom stage"):
         assert search_term_records(term), term
