@@ -51,7 +51,7 @@ def test_rich_menu_areas_are_four_equal_top_items_without_gaps():
 
 
 def test_rich_menu_actions_exclude_consultation_and_complete_reset():
-    expected = ["合格への道", "勉強する", "熱血モード", "教えて源さん", "ホームへ戻る"]
+    expected = ["合格への道", "勉強する", "教えて源さん", "熱血モード", "ホームへ戻る"]
     assert [spec[1] for spec in AREA_SPECS] == expected
     assert all("相談する" not in value for spec in AREA_SPECS for value in spec[:2])
     assert all("ふりだしにもどる" not in value for spec in AREA_SPECS for value in spec[:2])
