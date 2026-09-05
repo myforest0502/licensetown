@@ -66,24 +66,22 @@ def _layout(title: str, body_html: str):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{{ title }} | LicenseTown</title>
 <style>
-html{scroll-behavior:auto}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;background:#f7faf7;color:#18331f;overflow-y:auto}
-main{max-width:820px;margin:24px auto;padding:0 20px 40px}
-.card{width:100%;box-sizing:border-box;background:#fff;border:1px solid #dce8de;border-radius:18px;padding:28px}
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7faf7;color:#18331f}
+main{position:fixed;inset:0;box-sizing:border-box;padding:16px 20px;display:flex;align-items:center;justify-content:center}
+.card{width:min(820px,100%);max-height:calc(100dvh - 32px);box-sizing:border-box;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;background:#fff;border:1px solid #dce8de;border-radius:18px;padding:28px}
 a{color:#087d2c}.notice{padding:14px 16px;background:#eef8ef;border-radius:12px;margin-bottom:24px}h1{font-size:28px}h2{margin-top:28px;font-size:20px}dt{font-weight:700;margin-top:14px}dd{margin:4px 0 0}footer{margin-top:32px;font-size:13px;color:#66756a}.support-note{padding:16px;background:#f3f8f3;border-radius:12px}.muted{color:#66756a}.support-amounts{display:flex;gap:10px;flex-wrap:wrap;padding:0;list-style:none}.support-amounts li{padding:8px 12px;border:1px solid #cfe0d2;border-radius:999px;background:#fff;font-weight:700}
-@media(max-width:640px){main{margin:8px auto;padding:0 8px 24px}.card{padding:20px;border-radius:14px}h1{font-size:24px}}
+@media(max-width:640px){main{padding:8px}.card{max-height:calc(100dvh - 16px);padding:20px;border-radius:14px}h1{font-size:24px}}
 </style>
 <script>
 (function(){
-  if('scrollRestoration' in history) history.scrollRestoration='manual';
-  function showFromTop(){
-    window.scrollTo(0,0);
-    document.documentElement.scrollTop=0;
-    document.body.scrollTop=0;
+  function resetCard(){
+    var card=document.querySelector('.card');
+    if(card) card.scrollTop=0;
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',showFromTop); else showFromTop();
-  window.addEventListener('pageshow',showFromTop);
-  window.addEventListener('load',showFromTop);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',resetCard); else resetCard();
+  window.addEventListener('pageshow',resetCard);
+  window.addEventListener('load',resetCard);
 })();
 </script></head><body><main><div class="card"><div class="notice">{{ status }}</div>
 <h1>{{ title }}</h1>{{ body|safe }}<footer><a href="/site">LicenseTown公式サイトへ戻る</a></footer>

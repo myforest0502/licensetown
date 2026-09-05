@@ -45,7 +45,7 @@ def test_support_page_is_optional_and_sale_safe():
     assert "決済機能はまだ公開していません" in html
 
 
-def test_all_public_info_pages_open_from_top_and_use_normal_page_scroll():
+def test_all_public_info_pages_are_fixed_to_viewport_and_scroll_inside_card():
     app = Flask(__name__)
     app.register_blueprint(site_legal_ui.site_legal_ui)
     client = app.test_client()
@@ -61,12 +61,12 @@ def test_all_public_info_pages_open_from_top_and_use_normal_page_scroll():
         response = client.get(path)
         assert response.status_code == 200, path
         html = response.get_data(as_text=True)
-        assert "body{font-family" in html
+        assert "html,body{width:100%;height:100%;margin:0;overflow:hidden}" in html
+        assert "main{position:fixed;inset:0" in html
+        assert "max-height:calc(100dvh - 32px)" in html
         assert "overflow-y:auto" in html
-        assert "max-height:calc(100dvh" not in html
-        assert "history.scrollRestoration='manual'" in html
-        assert "window.scrollTo(0,0)" in html
-        assert "window.addEventListener('pageshow',showFromTop)" in html
+        assert "card.scrollTop=0" in html
+        assert "window.scrollTo(0,0)" not in html
         assert "LicenseTown公式サイトへ戻る" in html
 
 
