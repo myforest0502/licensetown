@@ -55,10 +55,12 @@ def test_standalone_info_links_escape_preview_iframe_and_start_at_top():
     assert 'href="/site/legal/terms#top" target="_top"' in html
 
 
-def test_line_start_escapes_preview_iframe_and_starts_at_top():
+def test_line_start_is_rewired_to_top_context_after_render():
     html = _app().test_client().get("/site/view/pc").get_data(as_text=True)
-    assert 'class="marketing-line-button" href="/site/line-start#top" target="_top"' in html
-    assert 'href="/site/view/pc#line-start-panel">LINEで無料ではじめる' not in html
+    assert "document.querySelectorAll('a.marketing-line-button')" in html
+    assert "link.setAttribute('href','/site/line-start#top')" in html
+    assert "link.setAttribute('target','_top')" in html
+    assert "wireStandaloneLineStart();" in html
 
 
 def test_brand_headline_is_shrunk_without_truncating_text():
