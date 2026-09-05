@@ -11,12 +11,14 @@ FOUNDATION_ANSWER_THRESHOLD = 100
 MIN_RELIABLE_ANSWERS = 10
 TARGET_FIELD_ACCURACY = 70
 
+# 十分な回答数がある分野だけを「得意・頑張った分野」として扱う。
+# 1問100%のような偶然性が大きい数字は、源さんが褒め材料に使わない。
 GENSAN_FEEDBACK_TEMPLATES = (
-    "{praise}はよう頑張ってんなぁ＾＾\n今日は{next}を5問だけいってみるか？",
-    "{praise}、いい感じだぞ＾＾\n次は{next}を少しやってみようか。",
-    "{praise}はだいぶ積み上がってきたなぁ。\n今日は{next}をちょっと触ってみるか＾＾",
-    "{praise}はちゃんと続いてるな＾＾\n{next}も10問くらいやればもっと見えてくるぞ。",
-    "{praise}は強くなってきたなぁ＾＾\n次は{next}を少しずつ埋めていこう。",
+    "{praise}は{answers}問まで積んで正答率{accuracy}%だ。ちゃんと力になってるぞ＾＾\n今日は{next}を5問、丁寧にいってみるか。",
+    "{praise}は{answers}問やって正答率{accuracy}%。ここまで積んだのは立派だ＾＾\n次は{next}を少しずつ詰めよう。",
+    "{praise}は{answers}問まで続けて正答率{accuracy}%だな。積み重ねはちゃんと見えてるぞ＾＾\n今日は{next}を5問やってみるか。",
+    "{praise}は{answers}問で正答率{accuracy}%。一問二問の数字じゃない、これは積み上げた結果だ＾＾\n次は{next}を少し触っておこう。",
+    "{praise}は{answers}問やって正答率{accuracy}%まで来たな＾＾\n今度は{next}を5問、焦らず固めていこう。",
 )
 
 
@@ -177,6 +179,31 @@ def build_learning_guidance(
     }
 
 
+def _field_by_name(fields: list[dict[str, Any]], name: str | None) -> dict[str, Any] | None:
+    if not name:
+        return None
+    return next((item for item in fields if item.get("name") == name), None)
+
+
+def _next_field_name(
+    fields: list[dict[str, Any]],
+    weak_fields: list[dict[str, Any]],
+    recommended_study: list[tuple[str, int]],
+    exclude_name: str | None = None,
+) -> str | None:
+    if recommended_study:
+        return recommended_study[0][0]
+    if weak_fields:
+        return weak_fields[0]["name"]
+    alternatives = [item for item in fields if item.get("name") != exclude_name]
+    if alternatives:
+        return min(
+            alternatives,
+            key=lambda item: (item["answered_count"], item["category_small"]),
+        )["name"]
+    return None
+
+
 def build_gensan_comment(
     total_answers: int,
     fields: list[dict[str, Any]],
@@ -185,40 +212,110 @@ def build_gensan_comment(
     streak_days: int = 0,
     today_progress: int = 0,
 ) -> str:
-    """保存済み学習データから「褒める＋次の一歩」を決定的に作る。"""
+    """保存済み学習データから、根拠のある「見守り＋次の一歩」を作る。
+
+    源さんは正答率だけでは褒めない。回答数が10問未満の分野はまだ
+    得意・不得意を断定せず、継続日数・回答量・十分な標本がある分野の
+    実績を優先して言葉にする。
+    """
     learned = [item for item in fields if item["answered_count"] > 0]
     if not learned:
         return "まだ始まったばかりだな＾＾\nまずは5問だけやってみるか？"
 
-    praise_item = max(
-        learned,
-        key=lambda item: (
-            item["accuracy"] if item["accuracy"] is not None else -1,
-            item["answered_count"],
-            -item["category_small"],
-        ),
-    )
-    next_name = recommended_study[0][0] if recommended_study else None
-    if not next_name and weak_fields:
-        next_name = weak_fields[0]["name"]
-    if not next_name:
-        alternatives = [
-            item for item in fields
-            if item["name"] != praise_item["name"]
-        ]
-        if alternatives:
-            next_name = min(
-                alternatives,
-                key=lambda item: (item["answered_count"], item["category_small"]),
-            )["name"]
-    if not next_name:
-        return f"{praise_item['name']}、いい感じだぞ＾＾\n今日もおすすめ問題を5問だけいってみるか？"
+    reliable = [
+        item for item in learned
+        if item["answered_count"] >= MIN_RELIABLE_ANSWERS
+        and item["accuracy"] is not None
+    ]
+    strengths = [item for item in reliable if item["accuracy"] >= TARGET_FIELD_ACCURACY]
 
-    template_index = (
-        total_answers + streak_days + today_progress
-        + sum(ord(char) for char in praise_item["name"] + next_name)
-    ) % len(GENSAN_FEEDBACK_TEMPLATES)
-    return GENSAN_FEEDBACK_TEMPLATES[template_index].format(
-        praise=praise_item["name"],
-        next=next_name,
+    # 少数回答の高正答率は「褒める根拠」ではなく「まだ判断が早い数字」。
+    low_sample_high = [
+        item for item in learned
+        if item["answered_count"] < MIN_RELIABLE_ANSWERS
+        and item["accuracy"] is not None
+        and item["accuracy"] >= TARGET_FIELD_ACCURACY
+    ]
+    low_sample_item = max(
+        low_sample_high,
+        key=lambda item: (item["accuracy"], item["answered_count"], -item["category_small"]),
+        default=None,
     )
+
+    praise_item = max(
+        strengths,
+        # 「正答率100%の10問」より、十分な量を積み上げた分野を優先する。
+        key=lambda item: (item["answered_count"], item["accuracy"], -item["category_small"]),
+        default=None,
+    )
+    next_name = _next_field_name(
+        fields,
+        weak_fields,
+        recommended_study,
+        exclude_name=praise_item["name"] if praise_item else None,
+    )
+    next_item = _field_by_name(fields, next_name)
+
+    lines: list[str] = []
+
+    if streak_days >= 7:
+        lines.append(f"{streak_days}日続けてるの、ちゃんと見てるぞ＾＾ これは立派だ。")
+    elif streak_days >= 3:
+        lines.append(f"{streak_days}日続いてるな。こういう積み重ねが一番強いぞ＾＾")
+
+    if praise_item:
+        if not lines:
+            template_index = (
+                total_answers + streak_days + today_progress
+                + sum(ord(char) for char in praise_item["name"] + (next_name or ""))
+            ) % len(GENSAN_FEEDBACK_TEMPLATES)
+            if next_name:
+                return GENSAN_FEEDBACK_TEMPLATES[template_index].format(
+                    praise=praise_item["name"],
+                    answers=praise_item["answered_count"],
+                    accuracy=praise_item["accuracy"],
+                    next=next_name,
+                )
+            return (
+                f"{praise_item['name']}は{praise_item['answered_count']}問まで積んで"
+                f"正答率{praise_item['accuracy']}%。ちゃんと力になってるぞ＾＾\n"
+                "今日もおすすめ問題を5問だけいってみるか？"
+            )
+        lines.append(
+            f"{praise_item['name']}も{praise_item['answered_count']}問やって"
+            f"正答率{praise_item['accuracy']}%。積み上げた結果が出てる。"
+        )
+    elif low_sample_item:
+        count = low_sample_item["answered_count"]
+        counter = "1問" if count == 1 else f"{count}問"
+        lines.append(
+            f"{low_sample_item['name']}は{counter}で正答率{low_sample_item['accuracy']}%。"
+            "数字はいいけど、まだ『得意』と決めるには早いぞ。"
+        )
+    elif not lines:
+        lines.append(
+            f"ここまで{total_answers}問やってきたな。正答率だけじゃなく、"
+            "続けて積むところまでちゃんと見てるぞ＾＾"
+        )
+
+    if next_name:
+        if next_item and next_item.get("answered_count", 0) >= MIN_RELIABLE_ANSWERS:
+            accuracy = next_item.get("accuracy")
+            if accuracy is not None and accuracy < TARGET_FIELD_ACCURACY:
+                lines.append(
+                    f"今は{next_name}が{next_item['answered_count']}問で正答率{accuracy}%。"
+                    "ここは逃げずに、今日はまず5問だけ丁寧に詰めよう。"
+                )
+            else:
+                lines.append(f"今日は{next_name}を5問だけやって、もう少し様子を見よう。")
+        elif next_item and next_item.get("answered_count", 0) > 0:
+            lines.append(
+                f"{next_name}はまだ{next_item['answered_count']}問だけだ。"
+                "今日は5問足して、判断できる材料を増やそう。"
+            )
+        else:
+            lines.append(f"今日は{next_name}をまず5問。手をつけて今の力を見てみよう。")
+    else:
+        lines.append("今日はおすすめ問題を5問だけ。焦らず続けりゃ大丈夫だ＾＾")
+
+    return "\n".join(lines)
