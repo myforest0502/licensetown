@@ -8,6 +8,9 @@ advertised from HOME.
 
 from __future__ import annotations
 
+import logging
+import os
+
 import app as legacy
 from linebot.models import (
     MessageAction,
@@ -20,6 +23,7 @@ from linebot.models import (
 from term_explainer import explain_term
 
 
+logger = logging.getLogger(__name__)
 _original_create_text_response = legacy.create_text_response
 
 
@@ -60,10 +64,26 @@ def create_home_message(user_id=None):
     )
 
 
+def _apply_rich_menu_v2_if_requested() -> None:
+    """One-shot deployment hook used only when explicitly enabled in Render."""
+    if os.getenv("LT_APPLY_RICH_MENU_V2_ON_BOOT", "").strip().lower() not in {"1", "true", "yes", "on"}:
+        return
+    try:
+        from scripts.setup_rich_menu import create_and_set_default
+
+        rich_menu_id = create_and_set_default(set_default=True)
+        logger.warning("lt_rich_menu_v2_apply status=ok rich_menu_id=%s", rich_menu_id)
+    except Exception:
+        logger.exception("lt_rich_menu_v2_apply status=error")
+        raise
+
+
 # Registered LINE callbacks resolve these names from the legacy app module at
 # call time, so production behavior can be composed without rewriting app.py.
 legacy.create_text_response = create_text_response
 legacy.create_home_message = create_home_message
+
+_apply_rich_menu_v2_if_requested()
 
 # Gunicorn entrypoint.
 app = legacy.app
