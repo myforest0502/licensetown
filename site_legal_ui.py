@@ -66,9 +66,12 @@ def _layout(title: str, body_html: str):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{{ title }} | LicenseTown</title>
 <style>
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;background:#f7faf7;color:#18331f}
-main{max-width:820px;margin:40px auto;padding:0 20px 60px}.card{background:#fff;border:1px solid #dce8de;border-radius:18px;padding:28px}
+html,body{height:100%;margin:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7faf7;color:#18331f;overflow:hidden}
+main{width:min(860px,100%);height:100dvh;margin:0 auto;padding:16px 20px;box-sizing:border-box;display:flex;align-items:center;justify-content:center}
+.card{width:100%;max-height:calc(100dvh - 32px);box-sizing:border-box;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;background:#fff;border:1px solid #dce8de;border-radius:18px;padding:28px}
 a{color:#087d2c}.notice{padding:14px 16px;background:#eef8ef;border-radius:12px;margin-bottom:24px}h1{font-size:28px}h2{margin-top:28px;font-size:20px}dt{font-weight:700;margin-top:14px}dd{margin:4px 0 0}footer{margin-top:32px;font-size:13px;color:#66756a}.support-note{padding:16px;background:#f3f8f3;border-radius:12px}.muted{color:#66756a}.support-amounts{display:flex;gap:10px;flex-wrap:wrap;padding:0;list-style:none}.support-amounts li{padding:8px 12px;border:1px solid #cfe0d2;border-radius:999px;background:#fff;font-weight:700}
+@media(max-width:640px){main{padding:8px}.card{max-height:calc(100dvh - 16px);padding:20px;border-radius:14px}h1{font-size:24px}}
 </style></head><body><main><div class="card"><div class="notice">{{ status }}</div>
 <h1>{{ title }}</h1>{{ body|safe }}<footer><a href="/site">LicenseTown公式サイトへ戻る</a></footer>
 </div></main></body></html>
