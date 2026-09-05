@@ -24,7 +24,7 @@ def _app():
     return app
 
 
-def test_all_modal_links_are_intercepted_without_hash_navigation():
+def test_remaining_modal_links_are_intercepted_without_hash_navigation():
     html = _app().test_client().get("/site/view/pc").get_data(as_text=True)
     assert '.marketing-modal-overlay.is-open{display:flex!important' in html
     assert "event.target.closest('a[href*=\"#\"]')" in html
@@ -40,7 +40,7 @@ def test_all_modal_links_are_intercepted_without_hash_navigation():
     assert "dialog.marketing-modal-overlay{width:100vw!important;height:100dvh!important" in html
 
 
-def test_all_overlays_are_anchored_to_viewport_bottom():
+def test_remaining_overlays_are_anchored_to_viewport_bottom():
     html = _app().test_client().get("/site/view/pc").get_data(as_text=True)
     assert '.marketing-modal-overlay.is-open{display:flex!important;align-items:flex-end!important' in html
     assert '.marketing-modal-overlay:target{display:flex!important;align-items:flex-end!important' in html
@@ -53,6 +53,12 @@ def test_standalone_info_links_escape_preview_iframe_and_start_at_top():
     html = _app().test_client().get("/site/view/pc").get_data(as_text=True)
     assert 'href="/site/support#top" target="_top"' in html
     assert 'href="/site/legal/terms#top" target="_top"' in html
+
+
+def test_line_start_escapes_preview_iframe_and_starts_at_top():
+    html = _app().test_client().get("/site/view/pc").get_data(as_text=True)
+    assert 'class="marketing-line-button" href="/site/line-start#top" target="_top"' in html
+    assert 'href="/site/view/pc#line-start-panel">LINEで無料ではじめる' not in html
 
 
 def test_brand_headline_is_shrunk_without_truncating_text():
