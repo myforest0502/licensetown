@@ -129,7 +129,7 @@ def _matching_snippets(record: dict, normalized_term: str) -> tuple[str, ...]:
                 clipped = _clip(sentence)
                 if clipped and clipped not in candidates:
                     candidates.append(clipped)
-            if len(candidates) >= 2:
+            if len(candidates) >= 3:
                 return tuple(candidates)
     return tuple(candidates)
 
@@ -159,6 +159,51 @@ def _score_record(record: dict, normalized_term: str) -> int:
     if normalized_term in choices:
         score += 4
     return score
+
+
+def _definition_score(sentence: str, normalized_term: str) -> int:
+    """Prefer sentences that actually answer 'what is X?' over case examples."""
+    normalized = _normalize(sentence)
+    if normalized_term not in normalized:
+        return -100
+    score = 0
+    term_pos = normalized.find(normalized_term)
+    if term_pos <= 6:
+        score += 4
+    if any(marker in normalized for marker in (
+        "とは", "である", "をいう", "を指す", "のことで", "評価する", "測定する",
+        "尺度", "検査", "指標", "方法", "分類", "構成され", "段階", "手法",
+    )):
+        score += 8
+    if re.search(r"(?:は|とは).{0,60}(?:である|をいう|を指す|のこと|尺度|検査|指標|方法|分類|評価)", normalized):
+        score += 10
+    # Clinical vignette/result sentences are useful as points but poor definitions.
+    if any(marker in normalized for marker in (
+        "患者", "症例", "rom", "筋力は", "徴候", "歩幅", "立ち上がり", "困難である",
+        "インプラント", "立脚", "遊脚", "上肢支持",
+    )):
+        score -= 8
+    return score
+
+
+def _pick_definition_and_points(term: str, results: list[TermSearchResult]) -> tuple[str | None, list[str]]:
+    normalized_term = _normalize(term)
+    candidates: list[str] = []
+    for result in results:
+        for snippet in result.snippets:
+            if snippet not in candidates:
+                candidates.append(snippet)
+
+    definition = None
+    if candidates:
+        ranked = sorted(candidates, key=lambda value: (-_definition_score(value, normalized_term), candidates.index(value)))
+        if _definition_score(ranked[0], normalized_term) >= 8:
+            definition = ranked[0]
+
+    points = [value for value in candidates if value != definition]
+    # Do not lead with patient-specific examples when better general statements exist.
+    points.sort(key=lambda value: (-_definition_score(value, normalized_term), candidates.index(value)))
+    return definition, points[:3]
 
 
 def search_term_records(
@@ -191,57 +236,57 @@ def search_term_records(
 
 
 def explain_term(term: object) -> str:
-    """Return a LINE-friendly evidence-grounded explanation without OpenAI API."""
+    """Return a LINE-friendly, definition-first explanation without OpenAI API."""
     cleaned = clean_term_query(term)
     if len(_normalize(cleaned)) < 2:
         return (
             "おう、調べたい言葉をもう少し具体的に入れてくれ＾＾\n"
-            "たとえば『FIM』『相反性抑制』『Brunnstrom stage』みたいな感じだ。"
+            "たとえば『FIM』『MMT』『Brunnstrom stage』みたいな感じだ。"
         )
 
     try:
-        results = search_term_records(cleaned)
+        # Search more widely than the final three related questions so a genuine
+        # definition sentence is not hidden behind high-scoring case examples.
+        evidence_results = search_term_records(cleaned, limit=20)
     except QuestionBankError:
         return (
             "おう、悪い。今は正式問題バンクを確認できない状態だ。\n"
             "推測では答えず、問題バンクが戻ってからもう一度確認しよう。"
         )
 
-    if not results:
+    if not evidence_results:
         return (
             f"おう、『{cleaned}』だな。\n"
             "今あるLicenseTownの正式問題・解説だけでは、意味を断定できるだけの記述を見つけられなかった。\n"
             "略語なら正式名称、長い質問なら調べたい用語だけにして、もう一度入れてみてくれ＾＾"
         )
 
-    snippets: list[str] = []
-    for result in results:
-        for snippet in result.snippets:
-            if snippet not in snippets:
-                snippets.append(snippet)
-            if len(snippets) >= 3:
-                break
-        if len(snippets) >= 3:
-            break
+    definition, points = _pick_definition_and_points(cleaned, evidence_results)
+    related_results = evidence_results[:3]
 
-    lines = [
-        f"おう、『{cleaned}』な。",
-        "LicenseTownの正式な問題・解説から確認すると、ここを押さえるといいぞ。",
-    ]
-    if snippets:
-        lines.extend(["", "■問題・解説にあるポイント"])
-        lines.extend(f"・{snippet}" for snippet in snippets)
+    lines = [f"おう、『{cleaned}』な。"]
+    if definition:
+        lines.extend([
+            "",
+            f"■{cleaned}とは？",
+            definition,
+        ])
     else:
         lines.extend([
             "",
-            "この言葉が出てくる問題は見つかったが、保存済み解説の中に直接説明している文は見つからなかった。",
-            "意味を推測で作らず、まず関連問題を示しておくぞ。",
+            f"■{cleaned}とは？",
+            "この言葉が出てくる問題は見つかったが、保存済み解説の中に『何か』を直接説明する定義文は見つからなかった。",
+            "ここは推測で意味を作らず、問題・解説から確認できる内容だけを示すぞ。",
         ])
+
+    if points:
+        lines.extend(["", "■国試で押さえるポイント"])
+        lines.extend(f"・{point}" for point in points)
 
     lines.extend(["", "■関連問題"])
     lines.extend(
         f"{result.question_id}（{result.category_name}）"
-        for result in results
+        for result in related_results
     )
     lines.extend([
         "",
