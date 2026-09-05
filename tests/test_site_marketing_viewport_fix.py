@@ -35,6 +35,14 @@ def test_overlay_clicks_are_intercepted_without_hash_navigation():
     assert "dialog.marketing-modal-overlay{width:100vw!important;height:100dvh!important" in html
 
 
+def test_overlays_are_anchored_to_viewport_bottom():
+    html = _app().test_client().get("/site/view/pc").get_data(as_text=True)
+    assert '.marketing-modal-overlay.is-open{display:flex!important;align-items:flex-end!important' in html
+    assert '.marketing-modal-overlay:target{align-items:flex-end!important' in html
+    assert 'margin:0 auto 16px!important' in html
+    assert 'scroll-margin-bottom:0!important' in html
+
+
 def test_brand_headline_is_shrunk_without_truncating_text():
     html = _app().test_client().get("/site/view/pc").get_data(as_text=True)
     assert 'ライセンスタウンは、あなたの「合格したい」を応援します。' in html
