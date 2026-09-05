@@ -10,10 +10,10 @@ from site_marketing_refresh import FAQ_ITEMS, FAQ_PREVIEW_ITEMS, _onboarding_url
 
 def _preview_items_html() -> str:
     return "".join(
-        '<article class="marketing-faq-preview-item">'
+        '<div class="marketing-faq-preview-item">'
         f'<h3>{escape(question)}</h3>'
         f'<p>{escape(answer)}</p>'
-        '</article>'
+        '</div>'
         for question, answer in FAQ_PREVIEW_ITEMS
     )
 
