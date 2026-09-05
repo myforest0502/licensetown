@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const phase = document.querySelector('.phase12-guidance-preview');
   const footer = document.querySelector('.dashboard-footer-cards');
   const weekly = window.LT_WEEKLY_LEARNING_SNAPSHOT || {};
+  let stateCard = null;
 
   if (phase) {
     phase.classList.add('learning-position-card');
@@ -35,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const stateSummary = phase.querySelector('.phase12-state-summary');
-    if (stateSummary && footer) {
-      const stateCard = document.createElement('article');
+    if (stateSummary) {
+      stateCard = document.createElement('article');
       stateCard.className = 'motivation-card knowledge-state-card';
       stateCard.innerHTML = '<h2>🔧 知識の確認状況</h2><p class="knowledge-state-lead">LTが今どの知識を「確認・修復・定着」のどこまで見ているかです。</p>';
       stateCard.appendChild(stateSummary);
@@ -49,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
           '<div><dt>再確認待ち・定着</dt><dd>時間を空けて確認する知識／時間を空けても確認できた知識</dd></div>' +
         '</dl>'
       );
-      footer.prepend(stateCard);
     }
   }
 
@@ -89,7 +89,21 @@ document.addEventListener('DOMContentLoaded', () => {
     <small class="weekly-learning-note">※「今日のおすすめ」や源さんの助言とは別に、1週間の量と波だけを振り返る欄です。</small>
   `;
 
-  const footprint = footer.querySelector('.footprint-card');
-  if (footprint) footer.insertBefore(weeklyCard, footprint);
-  else footer.appendChild(weeklyCard);
+  if (phase && stateCard) {
+    const layout = document.createElement('section');
+    layout.className = 'learning-insight-layout';
+    const right = document.createElement('div');
+    right.className = 'learning-insight-right';
+
+    phase.parentNode.insertBefore(layout, phase);
+    layout.appendChild(phase);
+    right.appendChild(stateCard);
+    right.appendChild(weeklyCard);
+    layout.appendChild(right);
+  } else {
+    if (stateCard) footer.prepend(stateCard);
+    const footprint = footer.querySelector('.footprint-card');
+    if (footprint) footer.insertBefore(weeklyCard, footprint);
+    else footer.appendChild(weeklyCard);
+  }
 });
