@@ -86,8 +86,11 @@ def _apply_rich_menu_v2_if_requested() -> None:
 install_prerequisite_attempt_cache(legacy)
 legacy.create_text_response = create_text_response
 legacy.create_home_message = create_home_message
-install_site_marketing_refresh(legacy.app)
+# Flask executes after_request handlers in reverse registration order. Register
+# the hotfix first so the normal marketing refresh runs first and the hotfix is
+# the final public rendering pass.
 install_site_marketing_hotfix(legacy.app)
+install_site_marketing_refresh(legacy.app)
 
 _apply_rich_menu_v2_if_requested()
 
