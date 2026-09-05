@@ -19,8 +19,10 @@ def _app(monkeypatch):
         <a class="marketing-line-button" href="https://example.com/line-start">LINEで無料ではじめる　›</a>
         </body></html>''',
     )
-    install_site_marketing_refresh(app)
+    # Production order: after_request executes in reverse registration order,
+    # so register the hotfix first and the normal refresh second.
     install_site_marketing_hotfix(app)
+    install_site_marketing_refresh(app)
     return app
 
 
