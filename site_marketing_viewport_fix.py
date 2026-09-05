@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import re
+
 from flask import request
 
 
-_STYLE = """<style id="marketing-viewport-fix-v09">
+_STYLE = """<style id="marketing-viewport-fix-v10">
 /* All modal-like dialogs in the public HP use the browser top layer and open from the viewport bottom. */
 dialog.marketing-modal-overlay{width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;border:0!important}
 dialog.marketing-modal-overlay::backdrop{background:transparent!important}
@@ -18,7 +20,7 @@ dialog.marketing-modal-overlay::backdrop{background:transparent!important}
   .marketing-modal-overlay.is-open>.marketing-modal-card,.marketing-modal-overlay:target>.marketing-modal-card{margin-bottom:8px!important;max-height:calc(100dvh - 16px)!important}
 }
 </style>
-<script id="marketing-viewport-fix-script-v09">
+<script id="marketing-viewport-fix-script-v10">
 (function(){
   var savedScrollX=0;
   var savedScrollY=0;
@@ -107,6 +109,33 @@ dialog.marketing-modal-overlay::backdrop{background:transparent!important}
 </script>"""
 
 
+def _open_info_pages_in_top_context(html: str) -> str:
+    """Open standalone public information pages outside the preview iframe.
+
+    The official site renders the PC/mobile public view inside an iframe. Without
+    ``target=_top``, legal/support pages inherit the outer page's scroll position
+    and can appear blank until the user scrolls back to the top. These links also
+    carry ``#top`` so the destination page has an explicit initial anchor.
+    """
+
+    pattern = re.compile(
+        r'<a(?P<attrs>[^>]*\bhref="(?P<href>/site/(?:support|legal/[^"#?]+))(?:#top)?"[^>]*)>',
+        flags=re.IGNORECASE,
+    )
+
+    def replace(match):
+        attrs = match.group("attrs")
+        href = match.group("href")
+        attrs = re.sub(r'\bhref="[^"]+"', f'href="{href}#top"', attrs, count=1)
+        if re.search(r'\btarget="[^"]*"', attrs, flags=re.IGNORECASE):
+            attrs = re.sub(r'\btarget="[^"]*"', 'target="_top"', attrs, count=1, flags=re.IGNORECASE)
+        else:
+            attrs += ' target="_top"'
+        return f"<a{attrs}>"
+
+    return pattern.sub(replace, html)
+
+
 def install_site_marketing_viewport_fix(app) -> None:
     @app.after_request
     def apply_site_marketing_viewport_fix(response):
@@ -115,8 +144,9 @@ def install_site_marketing_viewport_fix(app) -> None:
         if request.path not in {"/site/view/pc", "/site/view/mobile"}:
             return response
         html = response.get_data(as_text=True)
-        if 'id="marketing-viewport-fix-v09"' not in html:
+        html = _open_info_pages_in_top_context(html)
+        if 'id="marketing-viewport-fix-v10"' not in html:
             html = html.replace("</head>", _STYLE + "</head>", 1)
-            response.set_data(html)
-            response.headers["Content-Length"] = str(len(response.get_data()))
+        response.set_data(html)
+        response.headers["Content-Length"] = str(len(response.get_data()))
         return response
