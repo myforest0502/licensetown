@@ -1,21 +1,111 @@
 <!doctype html>
 <html lang="ja">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LicenseTown Internal</title></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LicenseTown Internal</title>
+  <style>
+    :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin: 0; background: #f5f7f6; color: #16231b; }
+    main { width: min(1080px, calc(100% - 32px)); margin: 32px auto 64px; }
+    h1 { margin-bottom: 6px; }
+    h2 { margin: 0 0 14px; font-size: 1.08rem; }
+    .muted { color: #5f6d64; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .card { background: #fff; border: 1px solid #dbe4de; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+    .metric { font-size: 1.55rem; font-weight: 700; margin: 6px 0 2px; }
+    .pass { color: #116530; font-weight: 700; }
+    .warn { color: #9b5d00; font-weight: 700; }
+    section { margin-top: 22px; }
+    form { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+    label { display: grid; gap: 5px; font-weight: 600; }
+    input { min-width: min(420px, 72vw); padding: 9px 10px; border: 1px solid #aebbb2; border-radius: 8px; }
+    button, a.action { display: inline-block; border: 0; border-radius: 8px; padding: 10px 14px; background: #176b42; color: #fff; text-decoration: none; font-weight: 700; cursor: pointer; }
+    ul { padding-left: 20px; }
+    li { margin: 7px 0; }
+    .flag { display: flex; justify-content: space-between; gap: 16px; border-bottom: 1px solid #edf1ee; padding: 7px 0; }
+    .flag:last-child { border-bottom: 0; }
+    .on { color: #9b5d00; font-weight: 700; }
+    .off { color: #4c6255; font-weight: 700; }
+    .capability strong { display: block; margin-bottom: 5px; }
+    .capability p { margin: 0; color: #5f6d64; font-size: .92rem; line-height: 1.5; }
+  </style>
+</head>
 <body>
   <main>
     <h1>LicenseTown Internal</h1>
-    <p>開発・診断専用。学習者・見守り画面とは分離されています。</p>
-    <form method="get">
-      <input type="hidden" name="token" value="{{ internal_token }}">
-      <label>learner_user_id <input name="learner_user_id" value="{{ learner_id }}" autocomplete="off"></label>
-      <button type="submit">対象を開く</button>
-    </form>
-    {% if learner_id %}
-    <nav>
-      <p><a href="{{ pilot_url }}">学習診断 / Phase11・repeat・cooldown</a></p>
-      <p><a href="{{ preview_url }}">本人画面プレビュー（開発QA）</a></p>
-    </nav>
-    {% endif %}
+    <p class="muted">開発・診断専用。学習者・親向け「学習見守り」とは、URL・認証・処理・表示を分離しています。</p>
+
+    <section>
+      <h2>システム概要</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="muted">Question Bank</div>
+          <div class="metric">{{ system_status.question_bank.question_count or '—' }}問</div>
+          <div>Q{{ system_status.question_bank.first_question_number or '—' }}〜Q{{ system_status.question_bank.last_question_number or '—' }}</div>
+          <div class="muted">{{ system_status.question_bank.version }}</div>
+        </div>
+        <div class="card">
+          <div class="muted">正式データ監査</div>
+          <div class="metric {{ 'pass' if system_status.question_bank.status == 'PASS' else 'warn' }}">{{ system_status.question_bank.status }}</div>
+          <div>errors: {{ system_status.question_bank.errors if system_status.question_bank.errors is not none else '—' }}</div>
+          <div class="muted">records: {{ system_status.question_bank.records or '—' }}</div>
+        </div>
+        <div class="card">
+          <div class="muted">Knowledge Node</div>
+          <div class="metric">{{ system_status.question_bank.canonical_represented or '—' }}</div>
+          <div>question represented / registry {{ system_status.question_bank.canonical_registry or '—' }}</div>
+          <div class="muted">singleton {{ system_status.question_bank.canonical_singleton or '—' }} / multi {{ system_status.question_bank.canonical_multi or '—' }}</div>
+        </div>
+        <div class="card">
+          <div class="muted">問題ソース</div>
+          <div class="metric">{{ system_status.question_bank.original or '—' }} + {{ system_status.question_bank.past_exam or '—' }}</div>
+          <div>original + past exam</div>
+          <div class="muted">Safety critical {{ system_status.question_bank.safety_critical or '—' }} / moderate {{ system_status.question_bank.safety_moderate or '—' }}</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>ユーザー別診断</h2>
+        <form method="get">
+          <input type="hidden" name="token" value="{{ internal_token }}">
+          <label>learner_user_id
+            <input name="learner_user_id" value="{{ learner_id }}" autocomplete="off" placeholder="診断対象の learner_user_id">
+          </label>
+          <button type="submit">対象を開く</button>
+        </form>
+        {% if learner_id %}
+        <p style="margin-bottom:0;">
+          <a class="action" href="{{ pilot_url }}">学習診断 / Phase11・repeat・cooldown</a>
+          <a class="action" href="{{ preview_url }}">本人画面プレビュー（開発QA）</a>
+        </p>
+        {% endif %}
+      </div>
+    </section>
+
+    <section>
+      <h2>開発ツールの現在地</h2>
+      <div class="grid">
+        {% for item in system_status.capabilities %}
+        <div class="card capability">
+          <strong>{{ item.name }}</strong>
+          <p>{{ item.detail }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>一時機能・計測フラグ</h2>
+        <p class="muted">値そのものや秘密情報は表示しません。ON/OFFだけを確認します。</p>
+        {% for name, enabled in system_status.feature_flags.items() %}
+          <div class="flag"><span>{{ name }}</span><span class="{{ 'on' if enabled else 'off' }}">{{ 'ON' if enabled else 'OFF' }}</span></div>
+        {% endfor %}
+      </div>
+    </section>
   </main>
 </body>
 </html>
