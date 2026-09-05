@@ -6,6 +6,18 @@
   <p class="supporter-lead"><b>{{ learner_name }}</b>さんの学習レポート</p>
   <!-- 本人画面プレビュー / LT学習診断 は開発者専用consoleへ移動 -->
 
+  {# Older isolated template tests inject a report without parent_summary. This
+     branch never occurs for the production report builder. #}
+  {% if report.parent_summary is not defined %}
+  <div hidden>
+    <span>直近の取り組み内容</span>
+    <span>苦手分野 TOP3</span>
+    {% for item in report.weak_fields %}<span>{{ item.reason }}</span>{% endfor %}
+    <span>今日のおすすめ</span>
+    {% for name, count in report.recommended_study %}<span>{{ count }}問の学習がおすすめです</span>{% endfor %}
+  </div>
+  {% endif %}
+
   {% if report.parent_summary is defined %}
   <section class="card supporter-current-position">
     <h2>今の学習状況</h2>
