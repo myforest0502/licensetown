@@ -256,7 +256,7 @@ def test_entering_consultation_without_message_does_not_record_activity(monkeypa
     app_module.user_modes.pop(user_id, None)
 
 
-def test_supporter_html_shows_activity_breakdown_without_consultation_text():
+def test_supporter_html_shows_parent_summary_without_internal_activity_breakdown():
     clear_activity_data()
     now = datetime.now(timezone.utc)
     q_id = question_for_field("人間発達学")
@@ -273,11 +273,14 @@ def test_supporter_html_shows_activity_breakdown_without_consultation_text():
 
     text = app.test_client().get(f"/supporter?token={token}").get_data(as_text=True)
 
-    assert "人間発達学 3 / 10問" in text
-    assert "未完了" in text
-    assert "おすすめ学習経由" in text
-    assert "相談モード" in text
-    assert "利用あり" in text
+    assert "直近の学習" in text
+    assert "人間発達学" in text
+    assert "3問" in text
+    assert "学習ペース" in text
+    assert "今後の見通し" in text
+    assert "おすすめ学習経由" not in text
+    assert "相談モード" not in text
+    assert "利用あり" not in text
     assert "保存してはいけない相談本文" not in text
 
 

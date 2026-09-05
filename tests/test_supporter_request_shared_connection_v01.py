@@ -67,7 +67,6 @@ def test_supporter_route_reuses_one_production_connection(monkeypatch):
 
 def test_supporter_report_uses_caller_owned_connection_without_opening_another(monkeypatch):
     connection = object()
-    attempts = [{"question_id": "Q1"}]
     seen = {}
 
     monkeypatch.setattr(report_module, "database_is_available", lambda: True)
@@ -78,11 +77,11 @@ def test_supporter_report_uses_caller_owned_connection_without_opening_another(m
             AssertionError("caller-owned connection must be reused")
         ),
     )
-    monkeypatch.setattr(
-        report_module,
-        "_shared_dashboard_learning_data",
-        lambda learner_id, conn: {
-            "summary": {"total_answers": 0, "study_minutes": 0},
+
+    def learning_data(learner_id, conn):
+        seen["learning_connection"] = conn
+        return {
+            "summary": {"total_answers": 0, "study_minutes": 0, "average_accuracy": 0},
             "activity": {
                 "weekly_learning_days": 0,
                 "weekly_answers": 0,
@@ -92,8 +91,9 @@ def test_supporter_report_uses_caller_owned_connection_without_opening_another(m
             },
             "fields": [],
             "unique_question_count": 0,
-        },
-    )
+        }
+
+    monkeypatch.setattr(report_module, "_shared_dashboard_learning_data", learning_data)
     monkeypatch.setattr(
         report_module,
         "build_learning_guidance",
@@ -118,21 +118,11 @@ def test_supporter_report_uses_caller_owned_connection_without_opening_another(m
         lambda learner_id, _connection=None: {"has_activity": False},
     )
 
-    def read_attempts(learner_id, conn):
-        seen["attempt_connection"] = conn
-        return attempts
-
-    monkeypatch.setattr(report_module, "_attempts_with_connection", read_attempts)
-    monkeypatch.setattr(
-        report_module,
-        "_parent_summary",
-        lambda summary, activity, fields, latest, rows: {"rows": rows},
-    )
-
     result = report_module.build_supporter_report(
         "learner",
         _connection=connection,
     )
 
-    assert seen["attempt_connection"] is connection
-    assert result["parent_summary"] == {"rows": attempts}
+    assert seen["learning_connection"] is connection
+    assert result["parent_summary"]["current_position"]["answered_count"] == 0
+    assert not hasattr(report_module, "_attempts_with_connection")

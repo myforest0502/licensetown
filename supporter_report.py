@@ -1,9 +1,7 @@
-"""Build supporter-facing learning data without developer diagnostics.
+"""Build the parent-facing learning report.
 
-``parent_summary`` is the stable vNext parent contract.  Legacy top-level keys are
-kept temporarily so the existing supporter UI can be migrated without changing
-its data semantics in the same step.  #100 will measure the old calls before any
-performance simplification.
+The parent page intentionally uses only lightweight learning aggregates. Developer
+and learner diagnostics live elsewhere under /internal or the learner dashboard.
 """
 
 from __future__ import annotations
@@ -12,7 +10,6 @@ from contextlib import nullcontext
 from datetime import timezone
 from zoneinfo import ZoneInfo
 
-from dashboard_read_bundle import _attempts_with_connection
 from database import (
     _get_question_result_rows,
     database_is_available,
@@ -23,35 +20,10 @@ from database import (
     get_latest_learning_day_summary,
     get_learning_activity,
     get_learning_summary,
-    get_question_attempts,
     get_unique_answered_question_count,
 )
-from field_evidence import build_field_evidence
-from field_progress import build_field_progress
 from learning_analysis import build_learning_guidance
-from pass_readiness import build_pass_readiness
 from supporter_performance import measure
-
-
-_POSITION_TEXT = {
-    "insufficient_evidence": "まだ判断材料を集めている段階です。",
-    "building_coverage": "学習範囲を広げている段階です。",
-    "repair_required": "理解を修正している項目があります。",
-    "retention_confirmation_needed": "覚え直した内容の定着を確認している段階です。",
-    "safety_attention_required": "優先して見直したい重要項目があります。",
-    "approaching_readiness": "合格に必要な準備の証拠がそろいつつあります。",
-    "readiness_supported": "LT上では幅広い準備の証拠が確認できています。",
-}
-
-_TRAJECTORY = {
-    "insufficient_evidence": ("判定保留", "学習データが増えてから見通しを判断します。"),
-    "building_coverage": ("学習継続", "まずは未確認の範囲を広げる段階です。"),
-    "repair_required": ("要注意", "現在は弱点修復を優先する段階です。"),
-    "retention_confirmation_needed": ("確認中", "修復した内容が時間をおいても保てるか確認中です。"),
-    "safety_attention_required": ("要注意", "重要項目の見直しを優先する必要があります。"),
-    "approaching_readiness": ("順調", "幅広い学習証拠がそろいつつあります。"),
-    "readiness_supported": ("順調", "幅広い準備と定着の証拠がそろっています。"),
-}
 
 
 def _supporter_comment(latest: dict, streak_days: int) -> str:
@@ -99,7 +71,7 @@ def _pace(activity: dict) -> dict:
     days = int(activity.get("weekly_learning_days") or 0)
     answers = int(activity.get("weekly_answers") or 0)
     if answers == 0:
-        return {"status": "要注意", "reason": "直近7日で問題学習の記録がありません。"}
+        return {"status": "様子見", "reason": "直近7日で問題学習の記録がありません。"}
     if days >= 3 or answers >= 30:
         return {
             "status": "継続中",
@@ -111,18 +83,62 @@ def _pace(activity: dict) -> dict:
     }
 
 
-def _parent_summary(summary: dict, activity: dict, fields: list[dict], latest: dict, attempts: list[dict]) -> dict:
-    with measure("parent_summary.evidence"):
-        evidence = build_field_evidence(attempts)
-        progress = build_field_progress(evidence)
-    with measure("parent_summary.readiness"):
-        readiness = build_pass_readiness(attempts, field_evidence=evidence, progress=progress)
-    readiness_status = readiness["status"]
-    coverage = float(readiness["components"]["coverage"].get("node_coverage") or 0.0)
-    trajectory_status, trajectory_reason = _TRAJECTORY.get(
-        readiness_status,
-        ("判定保留", "判断材料を確認しています。"),
-    )
+def _current_position(summary: dict, fields: list[dict]) -> dict:
+    answers = int(summary.get("total_answers") or 0)
+    accuracy = int(round(float(summary.get("average_accuracy") or 0)))
+    field_count = len(fields)
+    if answers == 0:
+        text = "まだ学習記録がありません。"
+        status = "これから"
+    elif answers < 30:
+        text = "まずは学習データを集めている段階です。"
+        status = "学習開始"
+    elif field_count < 3:
+        text = "取り組む分野を少しずつ広げている段階です。"
+        status = "範囲拡大中"
+    elif accuracy >= 70:
+        text = "複数分野で学習を進め、正答も安定してきています。"
+        status = "学習継続"
+    elif accuracy >= 50:
+        text = "学習範囲を広げながら、正答を安定させている段階です。"
+        status = "確認中"
+    else:
+        text = "学習は進んでいます。正答が安定しない分野を見直している段階です。"
+        status = "見直し中"
+    return {
+        "status": status,
+        "text": text,
+        "answered_count": answers,
+        "field_count": field_count,
+        "average_accuracy": accuracy,
+    }
+
+
+def _trajectory(summary: dict, activity: dict, fields: list[dict]) -> dict:
+    answers = int(summary.get("total_answers") or 0)
+    accuracy = int(round(float(summary.get("average_accuracy") or 0)))
+    weekly = int(activity.get("weekly_answers") or 0)
+    if answers < 30:
+        status = "判定保留"
+        reason = "学習データが増えてから、進み方を見ていきます。"
+    elif weekly == 0:
+        status = "様子見"
+        reason = "直近7日の問題学習がないため、まず再開できるかを見守ります。"
+    elif len(fields) >= 3 and accuracy >= 70:
+        status = "順調"
+        reason = "学習を続けながら、複数分野で正答を積み上げています。"
+    else:
+        status = "継続中"
+        reason = "学習は進んでいます。範囲と正答の安定をこれから確認していきます。"
+    return {
+        "status": status,
+        "reason": reason,
+        "pass_probability": None,
+        "pass_guarantee": False,
+    }
+
+
+def _parent_summary(summary: dict, activity: dict, fields: list[dict], latest: dict) -> dict:
     return {
         "latest_day": {
             "has_learning": bool(latest.get("has_learning")),
@@ -149,22 +165,12 @@ def _parent_summary(summary: dict, activity: dict, fields: list[dict], latest: d
             "study_minutes": int(activity.get("weekly_study_minutes") or 0),
         },
         "pace": _pace(activity),
-        "current_position": {
-            "status": readiness_status,
-            "text": _POSITION_TEXT.get(readiness_status, "現在地を確認しています。"),
-            "confirmed_scope_percent": int(round(coverage * 100)),
-        },
-        "trajectory": {
-            "status": trajectory_status,
-            "reason": trajectory_reason,
-            "pass_probability": None,
-            "pass_guarantee": False,
-        },
+        "current_position": _current_position(summary, fields),
+        "trajectory": _trajectory(summary, activity, fields),
     }
 
 
 def _shared_dashboard_learning_data(learner_user_id: str, conn) -> dict:
-    """Build the existing dashboard aggregate on a caller-owned DB connection."""
     question_rows = _get_question_result_rows(learner_user_id, conn)
     return {
         "summary": get_learning_summary(learner_user_id, _connection=conn),
@@ -183,7 +189,7 @@ def _shared_dashboard_learning_data(learner_user_id: str, conn) -> dict:
 
 
 def build_supporter_report(learner_user_id: str, *, _connection=None) -> dict:
-    """Return parent-facing data only; reuse a caller-owned Production connection."""
+    """Return parent-facing aggregates without loading per-question diagnostics."""
     with measure("build_supporter_report.total"):
         if database_is_available():
             connection_context = (
@@ -198,8 +204,6 @@ def build_supporter_report(learner_user_id: str, *, _connection=None) -> dict:
                 activity = learning_data["activity"]
                 all_fields = learning_data["fields"]
                 learned_fields = [item for item in all_fields if item["learned"]]
-                with measure("python.learning_guidance"):
-                    guidance = build_learning_guidance(summary["total_answers"], all_fields)
                 with measure("db.latest_learning_day_summary"):
                     latest = _format_latest(
                         get_latest_learning_day_summary(learner_user_id, _connection=conn)
@@ -208,8 +212,6 @@ def build_supporter_report(learner_user_id: str, *, _connection=None) -> dict:
                     latest_activity = _format_latest_activity(
                         get_latest_activity_day_summary(learner_user_id, _connection=conn)
                     )
-                with measure("db.question_attempts"):
-                    attempts = _attempts_with_connection(learner_user_id, conn)
         else:
             with measure("db.dashboard_learning_data"):
                 learning_data = get_dashboard_learning_data(learner_user_id)
@@ -217,23 +219,20 @@ def build_supporter_report(learner_user_id: str, *, _connection=None) -> dict:
             activity = learning_data["activity"]
             all_fields = learning_data["fields"]
             learned_fields = [item for item in all_fields if item["learned"]]
-            with measure("python.learning_guidance"):
-                guidance = build_learning_guidance(summary["total_answers"], all_fields)
             with measure("db.latest_learning_day_summary"):
                 latest = _format_latest(get_latest_learning_day_summary(learner_user_id))
             with measure("db.latest_activity_day_summary"):
                 latest_activity = _format_latest_activity(
                     get_latest_activity_day_summary(learner_user_id)
                 )
-            with measure("db.question_attempts"):
-                attempts = get_question_attempts(learner_user_id)
+
+        with measure("python.learning_guidance"):
+            guidance = build_learning_guidance(summary["total_answers"], all_fields)
         with measure("python.parent_summary"):
-            parent_summary = _parent_summary(summary, activity, learned_fields, latest, attempts)
+            parent_summary = _parent_summary(summary, activity, learned_fields, latest)
 
         return {
-            # vNext stable contract
             "parent_summary": parent_summary,
-            # temporary compatibility contract for the current supporter template/tests
             "latest": latest,
             "latest_studied": latest["has_learning"],
             "latest_fields": latest["fields"],
