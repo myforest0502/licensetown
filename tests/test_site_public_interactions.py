@@ -45,10 +45,10 @@ def test_mobile_faq_has_answers_and_single_open_accordion_behavior():
     html = client.get("/site/view/mobile").get_data(as_text=True)
     css = client.get("/site/preview-responsive/mobile.css").get_data(as_text=True)
 
-    assert html.count('class="faq-answer"') == 4
-    assert "月額料金はお願いしていません" in html
-    assert "一部の画面はブラウザで開いて確認します" in html
-    assert "個別の相談内容は共有されません" in html
+    assert html.count('class="faq-answer"') == 12
+    assert "検証期間中のため、利用料金はいただいていません" in html
+    assert "LINEが学習の入口になります" in html
+    assert "本人の個別の相談内容を見せるための機能ではありません" in html
     assert "理学療法士国家試験に向けて" in html
     assert "if (other !== item) other.open = false" in html
     assert '.faq-list details[open] summary:after{content:"−"}' in css
@@ -60,10 +60,10 @@ def test_pc_public_document_has_no_href_less_anchor_affordances():
     html = app.test_client().get("/site/view/pc").get_data(as_text=True)
 
     assert not re.search(r"<a\b(?![^>]*\bhref=)[^>]*>", html)
-    assert "ログイン（準備中）" in html
+    assert "ログイン（準備中）" not in html
     assert '<span class="detail public-static-control"' in html
     assert '表示イメージ</span>' in html
-    assert '<a href="/site/legal/contact">その他の質問はこちら' in html
+    assert '<a class="marketing-contact-link" href="/site/legal/contact">解決しない場合はお問い合わせください' in html
 
 
 def test_mobile_public_video_is_static_and_clearly_not_ready():
