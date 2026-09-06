@@ -55,19 +55,25 @@ def build_phase11_promotion_gate_status(
     stable_now = _int(states, "stable")
     due_to_stable = _int(transition_counts, "recheck_due_to_stable")
     due_to_repairing = _int(transition_counts, "recheck_due_to_repairing")
-    # New callers provide an explicit due-before-attempt outcome audit.  This is
-    # authoritative for whether a natural spaced review was actually observed,
-    # because prefix timelines can jump repaired -> stable on the review attempt.
+    # New callers provide an explicit due-before-attempt outcome audit. A natural
+    # review by itself is not enough to clear J4: the observed review must use
+    # STRONG different-question evidence and produce a decisive formal outcome
+    # (stable or repairing). Weak/same-Q or STRONG-but-still-due attempts remain
+    # useful evidence, but they keep the retention gate OPEN.
     if outcomes is not None:
         retention_review_count = _int(outcomes, "review_attempt_count")
+        qualified_retention_count = _int(outcomes, "qualified_strong_outcome_count")
         retention_observed = retention_review_count > 0
-        retention_status = PASS if retention_observed else OPEN
+        retention_qualified = qualified_retention_count > 0
+        retention_status = PASS if retention_qualified else OPEN
     else:
         # Backward-compatible fallback for callers not yet wired to the explicit
         # retention outcome audit.
         retention_review_count = 0
+        qualified_retention_count = 0
         retention_observed = bool(due_now or stable_now or due_to_stable or due_to_repairing)
-        retention_status = PASS if (due_to_stable or due_to_repairing or stable_now) else OPEN
+        retention_qualified = bool(due_to_stable or due_to_repairing or stable_now)
+        retention_status = PASS if retention_qualified else OPEN
 
     eligible = _int(replay, "eligible_snapshot_count")
     shadow_stronger = _int(replay, "shadow_stronger_disagreement_count")
@@ -77,7 +83,7 @@ def build_phase11_promotion_gate_status(
     observed_directions = sum(
         value > 0 for value in (shadow_stronger, current_stronger, agreement, inconclusive)
     )
-    # No fixed sample threshold is encoded.  Diversity is OPEN until at least two
+    # No fixed sample threshold is encoded. Diversity is OPEN until at least two
     # naturally observed result directions exist, then PASS as a collection gate.
     prospective_status = PASS if observed_directions >= 2 else OPEN
 
@@ -101,10 +107,15 @@ def build_phase11_promotion_gate_status(
         "retention": {
             "status": retention_status,
             "natural_retention_observed": retention_observed,
+            "qualified_strong_retention_observed": retention_qualified,
             "review_attempt_count": retention_review_count,
+            "qualified_strong_outcome_count": qualified_retention_count,
             "review_stable_count": _int(outcomes, "stable_count") if outcomes is not None else 0,
             "review_repairing_count": _int(outcomes, "repairing_count") if outcomes is not None else 0,
             "review_still_due_count": _int(outcomes, "still_due_count") if outcomes is not None else 0,
+            "strong_stable_count": _int(outcomes, "strong_stable_count") if outcomes is not None else 0,
+            "strong_repairing_count": _int(outcomes, "strong_repairing_count") if outcomes is not None else 0,
+            "strong_still_due_count": _int(outcomes, "strong_still_due_count") if outcomes is not None else 0,
             "recheck_due_count": due_now,
             "stable_count": stable_now,
             "recheck_due_to_stable": due_to_stable,
