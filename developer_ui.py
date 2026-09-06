@@ -26,9 +26,14 @@ from feedback_store import (
     set_operator_reply,
 )
 from goukaku_ui import build_dashboard
+from knowledge_node_state_transition import derive_all_user_node_states
 from phase11_repair_effectiveness_facts import (
     build_repair_effectiveness_evidence_line,
     build_same_day_repair_effectiveness_facts,
+)
+from phase11_retention_horizon_facts import (
+    build_retention_horizon_evidence_line,
+    build_retention_horizon_facts,
 )
 from phase11_session_load_facts import (
     build_same_day_session_load_evidence_line,
@@ -223,20 +228,25 @@ def register_developer_routes(blueprint) -> None:
         if period not in {"7", "30", "all"}:
             period = "7"
         diagnostics = build_pilot_diagnostics(learner_id, period)
-        same_day_session_load = build_same_day_session_load_facts(
-            get_question_attempts(learner_id)
-        )
+        attempts = get_question_attempts(learner_id)
+        same_day_session_load = build_same_day_session_load_facts(attempts)
         repair_effectiveness = build_same_day_repair_effectiveness_facts(
             get_learning_events(learner_id)
         )
+        retention_horizon = build_retention_horizon_facts(
+            derive_all_user_node_states(attempts)
+        )
         diagnostics["same_day_session_load"] = same_day_session_load
         diagnostics["repair_effectiveness"] = repair_effectiveness
+        diagnostics["retention_horizon"] = retention_horizon
         diagnostics["promotion_evidence_text"] = (
             str(diagnostics.get("promotion_evidence_text") or "").rstrip()
             + "\n"
             + build_same_day_session_load_evidence_line(same_day_session_load)
             + "\n"
             + build_repair_effectiveness_evidence_line(repair_effectiveness)
+            + "\n"
+            + build_retention_horizon_evidence_line(retention_horizon)
         ).lstrip("\n")
         return render_template(
             "goukaku/supporter_pilot_diagnostics.html",
