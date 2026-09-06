@@ -18,7 +18,10 @@ from typing import Any, Iterable
 from zoneinfo import ZoneInfo
 
 from knowledge_node_canonical import canonicalize_knowledge_node_id
-from knowledge_node_repair_evidence import classify_repair_confirmation
+from knowledge_node_repair_evidence import (
+    DIFFERENT_QUESTION_STRONG,
+    classify_repair_confirmation,
+)
 from knowledge_node_state_transition import derive_knowledge_node_state
 
 
@@ -122,6 +125,23 @@ def build_retention_outcome_audit(
 
     outcome_counts = Counter(item["outcome"] for item in reviews)
     evidence_counts = Counter(item["evidence_quality"] for item in reviews)
+    strong_stable_count = sum(
+        item["evidence_quality"] == DIFFERENT_QUESTION_STRONG
+        and item["outcome"] == "stable"
+        for item in reviews
+    )
+    strong_repairing_count = sum(
+        item["evidence_quality"] == DIFFERENT_QUESTION_STRONG
+        and item["outcome"] == "repairing"
+        for item in reviews
+    )
+    strong_still_due_count = sum(
+        item["evidence_quality"] == DIFFERENT_QUESTION_STRONG
+        and item["outcome"] == "still_due"
+        for item in reviews
+    )
+    qualified_strong_outcome_count = strong_stable_count + strong_repairing_count
+
     return {
         "review_attempt_count": len(reviews),
         "stable_count": outcome_counts["stable"],
@@ -131,17 +151,22 @@ def build_retention_outcome_audit(
         - outcome_counts["stable"]
         - outcome_counts["repairing"]
         - outcome_counts["still_due"],
-        "strong_evidence_count": evidence_counts["different_question_strong"],
+        "strong_evidence_count": evidence_counts[DIFFERENT_QUESTION_STRONG],
         "weak_evidence_count": evidence_counts["different_question_weak"],
         "same_question_count": evidence_counts["same_question"],
+        "strong_stable_count": strong_stable_count,
+        "strong_repairing_count": strong_repairing_count,
+        "strong_still_due_count": strong_still_due_count,
+        "qualified_strong_outcome_count": qualified_strong_outcome_count,
         "confident_correct_count": sum(
             item["is_correct"] and item.get("confidence") == 1 for item in reviews
         ),
         "reviews": reviews,
         "diagnostic_only": True,
         "policy_note": (
-            "These are naturally occurring formal retention-review attempts. "
-            "The audit does not create due states or authorize Phase11 promotion."
+            "A retention review is promotion-gate qualified only when STRONG different-Q "
+            "evidence produces a decisive formal outcome (stable or repairing). Weak/same-Q "
+            "or STRONG-but-still-due reviews remain observable but do not clear J4."
         ),
     }
 
@@ -156,6 +181,10 @@ def build_retention_outcome_evidence_line(audit: dict[str, Any] | None) -> str:
         f"still_due:{int(source.get('still_due_count') or 0)}",
         f"other:{int(source.get('other_outcome_count') or 0)}",
         f"strong:{int(source.get('strong_evidence_count') or 0)}",
+        f"strong_stable:{int(source.get('strong_stable_count') or 0)}",
+        f"strong_repairing:{int(source.get('strong_repairing_count') or 0)}",
+        f"strong_still_due:{int(source.get('strong_still_due_count') or 0)}",
+        f"qualified_strong:{int(source.get('qualified_strong_outcome_count') or 0)}",
         f"weak:{int(source.get('weak_evidence_count') or 0)}",
         f"same_q:{int(source.get('same_question_count') or 0)}",
         f"confident_correct:{int(source.get('confident_correct_count') or 0)}",

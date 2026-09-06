@@ -65,6 +65,8 @@ def test_captures_hidden_repaired_to_due_to_stable_review(monkeypatch):
     assert result["review_attempt_count"] == 1
     assert result["stable_count"] == 1
     assert result["strong_evidence_count"] == 1
+    assert result["strong_stable_count"] == 1
+    assert result["qualified_strong_outcome_count"] == 1
     review = result["reviews"][0]
     assert review["outcome"] == "stable"
     assert review["retention_reference_question_id"] == "Q2"
@@ -72,17 +74,19 @@ def test_captures_hidden_repaired_to_due_to_stable_review(monkeypatch):
     assert review["hours_after_due"] == 0.0
 
 
-def test_due_wrong_is_recorded_as_repairing(monkeypatch):
-    install_classifier(monkeypatch, {("Q1", "Q2")})
+def test_due_strong_wrong_is_qualified_repairing_outcome(monkeypatch):
+    install_classifier(monkeypatch, {("Q1", "Q2"), ("Q2", "Q3")})
     result = audit.build_retention_outcome_audit(
         repaired_history() + [attempt("Q3", correct=False, confidence=2, day=8)]
     )
     assert result["review_attempt_count"] == 1
     assert result["repairing_count"] == 1
+    assert result["strong_repairing_count"] == 1
+    assert result["qualified_strong_outcome_count"] == 1
     assert result["reviews"][0]["outcome"] == "repairing"
 
 
-def test_due_weak_correct_remains_due(monkeypatch):
+def test_due_weak_correct_remains_due_and_does_not_qualify(monkeypatch):
     install_classifier(monkeypatch, {("Q1", "Q2")})
     result = audit.build_retention_outcome_audit(
         repaired_history() + [attempt("Q3", correct=True, confidence=1, day=8)]
@@ -90,6 +94,18 @@ def test_due_weak_correct_remains_due(monkeypatch):
     assert result["review_attempt_count"] == 1
     assert result["still_due_count"] == 1
     assert result["weak_evidence_count"] == 1
+    assert result["qualified_strong_outcome_count"] == 0
+
+
+def test_due_strong_uncertain_correct_stays_due_and_does_not_qualify(monkeypatch):
+    install_classifier(monkeypatch, {("Q1", "Q2"), ("Q2", "Q3")})
+    result = audit.build_retention_outcome_audit(
+        repaired_history() + [attempt("Q3", correct=True, confidence=2, day=8)]
+    )
+    assert result["review_attempt_count"] == 1
+    assert result["strong_evidence_count"] == 1
+    assert result["strong_still_due_count"] == 1
+    assert result["qualified_strong_outcome_count"] == 0
 
 
 def test_before_due_attempt_is_not_retention_review(monkeypatch):
@@ -98,6 +114,7 @@ def test_before_due_attempt_is_not_retention_review(monkeypatch):
         repaired_history() + [attempt("Q3", correct=True, confidence=1, day=7)]
     )
     assert result["review_attempt_count"] == 0
+    assert result["qualified_strong_outcome_count"] == 0
 
 
 def test_evidence_line_excludes_identity_and_question_ids(monkeypatch):
@@ -108,6 +125,7 @@ def test_evidence_line_excludes_identity_and_question_ids(monkeypatch):
     result["user_id"] = "must-not-leak"
     line = audit.build_retention_outcome_evidence_line(result)
     assert line.startswith("retention_outcomes=reviews:1,stable:1")
+    assert "qualified_strong:1" in line
     assert "must-not-leak" not in line
     assert "learner" not in line
     assert "Q1" not in line and "Q2" not in line and "Q3" not in line
