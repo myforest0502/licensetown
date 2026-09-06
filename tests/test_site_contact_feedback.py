@@ -21,6 +21,8 @@ def test_contact_get_has_low_friction_fields():
     assert "ニックネームでも可・任意" in html
     assert "返信先メールアドレス" in html
     assert "未入力でも送信できます" in html
+    assert "入力した場合は、このアドレス宛てにも返信します" in html
+    assert "迷惑メールフォルダをご確認ください" in html
     assert "不具合" in html
     assert "ご要望" in html
     assert "使い方について" in html
@@ -56,8 +58,33 @@ def test_contact_post_success_shows_receipt_and_private_status_link(monkeypatch)
     assert "LT-20260906-ABCDEF12" in html
     assert "private-token-123" in html
     assert "受付番号だけでは内容を表示できません" in html
+    assert "返信先メールアドレスにも返信します" in html
+    assert "迷惑メールではない" in html
     assert calls[0]["name"] == "源さんファン"
     assert calls[0]["source"] == "web"
+
+
+def test_contact_post_without_email_does_not_show_email_delivery_notice(monkeypatch):
+    receipt = FeedbackReceipt(
+        public_id="LT-20260906-NOEMAIL01",
+        tracking_token="private-token-no-email",
+        created_at=datetime.now(timezone.utc),
+    )
+    monkeypatch.setattr(site_legal_ui, "create_feedback", lambda **kwargs: receipt)
+    response = _app().test_client().post(
+        "/site/legal/contact",
+        data={
+            "name": "",
+            "email": "",
+            "category": "other",
+            "message": "確認です。",
+            "website": "",
+        },
+    )
+    assert response.status_code == 201
+    html = response.get_data(as_text=True)
+    assert "返信先メールアドレスにも返信します" not in html
+    assert "迷惑メールではない" not in html
 
 
 def test_contact_validation_error_preserves_input(monkeypatch):
