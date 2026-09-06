@@ -28,6 +28,7 @@ def build_phase11_promotion_gate_status(
     state_counts: dict[str, Any] | None,
     transitions: dict[str, Any] | None,
     shadow_judgment: dict[str, Any] | None,
+    retention_outcome_audit: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Return deterministic gate states without inventing promotion thresholds."""
     replay = retrospective_shadow_audit or {}
@@ -36,6 +37,7 @@ def build_phase11_promotion_gate_status(
     retention = retention_horizon or {}
     states = state_counts or {}
     transition_counts = transitions or {}
+    outcomes = retention_outcome_audit
     shadow = shadow_judgment or {}
     comparison = shadow.get("comparison") or {}
 
@@ -53,8 +55,19 @@ def build_phase11_promotion_gate_status(
     stable_now = _int(states, "stable")
     due_to_stable = _int(transition_counts, "recheck_due_to_stable")
     due_to_repairing = _int(transition_counts, "recheck_due_to_repairing")
-    retention_observed = bool(due_now or stable_now or due_to_stable or due_to_repairing)
-    retention_status = PASS if (due_to_stable or due_to_repairing or stable_now) else OPEN
+    # New callers provide an explicit due-before-attempt outcome audit.  This is
+    # authoritative for whether a natural spaced review was actually observed,
+    # because prefix timelines can jump repaired -> stable on the review attempt.
+    if outcomes is not None:
+        retention_review_count = _int(outcomes, "review_attempt_count")
+        retention_observed = retention_review_count > 0
+        retention_status = PASS if retention_observed else OPEN
+    else:
+        # Backward-compatible fallback for callers not yet wired to the explicit
+        # retention outcome audit.
+        retention_review_count = 0
+        retention_observed = bool(due_now or stable_now or due_to_stable or due_to_repairing)
+        retention_status = PASS if (due_to_stable or due_to_repairing or stable_now) else OPEN
 
     eligible = _int(replay, "eligible_snapshot_count")
     shadow_stronger = _int(replay, "shadow_stronger_disagreement_count")
@@ -88,6 +101,10 @@ def build_phase11_promotion_gate_status(
         "retention": {
             "status": retention_status,
             "natural_retention_observed": retention_observed,
+            "review_attempt_count": retention_review_count,
+            "review_stable_count": _int(outcomes, "stable_count") if outcomes is not None else 0,
+            "review_repairing_count": _int(outcomes, "repairing_count") if outcomes is not None else 0,
+            "review_still_due_count": _int(outcomes, "still_due_count") if outcomes is not None else 0,
             "recheck_due_count": due_now,
             "stable_count": stable_now,
             "recheck_due_to_stable": due_to_stable,
