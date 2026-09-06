@@ -44,7 +44,8 @@
       ('safety','Safety'),
       ('repeat_audit','Repeat audit'),
       ('formal_trigger_consistency','Formal trigger'),
-      ('retention','Retention'),
+      ('retention','Retention / J4'),
+      ('intent_selection_alignment','Intent vs exact-Q / J5'),
       ('comparison_diversity','Comparison diversity'),
       ('profile_consistency','Profile consistency')
     ] %}
@@ -74,15 +75,21 @@
     <p>STRONGはあるが現在cooldown制約中のNode {{ supply.cooldown_constrained_strong_node_count }} / recent Q {{ supply.recent_question_count }}</p>
     {% endif %}
     <p>upcoming repaired {{ supply.upcoming_repaired_node_count }} / upcomingでSTRONGなし {{ supply.upcoming_without_strong_count }} / weak-only {{ supply.weak_only_count }} / formal alternateなし {{ supply.no_formal_alternate_count }}</p>
-    <p class="muted">J4が自然発生する前に、retention referenceと別のSTRONG問題が存在するか、さらに現在の30回答Recent Cooldownを避けて使えるSTRONGがあるかを先行監査します。実際のQ選択と制御fallbackはPhase10が最終決定します。</p>
+  </section>
+
+  {% set align = intent_selection_alignment %}
+  <section class="card">
+    <h2>J5 Intent vs Exact-Q Alignment</h2>
+    <p>saved recheck {{ align.saved_recheck_selection_count }} / evaluable {{ align.evaluable_recheck_selection_count }} / aligned {{ align.aligned_recheck_selection_count }} / misaligned {{ align.misaligned_recheck_selection_count }} / not evaluable {{ align.not_evaluable_recheck_selection_count }}</p>
+    <p>retention-reference基準: STRONG {{ align.strong_retention_q_count }} / weak {{ align.weak_retention_q_count }} / same-Q {{ align.same_question_retention_q_count }} / recent repeat {{ align.recent_repeat_recheck_count }} / cooldown bypass {{ align.cooldown_bypass_recheck_count }}</p>
+    <p class="muted">保存された selection_reason=recheck_due の実回答だけを対象に、回答直前のformal retention referenceに対してPhase10の実QがSTRONGだったかを再検証します。Phase10の選択ロジック自体は変更しません。</p>
   </section>
 
   {% set outcomes = retention_outcomes %}
   <section class="card">
     <h2>Natural Retention Outcomes</h2>
     <p>自然なretention review {{ outcomes.review_attempt_count }} / stable {{ outcomes.stable_count }} / repairing {{ outcomes.repairing_count }} / still due {{ outcomes.still_due_count }}</p>
-    <p>STRONG {{ outcomes.strong_evidence_count }} / weak {{ outcomes.weak_evidence_count }} / same-Q {{ outcomes.same_question_count }} / 自信あり正解 {{ outcomes.confident_correct_count }}</p>
-    <p class="muted">各実回答の直前時点で formal state が recheck_due だったかを再生して数えます。repaired→stable が1回答内で起きても取りこぼしません。</p>
+    <p>STRONG {{ outcomes.strong_evidence_count }} / qualified STRONG {{ outcomes.qualified_strong_outcome_count }} / weak {{ outcomes.weak_evidence_count }} / same-Q {{ outcomes.same_question_count }}</p>
   </section>
 
   {% set repair = repair_effectiveness %}
@@ -98,13 +105,11 @@
     <p>回答 {{ load.answered_count }} / 正答率 {{ load.accuracy_percent if load.accuracy_percent is not none else '—' }}% / unique Q {{ load.unique_question_count }} / repeat {{ load.repeat_attempt_count }}</p>
     <p>初回正答率 {{ load.first_attempt_accuracy_percent if load.first_attempt_accuracy_percent is not none else '—' }}% / repeat正答率 {{ load.repeat_accuracy_percent if load.repeat_accuracy_percent is not none else '—' }}% / 誤答後repeat正答率 {{ load.repeat_after_wrong_accuracy_percent if load.repeat_after_wrong_accuracy_percent is not none else '—' }}%</p>
     <p>最大回答間隔 {{ load.max_inter_attempt_gap_minutes if load.max_inter_attempt_gap_minutes is not none else '—' }}分 / 先頭→末尾の50問ブロック差 {{ load.leading_to_trailing_full_block_accuracy_delta_pp if load.leading_to_trailing_full_block_accuracy_delta_pp is not none else '—' }}pt</p>
-    <p class="muted">同日累積の観測値であり、疲労・連続学習・停止判断を自動判定しません。</p>
   </section>
 
   <section class="card">
     <h2>Current formal state</h2>
     <p>checking {{ diagnostics.state_counts.checking }} / repairing {{ diagnostics.state_counts.repairing }} / repaired {{ diagnostics.state_counts.repaired }} / recheck_due {{ diagnostics.state_counts.recheck_due }} / stable {{ diagnostics.state_counts.stable }}</p>
-    <p>legacy timeline counter: recheck_due→stable {{ diagnostics.due_to_stable }} / recheck_due→repairing {{ diagnostics.due_to_repairing }}</p>
   </section>
 </main>
 </body>
