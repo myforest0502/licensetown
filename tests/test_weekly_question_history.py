@@ -1,5 +1,6 @@
 import os
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 os.environ.setdefault("OPENAI_API_KEY", "test-key")
 os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
@@ -11,7 +12,10 @@ from database import get_weekly_question_history, set_supporter_link, deactivate
 from goukaku_ui import create_supporter_token
 
 
-NOW = datetime(2026, 8, 30, 3, 0, tzinfo=timezone.utc)  # 2026/08/30 JST
+# Keep fixtures in the actual current week so route-level tests do not expire as
+# calendar time advances.  The previous fixed 2026-08-30 value became stale on
+# the following week and made an unrelated PR fail.
+NOW = datetime.now(timezone.utc)
 
 
 def row(q, days, correct, confidence=2, selected=None, user="learner"):
@@ -34,8 +38,11 @@ def test_weekly_summary_boundaries_duplicates_unknown_and_natural_sort():
         row("Q1", 0, False, 1, user="other"),
     ])
     result = get_weekly_question_history("learner", NOW)
-    assert result["start_date"].isoformat() == "2026-08-24"
-    assert result["end_date"].isoformat() == "2026-08-30"
+    today_jst = NOW.astimezone(ZoneInfo("Asia/Tokyo")).date()
+    expected_start = today_jst - timedelta(days=today_jst.weekday())
+    expected_end = expected_start + timedelta(days=6)
+    assert result["start_date"] == expected_start
+    assert result["end_date"] == expected_end
     assert result["total_attempts"] == 4
     assert result["unique_questions"] == 3
     assert result["attempted_question_ids"] == ["Q2", "Q3", "Q10"]
