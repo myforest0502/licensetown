@@ -130,7 +130,7 @@ def _contact_form(*, values: dict[str, str] | None = None, error: str = "") -> s
   <div class="field">
     <label for="email">返信先メールアドレス <span class="hint">任意</span></label>
     <input id="email" name="email" type="email" maxlength="254" autocomplete="email" value="{escape(values.get('email', ''))}">
-    <span class="hint">未入力でも送信できます。メール返信機能は現在準備中のため、当面は送信後に表示される確認ページをご利用ください。</span>
+    <span class="hint">未入力でも送信できます。入力した場合は、このアドレス宛てにも返信します。返信が見当たらない場合は迷惑メールフォルダをご確認ください。</span>
   </div>
   <div class="field">
     <label for="category">お問い合わせ種類</label>
@@ -287,10 +287,17 @@ def contact():
 
     token = escape(receipt.tracking_token, quote=True)
     public_id = escape(receipt.public_id)
+    email_notice = ""
+    if values["email"].strip():
+        email_notice = """
+<p><strong>返信先メールアドレスにも返信します。</strong></p>
+<p class="privacy-note">返信メールが見当たらない場合は、迷惑メールフォルダをご確認ください。迷惑メールに入っていた場合は、そのメールを「迷惑メールではない」に設定してください。</p>
+"""
     body = f"""
 <div class="success"><strong>お問い合わせを受け付けました。</strong></div>
 <p>受付番号</p><p class="receipt">{public_id}</p>
 <p>こちらで内容を確認します。お問い合わせ状況と運営からの返信は、下の専用ページから確認できます。</p>
+{email_notice}
 <p><a class="button" href="/site/legal/contact/status?token={token}#top">お問い合わせ状況を確認する</a></p>
 <p class="privacy-note">この確認ページのURLは、他の人に共有しないでください。受付番号だけでは内容を表示できません。</p>
 """
