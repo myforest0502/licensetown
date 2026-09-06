@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   const phase = document.querySelector('.phase12-guidance-preview');
   const footer = document.querySelector('.dashboard-footer-cards');
+  const guidanceStack = document.querySelector('.guidance-stack');
+  const learnerDetails = document.querySelector('.learner-nav-detail-grid');
   const weekly = window.LT_WEEKLY_LEARNING_SNAPSHOT || {};
   let stateCard = null;
 
@@ -65,6 +67,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const accuracy = answers > 0 ? Math.round((correct / answers) * 100) : 0;
   const minutes = Math.max(Number(weekly.minutes) || 0, 0);
 
+  const formatPeriodLabel = (label) => {
+    const parts = String(label || '').split('/');
+    if (parts.length !== 2) return String(label || '');
+    const month = Number(parts[0]);
+    const day = Number(parts[1]);
+    if (!Number.isFinite(month) || !Number.isFinite(day)) return String(label || '');
+    return `${month}月${day}日`;
+  };
+  const periodText = days.length
+    ? `${formatPeriodLabel(days[0].label)}〜${formatPeriodLabel(days[days.length - 1].label)}`
+    : '';
+
   const maxAnswers = Math.max(...days.map((item) => Number(item.answered_count) || 0), 1);
   const bars = days.map((item) => {
     const count = Math.max(Number(item.answered_count) || 0, 0);
@@ -76,8 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const weeklyCard = document.createElement('article');
   weeklyCard.className = 'motivation-card weekly-learning-card';
   weeklyCard.innerHTML = `
-    <h2>📊 今週の学習記録</h2>
-    <p class="weekly-learning-lead">直近7日間の「どれだけ取り組んだか」を事実だけでまとめています。</p>
+    <div class="weekly-learning-heading">
+      <div><h2>📊 直近7日間の学習記録</h2><p class="weekly-learning-lead">「どれだけ取り組んだか」を事実だけでまとめています。</p></div>
+      ${periodText ? `<strong class="weekly-period">${periodText}</strong>` : ''}
+    </div>
     <div class="weekly-learning-metrics">
       <div><span>学習した日</span><strong>${learningDays}<small>/7日</small></strong></div>
       <div><span>回答</span><strong>${answers}<small>問</small></strong></div>
@@ -86,24 +102,49 @@ document.addEventListener('DOMContentLoaded', () => {
       <div><span>学習時間</span><strong>${Math.floor(minutes / 60)}<small>時間${minutes % 60}分</small></strong></div>
     </div>
     <div class="weekly-spark" aria-label="直近7日間の回答数">${bars}</div>
-    <small class="weekly-learning-note">※「今日のおすすめ」や源さんの助言とは別に、1週間の量と波だけを振り返る欄です。</small>
   `;
 
-  if (phase && stateCard) {
-    const layout = document.createElement('section');
-    layout.className = 'learning-insight-layout';
-    const right = document.createElement('div');
-    right.className = 'learning-insight-right';
+  let profileCard = null;
+  if (learnerDetails) {
+    profileCard = document.createElement('article');
+    profileCard.className = 'motivation-card study-profile-card';
+    profileCard.innerHTML = '<div class="study-profile-heading"><h2>🗂 今の学習カルテ</h2><p>「できている・直している・まだ確認できていない」をまとめて見ます。</p></div>';
+    const grid = learnerDetails.cloneNode(true);
+    grid.classList.add('study-profile-grid');
+    const headings = ['安定していること', '修復中', 'まだ確認できていないこと', '次に確認すること'];
+    grid.querySelectorAll(':scope > section').forEach((section, index) => {
+      const h3 = section.querySelector('h3');
+      if (h3 && headings[index]) h3.textContent = headings[index];
+    });
+    profileCard.appendChild(grid);
+    const originalDetails = learnerDetails.closest('.learner-nav-details');
+    if (originalDetails) originalDetails.classList.add('learner-nav-details-duplicated');
+  }
 
-    phase.parentNode.insertBefore(layout, phase);
-    layout.appendChild(phase);
-    right.appendChild(stateCard);
-    right.appendChild(weeklyCard);
-    layout.appendChild(right);
+  if (guidanceStack) {
+    if (stateCard) guidanceStack.appendChild(stateCard);
+    guidanceStack.appendChild(weeklyCard);
   } else {
     if (stateCard) footer.prepend(stateCard);
-    const footprint = footer.querySelector('.footprint-card');
-    if (footprint) footer.insertBefore(weeklyCard, footprint);
-    else footer.appendChild(weeklyCard);
+    footer.prepend(weeklyCard);
+  }
+
+  if (phase) {
+    phase.classList.add('dashboard-wide-insight');
+    if (profileCard) phase.insertAdjacentElement('afterend', profileCard);
+  } else if (profileCard) {
+    footer.prepend(profileCard);
+  }
+
+  const footprint = footer.querySelector('.footprint-card');
+  if (footprint) {
+    footprint.classList.add('footprint-card-expanded');
+    const textBlock = footprint.querySelector('div');
+    if (textBlock) {
+      textBlock.insertAdjacentHTML(
+        'beforeend',
+        '<div class="footprint-highlights"><span>学習した日</span><span>取り組んだ問題</span><span>成長の節目</span></div>'
+      );
+    }
   }
 });

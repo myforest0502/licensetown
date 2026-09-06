@@ -1,16 +1,17 @@
 from pathlib import Path
 
 
-def test_dashboard_insight_layout_places_position_left_and_state_weekly_right():
+def test_dashboard_density_uses_guidance_column_and_compact_lower_insights():
     root = Path(__file__).resolve().parents[1]
     js = (root / "static" / "goukaku" / "dashboard-meaning-cards.js").read_text(encoding="utf-8")
     css = (root / "static" / "goukaku" / "dashboard-meaning-cards.css").read_text(encoding="utf-8")
 
-    assert "learning-insight-layout" in js
-    assert "learning-insight-right" in js
-    assert "layout.appendChild(phase)" in js
-    assert "right.appendChild(stateCard)" in js
-    assert "right.appendChild(weeklyCard)" in js
-    assert ".learning-insight-layout{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)" in css
-    assert ".learning-insight-right{display:grid;grid-template-rows:auto auto" in css
-    assert "@media(max-width:700px){.learning-insight-layout{display:block}" in css
+    assert "const guidanceStack = document.querySelector('.guidance-stack')" in js
+    assert "guidanceStack.appendChild(stateCard)" in js
+    assert "guidanceStack.appendChild(weeklyCard)" in js
+    assert "study-profile-card" in js
+    assert "learner-nav-details-duplicated" in js
+    assert ".learning-position-card{grid-column:1/-1" in css
+    assert "height:auto" in css
+    assert ".study-profile-grid{display:grid!important;grid-template-columns:repeat(4" in css
+    assert "@media(max-width:700px)" in css
