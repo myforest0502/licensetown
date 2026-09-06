@@ -1,0 +1,165 @@
+.learner-navigation {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.learner-navigation > .learner-current-card,
+.learner-navigation > .learner-attention-card,
+.learner-navigation > .learner-today-card,
+.learner-navigation > .learner-nav-details {
+  margin: 0;
+}
+
+.learner-navigation > .learner-current-card {
+  grid-column: 1 / -1;
+  order: 1;
+  padding: 24px;
+  border-radius: 22px;
+  border: 1px solid rgba(34, 94, 70, .16);
+  background: linear-gradient(135deg, rgba(238, 248, 242, .98), rgba(255, 255, 255, .98));
+  box-shadow: 0 10px 28px rgba(28, 67, 50, .08);
+}
+
+.learner-current-card .learner-nav-kicker,
+.learner-attention-card .learner-nav-kicker,
+.learner-today-card .learner-nav-kicker {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  margin-bottom: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .03em;
+}
+
+.learner-current-card h2 {
+  margin: 4px 0 8px;
+  font-size: clamp(24px, 4.5vw, 34px);
+  line-height: 1.25;
+}
+
+.learner-current-card p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.learner-navigation > .learner-attention-card {
+  grid-column: 1 / -1;
+  order: 2;
+  padding: 20px 22px;
+  border-radius: 20px;
+  border: 1px solid rgba(197, 126, 35, .22);
+  background: rgba(255, 250, 240, .98);
+}
+
+.learner-attention-card .learner-nav-kicker {
+  font-size: 0;
+}
+
+.learner-attention-card .learner-nav-kicker::after {
+  content: "今いちばん大事なこと";
+  font-size: 12px;
+}
+
+.learner-attention-card .learner-attention-list > div {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.learner-attention-card .learner-attention-list > div:nth-child(n+2) {
+  display: none;
+}
+
+.learner-attention-card .learner-attention-list b {
+  display: block;
+  margin-bottom: 5px;
+  font-size: clamp(20px, 4vw, 26px);
+  line-height: 1.35;
+}
+
+.learner-attention-card .learner-attention-list span {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-weight: 800;
+}
+
+.learner-attention-card .learner-attention-list p {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.learner-navigation > .learner-today-card {
+  grid-column: 1 / -1;
+  order: 3;
+  padding: 24px;
+  border-radius: 22px;
+  border: 1px solid rgba(26, 116, 75, .2);
+  box-shadow: 0 12px 30px rgba(26, 91, 62, .1);
+}
+
+.learner-today-card .learner-nav-kicker {
+  font-size: 0;
+}
+
+.learner-today-card .learner-nav-kicker::after {
+  content: "今日やること";
+  font-size: 12px;
+}
+
+.learner-today-card h2 {
+  margin: 5px 0 8px;
+  font-size: clamp(24px, 5vw, 32px);
+  line-height: 1.25;
+}
+
+.learner-today-card > p:not(.recommend-challenge-status) {
+  margin: 0 0 18px;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.learner-today-card .learner-nav-action,
+.learner-today-card .recommend-challenge {
+  width: 100%;
+  min-height: 54px;
+  margin-top: 4px;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.learner-navigation > .learner-nav-details {
+  grid-column: 1 / -1;
+  order: 4;
+  margin-top: 2px;
+}
+
+.learner-navigation > .learner-nav-details summary {
+  font-weight: 800;
+}
+
+@media (max-width: 720px) {
+  .learner-navigation {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .learner-navigation > .learner-current-card,
+  .learner-navigation > .learner-attention-card,
+  .learner-navigation > .learner-today-card {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .learner-current-card h2,
+  .learner-attention-card .learner-attention-list b,
+  .learner-today-card h2 {
+    font-size: 22px;
+  }
+}
