@@ -114,10 +114,24 @@ Continue to block promotion for any meaningful recurrence of:
 
 The 35 STRONG repair attempts observed on 2026-09-06 contained zero recent-question-repeat flags and zero cooldown bypasses.
 
-## 7. Decision
+## 7. J4/J5 readiness work completed on 2026-09-06
+
+Everything that can be prepared without manufacturing future learner behavior is now on main and read-only:
+
+- due-before-attempt retention outcome replay catches a one-attempt `repaired -> recheck_due -> stable` transition that prefix-only timelines can hide;
+- retention STRONG-supply preflight identifies repaired/due Nodes without a formal STRONG alternate;
+- cooldown-aware preflight distinguishes static STRONG supply from a STRONG alternate that is actually usable outside the current 30-attempt Recent Question Cooldown window;
+- the J4 gate does **not** pass merely because any retention attempt occurred: it requires a natural STRONG different-question review with a decisive formal outcome (`stable` or `repairing`);
+- J5 independently joins persisted adaptive selection metadata to formal attempt history and revalidates each saved `selection_reason=recheck_due` exact Q against the retention reference immediately before answer time;
+- J5 is `BLOCKED` on an evaluable weak/same-Q mismatch, `PASS` only on evaluable STRONG alignment, otherwise `OPEN`;
+- J5 aggregate evidence is included in the internal Promotion Evidence Bundle.
+
+A direct Production cross-check on 2026-09-06 found **zero persisted adaptive selections with `selection_reason=recheck_due`** in the natural learner history so far. Therefore there is no valid J4/J5 outcome to judge yet, and no further implementation should be invented solely to manufacture one.
+
+## 8. Decision
 
 **HOLD / Shadow-only remains correct.**
 
-The reason has become narrower. Repair Supply is no longer merely theoretical: it is being exercised naturally and is generating formal-confirmation candidates. The major unresolved question is now whether those repairs survive spacing and whether J4 handles naturally due Nodes correctly.
+The reason is now an evidence boundary rather than an implementation gap. Repair Supply is being exercised naturally, J4/J5 capture and fail-closed gate logic are ready, and the remaining question is whether spaced repairs survive and are handled correctly when they become naturally due.
 
-No ranking-weight change is justified before that evidence arrives.
+No ranking-weight change, synthetic learner event, timestamp manipulation, or learner-facing Phase11 promotion is justified before that evidence arrives.
