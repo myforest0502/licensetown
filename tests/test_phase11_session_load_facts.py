@@ -43,28 +43,39 @@ def test_reconstructs_real_use_shape_without_making_fatigue_verdict():
     assert facts["max_inter_attempt_gap_minutes"] == 1.0
     assert facts["diagnostic_only"] is True
     assert "may span long breaks" in facts["policy_note"]
-    assert "do not by themselves prove" in facts["policy_note"]
+    assert "prior answer state" in facts["policy_note"]
 
 
-def test_repeat_accuracy_is_derived_from_chronological_prior_exposure():
+def test_repeat_accuracy_is_split_by_previous_answer_state():
     rows = [
         _attempt(1, correct=False, question_id="Q1"),
         _attempt(2, correct=True, question_id="Q2"),
         _attempt(3, correct=True, question_id="Q1"),
         _attempt(4, correct=False, question_id="Q2"),
+        _attempt(5, correct=False, question_id="Q3"),
+        _attempt(6, correct=False, question_id="Q3"),
+        _attempt(7, correct=True, question_id="Q4"),
+        _attempt(8, correct=True, question_id="Q4"),
     ]
 
     facts = build_same_day_session_load_facts(
         rows,
         as_of=datetime(2026, 9, 6, 12, 0, tzinfo=timezone.utc),
-        block_size=2,
+        block_size=4,
     )
 
-    assert facts["first_attempt_count"] == 2
+    assert facts["first_attempt_count"] == 4
     assert facts["first_attempt_accuracy_percent"] == 50.0
-    assert facts["repeat_attempt_count"] == 2
+    assert facts["repeat_attempt_count"] == 4
     assert facts["repeat_accuracy_percent"] == 50.0
-    assert facts["repeat_share_percent"] == 50.0
+    assert facts["repeat_after_wrong_count"] == 2
+    assert facts["wrong_to_correct_count"] == 1
+    assert facts["wrong_to_wrong_count"] == 1
+    assert facts["repeat_after_wrong_accuracy_percent"] == 50.0
+    assert facts["repeat_after_correct_count"] == 2
+    assert facts["correct_to_correct_count"] == 1
+    assert facts["correct_to_wrong_count"] == 1
+    assert facts["repeat_after_correct_accuracy_percent"] == 50.0
 
 
 def test_long_break_is_reported_without_turning_it_into_a_session_or_fatigue_rule():
