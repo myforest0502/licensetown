@@ -87,6 +87,7 @@
         {% if learner_id %}
         <p style="margin-bottom:0;">
           <a class="action" href="{{ pilot_url }}">学習診断 / Phase11・repeat・cooldown</a>
+          <a class="action" href="/internal/phase11-gates?token={{ internal_token|urlencode }}&learner_user_id={{ learner_id|urlencode }}">Phase11 Gate Status</a>
           <a class="action" href="{{ preview_url }}">本人画面プレビュー（開発QA）</a>
         </p>
         {% endif %}
