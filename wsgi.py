@@ -20,6 +20,7 @@ from linebot.models import (
     URIAction,
 )
 
+from phase11_gate_ui import install_phase11_gate_ui
 from prerequisite_attempt_cache import install_prerequisite_attempt_cache
 from site_marketing_hotfix import install_site_marketing_hotfix
 from site_marketing_refresh import install_site_marketing_refresh
@@ -92,6 +93,7 @@ legacy.create_home_message = create_home_message
 install_site_marketing_viewport_fix(legacy.app)
 install_site_marketing_hotfix(legacy.app)
 install_site_marketing_refresh(legacy.app)
+install_phase11_gate_ui(legacy.app)
 
 _apply_rich_menu_v2_if_requested()
 
