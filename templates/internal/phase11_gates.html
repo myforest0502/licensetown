@@ -65,6 +65,14 @@
     <p>Upcoming {{ retention.upcoming_review_count }} / 最短 {{ retention.earliest_review_at_jst or 'なし' }}{% if retention.earliest_review_in_hours is not none %}（約{{ retention.earliest_review_in_hours }}時間後）{% endif %}</p>
   </section>
 
+  {% set outcomes = retention_outcomes %}
+  <section class="card">
+    <h2>Natural Retention Outcomes</h2>
+    <p>自然なretention review {{ outcomes.review_attempt_count }} / stable {{ outcomes.stable_count }} / repairing {{ outcomes.repairing_count }} / still due {{ outcomes.still_due_count }}</p>
+    <p>STRONG {{ outcomes.strong_evidence_count }} / weak {{ outcomes.weak_evidence_count }} / same-Q {{ outcomes.same_question_count }} / 自信あり正解 {{ outcomes.confident_correct_count }}</p>
+    <p class="muted">各実回答の直前時点で formal state が recheck_due だったかを再生して数えます。repaired→stable が1回答内で起きても取りこぼしません。</p>
+  </section>
+
   {% set repair = repair_effectiveness %}
   <section class="card">
     <h2>Natural Repair Effectiveness</h2>
@@ -84,7 +92,7 @@
   <section class="card">
     <h2>Current formal state</h2>
     <p>checking {{ diagnostics.state_counts.checking }} / repairing {{ diagnostics.state_counts.repairing }} / repaired {{ diagnostics.state_counts.repaired }} / recheck_due {{ diagnostics.state_counts.recheck_due }} / stable {{ diagnostics.state_counts.stable }}</p>
-    <p>recheck_due→stable {{ diagnostics.due_to_stable }} / recheck_due→repairing {{ diagnostics.due_to_repairing }}</p>
+    <p>legacy timeline counter: recheck_due→stable {{ diagnostics.due_to_stable }} / recheck_due→repairing {{ diagnostics.due_to_repairing }}</p>
   </section>
 </main>
 </body>
