@@ -65,6 +65,14 @@
     <p>Upcoming {{ retention.upcoming_review_count }} / 最短 {{ retention.earliest_review_at_jst or 'なし' }}{% if retention.earliest_review_in_hours is not none %}（約{{ retention.earliest_review_in_hours }}時間後）{% endif %}</p>
   </section>
 
+  {% set supply = retention_supply %}
+  <section class="card">
+    <h2>Retention STRONG Supply Preflight</h2>
+    <p>due {{ supply.due_node_count }} / dueでSTRONGあり {{ supply.due_strong_available_count }} / dueでSTRONGなし {{ supply.due_without_strong_count }}</p>
+    <p>upcoming repaired {{ supply.upcoming_repaired_node_count }} / upcomingでSTRONGなし {{ supply.upcoming_without_strong_count }} / weak-only {{ supply.weak_only_count }} / formal alternateなし {{ supply.no_formal_alternate_count }}</p>
+    <p class="muted">J4が自然発生する前に、retention referenceと別のSTRONG問題が存在するかだけを先行監査します。実際のQ選択はPhase10、Safety・Recent Cooldownの制約は従来どおりです。</p>
+  </section>
+
   {% set outcomes = retention_outcomes %}
   <section class="card">
     <h2>Natural Retention Outcomes</h2>
