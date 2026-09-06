@@ -43,6 +43,10 @@ from phase11_retention_outcome_audit import (
     build_retention_outcome_audit,
     build_retention_outcome_evidence_line,
 )
+from phase11_retention_supply_audit import (
+    build_retention_supply_audit,
+    build_retention_supply_evidence_line,
+)
 from phase11_session_load_facts import (
     build_same_day_session_load_evidence_line,
     build_same_day_session_load_facts,
@@ -237,14 +241,14 @@ def register_developer_routes(blueprint) -> None:
             period = "7"
         diagnostics = build_pilot_diagnostics(learner_id, period)
         attempts = get_question_attempts(learner_id)
+        node_states = derive_all_user_node_states(attempts)
         same_day_session_load = build_same_day_session_load_facts(attempts)
         repair_effectiveness = build_same_day_repair_effectiveness_facts(
             get_learning_events(learner_id)
         )
-        retention_horizon = build_retention_horizon_facts(
-            derive_all_user_node_states(attempts)
-        )
+        retention_horizon = build_retention_horizon_facts(node_states)
         retention_outcomes = build_retention_outcome_audit(attempts)
+        retention_supply = build_retention_supply_audit(node_states, attempts=attempts)
         promotion_gate_status = build_phase11_promotion_gate_status(
             retrospective_shadow_audit=diagnostics.get("retrospective_shadow_audit"),
             repeat_structure_audit=diagnostics.get("repeat_structure_audit"),
@@ -261,6 +265,7 @@ def register_developer_routes(blueprint) -> None:
         diagnostics["repair_effectiveness"] = repair_effectiveness
         diagnostics["retention_horizon"] = retention_horizon
         diagnostics["retention_outcomes"] = retention_outcomes
+        diagnostics["retention_supply"] = retention_supply
         diagnostics["promotion_gate_status"] = promotion_gate_status
         diagnostics["promotion_evidence_text"] = (
             str(diagnostics.get("promotion_evidence_text") or "").rstrip()
@@ -272,6 +277,8 @@ def register_developer_routes(blueprint) -> None:
             + build_retention_horizon_evidence_line(retention_horizon)
             + "\n"
             + build_retention_outcome_evidence_line(retention_outcomes)
+            + "\n"
+            + build_retention_supply_evidence_line(retention_supply)
             + "\n"
             + build_phase11_promotion_gate_evidence_line(promotion_gate_status)
         ).lstrip("\n")

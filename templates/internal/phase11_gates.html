@@ -69,8 +69,12 @@
   <section class="card">
     <h2>Retention STRONG Supply Preflight</h2>
     <p>due {{ supply.due_node_count }} / dueでSTRONGあり {{ supply.due_strong_available_count }} / dueでSTRONGなし {{ supply.due_without_strong_count }}</p>
+    {% if supply.cooldown_known %}
+    <p>直近{{ supply.recent_window }}回答を除いて使えるSTRONG: due {{ supply.due_non_recent_strong_available_count }} / dueで非recent STRONGなし {{ supply.due_without_non_recent_strong_count }} / upcomingで非recent STRONGなし {{ supply.upcoming_without_non_recent_strong_count }}</p>
+    <p>STRONGはあるが現在cooldown制約中のNode {{ supply.cooldown_constrained_strong_node_count }} / recent Q {{ supply.recent_question_count }}</p>
+    {% endif %}
     <p>upcoming repaired {{ supply.upcoming_repaired_node_count }} / upcomingでSTRONGなし {{ supply.upcoming_without_strong_count }} / weak-only {{ supply.weak_only_count }} / formal alternateなし {{ supply.no_formal_alternate_count }}</p>
-    <p class="muted">J4が自然発生する前に、retention referenceと別のSTRONG問題が存在するかだけを先行監査します。実際のQ選択はPhase10、Safety・Recent Cooldownの制約は従来どおりです。</p>
+    <p class="muted">J4が自然発生する前に、retention referenceと別のSTRONG問題が存在するか、さらに現在の30回答Recent Cooldownを避けて使えるSTRONGがあるかを先行監査します。実際のQ選択と制御fallbackはPhase10が最終決定します。</p>
   </section>
 
   {% set outcomes = retention_outcomes %}

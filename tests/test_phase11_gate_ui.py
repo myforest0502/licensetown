@@ -79,6 +79,13 @@ def test_gate_page_renders_hold_retention_and_no_auto_promotion(monkeypatch):
                 "upcoming_without_strong_count": 2,
                 "weak_only_count": 1,
                 "no_formal_alternate_count": 1,
+                "cooldown_known": True,
+                "recent_window": 30,
+                "recent_question_count": 30,
+                "due_non_recent_strong_available_count": 0,
+                "due_without_non_recent_strong_count": 0,
+                "upcoming_without_non_recent_strong_count": 4,
+                "cooldown_constrained_strong_node_count": 2,
             },
             "retention_outcomes": {
                 "review_attempt_count": 0,
@@ -115,6 +122,8 @@ def test_gate_page_renders_hold_retention_and_no_auto_promotion(monkeypatch):
     assert "Retention Horizon" in html
     assert "Retention STRONG Supply Preflight" in html
     assert "upcomingでSTRONGなし 2" in html
+    assert "upcomingで非recent STRONGなし 4" in html
+    assert "cooldown制約中のNode 2" in html
     assert "Natural Retention Outcomes" in html
     assert "自然なretention review 0" in html
     assert "2026-09-09T08:26:32+09:00" in html
