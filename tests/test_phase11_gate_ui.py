@@ -6,18 +6,13 @@ os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
 os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
 from flask import Flask
-
 import phase11_gate_ui
-
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def _app():
-    app = Flask(
-        "phase11-gate-ui-test",
-        template_folder=str(ROOT / "templates"),
-    )
+    app = Flask("phase11-gate-ui-test", template_folder=str(ROOT / "templates"))
     phase11_gate_ui.install_phase11_gate_ui(app)
     return app
 
@@ -29,7 +24,7 @@ def test_gate_page_requires_internal_admin_token(monkeypatch):
     assert client.get("/internal/phase11-gates?token=wrong&learner_user_id=learner").status_code == 403
 
 
-def test_gate_page_renders_hold_retention_and_no_auto_promotion(monkeypatch):
+def test_gate_page_renders_hold_retention_j5_and_no_auto_promotion(monkeypatch):
     monkeypatch.setenv("LT_INTERNAL_ADMIN_TOKEN", "admin-secret")
     monkeypatch.setattr(
         phase11_gate_ui,
@@ -87,25 +82,38 @@ def test_gate_page_renders_hold_retention_and_no_auto_promotion(monkeypatch):
                 "upcoming_without_non_recent_strong_count": 4,
                 "cooldown_constrained_strong_node_count": 2,
             },
+            "intent_selection_alignment": {
+                "saved_recheck_selection_count": 0,
+                "evaluable_recheck_selection_count": 0,
+                "aligned_recheck_selection_count": 0,
+                "misaligned_recheck_selection_count": 0,
+                "not_evaluable_recheck_selection_count": 0,
+                "strong_retention_q_count": 0,
+                "weak_retention_q_count": 0,
+                "same_question_retention_q_count": 0,
+                "recent_repeat_recheck_count": 0,
+                "cooldown_bypass_recheck_count": 0,
+            },
             "retention_outcomes": {
                 "review_attempt_count": 0,
                 "stable_count": 0,
                 "repairing_count": 0,
                 "still_due_count": 0,
                 "strong_evidence_count": 0,
+                "qualified_strong_outcome_count": 0,
                 "weak_evidence_count": 0,
                 "same_question_count": 0,
-                "confident_correct_count": 0,
             },
             "gate_status": {
                 "decision": "hold",
                 "blocked_gates": [],
-                "open_gates": ["retention", "comparison_diversity"],
+                "open_gates": ["retention", "intent_selection_alignment", "comparison_diversity"],
                 "gates": {
                     "safety": {"status": "pass"},
                     "repeat_audit": {"status": "pass"},
                     "formal_trigger_consistency": {"status": "pass"},
                     "retention": {"status": "open"},
+                    "intent_selection_alignment": {"status": "open"},
                     "comparison_diversity": {"status": "open"},
                     "profile_consistency": {"status": "pass"},
                 },
@@ -124,8 +132,10 @@ def test_gate_page_renders_hold_retention_and_no_auto_promotion(monkeypatch):
     assert "upcomingでSTRONGなし 2" in html
     assert "upcomingで非recent STRONGなし 4" in html
     assert "cooldown制約中のNode 2" in html
+    assert "J5 Intent vs Exact-Q Alignment" in html
+    assert "saved recheck 0" in html
     assert "Natural Retention Outcomes" in html
-    assert "自然なretention review 0" in html
+    assert "qualified STRONG 0" in html
     assert "2026-09-09T08:26:32+09:00" in html
     assert "自動昇格なし" in html
     assert "learner-facing promotion allowed = false" in html
