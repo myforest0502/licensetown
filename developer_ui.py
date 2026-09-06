@@ -13,7 +13,7 @@ import os
 
 from flask import abort, redirect, render_template, request, url_for
 
-from database import get_question_attempts
+from database import get_learning_events, get_question_attempts
 from developer_status import build_developer_system_status
 from email_delivery import EmailDeliveryError, send_feedback_reply
 from feedback_store import (
@@ -26,6 +26,10 @@ from feedback_store import (
     set_operator_reply,
 )
 from goukaku_ui import build_dashboard
+from phase11_repair_effectiveness_facts import (
+    build_repair_effectiveness_evidence_line,
+    build_same_day_repair_effectiveness_facts,
+)
 from phase11_session_load_facts import (
     build_same_day_session_load_evidence_line,
     build_same_day_session_load_facts,
@@ -222,11 +226,17 @@ def register_developer_routes(blueprint) -> None:
         same_day_session_load = build_same_day_session_load_facts(
             get_question_attempts(learner_id)
         )
+        repair_effectiveness = build_same_day_repair_effectiveness_facts(
+            get_learning_events(learner_id)
+        )
         diagnostics["same_day_session_load"] = same_day_session_load
+        diagnostics["repair_effectiveness"] = repair_effectiveness
         diagnostics["promotion_evidence_text"] = (
             str(diagnostics.get("promotion_evidence_text") or "").rstrip()
             + "\n"
             + build_same_day_session_load_evidence_line(same_day_session_load)
+            + "\n"
+            + build_repair_effectiveness_evidence_line(repair_effectiveness)
         ).lstrip("\n")
         return render_template(
             "goukaku/supporter_pilot_diagnostics.html",
