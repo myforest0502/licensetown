@@ -20,6 +20,7 @@ from linebot.models import (
     URIAction,
 )
 
+from daily_wrong_review import REVIEW_COMMAND, install_daily_wrong_review
 from phase11_gate_ui import install_phase11_gate_ui
 from prerequisite_attempt_cache import install_prerequisite_attempt_cache
 from site_marketing_hotfix import install_site_marketing_hotfix
@@ -40,7 +41,7 @@ def create_text_response(user_message, mode="normal"):
 
 
 def create_home_message(user_id=None):
-    """Expose the exam-term tool instead of free-form consultation on HOME."""
+    """Expose core learner tools from HOME."""
     dashboard_url = legacy.build_dashboard_url(user_id)
     return TextSendMessage(
         text=(
@@ -56,6 +57,10 @@ def create_home_message(user_id=None):
             QuickReplyButton(action=MessageAction(
                 label="📘 勉強する！",
                 text="勉強する",
+            )),
+            QuickReplyButton(action=MessageAction(
+                label="📝 本日の振り返り",
+                text=REVIEW_COMMAND,
             )),
             QuickReplyButton(action=MessageAction(
                 label="❓ 教えて源さん",
@@ -86,6 +91,7 @@ def _apply_rich_menu_v2_if_requested() -> None:
 # Registered LINE callbacks resolve these names from the legacy app module at
 # call time, so production behavior can be composed without rewriting app.py.
 install_prerequisite_attempt_cache(legacy)
+install_daily_wrong_review(legacy)
 legacy.create_text_response = create_text_response
 legacy.create_home_message = create_home_message
 # Flask executes after_request handlers in reverse registration order.
