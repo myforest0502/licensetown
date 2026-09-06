@@ -24,6 +24,8 @@ def test_internal_index_accepts_header_token(monkeypatch):
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert "/internal/pilot-diagnostics" in text
+    assert "/internal/phase11-gates" in text
+    assert "Phase11 Gate Status" in text
     assert "/internal/learner-preview" in text
     assert "システム概要" in text
     assert "Question Bank" in text
