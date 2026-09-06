@@ -14,6 +14,7 @@ from knowledge_node_state_transition import derive_all_user_node_states
 from phase11_promotion_gate_status import build_phase11_promotion_gate_status
 from phase11_repair_effectiveness_facts import build_same_day_repair_effectiveness_facts
 from phase11_retention_horizon_facts import build_retention_horizon_facts
+from phase11_retention_outcome_audit import build_retention_outcome_audit
 from phase11_session_load_facts import build_same_day_session_load_facts
 from pilot_diagnostics import build_pilot_diagnostics
 
@@ -32,10 +33,12 @@ def build_phase11_gate_dashboard(learner_id: str, period: str = "7") -> dict:
     retention_horizon = build_retention_horizon_facts(
         derive_all_user_node_states(attempts)
     )
+    retention_outcomes = build_retention_outcome_audit(attempts)
     gate_status = build_phase11_promotion_gate_status(
         retrospective_shadow_audit=diagnostics.get("retrospective_shadow_audit"),
         repeat_structure_audit=diagnostics.get("repeat_structure_audit"),
         retention_horizon=retention_horizon,
+        retention_outcome_audit=retention_outcomes,
         state_counts=diagnostics.get("state_counts"),
         transitions={
             "recheck_due_to_stable": diagnostics.get("due_to_stable", 0),
@@ -51,6 +54,7 @@ def build_phase11_gate_dashboard(learner_id: str, period: str = "7") -> dict:
             get_learning_events(learner_id)
         ),
         "retention_horizon": retention_horizon,
+        "retention_outcomes": retention_outcomes,
         "gate_status": gate_status,
     }
 

@@ -43,7 +43,7 @@ def _status(**overrides):
 
 
 def test_current_natural_shape_stays_hold_with_retention_and_diversity_open():
-    result = _status()
+    result = _status(retention_outcome_audit={"review_attempt_count": 0})
     assert result["decision"] == "hold"
     assert result["learner_facing_promotion_allowed"] is False
     assert result["manual_review_required"] is True
@@ -70,6 +70,7 @@ def test_safety_repeat_or_trigger_regression_blocks_without_enabling_promotion()
                 "adaptive_metadata_inconsistent": 1,
             }
         },
+        retention_outcome_audit={"review_attempt_count": 0},
     )
     assert result["decision"] == "blocked"
     assert result["gates"]["safety"]["status"] == BLOCKED
@@ -78,7 +79,7 @@ def test_safety_repeat_or_trigger_regression_blocks_without_enabling_promotion()
     assert result["learner_facing_promotion_allowed"] is False
 
 
-def test_retention_outcome_and_direction_diversity_can_clear_checkable_gates_only():
+def test_explicit_retention_outcome_and_direction_diversity_clear_checkable_gates_only():
     result = _status(
         retrospective_shadow_audit={
             "eligible_snapshot_count": 4,
@@ -90,13 +91,21 @@ def test_retention_outcome_and_direction_diversity_can_clear_checkable_gates_onl
             "ordinary_single_wrong_takeover_candidate_count": 0,
         },
         retention_horizon={"recheck_due_count": 0, "upcoming_review_count": 8},
+        retention_outcome_audit={
+            "review_attempt_count": 1,
+            "stable_count": 1,
+            "repairing_count": 0,
+            "still_due_count": 0,
+        },
         state_counts={"stable": 1},
         transitions={
-            "recheck_due_to_stable": 1,
+            "recheck_due_to_stable": 0,
             "recheck_due_to_repairing": 0,
         },
     )
     assert result["gates"]["retention"]["status"] == PASS
+    assert result["gates"]["retention"]["review_attempt_count"] == 1
+    assert result["gates"]["retention"]["review_stable_count"] == 1
     assert result["gates"]["comparison_diversity"]["status"] == PASS
     assert result["automatically_clear"] is True
     assert result["decision"] == "hold"
@@ -104,8 +113,21 @@ def test_retention_outcome_and_direction_diversity_can_clear_checkable_gates_onl
     assert result["manual_review_required"] is True
 
 
+def test_explicit_zero_review_does_not_use_legacy_stable_or_timeline_as_false_pass():
+    result = _status(
+        retention_outcome_audit={"review_attempt_count": 0},
+        state_counts={"stable": 5},
+        transitions={
+            "recheck_due_to_stable": 4,
+            "recheck_due_to_repairing": 2,
+        },
+    )
+    assert result["gates"]["retention"]["status"] == OPEN
+    assert result["gates"]["retention"]["natural_retention_observed"] is False
+
+
 def test_evidence_line_is_non_identifying_and_never_says_promotion_allowed_true():
-    result = _status()
+    result = _status(retention_outcome_audit={"review_attempt_count": 0})
     result["user_id"] = "must-not-leak"
     result["token"] = "must-not-leak"
     line = build_phase11_promotion_gate_evidence_line(result)
