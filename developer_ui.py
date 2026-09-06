@@ -1,4 +1,4 @@
-"""Internal developer-only diagnostics routes.
+"""Internal developer-only diagnostics and operator routes.
 
 The public app already registers ``site_ui``. To avoid touching the large Flask
 entrypoint, these routes are attached to that existing blueprint before it is
@@ -14,6 +14,16 @@ import os
 from flask import abort, redirect, render_template, request, url_for
 
 from developer_status import build_developer_system_status
+from email_delivery import EmailDeliveryError, send_feedback_reply
+from feedback_store import (
+    FeedbackStoreUnavailable,
+    FeedbackValidationError,
+    VALID_CATEGORIES,
+    get_feedback_for_operator,
+    list_feedback_for_operator,
+    mark_email_delivery,
+    set_operator_reply,
+)
 from goukaku_ui import build_dashboard
 from pilot_diagnostics import build_pilot_diagnostics
 from supporter_performance import begin_request, finish_request
@@ -41,6 +51,13 @@ def require_developer_authorization() -> str:
     if not developer_authorized(token):
         abort(403)
     return str(token)
+
+
+def _decorate_feedback(item):
+    if not item:
+        return item
+    item["category_label"] = VALID_CATEGORIES.get(str(item.get("category") or ""), "その他")
+    return item
 
 
 def register_developer_routes(blueprint) -> None:
@@ -93,6 +110,7 @@ def register_developer_routes(blueprint) -> None:
             internal_token=token,
             learner_id=learner_id,
             system_status=build_developer_system_status(),
+            feedback_url=url_for("site_ui.internal_feedback", token=token),
             pilot_url=(
                 url_for(
                     "site_ui.internal_pilot_diagnostics",
@@ -111,6 +129,77 @@ def register_developer_routes(blueprint) -> None:
                 if learner_id
                 else None
             ),
+        )
+
+    @blueprint.route("/internal/feedback", methods=["GET", "POST"], endpoint="internal_feedback")
+    def _internal_feedback():
+        token = require_developer_authorization()
+        public_id = str(request.values.get("public_id") or "").strip()
+        notice = ""
+        error = ""
+
+        if request.method == "POST":
+            action = str(request.form.get("action") or "").strip()
+            selected = get_feedback_for_operator(public_id)
+            if not selected:
+                abort(404)
+
+            try:
+                if action == "reply":
+                    stored = set_operator_reply(
+                        public_id=public_id,
+                        reply=str(request.form.get("reply") or ""),
+                        status="responded",
+                    )
+                    if not stored:
+                        abort(404)
+                    selected = get_feedback_for_operator(public_id)
+                elif action == "retry":
+                    if not str(selected.get("operator_reply") or "").strip():
+                        raise FeedbackValidationError("再送できる保存済み返信がありません。")
+                else:
+                    abort(400)
+
+                if selected and selected.get("email"):
+                    try:
+                        delivery = send_feedback_reply(
+                            public_id=public_id,
+                            to_email=str(selected["email"]),
+                            reply=str(selected.get("operator_reply") or ""),
+                        )
+                    except EmailDeliveryError as exc:
+                        mark_email_delivery(public_id=public_id, delivery_status="failed")
+                        error = f"返信はNeonに保存しましたが、メール送信に失敗しました: {exc}"
+                    else:
+                        mark_email_delivery(
+                            public_id=public_id,
+                            delivery_status=delivery.delivery_state,
+                        )
+                        notice = (
+                            "返信を保存し、メール配送を確認しました。"
+                            if delivery.delivery_state == "sent"
+                            else "返信を保存し、メール送信を受け付けました。配送確認待ちです。"
+                        )
+                else:
+                    notice = "返信をNeonに保存しました。メールアドレス未入力のためメール送信はありません。"
+            except FeedbackValidationError as exc:
+                error = str(exc)
+
+        try:
+            items = [_decorate_feedback(item) for item in list_feedback_for_operator(limit=100)]
+            selected = _decorate_feedback(get_feedback_for_operator(public_id)) if public_id else None
+        except FeedbackStoreUnavailable:
+            items = []
+            selected = None
+            error = "お問い合わせの保存先に接続できません。"
+
+        return render_template(
+            "internal/feedback.html",
+            internal_token=token,
+            items=items,
+            selected=selected,
+            notice=notice,
+            error=error,
         )
 
     @blueprint.route(
