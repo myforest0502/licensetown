@@ -17,7 +17,7 @@ def _attempt(index, *, correct, question_id=None, answered_at=None):
 
 
 def test_reconstructs_real_use_shape_without_making_fatigue_verdict():
-    # Four 50-question blocks: 78%, 78%, 74%, 68%.
+    # Four 50-question cumulative same-day blocks: 78%, 78%, 74%, 68%.
     block_correct = [39, 39, 37, 34]
     rows = []
     for block_index, correct_count in enumerate(block_correct):
@@ -39,8 +39,11 @@ def test_reconstructs_real_use_shape_without_making_fatigue_verdict():
     assert facts["repeat_attempt_count"] == 52
     assert [block["accuracy_percent"] for block in facts["blocks"]] == [78.0, 78.0, 74.0, 68.0]
     assert facts["leading_to_trailing_full_block_accuracy_delta_pp"] == -10.0
+    assert facts["block_scope"] == "same_day_cumulative"
+    assert facts["max_inter_attempt_gap_minutes"] == 1.0
     assert facts["diagnostic_only"] is True
-    assert "do not by themselves prove fatigue" in facts["policy_note"]
+    assert "may span long breaks" in facts["policy_note"]
+    assert "do not by themselves prove" in facts["policy_note"]
 
 
 def test_repeat_accuracy_is_derived_from_chronological_prior_exposure():
@@ -62,6 +65,28 @@ def test_repeat_accuracy_is_derived_from_chronological_prior_exposure():
     assert facts["repeat_attempt_count"] == 2
     assert facts["repeat_accuracy_percent"] == 50.0
     assert facts["repeat_share_percent"] == 50.0
+
+
+def test_long_break_is_reported_without_turning_it_into_a_session_or_fatigue_rule():
+    rows = [
+        _attempt(1, correct=True, answered_at=datetime(2026, 9, 5, 23, 6, tzinfo=timezone.utc)),
+        _attempt(2, correct=True, answered_at=datetime(2026, 9, 5, 23, 16, tzinfo=timezone.utc)),
+        _attempt(3, correct=False, answered_at=datetime(2026, 9, 6, 4, 38, tzinfo=timezone.utc)),
+        _attempt(4, correct=True, answered_at=datetime(2026, 9, 6, 4, 41, tzinfo=timezone.utc)),
+    ]
+
+    facts = build_same_day_session_load_facts(
+        rows,
+        as_of=datetime(2026, 9, 6, 8, 0, tzinfo=timezone.utc),
+        block_size=2,
+    )
+
+    assert facts["answered_count"] == 4
+    assert facts["study_span_minutes"] == 335.0
+    assert facts["max_inter_attempt_gap_minutes"] == 322.0
+    assert facts["largest_inter_attempt_gaps_minutes"] == [322.0, 10.0, 3.0]
+    assert facts["block_scope"] == "same_day_cumulative"
+    assert "one continuous session" in facts["policy_note"]
 
 
 def test_excludes_other_jst_days_and_keeps_partial_block_without_delta():
