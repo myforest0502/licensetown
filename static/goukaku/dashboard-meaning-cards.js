@@ -3,8 +3,60 @@ document.addEventListener('DOMContentLoaded', () => {
   const footer = document.querySelector('.dashboard-footer-cards');
   const guidanceStack = document.querySelector('.guidance-stack');
   const learnerDetails = document.querySelector('.learner-nav-detail-grid');
+  const currentCard = document.querySelector('.learner-current-card');
+  const attentionCard = document.querySelector('.learner-attention-card');
+  const todayCard = document.querySelector('.learner-today-card');
   const weekly = window.LT_WEEKLY_LEARNING_SNAPSHOT || {};
   let stateCard = null;
+
+  const detailSections = learnerDetails
+    ? Array.from(learnerDetails.querySelectorAll(':scope > section'))
+    : [];
+
+  const cloneFirstDetail = (section, title) => {
+    if (!section) return null;
+    const article = document.createElement('article');
+    const heading = document.createElement('h3');
+    heading.textContent = title;
+    article.appendChild(heading);
+    const first = section.querySelector('p');
+    if (first) article.appendChild(first.cloneNode(true));
+    return article;
+  };
+
+  if (currentCard && detailSections.length) {
+    const detailGrid = document.createElement('div');
+    detailGrid.className = 'learner-current-detail-grid';
+    [
+      cloneFirstDetail(detailSections[0], '安定していること'),
+      cloneFirstDetail(detailSections[1], 'いま修復していること'),
+      cloneFirstDetail(detailSections[2], 'まだ確認したいこと'),
+    ].filter(Boolean).forEach((item) => detailGrid.appendChild(item));
+    if (detailGrid.children.length) currentCard.appendChild(detailGrid);
+  }
+
+  if (todayCard) {
+    const topPriority = attentionCard?.querySelector('.learner-attention-list > div:first-child');
+    const field = topPriority?.querySelector('b')?.textContent?.trim() || '学習データから選定';
+    const status = topPriority?.querySelector('span')?.textContent?.trim() || '優先して確認';
+    const amount = todayCard.querySelector('h2')?.textContent?.trim() || '今日のおすすめ';
+    const summary = document.createElement('div');
+    summary.className = 'learner-today-summary';
+    [
+      ['優先分野', field],
+      ['今の状態', status],
+      ['今日の学習量', amount],
+    ].forEach(([label, value]) => {
+      const box = document.createElement('div');
+      const span = document.createElement('span');
+      const strong = document.createElement('strong');
+      span.textContent = label;
+      strong.textContent = value;
+      box.append(span, strong);
+      summary.appendChild(box);
+    });
+    todayCard.appendChild(summary);
+  }
 
   if (phase) {
     phase.classList.add('learning-position-card');
@@ -15,10 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (badge) badge.remove();
 
     const originalHeadline = phase.querySelector(':scope > strong');
-    if (originalHeadline) {
-      originalHeadline.textContent = 'いまは、間違いを直して理解を確かめる段階です';
-      originalHeadline.classList.add('learning-position-headline');
-    }
+    if (originalHeadline) originalHeadline.classList.add('learning-position-headline');
 
     const reason = phase.querySelector('.phase12-preview-reason');
     if (reason) {
@@ -105,13 +154,27 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
 
   let profileCard = null;
+  let nextCheckCard = null;
   if (learnerDetails) {
-    profileCard = document.createElement('article');
-    profileCard.className = 'motivation-card study-profile-card';
-    profileCard.innerHTML = '<div class="study-profile-heading"><h2>🗂 今の学習カルテ</h2><p>「できている・直している・まだ確認できていない」をまとめて見ます。</p></div>';
     const grid = learnerDetails.cloneNode(true);
     grid.classList.add('study-profile-grid');
-    const headings = ['安定していること', '修復中', 'まだ確認できていないこと', '次に確認すること'];
+    const sections = Array.from(grid.querySelectorAll(':scope > section'));
+
+    if (sections[3]) {
+      nextCheckCard = document.createElement('article');
+      nextCheckCard.className = 'motivation-card next-check-card';
+      const nextBody = sections[3].cloneNode(true);
+      const nextHeading = nextBody.querySelector('h3');
+      if (nextHeading) nextHeading.textContent = '次に確認すること';
+      nextCheckCard.innerHTML = '<div class="next-check-heading"><h2>⏱ 次のチェックポイント</h2><p>忘れていないか、次にLTが確認する内容です。</p></div>';
+      nextCheckCard.appendChild(nextBody);
+      sections[3].remove();
+    }
+
+    profileCard = document.createElement('article');
+    profileCard.className = 'motivation-card study-profile-card';
+    profileCard.innerHTML = '<div class="study-profile-heading"><h2>🗂 今の学習カルテ</h2><p>「できている・直している・まだ確認できていない」を並べて確認します。</p></div>';
+    const headings = ['安定していること', '修復中', 'まだ確認できていないこと'];
     grid.querySelectorAll(':scope > section').forEach((section, index) => {
       const h3 = section.querySelector('h3');
       if (h3 && headings[index]) h3.textContent = headings[index];
@@ -121,17 +184,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (originalDetails) originalDetails.classList.add('learner-nav-details-duplicated');
   }
 
-  if (guidanceStack) {
-    if (stateCard) guidanceStack.appendChild(stateCard);
-    guidanceStack.appendChild(weeklyCard);
-  } else {
-    if (stateCard) footer.prepend(stateCard);
-    footer.prepend(weeklyCard);
+  if (guidanceStack && stateCard) {
+    guidanceStack.appendChild(stateCard);
+  } else if (stateCard) {
+    footer.prepend(stateCard);
   }
 
   if (phase) {
-    phase.classList.add('dashboard-wide-insight');
-    if (profileCard) phase.insertAdjacentElement('afterend', profileCard);
+    const phaseProfileGrid = document.createElement('section');
+    phaseProfileGrid.className = 'phase-profile-grid';
+    phase.parentNode.insertBefore(phaseProfileGrid, phase);
+    phaseProfileGrid.appendChild(phase);
+    if (profileCard) phaseProfileGrid.appendChild(profileCard);
   } else if (profileCard) {
     footer.prepend(profileCard);
   }
@@ -147,4 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
       );
     }
   }
+
+  footer.classList.add('dashboard-footer-split');
+  const footerLeft = document.createElement('div');
+  footerLeft.className = 'dashboard-footer-left';
+  if (footprint) footerLeft.appendChild(footprint);
+  if (nextCheckCard) footerLeft.appendChild(nextCheckCard);
+  if (footerLeft.children.length) footer.appendChild(footerLeft);
+  footer.appendChild(weeklyCard);
 });
