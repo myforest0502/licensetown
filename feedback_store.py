@@ -1,7 +1,8 @@
 """Persistence helpers for LicenseTown public feedback.
 
-The public form intentionally stores the authoritative copy in Neon.  E-mail is
-an optional delivery channel for future replies, never the system of record.
+Neon is the authoritative copy of every inquiry and operator reply. When a
+requester supplied an email address, email delivery is also required and its
+state is recorded alongside the stored reply.
 """
 
 from __future__ import annotations
@@ -22,6 +23,7 @@ VALID_CATEGORIES = {
     "other": "その他",
 }
 VALID_STATUSES = {"received", "reviewing", "planned", "responded", "closed"}
+VALID_EMAIL_DELIVERY_STATUSES = {"not_requested", "pending", "sent", "failed"}
 
 _EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
 
@@ -83,7 +85,6 @@ def validate_feedback(*, name: str | None, email: str | None, category: str | No
 
 
 def _new_public_id(now: datetime) -> str:
-    # Short enough to quote in conversation, random enough to avoid collisions.
     return f"LT-{now:%Y%m%d}-{secrets.token_hex(4).upper()}"
 
 
@@ -107,8 +108,6 @@ def create_feedback(
     page_value = _clean_optional(page_path, max_length=240)
     line_value = _clean_optional(line_user_id, max_length=160)
 
-    # Collision is extremely unlikely. Retry public_id only, keeping the private
-    # tracking token stable for this submission.
     for _ in range(4):
         public_id = _new_public_id(now)
         try:
@@ -143,8 +142,6 @@ def create_feedback(
                 created_at=created_at,
             )
         except Exception as exc:
-            # Retry only on public_id uniqueness collisions.  Avoid hiding real
-            # database failures behind repeated writes.
             if getattr(exc, "sqlstate", None) == "23505" and "public_id" in str(exc):
                 continue
             raise
@@ -184,18 +181,59 @@ def get_feedback_for_public_status(tracking_token: str | None) -> dict[str, Any]
     }
 
 
+def list_feedback_for_operator(*, limit: int = 100) -> list[dict[str, Any]]:
+    if not database_is_available():
+        raise FeedbackStoreUnavailable("お問い合わせの保存先に接続できません。")
+    safe_limit = min(max(int(limit), 1), 200)
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT public_id, name, email, category, message, status,
+                       operator_reply, email_delivery_status, email_sent_at,
+                       created_at, updated_at, replied_at, tracking_token
+                FROM feedback_inbox
+                ORDER BY created_at DESC
+                LIMIT %s
+                """,
+                (safe_limit,),
+            )
+            rows = cur.fetchall()
+    return [
+        {
+            "public_id": row[0],
+            "name": row[1],
+            "email": row[2],
+            "category": row[3],
+            "message": row[4],
+            "status": row[5],
+            "operator_reply": row[6],
+            "email_delivery_status": row[7],
+            "email_sent_at": row[8],
+            "created_at": row[9],
+            "updated_at": row[10],
+            "replied_at": row[11],
+            "tracking_token": row[12],
+        }
+        for row in rows
+    ]
+
+
+def get_feedback_for_operator(public_id: str | None) -> dict[str, Any] | None:
+    public_id_value = str(public_id or "").strip()
+    if not public_id_value or len(public_id_value) > 40:
+        return None
+    items = list_feedback_for_operator(limit=200)
+    return next((item for item in items if item["public_id"] == public_id_value), None)
+
+
 def set_operator_reply(
     *,
     public_id: str,
     reply: str,
     status: str = "responded",
 ) -> dict[str, Any] | None:
-    """Store an operator reply.
-
-    E-mail delivery is intentionally separate.  A future notifier can send the
-    same stored reply when a requester supplied an address without making e-mail
-    the authoritative record.
-    """
+    """Store the reply first; email delivery follows from this stored text."""
 
     public_id_value = _clean_required(public_id, max_length=40, message="受付番号が必要です。")
     reply_value = _clean_required(reply, max_length=8000, message="返信内容が必要です。")
@@ -216,7 +254,8 @@ def set_operator_reply(
                     email_delivery_status = CASE
                         WHEN email IS NULL THEN 'not_requested'
                         ELSE 'pending'
-                    END
+                    END,
+                    email_sent_at = NULL
                 WHERE public_id = %s
                 RETURNING public_id, email, operator_reply, status,
                           tracking_token, email_delivery_status
@@ -235,3 +274,31 @@ def set_operator_reply(
         "tracking_token": row[4],
         "email_delivery_status": row[5],
     }
+
+
+def mark_email_delivery(*, public_id: str, delivery_status: str) -> bool:
+    public_id_value = _clean_required(public_id, max_length=40, message="受付番号が必要です。")
+    if delivery_status not in VALID_EMAIL_DELIVERY_STATUSES:
+        raise FeedbackValidationError("メール配送状況が不正です。")
+    if not database_is_available():
+        raise FeedbackStoreUnavailable("お問い合わせの保存先に接続できません。")
+
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                UPDATE feedback_inbox
+                SET email_delivery_status = %s,
+                    email_sent_at = CASE
+                        WHEN %s = 'sent' THEN NOW()
+                        WHEN %s IN ('failed', 'not_requested') THEN NULL
+                        ELSE email_sent_at
+                    END,
+                    updated_at = NOW()
+                WHERE public_id = %s
+                """,
+                (delivery_status, delivery_status, delivery_status, public_id_value),
+            )
+            updated = cur.rowcount > 0
+        conn.commit()
+    return updated
