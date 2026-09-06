@@ -13,6 +13,7 @@ import os
 
 from flask import abort, redirect, render_template, request, url_for
 
+from database import get_question_attempts
 from developer_status import build_developer_system_status
 from email_delivery import EmailDeliveryError, send_feedback_reply
 from feedback_store import (
@@ -25,6 +26,10 @@ from feedback_store import (
     set_operator_reply,
 )
 from goukaku_ui import build_dashboard
+from phase11_session_load_facts import (
+    build_same_day_session_load_evidence_line,
+    build_same_day_session_load_facts,
+)
 from pilot_diagnostics import build_pilot_diagnostics
 from supporter_performance import begin_request, finish_request
 
@@ -213,9 +218,19 @@ def register_developer_routes(blueprint) -> None:
         period = request.args.get("period", "7")
         if period not in {"7", "30", "all"}:
             period = "7"
+        diagnostics = build_pilot_diagnostics(learner_id, period)
+        same_day_session_load = build_same_day_session_load_facts(
+            get_question_attempts(learner_id)
+        )
+        diagnostics["same_day_session_load"] = same_day_session_load
+        diagnostics["promotion_evidence_text"] = (
+            str(diagnostics.get("promotion_evidence_text") or "").rstrip()
+            + "\n"
+            + build_same_day_session_load_evidence_line(same_day_session_load)
+        ).lstrip("\n")
         return render_template(
             "goukaku/supporter_pilot_diagnostics.html",
-            diagnostics=build_pilot_diagnostics(learner_id, period),
+            diagnostics=diagnostics,
             learner_id=learner_id,
             supporter_token=token,
             internal_token=token,

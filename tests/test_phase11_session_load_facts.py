@@ -2,7 +2,10 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from phase11_session_load_facts import build_same_day_session_load_facts
+from phase11_session_load_facts import (
+    build_same_day_session_load_evidence_line,
+    build_same_day_session_load_facts,
+)
 
 
 def _attempt(index, *, correct, question_id=None, answered_at=None):
@@ -98,6 +101,40 @@ def test_long_break_is_reported_without_turning_it_into_a_session_or_fatigue_rul
     assert facts["largest_inter_attempt_gaps_minutes"] == [322.0, 10.0, 3.0]
     assert facts["block_scope"] == "same_day_cumulative"
     assert "one continuous session" in facts["policy_note"]
+
+
+def test_supporter_evidence_line_contains_only_compact_non_identifying_facts():
+    line = build_same_day_session_load_evidence_line({
+        "date_jst": "2026-09-06",
+        "answered_count": 200,
+        "accuracy_percent": 74.5,
+        "unique_question_count": 148,
+        "first_attempt_accuracy_percent": 70.3,
+        "repeat_attempt_count": 52,
+        "repeat_accuracy_percent": 86.5,
+        "repeat_after_wrong_count": 11,
+        "wrong_to_correct_count": 6,
+        "wrong_to_wrong_count": 5,
+        "repeat_after_wrong_accuracy_percent": 54.5,
+        "study_span_minutes": 490.0,
+        "max_inter_attempt_gap_minutes": 322.0,
+        "leading_to_trailing_full_block_accuracy_delta_pp": -10.0,
+        "block_scope": "same_day_cumulative",
+        "user_id": "must-not-leak",
+        "supporter_token": "must-not-leak",
+    })
+
+    assert line.startswith("same_day_load=date:2026-09-06,answers:200,accuracy:74.5")
+    assert "repeat_after_wrong:11,wrong_to_correct:6,wrong_to_wrong:5" in line
+    assert "repeat_after_wrong_accuracy:54.5" in line
+    assert "max_gap_minutes:322.0" in line
+    assert "block_scope:same_day_cumulative" in line
+    assert "must-not-leak" not in line
+    assert "user_id" not in line
+    assert "supporter_token" not in line
+    assert build_same_day_session_load_evidence_line(None).startswith(
+        "same_day_load=date:none,answers:0,accuracy:none"
+    )
 
 
 def test_excludes_other_jst_days_and_keeps_partial_block_without_delta():

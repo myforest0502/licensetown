@@ -202,3 +202,30 @@ def build_same_day_session_load_facts(
             "checking the prior answer state."
         ),
     }
+
+
+def build_same_day_session_load_evidence_line(facts: dict[str, Any] | None) -> str:
+    """Serialize only non-identifying same-day facts for Supporter QA bundles."""
+    source = facts or {}
+
+    def value(name: str) -> Any:
+        result = source.get(name)
+        return "none" if result is None else result
+
+    return "same_day_load=" + ",".join([
+        f"date:{value('date_jst')}",
+        f"answers:{int(source.get('answered_count') or 0)}",
+        f"accuracy:{value('accuracy_percent')}",
+        f"unique_q:{int(source.get('unique_question_count') or 0)}",
+        f"first_accuracy:{value('first_attempt_accuracy_percent')}",
+        f"repeats:{int(source.get('repeat_attempt_count') or 0)}",
+        f"repeat_accuracy:{value('repeat_accuracy_percent')}",
+        f"repeat_after_wrong:{int(source.get('repeat_after_wrong_count') or 0)}",
+        f"wrong_to_correct:{int(source.get('wrong_to_correct_count') or 0)}",
+        f"wrong_to_wrong:{int(source.get('wrong_to_wrong_count') or 0)}",
+        f"repeat_after_wrong_accuracy:{value('repeat_after_wrong_accuracy_percent')}",
+        f"study_span_minutes:{value('study_span_minutes')}",
+        f"max_gap_minutes:{value('max_inter_attempt_gap_minutes')}",
+        f"late_delta_pp:{value('leading_to_trailing_full_block_accuracy_delta_pp')}",
+        f"block_scope:{source.get('block_scope') or 'none'}",
+    ])
