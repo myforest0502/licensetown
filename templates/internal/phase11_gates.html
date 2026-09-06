@@ -21,13 +21,12 @@
     .gate-row { display: flex; justify-content: space-between; gap: 14px; padding: 8px 0; border-bottom: 1px solid #edf1ee; }
     .gate-row:last-child { border-bottom: 0; }
     .notice { border-left: 4px solid #a67b00; padding-left: 12px; }
-    a { color: #176b42; font-weight: 700; }
-    code { overflow-wrap: anywhere; }
+    button { border: 0; background: transparent; padding: 0; color: #176b42; font: inherit; font-weight: 700; cursor: pointer; }
   </style>
 </head>
 <body>
 <main>
-  <p><a href="{{ url_for('site_ui.internal_index', token=internal_token, learner_user_id=learner_id) }}">← Internal console</a></p>
+  <p><button type="button" onclick="history.back()">← 戻る</button></p>
   <h1>Phase11 Gate Status</h1>
   <p class="muted">診断専用。学習者向け推薦・Selector・Node状態を変更しません。</p>
 
