@@ -27,6 +27,10 @@ from feedback_store import (
 )
 from goukaku_ui import build_dashboard
 from knowledge_node_state_transition import derive_all_user_node_states
+from phase11_promotion_gate_status import (
+    build_phase11_promotion_gate_evidence_line,
+    build_phase11_promotion_gate_status,
+)
 from phase11_repair_effectiveness_facts import (
     build_repair_effectiveness_evidence_line,
     build_same_day_repair_effectiveness_facts,
@@ -236,9 +240,21 @@ def register_developer_routes(blueprint) -> None:
         retention_horizon = build_retention_horizon_facts(
             derive_all_user_node_states(attempts)
         )
+        promotion_gate_status = build_phase11_promotion_gate_status(
+            retrospective_shadow_audit=diagnostics.get("retrospective_shadow_audit"),
+            repeat_structure_audit=diagnostics.get("repeat_structure_audit"),
+            retention_horizon=retention_horizon,
+            state_counts=diagnostics.get("state_counts"),
+            transitions={
+                "recheck_due_to_stable": diagnostics.get("due_to_stable", 0),
+                "recheck_due_to_repairing": diagnostics.get("due_to_repairing", 0),
+            },
+            shadow_judgment=diagnostics.get("shadow_judgment"),
+        )
         diagnostics["same_day_session_load"] = same_day_session_load
         diagnostics["repair_effectiveness"] = repair_effectiveness
         diagnostics["retention_horizon"] = retention_horizon
+        diagnostics["promotion_gate_status"] = promotion_gate_status
         diagnostics["promotion_evidence_text"] = (
             str(diagnostics.get("promotion_evidence_text") or "").rstrip()
             + "\n"
@@ -247,6 +263,8 @@ def register_developer_routes(blueprint) -> None:
             + build_repair_effectiveness_evidence_line(repair_effectiveness)
             + "\n"
             + build_retention_horizon_evidence_line(retention_horizon)
+            + "\n"
+            + build_phase11_promotion_gate_evidence_line(promotion_gate_status)
         ).lstrip("\n")
         return render_template(
             "goukaku/supporter_pilot_diagnostics.html",
