@@ -56,6 +56,8 @@ def test_diagnostics_route_requires_internal_admin_and_not_on_personal_dashboard
         assert label in html
     assert "30問の選定理由を見る" in html
     assert "30問監査データをコピー" in html
+    assert "same_day_load=" in html
+    assert "block_scope:same_day_cumulative" in html
     assert html.count('class="adaptive-audit-item"') == 30
     assert "LT学習診断" not in client.get(f"/goukaku-no-michi?token=invalid").get_data(as_text=True)
 
