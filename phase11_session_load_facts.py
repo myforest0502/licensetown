@@ -63,7 +63,9 @@ def build_same_day_session_load_facts(
 
     The result intentionally contains no learner-facing recommendation and no
     fatigue/overpractice verdict.  The chronological blocks are cumulative
-    same-day blocks, not proof of one uninterrupted study session.
+    same-day blocks, not proof of one uninterrupted study session.  Generic
+    repeat accuracy is also kept separate from repeats that follow a wrong
+    answer so it cannot be mistaken for repair effectiveness.
     """
     if block_size <= 0:
         raise ValueError("block_size must be positive")
@@ -88,21 +90,39 @@ def build_same_day_session_load_facts(
     )
 
     seen_questions: set[str] = set()
+    previous_result_by_question: dict[str, bool | None] = {}
     first_attempt_count = first_correct = 0
     repeat_attempt_count = repeat_correct = 0
+    wrong_to_correct = wrong_to_wrong = 0
+    correct_to_correct = correct_to_wrong = 0
 
     for item in today:
         question_id = str(item.get("question_id") or "").strip().upper()
         is_repeat = bool(question_id and question_id in seen_questions)
-        is_correct = item.get("is_correct") is True and item.get("answer_status") != "unknown"
+        is_evaluable = item.get("answer_status") != "unknown"
+        current_result = item.get("is_correct") if is_evaluable else None
+        is_correct = current_result is True
         if is_repeat:
             repeat_attempt_count += 1
             repeat_correct += int(is_correct)
+            previous_result = previous_result_by_question.get(question_id)
+            if previous_result is False and current_result is True:
+                wrong_to_correct += 1
+            elif previous_result is False and current_result is False:
+                wrong_to_wrong += 1
+            elif previous_result is True and current_result is True:
+                correct_to_correct += 1
+            elif previous_result is True and current_result is False:
+                correct_to_wrong += 1
         else:
             first_attempt_count += 1
             first_correct += int(is_correct)
         if question_id:
             seen_questions.add(question_id)
+            previous_result_by_question[question_id] = current_result
+
+    repeat_after_wrong_count = wrong_to_correct + wrong_to_wrong
+    repeat_after_correct_count = correct_to_correct + correct_to_wrong
 
     blocks: list[dict[str, Any]] = []
     for start in range(0, len(today), block_size):
@@ -148,6 +168,18 @@ def build_same_day_session_load_facts(
         "repeat_correct_count": repeat_correct,
         "repeat_accuracy_percent": _accuracy(repeat_correct, repeat_attempt_count),
         "repeat_share_percent": _accuracy(repeat_attempt_count, len(today)),
+        "repeat_after_wrong_count": repeat_after_wrong_count,
+        "wrong_to_correct_count": wrong_to_correct,
+        "wrong_to_wrong_count": wrong_to_wrong,
+        "repeat_after_wrong_accuracy_percent": _accuracy(
+            wrong_to_correct, repeat_after_wrong_count
+        ),
+        "repeat_after_correct_count": repeat_after_correct_count,
+        "correct_to_correct_count": correct_to_correct,
+        "correct_to_wrong_count": correct_to_wrong,
+        "repeat_after_correct_accuracy_percent": _accuracy(
+            correct_to_correct, repeat_after_correct_count
+        ),
         "first_answered_at_jst": (
             answered_times[0].astimezone(TOKYO).isoformat() if answered_times else None
         ),
@@ -165,6 +197,8 @@ def build_same_day_session_load_facts(
         "policy_note": (
             "Same-day volume and late accuracy are observational evidence only; "
             "cumulative blocks may span long breaks and do not by themselves prove "
-            "fatigue, one continuous session, or a reason to block learning."
+            "fatigue, one continuous session, or a reason to block learning. Generic "
+            "repeat accuracy must not be treated as repair effectiveness without "
+            "checking the prior answer state."
         ),
     }
