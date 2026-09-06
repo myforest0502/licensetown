@@ -71,6 +71,15 @@ def test_gate_page_renders_hold_retention_and_no_auto_promotion(monkeypatch):
                 "earliest_review_at_jst": "2026-09-09T08:26:32+09:00",
                 "earliest_review_in_hours": 63.4,
             },
+            "retention_supply": {
+                "due_node_count": 0,
+                "due_strong_available_count": 0,
+                "due_without_strong_count": 0,
+                "upcoming_repaired_node_count": 13,
+                "upcoming_without_strong_count": 2,
+                "weak_only_count": 1,
+                "no_formal_alternate_count": 1,
+            },
             "retention_outcomes": {
                 "review_attempt_count": 0,
                 "stable_count": 0,
@@ -104,6 +113,8 @@ def test_gate_page_renders_hold_retention_and_no_auto_promotion(monkeypatch):
     assert "Phase11 Gate Status" in html
     assert "HOLD" in html
     assert "Retention Horizon" in html
+    assert "Retention STRONG Supply Preflight" in html
+    assert "upcomingでSTRONGなし 2" in html
     assert "Natural Retention Outcomes" in html
     assert "自然なretention review 0" in html
     assert "2026-09-09T08:26:32+09:00" in html
