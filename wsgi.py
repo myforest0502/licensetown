@@ -26,6 +26,7 @@ from prerequisite_attempt_cache import install_prerequisite_attempt_cache
 from site_marketing_hotfix import install_site_marketing_hotfix
 from site_marketing_refresh import install_site_marketing_refresh
 from site_marketing_viewport_fix import install_site_marketing_viewport_fix
+from supporter_learner_preview_bridge import install_supporter_learner_preview_bridge
 from term_explainer import explain_term
 
 
@@ -100,6 +101,7 @@ install_site_marketing_viewport_fix(legacy.app)
 install_site_marketing_hotfix(legacy.app)
 install_site_marketing_refresh(legacy.app)
 install_phase11_gate_ui(legacy.app)
+install_supporter_learner_preview_bridge(legacy.app)
 
 _apply_rich_menu_v2_if_requested()
 
