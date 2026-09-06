@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const dashboardGrid = document.querySelector('.dashboard-grid');
+  const learnerNavigation = document.querySelector('.learner-navigation');
+  const summaryGrid = document.querySelector('.summary-grid');
   const phase = document.querySelector('.phase12-guidance-preview');
   const footer = document.querySelector('.dashboard-footer-cards');
   const guidanceStack = document.querySelector('.guidance-stack');
@@ -8,6 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const todayCard = document.querySelector('.learner-today-card');
   const weekly = window.LT_WEEKLY_LEARNING_SNAPSHOT || {};
   let stateCard = null;
+  let stateProgressCard = null;
+  let strategyCard = null;
+
+  // Paid-product hierarchy: deadline/progress first, then the LT decision/navigation.
+  if (dashboardGrid && learnerNavigation && summaryGrid) {
+    summaryGrid.insertAdjacentElement('afterend', learnerNavigation);
+  }
 
   const detailSections = learnerDetails
     ? Array.from(learnerDetails.querySelectorAll(':scope > section'))
@@ -101,7 +111,46 @@ document.addEventListener('DOMContentLoaded', () => {
           '<div><dt>再確認待ち・定着</dt><dd>時間を空けて確認する知識／時間を空けても確認できた知識</dd></div>' +
         '</dl>'
       );
+
+      const values = Array.from(stateSummary.querySelectorAll('div')).map((item) => ({
+        label: item.querySelector('dt')?.textContent?.trim() || '',
+        value: Number((item.querySelector('dd')?.textContent || '').replace(/[^0-9]/g, '')) || 0,
+      }));
+      const byLabel = (name) => values.find((item) => item.label.includes(name))?.value || 0;
+      const repairing = byLabel('修復中');
+      const repaired = byLabel('修復済み');
+      const recheck = byLabel('再確認待ち');
+      const stable = byLabel('定着');
+
+      stateProgressCard = document.createElement('article');
+      stateProgressCard.className = 'motivation-card state-progress-card';
+      stateProgressCard.innerHTML = `
+        <h2>🪜 定着までの進み方</h2>
+        <p>「解けた」で終わらず、直す → 時間を空ける → もう一度確認する、までをLTが追います。</p>
+        <div class="state-progress-flow">
+          <div><span>1</span><b>修復中</b><strong>${repairing}</strong><small>別問題で理解を確認</small></div>
+          <i>→</i>
+          <div><span>2</span><b>修復済み</b><strong>${repaired}</strong><small>いったん理解を確認</small></div>
+          <i>→</i>
+          <div><span>3</span><b>再確認待ち</b><strong>${recheck}</strong><small>時間を空けて再確認</small></div>
+          <i>→</i>
+          <div><span>4</span><b>定着</b><strong>${stable}</strong><small>時間を空けても確認</small></div>
+        </div>`;
     }
+
+    const positionMain = document.createElement('div');
+    positionMain.className = 'learning-position-main';
+    Array.from(phase.childNodes).forEach((node) => positionMain.appendChild(node));
+    const positionAside = document.createElement('aside');
+    positionAside.className = 'learning-position-aside';
+    const retentionText = detailSections[3]?.textContent?.replace(/\s+/g, ' ').trim() || '修復した知識は、時間を空けてもう一度確認します。';
+    positionAside.innerHTML = `
+      <h3>ここから次の段階へ</h3>
+      <div><b>① 直す</b><span>自信を持って間違えた内容を、別問題で確認</span></div>
+      <div><b>② 時間を空ける</b><span>その場で覚えただけではないかを見る</span></div>
+      <div><b>③ 定着を確かめる</b><span>時間を空けても答えられたら「定着」へ</span></div>
+      <p>${retentionText}</p>`;
+    phase.append(positionMain, positionAside);
   }
 
   if (!footer) return;
@@ -131,10 +180,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const maxAnswers = Math.max(...days.map((item) => Number(item.answered_count) || 0), 1);
   const bars = days.map((item) => {
     const count = Math.max(Number(item.answered_count) || 0, 0);
-    const height = count > 0 ? Math.max(Math.round((count / maxAnswers) * 52), 8) : 2;
+    const height = count > 0 ? Math.max(Math.round((count / maxAnswers) * 92), 10) : 2;
     const label = String(item.label || '');
     return `<div class="weekly-spark-day"><span>${count}</span><i style="height:${height}px"></i><small>${label}</small></div>`;
   }).join('');
+  const avgPerLearningDay = learningDays ? Math.round(answers / learningDays) : 0;
+  const strongestDay = days.reduce((best, item) => (Number(item.answered_count) || 0) > (Number(best.answered_count) || 0) ? item : best, days[0] || {});
 
   const weeklyCard = document.createElement('article');
   weeklyCard.className = 'motivation-card weekly-learning-card';
@@ -151,7 +202,11 @@ document.addEventListener('DOMContentLoaded', () => {
       <div><span>学習時間</span><strong>${Math.floor(minutes / 60)}<small>時間${minutes % 60}分</small></strong></div>
     </div>
     <div class="weekly-spark" aria-label="直近7日間の回答数">${bars}</div>
-  `;
+    <div class="weekly-learning-detail">
+      <div><span>学習した日の平均</span><strong>${avgPerLearningDay}問/日</strong></div>
+      <div><span>最も取り組んだ日</span><strong>${strongestDay.label || '--'}　${Number(strongestDay.answered_count) || 0}問</strong></div>
+      <div><span>7日間の見方</span><strong>量だけでなく、継続と修復の進み方を一緒に見ます</strong></div>
+    </div>`;
 
   let profileCard = null;
   let nextCheckCard = null;
@@ -184,10 +239,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (originalDetails) originalDetails.classList.add('learner-nav-details-duplicated');
   }
 
-  if (guidanceStack && stateCard) {
-    guidanceStack.appendChild(stateCard);
-  } else if (stateCard) {
-    footer.prepend(stateCard);
+  if (guidanceStack) {
+    if (stateCard) guidanceStack.appendChild(stateCard);
+    if (stateProgressCard) guidanceStack.appendChild(stateProgressCard);
+    strategyCard = document.createElement('article');
+    strategyCard.className = 'motivation-card strategy-note-card';
+    const topItems = Array.from(attentionCard?.querySelectorAll('.learner-attention-list > div') || []).slice(0, 3);
+    strategyCard.innerHTML = '<h2>📝 LTの作戦メモ</h2><p>今の学習履歴から、優先順位をこう見ています。</p><div class="strategy-note-list"></div>';
+    const list = strategyCard.querySelector('.strategy-note-list');
+    topItems.forEach((item, index) => {
+      const field = item.querySelector('b')?.textContent?.trim() || '確認項目';
+      const message = item.querySelector('p')?.textContent?.trim() || '優先して確認します。';
+      list.insertAdjacentHTML('beforeend', `<div><span>${index + 1}</span><b>${field}</b><small>${message}</small></div>`);
+    });
+    if (!topItems.length) list.innerHTML = '<div><span>1</span><b>学習データを蓄積中</b><small>記録が増えると、優先順位がより具体的になります。</small></div>';
+    guidanceStack.appendChild(strategyCard);
+  } else {
+    if (stateCard) footer.prepend(stateCard);
+    if (stateProgressCard) footer.prepend(stateProgressCard);
   }
 
   if (phase) {
