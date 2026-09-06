@@ -15,6 +15,7 @@ from phase11_promotion_gate_status import build_phase11_promotion_gate_status
 from phase11_repair_effectiveness_facts import build_same_day_repair_effectiveness_facts
 from phase11_retention_horizon_facts import build_retention_horizon_facts
 from phase11_retention_outcome_audit import build_retention_outcome_audit
+from phase11_retention_supply_audit import build_retention_supply_audit
 from phase11_session_load_facts import build_same_day_session_load_facts
 from pilot_diagnostics import build_pilot_diagnostics
 
@@ -30,10 +31,10 @@ def build_phase11_gate_dashboard(learner_id: str, period: str = "7") -> dict:
 
     diagnostics = build_pilot_diagnostics(learner_id, period)
     attempts = get_question_attempts(learner_id)
-    retention_horizon = build_retention_horizon_facts(
-        derive_all_user_node_states(attempts)
-    )
+    node_states = derive_all_user_node_states(attempts)
+    retention_horizon = build_retention_horizon_facts(node_states)
     retention_outcomes = build_retention_outcome_audit(attempts)
+    retention_supply = build_retention_supply_audit(node_states)
     gate_status = build_phase11_promotion_gate_status(
         retrospective_shadow_audit=diagnostics.get("retrospective_shadow_audit"),
         repeat_structure_audit=diagnostics.get("repeat_structure_audit"),
@@ -55,6 +56,7 @@ def build_phase11_gate_dashboard(learner_id: str, period: str = "7") -> dict:
         ),
         "retention_horizon": retention_horizon,
         "retention_outcomes": retention_outcomes,
+        "retention_supply": retention_supply,
         "gate_status": gate_status,
     }
 
