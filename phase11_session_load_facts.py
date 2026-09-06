@@ -62,8 +62,8 @@ def build_same_day_session_load_facts(
     """Return same-day volume, repeat structure, and chronological accuracy facts.
 
     The result intentionally contains no learner-facing recommendation and no
-    fatigue/overpractice verdict.  A falling late-session accuracy is evidence to
-    review, not proof of its cause.
+    fatigue/overpractice verdict.  The chronological blocks are cumulative
+    same-day blocks, not proof of one uninterrupted study session.
     """
     if block_size <= 0:
         raise ValueError("block_size must be positive")
@@ -72,6 +72,21 @@ def build_same_day_session_load_facts(
         as_of = as_of.replace(tzinfo=timezone.utc)
 
     today = _ordered_today(attempts, as_of=as_of)
+    answered_times = [
+        _parse_time(item.get("answered_at") or item.get("attempted_at"))
+        for item in today
+    ]
+    answered_times = [value for value in answered_times if value is not None]
+    inter_attempt_gaps = [
+        round((current - previous).total_seconds() / 60.0, 1)
+        for previous, current in zip(answered_times, answered_times[1:])
+    ]
+    largest_gaps = sorted(inter_attempt_gaps, reverse=True)[:3]
+    study_span_minutes = (
+        round((answered_times[-1] - answered_times[0]).total_seconds() / 60.0, 1)
+        if len(answered_times) >= 2 else 0.0 if answered_times else None
+    )
+
     seen_questions: set[str] = set()
     first_attempt_count = first_correct = 0
     repeat_attempt_count = repeat_correct = 0
@@ -133,12 +148,23 @@ def build_same_day_session_load_facts(
         "repeat_correct_count": repeat_correct,
         "repeat_accuracy_percent": _accuracy(repeat_correct, repeat_attempt_count),
         "repeat_share_percent": _accuracy(repeat_attempt_count, len(today)),
+        "first_answered_at_jst": (
+            answered_times[0].astimezone(TOKYO).isoformat() if answered_times else None
+        ),
+        "last_answered_at_jst": (
+            answered_times[-1].astimezone(TOKYO).isoformat() if answered_times else None
+        ),
+        "study_span_minutes": study_span_minutes,
+        "largest_inter_attempt_gaps_minutes": largest_gaps,
+        "max_inter_attempt_gap_minutes": largest_gaps[0] if largest_gaps else None,
         "block_size": block_size,
+        "block_scope": "same_day_cumulative",
         "blocks": blocks,
         "leading_to_trailing_full_block_accuracy_delta_pp": leading_to_trailing_delta,
         "diagnostic_only": True,
         "policy_note": (
             "Same-day volume and late accuracy are observational evidence only; "
-            "they do not by themselves prove fatigue or justify blocking learning."
+            "cumulative blocks may span long breaks and do not by themselves prove "
+            "fatigue, one continuous session, or a reason to block learning."
         ),
     }
