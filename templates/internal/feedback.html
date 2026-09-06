@@ -93,7 +93,7 @@
         </form>
         {% endif %}
 
-        <p class="muted" style="margin-top:18px;">公開確認ページ: <a href="{{ url_for('site_legal_ui.contact_status', token=selected.tracking_token) }}" target="_blank" rel="noopener">確認する</a></p>
+        <p class="muted" style="margin-top:18px;">公開確認ページ: <a href="{{ url_for('site_ui.site_legal_ui.contact_status', token=selected.tracking_token) }}" target="_blank" rel="noopener">確認する</a></p>
       {% else %}
         <h2>問い合わせを選択</h2>
         <p class="muted">左の一覧から対応する問い合わせを選んでください。</p>
