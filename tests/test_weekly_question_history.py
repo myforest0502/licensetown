@@ -1,6 +1,5 @@
 import os
 from datetime import datetime, timedelta, timezone
-from zoneinfo import ZoneInfo
 
 os.environ.setdefault("OPENAI_API_KEY", "test-key")
 os.environ.setdefault("CHANNEL_ACCESS_TOKEN", "test-token")
@@ -12,9 +11,9 @@ from database import get_weekly_question_history, set_supporter_link, deactivate
 from goukaku_ui import create_supporter_token
 
 
-# Keep fixtures in the actual current week so route-level tests do not expire as
-# calendar time advances.  The previous fixed 2026-08-30 value became stale on
-# the following week and made an unrelated PR fail.
+# Keep fixtures relative to runtime so route-level tests do not expire as
+# calendar time advances. get_weekly_question_history intentionally reports a
+# rolling seven-JST-calendar-day window ending today.
 NOW = datetime.now(timezone.utc)
 
 
@@ -38,9 +37,9 @@ def test_weekly_summary_boundaries_duplicates_unknown_and_natural_sort():
         row("Q1", 0, False, 1, user="other"),
     ])
     result = get_weekly_question_history("learner", NOW)
-    today_jst = NOW.astimezone(ZoneInfo("Asia/Tokyo")).date()
-    expected_start = today_jst - timedelta(days=today_jst.weekday())
-    expected_end = expected_start + timedelta(days=6)
+    today_jst = NOW.astimezone(__import__("zoneinfo").ZoneInfo("Asia/Tokyo")).date()
+    expected_start = today_jst - timedelta(days=6)
+    expected_end = today_jst
     assert result["start_date"] == expected_start
     assert result["end_date"] == expected_end
     assert result["total_attempts"] == 4
