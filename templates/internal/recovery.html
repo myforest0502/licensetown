@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LicenseTown 開発者アクセス</title>
+  <style>
+    :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#173d2d;background:#f4f7f5}
+    body{margin:0}main{width:min(860px,calc(100% - 28px));margin:28px auto 56px}.card{background:#fff;border:1px solid #dce7e0;border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(24,61,45,.06);margin-top:14px}h1{margin:0 0 6px;font-size:26px}h2{margin:0 0 12px}.muted{color:#65746b;line-height:1.65}.warn{color:#a66200;font-weight:700}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.action{display:block;padding:16px;border-radius:14px;text-decoration:none;font-weight:800;border:1px solid #d6e5dc;background:#f6fbf8;color:#176b42}.action strong{display:block;font-size:18px;margin-bottom:4px}.action span{display:block;color:#5e6f65;font-size:13px;font-weight:500}.action.primary{background:#176b42;color:#fff;border-color:#176b42}.action.primary span{color:#e6f4ec}form{display:grid;gap:10px}input{box-sizing:border-box;width:100%;padding:12px 13px;border:1px solid #afbeb5;border-radius:10px;font-size:15px}button{justify-self:start;border:0;border-radius:10px;padding:11px 16px;background:#176b42;color:#fff;font-weight:800;cursor:pointer}.id{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;word-break:break-all;background:#f5f7f6;border-radius:8px;padding:8px}.note{padding:12px;border-radius:10px;background:#fff8e8;color:#72551d}@media(max-width:620px){.grid{grid-template-columns:1fr}.card{padding:16px}h1{font-size:22px}}
+  </style>
+</head>
+<body>
+<main>
+  <h1>LicenseTown 開発者アクセス</h1>
+  <p class="muted">親向け「学習見守り」と完全に分けた、開発・確認専用の入口です。一般の親画面には表示されません。</p>
+
+  <section class="card">
+    <h2>息子さんの画面を呼び出す</h2>
+    <p class="muted">今開いている「学習見守り」のURLを、そのまま貼れば対象学習者を自動で判定します。learner_user_id が分かる場合は直接入力でもOKです。</p>
+    <form method="get">
+      <input type="hidden" name="token" value="{{ internal_token }}">
+      <label>見守りURL / supporter token
+        <input name="supporter" value="{{ supporter_input }}" placeholder="https://.../supporter?token=...">
+      </label>
+      <label>learner_user_id（分かる場合だけ）
+        <input name="learner_user_id" value="{{ learner_id }}" placeholder="空欄でOK">
+      </label>
+      <button type="submit">対象を開く</button>
+    </form>
+    {% if error %}<p class="warn">{{ error }}</p>{% endif %}
+  </section>
+
+  {% if urls %}
+  <section class="card">
+    <h2>開発用ショートカット</h2>
+    <p class="muted">対象 learner_user_id</p>
+    <p class="id">{{ learner_id }}</p>
+    <div class="grid">
+      <a class="action primary" href="{{ urls.preview }}"><strong>本人のリアル画面</strong><span>現在の実データで「合格への道」をそのまま確認</span></a>
+      <a class="action" href="{{ urls.developer }}"><strong>開発者向け画面</strong><span>内部ダッシュボード・各開発ツールへの入口</span></a>
+      <a class="action" href="{{ urls.diagnostics }}"><strong>学習診断</strong><span>Phase11・repeat・cooldown などの詳細確認</span></a>
+      <a class="action" href="{{ urls.phase11 }}"><strong>Phase11 Gate Status</strong><span>自然データのGate・retention・repair確認</span></a>
+    </div>
+    <p class="note">このページと各リンクは LT_INTERNAL_ADMIN_TOKEN で保護されています。親向け画面には出しません。</p>
+  </section>
+  {% endif %}
+</main>
+</body>
+</html>
