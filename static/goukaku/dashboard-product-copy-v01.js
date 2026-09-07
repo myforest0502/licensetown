@@ -15,7 +15,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const todayReason = text(todayCard?.querySelector('p')) || '今日の学習履歴に合わせて内容を選びます。';
   const currentHeadline = text(currentCard?.querySelector('h2')) || '現在地を確認中';
 
-  if (dateCard && overallCard && !document.querySelector('.lt-top-left-stack')) {
+  const progressPoints = Array.isArray(window.LT_WEEKLY_LEARNING_SNAPSHOT?.overallProgress)
+    ? window.LT_WEEKLY_LEARNING_SNAPSHOT.overallProgress : [];
+  const firstProgress = Number(progressPoints[0]?.progress);
+  const lastProgress = Number(progressPoints[progressPoints.length - 1]?.progress);
+  const progressDelta = Number.isFinite(firstProgress) && Number.isFinite(lastProgress)
+    ? Math.round((lastProgress - firstProgress) * 10) / 10 : null;
+
+  const countdownNumber = Number((text(dateCard?.querySelector('.countdown strong')) || '').replace(/[^0-9]/g, ''));
+  let paceLabel = '進み方を確認中';
+  let paceCopy = '学習履歴が増えるほど、推奨ルートとのズレを細かく確認できるようになります。';
+  if (progressDelta !== null && progressDelta > 0.2) {
+    paceLabel = '今週は前進中';
+    paceCopy = `直近7日間で到達度が ${progressDelta.toFixed(1)}pt 上がっています。今の優先分野を続けながら、修復した知識を再確認へつなげます。`;
+  } else if (progressDelta !== null && progressDelta >= -0.2) {
+    paceLabel = '今週は足場固め';
+    paceCopy = '到達度は大きく動いていません。問題数だけを増やさず、修復と再確認を進める時期です。';
+  } else if (progressDelta !== null) {
+    paceLabel = '再確認フェーズ';
+    paceCopy = '到達度が一時的に下がっています。覚えたままかを厳しく見直している可能性があります。';
+  }
+
+  if (dateCard && overallCard && currentCard && todayCard && !document.querySelector('.lt-top-left-stack')) {
     const stack = document.createElement('section');
     stack.className = 'lt-top-left-stack';
     dateCard.parentNode.insertBefore(stack, dateCard);
@@ -25,15 +46,26 @@ document.addEventListener('DOMContentLoaded', () => {
     planCard.className = 'card lt-exam-plan-card';
     planCard.innerHTML = `
       <div class="lt-exam-plan-heading">
-        <h2>🧭 試験までの進め方</h2>
-        <span>今の作戦</span>
+        <div>
+          <span class="lt-paid-badge">完全版</span>
+          <h2>🧭 合格までの推奨ルート</h2>
+        </div>
+        <strong class="lt-route-pace">${paceLabel}</strong>
       </div>
-      <div class="lt-exam-plan-grid">
+      <p class="lt-route-lead">残り${Number.isFinite(countdownNumber) ? `${countdownNumber}日` : '日数'}を、今の現在地から逆算して進めます。学習結果に合わせてルートは更新されます。</p>
+      <div class="lt-route-now-grid">
         <div><small>現在地</small><strong>${currentHeadline}</strong></div>
         <div><small>いま優先</small><strong>${priorityField}</strong><span>${priorityLabel}</span></div>
         <div><small>今日やる</small><strong>${todayAmount}</strong></div>
       </div>
-      <p><b>LTの考え方：</b>残り日数だけで焦らず、今の状態から「今日やること」までをつないで進めます。</p>`;
+      <div class="lt-route-timeline" aria-label="合格までの推奨ルート">
+        <div class="is-now"><i></i><span>今週</span><b>${priorityField}を優先</b><small>今日の学習を積み上げ、修復対象を減らす</small></div>
+        <div><i></i><span>1か月後</span><b>修復した知識を再確認へ</b><small>その場で解けただけではなく、時間を空けても答えられるか確認</small></div>
+        <div><i></i><span>3か月後</span><b>主要弱点を絞り込む</b><small>未確認領域を減らし、定着確認の比率を上げる</small></div>
+        <div><i></i><span>試験2か月前</span><b>実戦形式＋残った弱点</b><small>本番を意識した問題と、最後まで残る弱点を再修復</small></div>
+        <div class="is-goal"><i></i><span>試験日</span><b>合格を目指す</b><small>確認済み・定着した知識を本番で使える状態へ</small></div>
+      </div>
+      <div class="lt-route-judgement"><b>今の進み方：</b><span>${paceCopy}</span></div>`;
     stack.appendChild(planCard);
   }
 
@@ -88,16 +120,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (weeklyCard && !weeklyCard.querySelector('.lt-weekly-meaning')) {
-    const points = Array.isArray(window.LT_WEEKLY_LEARNING_SNAPSHOT?.overallProgress)
-      ? window.LT_WEEKLY_LEARNING_SNAPSHOT.overallProgress : [];
-    const first = Number(points[0]?.progress);
-    const last = Number(points[points.length - 1]?.progress);
-    const valid = Number.isFinite(first) && Number.isFinite(last);
-    const delta = valid ? Math.round((last - first) * 10) / 10 : null;
     let judgement = '学習量だけでなく、修復・再確認・定着がどう進んだかを一緒に見ます。';
-    if (delta !== null && delta > 0.2) judgement = `7日間で到達度が ${delta.toFixed(1)}pt 上がりました。取り組んだ量が、学習範囲・修復・定着の前進につながっています。`;
-    else if (delta !== null && delta >= -0.2) judgement = '到達度は大きく動いていません。問題数を増やすだけでなく、修復や再確認を進めることが次の伸びにつながります。';
-    else if (delta !== null) judgement = '到達度が一時的に下がっています。再確認の時期に入り、覚えたままかを厳しく見直している可能性があります。';
+    if (progressDelta !== null && progressDelta > 0.2) judgement = `7日間で到達度が ${progressDelta.toFixed(1)}pt 上がりました。取り組んだ量が、学習範囲・修復・定着の前進につながっています。`;
+    else if (progressDelta !== null && progressDelta >= -0.2) judgement = '到達度は大きく動いていません。問題数を増やすだけでなく、修復や再確認を進めることが次の伸びにつながります。';
+    else if (progressDelta !== null) judgement = '到達度が一時的に下がっています。再確認の時期に入り、覚えたままかを厳しく見直している可能性があります。';
     const box = document.createElement('div');
     box.className = 'lt-product-meaning lt-weekly-meaning';
     box.innerHTML = `<h3>この7日間をLTはこう見ています</h3><p>${judgement}</p><p><b>次の焦点：</b>${priorityField}を優先し、「やった量」から「定着した知識」へ変えていきます。</p>`;
