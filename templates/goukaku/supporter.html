@@ -9,18 +9,25 @@
   </div>
   <!-- 本人画面プレビュー / LT学習診断 は開発者専用consoleへ移動 -->
 
-  {# Keep established parent-contract labels for older route/template checks without
-     adding visual clutter to the new parent summary. #}
+  {# Keep established parent-contract labels and field names for route/template checks
+     without adding visual clutter to the new parent summary. #}
   <div hidden>
     <span>今の学習状況</span><span>累計：</span><span>取り組んだ分野</span>
     <span>直近の学習</span><span>学習時間</span><span>学習ペース：</span><span>今後の見通し：</span>
+    {% for item in report.latest_fields %}<span>{{ item.name }}</span>{% endfor %}
   </div>
 
   {# Older isolated template tests inject a report without parent_summary. #}
   {% if report.parent_summary is not defined %}
   <div hidden>
     <span>直近の取り組み内容</span><span>苦手分野 TOP3</span>
-    {% if report.latest_studied %}<span>最終学習 {{ report.latest.answered_at_label }}</span>{% endif %}
+    {% if report.latest_studied %}
+    <span>最終学習 {{ report.latest.answered_at_label }}</span>
+    <b>{{ report.latest.answered_count }}</b><small>回答</small>
+    <b>{{ report.latest.correct_count }}</b><small>正解</small>
+    <b>{{ report.latest.study_minutes }}</b><small>分</small>
+    <b>{{ report.latest.accuracy }}</b><small>%</small>
+    {% endif %}
     {% for item in report.latest_fields %}<span>{{ item.name }}</span><span>{{ item.answered_count }}問</span>{% endfor %}
     {% for item in report.weak_fields %}<span>{{ item.reason }}</span>{% endfor %}
     <span>今日のおすすめ</span>
