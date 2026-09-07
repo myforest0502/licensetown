@@ -38,6 +38,7 @@
 
   {% if report.parent_summary is defined %}
   {% set ps = report.parent_summary %}
+  {% set trend_label = '好調' if ps.accuracy_trend.status == '上向き' else '注意' if ps.accuracy_trend.status == '要確認' else '順調' if ps.accuracy_trend.status == 'ほぼ横ばい' else ps.accuracy_trend.status %}
   <section class="supporter-parent-hero card">
     <div class="supporter-parent-hero-heading">
       <div><span>まず、これだけ見ればOK</span><h2>今の状態</h2></div>
@@ -54,9 +55,9 @@
         <strong>{{ ps.pace.status }}</strong>
         <p>7日で{{ ps.recent_7d.learning_days }}日・{{ ps.recent_7d.answered_count }}問</p>
       </article>
-      <article class="{{ 'tone-green' if ps.accuracy_trend.status == '上向き' else 'tone-amber' if ps.accuracy_trend.status == '要確認' else 'tone-soft' }}">
+      <article class="{{ 'tone-green' if trend_label in ['好調', '順調'] else 'tone-amber' if trend_label == '注意' else 'tone-soft' }}">
         <span>📈 成績は上がった？</span>
-        <strong>{{ ps.accuracy_trend.status }}</strong>
+        <strong>{{ trend_label }}</strong>
         <p>{{ ps.accuracy_trend.reason }}</p>
       </article>
       <article class="{{ 'tone-green' if ps.trajectory.status == '順調' else 'tone-amber' if ps.trajectory.status in ['継続中', '様子見'] else 'tone-soft' }}">
