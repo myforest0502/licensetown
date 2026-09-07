@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const todayCard = document.querySelector('.learner-today-card');
   const overallCard = document.querySelector('.overall-progress-preview');
   const weeklyCard = document.querySelector('.weekly-learning-card');
+  const dateCard = document.querySelector('.date-card');
 
   const text = (el) => (el?.textContent || '').replace(/\s+/g, ' ').trim();
   const firstPriority = attentionCard?.querySelector('.learner-attention-list > div:first-child');
@@ -12,6 +13,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const priorityMessage = text(firstPriority?.querySelector('p')) || '学習履歴から、今いちばん効果が高い内容を優先します。';
   const todayAmount = text(todayCard?.querySelector('h2')) || '今日のおすすめ学習';
   const todayReason = text(todayCard?.querySelector('p')) || '今日の学習履歴に合わせて内容を選びます。';
+  const currentHeadline = text(currentCard?.querySelector('h2')) || '現在地を確認中';
+
+  if (dateCard && overallCard && !document.querySelector('.lt-top-left-stack')) {
+    const stack = document.createElement('section');
+    stack.className = 'lt-top-left-stack';
+    dateCard.parentNode.insertBefore(stack, dateCard);
+    stack.appendChild(dateCard);
+
+    const planCard = document.createElement('article');
+    planCard.className = 'card lt-exam-plan-card';
+    planCard.innerHTML = `
+      <div class="lt-exam-plan-heading">
+        <h2>🧭 試験までの進め方</h2>
+        <span>今の作戦</span>
+      </div>
+      <div class="lt-exam-plan-grid">
+        <div><small>現在地</small><strong>${currentHeadline}</strong></div>
+        <div><small>いま優先</small><strong>${priorityField}</strong><span>${priorityLabel}</span></div>
+        <div><small>今日やる</small><strong>${todayAmount}</strong></div>
+      </div>
+      <p><b>LTの考え方：</b>残り日数だけで焦らず、今の状態から「今日やること」までをつないで進めます。</p>`;
+    stack.appendChild(planCard);
+  }
 
   if (overallCard && !overallCard.querySelector('.lt-product-meaning')) {
     const progress = text(overallCard.querySelector('.ring span')) || '--';
