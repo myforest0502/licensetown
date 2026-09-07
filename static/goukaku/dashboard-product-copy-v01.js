@@ -22,18 +22,95 @@ document.addEventListener('DOMContentLoaded', () => {
   const progressDelta = Number.isFinite(firstProgress) && Number.isFinite(lastProgress)
     ? Math.round((lastProgress - firstProgress) * 10) / 10 : null;
 
-  const countdownNumber = Number((text(dateCard?.querySelector('.countdown strong')) || '').replace(/[^0-9]/g, ''));
-  let paceLabel = '進み方を確認中';
-  let paceCopy = '学習履歴が増えるほど、推奨ルートとのズレを細かく確認できるようになります。';
+  const routeSnapshot = window.LT_ROUTE_SNAPSHOT || {};
+  const countdownFromSnapshot = Number(routeSnapshot.daysUntilExam);
+  const countdownFromCard = Number((text(dateCard?.querySelector('.countdown strong')) || '').replace(/[^0-9]/g, ''));
+  const countdownNumber = Number.isFinite(countdownFromSnapshot) && countdownFromSnapshot >= 0
+    ? countdownFromSnapshot : countdownFromCard;
+  const totalAnswers = Number(routeSnapshot.totalAnswers) || 0;
+  const uniqueAnsweredQuestions = Number(routeSnapshot.uniqueAnsweredQuestions) || 0;
+  const currentProgress = Number.parseFloat((text(overallCard?.querySelector('.ring span')) || '').replace('%', ''));
+
+  // LT推奨ペース v0.1。合格確率ではなく、試験日から逆算した学習到達指標の目安。
+  // 日数が減るほど、新規範囲中心から修復・再確認・定着中心へ移る想定で段階的に加速させる。
+  const ROUTE_ANCHORS = [
+    { days: 365, progress: 0 },
+    { days: 240, progress: 2 },
+    { days: 180, progress: 5 },
+    { days: 150, progress: 15 },
+    { days: 120, progress: 30 },
+    { days: 90, progress: 50 },
+    { days: 60, progress: 70 },
+    { days: 30, progress: 88 },
+    { days: 14, progress: 96 },
+    { days: 0, progress: 100 },
+  ];
+
+  const interpolateRecommendedProgress = (daysRemaining) => {
+    if (!Number.isFinite(daysRemaining)) return null;
+    if (daysRemaining >= ROUTE_ANCHORS[0].days) return ROUTE_ANCHORS[0].progress;
+    if (daysRemaining <= 0) return 100;
+    for (let i = 0; i < ROUTE_ANCHORS.length - 1; i += 1) {
+      const start = ROUTE_ANCHORS[i];
+      const end = ROUTE_ANCHORS[i + 1];
+      if (daysRemaining <= start.days && daysRemaining >= end.days) {
+        const ratio = (start.days - daysRemaining) / (start.days - end.days);
+        return start.progress + ((end.progress - start.progress) * ratio);
+      }
+    }
+    return null;
+  };
+
+  const equivalentDaysRemaining = (progress) => {
+    if (!Number.isFinite(progress)) return null;
+    const value = Math.max(0, Math.min(100, progress));
+    if (value <= ROUTE_ANCHORS[0].progress) return ROUTE_ANCHORS[0].days;
+    if (value >= 100) return 0;
+    for (let i = 0; i < ROUTE_ANCHORS.length - 1; i += 1) {
+      const start = ROUTE_ANCHORS[i];
+      const end = ROUTE_ANCHORS[i + 1];
+      if (value >= start.progress && value <= end.progress) {
+        const width = end.progress - start.progress;
+        const ratio = width > 0 ? (value - start.progress) / width : 0;
+        return start.days - ((start.days - end.days) * ratio);
+      }
+    }
+    return null;
+  };
+
+  const recommendedProgress = interpolateRecommendedProgress(countdownNumber);
+  const equivalentDays = equivalentDaysRemaining(currentProgress);
+  const scheduleDeltaDays = Number.isFinite(countdownNumber) && Number.isFinite(equivalentDays)
+    ? Math.round(countdownNumber - equivalentDays) : null;
+  const progressGap = Number.isFinite(currentProgress) && Number.isFinite(recommendedProgress)
+    ? Math.round((currentProgress - recommendedProgress) * 10) / 10 : null;
+
+  let scheduleLabel = '推奨ペースを計算中';
+  let scheduleDetail = '学習データが増えると、推奨ラインとの差を確認できます。';
+  if (scheduleDeltaDays !== null) {
+    if (Math.abs(scheduleDeltaDays) <= 2) {
+      scheduleLabel = 'ほぼ予定どおり';
+      scheduleDetail = scheduleDeltaDays > 0 ? `約${scheduleDeltaDays}日先行` : scheduleDeltaDays < 0 ? `約${Math.abs(scheduleDeltaDays)}日遅れ` : '予定どおり';
+    } else if (scheduleDeltaDays > 0) {
+      scheduleLabel = scheduleDeltaDays <= 7 ? '推奨ペース内' : '前倒しで進行';
+      scheduleDetail = `約${scheduleDeltaDays}日先行`;
+    } else {
+      scheduleLabel = scheduleDeltaDays >= -7 ? '推奨ペース内' : '少し巻き返したい';
+      scheduleDetail = `約${Math.abs(scheduleDeltaDays)}日遅れ`;
+    }
+  }
+
+  let weeklyLabel = '進み方を確認中';
+  let weeklyCopy = '学習履歴が増えるほど、推奨ルートとのズレを細かく確認できるようになります。';
   if (progressDelta !== null && progressDelta > 0.2) {
-    paceLabel = '今週は前進中';
-    paceCopy = `直近7日間で到達度が ${progressDelta.toFixed(1)}pt 上がっています。今の優先分野を続けながら、修復した知識を再確認へつなげます。`;
+    weeklyLabel = '今週は前進中';
+    weeklyCopy = `直近7日間で到達度が ${progressDelta.toFixed(1)}pt 上がっています。今の優先分野を続けながら、修復した知識を再確認へつなげます。`;
   } else if (progressDelta !== null && progressDelta >= -0.2) {
-    paceLabel = '今週は足場固め';
-    paceCopy = '到達度は大きく動いていません。問題数だけを増やさず、修復と再確認を進める時期です。';
+    weeklyLabel = '今週は足場固め';
+    weeklyCopy = '到達度は大きく動いていません。問題数だけを増やさず、修復と再確認を進める時期です。';
   } else if (progressDelta !== null) {
-    paceLabel = '再確認フェーズ';
-    paceCopy = '到達度が一時的に下がっています。覚えたままかを厳しく見直している可能性があります。';
+    weeklyLabel = '再確認フェーズ';
+    weeklyCopy = '到達度が一時的に下がっています。覚えたままかを厳しく見直している可能性があります。';
   }
 
   if (dateCard && overallCard && currentCard && todayCard && !document.querySelector('.lt-top-left-stack')) {
@@ -41,6 +118,13 @@ document.addEventListener('DOMContentLoaded', () => {
     stack.className = 'lt-top-left-stack';
     dateCard.parentNode.insertBefore(stack, dateCard);
     stack.appendChild(dateCard);
+
+    const recommendedDisplay = Number.isFinite(recommendedProgress) ? `${recommendedProgress.toFixed(1)}%` : '--';
+    const currentDisplay = Number.isFinite(currentProgress) ? `${currentProgress.toFixed(1)}%` : '--';
+    const gapDisplay = progressGap === null ? '--' : `${progressGap >= 0 ? '+' : ''}${progressGap.toFixed(1)}pt`;
+    const activityCopy = totalAnswers > 0
+      ? `${totalAnswers.toLocaleString('ja-JP')}回答・${uniqueAnsweredQuestions.toLocaleString('ja-JP')}問に取り組んだ記録を確認。`
+      : 'これからの学習記録を使って、推奨ルートとの差を更新します。';
 
     const planCard = document.createElement('article');
     planCard.className = 'card lt-exam-plan-card';
@@ -50,9 +134,15 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="lt-paid-badge">完全版</span>
           <h2>🧭 合格までの推奨ルート</h2>
         </div>
-        <strong class="lt-route-pace">${paceLabel}</strong>
+        <strong class="lt-route-pace">${scheduleLabel}</strong>
       </div>
       <p class="lt-route-lead">残り${Number.isFinite(countdownNumber) ? `${countdownNumber}日` : '日数'}を、今の現在地から逆算して進めます。学習結果に合わせてルートは更新されます。</p>
+      <div class="lt-route-pace-panel">
+        <div><small>この時点の推奨</small><strong>${recommendedDisplay}</strong><span>LT学習到達指標</span></div>
+        <div><small>現在</small><strong>${currentDisplay}</strong><span>推奨との差 ${gapDisplay}</span></div>
+        <div class="lt-route-pace-result"><small>推奨ルートとの位置</small><strong>${scheduleDetail}</strong><span>${scheduleLabel}</span></div>
+      </div>
+      <p class="lt-route-evidence">${activityCopy} <b>回答数だけではなく、修復・再確認・定着まで含めて現在地を判定します。</b></p>
       <div class="lt-route-now-grid">
         <div><small>現在地</small><strong>${currentHeadline}</strong></div>
         <div><small>いま優先</small><strong>${priorityField}</strong><span>${priorityLabel}</span></div>
@@ -65,7 +155,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <div><i></i><span>試験2か月前</span><b>実戦形式＋残った弱点</b><small>本番を意識した問題と、最後まで残る弱点を再修復</small></div>
         <div class="is-goal"><i></i><span>試験日</span><b>合格を目指す</b><small>確認済み・定着した知識を本番で使える状態へ</small></div>
       </div>
-      <div class="lt-route-judgement"><b>今の進み方：</b><span>${paceCopy}</span></div>`;
+      <div class="lt-route-judgement"><b>${weeklyLabel}：</b><span>${weeklyCopy}</span></div>
+      <small class="lt-route-disclaimer">※ 推奨値はLTの学習到達指標に対する目安で、合格確率ではありません。実データを見ながら今後も調整します。</small>`;
     stack.appendChild(planCard);
   }
 
