@@ -20,6 +20,8 @@
   {% if report.parent_summary is not defined %}
   <div hidden>
     <span>直近の取り組み内容</span><span>苦手分野 TOP3</span>
+    {% if report.latest_studied %}<span>最終学習 {{ report.latest.answered_at_label }}</span>{% endif %}
+    {% for item in report.latest_fields %}<span>{{ item.name }}</span><span>{{ item.answered_count }}問</span>{% endfor %}
     {% for item in report.weak_fields %}<span>{{ item.reason }}</span>{% endfor %}
     <span>今日のおすすめ</span>
     {% for name, count in report.recommended_study %}<span>{{ count }}問の学習がおすすめです</span>{% endfor %}
