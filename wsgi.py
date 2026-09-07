@@ -28,6 +28,7 @@ from dashboard_progress_trend import install_dashboard_progress_trend
 from developer_access_recovery import install_developer_access_recovery
 from phase11_gate_ui import install_phase11_gate_ui
 from prerequisite_attempt_cache import install_prerequisite_attempt_cache
+from site_direct_line_cta import install_site_direct_line_cta
 from site_marketing_hotfix import install_site_marketing_hotfix
 from site_marketing_refresh import install_site_marketing_refresh
 from site_marketing_viewport_fix import install_site_marketing_viewport_fix
@@ -115,8 +116,11 @@ install_daily_wrong_review(legacy)
 legacy.create_text_response = create_text_response
 legacy.create_home_message = create_home_message
 # Flask executes after_request handlers in reverse registration order.
-# Register the viewport pass first so it runs last, after refresh + hotfix.
+# Register the viewport pass first so it runs last. The direct CTA pass is
+# registered before hotfix so it runs after hotfix and restores the verified
+# onboarding link as the final public action.
 install_site_marketing_viewport_fix(legacy.app)
+install_site_direct_line_cta(legacy.app)
 install_site_marketing_hotfix(legacy.app)
 install_site_marketing_refresh(legacy.app)
 install_phase11_gate_ui(legacy.app)
