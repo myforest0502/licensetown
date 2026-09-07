@@ -21,3 +21,22 @@ def test_product_copy_explains_paid_dashboard_meaning_and_next_actions():
     assert "今日終えたら" in js
     assert "この7日間をLTはこう見ています" in js
     assert "学習範囲・修復・定着" in js
+
+
+def test_paid_route_compares_current_progress_with_recommended_pace():
+    root = Path(__file__).resolve().parents[1]
+    base = (root / "templates" / "goukaku" / "base.html").read_text(encoding="utf-8")
+    js = (root / "static" / "goukaku" / "dashboard-product-copy-v01.js").read_text(encoding="utf-8")
+    css = (root / "static" / "goukaku" / "dashboard-product-copy-v01.css").read_text(encoding="utf-8")
+
+    assert "LT_ROUTE_SNAPSHOT" in base
+    assert "daysUntilExam" in base
+    assert "totalAnswers" in base
+    assert "uniqueAnsweredQuestions" in base
+    assert "ROUTE_ANCHORS" in js
+    assert "interpolateRecommendedProgress" in js
+    assert "equivalentDaysRemaining" in js
+    assert "この時点の推奨" in js
+    assert "推奨ルートとの位置" in js
+    assert "合格確率ではありません" in js
+    assert "lt-route-pace-panel" in css
