@@ -1,0 +1,8 @@
+{
+  "__pycache__/app.cpython-314.pyc": "2bd448390671a29f7c09becb7334f38c9ea42559223382b88f158257eed42e2e",
+  "app.py": "aef518c3cd002dc222302be4c1fff95517b8c3988cadf18f93e1b93379d91ff6",
+  "static/site/site.css": "ce224ce3a794295e4da8936f1952ea749e4e4be00f6423d8f08a2ee5931adab0",
+  "templates/site/home.html": "8715d7467cf0768010c2a9072038e68ddfef59a935a88c6d64e0890ab7b1e350",
+  "tests/test_learning_stats.py": "56e5ba36ce2e39511a315f1a0f6ffb86e93bbc587cfe9dc08a8993456273efdc",
+  "tests/test_quiz_answer_numbering.py": "d80bb4bd2f8e88899f397c613335f5c112093708d3f60da80922067f5a4eacf0"
+}
