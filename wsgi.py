@@ -13,6 +13,7 @@ import os
 
 import app as legacy
 import goukaku_ui as goukaku_module
+import supporter_learner_preview_bridge as supporter_preview_module
 from linebot.models import (
     MessageAction,
     QuickReply,
@@ -95,6 +96,9 @@ def _apply_rich_menu_v2_if_requested() -> None:
 # call time, so production behavior can be composed without rewriting app.py.
 install_prerequisite_attempt_cache(legacy)
 install_dashboard_progress_trend(legacy, goukaku_module)
+# The preview bridge imported build_dashboard by value before composition;
+# point that reference at the same decorated builder used by the learner route.
+supporter_preview_module.build_dashboard = goukaku_module.build_dashboard
 install_daily_wrong_review(legacy)
 legacy.create_text_response = create_text_response
 legacy.create_home_message = create_home_message
