@@ -2,16 +2,16 @@
 {% block title %}学習見守り{% endblock %}
 {% block content %}
 <header class="app-header title-only"><h1>学習見守り</h1></header>
-<div class="page-content supporter-page">
-  <p class="supporter-lead"><b>{{ learner_name }}</b>さんの学習レポート</p>
-  <!-- 本人画面プレビュー / LT学習診断 は開発者専用consoleへ移動 -->
+<div class="page-content supporter-page supporter-parent-v01">
+  <div class="supporter-parent-intro">
+    <p class="supporter-lead"><b>{{ learner_name }}</b>さんの学習レポート</p>
+    <p>細かい学習診断ではなく、親として知りたいことだけをまとめています。</p>
+  </div>
 
-  {# Older isolated template tests inject a report without parent_summary. This
-     branch never occurs for the production report builder. #}
+  {# Older isolated template tests inject a report without parent_summary. #}
   {% if report.parent_summary is not defined %}
   <div hidden>
-    <span>直近の取り組み内容</span>
-    <span>苦手分野 TOP3</span>
+    <span>直近の取り組み内容</span><span>苦手分野 TOP3</span>
     {% for item in report.weak_fields %}<span>{{ item.reason }}</span>{% endfor %}
     <span>今日のおすすめ</span>
     {% for name, count in report.recommended_study %}<span>{{ count }}問の学習がおすすめです</span>{% endfor %}
@@ -19,73 +19,92 @@
   {% endif %}
 
   {% if report.parent_summary is defined %}
-  <section class="card supporter-current-position">
-    <h2>今の学習状況</h2>
-    <p><strong>{{ report.parent_summary.current_position.text }}</strong></p>
-    <p><b>累計：</b>{{ report.parent_summary.current_position.answered_count }}問</p>
-    <p><b>取り組んだ分野：</b>{{ report.parent_summary.current_position.field_count }}分野</p>
-    <p><b>これまでの正答率：</b>{{ report.parent_summary.current_position.average_accuracy }}%</p>
+  {% set ps = report.parent_summary %}
+  <section class="supporter-parent-hero card">
+    <div class="supporter-parent-hero-heading">
+      <div><span>まず、これだけ見ればOK</span><h2>今の状態</h2></div>
+      <small>合格を保証する判定ではなく、現在の学習状況の目安です</small>
+    </div>
+    <div class="supporter-parent-kpis">
+      <article>
+        <span>試験まであと</span>
+        <strong>{% if ps.exam.days_until_exam is not none %}{{ ps.exam.days_until_exam }}<small>日</small>{% else %}--{% endif %}</strong>
+        <p>{{ ps.exam.date_label }}</p>
+      </article>
+      <article>
+        <span>ちゃんと続いてる？</span>
+        <strong>{{ ps.pace.status }}</strong>
+        <p>7日で{{ ps.recent_7d.learning_days }}日・{{ ps.recent_7d.answered_count }}問</p>
+      </article>
+      <article>
+        <span>成績は上がった？</span>
+        <strong>{{ ps.accuracy_trend.status }}</strong>
+        <p>{{ ps.accuracy_trend.reason }}</p>
+      </article>
+      <article>
+        <span>このままで大丈夫？</span>
+        <strong>{{ ps.trajectory.status }}</strong>
+        <p>{{ ps.trajectory.reason }}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="supporter-parent-grid">
+    <article class="card supporter-parent-now">
+      <h2>そもそも、やってるの？</h2>
+      {% if report.latest_studied %}
+      <div class="supporter-parent-last-study"><span>最終学習</span><strong>{{ report.latest.answered_at_label }}</strong></div>
+      <div class="supporter-parent-mini-grid">
+        <p><span>直近の回答</span><b>{{ report.latest.answered_count }}問</b></p>
+        <p><span>直近の正答率</span><b>{{ report.latest.accuracy }}%</b></p>
+        <p><span>直近7日</span><b>{{ report.weekly_answers }}問</b></p>
+        <p><span>連続学習</span><b>{{ report.streak_days }}日</b></p>
+      </div>
+      {% else %}
+      <p class="empty-state">まだ学習記録がありません。</p>
+      {% endif %}
+      <p class="supporter-parent-answer">{{ ps.pace.reason }}</p>
+    </article>
+
+    <article class="card supporter-parent-progress">
+      <h2>ちょっとは前に進んでる？</h2>
+      <div class="supporter-parent-mini-grid">
+        <p><span>累計回答</span><b>{{ ps.cumulative.answered_count }}問</b></p>
+        <p><span>累計学習時間</span><b>{{ ps.cumulative.study_minutes // 60 }}時間{{ ps.cumulative.study_minutes % 60 }}分</b></p>
+        <p><span>直近7日正答率</span><b>{{ ps.recent_7d.accuracy }}%</b></p>
+        <p><span>全体の正答率</span><b>{{ ps.current_position.average_accuracy }}%</b></p>
+      </div>
+      <p class="supporter-parent-answer"><b>{{ ps.current_position.status }}</b> — {{ ps.current_position.text }}</p>
+    </article>
+  </section>
+
+  <section class="card supporter-parent-fields">
+    <div class="supporter-parent-section-heading"><div><span>得意と苦手</span><h2>何ができていて、何を見直している？</h2></div><small>10問以上取り組んだ分野から表示</small></div>
+    <div class="supporter-parent-field-columns">
+      <article>
+        <h3>👍 比較的できている分野</h3>
+        {% for item in ps.field_snapshot.strengths %}
+        <div class="supporter-parent-field-row"><b>{{ item.name }}</b><span>{{ item.accuracy }}%</span><small>{{ item.answered_count }}問</small></div>
+        {% else %}<p class="empty-state">判定できる学習量をためています。</p>{% endfor %}
+      </article>
+      <article>
+        <h3>🔎 今後確認したい分野</h3>
+        {% for item in ps.field_snapshot.needs_attention %}
+        <div class="supporter-parent-field-row"><b>{{ item.name }}</b><span>{{ item.accuracy }}%</span><small>{{ item.answered_count }}問</small></div>
+        {% else %}<p class="empty-state">判定できる学習量をためています。</p>{% endfor %}
+      </article>
+    </div>
+  </section>
+
+  <section class="card supporter-parent-action">
+    <span>親として今すること</span>
+    <h2>基本は、見守るだけでOK</h2>
+    <p>{{ ps.parent_action }}</p>
+    <div class="supporter-parent-note"><b>LTからの見守りメモ</b><span>{{ report.comment }}</span></div>
   </section>
   {% endif %}
 
-  <section class="supporter-today {{ 'studied' if report.latest_studied else 'resting' }}">
-    <div>
-      <span>直近の学習</span>
-      <strong>{% if report.latest_studied %}最終学習 {{ report.latest.answered_at_label }}{% else %}まだ学習記録がありません{% endif %}</strong>
-    </div>
-    {% if report.latest_studied %}
-    <div class="supporter-today-kpis">
-      <p><b>{{ report.latest.answered_count }}</b><small>回答</small></p>
-      <p><b>{{ report.latest.correct_count }}</b><small>正解</small></p>
-      <p><b>{{ report.latest.study_minutes }}</b><small>分</small></p>
-      <p><b>{{ report.latest.accuracy }}</b><small>%</small></p>
-    </div>
-    {% endif %}
-  </section>
-
-  <section class="card today-fields">
-    <h2>直近に取り組んだ分野</h2>
-    {% if report.latest_fields %}
-      {% for item in report.latest_fields %}
-      <div><b>{{ item.name }}</b><span>{{ item.answered_count }}問</span><span>正答率 {{ item.accuracy }}%</span></div>
-      {% endfor %}
-    {% else %}
-      <p class="empty-state">分野別の学習記録はまだありません。</p>
-    {% endif %}
-  </section>
-
-  <section class="supporter-grid">
-    <article class="card">
-      <h2>直近7日</h2>
-      <div class="supporter-stats">
-        <p><span>学習日数</span><strong>{{ report.weekly_learning_days }}<small>日</small></strong></p>
-        <p><span>回答数</span><strong>{{ report.weekly_answers }}<small>問</small></strong></p>
-        <p><span>学習時間</span><strong>{{ report.weekly_study_minutes }}<small>分</small></strong></p>
-        <p><span>正答率</span><strong>{{ report.weekly_accuracy }}<small>%</small></strong></p>
-      </div>
-    </article>
-    <article class="card streak-support">
-      <h2>継続</h2><strong>{{ report.streak_days }}<small>日</small></strong><p>連続学習日数</p>
-    </article>
-  </section>
-
-  <section class="card supporter-comment">
-    <h2>見守りメモ</h2>
-    <p>{{ report.comment }}</p>
-    {% if report.parent_summary is defined %}
-    <p><b>学習ペース：</b>{{ report.parent_summary.pace.status }} — {{ report.parent_summary.pace.reason }}</p>
-    <p><b>今後の見通し：</b>{{ report.parent_summary.trajectory.status }} — {{ report.parent_summary.trajectory.reason }}</p>
-    {% endif %}
-  </section>
-
-  <section class="card supporter-fields">
-    <h2>取り組んだ分野（全期間）</h2>
-    {% for item in report.fields %}
-    <div><b>{{ item.name }}</b><span>{{ item.answered_count }}問</span><div class="bar"><i class="score-{{ 'good' if item.accuracy >= 70 else 'warn' if item.accuracy >= 50 else 'weak' }}" style="width:{{ item.accuracy }}%"></i></div><strong>{{ item.accuracy }}%</strong></div>
-    {% else %}<p class="empty-state">分野別データはまだありません。</p>{% endfor %}
-  </section>
-
-  <a class="supporter-dashboard-link" href="{{ url_for('goukaku_ui.supporter_goukaku_home', token=supporter_token, learner_user_id=learner_id) }}">見守り用 合格への道 <span>詳しく見る・閲覧専用 ›</span></a>
+  <a class="supporter-dashboard-link supporter-parent-detail-link" href="{{ url_for('goukaku_ui.supporter_goukaku_home', token=supporter_token, learner_user_id=learner_id) }}">もっと詳しく見る <span>見守り用 合格への道・閲覧専用 ›</span></a>
   <p class="supporter-privacy">学習量・学習時間・成績だけを共有しています。相談内容や私的な会話は表示されません。</p>
 </div>
 {% endblock %}
