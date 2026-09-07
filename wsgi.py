@@ -24,6 +24,7 @@ from linebot.models import (
 
 from daily_wrong_review import REVIEW_COMMAND, install_daily_wrong_review
 from dashboard_progress_trend import install_dashboard_progress_trend
+from developer_access_recovery import install_developer_access_recovery
 from phase11_gate_ui import install_phase11_gate_ui
 from prerequisite_attempt_cache import install_prerequisite_attempt_cache
 from site_marketing_hotfix import install_site_marketing_hotfix
@@ -109,6 +110,7 @@ install_site_marketing_hotfix(legacy.app)
 install_site_marketing_refresh(legacy.app)
 install_phase11_gate_ui(legacy.app)
 install_supporter_learner_preview_bridge(legacy.app)
+install_developer_access_recovery(legacy.app)
 
 _apply_rich_menu_v2_if_requested()
 
