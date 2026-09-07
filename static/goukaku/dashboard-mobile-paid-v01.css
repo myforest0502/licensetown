@@ -27,6 +27,11 @@
   .learning-overview,.dashboard-story-layout{display:block!important}.learning-overview>.subject-card,.learning-overview>.guidance-stack,.dashboard-story-left,.dashboard-story-right{width:100%;margin:0 0 12px!important}.guidance-stack>*{margin:0 0 10px!important}
   .subject-card,.weak-card,.motivation-card,.state-progress-card,.strategy-note-card,.learning-position-card{padding:14px!important}
   .field-progress-row dl{grid-template-columns:repeat(3,minmax(0,1fr))}.field-progress-row dd{font-size:12px}
+  .weak-row{display:grid!important;grid-template-columns:36px minmax(0,1fr) auto!important;grid-template-rows:auto auto;column-gap:10px;row-gap:8px;align-items:start}
+  .weak-row>.rank{grid-column:1;grid-row:1}
+  .weak-row>p{grid-column:2;grid-row:1;min-width:0;margin:0!important}
+  .weak-row>strong{grid-column:3;grid-row:1;white-space:nowrap;align-self:start}
+  .weak-row>.readonly-action,.weak-row>.learner-preview-inert{grid-column:2/4;grid-row:2;display:block!important;width:100%!important;max-width:none!important;box-sizing:border-box;white-space:normal!important;word-break:keep-all!important;writing-mode:horizontal-tb!important;text-align:center;line-height:1.45;padding:8px 10px}
 
   .weekly-learning-card{padding:14px!important}.weekly-learning-card h2{font-size:20px}.weekly-learning-card canvas{max-width:100%;height:auto!important}.weekly-learning-card .lt-weekly-meaning{margin-top:10px}
   .history-checkpoint-grid{display:block!important}.history-checkpoint-grid>*{margin:0 0 10px!important;width:100%}
