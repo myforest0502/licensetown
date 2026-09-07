@@ -1,0 +1,39 @@
+@media(max-width:720px){
+  .page-content.dashboard-grid{display:block;padding:10px 10px 24px}
+  .dashboard-grid>*{width:100%;max-width:none;box-sizing:border-box}
+  .dashboard-grid>.learner-navigation,.dashboard-grid>.lt-top-left-stack,.dashboard-grid>.overall-progress-preview,.dashboard-grid>.summary-grid,.dashboard-grid>.learning-overview,.dashboard-grid>.weekly-learning-card,.dashboard-grid>.history-checkpoint-grid{margin:0 0 12px!important}
+
+  .app-header.title-only{padding:12px 14px}.app-header.title-only h1{font-size:22px}
+
+  .lt-top-left-stack .date-card{display:grid;grid-template-columns:minmax(0,1fr) 118px;gap:8px;padding:10px 12px}
+  .lt-top-left-stack .date-list>div{padding:2px 0}.lt-top-left-stack .date-list p{margin:0}.lt-top-left-stack .date-list b{font-size:11px}.lt-top-left-stack .date-list strong{font-size:13px}
+  .lt-top-left-stack .countdown{min-height:76px;padding:8px}.lt-top-left-stack .countdown>span{font-size:10px}.lt-top-left-stack .countdown>strong{font-size:34px}.lt-top-left-stack .countdown em{font-size:9px}
+
+  .lt-exam-plan-card{padding:14px!important}.lt-exam-plan-heading{display:block}.lt-exam-plan-heading>div{margin-bottom:8px}.lt-exam-plan-heading h2{font-size:19px}.lt-route-pace{display:inline-block;margin-bottom:8px;font-size:11px}
+  .lt-route-lead{font-size:12px}.lt-route-pace-panel{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.lt-route-pace-panel>div{padding:8px}.lt-route-pace-panel strong{font-size:18px}.lt-route-pace-panel .lt-route-pace-result strong{font-size:15px}
+  .lt-route-now-grid{grid-template-columns:1fr;gap:6px}.lt-route-now-grid>div{padding:8px 10px}.lt-route-now-grid strong{font-size:14px}
+  .lt-route-timeline{display:block;padding-left:20px}.lt-route-timeline:before{left:6px;right:auto;top:7px;bottom:8px;width:2px;height:auto}.lt-route-timeline>div{padding:0 0 14px 16px;text-align:left}.lt-route-timeline i{left:0;top:2px;transform:none}.lt-route-timeline span{font-size:10px}.lt-route-timeline b{font-size:13px}.lt-route-timeline small{font-size:10px;line-height:1.5}
+  .lt-route-judgement,.lt-route-evidence{font-size:11px}
+
+  .overall-progress-preview{padding:14px}.overall-progress-preview>h2{font-size:20px}.overall-progress-preview .achievement-body{display:block}.overall-progress-preview .ring{margin:0 auto 12px}.overall-progress-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.overall-progress-metrics>div{min-width:0}
+  .lt-product-meaning{padding:12px}.lt-product-meaning h3{font-size:15px}.lt-product-meaning p{font-size:12px}.lt-meaning-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.lt-meaning-grid>div{padding:8px}.lt-meaning-grid strong{font-size:17px}.lt-meaning-grid span,.lt-meaning-grid small{font-size:9px}
+
+  .learner-navigation{display:block}.learner-navigation>*{margin:0 0 10px!important}.learner-navigation article{padding:14px}.learner-nav-kicker{font-size:18px!important;font-weight:800}.learner-current-card h2,.learner-today-card h2{font-size:20px!important;line-height:1.4}.learner-navigation p{font-size:12px;line-height:1.65}.learner-nav-action,.recommend-challenge{width:100%;min-height:46px}
+  .learner-attention-list>div{padding:10px 0}.learner-attention-list p{margin-top:4px}
+  .learner-nav-detail-grid{grid-template-columns:1fr!important}
+
+  .summary-grid.five{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.summary-grid.five .mini-card{min-height:94px;padding:10px}.summary-grid.five .mini-card:last-child{grid-column:1/-1}.mini-card strong{font-size:23px}.mini-card b{font-size:11px}
+
+  .learning-overview,.dashboard-story-layout{display:block!important}.learning-overview>.subject-card,.learning-overview>.guidance-stack,.dashboard-story-left,.dashboard-story-right{width:100%;margin:0 0 12px!important}.guidance-stack>*{margin:0 0 10px!important}
+  .subject-card,.weak-card,.motivation-card,.state-progress-card,.strategy-note-card,.learning-position-card{padding:14px!important}
+  .field-progress-row dl{grid-template-columns:repeat(3,minmax(0,1fr))}.field-progress-row dd{font-size:12px}
+
+  .weekly-learning-card{padding:14px!important}.weekly-learning-card h2{font-size:20px}.weekly-learning-card canvas{max-width:100%;height:auto!important}.weekly-learning-card .lt-weekly-meaning{margin-top:10px}
+  .history-checkpoint-grid{display:block!important}.history-checkpoint-grid>*{margin:0 0 10px!important;width:100%}
+
+  .lt-action-flow{display:grid;grid-template-columns:1fr auto 1fr;gap:5px}.lt-action-flow span{text-align:center;font-size:11px}.lt-action-flow i:nth-of-type(2){display:none}
+}
+
+@media(max-width:390px){
+  .lt-route-pace-panel{grid-template-columns:1fr}.overall-progress-metrics,.lt-meaning-grid{grid-template-columns:1fr}.summary-grid.five{grid-template-columns:1fr}.summary-grid.five .mini-card:last-child{grid-column:auto}.lt-top-left-stack .date-card{grid-template-columns:1fr 106px}.lt-top-left-stack .countdown>strong{font-size:30px}
+}
