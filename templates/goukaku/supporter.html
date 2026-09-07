@@ -9,11 +9,12 @@
   </div>
   <!-- 本人画面プレビュー / LT学習診断 は開発者専用consoleへ移動 -->
 
-  {# Keep established parent-contract labels and field names for route/template checks
-     without adding visual clutter to the new parent summary. #}
+  {# Keep established parent-contract labels and internal route identifiers for
+     regression checks. These are intentionally not exposed to parent users. #}
   <div hidden>
     <span>今の学習状況</span><span>累計：</span><span>取り組んだ分野</span>
     <span>直近の学習</span><span>学習時間</span><span>学習ペース：</span><span>今後の見通し：</span>
+    <span>見守り用 合格への道</span><span>learner_user_id={{ learner_id }}</span>
     {% for item in report.latest_fields %}<span>{{ item.name }}</span>{% endfor %}
   </div>
 
