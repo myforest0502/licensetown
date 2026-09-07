@@ -22,6 +22,7 @@ from database import (
     get_learning_summary,
     get_unique_answered_question_count,
 )
+from dashboard_settings import get_effective_exam_date, tokyo_today
 from learning_analysis import build_learning_guidance
 from supporter_performance import measure
 
@@ -138,7 +139,96 @@ def _trajectory(summary: dict, activity: dict, fields: list[dict]) -> dict:
     }
 
 
-def _parent_summary(summary: dict, activity: dict, fields: list[dict], latest: dict) -> dict:
+def _exam_snapshot(learner_user_id: str) -> dict:
+    today = tokyo_today()
+    exam_date = get_effective_exam_date(learner_user_id)
+    return {
+        "date_label": exam_date.strftime("%Y/%m/%d") if exam_date else "未設定",
+        "days_until_exam": max((exam_date - today).days, 0) if exam_date else None,
+    }
+
+
+def _accuracy_trend(activity: dict) -> dict:
+    """Compare the first and last three calendar days inside the current 7-day window."""
+    daily = list(activity.get("daily") or [])
+    if len(daily) < 6:
+        return {"status": "判定中", "delta": None, "reason": "比較できる学習記録をためています。"}
+
+    def totals(rows):
+        answered = sum(int(row.get("answered_count") or 0) for row in rows)
+        correct = sum(int(row.get("correct_count") or 0) for row in rows)
+        accuracy = round(correct / answered * 100) if answered else None
+        return answered, accuracy
+
+    early_answers, early_accuracy = totals(daily[:3])
+    recent_answers, recent_accuracy = totals(daily[-3:])
+    if early_answers < 10 or recent_answers < 10:
+        return {
+            "status": "判定中",
+            "delta": None,
+            "reason": "前半・後半それぞれ10問以上になると、直近の変化を比較できます。",
+        }
+
+    delta = recent_accuracy - early_accuracy
+    if delta >= 5:
+        status = "上向き"
+    elif delta <= -5:
+        status = "要確認"
+    else:
+        status = "ほぼ横ばい"
+    sign = "+" if delta > 0 else ""
+    return {
+        "status": status,
+        "delta": delta,
+        "reason": f"直近7日の前半 {early_accuracy}% → 後半 {recent_accuracy}%（{sign}{delta}pt）。",
+    }
+
+
+def _parent_field_snapshot(fields: list[dict]) -> dict:
+    """Show only established fields so tiny samples do not become parent-facing labels."""
+    eligible = [
+        item for item in fields
+        if int(item.get("answered_count") or 0) >= 10 and item.get("accuracy") is not None
+    ]
+    strengths = sorted(
+        eligible,
+        key=lambda item: (-int(item["accuracy"]), -int(item["answered_count"]), item["name"]),
+    )[:3]
+    needs_attention = sorted(
+        eligible,
+        key=lambda item: (int(item["accuracy"]), -int(item["answered_count"]), item["name"]),
+    )[:3]
+
+    def compact(item):
+        return {
+            "name": item["name"],
+            "accuracy": int(item["accuracy"]),
+            "answered_count": int(item["answered_count"]),
+        }
+
+    return {
+        "strengths": [compact(item) for item in strengths],
+        "needs_attention": [compact(item) for item in needs_attention],
+        "minimum_answers": 10,
+    }
+
+
+def _parent_action(latest: dict, pace: dict, trend: dict) -> str:
+    if not latest.get("has_learning"):
+        return "今は結果を問い詰めず、まず再開できるタイミングを見守るのがおすすめです。"
+    if pace["status"] == "継続中" and trend["status"] in {"上向き", "ほぼ横ばい", "判定中"}:
+        return "今は大きく口を出さず、続いていることをそのまま見守って大丈夫です。"
+    if pace["status"] == "ペース確認":
+        return "問題数を責めるより、無理なく続けられているかだけ確認してあげてください。"
+    if trend["status"] == "要確認":
+        return "点数だけで判断せず、弱い分野をLTで見直している途中かを見守ってください。"
+    return "学習の再開と継続を優先し、結果はLTの推移を見ながら確認していきましょう。"
+
+
+def _parent_summary(summary: dict, activity: dict, fields: list[dict], latest: dict, learner_user_id: str) -> dict:
+    pace = _pace(activity)
+    trajectory = _trajectory(summary, activity, fields)
+    trend = _accuracy_trend(activity)
     return {
         "latest_day": {
             "has_learning": bool(latest.get("has_learning")),
@@ -163,10 +253,15 @@ def _parent_summary(summary: dict, activity: dict, fields: list[dict], latest: d
             "learning_days": int(activity.get("weekly_learning_days") or 0),
             "answered_count": int(activity.get("weekly_answers") or 0),
             "study_minutes": int(activity.get("weekly_study_minutes") or 0),
+            "accuracy": int(activity.get("weekly_accuracy") or 0),
         },
-        "pace": _pace(activity),
+        "exam": _exam_snapshot(learner_user_id),
+        "pace": pace,
         "current_position": _current_position(summary, fields),
-        "trajectory": _trajectory(summary, activity, fields),
+        "trajectory": trajectory,
+        "accuracy_trend": trend,
+        "field_snapshot": _parent_field_snapshot(fields),
+        "parent_action": _parent_action(latest, pace, trend),
     }
 
 
@@ -229,7 +324,13 @@ def build_supporter_report(learner_user_id: str, *, _connection=None) -> dict:
         with measure("python.learning_guidance"):
             guidance = build_learning_guidance(summary["total_answers"], all_fields)
         with measure("python.parent_summary"):
-            parent_summary = _parent_summary(summary, activity, learned_fields, latest)
+            parent_summary = _parent_summary(
+                summary,
+                activity,
+                learned_fields,
+                latest,
+                learner_user_id,
+            )
 
         return {
             "parent_summary": parent_summary,
