@@ -29,6 +29,7 @@ from developer_access_recovery import install_developer_access_recovery
 from one_question_starter import install_one_question_starter, one_question_quick_reply_item
 from phase11_gate_ui import install_phase11_gate_ui
 from prerequisite_attempt_cache import install_prerequisite_attempt_cache
+from site_beta_copy import install_site_beta_copy
 from site_direct_line_cta import install_site_direct_line_cta
 from site_marketing_hotfix import install_site_marketing_hotfix
 from site_marketing_refresh import install_site_marketing_refresh
@@ -137,9 +138,8 @@ legacy.create_text_response = create_text_response
 legacy.create_home_message = create_home_message
 legacy.reply_new_user_welcome = reply_new_user_welcome
 # Flask executes after_request handlers in reverse registration order.
-# Register the viewport pass first so it runs last. The direct CTA pass is
-# registered before hotfix so it runs after hotfix and restores the verified
-# onboarding link as the final public action.
+# Register beta copy first so it runs last and normalizes final public wording.
+install_site_beta_copy(legacy.app)
 install_site_marketing_viewport_fix(legacy.app)
 install_site_direct_line_cta(legacy.app)
 install_site_marketing_hotfix(legacy.app)
