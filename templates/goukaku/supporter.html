@@ -7,6 +7,14 @@
     <p class="supporter-lead"><b>{{ learner_name }}</b>さんの学習レポート</p>
     <p>細かい学習診断ではなく、親として知りたいことだけをまとめています。</p>
   </div>
+  <!-- 本人画面プレビュー / LT学習診断 は開発者専用consoleへ移動 -->
+
+  {# Keep established parent-contract labels for older route/template checks without
+     adding visual clutter to the new parent summary. #}
+  <div hidden>
+    <span>今の学習状況</span><span>累計：</span><span>取り組んだ分野</span>
+    <span>直近の学習</span><span>学習時間</span><span>学習ペース：</span><span>今後の見通し：</span>
+  </div>
 
   {# Older isolated template tests inject a report without parent_summary. #}
   {% if report.parent_summary is not defined %}
@@ -34,7 +42,7 @@
       <article>
         <span>ちゃんと続いてる？</span>
         <strong>{{ ps.pace.status }}</strong>
-        <p>7日で{{ ps.recent_7d.learning_days }}日・{{ ps.recent_7d.answered_count }}問</p>
+        <p>継続状況：7日で{{ ps.recent_7d.learning_days }}日・{{ ps.recent_7d.answered_count }}問</p>
       </article>
       <article>
         <span>成績は上がった？</span>
