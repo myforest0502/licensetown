@@ -20,7 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const right = document.createElement('div');
   right.className = 'dashboard-story-right';
 
+  // Keep the long subject overview on the left, then deliberately move two
+  // diagnostic cards from the right stack so both columns carry comparable
+  // information density.  Do not create vertical spacer gaps just to align
+  // the bottoms; cards should follow one another naturally.
   left.appendChild(subjectCard);
+
+  const stateProgressCard = guidanceStack.querySelector('.state-progress-card');
+  const strategyCard = guidanceStack.querySelector('.strategy-note-card');
+  if (stateProgressCard) left.appendChild(stateProgressCard);
+  if (strategyCard) left.appendChild(strategyCard);
   if (phaseCard) left.appendChild(phaseCard);
 
   right.appendChild(guidanceStack);
