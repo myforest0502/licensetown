@@ -26,8 +26,10 @@ from linebot.models import (
 from daily_wrong_review import REVIEW_COMMAND, install_daily_wrong_review
 from dashboard_progress_trend import install_dashboard_progress_trend
 from developer_access_recovery import install_developer_access_recovery
+from one_question_starter import install_one_question_starter, one_question_quick_reply_item
 from phase11_gate_ui import install_phase11_gate_ui
 from prerequisite_attempt_cache import install_prerequisite_attempt_cache
+from site_beta_copy import install_site_beta_copy
 from site_direct_line_cta import install_site_direct_line_cta
 from site_marketing_hotfix import install_site_marketing_hotfix
 from site_marketing_refresh import install_site_marketing_refresh
@@ -61,6 +63,7 @@ def create_home_message(user_id=None):
                 label="📊 合格への道",
                 uri=dashboard_url,
             )),
+            one_question_quick_reply_item(),
             QuickReplyButton(action=MessageAction(
                 label="📘 勉強する！",
                 text="勉強する",
@@ -78,6 +81,23 @@ def create_home_message(user_id=None):
                 text="熱血モード",
             )),
         ]),
+    )
+
+
+def reply_new_user_welcome(reply_token):
+    """Explain the beta offer clearly before handing the learner to Gensan."""
+    legacy.reply_to_line(
+        reply_token,
+        (
+            "ようこそ、ライセンスタウンへ！\n\n"
+            "LicenseTownは、理学療法士国家試験の合格までを一緒に歩く学習サービスです。\n\n"
+            "【現在はβ期間】\n"
+            "いまは改善に協力してもらう期間なので、完全版の機能を無料で開放しています。\n"
+            "正式リリース後は、一部機能を月額プランにする予定です。"
+            "料金が発生する場合は事前に案内し、知らないうちに課金されることはありません。\n\n"
+            "まずは気軽に使ってみてください＾＾\n"
+            "それでは、ここからは源さんにバトンタッチします！"
+        ),
     )
 
 
@@ -99,6 +119,7 @@ def _apply_rich_menu_v2_if_requested() -> None:
 # call time, so production behavior can be composed without rewriting app.py.
 install_prerequisite_attempt_cache(legacy)
 install_dashboard_progress_trend(legacy, goukaku_module)
+install_one_question_starter(legacy)
 # Preview helpers imported build_dashboard by value before composition. Rebind
 # them to the same decorated builder used by the live learner route.
 supporter_preview_module.build_dashboard = goukaku_module.build_dashboard
@@ -115,10 +136,10 @@ developer_ui_module.build_dashboard = _build_full_developer_preview_dashboard
 install_daily_wrong_review(legacy)
 legacy.create_text_response = create_text_response
 legacy.create_home_message = create_home_message
+legacy.reply_new_user_welcome = reply_new_user_welcome
 # Flask executes after_request handlers in reverse registration order.
-# Register the viewport pass first so it runs last. The direct CTA pass is
-# registered before hotfix so it runs after hotfix and restores the verified
-# onboarding link as the final public action.
+# Register beta copy first so it runs last and normalizes final public wording.
+install_site_beta_copy(legacy.app)
 install_site_marketing_viewport_fix(legacy.app)
 install_site_direct_line_cta(legacy.app)
 install_site_marketing_hotfix(legacy.app)
