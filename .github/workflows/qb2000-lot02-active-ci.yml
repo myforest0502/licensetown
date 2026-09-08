@@ -69,6 +69,7 @@ jobs:
         if: steps.state.outputs.integrated == 'false'
         run: |
           python -m scripts.integrate_question_bank_2000_lot02
+          python -m scripts.set_question_bank_2000_lot02_new_node_prerequisites
           python -m scripts.generate_question_tags_audit
       - name: Validate formal bank and runtime strong pairs
         run: |
