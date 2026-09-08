@@ -2489,7 +2489,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q246",
-      "Q1569"
+      "Q1569",
+      "Q1929"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5150,7 +5151,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q514",
-      "Q1795"
+      "Q1795",
+      "Q1949"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5239,7 +5241,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q522",
-      "Q1823"
+      "Q1823",
+      "Q1936"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5382,9 +5385,10 @@
   {
     "knowledge_node_id": "KN0528",
     "label": "回旋筋腱板は棘上筋、棘下筋、小円筋、肩甲下筋の4筋で構成され、上腕骨頭を関節窩へ安定させる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q536"
+      "Q536",
+      "Q1906"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5392,9 +5396,10 @@
   {
     "knowledge_node_id": "KN0529",
     "label": "僧帽筋は後頭骨・項靱帯に加え、第7頸椎から第12胸椎の棘突起などから起こるため胸椎に付着する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q537"
+      "Q537",
+      "Q1907"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5436,7 +5441,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q541",
-      "Q1594"
+      "Q1594",
+      "Q1912"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5500,9 +5506,10 @@
   {
     "knowledge_node_id": "KN0539",
     "label": "胃液分泌は胃壁伸展による局所・迷走神経反射や、G細胞から分泌されるガストリンによって促進される",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q547"
+      "Q547",
+      "Q1909"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5521,9 +5528,10 @@
   {
     "knowledge_node_id": "KN0541",
     "label": "老化に伴う生理機能の変化の基本事項",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q549"
+      "Q549",
+      "Q1910"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5531,9 +5539,10 @@
   {
     "knowledge_node_id": "KN0542",
     "label": "立位の安定性は、重心が支持基底面内に保たれ、各身体部分の重心線が適切に整列し、余分な姿勢制御トルクが少ないほど高まる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q550"
+      "Q550",
+      "Q1911"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5566,7 +5575,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q553",
-      "Q1650"
+      "Q1650",
+      "Q1941"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5588,7 +5598,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q555",
-      "Q1578"
+      "Q1578",
+      "Q1918"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5599,7 +5610,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q556",
-      "Q1679"
+      "Q1679",
+      "Q1924"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5621,7 +5633,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q558",
-      "Q1827"
+      "Q1827",
+      "Q1938"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5654,7 +5667,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q561",
-      "Q1762"
+      "Q1762",
+      "Q1931"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5665,7 +5679,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q562",
-      "Q1833"
+      "Q1833",
+      "Q1943"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5952,9 +5967,10 @@
   {
     "knowledge_node_id": "KN0581",
     "label": "生活習慣病には高血圧、脂質異常症、糖尿病、脳卒中など生活習慣と発症・進行が関連する疾患が含まれる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q589"
+      "Q589",
+      "Q1919"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6178,9 +6194,10 @@
   {
     "knowledge_node_id": "KN0603",
     "label": "肩関節の運動とそれに作用する筋の組合せの基本事項",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q611"
+      "Q611",
+      "Q1939"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6188,9 +6205,10 @@
   {
     "knowledge_node_id": "KN0604",
     "label": "虫様筋はMP関節を屈曲し、IP関節を伸展する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q612"
+      "Q612",
+      "Q1940"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6266,7 +6284,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q619",
-      "Q1617"
+      "Q1617",
+      "Q1914"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6372,9 +6391,10 @@
   {
     "knowledge_node_id": "KN0621",
     "label": "低栄養は貧血、褥瘡、サルコペニア、骨折リスクなどと関連する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q629"
+      "Q629",
+      "Q1925"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6382,9 +6402,10 @@
   {
     "knowledge_node_id": "KN0622",
     "label": "血友病は凝固因子欠乏により関節内出血を反復し、膝・足・肘などに血友病性関節症を生じる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q630"
+      "Q630",
+      "Q1926"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6413,9 +6434,10 @@
   {
     "knowledge_node_id": "KN0625",
     "label": "脳内βアミロイド沈着による老人斑と、リン酸化tauによる神経原線維変化が代表的病理所見である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q633"
+      "Q633",
+      "Q1927"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6423,9 +6445,10 @@
   {
     "knowledge_node_id": "KN0626",
     "label": "感情や対人関係、自己像の不安定さ、空虚感、衝動性、自傷行為などがみられる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q634"
+      "Q634",
+      "Q1932"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6649,9 +6672,10 @@
   {
     "knowledge_node_id": "KN0647",
     "label": "偽関節は血流が乏しい骨折や骨癒合条件の悪い部位で生じやすい",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q655"
+      "Q655",
+      "Q1948"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6935,9 +6959,10 @@
   {
     "knowledge_node_id": "KN0675",
     "label": "A型肝炎ウイルスは慢性肝炎へ移行しにくく、肝細胞癌の主要原因とはならない",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q683"
+      "Q683",
+      "Q1922"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6957,9 +6982,10 @@
   {
     "knowledge_node_id": "KN0677",
     "label": "最大吸気量は1回換気量＋予備吸気量、残気量は全肺気量−肺活量で表される",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q685"
+      "Q685",
+      "Q1923"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7029,9 +7055,10 @@
   {
     "knowledge_node_id": "KN0684",
     "label": "JDDST-Rの個人・社会領域では、乳児期に自分でビスケットを食べる行動が比較的早期に獲得される",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q692"
+      "Q692",
+      "Q1915"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7185,9 +7212,10 @@
   {
     "knowledge_node_id": "KN0699",
     "label": "提示された研究デザインの中では、対象を無作為に割り付けて介入効果を比較する無作為化比較試験が最もバイアスを抑えやすく、エビデンスレベルが高い",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q707"
+      "Q707",
+      "Q1920"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7258,7 +7286,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q714",
-      "Q1684"
+      "Q1684",
+      "Q1946"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7466,7 +7495,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q734",
-      "Q1576"
+      "Q1576",
+      "Q1908"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7670,7 +7700,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q754",
-      "Q1686"
+      "Q1686",
+      "Q1933"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7678,9 +7709,10 @@
   {
     "knowledge_node_id": "KN0747",
     "label": "バイオフィードバックは生理反応を視覚・聴覚情報として本人へ返し、望ましい反応を強化するオペラント条件づけを利用した方法である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q755"
+      "Q755",
+      "Q1913"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9921,9 +9953,10 @@
   {
     "knowledge_node_id": "KN0967",
     "label": "遠城寺式発達検査では1歳6か月までに『お菓子の包み紙を取って食べる』ような社会性・手の運動を獲得する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q977"
+      "Q977",
+      "Q1934"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11251,9 +11284,10 @@
   {
     "knowledge_node_id": "KN1097",
     "label": "Jackson発作は焦点性運動発作で、意識が保たれたまま局所の間代運動が拡大することがある",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1108"
+      "Q1108",
+      "Q1930"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11853,9 +11887,10 @@
   {
     "knowledge_node_id": "KN1156",
     "label": "脊髄髄膜瘤ではChiariⅡ型奇形や水頭症を高頻度に合併する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1169"
+      "Q1169",
+      "Q1935"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12065,9 +12100,10 @@
   {
     "knowledge_node_id": "KN1177",
     "label": "SARAは脊髄小脳失調症などの運動失調を、歩行・立位・四肢協調運動などから評価する尺度",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1190"
+      "Q1190",
+      "Q1947"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12306,9 +12342,10 @@
   {
     "knowledge_node_id": "KN1201",
     "label": "踵接地後の足関節底屈を前脛骨筋が遠心性に制御し、立脚中期までの脛骨前傾を下腿三頭筋が遠心性に制御する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1215"
+      "Q1215",
+      "Q1944"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12450,7 +12487,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1230",
-      "Q1526"
+      "Q1526",
+      "Q1928"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12960,7 +12998,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1281",
-      "Q1639"
+      "Q1639",
+      "Q1916"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13556,9 +13595,10 @@
   {
     "knowledge_node_id": "KN1324",
     "label": "ICFの環境因子には製品・技術、自然環境、支援、人々の態度、サービス・制度などが含まれる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1344"
+      "Q1344",
+      "Q1921"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13790,9 +13830,10 @@
   {
     "knowledge_node_id": "KN1347",
     "label": "受け入れ難い願望・思考を無意識に意識外へ押し込むのが抑圧",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1370"
+      "Q1370",
+      "Q1937"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14082,9 +14123,10 @@
   {
     "knowledge_node_id": "KN1376",
     "label": "日本最初の理学療法士養成校は1963年に開設され、1960年代に該当する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1400"
+      "Q1400",
+      "Q1917"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14103,9 +14145,10 @@
   {
     "knowledge_node_id": "KN1378",
     "label": "荷重応答期は床反力が膝後方を通り屈曲モーメントを生じるため、大腿四頭筋による膝伸展モーメントが最大となる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1402"
+      "Q1402",
+      "Q1945"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15806,9 +15849,10 @@
   {
     "knowledge_node_id": "KN1546",
     "label": "立ち上がりでは離殿前の体幹前傾と前方運動量により身体重心を足部支持基底面へ移す",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1857"
+      "Q1857",
+      "Q1942"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15859,6 +15903,46 @@
     "status": "singleton_initial",
     "question_ids": [
       "Q1905"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1552",
+    "label": "胸長神経は主にC5・C6・C7神経根から形成され前鋸筋を支配する",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1950"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1553",
+    "label": "心室筋活動電位の第2相ではL型Ca2+チャネルからのCa2+流入がK+流出と釣り合いプラトー相を形成する",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1951"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1554",
+    "label": "SIADHでは低張性低Na血症に対して尿が不適切に濃縮され、重症低Na血症では意識障害やけいれんを生じ得る",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1952"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1555",
+    "label": "歩行速度は歩行率とステップ長に規定され、どちらかを高めると他条件が同じなら速度は増加する",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1953"
     ],
     "aliases": [],
     "successor_ids": []

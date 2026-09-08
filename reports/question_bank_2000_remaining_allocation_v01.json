@@ -1,109 +1,108 @@
 {
   "baseline_audit_end": 1737,
-  "current_formal_end": 1905,
-  "current_formal_count": 1905,
-  "formal_original_added_since_audit": 168,
-  "original_remaining": 89,
+  "current_formal_end": 1953,
+  "current_formal_count": 1953,
+  "formal_original_added_since_audit": 216,
+  "original_remaining": 41,
   "past_exam_remaining": 6,
-  "total_remaining": 95,
+  "total_remaining": 47,
   "used": {
     "category": {
-      "1": 4,
-      "2": 6,
-      "3": 1,
-      "4": 3,
-      "5": 1,
-      "6": 3,
-      "7": 4,
-      "8": 14,
-      "9": 25,
-      "10": 3,
-      "11": 7,
-      "12": 7,
-      "13": 4,
-      "14": 6,
-      "15": 7,
+      "1": 8,
+      "2": 11,
+      "3": 3,
+      "4": 5,
+      "5": 3,
+      "6": 6,
+      "7": 7,
+      "8": 20,
+      "9": 27,
+      "10": 5,
+      "11": 10,
+      "12": 9,
+      "13": 7,
+      "14": 8,
+      "15": 11,
       "16": 20,
-      "17": 25,
-      "18": 28
+      "17": 26,
+      "18": 30
     },
     "task": {
-      "assessment_selection": 31,
-      "device_selection": 6,
-      "fact_recall": 3,
-      "finding_interpretation": 52,
-      "functional_goal_decision": 12,
-      "intervention_selection": 31,
-      "prognosis_prediction": 10,
-      "safety_priority": 23
+      "assessment_selection": 40,
+      "device_selection": 8,
+      "fact_recall": 5,
+      "finding_interpretation": 66,
+      "functional_goal_decision": 16,
+      "intervention_selection": 39,
+      "prognosis_prediction": 13,
+      "safety_priority": 29
     },
     "level": {
-      "1": 3,
-      "2": 51,
-      "3": 78,
-      "4": 36
+      "1": 5,
+      "2": 67,
+      "3": 98,
+      "4": 46
     },
     "safety": {
-      "critical": 26,
-      "moderate": 30,
-      "none": 112
+      "critical": 33,
+      "moderate": 35,
+      "none": 148
     },
     "node_slot": {
-      "multi_reinforcement": 26,
-      "new_node": 13,
-      "singleton_second": 129
+      "multi_reinforcement": 37,
+      "new_node": 18,
+      "singleton_second": 161
     },
-    "strong_formations": 155,
+    "strong_formations": 198,
     "weak_or_unproven_formations": [],
-    "safety_augment": 56
+    "safety_augment": 68
   },
   "remaining_original_plan": {
     "category": {
-      "1": 8,
-      "2": 10,
-      "3": 3,
-      "4": 4,
-      "5": 3,
-      "6": 5,
-      "7": 6,
-      "8": 11,
-      "9": 3,
-      "10": 4,
-      "11": 5,
-      "12": 3,
-      "13": 6,
-      "14": 4,
-      "15": 7,
+      "1": 4,
+      "2": 5,
+      "3": 1,
+      "4": 2,
+      "5": 1,
+      "6": 2,
+      "7": 3,
+      "8": 5,
+      "9": 1,
+      "10": 2,
+      "11": 2,
+      "12": 1,
+      "13": 3,
+      "14": 2,
+      "15": 3,
       "16": 0,
-      "17": 3,
-      "18": 4
+      "17": 2,
+      "18": 2
     },
     "task": {
-      "assessment_selection": 16,
-      "device_selection": 3,
-      "fact_recall": 3,
-      "finding_interpretation": 27,
-      "functional_goal_decision": 8,
-      "intervention_selection": 15,
-      "prognosis_prediction": 6,
-      "safety_priority": 11
+      "assessment_selection": 7,
+      "device_selection": 1,
+      "fact_recall": 1,
+      "finding_interpretation": 13,
+      "functional_goal_decision": 4,
+      "intervention_selection": 7,
+      "prognosis_prediction": 3,
+      "safety_priority": 5
     },
     "level": {
-      "1": 3,
-      "2": 29,
-      "3": 38,
-      "4": 19
+      "1": 1,
+      "2": 13,
+      "3": 18,
+      "4": 9
     },
     "node_slot": {
-      "singleton_second": 50,
-      "multi_reinforcement": 31,
-      "new_node": 8
+      "singleton_second": 18,
+      "multi_reinforcement": 20,
+      "new_node": 3
     },
-    "strong_formations": 69,
-    "safety_augment": 23
+    "strong_formations": 26,
+    "safety_augment": 11
   },
   "production_lots": [
-    48,
     41
   ]
 }

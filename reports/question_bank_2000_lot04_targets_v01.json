@@ -1,0 +1,2002 @@
+{
+  "lot": 4,
+  "formal_baseline": "Q1-Q1905",
+  "scope": "structural_target_selection_only",
+  "recent_node_exclusion_after_q": 1857,
+  "preferred_category_slot": {
+    "1": {
+      "singleton": 2,
+      "multi": 1,
+      "new": 1
+    },
+    "2": {
+      "singleton": 3,
+      "multi": 1,
+      "new": 1
+    },
+    "3": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "4": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "5": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "6": {
+      "singleton": 2,
+      "multi": 1,
+      "new": 0
+    },
+    "7": {
+      "singleton": 2,
+      "multi": 1,
+      "new": 0
+    },
+    "8": {
+      "singleton": 3,
+      "multi": 2,
+      "new": 1
+    },
+    "9": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "10": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "11": {
+      "singleton": 2,
+      "multi": 1,
+      "new": 0
+    },
+    "12": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "13": {
+      "singleton": 2,
+      "multi": 1,
+      "new": 0
+    },
+    "14": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "15": {
+      "singleton": 2,
+      "multi": 1,
+      "new": 1
+    },
+    "17": {
+      "singleton": 1,
+      "multi": 0,
+      "new": 0
+    },
+    "18": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    }
+  },
+  "actual_category_slot": {
+    "1": {
+      "singleton": 2,
+      "multi": 1,
+      "new": 1
+    },
+    "2": {
+      "singleton": 3,
+      "multi": 1,
+      "new": 1
+    },
+    "3": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "4": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "5": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "6": {
+      "singleton": 2,
+      "multi": 1,
+      "new": 0
+    },
+    "7": {
+      "singleton": 2,
+      "multi": 1,
+      "new": 0
+    },
+    "8": {
+      "singleton": 3,
+      "multi": 2,
+      "new": 1
+    },
+    "9": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "10": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "11": {
+      "singleton": 2,
+      "multi": 1,
+      "new": 0
+    },
+    "12": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "13": {
+      "singleton": 2,
+      "multi": 1,
+      "new": 0
+    },
+    "14": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "15": {
+      "singleton": 2,
+      "multi": 1,
+      "new": 1
+    },
+    "17": {
+      "singleton": 1,
+      "multi": 0,
+      "new": 0
+    },
+    "18": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    }
+  },
+  "existing_node_targets": [
+    {
+      "canonical_node_id": "KN0528",
+      "label": "回旋筋腱板は棘上筋、棘下筋、小円筋、肩甲下筋の4筋で構成され、上腕骨頭を関節窩へ安定させる",
+      "category_small": 1,
+      "question_ids": [
+        "Q536"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -536
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C1-S01"
+    },
+    {
+      "canonical_node_id": "KN0529",
+      "label": "僧帽筋は後頭骨・項靱帯に加え、第7頸椎から第12胸椎の棘突起などから起こるため胸椎に付着する",
+      "category_small": 1,
+      "question_ids": [
+        "Q537"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -537
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C1-S02"
+    },
+    {
+      "canonical_node_id": "KN0726",
+      "label": "筋と支配神経との組合せ",
+      "category_small": 1,
+      "question_ids": [
+        "Q734",
+        "Q1576"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 2
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        2,
+        -734
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C1-M01"
+    },
+    {
+      "canonical_node_id": "KN0539",
+      "label": "胃液分泌は胃壁伸展による局所・迷走神経反射や、G細胞から分泌されるガストリンによって促進される",
+      "category_small": 2,
+      "question_ids": [
+        "Q547"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -547
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C2-S01"
+    },
+    {
+      "canonical_node_id": "KN0541",
+      "label": "老化に伴う生理機能の変化の基本事項",
+      "category_small": 2,
+      "question_ids": [
+        "Q549"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -549
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C2-S02"
+    },
+    {
+      "canonical_node_id": "KN0542",
+      "label": "立位の安定性は、重心が支持基底面内に保たれ、各身体部分の重心線が適切に整列し、余分な姿勢制御トルクが少ないほど高まる",
+      "category_small": 2,
+      "question_ids": [
+        "Q550"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -550
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C2-S03"
+    },
+    {
+      "canonical_node_id": "KN0533",
+      "label": "カルシトニンは甲状腺傍濾胞細胞から、パラトルモン（PTH）は副甲状腺から分泌されるため、同一臓器から分泌される組合せではない",
+      "category_small": 2,
+      "question_ids": [
+        "Q541",
+        "Q1594"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 2
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        2,
+        -541
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C2-M01"
+    },
+    {
+      "canonical_node_id": "KN0747",
+      "label": "バイオフィードバックは生理反応を視覚・聴覚情報として本人へ返し、望ましい反応を強化するオペラント条件づけを利用した方法である",
+      "category_small": 3,
+      "question_ids": [
+        "Q755"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -755
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C3-S01"
+    },
+    {
+      "canonical_node_id": "KN0611",
+      "label": "意識せずに技能や習慣として再生される記憶は手続き記憶で、非陳述記憶に分類される",
+      "category_small": 3,
+      "question_ids": [
+        "Q619",
+        "Q1617"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -619
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C3-M01"
+    },
+    {
+      "canonical_node_id": "KN0684",
+      "label": "JDDST-Rの個人・社会領域では、乳児期に自分でビスケットを食べる行動が比較的早期に獲得される",
+      "category_small": 4,
+      "question_ids": [
+        "Q692"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -692
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C4-S01"
+    },
+    {
+      "canonical_node_id": "KN1265",
+      "label": "生後12か月以前には人見知りが出現し、コップを自分で持って飲む行動もみられるようになる",
+      "category_small": 4,
+      "question_ids": [
+        "Q1281",
+        "Q1639"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -1281
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C4-M01"
+    },
+    {
+      "canonical_node_id": "KN1376",
+      "label": "日本最初の理学療法士養成校は1963年に開設され、1960年代に該当する",
+      "category_small": 5,
+      "question_ids": [
+        "Q1400"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1400
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C5-S01"
+    },
+    {
+      "canonical_node_id": "KN0547",
+      "label": "フィードバックの説明の基本事項",
+      "category_small": 5,
+      "question_ids": [
+        "Q555",
+        "Q1578"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 2
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        2,
+        -555
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C5-M01"
+    },
+    {
+      "canonical_node_id": "KN0581",
+      "label": "生活習慣病には高血圧、脂質異常症、糖尿病、脳卒中など生活習慣と発症・進行が関連する疾患が含まれる",
+      "category_small": 6,
+      "question_ids": [
+        "Q589"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -589
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C6-S01"
+    },
+    {
+      "canonical_node_id": "KN0699",
+      "label": "提示された研究デザインの中では、対象を無作為に割り付けて介入効果を比較する無作為化比較試験が最もバイアスを抑えやすく、エビデンスレベルが高い",
+      "category_small": 6,
+      "question_ids": [
+        "Q707"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -707
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C6-S02"
+    },
+    {
+      "canonical_node_id": "KN1324",
+      "label": "ICFの環境因子には製品・技術、自然環境、支援、人々の態度、サービス・制度などが含まれる",
+      "category_small": 6,
+      "question_ids": [
+        "Q1344",
+        "Q1390"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 2
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        2,
+        -1344
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C6-M01"
+    },
+    {
+      "canonical_node_id": "KN0675",
+      "label": "A型肝炎ウイルスは慢性肝炎へ移行しにくく、肝細胞癌の主要原因とはならない",
+      "category_small": 7,
+      "question_ids": [
+        "Q683"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -683
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C7-S01"
+    },
+    {
+      "canonical_node_id": "KN0677",
+      "label": "最大吸気量は1回換気量＋予備吸気量、残気量は全肺気量−肺活量で表される",
+      "category_small": 7,
+      "question_ids": [
+        "Q685"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -685
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C7-S02"
+    },
+    {
+      "canonical_node_id": "KN0548",
+      "label": "神経膠芽腫は悪性度の高い原発性脳腫瘍で、浸潤性が強く予後不良である",
+      "category_small": 7,
+      "question_ids": [
+        "Q556",
+        "Q1679"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -556
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C7-M01"
+    },
+    {
+      "canonical_node_id": "KN0621",
+      "label": "低栄養は貧血、褥瘡、サルコペニア、骨折リスクなどと関連する",
+      "category_small": 8,
+      "question_ids": [
+        "Q629"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -629
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C8-S01"
+    },
+    {
+      "canonical_node_id": "KN0622",
+      "label": "血友病は凝固因子欠乏により関節内出血を反復し、膝・足・肘などに血友病性関節症を生じる",
+      "category_small": 8,
+      "question_ids": [
+        "Q630"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -630
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C8-S02"
+    },
+    {
+      "canonical_node_id": "KN0625",
+      "label": "脳内βアミロイド沈着による老人斑と、リン酸化tauによる神経原線維変化が代表的病理所見である",
+      "category_small": 8,
+      "question_ids": [
+        "Q633"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -633
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C8-S03"
+    },
+    {
+      "canonical_node_id": "KN1215",
+      "label": "糖尿病性多発ニューロパチーの左右対称・遠位優位の靴下型感覚障害",
+      "category_small": 8,
+      "question_ids": [
+        "Q1230",
+        "Q1526"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 2
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        2,
+        -1230
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C8-M01"
+    },
+    {
+      "canonical_node_id": "KN0245",
+      "label": "慢性高CO2血症における代償性呼吸性アシドーシス",
+      "category_small": 8,
+      "question_ids": [
+        "Q246",
+        "Q1569"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "original": 1,
+        "past_exam": 1
+      },
+      "levels": [
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        1,
+        -246
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C8-M02"
+    },
+    {
+      "canonical_node_id": "KN1097",
+      "label": "Jackson発作は焦点性運動発作で、意識が保たれたまま局所の間代運動が拡大することがある",
+      "category_small": 9,
+      "question_ids": [
+        "Q1108"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1108
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C9-S01"
+    },
+    {
+      "canonical_node_id": "KN0553",
+      "label": "中心性脊髄損傷は高齢者の頸椎過伸展外傷などで生じやすく、脊髄中心部の障害により下肢より上肢の麻痺が強いことが特徴である",
+      "category_small": 9,
+      "question_ids": [
+        "Q561",
+        "Q1762"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        2
+      ],
+      "safety": [
+        "moderate",
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -561
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C9-M01"
+    },
+    {
+      "canonical_node_id": "KN0626",
+      "label": "感情や対人関係、自己像の不安定さ、空虚感、衝動性、自傷行為などがみられる",
+      "category_small": 10,
+      "question_ids": [
+        "Q634"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -634
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C10-S01"
+    },
+    {
+      "canonical_node_id": "KN0746",
+      "label": "「少数の事実から、すべて同じ結果になる」と一般化する認知の歪みが極端な一般化である",
+      "category_small": 10,
+      "question_ids": [
+        "Q754",
+        "Q1686"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -754
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C10-M01"
+    },
+    {
+      "canonical_node_id": "KN0967",
+      "label": "遠城寺式発達検査では1歳6か月までに『お菓子の包み紙を取って食べる』ような社会性・手の運動を獲得する",
+      "category_small": 11,
+      "question_ids": [
+        "Q977"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -977
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C11-S01"
+    },
+    {
+      "canonical_node_id": "KN1156",
+      "label": "脊髄髄膜瘤ではChiariⅡ型奇形や水頭症を高頻度に合併する",
+      "category_small": 11,
+      "question_ids": [
+        "Q1169"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1169
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C11-S02"
+    },
+    {
+      "canonical_node_id": "KN0514",
+      "label": "近位筋優位の進行性筋力低下と、脂肪・結合組織増生による下腿三頭筋の仮性肥大が特徴的である",
+      "category_small": 11,
+      "question_ids": [
+        "Q522",
+        "Q1823"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        2
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -522
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C11-M01"
+    },
+    {
+      "canonical_node_id": "KN1347",
+      "label": "受け入れ難い願望・思考を無意識に意識外へ押し込むのが抑圧",
+      "category_small": 12,
+      "question_ids": [
+        "Q1370"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1370
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C12-S01"
+    },
+    {
+      "canonical_node_id": "KN0550",
+      "label": "自分が受け入れ難い感情や衝動を他者が持っているとみなす防衛機制は投影である",
+      "category_small": 12,
+      "question_ids": [
+        "Q558",
+        "Q1827"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -558
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C12-M01"
+    },
+    {
+      "canonical_node_id": "KN0603",
+      "label": "肩関節の運動とそれに作用する筋の組合せの基本事項",
+      "category_small": 13,
+      "question_ids": [
+        "Q611"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -611
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C13-S01"
+    },
+    {
+      "canonical_node_id": "KN0604",
+      "label": "虫様筋はMP関節を屈曲し、IP関節を伸展する",
+      "category_small": 13,
+      "question_ids": [
+        "Q612"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -612
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C13-S02"
+    },
+    {
+      "canonical_node_id": "KN0545",
+      "label": "股関節の運動とそれに作用する筋の組合せの基本事項",
+      "category_small": 13,
+      "question_ids": [
+        "Q553",
+        "Q1650"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -553
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C13-M01"
+    },
+    {
+      "canonical_node_id": "KN1546",
+      "label": "立ち上がりでは離殿前の体幹前傾と前方運動量により身体重心を足部支持基底面へ移す",
+      "category_small": 14,
+      "question_ids": [
+        "Q1857"
+      ],
+      "existing_demands": [
+        {
+          "task": "functional_goal_decision",
+          "primary_ability": "DECIDE"
+        }
+      ],
+      "sources": {
+        "original": 1
+      },
+      "levels": [
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        0,
+        0,
+        -1857
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C14-S01"
+    },
+    {
+      "canonical_node_id": "KN0554",
+      "label": "運動障害と評価方法の組合せの基本事項",
+      "category_small": 14,
+      "question_ids": [
+        "Q562",
+        "Q1833"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -562
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C14-M01"
+    },
+    {
+      "canonical_node_id": "KN1201",
+      "label": "踵接地後の足関節底屈を前脛骨筋が遠心性に制御し、立脚中期までの脛骨前傾を下腿三頭筋が遠心性に制御する",
+      "category_small": 15,
+      "question_ids": [
+        "Q1215"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1215
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C15-S01"
+    },
+    {
+      "canonical_node_id": "KN1378",
+      "label": "荷重応答期は床反力が膝後方を通り屈曲モーメントを生じるため、大腿四頭筋による膝伸展モーメントが最大となる",
+      "category_small": 15,
+      "question_ids": [
+        "Q1402"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1402
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C15-S02"
+    },
+    {
+      "canonical_node_id": "KN0706",
+      "label": "歩行速度・歩幅が低下し、両脚支持期が延長、腕振りも減少する",
+      "category_small": 15,
+      "question_ids": [
+        "Q714",
+        "Q1684"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -714
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C15-M01"
+    },
+    {
+      "canonical_node_id": "KN1177",
+      "label": "SARAは脊髄小脳失調症などの運動失調を、歩行・立位・四肢協調運動などから評価する尺度",
+      "category_small": 17,
+      "question_ids": [
+        "Q1190"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1190
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C17-S01"
+    },
+    {
+      "canonical_node_id": "KN0647",
+      "label": "偽関節は血流が乏しい骨折や骨癒合条件の悪い部位で生じやすい",
+      "category_small": 18,
+      "question_ids": [
+        "Q655"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -655
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L04-C18-S01"
+    },
+    {
+      "canonical_node_id": "KN0506",
+      "label": "延髄には舌下神経核があり、舌の運動を担う舌下神経機能が障害されやすい",
+      "category_small": 18,
+      "question_ids": [
+        "Q514",
+        "Q1795"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -514
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L04-C18-M01"
+    }
+  ],
+  "new_node_reservations": [
+    {
+      "category_small": 1,
+      "count": 1,
+      "node_id_allocated": false
+    },
+    {
+      "category_small": 2,
+      "count": 1,
+      "node_id_allocated": false
+    },
+    {
+      "category_small": 8,
+      "count": 1,
+      "node_id_allocated": false
+    },
+    {
+      "category_small": 15,
+      "count": 1,
+      "node_id_allocated": false
+    }
+  ],
+  "inventory_summary": {
+    "1": {
+      "singleton": {
+        "available": 108,
+        "selected": 2
+      },
+      "multi": {
+        "available": 24,
+        "selected": 1
+      },
+      "new_node_reserved": 1,
+      "preferred_split": {
+        "singleton": 2,
+        "multi": 1,
+        "new": 1
+      }
+    },
+    "2": {
+      "singleton": {
+        "available": 124,
+        "selected": 3
+      },
+      "multi": {
+        "available": 17,
+        "selected": 1
+      },
+      "new_node_reserved": 1,
+      "preferred_split": {
+        "singleton": 3,
+        "multi": 1,
+        "new": 1
+      }
+    },
+    "3": {
+      "singleton": {
+        "available": 5,
+        "selected": 1
+      },
+      "multi": {
+        "available": 8,
+        "selected": 1
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 1,
+        "multi": 1,
+        "new": 0
+      }
+    },
+    "4": {
+      "singleton": {
+        "available": 20,
+        "selected": 1
+      },
+      "multi": {
+        "available": 5,
+        "selected": 1
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 1,
+        "multi": 1,
+        "new": 0
+      }
+    },
+    "5": {
+      "singleton": {
+        "available": 3,
+        "selected": 1
+      },
+      "multi": {
+        "available": 1,
+        "selected": 1
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 1,
+        "multi": 1,
+        "new": 0
+      }
+    },
+    "6": {
+      "singleton": {
+        "available": 51,
+        "selected": 2
+      },
+      "multi": {
+        "available": 7,
+        "selected": 1
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 2,
+        "multi": 1,
+        "new": 0
+      }
+    },
+    "7": {
+      "singleton": {
+        "available": 44,
+        "selected": 2
+      },
+      "multi": {
+        "available": 15,
+        "selected": 1
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 2,
+        "multi": 1,
+        "new": 0
+      }
+    },
+    "8": {
+      "singleton": {
+        "available": 114,
+        "selected": 3
+      },
+      "multi": {
+        "available": 26,
+        "selected": 2
+      },
+      "new_node_reserved": 1,
+      "preferred_split": {
+        "singleton": 3,
+        "multi": 2,
+        "new": 1
+      }
+    },
+    "9": {
+      "singleton": {
+        "available": 87,
+        "selected": 1
+      },
+      "multi": {
+        "available": 23,
+        "selected": 1
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 1,
+        "multi": 1,
+        "new": 0
+      }
+    },
+    "10": {
+      "singleton": {
+        "available": 26,
+        "selected": 1
+      },
+      "multi": {
+        "available": 5,
+        "selected": 1
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 1,
+        "multi": 1,
+        "new": 0
+      }
+    },
+    "11": {
+      "singleton": {
+        "available": 37,
+        "selected": 2
+      },
+      "multi": {
+        "available": 5,
+        "selected": 1
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 2,
+        "multi": 1,
+        "new": 0
+      }
+    },
+    "12": {
+      "singleton": {
+        "available": 8,
+        "selected": 1
+      },
+      "multi": {
+        "available": 4,
+        "selected": 1
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 1,
+        "multi": 1,
+        "new": 0
+      }
+    },
+    "13": {
+      "singleton": {
+        "available": 46,
+        "selected": 2
+      },
+      "multi": {
+        "available": 15,
+        "selected": 1
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 2,
+        "multi": 1,
+        "new": 0
+      }
+    },
+    "14": {
+      "singleton": {
+        "available": 1,
+        "selected": 1
+      },
+      "multi": {
+        "available": 3,
+        "selected": 1
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 1,
+        "multi": 1,
+        "new": 0
+      }
+    },
+    "15": {
+      "singleton": {
+        "available": 68,
+        "selected": 2
+      },
+      "multi": {
+        "available": 20,
+        "selected": 1
+      },
+      "new_node_reserved": 1,
+      "preferred_split": {
+        "singleton": 2,
+        "multi": 1,
+        "new": 1
+      }
+    },
+    "17": {
+      "singleton": {
+        "available": 122,
+        "selected": 1
+      },
+      "multi": {
+        "available": 31,
+        "selected": 0
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 1,
+        "multi": 0,
+        "new": 0
+      }
+    },
+    "18": {
+      "singleton": {
+        "available": 255,
+        "selected": 1
+      },
+      "multi": {
+        "available": 28,
+        "selected": 1
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 1,
+        "multi": 1,
+        "new": 0
+      }
+    }
+  },
+  "excluded_recent_node_count": 48,
+  "required_existing_targets": 44,
+  "required_new_nodes": 4,
+  "required_total_questions": 48,
+  "required_strong_formations": 37,
+  "required_safety_augment": 12,
+  "guardrails": [
+    "No Q IDs are allocated by this target roster.",
+    "No Knowledge Node registry write is performed.",
+    "Nodes receiving Lot03 supply after Q1857 are not immediately retargeted.",
+    "Per-category singleton/multi split may rebalance only when formal inventory requires it; global 27/17 and category totals remain exact.",
+    "Every singleton draft must differ from the reference in task or primary ability and semantic demand.",
+    "Every multi-reinforcement draft intended as strong must add a demand not already present in that Node.",
+    "A target may be replaced from the same category/slot inventory during medical/semantic review."
+  ]
+}

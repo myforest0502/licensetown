@@ -67,7 +67,7 @@ def test_formal_question_bank_passes_schema_and_cross_file_validation():
     assert report["knowledge_node_id_present"] == EXPECTED_QUESTION_COUNT
     assert report["knowledge_node_id_empty"] == 0
     assert report["knowledge_node_id_format_invalid"] == 0
-    assert report["registry_node_count"] == 1551
+    assert report["registry_node_count"] == 1555
     assert report["registry_id_duplicate"] == 0
     assert report["registry_id_format_invalid"] == 0
     assert report["registry_missing_question"] == 0
