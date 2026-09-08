@@ -1,0 +1,475 @@
+{
+  "lot": "question_bank_2000_production_lot01_v01",
+  "chunk": 1,
+  "chunk_count": 6,
+  "status": "authoring_chunk",
+  "formal_baseline": "Q1-Q1761",
+  "q_ids_reserved": false,
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L01-C9-S01",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0553",
+      "target_node_label": "中心性脊髄損傷は高齢者の頸椎過伸展外傷などで生じやすく、脊髄中心部の障害により下肢より上肢の麻痺が強いことが特徴である",
+      "reference_question_ids": [
+        "Q561"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "moderate",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested finding_interpretation / INTERPRET",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C9-S02",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0558",
+      "target_node_label": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である",
+      "reference_question_ids": [
+        "Q566"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "moderate",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested prognosis_prediction / PREDICT",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C9-S03",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0574",
+      "target_node_label": "上位・下位運動ニューロン障害により四肢麻痺、舌萎縮、構音・嚥下障害が進行するが、眼球運動は比較的末期まで保たれやすい",
+      "reference_question_ids": [
+        "Q582"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "moderate",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested finding_interpretation / INTERPRET",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C9-S04",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0613",
+      "target_node_label": "脊髄損傷の自律神経過反射の典型所見",
+      "reference_question_ids": [
+        "Q621"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested safety_priority / DECIDE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C9-S05",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0638",
+      "target_node_label": "NIHSSには意識水準・質問・命令など意識状態の評価が含まれる",
+      "reference_question_ids": [
+        "Q646"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "moderate",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested finding_interpretation / INTERPRET",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C9-S06",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0687",
+      "target_node_label": "動作緩慢、安静時振戦、自律神経症状として便秘、前駆症状としてREM睡眠行動障害などがみられる",
+      "reference_question_ids": [
+        "Q695"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested finding_interpretation / INTERPRET",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C9-S07",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0781",
+      "target_node_label": "筋萎縮、筋力低下、線維束性収縮、腱反射低下などがみられる",
+      "reference_question_ids": [
+        "Q789"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested finding_interpretation / INTERPRET",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C9-S08",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0830",
+      "target_node_label": "てんかんは病因により特発性と症候性などに分類され、意識障害を伴わない発作もある",
+      "reference_question_ids": [
+        "Q839"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "moderate",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested finding_interpretation / INTERPRET",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    }
+  ],
+  "rules": [
+    "This is one authoring chunk of Lot01, not an independently integrable batch.",
+    "Do not allocate Q IDs or Knowledge Node IDs.",
+    "Fill only these eight drafts and preserve draft_id/slot/target/reference fields.",
+    "Suggested task/level/Safety may change only for medical quality; final 48-lot quotas are reconciled after all chunks.",
+    "Every completed draft needs evidence and honest semantic review."
+  ]
+}

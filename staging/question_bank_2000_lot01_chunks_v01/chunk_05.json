@@ -1,0 +1,475 @@
+{
+  "lot": "question_bank_2000_production_lot01_v01",
+  "chunk": 5,
+  "chunk_count": 6,
+  "status": "authoring_chunk",
+  "formal_baseline": "Q1-Q1761",
+  "q_ids_reserved": false,
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L01-C18-S02",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0504",
+      "target_node_label": "フレイルの説明の基本事項",
+      "reference_question_ids": [
+        "Q512"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested intervention_selection / PRESCRIBE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-S03",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0506",
+      "target_node_label": "延髄には舌下神経核があり、舌の運動を担う舌下神経機能が障害されやすい",
+      "reference_question_ids": [
+        "Q514"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested intervention_selection / PRESCRIBE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-S04",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0511",
+      "target_node_label": "鵞足は縫工筋、薄筋、半腱様筋の腱が脛骨近位内側に付着して形成される",
+      "reference_question_ids": [
+        "Q519"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested intervention_selection / PRESCRIBE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-S05",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0569",
+      "target_node_label": "重心が前方へ移り、足関節戦略で後方へ戻すため腓腹筋など足関節底屈筋が早期に活動する",
+      "reference_question_ids": [
+        "Q577"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested functional_goal_decision / DECIDE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-S06",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0570",
+      "target_node_label": "高強度運動で疲労が進むと解糖系への依存が高まり、乳酸と水素イオンが増加する",
+      "reference_question_ids": [
+        "Q578"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested intervention_selection / PRESCRIBE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-S07",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0571",
+      "target_node_label": "ムコ多糖類が皮下に蓄積する粘液水腫を生じ、圧迫しても圧痕を残しにくい非圧痕性浮腫となる",
+      "reference_question_ids": [
+        "Q579"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested intervention_selection / PRESCRIBE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-S08",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0614",
+      "target_node_label": "老研式活動能力指標の手段的自立には公共交通機関の利用、買物、食事準備、金銭管理などが含まれる",
+      "reference_question_ids": [
+        "Q622"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested intervention_selection / PRESCRIBE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-S09",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0630",
+      "target_node_label": "SOAPは問題志向型診療記録で、Sは主観情報、Oは客観情報、Aは評価・解釈、Pは今後の計画を記載する",
+      "reference_question_ids": [
+        "Q638"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested intervention_selection / PRESCRIBE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    }
+  ],
+  "rules": [
+    "This is one authoring chunk of Lot01, not an independently integrable batch.",
+    "Do not allocate Q IDs or Knowledge Node IDs.",
+    "Fill only these eight drafts and preserve draft_id/slot/target/reference fields.",
+    "Suggested task/level/Safety may change only for medical quality; final 48-lot quotas are reconciled after all chunks.",
+    "Every completed draft needs evidence and honest semantic review."
+  ]
+}

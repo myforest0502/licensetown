@@ -1,0 +1,477 @@
+{
+  "lot": "question_bank_2000_production_lot01_v01",
+  "chunk": 3,
+  "chunk_count": 6,
+  "status": "authoring_chunk",
+  "formal_baseline": "Q1-Q1761",
+  "q_ids_reserved": false,
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L01-C16-S06",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0635",
+      "target_node_label": "Monteggia骨折は尺骨近位〜骨幹部骨折に橈骨頭脱臼を合併する損傷である",
+      "reference_question_ids": [
+        "Q643"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested safety_priority / DECIDE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C16-S07",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0636",
+      "target_node_label": "国家試験対策では腰椎を正答として覚える",
+      "reference_question_ids": [
+        "Q644"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested finding_interpretation / INTERPRET",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C16-M01",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0686",
+      "target_node_label": "Malgaigne骨折は骨盤輪の垂直不安定性を伴う骨盤骨折である",
+      "reference_question_ids": [
+        "Q694",
+        "Q1575"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "moderate",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested finding_interpretation / INTERPRET",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C16-M02",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0962",
+      "target_node_label": "Galeazzi骨折とJefferson骨折の定義",
+      "reference_question_ids": [
+        "Q972",
+        "Q1354"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested safety_priority / DECIDE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C17-S01",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0493",
+      "target_node_label": "Daniels らの徒手筋力テストの特徴",
+      "reference_question_ids": [
+        "Q501"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested assessment_selection / MEASURE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C17-S02",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0631",
+      "target_node_label": "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える",
+      "reference_question_ids": [
+        "Q639"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested assessment_selection / MEASURE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C17-S03",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0680",
+      "target_node_label": "T1が小指外転筋に対応する",
+      "reference_question_ids": [
+        "Q688"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested assessment_selection / MEASURE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C17-S04",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0774",
+      "target_node_label": "日本整形外科学会・日本リハビリテーション医学会の参考可動域では股関節伸展15°が基準値である",
+      "reference_question_ids": [
+        "Q782"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested assessment_selection / MEASURE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    }
+  ],
+  "rules": [
+    "This is one authoring chunk of Lot01, not an independently integrable batch.",
+    "Do not allocate Q IDs or Knowledge Node IDs.",
+    "Fill only these eight drafts and preserve draft_id/slot/target/reference fields.",
+    "Suggested task/level/Safety may change only for medical quality; final 48-lot quotas are reconciled after all chunks.",
+    "Every completed draft needs evidence and honest semantic review."
+  ]
+}

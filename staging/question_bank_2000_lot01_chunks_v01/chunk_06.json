@@ -1,0 +1,455 @@
+{
+  "lot": "question_bank_2000_production_lot01_v01",
+  "chunk": 6,
+  "chunk_count": 6,
+  "status": "authoring_chunk",
+  "formal_baseline": "Q1-Q1761",
+  "q_ids_reserved": false,
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L01-C18-M01",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0509",
+      "target_node_label": "静的立位で下腿義足の足部内側が床から浮き上がったから病態・機能障害を解釈",
+      "reference_question_ids": [
+        "Q517",
+        "Q936"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "device_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: finding_interpretation/INTERPRET",
+        "candidate_demand": "suggested device_selection / PRESCRIBE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-M02",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0576",
+      "target_node_label": "水中運動療法の生理作用には水圧、浮力、粘性抵抗、熱伝導などが関与する",
+      "reference_question_ids": [
+        "Q584",
+        "Q1588"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "suggested intervention_selection / PRESCRIBE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-M03",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0643",
+      "target_node_label": "大腿義足の異常歩行と原因の対応関係",
+      "reference_question_ids": [
+        "Q651",
+        "Q1573"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "device_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: finding_interpretation/INTERPRET",
+        "candidate_demand": "suggested device_selection / PRESCRIBE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-M04",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0645",
+      "target_node_label": "腹圧性尿失禁に対する骨盤底筋群の筋力強化",
+      "reference_question_ids": [
+        "Q653",
+        "Q1577"
+      ],
+      "existing_demands": [
+        {
+          "task": "intervention_selection",
+          "primary_ability": "PRESCRIBE"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "existing demands: intervention_selection/PRESCRIBE",
+        "candidate_demand": "suggested functional_goal_decision / DECIDE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C9-N01",
+      "status": "authoring",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "suggested finding_interpretation / INTERPRET",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C16-N01",
+      "status": "authoring",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "suggested prognosis_prediction / PREDICT",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C17-N01",
+      "status": "authoring",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "fact_recall",
+      "primary_ability": "KNOW",
+      "secondary_ability": null,
+      "level": 1,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "suggested fact_recall / KNOW",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-N01",
+      "status": "authoring",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "suggested intervention_selection / PRESCRIBE",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    }
+  ],
+  "rules": [
+    "This is one authoring chunk of Lot01, not an independently integrable batch.",
+    "Do not allocate Q IDs or Knowledge Node IDs.",
+    "Fill only these eight drafts and preserve draft_id/slot/target/reference fields.",
+    "Suggested task/level/Safety may change only for medical quality; final 48-lot quotas are reconciled after all chunks.",
+    "Every completed draft needs evidence and honest semantic review."
+  ]
+}
