@@ -1,3 +1,4 @@
+import hashlib
 import json
 from collections import Counter
 from pathlib import Path
@@ -10,13 +11,31 @@ from reports import question_bank_2000_lot02_clone_validation_stack as validatio
 from reports import question_bank_2000_lot02_targets_v01 as targets
 
 ROOT = Path(__file__).parents[1]
+BANK = ROOT / "data" / "question_bank"
+PROTECTED = (
+    "questions.json",
+    "answers.json",
+    "explanations.json",
+    "question_tags.json",
+    "knowledge_nodes.json",
+    "bank_manifest.json",
+    "schema/question_bank_schema_v1.json",
+    "knowledge_node_canonical_map.json",
+    "strong_different_question_pairs.json",
+)
 
 
 def read(path: Path):
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
+def digest(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
 def test_lot02_preparation_pipeline_is_quota_exact_and_formal_read_only():
+    before = {name: digest(BANK / name) for name in PROTECTED}
+
     targets.main()
     assignment.main()
     template.main()
@@ -75,3 +94,6 @@ def test_lot02_preparation_pipeline_is_quota_exact_and_formal_read_only():
 
     assert (ROOT / "reports" / "question_bank_2000_lot02_validate.py").exists()
     assert (ROOT / "reports" / "question_bank_2000_lot02_seal.py").exists()
+
+    after = {name: digest(BANK / name) for name in PROTECTED}
+    assert after == before
