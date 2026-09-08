@@ -5,6 +5,7 @@ on:
     branches: [work/qb2000-lot03-active]
     paths:
       - 'reports/question_bank_2000_lot03_targets_v01.py'
+      - 'reports/question_bank_2000_lot03_targets_v02.py'
       - 'reports/question_bank_2000_lot03_assignment_v01.py'
       - '.github/workflows/qb2000-lot03-prepare.yml'
   workflow_dispatch:
@@ -38,7 +39,7 @@ jobs:
           PY
       - name: Build Lot03 roster and assignment
         run: |
-          python -m reports.question_bank_2000_lot03_targets_v01
+          python -m reports.question_bank_2000_lot03_targets_v02
           python -m reports.question_bank_2000_lot03_assignment_v01
       - name: Validate Lot03 structural quotas
         run: |
