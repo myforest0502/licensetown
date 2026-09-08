@@ -1,0 +1,33 @@
+name: qb2000 remaining allocation once
+
+on:
+  push:
+    branches:
+      - analysis/qb2000-remaining-allocation-v01
+    paths:
+      - reports/question_bank_2000_remaining_allocation_v01.py
+      - .github/workflows/qb2000_remaining_allocation_once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analysis/qb2000-remaining-allocation-v01
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Recalculate remaining allocation
+        run: python reports/question_bank_2000_remaining_allocation_v01.py
+      - name: Commit deterministic reports and remove one-shot workflow
+        run: |
+          rm .github/workflows/qb2000_remaining_allocation_once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/question_bank_2000_remaining_allocation_v01.json docs/question-bank-2000-remaining-allocation-v01.md .github/workflows/qb2000_remaining_allocation_once.yml
+          git commit -m "Record remaining Question Bank 2000 allocation"
+          git push
