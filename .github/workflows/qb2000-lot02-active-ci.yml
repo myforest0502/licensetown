@@ -1,0 +1,43 @@
+name: qb2000-lot02-active-ci
+
+on:
+  pull_request:
+
+jobs:
+  validate-lot02:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: .
+      OPENAI_API_KEY: test-key
+      CHANNEL_ACCESS_TOKEN: test-token
+      CHANNEL_SECRET: test-secret
+      DATABASE_URL: ""
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest
+      - name: Validate all Lot02 chunks and audits
+        run: |
+          for n in 1 2 3 4 5 6; do
+            python -m reports.question_bank_2000_lot02_chunk_validate $n
+            python -m reports.question_bank_2000_lot02_similarity_audit $n
+          done
+      - name: Run Lot02 tests
+        run: >-
+          python -m pytest -q
+          tests/test_question_bank_2000_lot02_chunk_validator.py
+          tests/test_question_bank_2000_lot02_target_allocation.py
+          tests/test_question_bank_2000_lot02_pipeline.py
+      - name: Upload similarity audits
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qb2000-lot02-all-chunk-audits
+          if-no-files-found: warn
+          path: reports/question_bank_2000_lot02_similarity_audits/*.json
