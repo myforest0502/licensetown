@@ -11,6 +11,7 @@
   "results": [
     {
       "draft_id": "L04-C12-M01",
+      "question_text": "患者が強い怒りを示しながら『療法士が私に怒っている』と繰り返す。投影が疑われるときの関わりとして最も適切なのはどれか。",
       "reference_question_ids": [
         "Q558",
         "Q1827"
@@ -73,6 +74,7 @@
     },
     {
       "draft_id": "L04-C13-S01",
+      "question_text": "肩関節外旋筋力の低下があり、選択的な筋力強化を行いたい。主な対象筋として最も適切なのはどれか。",
       "reference_question_ids": [
         "Q611"
       ],
@@ -134,6 +136,7 @@
     },
     {
       "draft_id": "L04-C13-S02",
+      "question_text": "虫様筋の機能が低下したときに生じやすい手指肢位として最も適切なのはどれか。",
       "reference_question_ids": [
         "Q612"
       ],
@@ -195,6 +198,7 @@
     },
     {
       "draft_id": "L04-C13-M01",
+      "question_text": "Trendelenburg徴候がみられ、股関節外転筋の選択的強化を行う。主な対象筋として最も適切なのはどれか。",
       "reference_question_ids": [
         "Q553",
         "Q1650"
@@ -257,6 +261,7 @@
     },
     {
       "draft_id": "L04-C14-S01",
+      "question_text": "立ち上がりで離殿できず、体幹前傾が不十分な患者に対する練習として最も適切なのはどれか。",
       "reference_question_ids": [
         "Q1857"
       ],
@@ -318,6 +323,7 @@
     },
     {
       "draft_id": "L04-C14-M01",
+      "question_text": "指鼻指試験で測定障害と企図振戦が明らかな患者に対し、上肢協調性の改善を目的に行う練習として最も適切なのはどれか。",
       "reference_question_ids": [
         "Q562",
         "Q1833"
@@ -380,6 +386,7 @@
     },
     {
       "draft_id": "L04-C15-S01",
+      "question_text": "歩行の荷重応答期に前足部が急速に床へ落ち、踵接地後の足関節底屈を制御できていない。最も関連する筋機能低下はどれか。",
       "reference_question_ids": [
         "Q1215"
       ],
@@ -441,6 +448,7 @@
     },
     {
       "draft_id": "L04-C15-S02",
+      "question_text": "歩行の荷重応答期に膝が過度に屈曲して膝折れしそうになる。正常ならこの時期に膝屈曲を制御する主な筋活動はどれか。",
       "reference_question_ids": [
         "Q1402"
       ],

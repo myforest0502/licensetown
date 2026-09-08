@@ -1,13 +1,583 @@
 {
-  "lot":"question_bank_2000_production_lot04_v01","chunk":3,"chunk_count":6,"status":"completed_chunk","formal_baseline":"Q1-Q1905","q_ids_reserved":false,"production_write":false,"db_write":false,
-  "drafts":[
-    {"draft_id":"L04-C7-S01","status":"accepted","slot_type":"singleton_second","target_node_id":"KN0675","target_node_label":"A型肝炎ウイルスは慢性肝炎へ移行しにくく、肝細胞癌の主要原因とはならない","reference_question_ids":["Q683"],"existing_demands":[{"task":"fact_recall","primary_ability":"KNOW"}],"proposed_category_small":7,"source":"original","required_new_demand_outside_existing":true,"title":"A型肝炎後の長期経過","question_text":"A型肝炎から回復した患者の長期経過を説明する。最も適切なのはどれか。","choices":{"1":"通常は慢性肝炎へ移行しない","2":"高率に慢性持続感染となる","3":"肝細胞癌の主要原因となる","4":"回復後も全例でウイルス血症が持続する","5":"必ず肝硬変へ進行する"},"correct_choices":["1"],"explanation":"A型肝炎は急性肝炎として発症し、通常は慢性感染へ移行しない。したがってB型・C型肝炎のような持続感染を介する肝硬変・肝細胞癌の主要原因にはならない。","choice_explanations":{"1":"○。A型肝炎は通常慢性化しない。","2":"慢性持続感染はA型肝炎の典型ではない。","3":"肝細胞癌の主要なウイルス性背景は慢性B型・C型肝炎である。","4":"回復後に全例でウイルス血症が持続するわけではない。","5":"A型肝炎が必ず肝硬変へ進行することはない。"},"proposed_task":"finding_interpretation","primary_ability":"INTERPRET","secondary_ability":null,"level":2,"safety":"moderate","clinical_intent":"肝炎ウイルスの種類から慢性化・発癌リスクの長期的意味を解釈する。","semantic_review":{"reference_demand":"fact_recall/KNOW","candidate_demand":"finding_interpretation/INTERPRET: 回復後の長期経過を判断する。","why_not_same_demand":"Q683はA型肝炎の慢性化・発癌との関係を直接問う。本問は回復後患者への長期説明として解釈させる。","related_formal_questions":[{"qid":"Q683","relation":"same canonical Node; direct formal reference"}],"decision":"accepted","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","expert_signoff":false},"evidence":[{"url":"https://www.cdc.gov/hepatitis-a/about/index.html","support":"CDC states hepatitis A causes acute infection and does not become chronic."}],"reviewed_sha256":"","assignment_status":"suggested_not_editorially_approved","assignment_may_change_if_quotas_preserved":true},
-    {"draft_id":"L04-C7-S02","status":"accepted","slot_type":"singleton_second","target_node_id":"KN0677","target_node_label":"最大吸気量は1回換気量＋予備吸気量、残気量は全肺気量−肺活量で表される","reference_question_ids":["Q685"],"existing_demands":[{"task":"fact_recall","primary_ability":"KNOW"}],"proposed_category_small":7,"source":"original","required_new_demand_outside_existing":true,"title":"肺気量分画の算出","question_text":"肺機能検査で全肺気量6.0 L、肺活量4.5 Lであった。残気量として最も適切なのはどれか。","choices":{"1":"0.5 L","2":"1.0 L","3":"1.5 L","4":"4.5 L","5":"10.5 L"},"correct_choices":["3"],"explanation":"残気量は全肺気量から肺活量を差し引いて求める。6.0−4.5＝1.5 Lである。","choice_explanations":{"1":"全肺気量と肺活量の差ではない。","2":"計算値より小さい。","3":"○。6.0−4.5＝1.5 Lである。","4":"これは提示された肺活量である。","5":"加算ではなく減算する。"},"proposed_task":"finding_interpretation","primary_ability":"INTERPRET","secondary_ability":null,"level":2,"safety":"moderate","clinical_intent":"測定された肺気量分画を関係式に当てはめて解釈する。","semantic_review":{"reference_demand":"fact_recall/KNOW","candidate_demand":"finding_interpretation/INTERPRET: 検査値から残気量を算出する。","why_not_same_demand":"Q685は肺気量分画の関係式を直接問う。本問は実測値を用いて残気量を導出させる。","related_formal_questions":[{"qid":"Q685","relation":"same canonical Node; direct formal reference"}],"decision":"accepted","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","expert_signoff":false},"evidence":[{"url":"https://www.ncbi.nlm.nih.gov/books/NBK482339/","support":"Pulmonary physiology references define total lung capacity as vital capacity plus residual volume."}],"reviewed_sha256":"","assignment_status":"suggested_not_editorially_approved","assignment_may_change_if_quotas_preserved":true},
-    {"draft_id":"L04-C7-M01","status":"accepted","slot_type":"multi_reinforcement","target_node_id":"KN0548","target_node_label":"神経膠芽腫は悪性度の高い原発性脳腫瘍で、浸潤性が強く予後不良である","reference_question_ids":["Q556","Q1679"],"existing_demands":[{"task":"fact_recall","primary_ability":"KNOW"},{"task":"finding_interpretation","primary_ability":"INTERPRET"}],"proposed_category_small":7,"source":"original","required_new_demand_outside_existing":true,"title":"神経膠芽腫の予後説明","question_text":"神経膠芽腫と診断された患者家族へ疾患の一般的特徴を説明する。予後に関する説明として最も適切なのはどれか。","choices":{"1":"浸潤性が強く再発しやすいため予後は不良である","2":"良性腫瘍で完全治癒が通常である","3":"転移性脳腫瘍より必ず予後良好である","4":"治療せず自然消退することが多い","5":"再発はほとんどみられない"},"correct_choices":["1"],"explanation":"神経膠芽腫は高悪性度で周囲脳組織へ浸潤性に増殖し、標準治療後も再発しやすい。そのため一般に予後不良の原発性脳腫瘍である。","choice_explanations":{"1":"○。高い浸潤性と再発率が予後不良の背景となる。","2":"良性腫瘍ではない。","3":"個々の症例を問わず必ず予後良好とはいえない。","4":"自然消退を期待して無治療とする疾患ではない。","5":"再発はむしろ重要な臨床問題である。"},"proposed_task":"prognosis_prediction","primary_ability":"PREDICT","secondary_ability":null,"level":4,"safety":"moderate","clinical_intent":"腫瘍の悪性度・浸潤性から一般的な再発性と予後を説明する。","semantic_review":{"reference_demand":"fact_recall/KNOW, finding_interpretation/INTERPRET","candidate_demand":"prognosis_prediction/PREDICT: 腫瘍特性から再発・予後を判断する。","why_not_same_demand":"既存問題は疾患同定や特徴解釈を問う。本問はその特徴を将来経過・予後へ結びつける。","related_formal_questions":[{"qid":"Q556","relation":"same canonical Node; direct formal reference"},{"qid":"Q1679","relation":"same canonical Node; direct formal reference"}],"decision":"accepted","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","expert_signoff":false},"evidence":[{"url":"https://www.ncbi.nlm.nih.gov/books/NBK470003/","support":"NCBI StatPearls describes glioblastoma as an aggressive infiltrative primary brain malignancy with poor prognosis and frequent recurrence."}],"reviewed_sha256":"","assignment_status":"suggested_not_editorially_approved","assignment_may_change_if_quotas_preserved":true},
-    {"draft_id":"L04-C8-S01","status":"accepted","slot_type":"singleton_second","target_node_id":"KN0621","target_node_label":"低栄養は貧血、褥瘡、サルコペニア、骨折リスクなどと関連する","reference_question_ids":["Q629"],"existing_demands":[{"task":"fact_recall","primary_ability":"KNOW"}],"proposed_category_small":8,"source":"original","required_new_demand_outside_existing":true,"title":"低栄養患者の訓練前対応","question_text":"著明な体重減少と低栄養があり、仙骨部に発赤を認める入院患者が強い負荷の筋力訓練を希望している。まず優先する対応はどれか。","choices":{"1":"栄養状態と皮膚・褥瘡リスクを評価し多職種で対応する","2":"希望どおり最大負荷訓練を直ちに開始する","3":"発赤部へ長時間圧をかけて訓練する","4":"体重減少を無視して訓練量のみ増やす","5":"食事摂取を減らして体重をさらに落とす"},"correct_choices":["1"],"explanation":"低栄養は筋量低下や創傷治癒遅延、褥瘡リスクと関連する。発赤もあるため、まず栄養・皮膚状態を評価し、除圧や栄養管理を含む多職種対応を優先する。","choice_explanations":{"1":"○。低栄養と皮膚障害リスクを先に評価・管理する。","2":"状態評価なしの高負荷訓練は安全性に欠ける。","3":"発赤部への持続圧は褥瘡悪化につながり得る。","4":"低栄養を無視するのは不適切である。","5":"さらなる栄養不足を招く。"},"proposed_task":"safety_priority","primary_ability":"DECIDE","secondary_ability":null,"level":4,"safety":"critical","clinical_intent":"低栄養と皮膚障害兆候を認識し、訓練より先に安全管理を優先する。","semantic_review":{"reference_demand":"fact_recall/KNOW","candidate_demand":"safety_priority/DECIDE: 低栄養・皮膚所見から訓練前の優先対応を決める。","why_not_same_demand":"Q629は低栄養との関連疾患を問う。本問は実患者で合併リスクを安全上の優先順位へ変換させる。","related_formal_questions":[{"qid":"Q629","relation":"same canonical Node; direct formal reference"}],"decision":"accepted","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","expert_signoff":false},"evidence":[{"url":"https://www.ncbi.nlm.nih.gov/books/NBK430857/","support":"Clinical nutrition references associate malnutrition with impaired wound healing, loss of muscle mass, and poorer outcomes."}],"reviewed_sha256":"","assignment_status":"suggested_not_editorially_approved","assignment_may_change_if_quotas_preserved":true},
-    {"draft_id":"L04-C8-S02","status":"accepted","slot_type":"singleton_second","target_node_id":"KN0622","target_node_label":"血友病は凝固因子欠乏により関節内出血を反復し、膝・足・肘などに血友病性関節症を生じる","reference_question_ids":["Q630"],"existing_demands":[{"task":"fact_recall","primary_ability":"KNOW"}],"proposed_category_small":8,"source":"original","required_new_demand_outside_existing":true,"title":"血友病の急性関節痛への対応","question_text":"血友病患者が運動中に膝の急な腫脹、熱感、疼痛を訴えた。最も優先すべき対応はどれか。","choices":{"1":"関節内出血を疑い運動を中止して医療チームへ連絡する","2":"疼痛を我慢させて反復スクワットを続ける","3":"強い徒手抵抗運動を追加する","4":"膝関節を強く揉み続ける","5":"腫脹を無視して歩行距離を延長する"},"correct_choices":["1"],"explanation":"血友病では関節内出血を起こしやすい。急な腫脹・熱感・疼痛は出血を疑う所見であり、運動を中止し、因子補充などの医療的対応につなげることが優先される。","choice_explanations":{"1":"○。急性関節出血を疑い安全確保と医療連携を優先する。","2":"出血増悪の可能性があり不適切である。","3":"急性期に強負荷を追加すべきではない。","4":"強いマッサージは出血部位への刺激となり得る。","5":"症状を無視した負荷増加は危険である。"},"proposed_task":"safety_priority","primary_ability":"DECIDE","secondary_ability":null,"level":4,"safety":"critical","clinical_intent":"急性関節出血を疑う症状から運動中止と医療連携を最優先する。","semantic_review":{"reference_demand":"fact_recall/KNOW","candidate_demand":"safety_priority/DECIDE: 急性関節症状から出血を疑い運動中止を決める。","why_not_same_demand":"Q630は血友病性関節症の知識を問う。本問は運動中の急性症状に対する安全行動を決めさせる。","related_formal_questions":[{"qid":"Q630","relation":"same canonical Node; direct formal reference"}],"decision":"accepted","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","expert_signoff":false},"evidence":[{"url":"https://www.ncbi.nlm.nih.gov/books/NBK551607/","support":"Hemophilia commonly causes hemarthrosis; acute bleeding requires prompt recognition and treatment."}],"reviewed_sha256":"","assignment_status":"suggested_not_editorially_approved","assignment_may_change_if_quotas_preserved":true},
-    {"draft_id":"L04-C8-S03","status":"accepted","slot_type":"singleton_second","target_node_id":"KN0625","target_node_label":"脳内βアミロイド沈着による老人斑と、リン酸化tauによる神経原線維変化が代表的病理所見である","reference_question_ids":["Q633"],"existing_demands":[{"task":"fact_recall","primary_ability":"KNOW"}],"proposed_category_small":8,"source":"original","required_new_demand_outside_existing":true,"title":"Alzheimer病理所見の解釈","question_text":"認知症患者の病理で、細胞外にβアミロイド沈着、神経細胞内にリン酸化tauの凝集を認めた。最も考えられる疾患はどれか。","choices":{"1":"Alzheimer病","2":"Parkinson病","3":"筋萎縮性側索硬化症","4":"多発性硬化症","5":"Guillain-Barré症候群"},"correct_choices":["1"],"explanation":"細胞外のβアミロイド老人斑と、細胞内のリン酸化tauによる神経原線維変化はAlzheimer病の代表的病理所見である。","choice_explanations":{"1":"○。提示された2つの病理所見はAlzheimer病を強く示唆する。","2":"Parkinson病ではLewy小体などが代表的である。","3":"ALSは上位・下位運動ニューロン変性が中心である。","4":"多発性硬化症は中枢神経の脱髄病変が中心である。","5":"Guillain-Barré症候群は末梢神経系の急性炎症性ニューロパチーである。"},"proposed_task":"finding_interpretation","primary_ability":"INTERPRET","secondary_ability":null,"level":2,"safety":"moderate","clinical_intent":"病理所見の組合せから疾患を同定する。","semantic_review":{"reference_demand":"fact_recall/KNOW","candidate_demand":"finding_interpretation/INTERPRET: 病理像から疾患を同定する。","why_not_same_demand":"Q633は代表病理所見を直接問う。本問は所見を提示して診断へ結びつける。","related_formal_questions":[{"qid":"Q633","relation":"same canonical Node; direct formal reference"}],"decision":"accepted","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","expert_signoff":false},"evidence":[{"url":"https://www.ncbi.nlm.nih.gov/books/NBK499922/","support":"NCBI StatPearls describes amyloid plaques and neurofibrillary tangles of hyperphosphorylated tau as characteristic Alzheimer pathology."}],"reviewed_sha256":"","assignment_status":"suggested_not_editorially_approved","assignment_may_change_if_quotas_preserved":true},
-    {"draft_id":"L04-C8-M01","status":"accepted","slot_type":"multi_reinforcement","target_node_id":"KN1215","target_node_label":"糖尿病性多発ニューロパチーの左右対称・遠位優位の靴下型感覚障害","reference_question_ids":["Q1230","Q1526"],"existing_demands":[{"task":"fact_recall","primary_ability":"KNOW"}],"proposed_category_small":8,"source":"original","required_new_demand_outside_existing":true,"title":"糖尿病性神経障害の感覚分布","question_text":"長期罹患の糖尿病患者で両足趾から足関節へ左右対称にしびれと感覚低下が広がっている。最も考えやすい病態はどれか。","choices":{"1":"糖尿病性遠位対称性多発ニューロパチー","2":"単一の腓骨神経麻痺","3":"右L5神経根障害のみ","4":"左脛骨神経断裂","5":"一過性脳虚血発作"},"correct_choices":["1"],"explanation":"糖尿病性多発ニューロパチーは長さ依存性に遠位から始まり、左右対称の靴下型感覚障害を示すのが典型である。","choice_explanations":{"1":"○。遠位優位・左右対称の分布が典型的である。","2":"単一末梢神経障害なら分布は一側の神経支配域に偏る。","3":"単一神経根障害ではデルマトームや筋節に沿った一側性所見が中心となる。","4":"一側脛骨神経断裂では左右対称の靴下型にはならない。","5":"TIAはこのような慢性・遠位対称性の感覚障害を典型的には示さない。"},"proposed_task":"finding_interpretation","primary_ability":"INTERPRET","secondary_ability":null,"level":2,"safety":"none","clinical_intent":"感覚障害の分布から糖尿病性多発ニューロパチーを推定する。","semantic_review":{"reference_demand":"fact_recall/KNOW","candidate_demand":"finding_interpretation/INTERPRET: 分布パターンから病態を推定する。","why_not_same_demand":"既存問題は靴下型感覚障害の知識を問う。本問は患者所見の空間分布を診断へ変換させる。","related_formal_questions":[{"qid":"Q1230","relation":"same canonical Node; direct formal reference"},{"qid":"Q1526","relation":"same canonical Node; direct formal reference"}],"decision":"accepted","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","expert_signoff":false},"evidence":[{"url":"https://www.ncbi.nlm.nih.gov/books/NBK442009/","support":"Diabetic peripheral neuropathy commonly presents as a symmetric, length-dependent stocking-glove sensory neuropathy."}],"reviewed_sha256":"","assignment_status":"suggested_not_editorially_approved","assignment_may_change_if_quotas_preserved":true},
-    {"draft_id":"L04-C8-M02","status":"accepted","slot_type":"multi_reinforcement","target_node_id":"KN0245","target_node_label":"慢性高CO2血症における代償性呼吸性アシドーシス","reference_question_ids":["Q246","Q1569"],"existing_demands":[{"task":"finding_interpretation","primary_ability":"INTERPRET"}],"proposed_category_small":8,"source":"original","required_new_demand_outside_existing":true,"title":"慢性高CO2血症の運動前判断","question_text":"COPD患者の血液ガスでPaCO2 60 Torr、HCO3− 34 mEq/Lと慢性的なCO2貯留を認める。新たに傾眠と呼吸数低下が出現した。理学療法士の対応として最も適切なのはどれか。","choices":{"1":"運動を中止し急性増悪を疑って医療スタッフへ報告する","2":"高強度運動を開始して覚醒を促す","3":"症状を無視して歩行距離を延長する","4":"呼吸数がさらに低下するまで観察のみとする","5":"自己判断で鎮静薬を追加する"},"correct_choices":["1"],"explanation":"慢性高CO2血症ではHCO3−上昇による腎性代償がみられるが、新規の傾眠や呼吸数低下は急性の換気悪化・CO2ナルコーシスを疑う危険所見である。運動を中止して速やかに医療評価へつなげる。","choice_explanations":{"1":"○。新たな意識・換気悪化は安全上優先して評価すべき所見である。","2":"換気不全が疑われる状況で高強度運動は不適切である。","3":"危険所見を無視して負荷を増やしてはいけない。","4":"悪化を待つのではなく速やかな報告が必要である。","5":"理学療法士が自己判断で鎮静薬を追加することはない。"},"proposed_task":"safety_priority","primary_ability":"DECIDE","secondary_ability":null,"level":4,"safety":"critical","clinical_intent":"慢性代償所見と新規危険徴候を区別し、運動中止と医療連携を優先する。","semantic_review":{"reference_demand":"finding_interpretation/INTERPRET","candidate_demand":"safety_priority/DECIDE: 慢性高CO2血症患者の新規危険徴候から中止・報告を決める。","why_not_same_demand":"既存問題は血液ガスの酸塩基解釈を問う。本問はその背景を踏まえて急性悪化時の安全行動を決定させる。","related_formal_questions":[{"qid":"Q246","relation":"same canonical Node; direct formal reference"},{"qid":"Q1569","relation":"same canonical Node; direct formal reference"}],"decision":"accepted","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","expert_signoff":false},"evidence":[{"url":"https://www.ncbi.nlm.nih.gov/books/NBK482430/","support":"Respiratory acidosis references describe chronic renal bicarbonate compensation and neurologic manifestations with worsening hypercapnia."}],"reviewed_sha256":"","assignment_status":"suggested_not_editorially_approved","assignment_may_change_if_quotas_preserved":true}
+  "lot": "question_bank_2000_production_lot04_v01",
+  "chunk": 3,
+  "chunk_count": 6,
+  "status": "completed_chunk",
+  "formal_baseline": "Q1-Q1905",
+  "q_ids_reserved": false,
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L04-C7-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0675",
+      "target_node_label": "A型肝炎ウイルスは慢性肝炎へ移行しにくく、肝細胞癌の主要原因とはならない",
+      "reference_question_ids": [
+        "Q683"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 7,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "A型肝炎後の長期経過",
+      "question_text": "A型肝炎から回復した患者の長期経過を説明する。最も適切なのはどれか。",
+      "choices": {
+        "1": "通常は慢性肝炎へ移行しない",
+        "2": "高率に慢性持続感染となる",
+        "3": "肝細胞癌の主要原因となる",
+        "4": "回復後も全例でウイルス血症が持続する",
+        "5": "必ず肝硬変へ進行する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "A型肝炎は急性肝炎として発症し、通常は慢性感染へ移行しない。したがってB型・C型肝炎のような持続感染を介する肝硬変・肝細胞癌の主要原因にはならない。",
+      "choice_explanations": {
+        "1": "○。A型肝炎は通常慢性化しない。",
+        "2": "慢性持続感染はA型肝炎の典型ではない。",
+        "3": "肝細胞癌の主要なウイルス性背景は慢性B型・C型肝炎である。",
+        "4": "回復後に全例でウイルス血症が持続するわけではない。",
+        "5": "A型肝炎が必ず肝硬変へ進行することはない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "肝炎ウイルスの種類から慢性化・発癌リスクの長期的意味を解釈する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 回復後の長期経過を判断する。",
+        "why_not_same_demand": "Q683はA型肝炎の慢性化・発癌との関係を直接問う。本問は回復後患者への長期説明として解釈させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q683",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.cdc.gov/hepatitis-a/about/index.html",
+          "support": "CDC states hepatitis A causes acute infection and does not become chronic."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C7-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0677",
+      "target_node_label": "最大吸気量は1回換気量＋予備吸気量、残気量は全肺気量−肺活量で表される",
+      "reference_question_ids": [
+        "Q685"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 7,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "肺気量分画の算出",
+      "question_text": "肺機能検査で全肺気量6.0 L、肺活量4.5 Lであった。残気量として最も適切なのはどれか。",
+      "choices": {
+        "1": "0.5 L",
+        "2": "1.0 L",
+        "3": "1.5 L",
+        "4": "4.5 L",
+        "5": "10.5 L"
+      },
+      "correct_choices": [
+        "3"
+      ],
+      "explanation": "残気量は全肺気量から肺活量を差し引いて求める。6.0−4.5＝1.5 Lである。",
+      "choice_explanations": {
+        "1": "全肺気量と肺活量の差ではない。",
+        "2": "計算値より小さい。",
+        "3": "○。6.0−4.5＝1.5 Lである。",
+        "4": "これは提示された肺活量である。",
+        "5": "加算ではなく減算する。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "測定された肺気量分画を関係式に当てはめて解釈する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 検査値から残気量を算出する。",
+        "why_not_same_demand": "Q685は肺気量分画の関係式を直接問う。本問は実測値を用いて残気量を導出させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q685",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK482339/",
+          "support": "Pulmonary physiology references define total lung capacity as vital capacity plus residual volume."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C7-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0548",
+      "target_node_label": "神経膠芽腫は悪性度の高い原発性脳腫瘍で、浸潤性が強く予後不良である",
+      "reference_question_ids": [
+        "Q556",
+        "Q1679"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 7,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "神経膠芽腫の予後説明",
+      "question_text": "神経膠芽腫と診断された患者家族へ疾患の一般的特徴を説明する。予後に関する説明として最も適切なのはどれか。",
+      "choices": {
+        "1": "浸潤性が強く再発しやすいため予後は不良である",
+        "2": "良性腫瘍で完全治癒が通常である",
+        "3": "転移性脳腫瘍より必ず予後良好である",
+        "4": "治療せず自然消退することが多い",
+        "5": "再発はほとんどみられない"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "神経膠芽腫は高悪性度で周囲脳組織へ浸潤性に増殖し、標準治療後も再発しやすい。そのため一般に予後不良の原発性脳腫瘍である。",
+      "choice_explanations": {
+        "1": "○。高い浸潤性と再発率が予後不良の背景となる。",
+        "2": "良性腫瘍ではない。",
+        "3": "個々の症例を問わず必ず予後良好とはいえない。",
+        "4": "自然消退を期待して無治療とする疾患ではない。",
+        "5": "再発はむしろ重要な臨床問題である。"
+      },
+      "proposed_task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "moderate",
+      "clinical_intent": "腫瘍の悪性度・浸潤性から一般的な再発性と予後を説明する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW, finding_interpretation/INTERPRET",
+        "candidate_demand": "prognosis_prediction/PREDICT: 腫瘍特性から再発・予後を判断する。",
+        "why_not_same_demand": "既存問題は疾患同定や特徴解釈を問う。本問はその特徴を将来経過・予後へ結びつける。",
+        "related_formal_questions": [
+          {
+            "qid": "Q556",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1679",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK470003/",
+          "support": "NCBI StatPearls describes glioblastoma as an aggressive infiltrative primary brain malignancy with poor prognosis and frequent recurrence."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C8-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0621",
+      "target_node_label": "低栄養は貧血、褥瘡、サルコペニア、骨折リスクなどと関連する",
+      "reference_question_ids": [
+        "Q629"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "低栄養と皮膚リスクを踏まえた機能目標",
+      "question_text": "著明な体重減少と低栄養があり仙骨部に発赤を認める入院患者で、離床能力の低下もみられる。短期目標として最も適切なのはどれか。",
+      "choices": {
+        "1": "栄養・除圧管理と並行して安全な離床時間を段階的に延ばす",
+        "2": "発赤部へ長時間圧をかけ続ける",
+        "3": "栄養状態を無視して最大負荷訓練のみ行う",
+        "4": "食事摂取を減らしてさらに減量する",
+        "5": "皮膚状態を確認せず終日同一姿勢を保つ"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "低栄養は筋量低下や創傷治癒遅延、褥瘡リスクと関連する。機能回復を目指す場合も栄養・除圧管理を並行し、安全性を確保しながら離床量を段階的に増やす目標が適切である。",
+      "choice_explanations": {
+        "1": "○。リスク管理と機能回復を両立した具体的目標である。",
+        "2": "発赤部への持続圧は悪化につながり得る。",
+        "3": "低栄養と皮膚リスクを無視している。",
+        "4": "さらなる低栄養を招く。",
+        "5": "褥瘡リスク管理に反する。"
+      },
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "低栄養・皮膚障害リスクを踏まえ、安全管理と離床機能を両立する短期目標を決定する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "functional_goal_decision/DECIDE: 高リスク状態で安全性と離床機能を両立する目標を決める。",
+        "why_not_same_demand": "Q629は低栄養と関連する問題を問う。本問は低栄養・皮膚所見を機能回復目標の優先順位へ変換させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q629",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK430857/",
+          "support": "Clinical nutrition references associate malnutrition with impaired wound healing, loss of muscle mass, and poorer outcomes."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "author-adjusted-for-medical-fit-and-quota",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C8-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0622",
+      "target_node_label": "血友病は凝固因子欠乏により関節内出血を反復し、膝・足・肘などに血友病性関節症を生じる",
+      "reference_question_ids": [
+        "Q630"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "血友病の急性関節痛への対応",
+      "question_text": "血友病患者が運動中に膝の急な腫脹、熱感、疼痛を訴えた。最も優先すべき対応はどれか。",
+      "choices": {
+        "1": "関節内出血を疑い運動を中止して医療チームへ連絡する",
+        "2": "疼痛を我慢させて反復スクワットを続ける",
+        "3": "強い徒手抵抗運動を追加する",
+        "4": "膝関節を強く揉み続ける",
+        "5": "腫脹を無視して歩行距離を延長する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "血友病では関節内出血を起こしやすい。急な腫脹・熱感・疼痛は出血を疑う所見であり、運動を中止し、因子補充などの医療的対応につなげることが優先される。",
+      "choice_explanations": {
+        "1": "○。急性関節出血を疑い安全確保と医療連携を優先する。",
+        "2": "出血増悪の可能性があり不適切である。",
+        "3": "急性期に強負荷を追加すべきではない。",
+        "4": "強いマッサージは出血部位への刺激となり得る。",
+        "5": "症状を無視した負荷増加は危険である。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "急性関節出血を疑う症状から運動中止と医療連携を最優先する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "safety_priority/DECIDE: 急性関節症状から出血を疑い運動中止を決める。",
+        "why_not_same_demand": "Q630は血友病性関節症の知識を問う。本問は運動中の急性症状に対する安全行動を決めさせる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q630",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK551607/",
+          "support": "Hemophilia commonly causes hemarthrosis; acute bleeding requires prompt recognition and treatment."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C8-S03",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0625",
+      "target_node_label": "脳内βアミロイド沈着による老人斑と、リン酸化tauによる神経原線維変化が代表的病理所見である",
+      "reference_question_ids": [
+        "Q633"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "Alzheimer病理所見の解釈",
+      "question_text": "認知症患者の病理で、細胞外にβアミロイド沈着、神経細胞内にリン酸化tauの凝集を認めた。最も考えられる疾患はどれか。",
+      "choices": {
+        "1": "Alzheimer病",
+        "2": "Parkinson病",
+        "3": "筋萎縮性側索硬化症",
+        "4": "多発性硬化症",
+        "5": "Guillain-Barré症候群"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "細胞外のβアミロイド老人斑と、細胞内のリン酸化tauによる神経原線維変化はAlzheimer病の代表的病理所見である。",
+      "choice_explanations": {
+        "1": "○。提示された2つの病理所見はAlzheimer病を強く示唆する。",
+        "2": "Parkinson病ではLewy小体などが代表的である。",
+        "3": "ALSは上位・下位運動ニューロン変性が中心である。",
+        "4": "多発性硬化症は中枢神経の脱髄病変が中心である。",
+        "5": "Guillain-Barré症候群は末梢神経系の急性炎症性ニューロパチーである。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "moderate",
+      "clinical_intent": "病理所見の組合せから疾患を同定する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 病理像から疾患を同定する。",
+        "why_not_same_demand": "Q633は代表病理所見を直接問う。本問は所見を提示して診断へ結びつける。",
+        "related_formal_questions": [
+          {
+            "qid": "Q633",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK499922/",
+          "support": "NCBI StatPearls describes amyloid plaques and neurofibrillary tangles of hyperphosphorylated tau as characteristic Alzheimer pathology."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C8-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN1215",
+      "target_node_label": "糖尿病性多発ニューロパチーの左右対称・遠位優位の靴下型感覚障害",
+      "reference_question_ids": [
+        "Q1230",
+        "Q1526"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "糖尿病性神経障害の感覚分布",
+      "question_text": "長期罹患の糖尿病患者で両足趾から足関節へ左右対称にしびれと感覚低下が広がっている。最も考えやすい病態はどれか。",
+      "choices": {
+        "1": "糖尿病性遠位対称性多発ニューロパチー",
+        "2": "単一の腓骨神経麻痺",
+        "3": "右L5神経根障害のみ",
+        "4": "左脛骨神経断裂",
+        "5": "一過性脳虚血発作"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "糖尿病性多発ニューロパチーは長さ依存性に遠位から始まり、左右対称の靴下型感覚障害を示すのが典型である。",
+      "choice_explanations": {
+        "1": "○。遠位優位・左右対称の分布が典型的である。",
+        "2": "単一末梢神経障害なら分布は一側の神経支配域に偏る。",
+        "3": "単一神経根障害ではデルマトームや筋節に沿った一側性所見が中心となる。",
+        "4": "一側脛骨神経断裂では左右対称の靴下型にはならない。",
+        "5": "TIAはこのような慢性・遠位対称性の感覚障害を典型的には示さない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "感覚障害の分布から糖尿病性多発ニューロパチーを推定する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 分布パターンから病態を推定する。",
+        "why_not_same_demand": "既存問題は靴下型感覚障害の知識を問う。本問は患者所見の空間分布を診断へ変換させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1230",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1526",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK442009/",
+          "support": "Diabetic peripheral neuropathy commonly presents as a symmetric, length-dependent stocking-glove sensory neuropathy."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C8-M02",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0245",
+      "target_node_label": "慢性高CO2血症における代償性呼吸性アシドーシス",
+      "reference_question_ids": [
+        "Q246",
+        "Q1569"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "慢性高CO2血症の運動前判断",
+      "question_text": "COPD患者の血液ガスでPaCO2 60 Torr、HCO3− 34 mEq/Lと慢性的なCO2貯留を認める。新たに傾眠と呼吸数低下が出現した。理学療法士の対応として最も適切なのはどれか。",
+      "choices": {
+        "1": "運動を中止し急性増悪を疑って医療スタッフへ報告する",
+        "2": "高強度運動を開始して覚醒を促す",
+        "3": "症状を無視して歩行距離を延長する",
+        "4": "呼吸数がさらに低下するまで観察のみとする",
+        "5": "自己判断で鎮静薬を追加する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "慢性高CO2血症ではHCO3−上昇による腎性代償がみられるが、新規の傾眠や呼吸数低下は急性の換気悪化・CO2ナルコーシスを疑う危険所見である。運動を中止して速やかに医療評価へつなげる。",
+      "choice_explanations": {
+        "1": "○。新たな意識・換気悪化は安全上優先して評価すべき所見である。",
+        "2": "換気不全が疑われる状況で高強度運動は不適切である。",
+        "3": "危険所見を無視して負荷を増やしてはいけない。",
+        "4": "悪化を待つのではなく速やかな報告が必要である。",
+        "5": "理学療法士が自己判断で鎮静薬を追加することはない。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "慢性代償所見と新規危険徴候を区別し、運動中止と医療連携を優先する。",
+      "semantic_review": {
+        "reference_demand": "finding_interpretation/INTERPRET",
+        "candidate_demand": "safety_priority/DECIDE: 慢性高CO2血症患者の新規危険徴候から中止・報告を決める。",
+        "why_not_same_demand": "既存問題は血液ガスの酸塩基解釈を問う。本問はその背景を踏まえて急性悪化時の安全行動を決定させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q246",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1569",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK482430/",
+          "support": "Respiratory acidosis references describe chronic renal bicarbonate compensation and neurologic manifestations with worsening hypercapnia."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    }
   ]
 }

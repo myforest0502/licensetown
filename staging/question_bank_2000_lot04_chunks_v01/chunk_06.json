@@ -247,36 +247,36 @@
       "proposed_category_small": 18,
       "source": "original",
       "required_new_demand_outside_existing": true,
-      "title": "舌下神経機能の評価",
-      "question_text": "延髄病変後に舌下神経機能低下が疑われる。ベッドサイドで最も直接確認すべき動作はどれか。",
+      "title": "舌運動障害の機能目標",
+      "question_text": "延髄病変後に舌の運動低下があり、食塊形成と口腔内での送り込みに時間を要している。短期的な機能目標として最も適切なのはどれか。",
       "choices": {
-        "1": "舌を前方へ突出させる",
-        "2": "肩をすくめる",
-        "3": "額にしわを寄せる",
-        "4": "眼球を外転させる",
-        "5": "下顎を強く閉じる"
+        "1": "舌運動を利用した食塊形成・送り込みの効率を高める",
+        "2": "下肢筋力だけを最大化する",
+        "3": "視野を拡大する",
+        "4": "聴力を改善する",
+        "5": "手指巧緻性だけを改善する"
       },
       "correct_choices": [
         "1"
       ],
-      "explanation": "舌下神経は舌筋の運動を支配する。舌突出を観察すると舌運動の左右差や偏位を確認でき、舌下神経機能の評価に有用である。",
+      "explanation": "舌下神経は舌運動を担うため、延髄病変で舌運動が低下すると口腔期の食塊形成・送り込みに影響する。障害機能に直接結びつく目標を設定する。",
       "choice_explanations": {
-        "1": "○。舌下神経機能を直接観察できる。",
-        "2": "肩すくめは主に副神経機能をみる。",
-        "3": "額の運動は顔面神経機能をみる。",
-        "4": "眼球外転は外転神経機能をみる。",
-        "5": "咬筋などの咀嚼筋は三叉神経運動枝支配である。"
+        "1": "○。舌運動障害が生じている機能へ直接対応する目標である。",
+        "2": "下肢筋力は提示された主要障害と直接対応しない。",
+        "3": "視野障害は示されていない。",
+        "4": "聴覚障害は示されていない。",
+        "5": "手指巧緻性は本例の主要障害ではない。"
       },
-      "proposed_task": "assessment_selection",
-      "primary_ability": "MEASURE",
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
       "secondary_ability": null,
       "level": 3,
       "safety": "none",
-      "clinical_intent": "延髄病変から予測される脳神経障害に対し、直接的な機能評価動作を選ぶ。",
+      "clinical_intent": "舌下神経機能障害から影響を受ける口腔機能を特定し、短期機能目標を決定する。",
       "semantic_review": {
         "reference_demand": "fact_recall/KNOW, finding_interpretation/INTERPRET",
-        "candidate_demand": "assessment_selection/MEASURE: 舌下神経のベッドサイド評価を選ぶ。",
-        "why_not_same_demand": "既存問題は神経核の知識・所見解釈を問う。本問は疑われる障害に対する評価方法を選択させる。",
+        "candidate_demand": "functional_goal_decision/DECIDE: 舌運動障害から口腔機能の目標を決める。",
+        "why_not_same_demand": "既存問題は延髄・舌下神経の知識や所見解釈を問う。本問は障害された舌運動を具体的な機能目標へ変換させる。",
         "related_formal_questions": [
           {
             "qid": "Q514",
@@ -299,7 +299,7 @@
         }
       ],
       "reviewed_sha256": "",
-      "assignment_status": "author-adjusted-for-medical-fit",
+      "assignment_status": "author-adjusted-for-medical-fit-and-quota",
       "assignment_may_change_if_quotas_preserved": true
     },
     {
@@ -374,43 +374,43 @@
       "status": "accepted",
       "slot_type": "new_node",
       "target_node_id": null,
-      "target_node_label": "Fickの原理では酸素消費量を動静脈酸素含量較差で除して心拍出量を求める",
+      "target_node_label": "心室筋活動電位の第2相ではL型Ca2+チャネルからのCa2+流入がK+流出と釣り合いプラトー相を形成する",
       "reference_question_ids": [],
       "existing_demands": [],
       "proposed_category_small": 2,
       "source": "original",
       "required_new_demand_outside_existing": false,
       "new_node_created_only_at_formal_integration": true,
-      "title": "Fick原理による心拍出量",
-      "question_text": "Fickの原理を用いて心拍出量を求める式として正しいのはどれか。",
+      "title": "心室筋活動電位のプラトー相",
+      "question_text": "心室筋細胞の活動電位で、第2相のプラトーを形成する主要な内向き電流はどれか。",
       "choices": {
-        "1": "酸素消費量÷動静脈酸素含量較差",
-        "2": "動静脈酸素含量較差÷酸素消費量",
-        "3": "心拍数÷一回拍出量",
-        "4": "収縮期血圧×拡張期血圧",
-        "5": "肺活量÷残気量"
+        "1": "L型Ca2+チャネルを介するCa2+流入",
+        "2": "Cl−チャネルを介するCl−流入",
+        "3": "Na+/K+-ATPaseによるK+流入のみ",
+        "4": "K+チャネルを介するK+流出のみ",
+        "5": "Ca2+ポンプによるCa2+排出"
       },
       "correct_choices": [
         "1"
       ],
-      "explanation": "Fickの原理では、全身酸素消費量は心拍出量と動静脈酸素含量較差の積に等しい。したがって心拍出量＝酸素消費量÷動静脈酸素含量較差で求める。",
+      "explanation": "心室筋活動電位の第2相ではL型Ca2+チャネルからCa2+が流入し、同時に生じるK+流出と電流が釣り合うことでプラトー相が形成される。",
       "choice_explanations": {
-        "1": "○。Fick原理の心拍出量算出式である。",
-        "2": "分子と分母が逆である。",
-        "3": "心拍出量は心拍数×一回拍出量であり除算ではない。",
-        "4": "血圧の積では心拍出量を求められない。",
-        "5": "肺気量分画の比では心拍出量を求められない。"
+        "1": "○。第2相の主要な内向き電流である。",
+        "2": "Cl−流入は心室筋第2相の主要機序ではない。",
+        "3": "Na+/K+-ATPaseはイオン勾配維持に重要だがプラトー相の主要内向き電流ではない。",
+        "4": "K+流出は外向き電流であり、Ca2+流入と釣り合う。",
+        "5": "Ca2+排出はプラトー形成の主要内向き電流ではない。"
       },
       "proposed_task": "fact_recall",
       "primary_ability": "KNOW",
       "secondary_ability": null,
       "level": 1,
       "safety": "none",
-      "clinical_intent": "酸素運搬の保存則から心拍出量を算出するFick原理の基本式を理解する。",
+      "clinical_intent": "心室筋活動電位第2相の主要イオン電流を想起する。",
       "semantic_review": {
-        "reference_demand": "new Node candidate; repository search for Fick returned no indexed result",
-        "candidate_demand": "fact_recall/KNOW: Fick原理の心拍出量算出式を同定する。",
-        "why_not_same_demand": "既存の心拍出量一般概念とは異なり、酸素消費量と動静脈酸素較差から算出する特定の測定原理を扱う。",
+        "reference_demand": "new Node candidate; no formal same-Node reference",
+        "candidate_demand": "fact_recall/KNOW: 心室筋活動電位第2相の主要内向きCa2+電流を想起する。",
+        "why_not_same_demand": "既存Nodeへの追加ではなく、正式バンクに同等canonical Nodeがないことを再監査して新規Node候補とする。",
         "related_formal_questions": [],
         "decision": "accepted",
         "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
@@ -419,16 +419,18 @@
       },
       "new_node_collision_review": {
         "decision": "accepted_new_node",
-        "why_existing_nodes_insufficient": "Repository text search for Fick returned no matching indexed content; final formal Node-label and semantic collision audit remains required before Node allocation."
+        "why_existing_nodes_insufficient": "Formal Q1-Q1905 contains no equivalent canonical Node for ventricular-myocyte phase-2 plateau formation by L-type Ca2+ influx balanced against K+ efflux; the prior Fick candidate was rejected because KN1548 is identical.",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09"
       },
       "evidence": [
         {
-          "url": "https://www.ncbi.nlm.nih.gov/books/NBK482433/",
-          "support": "Cardiovascular physiology references describe Fick cardiac output as oxygen consumption divided by the arterial-venous oxygen content difference."
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK537194/",
+          "support": "NCBI StatPearls describes phase 2 of the cardiomyocyte action potential as L-type Ca2+ influx balanced by K+ efflux, producing the plateau."
         }
       ],
       "reviewed_sha256": "",
-      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_status": "author-replaced-new-node-after-formal-collision",
       "assignment_may_change_if_quotas_preserved": true
     },
     {
