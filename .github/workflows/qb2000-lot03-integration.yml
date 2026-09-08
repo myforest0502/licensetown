@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/qb2000-lot03-integration.yml'
       - 'scripts/set_question_bank_2000_lot03_new_node_prerequisites.py'
+      - 'reports/question_bank_2000_remaining_allocation_v01.py'
   workflow_dispatch:
 
 permissions:
@@ -61,7 +62,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/question_bank reports staging/question_bank_2000_lot03_v01.json tests
+          git add data/question_bank reports docs/question-bank-2000-remaining-allocation-v01.md staging/question_bank_2000_lot03_v01.json tests
           git diff --cached --check
           if git diff --cached --quiet; then
             echo "No formal integration changes to commit"
