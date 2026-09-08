@@ -15,6 +15,8 @@ jobs:
         with: {ref: work/qb2000-lot05-active, fetch-depth: 0}
       - uses: actions/setup-python@v5
         with: {python-version: '3.13'}
+      - name: Normalize final review metadata
+        run: python -m reports.question_bank_2000_lot05_finalize_metadata
       - name: Merge and pre-seal validate
         run: |
           python -m reports.question_bank_2000_lot05_merge
