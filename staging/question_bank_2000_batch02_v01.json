@@ -1,0 +1,943 @@
+{
+  "batch": "question_bank_2000_batch02_v01",
+  "status": "staging_only",
+  "baseline_main_sha": "9bd50710fed3bfee301d5a801c1b2feaf6f80a35",
+  "bank_baseline": "Q1-Q1749",
+  "q_ids_reserved": false,
+  "production_write": false,
+  "db_write": false,
+  "formal_input_sha256": {
+    "questions.json": "c4283fd074b0cfb04673cfe934206906832a37a97200337be7ab5d2d29d9a2c7",
+    "answers.json": "9969b79994d37c4172b28c312a15cb712055142477ecab1a00240f30baa485ae",
+    "explanations.json": "4ebb17a2d0239fb3b9e8ca0ba91f90a3bda2d69d0b5824aaccd2dad86161bb69",
+    "question_tags.json": "5ac7fa0ed199f1b1070bd95f8c1b2e9cafd895183bea3e90c231a3669798d1f5",
+    "knowledge_nodes.json": "200f756fd10e3d7df95aba994fdd7a9ca139f3afca31a497c276a02f501a586b",
+    "bank_manifest.json": "830180042dd43aae1e4241312ebcb8d1e344506ec39da8337ac49951498c4bee",
+    "schema/question_bank_schema_v1.json": "6d174eb2a3cf3c59e2c99d5b624f2fe7ed3f52b7dd94f37ff68df50a284edac4",
+    "knowledge_node_canonical_map.json": "8327fb79a1b9950ca25c31c75f3c82b1fa5f0fcf182d2dbdece4bc59c6d762cf",
+    "strong_different_question_pairs.json": "e6bf812c0a726a1cfe149b3503ee308cdb7da16a4bf0298232b90a2e0e0aec7f"
+  },
+  "review_scope": "Codexによる原稿・比較監査。専門家承認や実測の教育効果を意味しない。正式統合は別PR。",
+  "screened_out": [
+    {
+      "reference_qid": "Q490",
+      "target_node_id": "KN0482",
+      "decision": "REJECT_IDEA",
+      "reason": "角度の数値からティルト機構を言い当てる案は、機構の特徴を問うreferenceと同じ需要。",
+      "replacement_reference_qid": "Q289"
+    },
+    {
+      "reference_qid": "Q344",
+      "target_node_id": "KN0341",
+      "decision": "REJECT_IDEA",
+      "reason": "電流を増やさず運動点へ電極を置く案は、正答概念の言い換えに留まる。",
+      "replacement_reference_qid": "Q415"
+    },
+    {
+      "reference_qid": "Q423",
+      "target_node_id": "KN0415",
+      "decision": "REJECT_IDEA",
+      "reason": "仰臥位肺活量低下から横隔膜低下を答える逆向き設問は、同じ対応関係の再生に留まる。",
+      "replacement_reference_qid": "Q431"
+    }
+  ],
+  "drafts": [
+    {
+      "reference_question_ids": [
+        "Q117"
+      ],
+      "title": "髄液排除前後の歩行評価計画",
+      "question_text": "特発性正常圧水頭症が疑われ、医師が髄液タップテストを行う。理学療法士は歩行の変化を評価する。測定計画として最も適切なのはどれか。",
+      "choices": {
+        "1": "排除直後の歩行速度のみを測り、改善がなければ評価を終了する",
+        "2": "排除前と排除後で歩行補助具を変え、最も速い値だけを比較する",
+        "3": "排除前に測定し、同じ補助具・介助条件で排除後の複数時点に歩行時間や方向転換を再評価する",
+        "4": "排除前の測定は行わず、翌日の本人の印象のみを記録する",
+        "5": "歩行は測らず、排除した髄液の量だけで歩行改善を判定する"
+      },
+      "correct_choices": [
+        "3"
+      ],
+      "answer_basis": "LT_original_staging",
+      "explanation": "排除前の基準値と条件をそろえた反復評価が必要である。歩行時間・歩数・方向転換などを記録し、排除後早期、翌日など複数時点で比較する。陰性だけで疾患や治療効果を否定しない。",
+      "choice_explanations": {
+        "1": "反応が遅れて現れることがあり、直後一回の陰性所見だけでは評価を終えられない。",
+        "2": "補助具や介助条件の差が測定値に混入し、髄液排除への反応を比較できない。",
+        "3": "排除前の基準値と条件をそろえた反復評価が必要である。歩行時間・歩数・方向転換などを記録し、排除後早期、翌日など複数時点で比較する。陰性だけで疾患や治療効果を否定しない。",
+        "4": "本人の印象は補助情報となるが、客観的な前後比較の代わりにはならない。",
+        "5": "排除量だけでは機能変化を示せず、歩行の反応を測定する必要がある。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "source": "original",
+      "clinical_intent": "疾患名は与え、測定時点・基準値・条件統一を選ばせる。Q74/Q144の歩行観察項目選択とは異なり、介入反応を比較可能にする設計が正答条件。",
+      "semantic_review": {
+        "reference_demand": "三徴から正常圧水頭症を同定する",
+        "candidate_demand": "髄液排除への遅延反応と交絡を考慮して前後比較の測定計画を選ぶ",
+        "why_not_same_demand": "疾患名は与え、測定時点・基準値・条件統一を選ばせる。Q74/Q144の歩行観察項目選択とは異なり、介入反応を比較可能にする設計が正答条件。",
+        "related_formal_questions": [
+          {
+            "qid": "Q74",
+            "difference": "通常の歩行指標選択。髄液排除前後の時点設計は問わない。"
+          },
+          {
+            "qid": "Q144",
+            "difference": "歩行観察項目の列挙。前後条件統一と遅延反応は問わない。"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex content audit",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.jstage.jst.go.jp/article/nmc/advpub/0/advpub_st.2020-0292/_pdf/-char/en",
+          "support": "iNPH第3版CQ7：タップ後の複数時点の機能評価。",
+          "accessed": "2026-09-08"
+        }
+      ],
+      "draft_id": "B02-01",
+      "status": "accepted",
+      "target_node_id": "KN0117",
+      "target_node_label": "歩行障害、認知機能低下、排尿障害の組合せから正常圧水頭症が最も考えられるを識別する",
+      "target_canonical_node_id": "KN0117",
+      "expected_target_state": "singleton",
+      "proposed_category_large": "B",
+      "proposed_category_small": 9,
+      "reference_snapshot": {
+        "task": "finding_interpretation",
+        "primary_ability": "INTERPRET",
+        "level": 2,
+        "safety": "none",
+        "question_text": "79歳の男性。歩行障害を主訴に受診した。歩幅は小さく、歩行開始時に足が出にくい。方向転換では数歩を要する。軽度の認知機能低下と尿失禁を認める。四肢筋力は保たれ、安静時振戦は認めない。最も考えられる疾患はどれか。"
+      },
+      "reviewed_sha256": "4dc328265606159952498adcd3f59ded49dadcb6ba74c934a428edb51cf94966"
+    },
+    {
+      "reference_question_ids": [
+        "Q583"
+      ],
+      "title": "末梢神経損傷後の電気生理所見",
+      "question_text": "上腕部の圧迫後に手関節伸展が低下した。3週後、病変より遠位での神経刺激による複合筋活動電位は保たれるが、病変をまたぐ刺激では著しく低下する。針筋電図で脱神経電位はない。最も整合する病態はどれか。",
+      "choices": {
+        "1": "軸索の連続性が保たれた局所伝導ブロック",
+        "2": "神経幹の完全断裂による遠位軸索変性",
+        "3": "広範な筋線維壊死による筋原性障害",
+        "4": "脳皮質運動野の損傷による中枢性麻痺",
+        "5": "遠位軸索が広範に変性した軸索損傷"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "answer_basis": "LT_original_staging",
+      "explanation": "受傷3週後も遠位刺激の反応が保たれ、病変を越える伝導のみ障害され、脱神経所見を欠く組合せはneurapraxiaに整合する。受傷直後の遠位反応だけでは軸索損傷を除外できない点に注意する。",
+      "choice_explanations": {
+        "1": "受傷3週後も遠位刺激の反応が保たれ、病変を越える伝導のみ障害され、脱神経所見を欠く組合せはneurapraxiaに整合する。受傷直後の遠位反応だけでは軸索損傷を除外できない点に注意する。",
+        "2": "完全断裂後3週なら遠位変性や脱神経所見が予想され、提示所見と合わない。",
+        "3": "筋原性障害では病変部をまたぐ神経刺激だけで反応が低下する局在を説明できない。",
+        "4": "皮質病変は末梢神経の局所的伝導ブロックを説明しない。",
+        "5": "広範な遠位軸索変性なら遠位刺激の反応も低下し、脱神経所見が生じ得る。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "source": "original",
+      "clinical_intent": "予後ランキングを問わず、3週という時期を含めた電気生理所見の整合性を判断させる。診断名の単純な置換ではない。",
+      "semantic_review": {
+        "reference_demand": "神経損傷分類のうち予後良好な名称を再生する",
+        "candidate_demand": "受傷後の時間と近位・遠位刺激および筋電図の組合せから伝導障害を局在する",
+        "why_not_same_demand": "予後ランキングを問わず、3週という時期を含めた電気生理所見の整合性を判断させる。診断名の単純な置換ではない。",
+        "related_formal_questions": [],
+        "decision": "accepted",
+        "reviewer": "Codex content audit",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://now.aapmr.org/peripheral-neurological-recovery-and-regeneration/",
+          "support": "AAPM&R：neurapraxiaの遠位伝導保持、局所ブロック、脱神経所見と検査時期。",
+          "accessed": "2026-09-08"
+        }
+      ],
+      "draft_id": "B02-02",
+      "status": "accepted",
+      "target_node_id": "KN0575",
+      "target_node_label": "neurapraxiaは軸索の連続性が保たれた一過性の伝導ブロックで、Waller変性を伴わず回復が良好である",
+      "target_canonical_node_id": "KN0575",
+      "expected_target_state": "singleton",
+      "proposed_category_large": "B",
+      "proposed_category_small": 9,
+      "reference_snapshot": {
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "level": 1,
+        "safety": "none",
+        "question_text": "末梢神経損傷で予後が最も良いのはどれか。"
+      },
+      "reviewed_sha256": "4faa82d57f95bea57fae911ff01a64e6c0e05d54868706ade9a8175d433dfd46"
+    },
+    {
+      "reference_question_ids": [
+        "Q647"
+      ],
+      "title": "Parkinson病評価の条件統一",
+      "question_text": "Parkinson病患者の4週間の運動療法前後を、同じ版のUPDRS運動評価で比較する。薬物療法は変更されていないが、日内のON・OFF変動がある。評価計画として最も適切なのはどれか。",
+      "choices": {
+        "1": "初回はOFF、再評価はONで測り、差をすべて運動療法の効果とする",
+        "2": "各回で動きやすい項目だけを選び、合計点を比較する",
+        "3": "服薬後経過時間は記録せず、検査室だけを同じにする",
+        "4": "服薬後経過時間とON・OFF状態を記録し、同じ状態・手順で比較する",
+        "5": "毎回異なる版を用い、満点に対する割合だけを比較する"
+      },
+      "correct_choices": [
+        "4"
+      ],
+      "answer_basis": "LT_original_staging",
+      "explanation": "服薬状態と評価手順をそろえることで、日内変動による交絡を減らせる。評価時の薬効状態を記録し、条件をそろえた経時比較を行う。",
+      "choice_explanations": {
+        "1": "服薬状態の効果と運動療法の効果が混在するため、差を帰属できない。",
+        "2": "項目を変えると合計点の比較可能性が失われる。",
+        "3": "日内変動が示されており、服薬状態を記録しない計画は不十分である。",
+        "4": "服薬状態と評価手順をそろえることで、日内変動による交絡を減らせる。評価時の薬効状態を記録し、条件をそろえた経時比較を行う。",
+        "5": "版が異なる尺度の得点は、満点比率だけで同等な測定とはみなせない。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "source": "original",
+      "clinical_intent": "尺度名・用途は与える。項目暗記ではなく、介入効果の判定に必要な比較条件を選ばせる。Q396の練習時間帯選択とも目的が異なる。",
+      "semantic_review": {
+        "reference_demand": "UPDRSに含まれない項目を再生する",
+        "candidate_demand": "薬効の日内変動を統制した経時的運動評価計画を選ぶ",
+        "why_not_same_demand": "尺度名・用途は与える。項目暗記ではなく、介入効果の判定に必要な比較条件を選ばせる。Q396の練習時間帯選択とも目的が異なる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q396",
+            "difference": "新しい歩行課題を練習する時間帯の選択。評価の交絡制御ではない。"
+          },
+          {
+            "qid": "Q1124",
+            "difference": "Parkinson病に適した検査・徴候の選択。本案は選択済み尺度での薬効条件統一。"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex content audit",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://web.stanford.edu/group/adrc/cgi-bin/web-proj/updrs.php",
+          "support": "MDS-UPDRS Part IIIの服薬状況・最終服薬後時間・ON/OFF記録。版を混同せず記録原則を参照。",
+          "accessed": "2026-09-08"
+        }
+      ],
+      "draft_id": "B02-03",
+      "status": "accepted",
+      "target_node_id": "KN0639",
+      "target_node_label": "UPDRSは精神・認知・気分、ADL、運動機能、治療合併症などを包括的に評価し、姿勢・歩行・ジスキネジアも含む",
+      "target_canonical_node_id": "KN0639",
+      "expected_target_state": "singleton",
+      "proposed_category_large": "B",
+      "proposed_category_small": 9,
+      "reference_snapshot": {
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "level": 1,
+        "safety": "none",
+        "question_text": "Parkinson病に対する包括的な評価指標であるUPDRSの評価項目でないのはどれか。"
+      },
+      "reviewed_sha256": "0acdd74dcbad0aaae52dc1e4735d500c623c96bcdef10c5d93cf4c5191cdd3e7"
+    },
+    {
+      "reference_question_ids": [
+        "Q242"
+      ],
+      "title": "持続性めまいの受診優先判断",
+      "question_text": "外来で突然のめまいが2時間続いている。頭位変換に限らず持続し、右方視では右向き、左方視では左向きの眼振がある。四肢筋力は保たれているが、自力で安定した座位を保てない。理学療法士の対応として最も適切なのはどれか。",
+      "choices": {
+        "1": "筋力が保たれているので歩行練習で経過をみる",
+        "2": "評価・練習を中断し、安全を確保して直ちに医師へ緊急評価を求める",
+        "3": "後半規管型BPPVと判断し、その場でEpley法を開始する",
+        "4": "家族に付き添いを依頼して帰宅させ、翌週再評価する",
+        "5": "注視方向による眼振の変化を末梢性の根拠として反復慣らしを行う"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "answer_basis": "LT_original_staging",
+      "explanation": "持続性めまい、注視方向で変わる眼振、著しい体幹不安定性は中枢性病変を疑う根拠となる。理学療法を進めず、転倒を防いで速やかな医学的評価につなぐ。",
+      "choice_explanations": {
+        "1": "筋力が保たれていても中枢性病変を否定できず、強い体幹不安定性もある。",
+        "2": "持続性めまい、注視方向で変わる眼振、著しい体幹不安定性は中枢性病変を疑う根拠となる。理学療法を進めず、転倒を防いで速やかな医学的評価につなぐ。",
+        "3": "短い頭位誘発性発作という所見ではなく、BPPVと断定して治療を始める根拠がない。",
+        "4": "急性中枢性病変が疑われる状況で、評価を翌週まで遅らせるのは不適切である。",
+        "5": "注視方向で眼振が変わる所見を末梢性の根拠とする解釈は逆である。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "source": "original",
+      "clinical_intent": "眼振の名称選択で終わらず、発症様式・体幹不安定性・筋力温存を統合して緊急対応を優先する。HINTSの未訓練実施やPTによる確定診断を要求しない。",
+      "semantic_review": {
+        "reference_demand": "中枢性を示唆する眼振パターンを選ぶ",
+        "candidate_demand": "筋力温存に惑わされず、急性持続性めまいの練習中断と緊急連携を決める",
+        "why_not_same_demand": "眼振の名称選択で終わらず、発症様式・体幹不安定性・筋力温存を統合して緊急対応を優先する。HINTSの未訓練実施やPTによる確定診断を要求しない。",
+        "related_formal_questions": [
+          {
+            "qid": "Q479",
+            "difference": "skew所見の意味を選ぶ問題で、急性期の受診優先判断ではない。"
+          },
+          {
+            "qid": "Q408",
+            "difference": "典型的Dix-Hallpike陽性に対するEpley法。持続性症状とは異なる。"
+          },
+          {
+            "qid": "Q312",
+            "difference": "頭位眼振から水平半規管型BPPVの患側を判断する。"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex content audit",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.saem.org/publications/grace/grace-3",
+          "support": "GRACE-3：急性めまいで中枢性所見と歩行不安定を重視。HINTSは訓練された臨床家に限る。",
+          "accessed": "2026-09-08"
+        }
+      ],
+      "draft_id": "B02-04",
+      "status": "accepted",
+      "target_node_id": "KN0241",
+      "target_node_label": "注視方向性眼振から中枢性前庭障害を疑う",
+      "target_canonical_node_id": "KN0241",
+      "expected_target_state": "singleton",
+      "proposed_category_large": "B",
+      "proposed_category_small": 9,
+      "reference_snapshot": {
+        "task": "finding_interpretation",
+        "primary_ability": "INTERPRET",
+        "level": 2,
+        "safety": "none",
+        "question_text": "めまい患者の眼振所見で、中枢性前庭障害を最も疑うのはどれか。"
+      },
+      "reviewed_sha256": "987aaa1f618ef49f10c2cde8efe3484f823abb2c299b2855fd7f695116b0ef4e"
+    },
+    {
+      "reference_question_ids": [
+        "Q289"
+      ],
+      "title": "踵部痂皮の経時変化",
+      "question_text": "踵の乾燥した黒色痂皮を除圧して経過観察していた。今回は痂皮辺縁が軟化して膿性排液が出現し、周囲に発赤と熱感が広がっている。現在の所見の解釈として最も適切なのはどれか。",
+      "choices": {
+        "1": "乾燥痂皮の正常な成熟だけで説明できる",
+        "2": "痂皮が黒色であるため感染の評価は不要である",
+        "3": "除圧によって必ず生じる一過性変化である",
+        "4": "排液があれば痂皮の下で上皮化が完了したと判断できる",
+        "5": "安定した乾燥痂皮とは扱えず、感染を含む不安定化を疑う"
+      },
+      "correct_choices": [
+        "5"
+      ],
+      "answer_basis": "LT_original_staging",
+      "explanation": "以前の安定した乾燥痂皮という条件が失われている。感染等の不安定化を疑い、除圧を維持しつつ創傷管理担当者へ速やかに評価を依頼する。PT単独の切除を意味しない。",
+      "choice_explanations": {
+        "1": "膿性排液と広がる炎症所見は正常成熟だけでは説明できない。",
+        "2": "色だけで感染を除外できない。辺縁・排液・周囲皮膚を合わせて判断する。",
+        "3": "これらの変化を除圧の必然的な反応とはみなせない。",
+        "4": "排液は上皮化完了の指標ではなく、膿性なら感染を疑う情報となる。",
+        "5": "以前の安定した乾燥痂皮という条件が失われている。感染等の不安定化を疑い、除圧を維持しつつ創傷管理担当者へ速やかに評価を依頼する。PT単独の切除を意味しない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "moderate",
+      "source": "original",
+      "clinical_intent": "以前の保護方針の暗記を転用できないよう、安定という前提が崩れた証拠を解釈させる。病期判定や一律デブリードマンの選択にはしない。",
+      "semantic_review": {
+        "reference_demand": "感染徴候のない安定痂皮に対する保護を選ぶ",
+        "candidate_demand": "経時的に出現した排膿・炎症所見から安定性判断を更新する",
+        "why_not_same_demand": "以前の保護方針の暗記を転用できないよう、安定という前提が崩れた証拠を解釈させる。病期判定や一律デブリードマンの選択にはしない。",
+        "related_formal_questions": [
+          {
+            "qid": "Q247",
+            "difference": "真皮露出から褥瘡Stage2を分類する。感染による経時的不安定化ではない。"
+          },
+          {
+            "qid": "Q332",
+            "difference": "皮下脂肪露出からStage3を分類する。"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex content audit",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://internationalguideline.com/s/CPG2019edition-digital-Nov2023version.pdf",
+          "support": "2019国際指針Heel pressure injuries：安定痂皮と感染が疑われる痂皮を区別して評価。",
+          "accessed": "2026-09-08"
+        }
+      ],
+      "draft_id": "B02-05",
+      "status": "accepted",
+      "target_node_id": "KN0287",
+      "target_node_label": "安定した踵部黒色痂皮の除圧・保護と感染観察",
+      "target_canonical_node_id": "KN0287",
+      "expected_target_state": "singleton",
+      "proposed_category_large": "C",
+      "proposed_category_small": 18,
+      "reference_snapshot": {
+        "task": "intervention_selection",
+        "primary_ability": "PRESCRIBE",
+        "level": 3,
+        "safety": "moderate",
+        "question_text": "踵部に乾燥して硬く、周囲の発赤・浮腫・排膿を伴わない黒色痂皮がある。最も適切な対応はどれか。"
+      },
+      "reviewed_sha256": "90cbc96b5fb6c90c3af0d820ca301069e89e80de13a38ade934780ffb72abab7"
+    },
+    {
+      "reference_question_ids": [
+        "Q415"
+      ],
+      "title": "車軸調整後の段階的導入",
+      "question_text": "手動車椅子の後輪車軸を調整すると、平地の駆動負担は減ったが、発進時に前輪が意図せず浮くようになった。本人は後輪バランスをまだ習得していない。新しい設定の導入方法として最も適切なのはどれか。",
+      "choices": {
+        "1": "前輪が浮くことに慣れるため、最初から単独で坂道を反復する",
+        "2": "駆動が軽くなったので、安全確認は省略して屋外使用を許可する",
+        "3": "転倒防止装置と介助者を確保し、設定の再調整も含めて平地から安定性と操作を確認する",
+        "4": "足台を外せば後方転倒がなくなるので、そのまま導入する",
+        "5": "本人の希望があれば後方介助をせず、最大速度で発進練習する"
+      },
+      "correct_choices": [
+        "3"
+      ],
+      "answer_basis": "LT_original_staging",
+      "explanation": "操作性の改善を生かすには、後方転倒を防ぐ介助・装置と段階的な試用が必要である。本人の技能に合わなければ設定を再調整する。",
+      "choice_explanations": {
+        "1": "未習得の後輪バランスを単独の坂道で獲得させる計画は危険が高い。",
+        "2": "駆動負担の軽減と安全性は別の評価軸であり、前輪の不意な浮き上がりを無視できない。",
+        "3": "操作性の改善を生かすには、後方転倒を防ぐ介助・装置と段階的な試用が必要である。本人の技能に合わなければ設定を再調整する。",
+        "4": "足台の除去だけで後方安定性の問題は解消せず、下肢の支持も失う。",
+        "5": "本人の希望を尊重しても、未習得動作の危険を放置する導入にはしない。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "moderate",
+      "source": "original",
+      "clinical_intent": "車軸移動方向は正答にせず、本人の技能と観察された浮き上がりから導入手順を組み立てる。単純な前方移動の効果の再生を超える。",
+      "semantic_review": {
+        "reference_demand": "車軸前方移動による操作性と安定性の変化を再生する",
+        "candidate_demand": "実際に得た操作性向上と不安定性を両立させる試用・練習計画を選ぶ",
+        "why_not_same_demand": "車軸移動方向は正答にせず、本人の技能と観察された浮き上がりから導入手順を組み立てる。単純な前方移動の効果の再生を超える。",
+        "related_formal_questions": [
+          {
+            "qid": "Q490",
+            "difference": "ティルト機構の特徴。車軸調整後の技能評価や導入方法ではない。"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex content audit",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://wheelchairskillsprogram.ca/wp-content/uploads/WSP-Manual-version-5.0-approved-version.2.pdf",
+          "support": "WSP：調整による安定性変化、後方spotter・転倒防止装置を用いた安全な技能評価と練習。",
+          "accessed": "2026-09-08"
+        }
+      ],
+      "draft_id": "B02-06",
+      "status": "accepted",
+      "target_node_id": "KN0408",
+      "target_node_label": "車椅子後輪車軸前方移動による操作性向上と後方転倒リスク増加",
+      "target_canonical_node_id": "KN0408",
+      "expected_target_state": "singleton",
+      "proposed_category_large": "C",
+      "proposed_category_small": 18,
+      "reference_snapshot": {
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "level": 1,
+        "safety": "none",
+        "question_text": "手動車椅子の後輪車軸を前方へ移動した場合の変化として正しいのはどれか。"
+      },
+      "reviewed_sha256": "3cf477dbdd25f0d7994a3a1172a63f6888fbf587014a9cab328511343c8f79c8"
+    },
+    {
+      "reference_question_ids": [
+        "Q369"
+      ],
+      "title": "咳介助効果を捉える測定",
+      "question_text": "神経筋疾患患者に咳介助を試す。安静時SpO₂は保たれ、指示理解とマウスピース保持は可能である。介助によって分泌物を動かす咳の能力が改善したか、最も直接的に前後比較する指標はどれか。",
+      "choices": {
+        "1": "咳嗽時最大呼気流量",
+        "2": "安静時SpO₂",
+        "3": "安静時の呼吸数",
+        "4": "6分間歩行距離",
+        "5": "胸郭の周径"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "answer_basis": "LT_original_staging",
+      "explanation": "咳嗽時最大呼気流量は咳によって生じる流速を測る。姿勢・器具等の条件をそろえた介助前後比較により、咳介助による流速の変化を直接捉えられる。",
+      "choice_explanations": {
+        "1": "咳嗽時最大呼気流量は咳によって生じる流速を測る。姿勢・器具等の条件をそろえた介助前後比較により、咳介助による流速の変化を直接捉えられる。",
+        "2": "SpO₂は酸素化を反映するが、咳による分泌物移動能力を直接測らない。",
+        "3": "呼吸数は呼吸状態の補助情報だが、介助時の咳流速の代わりにはならない。",
+        "4": "歩行距離は運動耐容能の指標で、咳介助の直接効果を測らない。",
+        "5": "胸郭周径だけでは咳時の呼気流速や声門機能の影響を捉えられない。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "moderate",
+      "source": "original",
+      "clinical_intent": "治療法は既に決まっている。酸素化と咳の力学的能力を区別して効果判定の指標を選ぶ。Q406/Q1738の換気不全進行判定とは別。",
+      "semantic_review": {
+        "reference_demand": "咳流速不足に対して機械的咳介助を選ぶ",
+        "candidate_demand": "咳介助を試した際の直接効果を測定する指標を選ぶ",
+        "why_not_same_demand": "治療法は既に決まっている。酸素化と咳の力学的能力を区別して効果判定の指標を選ぶ。Q406/Q1738の換気不全進行判定とは別。",
+        "related_formal_questions": [
+          {
+            "qid": "Q406",
+            "difference": "GBSの呼吸不全進行の監視。咳介助前後の流速ではない。"
+          },
+          {
+            "qid": "Q1738",
+            "difference": "肺活量の連続低下から呼吸筋機能の悪化を解釈する。"
+          },
+          {
+            "qid": "Q354",
+            "difference": "分泌物貯留所見から吸引適応を選ぶ。"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex content audit",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8640837/",
+          "support": "CHEST expert panel：peak cough flowを咳・気道クリアランス機能の評価に用いる。",
+          "accessed": "2026-09-08"
+        }
+      ],
+      "draft_id": "B02-07",
+      "status": "accepted",
+      "target_node_id": "KN0364",
+      "target_node_label": "呼気筋力低下時の機械的咳介助による排痰支援",
+      "target_canonical_node_id": "KN0364",
+      "expected_target_state": "singleton",
+      "proposed_category_large": "C",
+      "proposed_category_small": 18,
+      "reference_snapshot": {
+        "task": "intervention_selection",
+        "primary_ability": "PRESCRIBE",
+        "level": 3,
+        "safety": "none",
+        "question_text": "進行性神経筋疾患患者で、痰が増えると自力排痰が困難になる。意識は清明で気道分泌物はあるが、呼気筋力低下のため咳の流速が著しく低い。排痰を補助する方法として最も適切なのはどれか。"
+      },
+      "reviewed_sha256": "320f79fd91d80f8f68ae706cb30eeca16678d9a96b73b0dad490f7036615f49c"
+    },
+    {
+      "reference_question_ids": [
+        "Q431"
+      ],
+      "title": "連続流型LVADの脈拍触知不能",
+      "question_text": "連続流型LVAD装着者の離床前評価で橈骨動脈を触知できない。本人は清明で会話でき、呼吸は正常、皮膚は温かい。ドプラ法の血圧値とポンプ流量は本人の通常範囲で、アラームもない。最も適切な対応はどれか。",
+      "choices": {
+        "1": "触知できない脈拍だけを根拠に、直ちに胸骨圧迫を開始する",
+        "2": "脈拍を作るため、理学療法士がポンプ回転数を上げる",
+        "3": "皮膚が温かいので、以後の循環監視を終了する",
+        "4": "脈拍触知不能だけで心停止と判断せず、意識・呼吸・灌流と装置の監視を続ける",
+        "5": "装置の作動を確かめるため、一時的に電源を切る"
+      },
+      "correct_choices": [
+        "4"
+      ],
+      "answer_basis": "LT_original_staging",
+      "explanation": "連続流型では拍動を触知しにくい。意識、正常呼吸、灌流、ドプラ血圧、装置情報を総合し、触知不能だけで蘇生を開始しない。意識や呼吸が悪化した場合は別途緊急対応する。",
+      "choice_explanations": {
+        "1": "意識・正常呼吸・灌流が保たれており、脈拍触知不能だけで心停止と判断しない。",
+        "2": "ポンプ設定を独断で変更する対応ではない。",
+        "3": "温かい皮膚だけで以後の監視が不要になるわけではない。",
+        "4": "連続流型では拍動を触知しにくい。意識、正常呼吸、灌流、ドプラ血圧、装置情報を総合し、触知不能だけで蘇生を開始しない。意識や呼吸が悪化した場合は別途緊急対応する。",
+        "5": "生命維持装置の電源を確認目的で切ってはならない。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "critical",
+      "source": "original",
+      "clinical_intent": "測定手段は全て提示する。新たに測るものを選ぶのではなく、相反して見える脈拍と灌流情報を統合して危険な介入を回避する。",
+      "semantic_review": {
+        "reference_demand": "連続流型で適切な循環測定法を選ぶ",
+        "candidate_demand": "測定済みの灌流情報から脈拍触知不能を誤って心停止と扱うことを防ぐ",
+        "why_not_same_demand": "測定手段は全て提示する。新たに測るものを選ぶのではなく、相反して見える脈拍と灌流情報を統合して危険な介入を回避する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q93",
+            "difference": "退院後のLVAD機器自己管理の確認。脈拍触知不能と心停止を区別する問題ではない。"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex content audit",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines/adult-and-pediatric-special-circumstances-of-resuscitation",
+          "support": "AHA LVAD：連続流で脈拍を触知しないことがあり、血圧・呼吸・灌流を併用して心停止を判断。",
+          "accessed": "2026-09-08"
+        }
+      ],
+      "draft_id": "B02-08",
+      "status": "accepted",
+      "target_node_id": "KN0423",
+      "target_node_label": "連続流型LVADでは拍動が弱く、末梢動脈の触診や通常の自動血圧計だけでは循環状態を正確に把握しにくいを評価する",
+      "target_canonical_node_id": "KN0423",
+      "expected_target_state": "singleton",
+      "proposed_category_large": "C",
+      "proposed_category_small": 17,
+      "reference_snapshot": {
+        "task": "assessment_selection",
+        "primary_ability": "MEASURE",
+        "level": 3,
+        "safety": "none",
+        "question_text": "連続流型左室補助人工心臓〈LVAD〉装着患者では末梢動脈の拍動を触知しにくい。歩行練習前の循環評価として最も適切なのはどれか。"
+      },
+      "reviewed_sha256": "436cd08b69201ccd8a01563de621ec55ab2d64e2e14f6d02e3b7560419f4d5a9"
+    },
+    {
+      "reference_question_ids": [
+        "Q383"
+      ],
+      "title": "肩外転MMTの次の検査条件",
+      "question_text": "肩関節に疼痛や他動可動域制限はない。座位で肩を外転しようとすると体幹を傾けるが、上腕を持ち上げられない。筋収縮は触知できる。筋力段階1と2を区別するため、次に行う検査として最も適切なのはどれか。",
+      "choices": {
+        "1": "座位のまま手関節へ強い下向き抵抗を加える",
+        "2": "背臥位で上肢を支持して摩擦を減らし、体幹を固定して水平面内の肩外転を確認する",
+        "3": "立位で反動をつけて腕を振り上げさせる",
+        "4": "肩をすくめる強さだけを測り、肩外転筋力とする",
+        "5": "筋収縮を触知できるので、関節運動を確認せず段階2とする"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "answer_basis": "LT_original_staging",
+      "explanation": "肩外転を重力の影響を減らした条件で観察し、体幹の代償を抑える。収縮の触知のみか、重力除去下で運動できるかを分けて評価する。",
+      "choice_explanations": {
+        "1": "抗重力運動ができない段階で強い抵抗を加えても1と2の区別にはならない。",
+        "2": "肩外転を重力の影響を減らした条件で観察し、体幹の代償を抑える。収縮の触知のみか、重力除去下で運動できるかを分けて評価する。",
+        "3": "反動と体幹代償が混入し、肩外転筋の随意運動を評価できない。",
+        "4": "肩甲帯挙上は肩外転とは異なる運動であり、代用できない。",
+        "5": "筋収縮の触知だけでは段階2の運動能力を確認したことにならない。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "source": "original",
+      "clinical_intent": "段階の数字を選ばせず、観察が不十分な状態から必要な検査操作を選ぶ。部位暗記だけでなく支持と代償制御が正答条件。",
+      "semantic_review": {
+        "reference_demand": "重力除去位の全可動域運動を段階2と対応させる",
+        "candidate_demand": "抗重力検査失敗と代償所見を受け、重力・摩擦・体幹代償を除く次の検査を設計する",
+        "why_not_same_demand": "段階の数字を選ばせず、観察が不十分な状態から必要な検査操作を選ぶ。部位暗記だけでなく支持と代償制御が正答条件。",
+        "related_formal_questions": [
+          {
+            "qid": "Q501",
+            "difference": "MMTの一般原則の正誤。個別の代償後に行う検査操作ではない。"
+          },
+          {
+            "qid": "Q852",
+            "difference": "筋・段階・開始肢位の組合せの再生。"
+          },
+          {
+            "qid": "Q1240",
+            "difference": "膝屈伸で肢位が共通する段階の再生。"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex content audit",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.niehs.nih.gov/research/resources/assets/docs/mmt8_grading_and_testing_procedures_for_the_abbreviated_8_muscle_groups_508.pdf",
+          "support": "NIEHS：肩外転の抗重力位は座位、重力除去位は背臥位。",
+          "accessed": "2026-09-08"
+        }
+      ],
+      "draft_id": "B02-09",
+      "status": "accepted",
+      "target_node_id": "KN0378",
+      "target_node_label": "MMT grade 2の判定",
+      "target_canonical_node_id": "KN0378",
+      "expected_target_state": "singleton",
+      "proposed_category_large": "C",
+      "proposed_category_small": 17,
+      "reference_snapshot": {
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "level": 1,
+        "safety": "none",
+        "question_text": "徒手筋力検査で、重力を除いた肢位では全可動域を動かせるが、抗重力肢位では動かせない。筋力段階はどれか。"
+      },
+      "reviewed_sha256": "aa62f1d5a1646f1b6b817ced902bf5bcabfbc6e6575500494b202b0c7f347d24"
+    },
+    {
+      "reference_question_ids": [
+        "Q374"
+      ],
+      "title": "腹臥位療法中の除圧調整",
+      "question_text": "人工呼吸管理中の患者に腹臥位療法を継続している。酸素化と循環は安定しているが、頬部の支持部に圧が集中している。予防的な体位調整として最も適切なのはどれか。",
+      "choices": {
+        "1": "挿管チューブの位置を確認せず、理学療法士1人で頭を反対側へ回す",
+        "2": "頭の位置は固定し、発赤が強くなるまで支持具を変えない",
+        "3": "頬部を強く揉んでから同じ位置に戻す",
+        "4": "呼吸が安定しているので、皮膚の観察は翌日まで省略する",
+        "5": "気道・回路を担当するスタッフと協働し、支持具と頭部位置を調整して再度皮膚・呼吸状態を確認する"
+      },
+      "correct_choices": [
+        "5"
+      ],
+      "answer_basis": "LT_original_staging",
+      "explanation": "気道・回路を保護しながら圧を再分配し、調整後の皮膚と呼吸・循環を確認する。支持具だけを追加して確認を終えない。",
+      "choice_explanations": {
+        "1": "気道と回路の安全を確認しない単独の頭位変更は、抜管や回路への牽引を招き得る。",
+        "2": "障害が進むまで圧集中を放置せず、予防的に圧を再分配する。",
+        "3": "圧迫部への強い摩擦・揉捏は組織損傷を助長し得る。",
+        "4": "呼吸の安定は皮膚が安全であることを保証しない。",
+        "5": "気道・回路を保護しながら圧を再分配し、調整後の皮膚と呼吸・循環を確認する。支持具だけを追加して確認を終えない。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "moderate",
+      "source": "original",
+      "clinical_intent": "観察部位は与える。どこが圧迫されるかの再生を不要にし、挿管患者の安全な実施手順を問う。",
+      "semantic_review": {
+        "reference_demand": "腹臥位で圧迫されやすい部位を再生する",
+        "candidate_demand": "気道の安全と局所除圧を両立するチームでの調整手順を選ぶ",
+        "why_not_same_demand": "観察部位は与える。どこが圧迫されるかの再生を不要にし、挿管患者の安全な実施手順を問う。",
+        "related_formal_questions": [
+          {
+            "qid": "Q770",
+            "difference": "長時間座位の褥瘡好発部位の再生。気道管理下の除圧ではない。"
+          },
+          {
+            "qid": "Q1473",
+            "difference": "腹臥位の呼吸への効果の正誤。皮膚障害を防ぐ実施手順ではない。"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex content audit",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://internationalguideline.com/s/CPG2019edition-digital-Nov2023version.pdf",
+          "support": "国際指針：腹臥位での支持面・枕、体位調整、医療機器関連圧迫への配慮。",
+          "accessed": "2026-09-08"
+        },
+        {
+          "url": "https://www.internationalguideline.com/repositioning",
+          "support": "2025第4版：体位変換ごとの皮膚評価、患者の状態に応じた体位調整。",
+          "accessed": "2026-09-08"
+        }
+      ],
+      "draft_id": "B02-10",
+      "status": "accepted",
+      "target_node_id": "KN0369",
+      "target_node_label": "腹臥位で圧迫を受けやすい顔面・胸郭・骨盤・膝部の褥瘡予防",
+      "target_canonical_node_id": "KN0369",
+      "expected_target_state": "singleton",
+      "proposed_category_large": "C",
+      "proposed_category_small": 17,
+      "reference_snapshot": {
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "level": 1,
+        "safety": "none",
+        "question_text": "重症呼吸不全患者に長時間の腹臥位療法を行う。褥瘡予防のため、仰臥位とは異なる部位を重点的に観察する必要がある。腹臥位で圧迫を受けやすい部位の組合せはどれか。"
+      },
+      "reviewed_sha256": "eb9756a4cddb66477f2cea4dc22befa611b0d2ccf4500b8b6f7d3c65e0e7ac59"
+    },
+    {
+      "reference_question_ids": [
+        "Q329"
+      ],
+      "title": "脈拍がある外傷後の強い疼痛",
+      "question_text": "前腕骨折後の患者が、鎮痛薬を使用しても増強する疼痛を訴えた。手指を他動伸展すると激痛があり、前腕は緊満している。橈骨動脈は触知できる。理学療法士の対応として最も適切なのはどれか。",
+      "choices": {
+        "1": "脈拍消失を待たずに練習を中止し、直ちに担当医へ緊急評価を求める",
+        "2": "橈骨動脈が触知できるので予定どおり他動運動を続ける",
+        "3": "拘縮予防のため、痛みを越えて手指伸展を反復する",
+        "4": "次回の定期診察で報告することとし、温熱療法で経過をみる",
+        "5": "しびれや麻痺が出現するまで、握力測定で経過を追う"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "answer_basis": "LT_original_staging",
+      "explanation": "脈拍が保たれていても急性コンパートメント症候群を除外できない。増悪痛、他動伸張痛、緊満は早期の緊急評価が必要な所見で、麻痺や脈拍消失を待たない。",
+      "choice_explanations": {
+        "1": "脈拍が保たれていても急性コンパートメント症候群を除外できない。増悪痛、他動伸張痛、緊満は早期の緊急評価が必要な所見で、麻痺や脈拍消失を待たない。",
+        "2": "脈拍触知は区画内の筋・神経灌流が安全である保証にはならない。",
+        "3": "反復伸張を優先すると、緊急評価を遅らせる。",
+        "4": "温熱で様子を見る場面ではなく、速やかな医学的評価が必要である。",
+        "5": "麻痺などの進行所見を待つと不可逆的障害の危険がある。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "source": "original",
+      "clinical_intent": "病名を選ぶだけでなく、動脈が触れる状況でも観察待機しない時機判断を問う。Q466の『何をまず測るか』とも段階が異なる。",
+      "semantic_review": {
+        "reference_demand": "他動伸張痛からコンパートメント症候群を同定する",
+        "candidate_demand": "脈拍温存という誤った安心材料を退け、進行所見を待たずに緊急連携する",
+        "why_not_same_demand": "病名を選ぶだけでなく、動脈が触れる状況でも観察待機しない時機判断を問う。Q466の『何をまず測るか』とも段階が異なる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q466",
+            "difference": "循環・神経所見の優先確認項目を選ぶ。本案は確認済みの脈拍に惑わされず紹介時機を決める。"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex content audit",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.aaos.org/AAOSNow/2019/Jun/Clinical/clinical06/",
+          "support": "AAOS：古典的5Pのみに依存せず、不釣合いな痛み・他動伸張痛を重視。",
+          "accessed": "2026-09-08"
+        }
+      ],
+      "draft_id": "B02-11",
+      "status": "accepted",
+      "target_node_id": "KN0327",
+      "target_node_label": "他動手指伸展痛を伴う急性コンパートメント症候群の識別",
+      "target_canonical_node_id": "KN0327",
+      "expected_target_state": "singleton",
+      "proposed_category_large": "C",
+      "proposed_category_small": 16,
+      "reference_snapshot": {
+        "task": "finding_interpretation",
+        "primary_ability": "INTERPRET",
+        "level": 3,
+        "safety": "critical",
+        "question_text": "前腕骨折後、疼痛が増強し、他動的な手指伸展で強い疼痛を認める。最も疑うべき病態はどれか。"
+      },
+      "reviewed_sha256": "0f928db53989c71dbfc0551cf02f30efa8593489e6e02a4d95829d99b00e57f7"
+    },
+    {
+      "reference_question_ids": [
+        "Q1559"
+      ],
+      "title": "舟状骨骨折後の負荷再開判断",
+      "question_text": "舟状骨腰部骨折後、固定が外れて日常動作の痛みは軽くなった。本人は手を床について行う腕立て伏せを再開したいが、直近の画像では骨癒合が未確認で、医師から荷重再開の指示はない。最も適切な対応はどれか。",
+      "choices": {
+        "1": "安静時痛が軽いので、直ちに最大荷重で腕立て伏せを行う",
+        "2": "健側の握力が正常なら、患側も骨癒合したと判断する",
+        "3": "固定が外れた事実だけで、患側の荷重制限を解除する",
+        "4": "手をつく負荷は保留し、骨癒合と許容荷重を担当医に確認して段階的な再開を計画する",
+        "5": "痛み止めを使用して痛みが消えれば、画像確認は不要とする"
+      },
+      "correct_choices": [
+        "4"
+      ],
+      "answer_basis": "LT_original_staging",
+      "explanation": "舟状骨は癒合不全のリスクがあり、症状だけで荷重を再開しない。画像等による骨癒合と医師の許可を確認し、許容範囲で負荷を段階化する。",
+      "choice_explanations": {
+        "1": "疼痛軽減だけでは舟状骨の骨癒合を保証できない。",
+        "2": "健側握力は患側骨折の癒合を示さない。",
+        "3": "固定除去と高負荷の許可は同義ではなく、個別の治療計画を確認する。",
+        "4": "舟状骨は癒合不全のリスクがあり、症状だけで荷重を再開しない。画像等による骨癒合と医師の許可を確認し、許容範囲で負荷を段階化する。",
+        "5": "鎮痛による症状消失は骨癒合の証明にならない。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "moderate",
+      "source": "original",
+      "clinical_intent": "骨名は提示し、癒合未確認と本人の活動希望の対立を処理させる。Q467の初回X線陰性・新鮮骨折疑いの対応ではない。",
+      "semantic_review": {
+        "reference_demand": "偽関節を生じやすい骨の名称を選ぶ",
+        "candidate_demand": "疼痛軽減と骨癒合を区別し、許可のない手関節荷重再開を保留する",
+        "why_not_same_demand": "骨名は提示し、癒合未確認と本人の活動希望の対立を処理させる。Q467の初回X線陰性・新鮮骨折疑いの対応ではない。",
+        "related_formal_questions": [
+          {
+            "qid": "Q655",
+            "difference": "偽関節好発部位の複数選択。復帰判断ではない。"
+          },
+          {
+            "qid": "Q467",
+            "difference": "未診断の新鮮損傷で初回X線が陰性の場合。本案は診断後・固定除去後の負荷許可。"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex content audit",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.orthoinfo.org/diseases--conditions/scaphoid-fracture-of-the-wrist",
+          "support": "AAOS：舟状骨の癒合不全リスク、癒合までの荷重・押す動作の制限。",
+          "accessed": "2026-09-08"
+        }
+      ],
+      "draft_id": "B02-12",
+      "status": "accepted",
+      "target_node_id": "KN1533",
+      "target_node_label": "手舟状骨は血流が乏しい部位があり偽関節を生じやすい",
+      "target_canonical_node_id": "KN1533",
+      "expected_target_state": "singleton",
+      "proposed_category_large": "C",
+      "proposed_category_small": 16,
+      "reference_snapshot": {
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "level": 1,
+        "safety": "none",
+        "question_text": "骨折後に偽関節を生じやすいのはどれか。"
+      },
+      "reviewed_sha256": "ff0d5629e8b6bb059fda2631ac5067850d90eec0e4caabf1cc59fc92c8495a0a"
+    }
+  ],
+  "formal_hash_format": "sha256-lf-normalized-v1"
+}
