@@ -1,0 +1,41 @@
+{
+  "batch": "question_bank_2000_batch01_v01",
+  "status": "staging_only",
+  "replacement_for": "B01-05",
+  "reason": "KN0025 is already confirmed_shared with multiple questions; keep it only as a later multi-demand candidate and use a singleton target for the first-lot acceptance count.",
+  "draft": {
+    "draft_id": "B01-R1",
+    "target_node_id": "KN0028",
+    "target_node_label": "無痛性皮膚障害の自己管理",
+    "reference_question_ids": ["Q28"],
+    "proposed_category_large": "B",
+    "proposed_category_small": 11,
+    "source": "original",
+    "title": "感覚低下がある皮膚の自己管理",
+    "question_text": "足部の感覚が低下しており、靴ずれができても痛みに気づきにくい患者に自己管理を指導する。最も適切なのはどれか。",
+    "choices": {
+      "1": "毎日、足部を目で確認し、靴の中の異物や圧迫部位も点検する",
+      "2": "痛みがない限り皮膚の発赤は放置する",
+      "3": "熱さを感じにくいので高温の湯で足を温める",
+      "4": "皮膚を強くこすって感覚刺激を増やす",
+      "5": "靴の適合は確認せず長時間歩行を続ける"
+    },
+    "correct_choices": ["1"],
+    "answer_basis": "保護感覚が低下している場合は痛みを警告として利用できないため、視診、靴内確認、圧迫や熱傷の予防などを日常的に行うことが重要である。",
+    "explanation": "感覚低下がある皮膚では小さな損傷に気づきにくく、潰瘍や感染へ進む危険がある。痛みの有無ではなく、毎日の視診と環境確認で早期発見・予防を行う。",
+    "choice_explanations": {
+      "1": "正しい。痛みを頼れないため、視診と靴内・圧迫部位の確認が重要である。",
+      "2": "痛みがなくても組織損傷は進行し得るため不適切である。",
+      "3": "温度感覚低下がある場合は熱傷の危険がある。",
+      "4": "強い摩擦は皮膚損傷を起こし得る。",
+      "5": "不適合な靴や長時間の圧迫は皮膚障害の原因となる。"
+    },
+    "proposed_task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "PRESCRIBE",
+    "level": 2,
+    "safety": "moderate",
+    "strong_intent": "Convert loss of pain warning into a concrete prevention decision rather than simple recall.",
+    "category_validation_required": true
+  }
+}

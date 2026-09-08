@@ -1,0 +1,14 @@
+{
+  "status": "staging_only",
+  "source": "current formal Question Bank comparison",
+  "applies_to_batch": "question_bank_2000_batch01_v01",
+  "corrections": {
+    "B01-02": {"category_large": "C", "category_small": 15, "reference_qid": "Q33"},
+    "B01-07": {"category_large": "C", "category_small": 15, "reference_qid": "Q24"},
+    "B01-08": {"category_large": "C", "category_small": 18, "reference_qid": "Q31"},
+    "B01-09": {"category_large": "C", "category_small": 13, "reference_qid": "Q32"},
+    "B01-10": {"category_large": "C", "category_small": 13, "reference_qid": "Q9"},
+    "B01-11": {"category_large": "C", "category_small": 15, "reference_qid": "Q16"}
+  },
+  "note": "These values were discovered by the reproducible staging validator against the current reference question records. The original draft file remains an immutable first-pass artifact; promotion code must apply this correction overlay."
+}
