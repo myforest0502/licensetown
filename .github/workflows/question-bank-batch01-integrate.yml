@@ -1,0 +1,39 @@
+name: question-bank-batch01-integrate
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - scripts/integrate_question_bank_2000_batch01.py
+      - .github/workflows/question-bank-batch01-integrate.yml
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Generate formal Batch01 records
+        run: python scripts/integrate_question_bank_2000_batch01.py
+      - name: Commit generated formal stores
+        shell: bash
+        run: |
+          if git diff --quiet -- data/question_bank; then
+            echo "No generated changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/question_bank/questions.json \
+                  data/question_bank/answers.json \
+                  data/question_bank/explanations.json \
+                  data/question_bank/question_tags.json \
+                  data/question_bank/knowledge_nodes.json \
+                  data/question_bank/bank_manifest.json
+          git commit -m "Integrate Question Bank Batch01 formal records"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
