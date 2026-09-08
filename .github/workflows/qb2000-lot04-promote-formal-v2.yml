@@ -5,6 +5,7 @@ on:
     branches: [work/qb2000-lot04-active]
     paths:
       - '.github/workflows/qb2000-lot04-promote-formal-v2.yml'
+      - 'scripts/refresh_formal_count_tests_q1953.py'
   workflow_dispatch:
 
 permissions:
