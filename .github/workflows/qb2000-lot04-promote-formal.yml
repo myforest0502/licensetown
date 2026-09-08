@@ -38,6 +38,7 @@ jobs:
           git checkout origin/work/qb2000-lot04-active -- \
             staging/question_bank_2000_lot04_v01.json \
             reports/question_bank_2000_lot04_validate.py \
+            reports/question_bank_2000_lot04_targets_v01.json \
             scripts/integrate_question_bank_2000_lot04.py \
             scripts/set_question_bank_2000_lot04_new_node_prerequisites.py \
             tests/test_question_bank_2000_lot04_integration.py
@@ -88,7 +89,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/question_bank reports/question_bank_2000_lot04_validate.py reports/question_tags_audit.txt reports/question_bank_2000_remaining_allocation_v01.json docs/question-bank-2000-remaining-allocation-v01.md staging/question_bank_2000_lot04_v01.json scripts/integrate_question_bank_2000_lot04.py scripts/set_question_bank_2000_lot04_new_node_prerequisites.py tests/test_question_bank_2000_lot04_integration.py
+          git add data/question_bank reports/question_bank_2000_lot04_validate.py reports/question_bank_2000_lot04_targets_v01.json reports/question_tags_audit.txt reports/question_bank_2000_remaining_allocation_v01.json docs/question-bank-2000-remaining-allocation-v01.md staging/question_bank_2000_lot04_v01.json scripts/integrate_question_bank_2000_lot04.py scripts/set_question_bank_2000_lot04_new_node_prerequisites.py tests/test_question_bank_2000_lot04_integration.py
           git diff --cached --check
           git commit -m "Integrate Question Bank 2000 Lot04 Q1906-Q1953 [lot04-formal-integrated]"
           git push origin HEAD:qb2000-finish
