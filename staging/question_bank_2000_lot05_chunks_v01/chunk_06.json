@@ -2,271 +2,36 @@
   "lot": 5,
   "chunk": 6,
   "formal_baseline": "Q1-Q1953",
-  "status": "authoring_chunk",
+  "status": "completed_chunk",
   "production_write": false,
   "db_write": false,
   "drafts": [
     {
-      "draft_id": "L05-C17-M01",
-      "draft_order": 36,
-      "status": "authoring",
-      "source": "original",
-      "slot_type": "multi_reinforcement",
-      "target_node_id": "KN0631",
-      "target_node_label": "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える",
-      "reference_question_ids": [
-        "Q639",
-        "Q1783"
-      ],
-      "existing_demands": [
-        {
-          "task": "assessment_selection",
-          "primary_ability": "MEASURE"
-        },
-        {
-          "task": "fact_recall",
-          "primary_ability": "KNOW"
-        }
-      ],
-      "proposed_category_small": 17,
-      "proposed_task": "finding_interpretation",
-      "primary_ability": "INTERPRET",
-      "secondary_ability": null,
-      "level": 2,
-      "safety": "none",
-      "title": "",
-      "question_text": "",
-      "choices": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "correct_choices": [],
-      "explanation": "",
-      "choice_explanations": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "evidence": [],
-      "semantic_review": "pending",
-      "expert_signoff": false
+      "draft_id":"L05-C17-M01","draft_order":36,"status":"accepted","source":"original","slot_type":"multi_reinforcement","target_node_id":"KN0631","target_node_label":"Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える","reference_question_ids":["Q639","Q1783"],"existing_demands":[{"task":"assessment_selection","primary_ability":"MEASURE"},{"task":"fact_recall","primary_ability":"KNOW"}],"proposed_category_small":17,"proposed_task":"finding_interpretation","primary_ability":"INTERPRET","secondary_ability":null,"level":2,"safety":"none",
+      "title":"肘伸展MMT結果の解釈","question_text":"腹臥位で肩を外転し、肘伸展を評価した。全可動域を重力に抗して動かせるが、検者が前腕遠位へ抵抗を加えると保持できない。MMT段階はどれか。","choices":{"1":"1","2":"2","3":"3","4":"4","5":"5"},"correct_choices":["3"],"explanation":"MMT3は重力に抗して全可動域を動かせるが、外からの抵抗には耐えられない段階である。したがって本所見は段階3に相当する。","choice_explanations":{"1":"段階1は筋収縮を触知するが関節運動を生じない。","2":"段階2は重力除去下で全可動域を動かせる。","3":"○。抗重力で全可動域可能だが抵抗に耐えられない。","4":"段階4は中等度の抵抗に抗して保持できる。","5":"段階5は最大抵抗に抗して保持できる。"},"evidence":[{"url":"https://www.ncbi.nlm.nih.gov/books/NBK563163/","support":"Manual muscle testing grade 3 is full range of motion against gravity without added resistance; grades 4 and 5 require resistance."}],"semantic_review":{"candidate_demand":"finding_interpretation/INTERPRET: 肘伸展MMTの実測所見から段階を判定する。","why_not_same_demand":"Q639は手技の知識、Q1783は評価選択。本問は得られた所見をMMT段階へ変換する。","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","decision":"accepted","expert_signoff":false},"expert_signoff":false
     },
     {
-      "draft_id": "L05-C18-S01",
-      "draft_order": 37,
-      "status": "authoring",
-      "source": "original",
-      "slot_type": "singleton_second",
-      "target_node_id": "KN0651",
-      "target_node_label": "長期不動による廃用では筋量・筋力低下が進み、活動低下を原因とする二次性サルコペニアを生じうる",
-      "reference_question_ids": [
-        "Q659"
-      ],
-      "existing_demands": [
-        {
-          "task": "fact_recall",
-          "primary_ability": "KNOW"
-        }
-      ],
-      "proposed_category_small": 18,
-      "proposed_task": "functional_goal_decision",
-      "primary_ability": "DECIDE",
-      "secondary_ability": null,
-      "level": 2,
-      "safety": "none",
-      "title": "",
-      "question_text": "",
-      "choices": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "correct_choices": [],
-      "explanation": "",
-      "choice_explanations": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "evidence": [],
-      "semantic_review": "pending",
-      "expert_signoff": false
+      "draft_id":"L05-C18-S01","draft_order":37,"status":"accepted","source":"original","slot_type":"singleton_second","target_node_id":"KN0651","target_node_label":"長期不動による廃用では筋量・筋力低下が進み、活動低下を原因とする二次性サルコペニアを生じうる","reference_question_ids":["Q659"],"existing_demands":[{"task":"fact_recall","primary_ability":"KNOW"}],"proposed_category_small":18,"proposed_task":"functional_goal_decision","primary_ability":"DECIDE","secondary_ability":null,"level":2,"safety":"none",
+      "title":"廃用後の機能目標設定","question_text":"長期臥床後、全身筋力と歩行耐久性が低下した高齢者。医学的に離床可能である。廃用の改善を目的とした短期機能目標として最も適切なのはどれか。","choices":{"1":"見守り下で病棟内歩行距離を段階的に延ばす","2":"一日中ベッド上安静を継続する","3":"疲労があっても最大負荷運動を毎日行う","4":"移動はすべて介助者が代行する","5":"筋力評価をせず活動を永久に制限する"},"correct_choices":["1"],"explanation":"活動低下による廃用では安全性を確認しながら離床・歩行などの日常活動量を段階的に増やすことが、筋力と移動能力の回復につながる。","choice_explanations":{"1":"○。実生活の移動能力を段階的に回復させる具体的機能目標である。","2":"安静継続は廃用を助長する。","3":"最大負荷の強制は過用や有害事象のリスクがある。","4":"本人の活動機会を奪い廃用改善に反する。","5":"根拠なく活動を恒久制限するのは不適切である。"},"evidence":[{"url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC6322506/","support":"Sarcopenia management emphasizes physical activity and progressive resistance/exercise; inactivity contributes to loss of muscle mass and function."}],"semantic_review":{"candidate_demand":"functional_goal_decision/DECIDE: 廃用状態から安全で測定可能な移動目標を設定する。","why_not_same_demand":"Q659は廃用とサルコペニアの知識。本問は離床可能な患者の具体的機能目標を選ばせる。","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","decision":"accepted","expert_signoff":false},"expert_signoff":false
     },
     {
-      "draft_id": "L05-C18-M01",
-      "draft_order": 38,
-      "status": "authoring",
-      "source": "original",
-      "slot_type": "multi_reinforcement",
-      "target_node_id": "KN0511",
-      "target_node_label": "鵞足は縫工筋、薄筋、半腱様筋の腱が脛骨近位内側に付着して形成される",
-      "reference_question_ids": [
-        "Q519",
-        "Q1796"
-      ],
-      "existing_demands": [
-        {
-          "task": "fact_recall",
-          "primary_ability": "KNOW"
-        },
-        {
-          "task": "finding_interpretation",
-          "primary_ability": "INTERPRET"
-        }
-      ],
-      "proposed_category_small": 18,
-      "proposed_task": "intervention_selection",
-      "primary_ability": "PRESCRIBE",
-      "secondary_ability": null,
-      "level": 2,
-      "safety": "none",
-      "title": "",
-      "question_text": "",
-      "choices": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "correct_choices": [],
-      "explanation": "",
-      "choice_explanations": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "evidence": [],
-      "semantic_review": "pending",
-      "expert_signoff": false
+      "draft_id":"L05-C18-M01","draft_order":38,"status":"accepted","source":"original","slot_type":"multi_reinforcement","target_node_id":"KN0511","target_node_label":"鵞足は縫工筋、薄筋、半腱様筋の腱が脛骨近位内側に付着して形成される","reference_question_ids":["Q519","Q1796"],"existing_demands":[{"task":"fact_recall","primary_ability":"KNOW"},{"task":"finding_interpretation","primary_ability":"INTERPRET"}],"proposed_category_small":18,"proposed_task":"intervention_selection","primary_ability":"PRESCRIBE","secondary_ability":null,"level":2,"safety":"none",
+      "title":"鵞足部痛への運動選択","question_text":"鵞足部に圧痛があり、ランニング後に脛骨近位内側痛が増える。急性炎症が落ち着いた後の運動療法として最も適切なのはどれか。","choices":{"1":"ハムストリングスなどの柔軟性改善と段階的な下肢筋力訓練","2":"疼痛を無視した全力走の反復","3":"膝を終日完全固定する","4":"上肢だけを最大負荷で訓練する","5":"患部に回旋ストレスを加え続ける"},"correct_choices":["1"],"explanation":"鵞足部は縫工筋・薄筋・半腱様筋腱が付着する。鵞足部痛では負荷調整後、関連筋の柔軟性と筋力を段階的に回復させる保存的運動療法が適する。","choice_explanations":{"1":"○。関連する筋腱への負荷を調整しながら柔軟性・筋力を回復する。","2":"疼痛を悪化させる高負荷反復は不適切である。","3":"長期固定は廃用を招く。","4":"症状部位の機能回復につながらない。","5":"反復する過大ストレスは回復を妨げる。"},"evidence":[{"url":"https://www.ncbi.nlm.nih.gov/books/NBK532941/","support":"Pes anserine bursitis/tendinobursitis is generally managed conservatively with activity modification, stretching and strengthening after acute symptoms are controlled."}],"semantic_review":{"candidate_demand":"intervention_selection/PRESCRIBE: 鵞足を構成する筋腱と負荷特性を踏まえ保存的運動を選択する。","why_not_same_demand":"Q519は構成筋の知識、Q1796は所見解釈。本問は回復期の介入を選ぶ。","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","decision":"accepted","expert_signoff":false},"expert_signoff":false
     },
     {
-      "draft_id": "L05-C1-N01",
-      "draft_order": 39,
-      "status": "authoring",
-      "source": "original",
-      "slot_type": "new_node",
-      "target_node_id": null,
-      "target_node_label": "",
-      "reference_question_ids": [],
-      "existing_demands": [],
-      "proposed_category_small": 1,
-      "proposed_task": "finding_interpretation",
-      "primary_ability": "INTERPRET",
-      "secondary_ability": null,
-      "level": 4,
-      "safety": "none",
-      "title": "",
-      "question_text": "",
-      "choices": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "correct_choices": [],
-      "explanation": "",
-      "choice_explanations": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "evidence": [],
-      "semantic_review": "pending",
-      "expert_signoff": false,
-      "new_node_collision_review": "pending"
+      "draft_id":"L05-C1-N01","draft_order":39,"status":"accepted","source":"original","slot_type":"new_node","target_node_id":null,"target_node_label":"大腿神経の伏在神経は運動枝を持たない純粋な感覚枝で、下腿内側から足関節内側の知覚を担う","reference_question_ids":[],"existing_demands":[],"proposed_category_small":1,"proposed_task":"finding_interpretation","primary_ability":"INTERPRET","secondary_ability":null,"level":4,"safety":"none",
+      "title":"伏在神経障害の局在","question_text":"膝内側の手術後、下腿前内側から内果周囲にしびれが出現した。大腿四頭筋筋力と膝蓋腱反射は保たれている。障害が最も疑われる神経はどれか。","choices":{"1":"伏在神経","2":"大腿神経本幹","3":"総腓骨神経","4":"脛骨神経","5":"上殿神経"},"correct_choices":["1"],"explanation":"伏在神経は大腿神経の純感覚枝で、下腿内側から内果付近の皮膚感覚を担う。大腿四頭筋力と膝蓋腱反射が保たれ、感覚症状のみが分布に一致するため伏在神経障害が最も考えやすい。","choice_explanations":{"1":"○。純感覚枝であり下腿内側の感覚分布と一致する。","2":"大腿神経本幹障害なら大腿四頭筋麻痺や膝蓋腱反射低下を伴いやすい。","3":"総腓骨神経は下腿外側・足背や足関節背屈などに関与する。","4":"脛骨神経は足底感覚や底屈筋群などに関与する。","5":"上殿神経は中殿筋などの運動支配が中心である。"},"evidence":[{"url":"https://www.ncbi.nlm.nih.gov/books/NBK541045/","support":"The saphenous nerve is a strictly sensory branch of the femoral nerve and supplies sensation over the anteromedial/medial leg to the medial malleolus."}],"semantic_review":{"candidate_demand":"finding_interpretation/INTERPRET: 感覚分布と運動・反射温存から伏在神経へ局在する。","why_not_same_demand":"正式Q1-Q1953には伏在神経の純感覚性と下腿内側分布を一体として扱うNodeがないため、新規局在推論需要を作る。","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","decision":"accepted","expert_signoff":false},"expert_signoff":false,
+      "new_node_collision_review":{"decision":"accepted_new_node","candidate_key":"C1_D","max_node_similarity":0.325581,"max_question_similarity":0.245614,"why_existing_nodes_insufficient":"Lot05 collision auditで最類似Nodeは前骨間・後骨間神経の純運動性に関するKN1089であり、伏在神経の純感覚性と下腿内側分布は扱っていない。既存正式問題にも同一需要を認めない。"}
     },
     {
-      "draft_id": "L05-C2-N01",
-      "draft_order": 40,
-      "status": "authoring",
-      "source": "original",
-      "slot_type": "new_node",
-      "target_node_id": null,
-      "target_node_label": "",
-      "reference_question_ids": [],
-      "existing_demands": [],
-      "proposed_category_small": 2,
-      "proposed_task": "prognosis_prediction",
-      "primary_ability": "PREDICT",
-      "secondary_ability": null,
-      "level": 2,
-      "safety": "none",
-      "title": "",
-      "question_text": "",
-      "choices": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "correct_choices": [],
-      "explanation": "",
-      "choice_explanations": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "evidence": [],
-      "semantic_review": "pending",
-      "expert_signoff": false,
-      "new_node_collision_review": "pending"
+      "draft_id":"L05-C2-N01","draft_order":40,"status":"accepted","source":"original","slot_type":"new_node","target_node_id":null,"target_node_label":"末梢化学受容器である頸動脈小体は動脈血酸素分圧低下に反応し、低酸素時の換気を促進する","reference_question_ids":[],"existing_demands":[],"proposed_category_small":2,"proposed_task":"prognosis_prediction","primary_ability":"PREDICT","secondary_ability":null,"level":2,"safety":"none",
+      "title":"低酸素時の換気応答予測","question_text":"健康成人で動脈血酸素分圧が急激に低下し、二酸化炭素分圧は大きく変化していない。頸動脈小体の反応によって起こりやすい変化はどれか。","choices":{"1":"換気量が増加する","2":"換気が完全に停止する","3":"呼吸数が必ず0になる","4":"酸素低下を感知できなくなる","5":"直ちに肺活量が消失する"},"correct_choices":["1"],"explanation":"頸動脈小体は主要な末梢化学受容器として低酸素血症を感知し、呼吸中枢への入力を介して換気を促進する。したがって急性低酸素では換気量増加が予測される。","choice_explanations":{"1":"○。低酸素刺激は末梢化学受容器を介して換気を増加させる。","2":"生理的応答は換気抑制ではなく換気促進である。","3":"低酸素で呼吸数0となるのが通常の反応ではない。","4":"頸動脈小体は低酸素を感知する。","5":"肺活量そのものが直ちに消失する機序ではない。"},"evidence":[{"url":"https://www.ncbi.nlm.nih.gov/books/NBK482414/","support":"Peripheral chemoreceptors, especially carotid bodies, primarily detect low arterial oxygen and stimulate respiratory drive during significant hypoxemia."}],"semantic_review":{"candidate_demand":"prognosis_prediction/PREDICT: 急性PaO2低下から末梢化学受容器を介する換気応答を予測する。","why_not_same_demand":"低酸素肺血管収縮の既存KN1341とは機序・効果器が異なり、本問は頸動脈小体による呼吸調節を扱う。","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","decision":"accepted","expert_signoff":false},"expert_signoff":false,
+      "new_node_collision_review":{"decision":"accepted_new_node","candidate_key":"C2_C","max_node_similarity":0.277778,"max_question_similarity":0.301887,"why_existing_nodes_insufficient":"正式Nodeの低酸素関連概念には肺血管収縮などがあるが、頸動脈小体という末梢化学受容器の酸素感知と換気促進を同一概念として扱う既存NodeはLot05 collision auditで認めない。"}
     },
     {
-      "draft_id": "L05-C7-N01",
-      "draft_order": 41,
-      "status": "authoring",
-      "source": "original",
-      "slot_type": "new_node",
-      "target_node_id": null,
-      "target_node_label": "",
-      "reference_question_ids": [],
-      "existing_demands": [],
-      "proposed_category_small": 7,
-      "proposed_task": "fact_recall",
-      "primary_ability": "KNOW",
-      "secondary_ability": null,
-      "level": 1,
-      "safety": "none",
-      "title": "",
-      "question_text": "",
-      "choices": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "correct_choices": [],
-      "explanation": "",
-      "choice_explanations": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "evidence": [],
-      "semantic_review": "pending",
-      "expert_signoff": false,
-      "new_node_collision_review": "pending"
+      "draft_id":"L05-C7-N01","draft_order":41,"status":"accepted","source":"original","slot_type":"new_node","target_node_id":null,"target_node_label":"アミロイド沈着はCongo red染色で赤橙色に染まり、偏光下で特徴的な緑色系複屈折を示す","reference_question_ids":[],"existing_demands":[],"proposed_category_small":7,"proposed_task":"fact_recall","primary_ability":"KNOW","secondary_ability":null,"level":1,"safety":"none",
+      "title":"アミロイドの特殊染色","question_text":"アミロイド沈着の組織学的確認に用いられ、偏光観察と組み合わせる代表的な染色法はどれか。","choices":{"1":"Congo red染色","2":"Gram染色","3":"Ziehl-Neelsen染色","4":"Prussian blue染色","5":"Sudan III染色"},"correct_choices":["1"],"explanation":"アミロイドはCongo red染色で赤橙色に染まり、偏光下で特徴的な複屈折を示すため、組織学的確認に代表的に用いられる。","choice_explanations":{"1":"○。アミロイド検出の代表的特殊染色である。","2":"Gram染色は細菌の分類に用いる。","3":"Ziehl-Neelsen染色は抗酸菌の検出に用いる。","4":"Prussian blue染色は鉄沈着の検出に用いる。","5":"Sudan III染色は脂質染色に用いられる。"},"evidence":[{"url":"https://www.ncbi.nlm.nih.gov/books/NBK470285/","support":"Amyloid deposits are identified with Congo red staining and characteristic birefringence under polarized light."}],"semantic_review":{"candidate_demand":"fact_recall/KNOW: アミロイドを確認する代表的特殊染色を選ぶ。","why_not_same_demand":"Lot05 collision auditでは既存Node・正式問題にCongo redによるアミロイド確認を同一Nodeとして扱うものを認めない。","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","decision":"accepted","expert_signoff":false},"expert_signoff":false,
+      "new_node_collision_review":{"decision":"accepted_new_node","candidate_key":"C7_B","max_node_similarity":0.219512,"max_question_similarity":0.25,"why_existing_nodes_insufficient":"12候補のcollision auditでC7_Bは既存Node最大類似0.219512、正式問題最大0.25で、アミロイド特殊染色という独立概念を表す既存Nodeを認めない。"}
     }
   ]
 }
