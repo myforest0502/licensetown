@@ -1,6 +1,10 @@
 import json
 import shutil
 
+from knowledge_node_repair_evidence import (
+    DIFFERENT_QUESTION_STRONG,
+    classify_repair_confirmation,
+)
 from reports.question_bank_2000_batch02_validate import (
     BANK,
     PROTECTED,
@@ -81,3 +85,14 @@ def test_batch02_integrator_dry_run_is_atomic_and_idempotent(tmp_path):
     integrate(tmp_path, STAGING)
     assert len(read(tmp_path / "questions.json")) == END_Q
     assert read(tmp_path / "bank_manifest.json")["question_count"] == END_Q
+
+
+def test_batch02_formal_pairs_are_runtime_strong_repair_evidence():
+    payload = read(STAGING)
+    drafts = [row for row in payload["drafts"] if row["status"] == "accepted"]
+    assert len(drafts) == 12
+
+    for offset, draft in enumerate(drafts):
+        ref = draft["reference_question_ids"][0]
+        qid = f"Q{START_Q + offset}"
+        assert classify_repair_confirmation(ref, qid) == DIFFERENT_QUESTION_STRONG
