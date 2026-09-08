@@ -1,0 +1,41 @@
+name: qb2000-lot05-seal-ci
+on:
+  push:
+    branches: [work/qb2000-lot05-active]
+    paths: ['.github/workflows/qb2000-lot05-seal-ci.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  seal-ci:
+    runs-on: ubuntu-latest
+    env: {PYTHONPATH: .}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: work/qb2000-lot05-active, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.13'}
+      - name: Merge and pre-seal validate
+        run: |
+          python -m reports.question_bank_2000_lot05_merge
+          python - <<'PY'
+          from reports.question_bank_2000_lot05_validate import build_report
+          import json
+          r=build_report(require_seals=False)
+          print(json.dumps(r,ensure_ascii=False,indent=2))
+          assert not r['hard_errors'], r
+          assert not r['warnings'], r
+          assert r['accepted_count']==41
+          assert r['structural_strong_formations']>=26
+          PY
+      - name: Seal and final validate
+        run: |
+          python -m reports.question_bank_2000_lot05_seal
+          python -m reports.question_bank_2000_lot05_validate
+          git diff --check
+      - name: Commit sealed staging
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add staging/question_bank_2000_lot05_v01.json
+          if git diff --cached --quiet; then echo 'No sealed changes'; else git commit -m 'Seal Question Bank 2000 Lot05 [lot05-sealed]'; git push origin HEAD:work/qb2000-lot05-active; fi
