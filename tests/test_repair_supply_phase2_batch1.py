@@ -21,7 +21,9 @@ ITEMS = {
 
 
 def test_phase2_batch1_records_are_complete_and_mapped():
-    assert question_count() == 1737
+    # This is a historical-batch regression test. The formal bank may grow,
+    # but it must never shrink below the bank size this batch was approved in.
+    assert question_count() >= 1737
     for q_id, (node_id, _sources, task, ability, correct) in ITEMS.items():
         question = get_question(q_id)
         answer = get_answer(q_id)
