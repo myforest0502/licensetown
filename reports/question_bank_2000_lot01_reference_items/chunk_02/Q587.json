@@ -1,0 +1,62 @@
+{
+  "qid": "Q587",
+  "question": {
+    "id": "Q587",
+    "management_code": "Q587-C-16-P",
+    "category_large": "C",
+    "category_small": 16,
+    "source": "P",
+    "title": null,
+    "question_text": "腰椎分離症で分離するのはどれか。",
+    "choices": {
+      "1": "横突起",
+      "2": "棘突起",
+      "3": "椎間板",
+      "4": "椎弓",
+      "5": "椎体"
+    },
+    "exam": {
+      "exam_no": 52,
+      "session": "午後",
+      "question_no": 41
+    }
+  },
+  "answer": {
+    "id": "Q587",
+    "display_answer": "4",
+    "accepted_answer_sets": [
+      [
+        "4"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  "explanation": {
+    "id": "Q587",
+    "explanation": "腰椎分離症は椎弓の関節突起間部に疲労骨折などによる分離が生じる病態である。したがって選択肢では椎弓が正しい。",
+    "choice_explanations": {
+      "1": "横突起の分離ではない。",
+      "2": "棘突起の分離ではない。",
+      "3": "椎間板病変ではない。",
+      "4": "○。椎弓の関節突起間部に分離が生じる。",
+      "5": "椎体そのものの分離ではない。"
+    }
+  },
+  "tag": {
+    "id": "Q587",
+    "theme": "腰椎分離症で分離するのはどれか",
+    "knowledge_node": "腰椎分離症は椎弓の関節突起間部に疲労骨折などによる分離が生じる病態である",
+    "knowledge_node_id": "KN0579",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "腰椎分離症で分離するのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  }
+}

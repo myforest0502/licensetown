@@ -1,0 +1,62 @@
+{
+  "qid": "Q564",
+  "question": {
+    "id": "Q564",
+    "management_code": "Q564-C-16-P",
+    "category_large": "C",
+    "category_small": 16,
+    "source": "P",
+    "title": null,
+    "question_text": "上腕骨外側上顆炎について正しいのはどれか。",
+    "choices": {
+      "1": "男性に多い。",
+      "2": "高齢者に多い。",
+      "3": "自発痛はない。",
+      "4": "手関節伸筋腱の付着部の炎症である。",
+      "5": "物を持ち上げる際は前腕回内位で行うようにする。"
+    },
+    "exam": {
+      "exam_no": 52,
+      "session": "午前",
+      "question_no": 85
+    }
+  },
+  "answer": {
+    "id": "Q564",
+    "display_answer": "4",
+    "accepted_answer_sets": [
+      [
+        "4"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  "explanation": {
+    "id": "Q564",
+    "explanation": "上腕骨外側上顆炎は手関節伸筋群、とくに短橈側手根伸筋などの総伸筋腱起始部に生じる腱障害である。把持や手関節伸展で疼痛が誘発される。",
+    "choice_explanations": {
+      "1": "性差だけで男性に多いとはいえない。",
+      "2": "中高年に多いが高齢者特有ではない。",
+      "3": "自発痛を認めることもあるため断定できない。",
+      "4": "○。手関節伸筋腱の外側上顆付着部が障害される。",
+      "5": "持ち上げは前腕回外位の方が伸筋群負担を減らしやすい。"
+    }
+  },
+  "tag": {
+    "id": "Q564",
+    "theme": "上腕骨外側上顆炎について正しいのはどれか",
+    "knowledge_node": "上腕骨外側上顆炎の特徴",
+    "knowledge_node_id": "KN0556",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "上腕骨外側上顆炎について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  }
+}

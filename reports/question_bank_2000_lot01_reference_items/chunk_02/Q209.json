@@ -1,0 +1,60 @@
+{
+  "qid": "Q209",
+  "question": {
+    "id": "Q209",
+    "management_code": "Q209-B-9-O",
+    "category_large": "B",
+    "category_small": 9,
+    "source": "O",
+    "title": "脳血管障害・消去現象",
+    "question_text": "74歳の男性。右頭頂葉梗塞後4週である。左片麻痺は軽度である。左手だけを触れると正しく答えられるが、左右同時に触れると右側だけを答え、左側刺激に気付かない。最も考えられる障害はどれか。",
+    "choices": {
+      "A": "消去現象",
+      "B": "観念失行",
+      "C": "運動失調",
+      "D": "失認",
+      "E": "失語症"
+    },
+    "exam": null
+  },
+  "answer": {
+    "id": "Q209",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  "explanation": {
+    "id": "Q209",
+    "explanation": "左手だけを刺激すると認識できるが、左右を同時に刺激すると右側だけを認識し、左側刺激に気付かない。単独では認識できる一側刺激が両側同時刺激によって認識されなくなる所見は消去現象である。",
+    "choice_explanations": {
+      "A": "正しい。両側同時刺激時に一側刺激への認識が消失する典型的な消去現象である。",
+      "B": "観念失行は道具使用や動作系列に障害を認める状態である。",
+      "C": "運動失調は運動の正確性や協調性が障害される状態である。",
+      "D": "失認では対象そのものの認識障害が問題となるが、左単独刺激は認識できている。",
+      "E": "失語症は言語機能障害であり、両側刺激時の認知障害とは異なる。"
+    }
+  },
+  "tag": {
+    "id": "Q209",
+    "theme": "脳血管障害・消去現象",
+    "knowledge_node": "両側同時刺激で出現する消去現象の識別",
+    "knowledge_node_id": "KN0208",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "消去現象の定義",
+      "単独刺激と両側同時刺激",
+      "半側空間無視との違い"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  }
+}

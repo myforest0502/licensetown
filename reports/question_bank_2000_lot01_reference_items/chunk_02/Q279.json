@@ -1,0 +1,60 @@
+{
+  "qid": "Q279",
+  "question": {
+    "id": "Q279",
+    "management_code": "Q279-B-9-O",
+    "category_large": "B",
+    "category_small": 9,
+    "source": "O",
+    "title": "高次脳機能・半側空間無視",
+    "question_text": "単独刺激では左右とも認識できるが、左右同時刺激では左側刺激を見落とす。最も考えられるのはどれか。",
+    "choices": {
+      "A": "同名半盲",
+      "B": "視覚失認",
+      "C": "失語症",
+      "D": "小脳性運動失調",
+      "E": "消去現象を伴う半側空間無視"
+    },
+    "exam": null
+  },
+  "answer": {
+    "id": "Q279",
+    "display_answer": "E",
+    "accepted_answer_sets": [
+      [
+        "E"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  "explanation": {
+    "id": "Q279",
+    "explanation": "左右単独では認識でき、同時提示で病巣反対側を見落とす所見は消去現象で、半側空間無視を支持する。半盲は単独刺激でも同じ視野を見落とす。類題では一次視覚障害と注意の競合による見落としを区別する。",
+    "choice_explanations": {
+      "A": "半盲では単独刺激でも障害視野を検出できない。",
+      "B": "視覚失認は見えている物体の認知障害である。",
+      "C": "失語症は言語機能障害である。",
+      "D": "小脳性失調は協調運動障害である。",
+      "E": "正しい。同時刺激で反対側を消去する。"
+    }
+  },
+  "tag": {
+    "id": "Q279",
+    "theme": "高次脳機能・半側空間無視",
+    "knowledge_node": "両側同時刺激で生じる消去現象の識別",
+    "knowledge_node_id": "KN0208",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "左右単独では認識でき、同時提示で病巣反対側を見落とす所見は消去現象で、半側空間無視を支持する。",
+      "類題では一次視覚障害と注意の競合による見落としを区別する。",
+      "半盲は単独刺激でも同じ視野を見落とす。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  }
+}

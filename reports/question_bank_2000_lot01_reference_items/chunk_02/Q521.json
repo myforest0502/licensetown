@@ -1,0 +1,63 @@
+{
+  "qid": "Q521",
+  "question": {
+    "id": "Q521",
+    "management_code": "Q521-B-9-P",
+    "category_large": "B",
+    "category_small": 9,
+    "source": "P",
+    "title": null,
+    "question_text": "Parkinson病で主にみられる徴候はどれか。2つ選べ。",
+    "choices": {
+      "1": "眼振",
+      "2": "突進現象",
+      "3": "動作時振戦",
+      "4": "歯車様固縮",
+      "5": "ミオクローヌス"
+    },
+    "exam": {
+      "exam_no": 52,
+      "session": "午前",
+      "question_no": 34
+    }
+  },
+  "answer": {
+    "id": "Q521",
+    "display_answer": "2・4",
+    "accepted_answer_sets": [
+      [
+        "2",
+        "4"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  "explanation": {
+    "id": "Q521",
+    "explanation": "Parkinson病の主要徴候には安静時振戦、筋強剛、無動・寡動、姿勢反射障害があり、突進現象や歯車様固縮がみられる。動作時振戦、眼振、ミオクローヌスは代表的徴候ではないため、正答は2・4である。",
+    "choice_explanations": {
+      "1": "眼振は前庭・小脳系などの障害でみられ、Parkinson病の主要徴候ではない。",
+      "2": "○。姿勢反射障害に関連して突進現象がみられる。",
+      "3": "Parkinson病に典型的なのは安静時振戦で、動作時振戦を主徴としない。",
+      "4": "○。筋強剛の一型として歯車様固縮がみられる。",
+      "5": "ミオクローヌスは急激な不随意運動で、Parkinson病の主要徴候ではない。"
+    }
+  },
+  "tag": {
+    "id": "Q521",
+    "theme": "Parkinson病で主にみられる徴候はどれか",
+    "knowledge_node": "Parkinson病の主要徴候には安静時振戦、筋強剛、無動・寡動、姿勢反射障害があり、突進現象や歯車様固縮がみられる",
+    "knowledge_node_id": "KN0513",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Parkinson病で主にみられる徴候はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  }
+}

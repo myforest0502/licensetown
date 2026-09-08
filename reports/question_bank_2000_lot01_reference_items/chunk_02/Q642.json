@@ -1,0 +1,63 @@
+{
+  "qid": "Q642",
+  "question": {
+    "id": "Q642",
+    "management_code": "Q642-C-16-P",
+    "category_large": "C",
+    "category_small": 16,
+    "source": "P",
+    "title": null,
+    "question_text": "関節リウマチにおいて、余暇、仕事、身の回りのことの3つの要素から機能状態の程度を示す指標はどれか。",
+    "choices": {
+      "1": "CMI",
+      "2": "DAS28〈Disease Activity Score 28〉",
+      "3": "Larsen分類",
+      "4": "Sharp score",
+      "5": "Steinbrockerのclass分類"
+    },
+    "exam": {
+      "exam_no": 54,
+      "session": "午前",
+      "question_no": 30
+    }
+  },
+  "answer": {
+    "id": "Q642",
+    "display_answer": "5",
+    "accepted_answer_sets": [
+      [
+        "5"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  "explanation": {
+    "id": "Q642",
+    "explanation": "Steinbrockerのclass分類は関節リウマチ患者の機能障害を、身の回り動作・職業活動・余暇活動の可否から4段階に分類する。",
+    "choice_explanations": {
+      "1": "CMIは心身の自覚症状をみる質問紙である。",
+      "2": "DAS28は疾患活動性を評価する。",
+      "3": "Larsen分類はX線画像で関節破壊を評価する。",
+      "4": "Sharp scoreも画像上の関節破壊を定量化する。",
+      "5": "○。Steinbrocker classは機能状態を分類する。"
+    }
+  },
+  "tag": {
+    "id": "Q642",
+    "theme": "関節リウマチにおいて、余暇、仕事、身の回りのことの3つの要素から機能状態の程度を示す",
+    "knowledge_node": "Steinbrockerのclass分類は関節リウマチ患者の機能障害を、身の回り動作・職業活動・余暇活動の可否から4段階に分類する",
+    "knowledge_node_id": "KN0634",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Steinbrockerのclass分類は関節リウマチ患者の機能障害を、身の回り動作・職業活動・余暇活動の可否から4段階に分類する。",
+      "Steinbrocker classは機能状態を分類する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  }
+}
