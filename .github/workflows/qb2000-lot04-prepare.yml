@@ -1,0 +1,47 @@
+name: qb2000-lot04-prepare
+
+on:
+  push:
+    branches:
+      - work/qb2000-lot04-active
+    paths:
+      - reports/question_bank_2000_lot04_build_template.py
+      - reports/question_bank_2000_lot04_build_seed.py
+      - reports/question_bank_2000_lot04_split_seed.py
+      - .github/workflows/qb2000-lot04-prepare.yml
+
+permissions:
+  contents: write
+
+jobs:
+  prepare-authoring:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot04-active
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Require generated target roster and assignment
+        run: test -f reports/question_bank_2000_lot04_targets_v01.json && test -f reports/question_bank_2000_lot04_assignment_v01.json
+      - name: Build template
+        run: python -m reports.question_bank_2000_lot04_build_template
+      - name: Build seed
+        run: python -m reports.question_bank_2000_lot04_build_seed
+      - name: Split six chunks
+        run: python -m reports.question_bank_2000_lot04_split_seed
+      - name: Syntax-check Lot04 validation scaffold
+        run: python -m py_compile reports/question_bank_2000_lot04_chunk_validate.py reports/question_bank_2000_lot04_chunks.py reports/question_bank_2000_lot04_similarity_audit.py reports/question_bank_2000_lot04_seal.py reports/question_bank_2000_lot04_validate.py
+      - name: Commit authoring seed and chunks
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add staging/question_bank_2000_lot04_template_v01.json staging/question_bank_2000_lot04_authoring_seed_v01.json staging/question_bank_2000_lot04_chunks_v01
+          git diff --cached --check
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Prepare Question Bank 2000 Lot04 authoring chunks"
+          git push origin HEAD:work/qb2000-lot04-active
