@@ -13,14 +13,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BANK = ROOT / "data" / "question_bank"
 FORMAL_BASELINE_END = 1953
-RECENT_EXCLUDE_AFTER = 1737
+RECENT_EXCLUDE_AFTER = 1953
 EXCLUDE_NODE = "KN0779"
 
 CATEGORY_TOTALS = {
     1: 4, 2: 5, 3: 1, 4: 2, 5: 1, 6: 2, 7: 3, 8: 5, 9: 1,
     10: 2, 11: 2, 12: 1, 13: 3, 14: 2, 15: 3, 16: 0, 17: 2, 18: 2,
 }
-# Three genuinely new concepts are reserved in foundational/pathology categories.
 NEW_BY_CATEGORY = {1: 1, 2: 1, 7: 1}
 TARGET_SINGLETON_TOTAL = 18
 TARGET_MULTI_TOTAL = 20
@@ -36,8 +35,6 @@ def qnum(qid: str) -> int:
 
 
 def _preferred_multi(category: int, existing_total: int) -> int:
-    # Final lot intentionally leans toward multi reinforcement while preserving
-    # enough singleton-second supply to close the audited 18/20/3 slot plan.
     return min(existing_total, max(0, round(existing_total * TARGET_MULTI_TOTAL / (TARGET_MULTI_TOTAL + TARGET_SINGLETON_TOTAL))))
 
 
@@ -87,11 +84,7 @@ def _solve_slot_split(inventory: dict) -> dict[int, dict[str, int]]:
     for category, multi in zip(categories, solution[1]):
         new_count = NEW_BY_CATEGORY.get(category, 0)
         existing_total = CATEGORY_TOTALS[category] - new_count
-        actual[category] = {
-            "singleton": existing_total - multi,
-            "multi": multi,
-            "new": new_count,
-        }
+        actual[category] = {"singleton": existing_total - multi, "multi": multi, "new": new_count}
     if sum(v["singleton"] for v in actual.values()) != TARGET_SINGLETON_TOTAL:
         raise ValueError(f"singleton total mismatch: {actual}")
     if sum(v["multi"] for v in actual.values()) != TARGET_MULTI_TOTAL:
@@ -230,7 +223,7 @@ def main() -> int:
         "guardrails": [
             "No Q IDs are allocated by this target roster.",
             "No Knowledge Node registry write is performed.",
-            "Nodes with questions added after Q1737 are excluded from immediate retargeting.",
+            "The final lot may reuse recently supplied Nodes when a category has no older untouched inventory; ranking still favors older/simpler candidates.",
             "Every existing-Node draft must add a distinct task/ability and semantic demand.",
             "New-node reservations require explicit collision review before Node ID allocation.",
         ],
