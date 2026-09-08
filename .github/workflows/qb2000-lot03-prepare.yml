@@ -1,0 +1,78 @@
+name: qb2000-lot03-prepare
+
+on:
+  push:
+    branches: [work/qb2000-lot03-active]
+    paths:
+      - 'reports/question_bank_2000_lot03_targets_v01.py'
+      - 'reports/question_bank_2000_lot03_targets_v02.py'
+      - 'reports/question_bank_2000_lot03_assignment_v01.py'
+      - '.github/workflows/qb2000-lot03-prepare.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  prepare-lot03:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot03-active
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Verify formal baseline
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path('data/question_bank/bank_manifest.json').read_text(encoding='utf-8-sig'))
+          assert manifest['question_count'] == 1857
+          assert manifest['last_question_number'] == 1857
+          assert manifest['bank_version'] == '2026-09-b16'
+          PY
+      - name: Build Lot03 roster and assignment
+        run: |
+          python -m reports.question_bank_2000_lot03_targets_v02
+          python -m reports.question_bank_2000_lot03_assignment_v01
+      - name: Validate Lot03 structural quotas
+        run: |
+          python - <<'PY'
+          import json
+          from collections import Counter
+          from pathlib import Path
+          roster = json.loads(Path('reports/question_bank_2000_lot03_targets_v01.json').read_text(encoding='utf-8'))
+          assignment = json.loads(Path('reports/question_bank_2000_lot03_assignment_v01.json').read_text(encoding='utf-8'))
+          assert roster['formal_baseline'] == 'Q1-Q1857'
+          assert roster['required_total_questions'] == 48
+          assert roster['required_existing_targets'] == 43
+          assert roster['required_new_nodes'] == 5
+          assert Counter(x['slot_type'] for x in roster['existing_node_targets']) == Counter({'singleton_second': 30, 'multi_reinforcement': 13})
+          assert len({x['canonical_node_id'] for x in roster['existing_node_targets']}) == 43
+          assert Counter(x['suggested_task'] for x in assignment['assignments']) == Counter({
+              'assessment_selection': 9, 'device_selection': 1, 'fact_recall': 1,
+              'finding_interpretation': 14, 'functional_goal_decision': 4,
+              'intervention_selection': 9, 'prognosis_prediction': 4, 'safety_priority': 6,
+          })
+          assert Counter(x['suggested_level'] for x in assignment['assignments']) == Counter({1: 1, 2: 15, 3: 21, 4: 11})
+          assert sum(x['suggested_safety'] in {'moderate','critical'} for x in assignment['assignments']) == 13
+          assert assignment['structurally_distinct_existing_assignments'] == 43
+          PY
+      - name: Commit generated Lot03 preparation outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/question_bank_2000_lot03_targets_v01.json reports/question_bank_2000_lot03_assignment_v01.json
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "No generated Lot03 changes"
+            exit 0
+          fi
+          git commit -m "Generate Question Bank 2000 Lot03 roster and assignment"
+          git push origin HEAD:work/qb2000-lot03-active

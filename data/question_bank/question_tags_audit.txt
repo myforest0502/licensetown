@@ -1,8 +1,8 @@
 LicenseTown question_tags.json audit
-bank_version: 2026-09-b16
-source: current formal Question Bank through Q1857
-records: 1857
-Q range: Q1-Q1857
+bank_version: 2026-09-b17
+source: current formal Question Bank through Q1905
+records: 1905
+Q range: Q1-Q1905
 duplicates: 0
 missing: 0
 schema errors: 0
@@ -12,73 +12,73 @@ errors: 0
 
 tag_version:
   0.3: 200
-  1.0: 1657
+  1.0: 1705
 
 tag_status:
-  reviewed: 1657
+  reviewed: 1705
   reviewed_sample: 200
 
 task:
-  assessment_selection: 219
-  device_selection: 49
-  fact_recall: 883
-  finding_interpretation: 326
-  functional_goal_decision: 25
-  intervention_selection: 241
-  prognosis_prediction: 11
-  safety_priority: 103
+  assessment_selection: 228
+  device_selection: 50
+  fact_recall: 884
+  finding_interpretation: 340
+  functional_goal_decision: 29
+  intervention_selection: 250
+  prognosis_prediction: 15
+  safety_priority: 109
 
 primary ability:
-  DECIDE: 128
-  INTERPRET: 326
-  KNOW: 883
-  MEASURE: 219
-  PREDICT: 11
-  PRESCRIBE: 290
+  DECIDE: 138
+  INTERPRET: 340
+  KNOW: 884
+  MEASURE: 228
+  PREDICT: 15
+  PRESCRIBE: 300
 
 secondary ability:
   DECIDE: 80
-  INTERPRET: 320
+  INTERPRET: 338
   KNOW: 107
   MEASURE: 44
   PREDICT: 1
   PRESCRIBE: 28
-  null: 1277
+  null: 1307
 
 level:
-  1: 861
-  2: 224
-  3: 650
-  4: 122
+  1: 862
+  2: 239
+  3: 671
+  4: 133
 
 safety:
-  critical: 85 (4.6%)
-  moderate: 255 (13.7%)
-  none: 1517 (81.7%)
+  critical: 91 (4.8%)
+  moderate: 262 (13.8%)
+  none: 1552 (81.5%)
 
 source:
-  original: 763 (41.1%)
-  past_exam: 1094 (58.9%)
+  original: 811 (42.6%)
+  past_exam: 1094 (57.4%)
 
 candidate metric highlights:
-  fact_recall: 883 (47.5%)
+  fact_recall: 884 (46.4%)
 
 canonical Knowledge Node coverage:
-  registry nodes: 1546
-  canonical nodes represented by questions: 1516
-  singleton canonical nodes: 1226
-  multi-question canonical nodes: 290
-  confirmed-shared registry groups: 278
-  confirmed-shared registry questions: 589
+  registry nodes: 1551
+  canonical nodes represented by questions: 1521
+  singleton canonical nodes: 1201
+  multi-question canonical nodes: 320
+  confirmed-shared registry groups: 312
+  confirmed-shared registry questions: 666
 
-B12 final range Q1661-Q1857:
-  records: 197
+B12 final range Q1661-Q1905:
+  records: 245
   content-quality gate: tracked by scripts/audit_question_content_quality.py
   repair-evidence gate: tracked by formal STRONG pair tests
   known exception: KN0779 remains intentional WEAK; no Q1738
 
 validation summary:
-  four-store counts: {'questions': 1857, 'answers': 1857, 'explanations': 1857, 'question_tags': 1857}
+  four-store counts: {'questions': 1905, 'answers': 1905, 'explanations': 1905, 'question_tags': 1905}
   four-store missing: {'questions': 0, 'answers': 0, 'explanations': 0, 'question_tags': 0}
   four-store duplicates: {'questions': 0, 'answers': 0, 'explanations': 0, 'question_tags': 0}
   invalid accepted answers: 0

@@ -401,7 +401,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q39",
-      "Q1593"
+      "Q1593",
+      "Q1887"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4007,7 +4008,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q399",
-      "Q1572"
+      "Q1572",
+      "Q1897"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5009,7 +5011,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q501",
-      "Q1782"
+      "Q1782",
+      "Q1898"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5092,7 +5095,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q509",
-      "Q1793"
+      "Q1793",
+      "Q1899"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5110,9 +5114,10 @@
   {
     "knowledge_node_id": "KN0503",
     "label": "グルコースが解糖系を通ってピルビン酸となり、酸素供給が不十分な条件では乳酸へ変換される",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q511"
+      "Q511",
+      "Q1865"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5123,7 +5128,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q512",
-      "Q1794"
+      "Q1794",
+      "Q1900"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5155,7 +5161,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q515",
-      "Q1674"
+      "Q1674",
+      "Q1892"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5311,9 +5318,10 @@
   {
     "knowledge_node_id": "KN0522",
     "label": "三次予防は、すでに発症した疾病や障害について機能低下・合併症・再発を防ぎ、社会復帰を促す段階である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q530"
+      "Q530",
+      "Q1871"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5331,9 +5339,10 @@
   {
     "knowledge_node_id": "KN0524",
     "label": "Heinrich の法則の特徴",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q532"
+      "Q532",
+      "Q1872"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5351,9 +5360,10 @@
   {
     "knowledge_node_id": "KN0526",
     "label": "外胚葉からは神経系や表皮が発生する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q534"
+      "Q534",
+      "Q1858"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5361,9 +5371,10 @@
   {
     "knowledge_node_id": "KN0527",
     "label": "体表から触知しやすい骨指標として胸骨角と舟状骨粗面がある",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q535"
+      "Q535",
+      "Q1859"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5445,9 +5456,10 @@
   {
     "knowledge_node_id": "KN0535",
     "label": "活動電位の脱分極では主にNa+が細胞内へ流入し、再分極ではK+が細胞外へ流出する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q543"
+      "Q543",
+      "Q1861"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5455,9 +5467,10 @@
   {
     "knowledge_node_id": "KN0536",
     "label": "腱を叩いて筋が急速に伸張されると筋紡錘のIa求心性線維が興奮し、脊髄でα運動ニューロンを介して同じ筋を収縮させる伸張反射が起こる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q544"
+      "Q544",
+      "Q1862"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5465,9 +5478,10 @@
   {
     "knowledge_node_id": "KN0537",
     "label": "健常者の安静時呼吸の特徴",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q545"
+      "Q545",
+      "Q1863"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5475,9 +5489,10 @@
   {
     "knowledge_node_id": "KN0538",
     "label": "トロンビンは凝固カスケードでプロトロンビンから生成され、フィブリノゲンをフィブリンへ変換する中心的凝固酵素である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q546"
+      "Q546",
+      "Q1864"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5526,9 +5541,10 @@
   {
     "knowledge_node_id": "KN0543",
     "label": "肩甲骨の運動とそれに作用する筋の組合せの基本事項",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q551"
+      "Q551",
+      "Q1890"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5536,9 +5552,10 @@
   {
     "knowledge_node_id": "KN0544",
     "label": "前腕回外に作用する筋",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q552"
+      "Q552",
+      "Q1891"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5615,7 +5632,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q559",
-      "Q967"
+      "Q967",
+      "Q1869"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5742,9 +5760,10 @@
   {
     "knowledge_node_id": "KN0563",
     "label": "断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q571"
+      "Q571",
+      "Q1883"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5752,9 +5771,10 @@
   {
     "knowledge_node_id": "KN0564",
     "label": "反復する過食と、体重増加を防ぐ自己誘発性嘔吐や下剤乱用などの代償行動がみられる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q572"
+      "Q572",
+      "Q1884"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6053,9 +6073,10 @@
   {
     "knowledge_node_id": "KN0593",
     "label": "ネフロンは腎小体と尿細管からなり、腎小体は糸球体とBowman嚢で構成される",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q601"
+      "Q601",
+      "Q1860"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6208,9 +6229,10 @@
   {
     "knowledge_node_id": "KN0608",
     "label": "疾患と病因・病理学的変化の組合せの基本事項",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q616"
+      "Q616",
+      "Q1874"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6230,9 +6252,10 @@
   {
     "knowledge_node_id": "KN0610",
     "label": "正常な肉芽組織は赤〜鮮紅色で湿潤し、新生毛細血管が豊富なため軽い刺激でも出血しやすい",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q618"
+      "Q618",
+      "Q1875"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6251,9 +6274,10 @@
   {
     "knowledge_node_id": "KN0612",
     "label": "老年期の課題は「自我の統合 対 絶望」である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q620"
+      "Q620",
+      "Q1867"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6304,9 +6328,10 @@
   {
     "knowledge_node_id": "KN0617",
     "label": "Huntington病は常染色体優性遺伝で家族性発症が基本である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q625"
+      "Q625",
+      "Q1877"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6314,9 +6339,10 @@
   {
     "knowledge_node_id": "KN0618",
     "label": "重症筋無力症は神経筋接合部のアセチルコリン受容体などに対する自己抗体による自己免疫疾患で、易疲労性と日内変動を示す",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q626"
+      "Q626",
+      "Q1878"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6324,9 +6350,10 @@
   {
     "knowledge_node_id": "KN0619",
     "label": "眼疾患とその病態の組合せの基本事項",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q627"
+      "Q627",
+      "Q1879"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6334,9 +6361,10 @@
   {
     "knowledge_node_id": "KN0620",
     "label": "10 か月の正常児の典型所見",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q628"
+      "Q628",
+      "Q1880"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6610,9 +6638,10 @@
   {
     "knowledge_node_id": "KN0646",
     "label": "小児の上腕骨顆上骨折では上腕動脈障害により前腕虚血を生じ、Volkmann虚血性拘縮へ進む危険がある",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q654"
+      "Q654",
+      "Q1886"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6640,9 +6669,10 @@
   {
     "knowledge_node_id": "KN0649",
     "label": "姿勢反射の成熟が遅れ、対称性緊張性頸反射などの原始反射が長く残存して随意運動を妨げることがある",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q657"
+      "Q657",
+      "Q1868"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7300,7 +7330,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q721",
-      "Q1583"
+      "Q1583",
+      "Q1885"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7625,9 +7656,10 @@
   {
     "knowledge_node_id": "KN0745",
     "label": "障害受容の過程では抑うつ状態にある患者へ一方的・積極的な指導を押しつけるのではなく、感情を受け止めながら支持的に関わることが重要である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q753"
+      "Q753",
+      "Q1866"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8132,9 +8164,10 @@
   {
     "knowledge_node_id": "KN0795",
     "label": "ノーマライゼーションは障害の有無にかかわらず、地域で通常の生活を営める社会を目指す理念である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q803"
+      "Q803",
+      "Q1873"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8337,9 +8370,10 @@
   {
     "knowledge_node_id": "KN0815",
     "label": "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q824"
+      "Q824",
+      "Q1894"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8830,9 +8864,10 @@
   {
     "knowledge_node_id": "KN0863",
     "label": "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q872"
+      "Q872",
+      "Q1895"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9228,7 +9263,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q911",
-      "Q1592"
+      "Q1592",
+      "Q1881"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10088,9 +10124,10 @@
   {
     "knowledge_node_id": "KN0987",
     "label": "反復拮抗運動障害を評価する前腕回内外試験",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q997"
+      "Q997",
+      "Q1893"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10791,9 +10828,10 @@
   {
     "knowledge_node_id": "KN1056",
     "label": "患者は麻痺側へ傾き、非麻痺側上下肢で支持面を押す",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1066"
+      "Q1066",
+      "Q1882"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11059,9 +11097,10 @@
   {
     "knowledge_node_id": "KN1082",
     "label": "NSAIDsはプロスタグランジン産生を抑制し、胃粘膜防御を低下させるため胃潰瘍・消化管出血を起こしうる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1093"
+      "Q1093",
+      "Q1876"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11698,9 +11737,10 @@
   {
     "knowledge_node_id": "KN1145",
     "label": "正常歩行では足関節は荷重応答で底屈、立脚中期に背屈、立脚後期に底屈、遊脚期に背屈し、底背屈がそれぞれ2回現れる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1158"
+      "Q1158",
+      "Q1896"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11749,9 +11789,10 @@
   {
     "knowledge_node_id": "KN1150",
     "label": "受け入れ難い欲求と正反対の態度・行動を強く示して不安を処理する防衛機制が反動形成",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1163"
+      "Q1163",
+      "Q1888"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12305,9 +12346,10 @@
   {
     "knowledge_node_id": "KN1205",
     "label": "感情や欲動から距離を置き、抽象的・理論的に分析して処理する防衛機制が知性化",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1219"
+      "Q1219",
+      "Q1889"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13595,9 +13637,10 @@
   {
     "knowledge_node_id": "KN1332",
     "label": "特別支援学校の教育環境",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1352"
+      "Q1352",
+      "Q1870"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15766,6 +15809,56 @@
     "status": "singleton_initial",
     "question_ids": [
       "Q1857"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1547",
+    "label": "気管支肺区域は区域気管支を単位とする肺葉内の解剖学的区画である",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1901"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1548",
+    "label": "Fickの原理では酸素消費量を動静脈酸素含量較差で除して心拍出量を求める",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1902"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1549",
+    "label": "CRPは急性炎症でESRより早く上昇し、炎症活動性の短期変化を追跡しやすい",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1903"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1550",
+    "label": "起立性低血圧は立位3分以内に収縮期血圧20mmHg以上または拡張期血圧10mmHg以上低下する",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1904"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1551",
+    "label": "歩行開始前には重心移動を準備する予測的姿勢調節〈APA〉が生じ、第一歩の安定性に寄与する",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1905"
     ],
     "aliases": [],
     "successor_ids": []

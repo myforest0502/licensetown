@@ -1,0 +1,37 @@
+name: qb2000-lot03-sync-tests
+
+on:
+  push:
+    branches: [work/qb2000-lot03-active]
+    paths:
+      - '.github/workflows/qb2000-lot03-sync-tests.yml'
+      - 'scripts/sync_qb2000_lot03_test_contracts.py'
+
+permissions:
+  contents: write
+
+jobs:
+  sync-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot03-active
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Synchronize static formal-bank expectations
+        run: python -m scripts.sync_qb2000_lot03_test_contracts
+      - name: Commit synchronized tests
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "No test contract changes"
+            exit 0
+          fi
+          git commit -m "Sync tests with Question Bank 2000 Lot03"
+          git push origin HEAD:work/qb2000-lot03-active
