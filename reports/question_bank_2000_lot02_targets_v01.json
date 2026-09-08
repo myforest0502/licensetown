@@ -1,0 +1,1705 @@
+{
+  "lot": 2,
+  "formal_baseline": "Q1-Q1809",
+  "scope": "structural_target_selection_only",
+  "recent_node_exclusion_after_q": 1737,
+  "preferred_category_slot": {
+    "8": {
+      "singleton": 5,
+      "multi": 2,
+      "new": 1
+    },
+    "9": {
+      "singleton": 4,
+      "multi": 2,
+      "new": 0
+    },
+    "11": {
+      "singleton": 3,
+      "multi": 1,
+      "new": 1
+    },
+    "12": {
+      "singleton": 3,
+      "multi": 1,
+      "new": 1
+    },
+    "14": {
+      "singleton": 2,
+      "multi": 1,
+      "new": 1
+    },
+    "16": {
+      "singleton": 4,
+      "multi": 1,
+      "new": 0
+    },
+    "17": {
+      "singleton": 5,
+      "multi": 2,
+      "new": 0
+    },
+    "18": {
+      "singleton": 6,
+      "multi": 2,
+      "new": 0
+    }
+  },
+  "actual_category_slot": {
+    "8": {
+      "singleton": 5,
+      "multi": 2,
+      "new": 1
+    },
+    "9": {
+      "singleton": 4,
+      "multi": 2,
+      "new": 0
+    },
+    "11": {
+      "singleton": 3,
+      "multi": 1,
+      "new": 1
+    },
+    "12": {
+      "singleton": 4,
+      "multi": 0,
+      "new": 1
+    },
+    "14": {
+      "singleton": 3,
+      "multi": 0,
+      "new": 1
+    },
+    "16": {
+      "singleton": 4,
+      "multi": 1,
+      "new": 0
+    },
+    "17": {
+      "singleton": 5,
+      "multi": 2,
+      "new": 0
+    },
+    "18": {
+      "singleton": 4,
+      "multi": 4,
+      "new": 0
+    }
+  },
+  "existing_node_targets": [
+    {
+      "canonical_node_id": "KN0515",
+      "label": "うっ血性心不全の典型所見",
+      "category_small": 8,
+      "question_ids": [
+        "Q523"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -523
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C8-S01"
+    },
+    {
+      "canonical_node_id": "KN0557",
+      "label": "福山型筋ジストロフィーは先天性筋ジストロフィーで乳児期早期から症状がみられ、選択肢中で平均発症年齢が最も低い",
+      "category_small": 8,
+      "question_ids": [
+        "Q565"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -565
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C8-S02"
+    },
+    {
+      "canonical_node_id": "KN0560",
+      "label": "高齢者では嚥下反射・咳反射の低下や口腔機能低下により誤嚥性肺炎が多い",
+      "category_small": 8,
+      "question_ids": [
+        "Q568"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -568
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C8-S03"
+    },
+    {
+      "canonical_node_id": "KN0561",
+      "label": "内分泌異常と病態の組合せの基本事項",
+      "category_small": 8,
+      "question_ids": [
+        "Q569"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -569
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C8-S04"
+    },
+    {
+      "canonical_node_id": "KN0577",
+      "label": "COPDでは上肢挙上で肩甲帯筋が上肢運動に使われると補助呼吸筋として働きにくくなり、換気負担が増える",
+      "category_small": 8,
+      "question_ids": [
+        "Q585"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -585
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C8-S05"
+    },
+    {
+      "canonical_node_id": "KN0598",
+      "label": "体静脈系うっ血により頸静脈怒張、肝脾腫、末梢浮腫などがみられる",
+      "category_small": 8,
+      "question_ids": [
+        "Q606",
+        "Q1587"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 2
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        2,
+        -606
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L02-C8-M01"
+    },
+    {
+      "canonical_node_id": "KN0623",
+      "label": "リンパ浮腫では蛋白に富む間質液が貯留し、皮膚バリア低下も加わって蜂窩織炎を繰り返しやすい",
+      "category_small": 8,
+      "question_ids": [
+        "Q631",
+        "Q1227"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 2
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        2,
+        -631
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L02-C8-M02"
+    },
+    {
+      "canonical_node_id": "KN0898",
+      "label": "核上型神経因性膀胱では反射性排尿を利用できることがあり、恥骨上部などトリガーポイント刺激を試みる",
+      "category_small": 9,
+      "question_ids": [
+        "Q907"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -907
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C9-S01"
+    },
+    {
+      "canonical_node_id": "KN0909",
+      "label": "てんかん関連の精神症状として粘着性、爆発性、不機嫌状態、もうろう状態などが知られる",
+      "category_small": 9,
+      "question_ids": [
+        "Q918"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -918
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C9-S02"
+    },
+    {
+      "canonical_node_id": "KN0924",
+      "label": "発話が非流暢で自発言語が障害される一方、理解は比較的保たれる",
+      "category_small": 9,
+      "question_ids": [
+        "Q933"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -933
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C9-S03"
+    },
+    {
+      "canonical_node_id": "KN0991",
+      "label": "屈筋優位の共同運動が出やすく、肘屈曲姿勢をとることが多い",
+      "category_small": 9,
+      "question_ids": [
+        "Q1001"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1001
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C9-S04"
+    },
+    {
+      "canonical_node_id": "KN0232",
+      "label": "Brown-Séquard症候群の同側運動・深部感覚障害と対側温痛覚障害",
+      "category_small": 9,
+      "question_ids": [
+        "Q233",
+        "Q314"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "original": 2
+      },
+      "levels": [
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        0,
+        -233
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L02-C9-M01"
+    },
+    {
+      "canonical_node_id": "KN0280",
+      "label": "仙髄温存による不全脊髄損傷の判定",
+      "category_small": 9,
+      "question_ids": [
+        "Q282",
+        "Q333"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "original": 2
+      },
+      "levels": [
+        2
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        0,
+        -282
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L02-C9-M02"
+    },
+    {
+      "canonical_node_id": "KN0514",
+      "label": "近位筋優位の進行性筋力低下と、脂肪・結合組織増生による下腿三頭筋の仮性肥大が特徴的である",
+      "category_small": 11,
+      "question_ids": [
+        "Q522"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -522
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C11-S01"
+    },
+    {
+      "canonical_node_id": "KN0559",
+      "label": "中枢神経の先天奇形とその特徴の組合せの基本事項",
+      "category_small": 11,
+      "question_ids": [
+        "Q567"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -567
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C11-S02"
+    },
+    {
+      "canonical_node_id": "KN0562",
+      "label": "自閉スペクトラム症は幼児期から特徴が現れ、男児に多い",
+      "category_small": 11,
+      "question_ids": [
+        "Q570"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -570
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C11-S03"
+    },
+    {
+      "canonical_node_id": "KN0373",
+      "label": "発育性股関節形成不全の初期装具での屈曲・外転位保持",
+      "category_small": 11,
+      "question_ids": [
+        "Q378",
+        "Q1582"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "original": 1,
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        1,
+        -378
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L02-C11-M01"
+    },
+    {
+      "canonical_node_id": "KN0550",
+      "label": "自分が受け入れ難い感情や衝動を他者が持っているとみなす防衛機制は投影である",
+      "category_small": 12,
+      "question_ids": [
+        "Q558"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -558
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C12-S01"
+    },
+    {
+      "canonical_node_id": "KN0895",
+      "label": "内田・クレペリン精神検査は連続加算作業の作業曲線から性格・行動特性、作業態度などをみる",
+      "category_small": 12,
+      "question_ids": [
+        "Q904"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -904
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C12-S02"
+    },
+    {
+      "canonical_node_id": "KN1030",
+      "label": "抑圧・合理化・反動形成・スプリッティングは防衛機制として扱われるが、転移は治療関係で感情を治療者へ向ける現象で、防衛機制とは区別される",
+      "category_small": 12,
+      "question_ids": [
+        "Q1040"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1040
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C12-S03"
+    },
+    {
+      "canonical_node_id": "KN1086",
+      "label": "MMPIとYG性格検査はいずれも質問項目への回答から人格傾向を評価する質問紙法である",
+      "category_small": 12,
+      "question_ids": [
+        "Q1097"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1097
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C12-S04"
+    },
+    {
+      "canonical_node_id": "KN1027",
+      "label": "ボツリヌス毒素は運動神経終末でアセチルコリン放出を阻害し、神経筋伝達を抑制して痙縮を軽減する",
+      "category_small": 14,
+      "question_ids": [
+        "Q1037"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1037
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C14-S01"
+    },
+    {
+      "canonical_node_id": "KN1264",
+      "label": "痙縮は上位運動ニューロン障害で出現する",
+      "category_small": 14,
+      "question_ids": [
+        "Q1280"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1280
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C14-S02"
+    },
+    {
+      "canonical_node_id": "KN0554",
+      "label": "運動障害と評価方法の組合せの基本事項",
+      "category_small": 14,
+      "question_ids": [
+        "Q562"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        1,
+        0,
+        -562
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C14-S03"
+    },
+    {
+      "canonical_node_id": "KN0709",
+      "label": "関節リウマチでは前足部変形として外反母趾とともに小趾側の内反変形がみられる",
+      "category_small": 16,
+      "question_ids": [
+        "Q717"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -717
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C16-S01"
+    },
+    {
+      "canonical_node_id": "KN0752",
+      "label": "外傷性骨折の分類では、剝離骨折は筋・腱・靱帯の牽引で骨片が母床から完全に離れるため、通常は完全骨折として扱う",
+      "category_small": 16,
+      "question_ids": [
+        "Q760"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -760
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C16-S02"
+    },
+    {
+      "canonical_node_id": "KN0754",
+      "label": "慢性炎症、活動性低下、ステロイド治療などにより続発性骨粗鬆症のリスクが高くなる",
+      "category_small": 16,
+      "question_ids": [
+        "Q762"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -762
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C16-S03"
+    },
+    {
+      "canonical_node_id": "KN0778",
+      "label": "荷重開始時の疼痛や動作開始時痛がみられ、進行すると大腿四頭筋萎縮を伴う",
+      "category_small": 16,
+      "question_ids": [
+        "Q786"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -786
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C16-S04"
+    },
+    {
+      "canonical_node_id": "KN0181",
+      "label": "後方アプローチによる人工股関節全置換術後では、股関節の深い屈曲に内転と内旋が加わると後方脱臼の危険が高まる",
+      "category_small": 16,
+      "question_ids": [
+        "Q182",
+        "Q1568"
+      ],
+      "existing_demands": [
+        {
+          "task": "safety_priority",
+          "primary_ability": "DECIDE"
+        }
+      ],
+      "sources": {
+        "original": 1,
+        "past_exam": 1
+      },
+      "levels": [
+        4
+      ],
+      "safety": [
+        "critical"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        1,
+        -182
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L02-C16-M01"
+    },
+    {
+      "canonical_node_id": "KN0848",
+      "label": "Spurlingテストは頸部を伸展・側屈し軸圧を加えて上肢放散痛を誘発し、頸椎神経根障害を評価する",
+      "category_small": 17,
+      "question_ids": [
+        "Q857"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -857
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C17-S01"
+    },
+    {
+      "canonical_node_id": "KN0849",
+      "label": "共同運動パターンが随意的に可能となり、肩関節内転・肘関節伸展・前腕回内は伸展共同運動に含まれる",
+      "category_small": 17,
+      "question_ids": [
+        "Q858"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -858
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C17-S02"
+    },
+    {
+      "canonical_node_id": "KN1053",
+      "label": "NIHSSは急性期脳卒中の神経学的重症度を、意識、注視、視野、顔面麻痺、上下肢運動、感覚、言語などで評価する",
+      "category_small": 17,
+      "question_ids": [
+        "Q1063"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1063
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C17-S03"
+    },
+    {
+      "canonical_node_id": "KN1091",
+      "label": "FIMには認知項目として社会的交流があり、更衣は上半身と下半身に分けて採点する",
+      "category_small": 17,
+      "question_ids": [
+        "Q1102"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1102
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C17-S04"
+    },
+    {
+      "canonical_node_id": "KN1111",
+      "label": "Freiberg病は中足骨頭の無腐性壊死で、特に第2中足骨頭に好発する",
+      "category_small": 17,
+      "question_ids": [
+        "Q1122"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1122
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C17-S05"
+    },
+    {
+      "canonical_node_id": "KN0495",
+      "label": "Barthel Indexにおける移乗・移動能力の採点",
+      "category_small": 17,
+      "question_ids": [
+        "Q503",
+        "Q1673"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        2,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -503
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L02-C17-M01"
+    },
+    {
+      "canonical_node_id": "KN0512",
+      "label": "Fugl-Meyer Assessmentは脳卒中後の運動機能だけでなく、感覚、関節可動域、疼痛なども含む包括的評価である",
+      "category_small": 17,
+      "question_ids": [
+        "Q520",
+        "Q1675"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -520
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L02-C17-M02"
+    },
+    {
+      "canonical_node_id": "KN0640",
+      "label": "GMFMは脳性麻痺児などの粗大運動能力を測定する尺度で、項目は健常5歳児であれば達成可能な粗大運動課題から構成される",
+      "category_small": 18,
+      "question_ids": [
+        "Q648"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -648
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C18-S01"
+    },
+    {
+      "canonical_node_id": "KN0641",
+      "label": "NYHA心機能分類は心疾患患者の自覚症状と身体活動制限の程度をⅠ〜Ⅳの4段階で分類する",
+      "category_small": 18,
+      "question_ids": [
+        "Q649"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -649
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C18-S02"
+    },
+    {
+      "canonical_node_id": "KN0642",
+      "label": "、設定した運動速度に近い速度域で筋力増強効果が最も大きくなる「速度特異性」がある",
+      "category_small": 18,
+      "question_ids": [
+        "Q650"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -650
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C18-S03"
+    },
+    {
+      "canonical_node_id": "KN0644",
+      "label": "動脈血酸素飽和度がほぼ保たれるため、動脈血酸素含量は大きく変化しない",
+      "category_small": 18,
+      "question_ids": [
+        "Q652"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -652
+      ],
+      "selection_intent": "add a clinically distinct second demand; candidate must not repeat the reference task/ability",
+      "slot_type": "singleton_second",
+      "lot_target_id": "L02-C18-S04"
+    },
+    {
+      "canonical_node_id": "KN0717",
+      "label": "Perthes病は小児の大腿骨頭骨端に生じる阻血性壊死で、治療では骨頭を臼蓋内に保ちつつ免荷する装具療法が行われる",
+      "category_small": 18,
+      "question_ids": [
+        "Q725",
+        "Q1586"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 2
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        2,
+        -725
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L02-C18-M01"
+    },
+    {
+      "canonical_node_id": "KN0846",
+      "label": "下肢異常に応じた金属支柱付きAFO足継手機能の設定",
+      "category_small": 18,
+      "question_ids": [
+        "Q855",
+        "Q1306"
+      ],
+      "existing_demands": [
+        {
+          "task": "device_selection",
+          "primary_ability": "PRESCRIBE"
+        }
+      ],
+      "sources": {
+        "past_exam": 2
+      },
+      "levels": [
+        3
+      ],
+      "safety": [
+        "moderate"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        2,
+        -855
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L02-C18-M02"
+    },
+    {
+      "canonical_node_id": "KN1057",
+      "label": "スワンネック変形のPIP過伸展・DIP屈曲",
+      "category_small": 18,
+      "question_ids": [
+        "Q1067",
+        "Q1391"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 2
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        2,
+        -1067
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L02-C18-M03"
+    },
+    {
+      "canonical_node_id": "KN0305",
+      "label": "口すぼめ呼吸による呼気時気道内圧維持と気道虚脱抑制",
+      "category_small": 18,
+      "question_ids": [
+        "Q307",
+        "Q1590"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "original": 1,
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        1,
+        -307
+      ],
+      "selection_intent": "add a demand outside the existing demand set; weak multi Nodes are preferred",
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L02-C18-M04"
+    }
+  ],
+  "new_node_reservations": [
+    {
+      "category_small": 8,
+      "count": 1,
+      "node_id_allocated": false
+    },
+    {
+      "category_small": 11,
+      "count": 1,
+      "node_id_allocated": false
+    },
+    {
+      "category_small": 12,
+      "count": 1,
+      "node_id_allocated": false
+    },
+    {
+      "category_small": 14,
+      "count": 1,
+      "node_id_allocated": false
+    }
+  ],
+  "inventory_summary": {
+    "8": {
+      "singleton": {
+        "available": 122,
+        "selected": 5
+      },
+      "multi": {
+        "available": 22,
+        "selected": 2
+      },
+      "new_node_reserved": 1,
+      "preferred_split": {
+        "singleton": 5,
+        "multi": 2,
+        "new": 1
+      }
+    },
+    "9": {
+      "singleton": {
+        "available": 91,
+        "selected": 4
+      },
+      "multi": {
+        "available": 2,
+        "selected": 2
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 4,
+        "multi": 2,
+        "new": 0
+      }
+    },
+    "11": {
+      "singleton": {
+        "available": 40,
+        "selected": 3
+      },
+      "multi": {
+        "available": 3,
+        "selected": 1
+      },
+      "new_node_reserved": 1,
+      "preferred_split": {
+        "singleton": 3,
+        "multi": 1,
+        "new": 1
+      }
+    },
+    "12": {
+      "singleton": {
+        "available": 13,
+        "selected": 4
+      },
+      "multi": {
+        "available": 0,
+        "selected": 0
+      },
+      "new_node_reserved": 1,
+      "preferred_split": {
+        "singleton": 3,
+        "multi": 1,
+        "new": 1
+      }
+    },
+    "14": {
+      "singleton": {
+        "available": 4,
+        "selected": 3
+      },
+      "multi": {
+        "available": 0,
+        "selected": 0
+      },
+      "new_node_reserved": 1,
+      "preferred_split": {
+        "singleton": 2,
+        "multi": 1,
+        "new": 1
+      }
+    },
+    "16": {
+      "singleton": {
+        "available": 80,
+        "selected": 4
+      },
+      "multi": {
+        "available": 7,
+        "selected": 1
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 4,
+        "multi": 1,
+        "new": 0
+      }
+    },
+    "17": {
+      "singleton": {
+        "available": 126,
+        "selected": 5
+      },
+      "multi": {
+        "available": 11,
+        "selected": 2
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 5,
+        "multi": 2,
+        "new": 0
+      }
+    },
+    "18": {
+      "singleton": {
+        "available": 258,
+        "selected": 4
+      },
+      "multi": {
+        "available": 9,
+        "selected": 4
+      },
+      "new_node_reserved": 0,
+      "preferred_split": {
+        "singleton": 6,
+        "multi": 2,
+        "new": 0
+      }
+    }
+  },
+  "excluded_recent_node_count": 72,
+  "required_existing_targets": 44,
+  "required_new_nodes": 4,
+  "required_total_questions": 48,
+  "required_strong_formations": 41,
+  "required_safety_augment": 12,
+  "guardrails": [
+    "No Q IDs are allocated by this target roster.",
+    "No Knowledge Node registry write is performed.",
+    "Nodes receiving calibration/Lot01 supply after Q1737 are not immediately retargeted.",
+    "Per-category singleton/multi split may rebalance only when formal inventory requires it; global 32/12 and category totals remain exact.",
+    "Every singleton draft must differ from the reference in task or primary ability and semantic demand.",
+    "Every multi-reinforcement draft intended as strong must add a demand not already present in that Node.",
+    "A target may be replaced from the same category/slot inventory during medical/semantic review."
+  ]
+}

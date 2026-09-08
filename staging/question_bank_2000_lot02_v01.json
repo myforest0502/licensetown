@@ -1,0 +1,3415 @@
+{
+  "batch": "question_bank_2000_production_lot02_v01",
+  "formal_baseline": "Q1-Q1809",
+  "q_ids_reserved": false,
+  "production_write": false,
+  "db_write": false,
+  "accepted_target_count": 48,
+  "status": "staging_only",
+  "drafts": [
+    {
+      "draft_id": "L02-C8-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0515",
+      "target_node_label": "うっ血性心不全の典型所見",
+      "reference_question_ids": [
+        "Q523"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "うっ血性心不全の所見統合",
+      "question_text": "76歳男性。労作時息切れが増悪し、夜間は起坐呼吸を認める。両側下肺野に湿性ラ音があり、頸静脈怒張と両下腿浮腫もみられる。病態として最も考えられるのはどれか。",
+      "choices": {
+        "1": "うっ血性心不全",
+        "2": "気管支喘息",
+        "3": "過換気症候群",
+        "4": "閉塞性動脈硬化症",
+        "5": "末梢性顔面神経麻痺"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "肺うっ血を示す起坐呼吸・湿性ラ音に、体静脈うっ血を示す頸静脈怒張・下腿浮腫が併存しており、うっ血性心不全を最も支持する。",
+      "choice_explanations": {
+        "1": "○。肺うっ血と体静脈うっ血の所見を同時に説明できる。",
+        "2": "喘息では喘鳴が中心で、頸静脈怒張や両下腿浮腫を一括して説明しにくい。",
+        "3": "過換気では急性の呼吸困難やしびれを呈し得るが、慢性のうっ血所見とは合わない。",
+        "4": "閉塞性動脈硬化症は間欠性跛行や末梢循環障害が主体である。",
+        "5": "顔面神経麻痺は本例の呼吸・循環所見を説明しない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "moderate",
+      "clinical_intent": "複数の肺・体静脈うっ血所見を統合して心不全を識別する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 複数の肺・体静脈うっ血所見を統合して心不全を識別する。",
+        "why_not_same_demand": "Q523は典型所見の直接知識を問う。本問は症例中の複数所見を統合して病態を同定させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q523",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK459381/",
+          "support": "Right heart failure and systemic venous congestion commonly produce jugular venous distension, peripheral edema and hepatosplanchnic congestion; heart failure assessment integrates congestion findings."
+        }
+      ],
+      "reviewed_sha256": "c4ab8f6e4f629ab154606e131a1a0c9551de649c04bcd61144c7b7df8f66315f",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C8-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0557",
+      "target_node_label": "福山型筋ジストロフィーは先天性筋ジストロフィーで乳児期早期から症状がみられ、選択肢中で平均発症年齢が最も低い",
+      "reference_question_ids": [
+        "Q565"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "福山型先天性筋ジストロフィーの所見統合",
+      "question_text": "8か月男児。出生後から筋緊張低下があり、頸定が遅れている。近位筋優位の筋力低下、股・膝関節拘縮、CK高値を認め、頭部MRIで大脳皮質形成異常がみられた。最も考えられる疾患はどれか。",
+      "choices": {
+        "1": "Duchenne型筋ジストロフィー",
+        "2": "福山型先天性筋ジストロフィー",
+        "3": "Becker型筋ジストロフィー",
+        "4": "筋強直性ジストロフィー",
+        "5": "多発筋炎"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "福山型先天性筋ジストロフィーは乳児期早期からの筋緊張低下・筋力低下、関節拘縮、CK高値に加え、中枢神経の皮質形成異常を伴うことが特徴である。",
+      "choice_explanations": {
+        "1": "Duchenne型は通常、乳児期早期から大脳皮質形成異常を伴う病像ではない。",
+        "2": "○。乳児期発症の筋症状と脳形成異常の組合せが典型的である。",
+        "3": "Becker型はより軽症で発症が遅いことが多い。",
+        "4": "筋強直性ジストロフィーでは筋強直などが主要所見となる。",
+        "5": "多発筋炎は後天性炎症性筋疾患で、この先天性病像に合わない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "moderate",
+      "clinical_intent": "発症時期、筋所見、CK、脳MRIを統合して先天性筋ジストロフィーを鑑別する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 発症時期、筋所見、CK、脳MRIを統合して先天性筋ジストロフィーを鑑別する。",
+        "why_not_same_demand": "Q565は平均発症年齢という単一知識を問う。本問は乳児期の臨床像とMRI・検査所見を統合する診断推論である。",
+        "related_formal_questions": [
+          {
+            "qid": "Q565",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK1206/",
+          "support": "GeneReviews describes early-infantile hypotonia/weakness, joint contractures, markedly elevated CK and characteristic brain malformations in Fukuyama congenital muscular dystrophy."
+        }
+      ],
+      "reviewed_sha256": "bd7d7700206eae7020045edd127f13dd3a175f4d84529cd3a59a25e5c31aeb83",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C8-S03",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0560",
+      "target_node_label": "高齢者では嚥下反射・咳反射の低下や口腔機能低下により誤嚥性肺炎が多い",
+      "reference_question_ids": [
+        "Q568"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "誤嚥疑いに対する嚥下評価",
+      "question_text": "脳梗塞後の82歳男性。食事中のむせ、湿性嗄声、反復する肺炎を認める。誤嚥の有無と嚥下のどの時相で問題が生じるかを直接確認したい。最も適切な評価はどれか。",
+      "choices": {
+        "1": "徒手筋力検査",
+        "2": "改訂長谷川式簡易知能評価スケール",
+        "3": "嚥下造影検査〈VFSS〉",
+        "4": "6分間歩行試験",
+        "5": "関節可動域測定"
+      },
+      "correct_choices": [
+        "3"
+      ],
+      "explanation": "VFSSは造影剤を含む食塊の動きをX線透視下で観察し、口腔・咽頭期の動態、喉頭侵入・誤嚥の有無や時期を直接評価できる。",
+      "choice_explanations": {
+        "1": "筋力評価では誤嚥を直接確認できない。",
+        "2": "認知機能評価は指示理解などの参考にはなるが、誤嚥の直接評価ではない。",
+        "3": "○。誤嚥と嚥下動態を直接観察できる代表的な機器評価である。",
+        "4": "歩行耐容能評価であり嚥下機能を直接みない。",
+        "5": "関節可動域は嚥下時の食塊動態を評価できない。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "moderate",
+      "clinical_intent": "誤嚥疑いの目的に応じて機器的嚥下評価を選択する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 誤嚥疑いの目的に応じて機器的嚥下評価を選択する。",
+        "why_not_same_demand": "Q568は高齢者で誤嚥性肺炎が生じやすい背景の知識問題。本問は具体的な評価目的からVFSSを選択させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q568",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.asha.org/practice-portal/resources/videofluoroscopic-swallow-study/",
+          "support": "ASHA states VFSS provides a direct dynamic view of swallowing and can identify presence, timing and amount of aspiration."
+        }
+      ],
+      "reviewed_sha256": "fb24b2a80744d163543f23865a9121f1bcb0f224d07a26bbbd6373d6901a5fca",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C8-S04",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0561",
+      "target_node_label": "内分泌異常と病態の組合せの基本事項",
+      "reference_question_ids": [
+        "Q569"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "甲状腺機能低下症の検査所見統合",
+      "question_text": "58歳女性。倦怠感、寒がり、便秘、体重増加、徐脈を認める。血液検査でTSH高値、遊離T4低値であった。最も考えられる病態はどれか。",
+      "choices": {
+        "1": "原発性甲状腺機能低下症",
+        "2": "原発性甲状腺機能亢進症",
+        "3": "褐色細胞腫",
+        "4": "原発性アルドステロン症",
+        "5": "先端巨大症"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "原発性甲状腺機能低下症では甲状腺ホルモン低下に対する負のフィードバック低下によりTSHが上昇し、遊離T4が低下する。寒冷不耐、体重増加、便秘、徐脈も整合する。",
+      "choice_explanations": {
+        "1": "○。症状とTSH高値・遊離T4低値が一致する。",
+        "2": "甲状腺機能亢進症では一般にTSH低値、甲状腺ホルモン高値となる。",
+        "3": "褐色細胞腫では発作性高血圧、動悸、発汗などが典型である。",
+        "4": "原発性アルドステロン症では高血圧や低K血症が中心となる。",
+        "5": "先端巨大症では手足・顔貌の変化などが中心で、本検査パターンとは異なる。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "moderate",
+      "clinical_intent": "症状とTSH・遊離T4の組合せから内分泌病態を同定する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 症状とTSH・遊離T4の組合せから内分泌病態を同定する。",
+        "why_not_same_demand": "Q569は内分泌異常と病態の基本的組合せを直接問う。本問は症状とホルモン検査のフィードバック関係を統合する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q569",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK519536/",
+          "support": "StatPearls describes hypothyroid symptoms including cold intolerance and weight gain and characteristic primary hypothyroidism labs of elevated TSH with low free T4."
+        }
+      ],
+      "reviewed_sha256": "a09a23cda810cb59239b496fd3a6fee60000f26a04330f52f13a73536f50abee",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C8-S05",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0577",
+      "target_node_label": "COPDでは上肢挙上で肩甲帯筋が上肢運動に使われると補助呼吸筋として働きにくくなり、換気負担が増える",
+      "reference_question_ids": [
+        "Q585"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "COPD上肢活動時の安全対応",
+      "question_text": "重症COPDの患者に上肢挙上を含む更衣練習を行っていたところ、急に強い呼吸困難とめまいを訴え、会話継続も困難となった。理学療法士が最初に行う対応として最も適切なのはどれか。",
+      "choices": {
+        "1": "そのまま反復して慣れさせる",
+        "2": "負荷を中止し、上肢を支持した安楽な姿勢で呼吸と全身状態を再評価する",
+        "3": "上肢をさらに高く挙げる",
+        "4": "息こらえを指示する",
+        "5": "症状を無視して下肢筋力訓練へ切り替える"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "COPDでは上肢活動で呼吸困難が増悪し得る。急な強い呼吸困難とめまいが出現した場合はまず負荷を中止し、呼吸をしやすい姿勢を確保して症状・酸素化などを再評価する。",
+      "choice_explanations": {
+        "1": "強い症状が出ている状態で継続するのは安全でない。",
+        "2": "○。急な症状増悪時は運動負荷を止め、安全確保と状態評価を優先する。",
+        "3": "上肢挙上は呼吸困難を増悪させ得る。",
+        "4": "息こらえは換気を妨げるため不適切である。",
+        "5": "運動種目を変える前に急性症状の評価が必要である。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "COPDで上肢活動により急激に呼吸症状が悪化した際の安全優先順位を判断する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "safety_priority/DECIDE: COPDで上肢活動により急激に呼吸症状が悪化した際の安全優先順位を判断する。",
+        "why_not_same_demand": "Q585は上肢挙上で換気負担が増える機序の知識問題。本問は実際の急性症状出現時に安全行動を決定させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q585",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6464968/",
+          "support": "Upper-limb activity in COPD is associated with dyspnea; pulmonary-rehabilitation upper-limb training is supervised and progressed to tolerance."
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3213715/",
+          "support": "Pulmonary rehabilitation exercise intensity/duration is symptom limited and training is increased gradually from a tolerated level."
+        }
+      ],
+      "reviewed_sha256": "7c2fb1d2b256c7bca8b23ba39834584f6d5fb3efc50d68b10a3a8c9964ecb8d5",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C8-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0598",
+      "target_node_label": "体静脈系うっ血により頸静脈怒張、肝脾腫、末梢浮腫などがみられる",
+      "reference_question_ids": [
+        "Q606",
+        "Q1587"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "右心不全による体静脈うっ血",
+      "question_text": "慢性肺疾患のある72歳男性。下腿浮腫が増悪し、頸静脈怒張、肝腫大、腹水を認める。肺野の湿性ラ音は目立たない。これらの所見を最も直接説明する病態はどれか。",
+      "choices": {
+        "1": "右心不全による体静脈うっ血",
+        "2": "左反回神経麻痺",
+        "3": "末梢動脈閉塞",
+        "4": "過換気症候群",
+        "5": "鉄欠乏性貧血"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "頸静脈怒張、末梢浮腫、肝腫大、腹水は右房圧上昇と体静脈系うっ血を反映する代表的な右心不全所見である。",
+      "choice_explanations": {
+        "1": "○。全身静脈うっ血の分布を一貫して説明する。",
+        "2": "嗄声は生じ得るが体静脈うっ血所見は説明しない。",
+        "3": "末梢動脈閉塞では虚血症状が主体である。",
+        "4": "過換気では体静脈うっ血を生じない。",
+        "5": "貧血は労作時息切れの原因になり得るが、頸静脈怒張・腹水の主要説明ではない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "moderate",
+      "clinical_intent": "体静脈うっ血の分布から右心不全を識別する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 体静脈うっ血の分布から右心不全を識別する。",
+        "why_not_same_demand": "Q606/Q1587は頸静脈怒張・浮腫などの所見を直接知識として扱う。本問は症例の所見分布から右心系うっ血を推論する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q606",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1587",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK459381/",
+          "support": "StatPearls lists jugular venous distension, peripheral edema, hepatosplenomegaly and ascites as common right-heart-failure findings."
+        }
+      ],
+      "reviewed_sha256": "6d77cf312091c254704b1c260cd0badb52ab43449e0f399172f298f311451d4a",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C8-M02",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0623",
+      "target_node_label": "リンパ浮腫では蛋白に富む間質液が貯留し、皮膚バリア低下も加わって蜂窩織炎を繰り返しやすい",
+      "reference_question_ids": [
+        "Q631",
+        "Q1227"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "続発性リンパ浮腫の所見統合",
+      "question_text": "乳癌術後に腋窩リンパ節郭清を受けた65歳女性。数か月かけて同側上肢の腫脹が増し、皮膚の硬化を認める。過去1年に同部位の蜂窩織炎を2回発症した。最も考えられるのはどれか。",
+      "choices": {
+        "1": "続発性リンパ浮腫",
+        "2": "急性動脈閉塞",
+        "3": "橈骨神経麻痺",
+        "4": "肩関節周囲炎",
+        "5": "筋萎縮性側索硬化症"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "リンパ節郭清後の慢性・進行性上肢腫脹と皮膚変化、反復する蜂窩織炎は続発性リンパ浮腫に典型的である。リンパうっ滞と皮膚バリア障害により感染を反復しやすい。",
+      "choice_explanations": {
+        "1": "○。手術歴、慢性腫脹、皮膚硬化、反復感染が整合する。",
+        "2": "急性動脈閉塞では突然の疼痛、蒼白、冷感、脈拍消失などが問題となる。",
+        "3": "橈骨神経麻痺は運動・感覚障害が中心で慢性上肢腫脹を説明しない。",
+        "4": "肩関節周囲炎では疼痛・可動域制限が中心である。",
+        "5": "ALSは進行性筋力低下を呈するが局所のリンパ性腫脹を説明しない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "癌治療歴、慢性腫脹、皮膚変化と反復感染を統合して続発性リンパ浮腫を同定する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 癌治療歴、慢性腫脹、皮膚変化と反復感染を統合して続発性リンパ浮腫を同定する。",
+        "why_not_same_demand": "Q631/Q1227は蛋白に富む間質液や蜂窩織炎リスクを知識として問う。本問は既往と時間経過・皮膚所見・感染歴を統合する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q631",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1227",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK537239/",
+          "support": "StatPearls describes cancer/lymph-node surgery history, gradual swelling and recurrent cellulitis as key lymphedema history/complications."
+        }
+      ],
+      "reviewed_sha256": "2ca355450e77a0453f66c4b1db92d56b1ebe8f92de806a30801f053f4cdb1558",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C9-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0898",
+      "target_node_label": "核上型神経因性膀胱では反射性排尿を利用できることがあり、恥骨上部などトリガーポイント刺激を試みる",
+      "reference_question_ids": [
+        "Q907"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "神経因性膀胱の残尿評価",
+      "question_text": "脊髄損傷後で反射性排尿を利用している患者。自排尿後も下腹部膨満感があり、膀胱が十分に空になっているか確認したい。まず定量すべき指標として最も適切なのはどれか。",
+      "choices": {
+        "1": "最大酸素摂取量",
+        "2": "排尿後残尿量",
+        "3": "握力",
+        "4": "足関節背屈可動域",
+        "5": "視力"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "神経因性膀胱では自排尿できる患者でも排出不全を評価する必要がある。排尿後残尿量〈PVR〉は超音波膀胱スキャンなどで定量でき、膀胱排出能の基本的評価となる。",
+      "choice_explanations": {
+        "1": "全身持久力指標で膀胱排出能を直接評価しない。",
+        "2": "○。排尿後に膀胱内へ残る尿量を直接定量する。",
+        "3": "上肢筋力であり排尿評価ではない。",
+        "4": "関節可動域は排尿後残尿を示さない。",
+        "5": "視機能は膀胱排出能の評価ではない。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "神経因性膀胱の排出不全を把握するため、目的に合う評価指標を選択する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 神経因性膀胱の排出不全を把握するため、目的に合う評価指標を選択する。",
+        "why_not_same_demand": "Q907は核上型膀胱で反射性排尿を利用する方法の知識問題。本問は排出安全性を確認するための評価選択を問う。",
+        "related_formal_questions": [
+          {
+            "qid": "Q907",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK560617/",
+          "support": "StatPearls recommends determination of post-void residual urine volume for patients with neurogenic bladder who can void spontaneously, preferably by ultrasonography."
+        }
+      ],
+      "reviewed_sha256": "e16477bc3b87edb5af795fadff0846f6b238b9a089517f000c54f0e2e2583822",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C9-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0909",
+      "target_node_label": "てんかん関連の精神症状として粘着性、爆発性、不機嫌状態、もうろう状態などが知られる",
+      "reference_question_ids": [
+        "Q918"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "てんかん患者の自殺リスクへの初期対応",
+      "question_text": "てんかんで通院中の28歳男性。最近抑うつが強まり、「死んだ方がいい。具体的な方法も考えている」と話した。理学療法士の対応として最も優先すべきなのはどれか。",
+      "choices": {
+        "1": "一人で帰宅させ次回まで様子を見る",
+        "2": "安全を確保して自殺リスクを直ちに評価し、緊急の医療・精神科支援につなぐ",
+        "3": "運動負荷を上げて気分転換を図る",
+        "4": "発言を記録せず忘れる",
+        "5": "抗てんかん薬を自己判断で中止させる"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "具体的な自殺念慮を表明しているため、運動継続より安全確保と緊急評価・専門支援への接続を優先する。てんかんでは精神疾患や自殺関連リスクが一般人口より高い。",
+      "choice_explanations": {
+        "1": "具体的な計画を伴う自殺念慮を放置するのは危険である。",
+        "2": "○。目前の安全確保、自殺リスク評価、緊急の専門支援への接続を優先する。",
+        "3": "急性の自殺リスクが疑われる状況で運動を優先しない。",
+        "4": "安全に関わる発言は適切に共有・記録し対応する。",
+        "5": "薬剤変更は処方医の管理下で行う。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "てんかん患者に具体的自殺念慮が出現した際、生命安全を最優先に対応する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "safety_priority/DECIDE: てんかん患者に具体的自殺念慮が出現した際、生命安全を最優先に対応する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q918",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/39998659/",
+          "support": "2025年メタ解析で、てんかん患者は非てんかん者より自殺念慮・企図・自殺死亡のリスクが高い。"
+        },
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/39585664/",
+          "support": "てんかん患者では精神疾患および自殺念慮の頻度が高いことを示す系統的レビュー。"
+        }
+      ],
+      "reviewed_sha256": "2623b85ab9bb59f0d519c505b4959a31ae8695737edbf99f9d09d9ee40fb6d80",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C9-S03",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0924",
+      "target_node_label": "発話が非流暢で自発言語が障害される一方、理解は比較的保たれる",
+      "reference_question_ids": [
+        "Q933"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "Broca失語の所見統合",
+      "question_text": "左中大脳動脈領域の脳梗塞後。発話は非流暢で努力性、短い語句が中心だが、簡単な口頭指示の理解は比較的良好である。最も考えられる失語はどれか。",
+      "choices": {
+        "1": "Broca失語",
+        "2": "Wernicke失語",
+        "3": "伝導失語",
+        "4": "全失語",
+        "5": "失読のみ"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "非流暢で努力性の発話に対し理解が比較的保たれる組合せはBroca失語に典型的である。",
+      "choice_explanations": {
+        "1": "○。発話産生の障害が強く、理解が比較的保たれる。",
+        "2": "Wernicke失語は流暢だが理解障害が目立つ。",
+        "3": "伝導失語では流暢性と理解が比較的保たれ、復唱障害が特徴となる。",
+        "4": "全失語では発話だけでなく理解も強く障害される。",
+        "5": "本例は言語表出全般の障害を示しており、読字だけの障害ではない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "clinical_intent": "発話流暢性と理解の組合せから失語型を識別する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 発話流暢性と理解の組合せから失語型を識別する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q933",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK559315/",
+          "support": "Broca失語は非流暢・努力性発話を特徴とし、理解は比較的保たれる。"
+        }
+      ],
+      "reviewed_sha256": "61486ee7a4d74519ef5c520fe990b8fa2597f0ccedaed2e3c509a1501e7b1a5d",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C9-S04",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0991",
+      "target_node_label": "屈筋優位の共同運動が出やすく、肘屈曲姿勢をとることが多い",
+      "reference_question_ids": [
+        "Q1001"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "上肢屈曲共同運動の識別",
+      "question_text": "脳卒中後の右片麻痺患者。物を取ろうとすると、肩外転・外旋、肘屈曲、前腕回外が意図せず一緒に出現する。最も適切な解釈はどれか。",
+      "choices": {
+        "1": "上肢屈曲共同運動が優位である",
+        "2": "上肢伸展共同運動が優位である",
+        "3": "小脳性運動失調である",
+        "4": "末梢神経麻痺のみである",
+        "5": "正常な分離運動である"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "脳卒中後の病的共同運動では、屈曲共同運動として肩外転・外旋、肘屈曲、前腕回外などが連合して出現する。",
+      "choice_explanations": {
+        "1": "○。記載された運動の結合は典型的な上肢屈曲共同運動である。",
+        "2": "伸展共同運動では肩内転・内旋や肘伸展などが主体となる。",
+        "3": "小脳性運動失調の測定異常や企図振戦の記載ではない。",
+        "4": "中枢性片麻痺に伴う共同運動パターンであり末梢神経単独では説明しにくい。",
+        "5": "複数関節が固定的に連動しており分離運動ではない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "clinical_intent": "複数関節の連合パターンから病的屈曲共同運動を識別する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 複数関節の連合パターンから病的屈曲共同運動を識別する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1001",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7742824/",
+          "support": "脳卒中後上肢の屈曲共同運動は肩外転・外旋、肘屈曲、前腕回外などの結合として記述される。"
+        }
+      ],
+      "reviewed_sha256": "968049394d4d8d95085c475964069cc5fd26174351eac3b3a2b36914265fc6cf",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C9-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0232",
+      "target_node_label": "Brown-Séquard症候群の同側運動・深部感覚障害と対側温痛覚障害",
+      "reference_question_ids": [
+        "Q233",
+        "Q314"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "Brown-Séquard症候群の歩行予後",
+      "question_text": "外傷性Brown-Séquard症候群と診断された35歳男性。急性期治療後、下肢に随意運動が残存している。一般的な機能予後として最も適切なのはどれか。",
+      "choices": {
+        "1": "不完全脊髄損傷であり歩行機能回復の可能性は比較的高い",
+        "2": "必ず永久完全対麻痺となる",
+        "3": "上肢機能だけが回復する",
+        "4": "神経学的回復は24時間で終了する",
+        "5": "リハビリテーションは予後に関係しない"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "Brown-Séquard症候群は不完全脊髄損傷で、他の重い脊髄症候群と比べ歩行を含む機能回復の可能性が比較的高い。",
+      "choice_explanations": {
+        "1": "○。外傷性Brown-Séquard症候群では有用な運動回復や歩行再獲得が期待できることが多い。",
+        "2": "不完全損傷であり完全麻痺が必発ではない。",
+        "3": "下肢運動回復もみられ得る。",
+        "4": "神経学的回復は数か月からさらに長期に続き得る。",
+        "5": "リハビリテーションは機能回復と二次障害予防に重要である。"
+      },
+      "proposed_task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "clinical_intent": "Brown-Séquard症候群という不完全損傷型から一般的な歩行回復可能性を予測する。",
+      "semantic_review": {
+        "reference_demand": "finding_interpretation/INTERPRET",
+        "candidate_demand": "prognosis_prediction/PREDICT: Brown-Séquard症候群という不完全損傷型から一般的な歩行回復可能性を予測する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q233",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q314",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK538135/",
+          "support": "Brown-Séquard症候群は不完全脊髄損傷で、一般に機能回復・歩行予後が良好とされる。"
+        }
+      ],
+      "reviewed_sha256": "1026c50c9f27d6de8d4d3e60b5e62c56777d14052149cf27031bc677f41c64d1",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C9-M02",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0280",
+      "target_node_label": "仙髄温存による不全脊髄損傷の判定",
+      "reference_question_ids": [
+        "Q282",
+        "Q333"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "脊髄損傷で仙髄温存を認めた際の安全判断",
+      "question_text": "頸髄損傷直後の患者。S4～5領域の感覚と深部肛門圧が保たれている一方、四肢筋力は著しく低下している。離床前の対応として最も適切なのはどれか。",
+      "choices": {
+        "1": "仙髄温存があるので脊椎保護を解除する",
+        "2": "不全損傷として神経学的所見を記録し、脊椎安定性と全身状態を確認してから離床を判断する",
+        "3": "歩行可能とみなし直ちに独歩させる",
+        "4": "仙髄温存を無視して完全損傷と記録する",
+        "5": "筋力低下は心因性と判断する"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "仙髄温存は不全脊髄損傷を示す重要所見だが、脊椎の安定性や離床安全性を保証しない。急性期は神経学的分類を正確に行い、医学的・脊椎安定性を確認して離床を判断する。",
+      "choice_explanations": {
+        "1": "仙髄温存だけで脊椎保護解除を判断できない。",
+        "2": "○。不全損傷の所見を正確に記録し、急性期の安全条件を確認してから離床する。",
+        "3": "仙髄温存は歩行能力そのものを保証しない。",
+        "4": "仙髄温存があれば完全損傷とは分類しない。",
+        "5": "明らかな頸髄損傷所見を心因性と決めつけない。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "仙髄温存を認識しつつ、急性脊髄損傷の離床安全性を別に判断する。",
+      "semantic_review": {
+        "reference_demand": "finding_interpretation/INTERPRET",
+        "candidate_demand": "safety_priority/DECIDE: 仙髄温存を認識しつつ、急性脊髄損傷の離床安全性を別に判断する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q282",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q333",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8152171/",
+          "support": "ISNCSCIではS4-5感覚、深部肛門圧や随意肛門収縮などの仙髄温存が不全損傷分類に用いられる。"
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6946808/",
+          "support": "仙髄温存は完全/不全損傷を区別する中核所見である。"
+        }
+      ],
+      "reviewed_sha256": "38175ed4ea17be7c1d73a1164b02cfc4f54aa4ce63b934d70ee36b2bdf1dcb6f",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C11-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0514",
+      "target_node_label": "近位筋優位の進行性筋力低下と、脂肪・結合組織増生による下腿三頭筋の仮性肥大が特徴的である",
+      "reference_question_ids": [
+        "Q522"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 11,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "Duchenne型筋ジストロフィーの歩行機能評価",
+      "question_text": "歩行可能なDuchenne型筋ジストロフィーの9歳男児。疾患に伴う立ち上がり、階段、走行などの歩行関連機能を経時的に追跡したい。最も適切な評価尺度はどれか。",
+      "choices": {
+        "1": "North Star Ambulatory Assessment〈NSAA〉",
+        "2": "Glasgow Coma Scale",
+        "3": "Mini-Mental State Examination",
+        "4": "Borg scaleのみ",
+        "5": "Braden Scale"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "NSAAは歩行可能なDuchenne型筋ジストロフィー児の機能能力を評価するため開発され、立ち上がりや歩行関連活動を含む。",
+      "choice_explanations": {
+        "1": "○。DMDの歩行可能児の機能変化を追跡する疾患特異的評価である。",
+        "2": "意識レベル評価である。",
+        "3": "認知機能評価であり歩行機能の主要尺度ではない。",
+        "4": "自覚的運動強度のみではDMDの多面的歩行機能を追跡できない。",
+        "5": "褥瘡リスク評価である。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "歩行可能DMD児の経時的機能変化に適した疾患特異的尺度を選択する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 歩行可能DMD児の経時的機能変化に適した疾患特異的尺度を選択する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q522",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/21954141/",
+          "support": "NSAAは歩行可能なDuchenne型筋ジストロフィー男児の機能能力評価として開発され、実用性・信頼性が示されている。"
+        }
+      ],
+      "reviewed_sha256": "3a833326f07bd73954bede8496cc693975a47df1424577844b4aed8da70c2947",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C11-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0559",
+      "target_node_label": "中枢神経の先天奇形とその特徴の組合せの基本事項",
+      "reference_question_ids": [
+        "Q567"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 11,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "Chiari II型奇形の所見統合",
+      "question_text": "脊髄髄膜瘤のある乳児。MRIで小脳虫部と脳幹の尾側偏位を認め、水頭症も合併している。最も考えられる中枢神経奇形はどれか。",
+      "choices": {
+        "1": "Chiari II型奇形",
+        "2": "Chiari I型奇形",
+        "3": "脳梁欠損のみ",
+        "4": "無脳症",
+        "5": "硬膜外血腫"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "Chiari II型奇形は脊髄髄膜瘤と強く関連し、小脳虫部・脳幹などの尾側偏位を特徴とし、水頭症をしばしば合併する。",
+      "choice_explanations": {
+        "1": "○。脊髄髄膜瘤、後頭蓋窩構造の尾側偏位、水頭症の組合せが典型的である。",
+        "2": "Chiari I型は主に小脳扁桃下垂で、脊髄髄膜瘤とのほぼ必発の関連はない。",
+        "3": "脳梁欠損だけでは記載された後頭蓋窩所見を説明しない。",
+        "4": "無脳症は大脳・頭蓋の重篤な形成不全である。",
+        "5": "硬膜外血腫は先天奇形ではない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "脊髄髄膜瘤とMRI所見・水頭症の組合せからChiari II型奇形を同定する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 脊髄髄膜瘤とMRI所見・水頭症の組合せからChiari II型奇形を同定する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q567",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK557498/",
+          "support": "Chiari II型はほぼ常に脊髄髄膜瘤と関連し、小脳虫部・脳幹・第4脳室の尾側偏位を特徴とし、水頭症を伴いやすい。"
+        }
+      ],
+      "reviewed_sha256": "ae309365ebcc255fc86a38c50b666199235494ecd7c8c6c2b050e2297d4cd078",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C11-S03",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0562",
+      "target_node_label": "自閉スペクトラム症は幼児期から特徴が現れ、男児に多い",
+      "reference_question_ids": [
+        "Q570"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 11,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "自閉スペクトラム症の発達所見統合",
+      "question_text": "2歳男児。名前を呼んでも振り向きにくく、共同注意が乏しい。同年齢児との相互的な遊びが少なく、同じ車輪を長時間回す行動を繰り返す。最も考えられるのはどれか。",
+      "choices": {
+        "1": "自閉スペクトラム症",
+        "2": "分離不安症のみ",
+        "3": "単純な運動発達遅滞のみ",
+        "4": "急性せん妄",
+        "5": "末梢神経障害"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "社会的コミュニケーション・相互作用の持続的な困難と、限定的・反復的行動の双方が幼児期からみられるため、自閉スペクトラム症を考える。",
+      "choice_explanations": {
+        "1": "○。社会的相互作用の困難と反復的行動の組合せがASDの中核像に合う。",
+        "2": "分離不安だけでは共同注意低下と反復行動を説明しない。",
+        "3": "運動発達遅滞だけでは社会的コミュニケーションの質的特徴を説明しない。",
+        "4": "急性せん妄は急性発症の意識・注意変動が中心である。",
+        "5": "末梢神経障害はこの社会行動パターンを説明しない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "幼児の社会的コミュニケーションと反復行動を統合してASDを識別する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 幼児の社会的コミュニケーションと反復行動を統合してASDを識別する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q570",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.cdc.gov/autism/hcp/diagnosis/index.html",
+          "support": "ASD診断は発達歴と行動観察に基づき、DSM-5の社会的コミュニケーション障害と限定反復行動の基準を用いる。"
+        },
+        {
+          "url": "https://www.cdc.gov/autism/hcp/diagnosis/screening.html",
+          "support": "幼児期のASDスクリーニングと早期同定が推奨される。"
+        }
+      ],
+      "reviewed_sha256": "38d71b3f2a385a37abc1e09ce97e9a6e89162c8bf74f2c431b8503e6baa78230",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C11-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0373",
+      "target_node_label": "発育性股関節形成不全の初期装具での屈曲・外転位保持",
+      "reference_question_ids": [
+        "Q378",
+        "Q1582"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 11,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "発育性股関節形成不全の装具選択",
+      "question_text": "生後3か月女児。発育性股関節形成不全と診断され、徒手整復可能で手術適応はない。股関節を屈曲・外転位に保ちながら治療するために最も適切な装具はどれか。",
+      "choices": {
+        "1": "Pavlik harness",
+        "2": "硬性頸椎カラー",
+        "3": "長下肢装具",
+        "4": "ミルウォーキーブレース",
+        "5": "短対立装具"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "Pavlik harnessは乳児の発育性股関節形成不全で、股関節を屈曲・外転位に保持しつつ動きを許容する代表的な初期装具である。",
+      "choice_explanations": {
+        "1": "○。乳児DDHの初期治療で用いられる動的装具である。",
+        "2": "頸椎固定用である。",
+        "3": "下肢麻痺などの歩行補助に用いる。",
+        "4": "脊柱側弯症用の体幹装具である。",
+        "5": "母指対立補助など上肢用である。"
+      },
+      "proposed_task": "device_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "乳児DDHの整復保持目的に適した装具を選択する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "device_selection/PRESCRIBE: 乳児DDHの整復保持目的に適した装具を選択する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q378",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1582",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://orthoinfo.aaos.org/en/diseases--conditions/developmental-dislocation-dysplasia-of-the-hip-ddh/",
+          "support": "AAOSは乳児DDHでPavlik harnessを用いて股関節を適切な位置に保持する治療を説明している。"
+        }
+      ],
+      "reviewed_sha256": "41f637561df57143acc69c25c326e042b67d760ab260d208b0b119772da1944d",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C12-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0550",
+      "target_node_label": "自分が受け入れ難い感情や衝動を他者が持っているとみなす防衛機制は投影である",
+      "reference_question_ids": [
+        "Q558"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 12,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "投影の臨床場面での識別",
+      "question_text": "患者は自分が治療者に強い怒りを抱いていることには触れず、「先生の方が私を嫌って怒っている」と繰り返し訴える。最も考えられる防衛機制はどれか。",
+      "choices": {
+        "1": "投影",
+        "2": "昇華",
+        "3": "合理化",
+        "4": "置き換え",
+        "5": "反動形成"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "投影は自分の受け入れ難い感情や衝動を、自分ではなく他者が持っているものとして帰属する防衛機制である。",
+      "choice_explanations": {
+        "1": "○。自分の怒りを治療者側の感情として帰属している。",
+        "2": "昇華は衝動を社会的に受容される活動へ変換する。",
+        "3": "合理化は行動や感情にもっともらしい理由を後付けする。",
+        "4": "置き換えは感情の対象を別の対象へ移す。",
+        "5": "反動形成は受け入れ難い感情と反対の態度を強く示す。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "対人場面の発言から投影という防衛機制を識別する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 対人場面の発言から投影という防衛機制を識別する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q558",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK606117/",
+          "support": "Psychodynamic Therapyの解説ではprojectionを含む防衛機制は無意識的な心理戦略として説明される。"
+        },
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/32644532/",
+          "support": "StatPearls Defense Mechanismsは主要な防衛機制を臨床的に整理している。"
+        }
+      ],
+      "reviewed_sha256": "2d83cc4d0329372f97aa317c3ea3ef9180844c8356c569fceea78ae92590a672",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C12-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0895",
+      "target_node_label": "内田・クレペリン精神検査は連続加算作業の作業曲線から性格・行動特性、作業態度などをみる",
+      "reference_question_ids": [
+        "Q904"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 12,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "内田クレペリン検査の作業曲線解釈",
+      "question_text": "内田クレペリン精神検査で、前半より休憩後の後半開始時に作業量が増え、その後の作業量の推移を含む曲線が得られた。検査で主に扱う情報として最も適切なのはどれか。",
+      "choices": {
+        "1": "連続加算作業の作業量と時間的変化",
+        "2": "関節可動域",
+        "3": "肺活量",
+        "4": "深部腱反射",
+        "5": "視野欠損"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "内田クレペリン検査は一定時間ごとの連続加算作業量から作業曲線を作成し、作業量、休憩効果、曲線変動などを扱う心理検査である。",
+      "choice_explanations": {
+        "1": "○。連続加算作業の量と時間的推移が中心データとなる。",
+        "2": "運動器評価ではない。",
+        "3": "呼吸機能検査ではない。",
+        "4": "神経学的反射検査ではない。",
+        "5": "視野検査ではない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "内田クレペリン検査の作業曲線が何を表すかを解釈する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 内田クレペリン検査の作業曲線が何を表すかを解釈する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q904",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/7666606/",
+          "support": "内田クレペリン検査では加算作業と作業曲線指標が用いられ、作業曲線指標の再検査信頼性などが検討されている。"
+        },
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/6533387/",
+          "support": "作業量、休憩効果、作業曲線の変動指標が内田クレペリン検査で扱われる。"
+        }
+      ],
+      "reviewed_sha256": "5df682248fc7f54b041e7b117f9ad276eeb112dd23b186e753e80daa9985dd93",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C12-S03",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1030",
+      "target_node_label": "抑圧・合理化・反動形成・スプリッティングは防衛機制として扱われるが、転移は治療関係で感情を治療者へ向ける現象で、防衛機制とは区別される",
+      "reference_question_ids": [
+        "Q1040"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 12,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "転移がみられる患者への対応",
+      "question_text": "心理面談で患者が、治療者を厳格だった父親と重ねて強い恐れと反発を示している。転移が疑われる場面での対応として最も適切なのはどれか。",
+      "choices": {
+        "1": "患者の感情を否定して話題を変える",
+        "2": "治療関係の枠組みを保ちながら、現在の感情と過去の対人関係との関連を探索する",
+        "3": "治療者も個人的な怒りをそのまま返す",
+        "4": "患者との私的関係を深める",
+        "5": "直ちに面談を永久中止する"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "転移は重要他者への感情や態度が治療者へ無意識に向けられる現象で、心理療法では治療枠を保ちながらそのパターンを探索し洞察につなげる。",
+      "choice_explanations": {
+        "1": "感情を一律に否定すると治療的理解につながりにくい。",
+        "2": "○。境界を保ちつつ転移を治療的に理解・探索する。",
+        "3": "治療者の反応を無制御に返すことは不適切である。",
+        "4": "治療境界を崩す私的関係は避ける。",
+        "5": "安全上の理由がない限り、転移の存在だけで永久中止する必要はない。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "転移を認識し、治療境界を保った心理療法的対応を選択する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "intervention_selection/PRESCRIBE: 転移を認識し、治療境界を保った心理療法的対応を選択する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1040",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK606117/",
+          "support": "Psychodynamic therapyではtransferenceを重要他者への感情・態度が治療者へ無意識に向けられる現象として扱い、治療関係内で探索する。"
+        }
+      ],
+      "reviewed_sha256": "6d49c5bcda0066f7300f4a83fd9d081ca988871c4cd3684255e589e87b8dee75",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C12-S04",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1086",
+      "target_node_label": "MMPIとYG性格検査はいずれも質問項目への回答から人格傾向を評価する質問紙法である",
+      "reference_question_ids": [
+        "Q1097"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 12,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "MMPIの選択",
+      "question_text": "成人患者の人格特性と広範な精神病理を標準化された質問紙で評価し、妥当性尺度も含めて回答傾向を検討したい。最も適切な検査はどれか。",
+      "choices": {
+        "1": "MMPI",
+        "2": "Wechsler成人知能検査",
+        "3": "Benton視覚記銘検査",
+        "4": "FIM",
+        "5": "徒手筋力検査"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "MMPIは人格特性と精神病理を幅広く評価する代表的質問紙法で、回答の妥当性をみる尺度も含む。",
+      "choice_explanations": {
+        "1": "○。人格・精神病理と妥当性尺度を含む質問紙検査である。",
+        "2": "知能検査であり人格質問紙ではない。",
+        "3": "視覚記憶などの神経心理検査である。",
+        "4": "ADL自立度評価である。",
+        "5": "筋力評価である。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "人格・精神病理を質問紙で幅広く評価する目的からMMPIを選択する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 人格・精神病理を質問紙で幅広く評価する目的からMMPIを選択する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1097",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK557525/",
+          "support": "MMPIは人格特性と精神病理を評価する広く用いられる心理検査で、妥当性尺度を含む。"
+        }
+      ],
+      "reviewed_sha256": "09b00276ca84be6aeece75f58217226ef44bcdc7a5563b11abcd42a1e2e28dab",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C14-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1027",
+      "target_node_label": "ボツリヌス毒素は運動神経終末でアセチルコリン放出を阻害し、神経筋伝達を抑制して痙縮を軽減する",
+      "reference_question_ids": [
+        "Q1037"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 14,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "局所痙縮へのボツリヌス毒素治療",
+      "question_text": "脳卒中後、肘屈筋と手指屈筋の局所的な痙縮が強く、更衣と手掌衛生を妨げている。全身性の鎮静をできるだけ避けたい。治療選択として最も適切なのはどれか。",
+      "choices": {
+        "1": "標的筋へのボツリヌス毒素注射",
+        "2": "抗菌薬の長期投与",
+        "3": "利尿薬のみ",
+        "4": "視力矯正",
+        "5": "完全安静のみ"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "局所性・多巣性痙縮ではボツリヌス毒素による化学的除神経が標的筋の過活動を低下させる選択肢となる。シナプス前終末でアセチルコリン放出を阻害する。",
+      "choice_explanations": {
+        "1": "○。局所痙縮に標的を絞って作用させられる。",
+        "2": "感染治療ではない。",
+        "3": "体液管理では痙縮を直接改善しない。",
+        "4": "視機能とは無関係である。",
+        "5": "安静のみでは局所痙縮への標準的介入にならない。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": "INTERPRET",
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "局所痙縮によるADL障害に対して標的型の治療を選択する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "intervention_selection/PRESCRIBE: 局所痙縮によるADL障害に対して標的型の治療を選択する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1037",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK557387/",
+          "support": "ボツリヌス毒素はコリン作動性神経終末のSNARE蛋白を介してシナプス前アセチルコリン放出を可逆的に阻害する。"
+        },
+        {
+          "url": "https://ncbi.nlm.nih.gov/books/NBK507869/",
+          "support": "Botulinum toxin chemodenervation is an effective treatment for selected patients with spasticity, including approved upper-limb spasticity indications."
+        }
+      ],
+      "reviewed_sha256": "9794109766ed9659870a73adf49134a48da58b61b0332370e7893cbb7a5d5cb8",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C14-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1264",
+      "target_node_label": "痙縮は上位運動ニューロン障害で出現する",
+      "reference_question_ids": [
+        "Q1280"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 14,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "痙縮の速度依存性所見",
+      "question_text": "脳卒中後の片麻痺患者。肘をゆっくり伸ばすと抵抗は軽いが、速く伸ばすほど途中で急な抵抗が強くなる。最も適切な解釈はどれか。",
+      "choices": {
+        "1": "痙縮を示唆する",
+        "2": "弛緩性麻痺を示す",
+        "3": "固定性拘縮だけを示す",
+        "4": "感覚失調を示す",
+        "5": "筋力正常を示す"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "痙縮は上位運動ニューロン症候群の陽性徴候で、他動伸張速度が速いほど抵抗が増す速度依存性が特徴である。",
+      "choice_explanations": {
+        "1": "○。速度依存性の筋緊張増加は痙縮の特徴である。",
+        "2": "弛緩性麻痺では筋緊張低下が主体である。",
+        "3": "固定性拘縮は速度に依存しない機械的制限が主体となる。",
+        "4": "感覚失調の主要所見ではない。",
+        "5": "異常な伸張反応があり正常とはいえない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "他動運動速度と抵抗の変化から痙縮を識別する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 他動運動速度と抵抗の変化から痙縮を識別する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1280",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK507869/",
+          "support": "痙縮は速度依存性に筋緊張・伸張反射が増加する上位運動ニューロン障害の所見である。"
+        }
+      ],
+      "reviewed_sha256": "4f1528e7310dbdff1e933978fbbeeee8f345580543f6925fc364a8317f5428ce",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C14-S03",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0554",
+      "target_node_label": "運動障害と評価方法の組合せの基本事項",
+      "reference_question_ids": [
+        "Q562"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        }
+      ],
+      "proposed_category_small": 14,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "痙縮と拘縮を分ける評価",
+      "question_text": "脳卒中後の足関節底屈筋群に抵抗を認める。神経性の速度依存成分と固定性の短縮を区別して評価したい。最も有用な所見の組合せはどれか。",
+      "choices": {
+        "1": "遅い伸張での最大可動域と速い伸張でのcatch角度",
+        "2": "安静時心拍数と身長",
+        "3": "視力と聴力",
+        "4": "握力と体重",
+        "5": "血糖値と尿比重"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "Modified Tardieu Scaleでは遅い速度で得られる最大他動可動域R2と、速い伸張でcatchが生じる角度R1を比較し、動的な痙縮成分と固定性短縮の把握に役立てる。",
+      "choice_explanations": {
+        "1": "○。速度を変えた伸張時の角度差が神経性・機械的成分の理解に有用である。",
+        "2": "筋緊張の速度依存性を評価しない。",
+        "3": "感覚器評価である。",
+        "4": "痙縮と拘縮を区別する直接指標ではない。",
+        "5": "代謝・腎機能指標である。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "速度を変えた他動伸張所見から痙縮と固定性短縮の成分を区別する。",
+      "semantic_review": {
+        "reference_demand": "assessment_selection/MEASURE",
+        "candidate_demand": "finding_interpretation/INTERPRET: 速度を変えた他動伸張所見から痙縮と固定性短縮の成分を区別する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q562",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK507869/",
+          "support": "Tardieu scaleは異なる伸張速度で反応を評価し、R1をcatch角度、R2をゆっくり伸張時の全可動域として扱う。"
+        }
+      ],
+      "reviewed_sha256": "7dcddec4a5e90393f97afbc520d16a1f3f67e4622b1b79c7b3f7ff1b8126337e",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C16-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0709",
+      "target_node_label": "関節リウマチでは前足部変形として外反母趾とともに小趾側の内反変形がみられる",
+      "reference_question_ids": [
+        "Q717"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "関節リウマチ前足部変形への装具選択",
+      "question_text": "関節リウマチ患者。外反母趾と中足骨頭部痛があり、歩行時の前足部負担を軽減したい。初期の装具療法として最も適切なのはどれか。",
+      "choices": {
+        "1": "中足骨パッドを用いた足底装具",
+        "2": "頸椎カラー",
+        "3": "長下肢装具",
+        "4": "硬性体幹装具",
+        "5": "肩外転装具"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "前足部痛を伴う関節リウマチでは、足底装具や中足骨パッドで圧を分散し、疼痛を軽減することがある。",
+      "choice_explanations": {
+        "1": "○。前足部への荷重を分散し中足骨頭部の圧を軽減する。",
+        "2": "頸椎用である。",
+        "3": "下肢全体の支持が必要な病態に用いる。",
+        "4": "体幹用である。",
+        "5": "肩関節用である。"
+      },
+      "proposed_task": "device_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "RA前足部変形に対し疼痛軽減を目的とした装具を選択する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "device_selection/PRESCRIBE: RA前足部変形に対し疼痛軽減を目的とした装具を選択する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q717",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://orthoinfo.aaos.org/en/diseases--conditions/rheumatoid-arthritis-of-the-foot-and-ankle/",
+          "support": "AAOSは関節リウマチの足部症状に対し装具・靴の調整などの保存療法を説明している。"
+        }
+      ],
+      "reviewed_sha256": "e3d373e1a724ee07730c3b99beb6e316e85bc72e7081dc0a7d6aacea06c8fee7",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C16-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0752",
+      "target_node_label": "外傷性骨折の分類では、剝離骨折は筋・腱・靱帯の牽引で骨片が母床から完全に離れるため、通常は完全骨折として扱う",
+      "reference_question_ids": [
+        "Q760"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "剝離骨折を疑う外傷の初期対応",
+      "question_text": "短距離走のスタートで突然骨盤周囲に強い痛みが生じた高校生。局所圧痛が強く、筋収縮で疼痛が増悪する。剝離骨折が疑われる。初期対応として最も適切なのはどれか。",
+      "choices": {
+        "1": "競技を中止し患部を保護して画像評価につなげる",
+        "2": "痛みを我慢して全力走を続ける",
+        "3": "強い抵抗運動を直ちに開始する",
+        "4": "局所を強く揉み続ける",
+        "5": "翌日からジャンプ練習を再開する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "剝離骨折が疑われる急性外傷では競技を中止し、患部を保護して骨折の有無を画像で確認する。無理な負荷継続は転位や症状悪化につながる。",
+      "choice_explanations": {
+        "1": "○。安全を優先した初期対応である。",
+        "2": "悪化させるおそれがある。",
+        "3": "急性期には不適切である。",
+        "4": "骨折疑いへの対応として不適切である。",
+        "5": "診断前の高負荷再開は避ける。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "剝離骨折疑いで競技継続を避け、保護と医療評価を優先する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "safety_priority/DECIDE: 剝離骨折疑いで競技継続を避け、保護と医療評価を優先する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q760",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://orthoinfo.aaos.org/en/diseases--conditions/hip-strains/",
+          "support": "AAOSは急性筋腱損傷で活動中止と保護を基本とし、骨片剝離を伴う場合は評価が必要となることを説明している。"
+        }
+      ],
+      "reviewed_sha256": "63edabf10b3c86fedbaf748503b658625b971eea5a3fb263b87d9c3b0537ad5d",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C16-S03",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0754",
+      "target_node_label": "慢性炎症、活動性低下、ステロイド治療などにより続発性骨粗鬆症のリスクが高くなる",
+      "reference_question_ids": [
+        "Q762"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "ステロイド使用患者の生活目標",
+      "question_text": "関節リウマチで長期ステロイド治療中の患者。骨粗鬆症リスクが高く、現在は屋外歩行自立だが転倒不安がある。理学療法の機能目標として最も適切なのはどれか。",
+      "choices": {
+        "1": "転倒リスクを下げながら安全な屋外歩行を維持する",
+        "2": "活動をすべて中止して終日臥床する",
+        "3": "疼痛の有無にかかわらず高衝撃運動だけを行う",
+        "4": "筋力評価を行わず歩行補助具を禁止する",
+        "5": "骨折歴がないため予防目標は不要とする"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "続発性骨粗鬆症リスクが高い患者では、活動性を保ちつつ転倒予防と安全な移動能力の維持を目標にすることが重要である。",
+      "choice_explanations": {
+        "1": "○。活動維持と骨折予防を両立する。",
+        "2": "廃用を招く。",
+        "3": "骨折リスクを考慮しない。",
+        "4": "個別評価を欠く。",
+        "5": "一次予防の観点から不適切である。"
+      },
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "骨粗鬆症リスクを踏まえ安全な移動能力維持という機能目標を設定する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "functional_goal_decision/DECIDE: 骨粗鬆症リスクを踏まえ安全な移動能力維持という機能目標を設定する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q762",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://rheumatology.org/patients/glucocorticoid-induced-osteoporosis",
+          "support": "ACRは長期グルココルチコイド使用が骨粗鬆症・骨折リスクを高めることを説明している。"
+        }
+      ],
+      "reviewed_sha256": "159bf196936752cdba1009635f25c785140b2193bb3b75a22dd263885f207d62",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C16-S04",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0778",
+      "target_node_label": "荷重開始時の疼痛や動作開始時痛がみられ、進行すると大腿四頭筋萎縮を伴う",
+      "reference_question_ids": [
+        "Q786"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "変形性膝関節症の機能低下予測",
+      "question_text": "変形性膝関節症患者。立ち上がり開始時痛が増え、最近は大腿四頭筋萎縮も目立つ。介入せず活動量がさらに低下した場合に最も起こりやすいのはどれか。",
+      "choices": {
+        "1": "歩行・立ち上がり能力のさらなる低下",
+        "2": "膝機能の自然な急速改善",
+        "3": "大腿四頭筋筋力の自然増強",
+        "4": "関節負荷と無関係な視力低下のみ",
+        "5": "疼痛と筋力に関係なく持久力が向上"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "疼痛による活動低下と大腿四頭筋筋力低下は、変形性膝関節症の機能制限をさらに悪化させる悪循環を形成しうる。",
+      "choice_explanations": {
+        "1": "○。疼痛・筋力低下・活動低下が機能障害を進めうる。",
+        "2": "自然改善を前提にできない。",
+        "3": "廃用では筋力は低下しやすい。",
+        "4": "主病態と関連しない。",
+        "5": "活動低下では持久力も低下しやすい。"
+      },
+      "proposed_task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "clinical_intent": "OAで活動低下と四頭筋萎縮が続く場合の機能予後を予測する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "prognosis_prediction/PREDICT: OAで活動低下と四頭筋萎縮が続く場合の機能予後を予測する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q786",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://orthoinfo.aaos.org/en/diseases--conditions/arthritis-of-the-knee/",
+          "support": "AAOSは膝OAで疼痛、こわばり、筋力低下や活動制限が生じうることを説明している。"
+        }
+      ],
+      "reviewed_sha256": "415931103602d7d3e05138719ede440b73ad16f3f3ce693538853e792512036f",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C16-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0181",
+      "target_node_label": "後方アプローチによる人工股関節全置換術後では、股関節の深い屈曲に内転と内旋が加わると後方脱臼の危険が高まる",
+      "reference_question_ids": [
+        "Q182",
+        "Q1568"
+      ],
+      "existing_demands": [
+        {
+          "task": "safety_priority",
+          "primary_ability": "DECIDE"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "後方アプローチTHA後の脱臼リスク予測",
+      "question_text": "後方アプローチで人工股関節全置換術を受けた患者。低い椅子から立ち上がる際に股関節を深く屈曲し、膝を内側へ入れ、つま先も内向きにしている。この動作を反復した場合に最も懸念されるのはどれか。",
+      "choices": {
+        "1": "後方脱臼",
+        "2": "肩関節前方脱臼",
+        "3": "足関節外側靱帯損傷",
+        "4": "手根管症候群",
+        "5": "頸椎捻挫"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "後方アプローチTHA後では、深い股関節屈曲に内転・内旋が組み合わさると後方脱臼リスクが高まる。",
+      "choice_explanations": {
+        "1": "○。典型的な危険肢位の組み合わせである。",
+        "2": "術側股関節の問題ではない。",
+        "3": "本動作から主要に予測する合併症ではない。",
+        "4": "関連しない。",
+        "5": "関連しない。"
+      },
+      "proposed_task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "moderate",
+      "clinical_intent": "危険肢位の反復からTHA後方脱臼リスクを予測する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: safety_priority/DECIDE",
+        "candidate_demand": "prognosis_prediction/PREDICT: 危険肢位の反復からTHA後方脱臼リスクを予測する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q182",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1568",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://orthoinfo.aaos.org/en/treatment/total-hip-replacement/",
+          "support": "AAOSはTHA後に脱臼を避けるため術式に応じた動作上の注意が必要であることを説明している。"
+        }
+      ],
+      "reviewed_sha256": "d25eb76bff7c996b06437df0a9b2ccabd75a6ff81f3c7d131c65104bc4335103",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C17-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0848",
+      "target_node_label": "Spurlingテストは頸部を伸展・側屈し軸圧を加えて上肢放散痛を誘発し、頸椎神経根障害を評価する",
+      "reference_question_ids": [
+        "Q857"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "頸椎神経根障害を疑う評価",
+      "question_text": "頸部痛に加えて右上肢への放散痛がある患者。頸椎神経根障害の可能性を高めるために実施する誘発テストとして最も適切なのはどれか。",
+      "choices": {
+        "1": "Spurlingテスト",
+        "2": "Thomasテスト",
+        "3": "Trendelenburgテスト",
+        "4": "Thompsonテスト",
+        "5": "McMurrayテスト"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "Spurlingテストは頸部伸展・患側回旋などに軸圧を加え、上肢への神経根症状を再現する頸椎神経根障害の誘発テストである。",
+      "choice_explanations": {
+        "1": "○。頸椎神経根障害の評価に用いる。",
+        "2": "股関節屈曲拘縮の評価である。",
+        "3": "中殿筋機能などの評価である。",
+        "4": "アキレス腱断裂の評価である。",
+        "5": "半月板障害の評価である。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "上肢放散痛のある患者で頸椎神経根障害を確認する誘発テストを選択する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 上肢放散痛のある患者で頸椎神経根障害を確認する誘発テストを選択する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q857",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK493152/",
+          "support": "StatPearlsはSpurling testを頸椎神経根障害の評価に用いる誘発テストとして説明している。"
+        }
+      ],
+      "reviewed_sha256": "a93576939be16365329638dd8cf039046659e160384149bc21091221c0c031f4",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C17-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0849",
+      "target_node_label": "共同運動パターンが随意的に可能となり、肩関節内転・肘関節伸展・前腕回内は伸展共同運動に含まれる",
+      "reference_question_ids": [
+        "Q858"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "Brunnstrom stageの評価",
+      "question_text": "脳卒中後片麻痺患者。上肢で伸展共同運動パターンを随意的に出せるが、共同運動から外れた分離運動はまだ困難である。回復段階を把握する評価として最も適切なのはどれか。",
+      "choices": {
+        "1": "Brunnstrom recovery stage",
+        "2": "MMSE",
+        "3": "NYHA分類",
+        "4": "Hugh-Jones分類",
+        "5": "Glasgow Coma Scale"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "Brunnstrom recovery stageは片麻痺の回復過程を、弛緩、共同運動の出現・随意化、共同運動からの分離などに基づいて段階づける。",
+      "choice_explanations": {
+        "1": "○。共同運動と分離運動の程度を評価する。",
+        "2": "認知機能検査である。",
+        "3": "心機能分類である。",
+        "4": "呼吸困難の分類である。",
+        "5": "意識レベル評価である。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "共同運動の随意性と分離運動の程度から片麻痺回復段階を評価する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 共同運動の随意性と分離運動の程度から片麻痺回復段階を評価する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q858",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK585046/",
+          "support": "脳卒中リハビリテーションの解説では運動回復段階や共同運動パターンを用いた評価が扱われる。"
+        }
+      ],
+      "reviewed_sha256": "2ffa1eb7100d985ca61af0907ef822927f178f320ae3da48834a9063bba6dbfb",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C17-S03",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1053",
+      "target_node_label": "NIHSSは急性期脳卒中の神経学的重症度を、意識、注視、視野、顔面麻痺、上下肢運動、感覚、言語などで評価する",
+      "reference_question_ids": [
+        "Q1063"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "急性期脳卒中の重症度評価",
+      "question_text": "発症数時間の脳梗塞患者。意識、注視、視野、顔面麻痺、上下肢運動、感覚、言語などをまとめて神経学的重症度として数値化したい。最も適切なのはどれか。",
+      "choices": {
+        "1": "NIHSS",
+        "2": "Barthel Index",
+        "3": "FIM",
+        "4": "Borg scale",
+        "5": "TUG"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "NIHSSは急性期脳卒中の神経学的障害を複数項目で評価し、重症度を定量化する標準尺度である。",
+      "choice_explanations": {
+        "1": "○。急性期脳卒中の神経学的重症度評価に用いる。",
+        "2": "ADL評価である。",
+        "3": "ADLの自立度と介助量を評価する。",
+        "4": "自覚的運動強度を評価する。",
+        "5": "移動能力・転倒リスクに用いる。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "急性期脳卒中の神経学的重症度を定量化する尺度を選択する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 急性期脳卒中の神経学的重症度を定量化する尺度を選択する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1063",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.stroke.org/en/professionals/stroke-resource-library/nih-stroke-scale",
+          "support": "American Stroke AssociationはNIH Stroke Scaleを脳卒中の神経学的障害評価に用いる標準尺度として提供している。"
+        }
+      ],
+      "reviewed_sha256": "6ff16d67530ce49240bdcbf7beafd74590fe37f11296ff5aaf641eef30df7a90",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C17-S04",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1091",
+      "target_node_label": "FIMには認知項目として社会的交流があり、更衣は上半身と下半身に分けて採点する",
+      "reference_question_ids": [
+        "Q1102"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "FIMで認知面を評価する項目",
+      "question_text": "脳卒中患者のFIMを用いて、他者との関わり方や対人場面での適切な交流を評価したい。該当する項目はどれか。",
+      "choices": {
+        "1": "社会的交流",
+        "2": "上半身更衣",
+        "3": "排尿管理",
+        "4": "歩行",
+        "5": "階段"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "FIMの認知領域には理解、表出、社会的交流、問題解決、記憶が含まれる。対人関係の適切さをみるのは社会的交流である。",
+      "choice_explanations": {
+        "1": "○。認知領域の項目である。",
+        "2": "セルフケア項目である。",
+        "3": "排泄管理項目である。",
+        "4": "移動項目である。",
+        "5": "移動項目である。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "FIMの目的に応じて認知領域の適切な評価項目を選ぶ。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: FIMの目的に応じて認知領域の適切な評価項目を選ぶ。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1102",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.sralab.org/rehabilitation-measures/functional-independence-measure",
+          "support": "Rehabilitation Measures DatabaseはFIMの運動・認知領域と各項目を整理している。"
+        }
+      ],
+      "reviewed_sha256": "75d6188b8562011962f5fff4ec9181276740032e1aa33f4ef578f9a5ab9fd981",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C17-S05",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1111",
+      "target_node_label": "Freiberg病は中足骨頭の無腐性壊死で、特に第2中足骨頭に好発する",
+      "reference_question_ids": [
+        "Q1122"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "Freiberg病を疑う画像評価",
+      "question_text": "17歳女性。第2中足骨頭部の荷重時痛が続き、Freiberg病が疑われる。骨頭の扁平化や骨硬化などを確認する初期画像検査として最も適切なのはどれか。",
+      "choices": {
+        "1": "足部単純X線",
+        "2": "頭部CT",
+        "3": "胸部MRI",
+        "4": "心エコー",
+        "5": "脳波"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "Freiberg病は中足骨頭の骨壊死で、単純X線では進行に応じて骨頭の扁平化、硬化、変形などを評価できる。",
+      "choice_explanations": {
+        "1": "○。足部病変の初期画像評価として適切である。",
+        "2": "病変部位が異なる。",
+        "3": "病変部位が異なる。",
+        "4": "循環器検査である。",
+        "5": "神経生理検査である。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "Freiberg病の中足骨頭変化を確認する画像評価を選択する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: Freiberg病の中足骨頭変化を確認する画像評価を選択する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1122",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK537308/",
+          "support": "StatPearlsはFreiberg diseaseの診断で足部X線所見を扱っている。"
+        }
+      ],
+      "reviewed_sha256": "0e0f9c107d8b31eccee117da756afc5c9fe458f86f769dc12306f9d99a26f13a",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C17-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0495",
+      "target_node_label": "Barthel Indexにおける移乗・移動能力の採点",
+      "reference_question_ids": [
+        "Q503",
+        "Q1673"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "Barthel Indexの基本構成",
+      "question_text": "Barthel Indexで直接評価する項目として最も適切なのはどれか。",
+      "choices": {
+        "1": "ベッド・椅子間の移乗",
+        "2": "失語症の重症度",
+        "3": "関節可動域",
+        "4": "抑うつ症状",
+        "5": "最大酸素摂取量"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "Barthel Indexは食事、整容、排泄、入浴、移乗、歩行・車椅子移動、階段など基本的ADLの自立度を評価する。",
+      "choice_explanations": {
+        "1": "○。移乗はBarthel Indexの主要項目である。",
+        "2": "言語機能検査ではない。",
+        "3": "ROMそのものを採点しない。",
+        "4": "心理尺度ではない。",
+        "5": "運動負荷試験ではない。"
+      },
+      "proposed_task": "fact_recall",
+      "primary_ability": "KNOW",
+      "secondary_ability": null,
+      "level": 1,
+      "safety": "none",
+      "clinical_intent": "Barthel Indexが対象とする基本ADL項目を識別する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: assessment_selection/MEASURE, finding_interpretation/INTERPRET",
+        "candidate_demand": "fact_recall/KNOW: Barthel Indexが対象とする基本ADL項目を識別する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q503",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1673",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.sralab.org/rehabilitation-measures/barthel-index",
+          "support": "Rehabilitation Measures DatabaseはBarthel IndexのADL項目と採点を整理している。"
+        }
+      ],
+      "reviewed_sha256": "7523b4e38908472bf98002095dee45c9c9ad9a3f624cf23b0baa8d976672af4a",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C17-M02",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0512",
+      "target_node_label": "Fugl-Meyer Assessmentは脳卒中後の運動機能だけでなく、感覚、関節可動域、疼痛なども含む包括的評価である",
+      "reference_question_ids": [
+        "Q520",
+        "Q1675"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "Fugl-Meyer評価に基づく介入方針",
+      "question_text": "脳卒中片麻痺患者。Fugl-Meyer Assessmentで上肢運動得点が低く、感覚項目にも障害を認めた。初期介入として最も適切なのはどれか。",
+      "choices": {
+        "1": "残存運動と感覚入力を用いた反復的な課題練習を段階づける",
+        "2": "評価結果を無視して高難度巧緻課題だけを行う",
+        "3": "麻痺側上肢を完全に不使用とする",
+        "4": "関節痛があっても強制的に最大負荷を加える",
+        "5": "運動機能評価をせず退院まで安静とする"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "Fugl-Meyer Assessmentは運動・感覚・関節可動域・疼痛などを把握でき、得られた障害プロフィールをもとに課題難易度や反復練習を調整する。",
+      "choice_explanations": {
+        "1": "○。評価所見に応じた段階的介入である。",
+        "2": "能力に合わない。",
+        "3": "不使用を助長する。",
+        "4": "疼痛管理を欠く。",
+        "5": "廃用を招く。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "Fugl-Meyerで得た運動・感覚所見を介入選択に反映する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: assessment_selection/MEASURE, finding_interpretation/INTERPRET",
+        "candidate_demand": "intervention_selection/PRESCRIBE: Fugl-Meyerで得た運動・感覚所見を介入選択に反映する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q520",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1675",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.sralab.org/rehabilitation-measures/fugl-meyer-assessment-motor-recovery-after-stroke",
+          "support": "Rehabilitation Measures DatabaseはFugl-Meyer Assessmentが運動・感覚・関節可動域・疼痛を含むことを説明している。"
+        }
+      ],
+      "reviewed_sha256": "31557f784579f3ddd9245aa99ded3d22532bc876f77a424e165e9c49e052fc6c",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C18-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0640",
+      "target_node_label": "GMFMは脳性麻痺児などの粗大運動能力を測定する尺度で、項目は健常5歳児であれば達成可能な粗大運動課題から構成される",
+      "reference_question_ids": [
+        "Q648"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "GMFM結果を用いた練習選択",
+      "question_text": "脳性麻痺児。GMFMで立位項目は多く達成できるが、走行・跳躍領域の得点が低い。介入として最も適切なのはどれか。",
+      "choices": {
+        "1": "安全を確保し走行・跳躍に関連する粗大運動課題を段階的に練習する",
+        "2": "得点の高い臥位課題だけを繰り返す",
+        "3": "評価結果と無関係に上肢筋力だけを訓練する",
+        "4": "移動練習を全面的に禁止する",
+        "5": "達成可能な課題をすべて除外する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "GMFMは粗大運動能力の領域別プロフィールを把握できるため、低得点領域に対して安全に難易度を調整した課題練習を計画できる。",
+      "choice_explanations": {
+        "1": "○。評価結果を目標と介入に結びつける。",
+        "2": "主要な課題に合わない。",
+        "3": "粗大運動上の課題に対応しない。",
+        "4": "必要な活動を制限する。",
+        "5": "学習機会を失う。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "GMFMの領域別結果から優先する粗大運動練習を選択する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "intervention_selection/PRESCRIBE: GMFMの領域別結果から優先する粗大運動練習を選択する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q648",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://canchild.ca/en/resources/44-gross-motor-function-measure-gmfm",
+          "support": "CanChildはGMFMを脳性麻痺児などの粗大運動機能変化を評価する尺度として説明している。"
+        }
+      ],
+      "reviewed_sha256": "e2222d4e33b5dc649bd6c0db141c21e9c52f6ae1aedc3721138cd61cb33093b9",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C18-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0641",
+      "target_node_label": "NYHA心機能分類は心疾患患者の自覚症状と身体活動制限の程度をⅠ〜Ⅳの4段階で分類する",
+      "reference_question_ids": [
+        "Q649"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "NYHA IIの生活目標設定",
+      "question_text": "慢性心不全患者。安静時症状はなく、通常より速い歩行や坂道で息切れするが、平地の日常歩行は可能でNYHA IIと判断された。理学療法の機能目標として最も適切なのはどれか。",
+      "choices": {
+        "1": "症状をモニターしながら日常生活で必要な歩行耐容能を維持・向上する",
+        "2": "終日安静を目標とする",
+        "3": "症状が出ても最大運動を継続する",
+        "4": "生活活動をすべて家族へ代行してもらう",
+        "5": "心疾患と無関係な上肢巧緻性だけを目標にする"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "NYHA IIでは軽度の身体活動制限があり、通常活動で症状が出る。安全な範囲で日常生活に必要な活動耐容能を維持・向上する目標が適切である。",
+      "choice_explanations": {
+        "1": "○。症状と活動制限に対応した機能目標である。",
+        "2": "過度な活動制限である。",
+        "3": "安全性を欠く。",
+        "4": "自立性を損なう。",
+        "5": "主要問題に対応しない。"
+      },
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "NYHA分類から実生活に即した活動耐容能の目標を設定する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "functional_goal_decision/DECIDE: NYHA分類から実生活に即した活動耐容能の目標を設定する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q649",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.heart.org/en/health-topics/heart-failure/what-is-heart-failure/classes-of-heart-failure",
+          "support": "American Heart AssociationはNYHA I〜IVを症状と身体活動制限で分類している。"
+        }
+      ],
+      "reviewed_sha256": "f60d0decb476afa89ae781f0331f447901afe0dab8d0df8a872209d06a273f2e",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C18-S03",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0642",
+      "target_node_label": "、設定した運動速度に近い速度域で筋力増強効果が最も大きくなる「速度特異性」がある",
+      "reference_question_ids": [
+        "Q650"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "等速性トレーニングの速度設定",
+      "question_text": "等速性膝伸展トレーニングを行う。競技動作に近い速い角速度での筋出力改善を主目的とする場合、速度特異性を踏まえた設定として最も適切なのはどれか。",
+      "choices": {
+        "1": "目標動作に近い比較的速い角速度で訓練する",
+        "2": "毎回きわめて遅い速度だけに固定する",
+        "3": "角速度を設定せず完全受動運動のみ行う",
+        "4": "筋収縮を伴わない安静のみとする",
+        "5": "速度に関係なく同じ効果とみなす"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "等速性筋力トレーニングには速度特異性があり、訓練速度に近い速度域での筋力改善が大きくなりやすい。",
+      "choice_explanations": {
+        "1": "○。目標速度域に合わせる考え方である。",
+        "2": "速い動作の改善には特異性が乏しい。",
+        "3": "筋力増強刺激にならない。",
+        "4": "筋力増強にならない。",
+        "5": "速度特異性を無視している。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "等速性運動の速度特異性から目的に合う訓練速度を選択する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "intervention_selection/PRESCRIBE: 等速性運動の速度特異性から目的に合う訓練速度を選択する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q650",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/7247595/",
+          "support": "等速性筋力トレーニング研究では訓練速度に関連した速度特異的な筋力変化が報告されている。"
+        }
+      ],
+      "reviewed_sha256": "16138e7e8bf99be9e682800960a7fe21d4d3bc38ae75db314f4b7539b2145450",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C18-S04",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0644",
+      "target_node_label": "動脈血酸素飽和度がほぼ保たれるため、動脈血酸素含量は大きく変化しない",
+      "reference_question_ids": [
+        "Q652"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "貧血患者の運動負荷調整",
+      "question_text": "Hb 7.5 g/dLの貧血患者。SpO2は97%だが軽い歩行で動悸と息切れが出現する。運動療法として最も適切なのはどれか。",
+      "choices": {
+        "1": "SpO2だけで安全と判断せず症状・心拍・Hbを踏まえて負荷を下げる",
+        "2": "SpO2が正常なので最大運動を続ける",
+        "3": "動悸を無視して負荷を増やす",
+        "4": "息切れが強くても休憩を禁止する",
+        "5": "酸素含量はHbと無関係と判断する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "動脈血酸素含量は主にHb濃度と酸素飽和度で決まる。貧血ではSpO2が正常でも酸素運搬量が低下しうるため、症状や循環応答を見て負荷を調整する。",
+      "choice_explanations": {
+        "1": "○。貧血の酸素運搬能低下を考慮している。",
+        "2": "SpO2だけでは酸素含量を評価できない。",
+        "3": "安全性を欠く。",
+        "4": "症状悪化のおそれがある。",
+        "5": "Hbは酸素含量の主要決定因子である。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "正常SpO2でも貧血で酸素運搬能が低いことを踏まえ運動負荷を調整する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "intervention_selection/PRESCRIBE: 正常SpO2でも貧血で酸素運搬能が低いことを踏まえ運動負荷を調整する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q652",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK538336/",
+          "support": "StatPearlsの酸素輸送生理は血液酸素含量が主にヘモグロビン濃度と酸素飽和度で決まることを説明している。"
+        }
+      ],
+      "reviewed_sha256": "762f2603d78323965d41e6d703962d56aa27c9e6ab36c49494c7cb1a64dc3a33",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C18-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0717",
+      "target_node_label": "Perthes病は小児の大腿骨頭骨端に生じる阻血性壊死で、治療では骨頭を臼蓋内に保ちつつ免荷する装具療法が行われる",
+      "reference_question_ids": [
+        "Q725",
+        "Q1586"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "Perthes病の保存的介入",
+      "question_text": "7歳男児。Perthes病で股関節外転・内旋可動域は保たれているが、走ると股関節痛が出る。保存的介入として最も適切なのはどれか。",
+      "choices": {
+        "1": "高衝撃活動を減らし、外転・内旋可動域を保つ運動と必要に応じた免荷・containmentを行う",
+        "2": "疼痛があってもジャンプを反復する",
+        "3": "股関節を長期間完全固定して可動域練習を行わない",
+        "4": "大腿骨頭への衝撃を増やすため荷重を追加する",
+        "5": "可動域に関係なく強制的な内転拘縮を作る"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "Perthes病の保存療法では大腿骨頭の変形を抑えつつ臼蓋内containmentと股関節可動域、とくに外転・内旋を保つことが重要で、疼痛期には高衝撃活動を避ける。",
+      "choice_explanations": {
+        "1": "○。病態と治療目標に合う。",
+        "2": "大腿骨頭への負荷を増やす。",
+        "3": "可動域維持の目標に反する。",
+        "4": "病態を悪化させうる。",
+        "5": "containmentに不利である。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "Perthes病のcontainmentと可動域維持を両立する保存的介入を選択する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "intervention_selection/PRESCRIBE: Perthes病のcontainmentと可動域維持を両立する保存的介入を選択する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q725",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1586",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK513230/",
+          "support": "StatPearlsはPerthes病で高衝撃活動の回避、可動域維持、必要に応じた免荷やcontainmentを説明している。"
+        }
+      ],
+      "reviewed_sha256": "8b05cc7c02fec3b4c18f0604b5277f7548cb1999ca19b2c235304a4c3106c39a",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C18-M02",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0846",
+      "target_node_label": "下肢異常に応じた金属支柱付きAFO足継手機能の設定",
+      "reference_question_ids": [
+        "Q855",
+        "Q1306"
+      ],
+      "existing_demands": [
+        {
+          "task": "device_selection",
+          "primary_ability": "PRESCRIBE"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "反張膝に対するAFO調整",
+      "question_text": "金属支柱付きAFOを使用する片麻痺患者。立脚初期から足関節底屈が強く、膝過伸展が目立つ。装具調整として最も適切なのはどれか。",
+      "choices": {
+        "1": "足継手の底屈を制限・抵抗して過度な底屈を抑える",
+        "2": "底屈をさらに自由にして加速する",
+        "3": "背屈を完全に禁止して底屈位で固定する",
+        "4": "AFOを外して反張膝を増やす",
+        "5": "膝過伸展と無関係なので調整しない"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "立脚初期の過度な足関節底屈は下腿の前方移動を妨げ、膝伸展モーメントを増やして反張膝を助長することがある。底屈制動はこれを抑える調整の一つである。",
+      "choice_explanations": {
+        "1": "○。足部・下腿の進行を整え反張膝の軽減を狙う。",
+        "2": "反張膝を助長しうる。",
+        "3": "底屈位固定は不適切である。",
+        "4": "装具の治療目的に反する。",
+        "5": "足継手設定は膝運動に影響する。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "反張膝の原因となる過度な底屈をAFO足継手設定で調整する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: device_selection/PRESCRIBE",
+        "candidate_demand": "intervention_selection/PRESCRIBE: 反張膝の原因となる過度な底屈をAFO足継手設定で調整する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q855",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1306",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20738232/",
+          "support": "AFOの足関節抵抗・アライメントは片麻痺歩行の膝運動を変化させうることが報告されている。"
+        }
+      ],
+      "reviewed_sha256": "099f2fd45687b20d078fe6a3b6c57fe1ae2add45cb4bb94557e2479771142a47",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C18-M03",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN1057",
+      "target_node_label": "スワンネック変形のPIP過伸展・DIP屈曲",
+      "reference_question_ids": [
+        "Q1067",
+        "Q1391"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "スワンネック変形へのスプリント",
+      "question_text": "関節リウマチ患者。PIP関節過伸展とDIP関節屈曲を示す可動性のあるスワンネック変形がある。保存的介入として最も適切なのはどれか。",
+      "choices": {
+        "1": "PIP過伸展を制限するextension-block型スプリント",
+        "2": "PIP過伸展をさらに強める固定",
+        "3": "DIPを最大屈曲位で永久固定",
+        "4": "手指運動を全面禁止する",
+        "5": "母指CM関節のみを固定する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "可動性が残るスワンネック変形では、手指療法とともにPIP過伸展を制限するextension-block splintなどが保存的に用いられる。",
+      "choice_explanations": {
+        "1": "○。PIP過伸展を制御する。",
+        "2": "変形を助長する。",
+        "3": "標準的保存療法ではない。",
+        "4": "廃用を招く。",
+        "5": "主病変に対応しない。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "スワンネック変形のPIP過伸展を抑える保存的スプリントを選択する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "intervention_selection/PRESCRIBE: スワンネック変形のPIP過伸展を抑える保存的スプリントを選択する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1067",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1391",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/sites/books/NBK525970/",
+          "support": "StatPearlsはスワンネック変形でPIP過伸展を制限するextension block splintを保存療法として説明している。"
+        }
+      ],
+      "reviewed_sha256": "5aad48c65541432fb2e3cef77a41773e3b7331c0effe42d8d936923a0f448cf4",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C18-M04",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0305",
+      "target_node_label": "口すぼめ呼吸による呼気時気道内圧維持と気道虚脱抑制",
+      "reference_question_ids": [
+        "Q307",
+        "Q1590"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "口すぼめ呼吸中の危険所見への対応",
+      "question_text": "COPD患者の歩行練習中。口すぼめ呼吸を行っているが、SpO2が82%まで低下し、会話が途切れて意識がぼんやりしてきた。最優先の対応はどれか。",
+      "choices": {
+        "1": "歩行を中止し、呼吸・循環状態を評価して必要な医療対応につなげる",
+        "2": "口すぼめ呼吸だけを続けて歩行速度を上げる",
+        "3": "SpO2低下を無視して訓練を継続する",
+        "4": "休憩を禁止する",
+        "5": "症状が強いほど運動負荷を増やす"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "口すぼめ呼吸は呼気時の気道虚脱を抑え呼吸困難を軽減しうるが、著明な低酸素と意識変容が出た場合に運動継続を正当化するものではない。安全確保と状態評価を優先する。",
+      "choice_explanations": {
+        "1": "○。重度低酸素・意識変容では安全確保が最優先である。",
+        "2": "危険な運動継続である。",
+        "3": "低酸素を放置する。",
+        "4": "悪化させるおそれがある。",
+        "5": "安全性を欠く。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "口すぼめ呼吸の限界を理解し、重度低酸素時に運動中止と評価を優先する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: fact_recall/KNOW",
+        "candidate_demand": "safety_priority/DECIDE: 口すぼめ呼吸の限界を理解し、重度低酸素時に運動中止と評価を優先する。",
+        "why_not_same_demand": "既存問題はNode内容の直接知識・既存需要を問うのに対し、本問は症例情報から別の臨床判断を要求する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q307",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1590",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/18678567/",
+          "support": "COPDで口すぼめ呼吸が歩行時の呼吸困難や酸素化に影響することが検討されており、呼吸訓練中も酸素化と症状の監視が重要である。"
+        }
+      ],
+      "reviewed_sha256": "c8520b2241273da02c6f1af577521e664bf9c973c5ea93a70449b97ae555981f",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L02-C8-N01",
+      "status": "accepted",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "高カリウム血症で心電図変化がある場合は致死的不整脈リスクがあり運動より緊急医療評価を優先する",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "高カリウム血症の運動中止判断",
+      "question_text": "慢性腎臓病患者。運動開始前の血清K 6.8 mEq/Lで、心電図に尖鋭T波を認める。理学療法として最優先なのはどれか。",
+      "choices": {
+        "1": "運動を開始せず直ちに医療チームへ報告し緊急評価につなげる",
+        "2": "予定どおり最大運動負荷試験を行う",
+        "3": "心電図を外して運動を継続する",
+        "4": "K値を無視して筋力訓練を行う",
+        "5": "水分摂取だけで様子をみて高強度運動を行う"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "高カリウム血症は致死的不整脈を起こしうる。K 6.5 mEq/L以上や心電図変化は緊急対応が必要で、運動開始より医療評価を優先する。",
+      "choice_explanations": {
+        "1": "○。重大な不整脈リスクへの安全対応である。",
+        "2": "危険である。",
+        "3": "監視を外すべきでない。",
+        "4": "高K血症を放置できない。",
+        "5": "緊急評価が必要である。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "高カリウム血症と心電図異常を認識し、運動中止と緊急医療評価を選択する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: none (new Node)",
+        "candidate_demand": "safety_priority/DECIDE: 高カリウム血症と心電図異常を認識し、運動中止と緊急医療評価を選択する。",
+        "why_not_same_demand": "新規Node候補であり、既存Nodeの単なる言い換えではなく独立した臨床概念として作問する。",
+        "related_formal_questions": [],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK470284/",
+          "support": "StatPearlsは高カリウム血症で尖鋭T波などの心電図変化と致死的不整脈リスクを示し、重症例では緊急治療が必要と説明している。"
+        }
+      ],
+      "reviewed_sha256": "e100cc60cf508c9cbb984dd2f90f4d27bafa0f28390972fd6fe53cd4e1b2c60f",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true,
+      "new_node_collision_review": {
+        "decision": "accepted_new_node",
+        "why_existing_nodes_insufficient": "既存Node群に『高カリウム血症の心電図変化を運動可否の安全判断へ結びつける』概念を直接表すNodeがなく、電解質一般や不整脈一般へ統合すると安全判断の粒度が失われるため。"
+      }
+    },
+    {
+      "draft_id": "L02-C11-N01",
+      "status": "accepted",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "獲得していた発達技能の喪失は発達退行であり早期の発達・医学的評価を要する",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 11,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "発達退行の解釈",
+      "question_text": "2歳児。以前は10語以上話し、簡単な指示にも従えていたが、この2か月で言葉が減り、できていた遊びも行わなくなった。この所見の解釈として最も適切なのはどれか。",
+      "choices": {
+        "1": "獲得済み技能の喪失であり、発達退行として早期評価が必要",
+        "2": "正常発達なので評価不要",
+        "3": "単なる身長増加の所見",
+        "4": "運動発達とは無関係なので必ず放置する",
+        "5": "新しい技能獲得だけを意味する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "一度獲得した言語・社会・運動などの技能を失うことは発達退行であり、通常の個人差だけで片づけず早期に医療・発達評価へつなげるべき所見である。",
+      "choice_explanations": {
+        "1": "○。技能喪失は重要な発達上の警告所見である。",
+        "2": "評価不要とはいえない。",
+        "3": "身長変化の説明ではない。",
+        "4": "放置すべきでない。",
+        "5": "技能の獲得ではなく喪失である。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "獲得済み技能の喪失を発達退行という重要所見として解釈する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: none (new Node)",
+        "candidate_demand": "finding_interpretation/INTERPRET: 獲得済み技能の喪失を発達退行という重要所見として解釈する。",
+        "why_not_same_demand": "新規Node候補であり、既存Nodeの単なる言い換えではなく独立した臨床概念として作問する。",
+        "related_formal_questions": [],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.cdc.gov/act-early/milestones/2-years.html",
+          "support": "CDCは子どもが以前できていた技能を失った場合、待たずに医師へ相談し発達評価を求めるよう勧めている。"
+        }
+      ],
+      "reviewed_sha256": "838d6cde432f4cbc4db761f3b95ebb9514aa64f94c959d7446ed30ea59464d05",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true,
+      "new_node_collision_review": {
+        "decision": "accepted_new_node",
+        "why_existing_nodes_insufficient": "既存Node群に『獲得済み発達技能の喪失＝発達退行』という縦断的変化そのものを主概念とするNodeがなく、発達マイルストーン一般へ統合すると警告所見としての意味が薄れるため。"
+      }
+    },
+    {
+      "draft_id": "L02-C12-N01",
+      "status": "accepted",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "うつ病の行動活性化では回避を減らし価値ある活動への再参加を具体的・段階的に計画する",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 12,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "うつ病の行動活性化に沿う目標",
+      "question_text": "うつ病で外出と家事を避けるようになった患者。『家族と夕食づくりを少しずつ再開したい』と希望している。行動活性化の考え方に沿う初期目標として最も適切なのはどれか。",
+      "choices": {
+        "1": "週3回、10分間だけ家族と簡単な夕食準備を行い実施状況を記録する",
+        "2": "気分が完全に良くなるまで活動をすべて避ける",
+        "3": "達成基準を決めず漠然と元気になることだけを目標にする",
+        "4": "失敗を避けるため家族との活動を永久に中止する",
+        "5": "最初から毎日3時間の家事を必須にする"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "行動活性化では活動と気分の関連を見ながら回避を減らし、価値のある活動への再参加を具体的・段階的に計画する。小さく測定可能な目標が適している。",
+      "choice_explanations": {
+        "1": "○。具体的で段階的な再参加目標である。",
+        "2": "回避を強める。",
+        "3": "行動目標として測定できない。",
+        "4": "社会的撤退を固定する。",
+        "5": "初期目標として過大である。"
+      },
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "抑うつによる回避を減らし、価値ある生活活動へ段階的に再参加する機能目標を設定する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: none (new Node)",
+        "candidate_demand": "functional_goal_decision/DECIDE: 抑うつによる回避を減らし、価値ある生活活動へ段階的に再参加する機能目標を設定する。",
+        "why_not_same_demand": "新規Node候補であり、既存Nodeの単なる言い換えではなく独立した臨床概念として作問する。",
+        "related_formal_questions": [],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations",
+          "support": "NICEは行動活性化を活動と気分の関連を捉え、回避を減らして有益な行動を計画する目標志向の治療として説明している。"
+        }
+      ],
+      "reviewed_sha256": "8f0735e95949b3d27bd39c547cc3782edace17f995e71e3e6587c74abfe86c5c",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true,
+      "new_node_collision_review": {
+        "decision": "accepted_new_node",
+        "why_existing_nodes_insufficient": "既存Node群に『行動活性化で回避を減らし価値ある活動を段階的に再開する』概念を独立して表すNodeがなく、うつ病一般や認知療法一般では介入原理が異なるため。"
+      }
+    },
+    {
+      "draft_id": "L02-C14-N01",
+      "status": "accepted",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "立ち上がりでは離殿前の体幹前傾と前方運動量により身体重心を足部支持基底面へ移す",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 14,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "立ち上がり動作の機能目標",
+      "question_text": "高齢者。椅子から立つ際に体幹前傾がほとんどなく、離殿前に後方へ戻ってしまう。下肢筋力は立位保持に足りている。動作改善の機能目標として最も適切なのはどれか。",
+      "choices": {
+        "1": "離殿前に体幹を適度に前傾し、身体重心を足部支持基底面上へ前方移動できる",
+        "2": "体幹を後方へ反らしたまま離殿する",
+        "3": "足を前方へ遠く出して重心をさらに後方へ残す",
+        "4": "離殿前の前方運動量を完全になくす",
+        "5": "上肢だけで体を引き上げることを唯一の目標にする"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "立ち上がりでは離殿前の体幹前傾と前方への運動量が、身体重心を足部支持基底面へ移してその後の上方移動につなげる。前方移動が不足する場合はこの運動戦略の獲得が機能目標となる。",
+      "choice_explanations": {
+        "1": "○。立ち上がりの重心移動に合う。",
+        "2": "後方重心を助長する。",
+        "3": "前方移動を妨げる。",
+        "4": "離殿に必要な運動量を失う。",
+        "5": "代償に偏り根本的動作目標にならない。"
+      },
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "立ち上がりで離殿前の前方重心移動を獲得する機能目標を設定する。",
+      "semantic_review": {
+        "reference_demand": "existing demands: none (new Node)",
+        "candidate_demand": "functional_goal_decision/DECIDE: 立ち上がりで離殿前の前方重心移動を獲得する機能目標を設定する。",
+        "why_not_same_demand": "新規Node候補であり、既存Nodeの単なる言い換えではなく独立した臨床概念として作問する。",
+        "related_formal_questions": [],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/2026635/",
+          "support": "椅子からの立ち上がり研究は離殿前後の体幹運動と身体重心・運動量移行の役割を示している。"
+        }
+      ],
+      "reviewed_sha256": "ef93b602783e970948ead75588dc834f4f3cf294cffda0de0bfc1e148fc1193e",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true,
+      "new_node_collision_review": {
+        "decision": "accepted_new_node",
+        "why_existing_nodes_insufficient": "既存Node群に『離殿前の体幹前傾と前方運動量による重心移動』を主概念とするNodeがなく、一般的な立ち上がり筋力やバランスNodeではこの運動学的フェーズを十分に表せないため。"
+      }
+    }
+  ],
+  "chunk_merge_provenance": {
+    "scheme": "6x8-authoring-only-v1",
+    "chunks": [
+      "question_bank_2000_lot02_chunks_v01/chunk_01.json",
+      "question_bank_2000_lot02_chunks_v01/chunk_02.json",
+      "question_bank_2000_lot02_chunks_v01/chunk_03.json",
+      "question_bank_2000_lot02_chunks_v01/chunk_04.json",
+      "question_bank_2000_lot02_chunks_v01/chunk_05.json",
+      "question_bank_2000_lot02_chunks_v01/chunk_06.json"
+    ],
+    "seed_present_at_merge": false
+  },
+  "formal_hash_format": "sha256-lf-normalized-v1",
+  "formal_input_sha256": {
+    "questions.json": "b980c36936467da25032d8c6ab949c01fd7800308833d915175714b554bc5048",
+    "answers.json": "5ee70584b608c14e993e0be7968dbdeaec596b7ce4494846ffa35e80228172c8",
+    "explanations.json": "b8d1eee604feefb0b324f39d78dd1894a73a98cbda26bfd5984ea241fd45c26f",
+    "question_tags.json": "49275127acc0c76632320a186aa0a2612106eba5838e08c14baa7f9c406382d7",
+    "knowledge_nodes.json": "8d4ed3426aeba079152f4cc06181da65ccc834f02ab2a0f7e9a368acc627f167",
+    "bank_manifest.json": "6df3d5c324d4161036c84ada0859660ffaab14a18752e14ba0a78f139a418e2f",
+    "schema/question_bank_schema_v1.json": "df0b3a5ede701ab3927de2e272d7c705b49c3bdac202fff755547c153ff045eb",
+    "knowledge_node_canonical_map.json": "8327fb79a1b9950ca25c31c75f3c82b1fa5f0fcf182d2dbdece4bc59c6d762cf",
+    "strong_different_question_pairs.json": "e6bf812c0a726a1cfe149b3503ee308cdb7da16a4bf0298232b90a2e0e0aec7f"
+  }
+}
