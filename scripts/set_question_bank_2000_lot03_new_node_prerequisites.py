@@ -3,7 +3,8 @@
 The Lot03 integrator allocates the formal Q/KN identifiers first. This idempotent
 post-integration step supplies the non-empty prerequisite_nodes required by the
 formal question-tag schema before bank-wide validation. The mapping is stable and
-is also the deterministic rerun boundary for the Lot03 integration workflow.
+is also the deterministic rerun boundary for the Lot03 integration workflow after
+all static formal-bank test expectations have been synchronized.
 """
 from __future__ import annotations
 
