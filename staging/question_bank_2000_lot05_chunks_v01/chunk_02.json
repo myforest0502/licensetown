@@ -1,0 +1,341 @@
+{
+  "lot": 5,
+  "chunk": 2,
+  "formal_baseline": "Q1-Q1953",
+  "status": "authoring_chunk",
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L05-C3-M01",
+      "draft_order": 8,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0678",
+      "target_node_label": "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める",
+      "reference_question_ids": [
+        "Q686",
+        "Q1622"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 3,
+      "proposed_task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C4-S01",
+      "draft_order": 9,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0720",
+      "target_node_label": "Down症候群では筋緊張低下と関節弛緩性により、殿部を床につけて移動するshufflingなど独特の移動様式がみられることがある",
+      "reference_question_ids": [
+        "Q728"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 4,
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C4-M01",
+      "draft_order": 10,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0612",
+      "target_node_label": "老年期の課題は「自我の統合 対 絶望」である",
+      "reference_question_ids": [
+        "Q620",
+        "Q1867"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 4,
+      "proposed_task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C5-M01",
+      "draft_order": 11,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN1332",
+      "target_node_label": "特別支援学校の教育環境",
+      "reference_question_ids": [
+        "Q1352",
+        "Q1870"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "functional_goal_decision",
+          "primary_ability": "DECIDE"
+        }
+      ],
+      "proposed_category_small": 5,
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C6-S01",
+      "draft_order": 12,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0979",
+      "target_node_label": "ICFは心身機能・身体構造、活動、参加、環境因子などが相互作用するモデルで、活動・参加の第一評価点は実行状況を表す",
+      "reference_question_ids": [
+        "Q989"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 6,
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C6-M01",
+      "draft_order": 13,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0131",
+      "target_node_label": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である",
+      "reference_question_ids": [
+        "Q131",
+        "Q1574"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 6,
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C7-S01",
+      "draft_order": 14,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0690",
+      "target_node_label": "熱傷深度ではⅠ度は発赤のみ、浅達性Ⅱ度は湿潤・水疱で強い痛み、深達性Ⅱ度では知覚低下を伴うことがある",
+      "reference_question_ids": [
+        "Q698"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 7,
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    }
+  ]
+}

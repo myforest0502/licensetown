@@ -1,0 +1,378 @@
+[
+  {
+    "draft_id": "L05-C17-M01",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0631",
+    "target_node_label": "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える",
+    "planned_task": "finding_interpretation",
+    "planned_primary_ability": "INTERPRET",
+    "planned_level": 2,
+    "references": [
+      {
+        "question_id": "Q639",
+        "question": {
+          "id": "Q639",
+          "management_code": "Q639-C-17-P",
+          "category_large": "C",
+          "category_small": 17,
+          "source": "P",
+          "title": null,
+          "question_text": "関節可動域が正常な患者に対し、Danielsらの徒手筋力テストの段階5の検査で、軽度屈曲位で抵抗を加えるのはどれか。",
+          "choices": {
+            "1": "肩関節伸展",
+            "2": "肘関節伸展",
+            "3": "手関節伸展",
+            "4": "股関節伸展",
+            "5": "頸部複合伸展"
+          },
+          "exam": {
+            "exam_no": 54,
+            "session": "午前",
+            "question_no": 25
+          }
+        },
+        "answer": {
+          "id": "Q639",
+          "display_answer": "2",
+          "accepted_answer_sets": [
+            [
+              "2"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q639",
+          "explanation": "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える。したがって2が正しい。",
+          "choice_explanations": {
+            "1": "肩伸展はこの軽度屈曲位抵抗の代表ではない。",
+            "2": "○。肘伸展では軽度屈曲位で抵抗を加える。",
+            "3": "手関節伸展は手背側へ屈曲方向の抵抗を加える。",
+            "4": "股関節伸展は腹臥位で大腿遠位へ抵抗を加える。",
+            "5": "頸部複合伸展は頭部へ屈曲方向の抵抗を加える。"
+          }
+        },
+        "tag": {
+          "id": "Q639",
+          "theme": "関節可動域が正常な患者に対し、Danielsらの徒手筋力テストの段階5の検査で、軽度",
+          "knowledge_node": "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える",
+          "knowledge_node_id": "KN0631",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える。",
+            "したがって2が正しい。",
+            "肘伸展では軽度屈曲位で抵抗を加える。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1783",
+        "question": {
+          "id": "Q1783",
+          "management_code": "Q1783-C-17-O",
+          "category_large": "C",
+          "category_small": 17,
+          "source": "O",
+          "title": "肘関節伸展MMTの実施",
+          "question_text": "肘関節伸展のDaniels法MMTで、重力に抗する全可動域を確認した後に段階5を判定する。検査者の操作で最も適切なのはどれか。",
+          "choices": {
+            "A": "肘完全伸展で上腕遠位を伸展方向へ押す",
+            "B": "肘をわずかに屈曲させ、前腕遠位へ屈曲方向の抵抗を加える",
+            "C": "肘90度屈曲位で前腕近位へ伸展方向の抵抗を加える",
+            "D": "前腕回外位で手関節掌側へ抵抗を加える",
+            "E": "肩関節外転位で上腕近位へ内転方向の抵抗を加える"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1783",
+          "display_answer": "B",
+          "accepted_answer_sets": [
+            [
+              "B"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1783",
+          "explanation": "肘伸展MMTの段階5では、肘をわずかに屈曲した位置で伸展位を保持させ、前腕遠位に肘屈曲方向の抵抗を加えて上腕三頭筋の保持力を判定する。",
+          "choice_explanations": {
+            "A": "関節を完全伸展位でロックすると骨性支持の影響を受けやすく、適切な抵抗位置・方向でもない。",
+            "B": "○。軽度屈曲位からの伸展保持に対し、前腕遠位へ屈曲方向の抵抗を加える。",
+            "C": "前腕近位への伸展方向抵抗は上腕三頭筋の伸展保持を適切に負荷しない。",
+            "D": "手関節掌側への抵抗は肘伸展ではなく手関節運動の検査に近い。",
+            "E": "上腕近位への内転方向抵抗は肩関節外転筋の検査条件である。"
+          }
+        },
+        "tag": {
+          "id": "Q1783",
+          "theme": "肘関節伸展MMTの実施",
+          "knowledge_node": "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える",
+          "knowledge_node_id": "KN0631",
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE",
+          "secondary_ability": null,
+          "level": 2,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える。",
+            "したがって2が正しい。",
+            "肘伸展では軽度屈曲位で抵抗を加える。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C18-S01",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN0651",
+    "target_node_label": "長期不動による廃用では筋量・筋力低下が進み、活動低下を原因とする二次性サルコペニアを生じうる",
+    "planned_task": "functional_goal_decision",
+    "planned_primary_ability": "DECIDE",
+    "planned_level": 2,
+    "references": [
+      {
+        "question_id": "Q659",
+        "question": {
+          "id": "Q659",
+          "management_code": "Q659-C-18-P",
+          "category_large": "C",
+          "category_small": 18,
+          "source": "P",
+          "title": null,
+          "question_text": "廃用症候群で正しいのはどれか。",
+          "choices": {
+            "1": "加齢による影響は少ない。",
+            "2": "二次性サルコペニアを認める。",
+            "3": "筋萎縮は上肢に強くみられる。",
+            "4": "進行しても摂食嚥下機能は保たれる。",
+            "5": "高齢者では高アルブミン血症を認める。"
+          },
+          "exam": {
+            "exam_no": 54,
+            "session": "午前",
+            "question_no": 49
+          }
+        },
+        "answer": {
+          "id": "Q659",
+          "display_answer": "2",
+          "accepted_answer_sets": [
+            [
+              "2"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q659",
+          "explanation": "長期不動による廃用では筋量・筋力低下が進み、活動低下を原因とする二次性サルコペニアを生じうる。高齢者では影響が大きく、嚥下機能や栄養状態も低下しうる。",
+          "choice_explanations": {
+            "1": "高齢者ほど廃用の影響を受けやすい。",
+            "2": "○。活動低下による二次性サルコペニアを認める。",
+            "3": "抗重力筋を中心に下肢筋萎縮が強くなりやすい。",
+            "4": "長期廃用では摂食嚥下機能も低下しうる。",
+            "5": "低栄養ではアルブミン低下を伴うことがある。"
+          }
+        },
+        "tag": {
+          "id": "Q659",
+          "theme": "廃用症候群で正しいのはどれか",
+          "knowledge_node": "長期不動による廃用では筋量・筋力低下が進み、活動低下を原因とする二次性サルコペニアを生じうる",
+          "knowledge_node_id": "KN0651",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "高齢者では影響が大きく、嚥下機能や栄養状態も低下しうる。",
+            "長期不動による廃用では筋量・筋力低下が進み、活動低下を原因とする二次性サルコペニアを生じうる。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C18-M01",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0511",
+    "target_node_label": "鵞足は縫工筋、薄筋、半腱様筋の腱が脛骨近位内側に付着して形成される",
+    "planned_task": "intervention_selection",
+    "planned_primary_ability": "PRESCRIBE",
+    "planned_level": 2,
+    "references": [
+      {
+        "question_id": "Q519",
+        "question": {
+          "id": "Q519",
+          "management_code": "Q519-C-18-P",
+          "category_large": "C",
+          "category_small": 18,
+          "source": "P",
+          "title": null,
+          "question_text": "鵞足をつくるのはどれか。",
+          "choices": {
+            "1": "大腿二頭筋",
+            "2": "内側広筋",
+            "3": "半腱様筋",
+            "4": "腓腹筋",
+            "5": "ヒラメ筋"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午前",
+            "question_no": 32
+          }
+        },
+        "answer": {
+          "id": "Q519",
+          "display_answer": "3",
+          "accepted_answer_sets": [
+            [
+              "3"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q519",
+          "explanation": "鵞足は縫工筋、薄筋、半腱様筋の腱が脛骨近位内側に付着して形成される。選択肢の中でこの構成筋に含まれるのは半腱様筋であるため、正答は3である。",
+          "choice_explanations": {
+            "1": "大腿二頭筋は腓骨頭へ付着する。",
+            "2": "内側広筋は大腿四頭筋の一部で膝蓋骨・膝蓋腱を介して脛骨粗面へ作用する。",
+            "3": "○。半腱様筋は縫工筋・薄筋とともに鵞足を形成する。",
+            "4": "腓腹筋は大腿骨顆上部から起こりアキレス腱へ移行する。",
+            "5": "ヒラメ筋は下腿後面からアキレス腱へ移行する。"
+          }
+        },
+        "tag": {
+          "id": "Q519",
+          "theme": "鵞足をつくるのはどれか",
+          "knowledge_node": "鵞足は縫工筋、薄筋、半腱様筋の腱が脛骨近位内側に付着して形成される",
+          "knowledge_node_id": "KN0511",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "鵞足をつくるのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1796",
+        "question": {
+          "id": "Q1796",
+          "management_code": "Q1796-C-18-O",
+          "category_large": "C",
+          "category_small": 18,
+          "source": "O",
+          "title": "鵞足部痛の臨床解釈",
+          "question_text": "長距離走者。膝関節裂隙より遠位の脛骨近位内側に限局した圧痛があり、抵抗を加えた膝屈曲と下腿内旋で疼痛が再現される。McMurrayテストは陰性である。障害部位として最も考えられるのはどれか。",
+          "choices": {
+            "A": "鵞足部",
+            "B": "大腿二頭筋腱付着部",
+            "C": "膝蓋腱中央部",
+            "D": "腓腹筋外側頭起始部",
+            "E": "外側半月板"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1796",
+          "display_answer": "A",
+          "accepted_answer_sets": [
+            [
+              "A"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1796",
+          "explanation": "鵞足を形成する縫工筋、薄筋、半腱様筋は脛骨近位内側に付着し、膝屈曲や下腿内旋に関与する。関節裂隙より遠位内側の圧痛とこれらの運動での疼痛再現、陰性の半月板検査は鵞足部障害を支持する。",
+          "choice_explanations": {
+            "A": "○。疼痛部位と誘発運動が、脛骨近位内側へ付着する鵞足構成筋腱の解剖・作用に一致する。",
+            "B": "大腿二頭筋腱は腓骨頭へ付着するため、疼痛は膝外側に生じやすい。",
+            "C": "膝蓋腱障害では膝蓋骨下極から脛骨粗面にかけた前面痛が中心となる。",
+            "D": "腓腹筋外側頭は大腿骨外側顆後面から起こり、本例の脛骨近位内側圧痛とは一致しない。",
+            "E": "外側半月板障害なら外側関節裂隙の疼痛や半月板誘発検査所見を考える。"
+          }
+        },
+        "tag": {
+          "id": "Q1796",
+          "theme": "鵞足部痛の臨床解釈",
+          "knowledge_node": "鵞足は縫工筋、薄筋、半腱様筋の腱が脛骨近位内側に付着して形成される",
+          "knowledge_node_id": "KN0511",
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET",
+          "secondary_ability": null,
+          "level": 3,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "鵞足をつくるのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C1-N01",
+    "slot_type": "new_node",
+    "target_node_id": null,
+    "target_node_label": "",
+    "planned_task": "finding_interpretation",
+    "planned_primary_ability": "INTERPRET",
+    "planned_level": 4,
+    "references": [],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C2-N01",
+    "slot_type": "new_node",
+    "target_node_id": null,
+    "target_node_label": "",
+    "planned_task": "prognosis_prediction",
+    "planned_primary_ability": "PREDICT",
+    "planned_level": 2,
+    "references": [],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C7-N01",
+    "slot_type": "new_node",
+    "target_node_id": null,
+    "target_node_label": "",
+    "planned_task": "fact_recall",
+    "planned_primary_ability": "KNOW",
+    "planned_level": 1,
+    "references": [],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  }
+]

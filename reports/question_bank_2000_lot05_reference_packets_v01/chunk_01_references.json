@@ -1,0 +1,584 @@
+[
+  {
+    "draft_id": "L05-C1-S01",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN0530",
+    "target_node_label": "大内転筋は内転部とハムストリング部で神経支配が異なり、前者は閉鎖神経、後者は坐骨神経脛骨部から支配を受ける",
+    "planned_task": "assessment_selection",
+    "planned_primary_ability": "MEASURE",
+    "planned_level": 3,
+    "references": [
+      {
+        "question_id": "Q538",
+        "question": {
+          "id": "Q538",
+          "management_code": "Q538-A-1-P",
+          "category_large": "A",
+          "category_small": 1,
+          "source": "P",
+          "title": null,
+          "question_text": "二重神経支配の筋はどれか。",
+          "choices": {
+            "1": "長内転筋",
+            "2": "大内転筋",
+            "3": "中間広筋",
+            "4": "半膜様筋",
+            "5": "ヒラメ筋"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午前",
+            "question_no": 56
+          }
+        },
+        "answer": {
+          "id": "Q538",
+          "display_answer": "2",
+          "accepted_answer_sets": [
+            [
+              "2"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q538",
+          "explanation": "大内転筋は内転部とハムストリング部で神経支配が異なり、前者は閉鎖神経、後者は坐骨神経脛骨部から支配を受ける。したがって二重神経支配を受ける筋は大内転筋である。",
+          "choice_explanations": {
+            "1": "長内転筋は主に閉鎖神経支配である。",
+            "2": "○。大内転筋は閉鎖神経と坐骨神経脛骨部の二重支配を受ける。",
+            "3": "中間広筋は大腿神経支配である。",
+            "4": "半膜様筋は坐骨神経脛骨部支配である。",
+            "5": "ヒラメ筋は脛骨神経支配である。"
+          }
+        },
+        "tag": {
+          "id": "Q538",
+          "theme": "二重神経支配の筋はどれか",
+          "knowledge_node": "大内転筋は内転部とハムストリング部で神経支配が異なり、前者は閉鎖神経、後者は坐骨神経脛骨部から支配を受ける",
+          "knowledge_node_id": "KN0530",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "二重神経支配の筋はどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C1-S02",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN0531",
+    "target_node_label": "脳血管とその還流域の組合せの基本事項",
+    "planned_task": "finding_interpretation",
+    "planned_primary_ability": "INTERPRET",
+    "planned_level": 3,
+    "references": [
+      {
+        "question_id": "Q539",
+        "question": {
+          "id": "Q539",
+          "management_code": "Q539-A-1-P",
+          "category_large": "A",
+          "category_small": 1,
+          "source": "P",
+          "title": null,
+          "question_text": "脳血管とその還流域の組合せで正しいのはどれか。",
+          "choices": {
+            "1": "前大脳動脈　黒質",
+            "2": "中大脳動脈　海馬",
+            "3": "後大脳動脈　視床",
+            "4": "脳底動脈　Broca野",
+            "5": "椎骨動脈　中心前回"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午前",
+            "question_no": 57
+          }
+        },
+        "answer": {
+          "id": "Q539",
+          "display_answer": "3",
+          "accepted_answer_sets": [
+            [
+              "3"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q539",
+          "explanation": "視床の血流は主に後大脳動脈系の穿通枝などから供給される。前大脳動脈は内側前頭・頭頂面、中大脳動脈は外側大脳半球、椎骨・脳底動脈は脳幹・小脳などを主に灌流するため、正答は3である。",
+          "choice_explanations": {
+            "1": "黒質は主に後大脳動脈・脳底動脈系の穿通枝から供給される。",
+            "2": "海馬は主に後大脳動脈系などから供給され、中大脳動脈との組合せは不適切である。",
+            "3": "○。視床は主として後大脳動脈系の枝から血流を受ける。",
+            "4": "Broca野は中大脳動脈上枝の灌流域である。",
+            "5": "中心前回外側部は主に中大脳動脈領域である。"
+          }
+        },
+        "tag": {
+          "id": "Q539",
+          "theme": "脳血管とその還流域の組合せで正しいのはどれか",
+          "knowledge_node": "脳血管とその還流域の組合せの基本事項",
+          "knowledge_node_id": "KN0531",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "脳血管とその還流域の組合せで正しいのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C1-S03",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN0585",
+    "target_node_label": "上腕骨小結節には肩甲下筋腱が付着する",
+    "planned_task": "assessment_selection",
+    "planned_primary_ability": "MEASURE",
+    "planned_level": 2,
+    "references": [
+      {
+        "question_id": "Q593",
+        "question": {
+          "id": "Q593",
+          "management_code": "Q593-A-1-P",
+          "category_large": "A",
+          "category_small": 1,
+          "source": "P",
+          "title": null,
+          "question_text": "上腕骨小結節に付着する筋はどれか。",
+          "choices": {
+            "1": "棘下筋",
+            "2": "棘上筋",
+            "3": "肩甲下筋",
+            "4": "小円筋",
+            "5": "上腕二頭筋"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午後",
+            "question_no": 51
+          }
+        },
+        "answer": {
+          "id": "Q593",
+          "display_answer": "3",
+          "accepted_answer_sets": [
+            [
+              "3"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q593",
+          "explanation": "上腕骨小結節には肩甲下筋腱が付着する。棘上筋・棘下筋・小円筋は大結節へ付着し、上腕二頭筋長頭腱は結節間溝を走行する。",
+          "choice_explanations": {
+            "1": "棘下筋は大結節に付着する。",
+            "2": "棘上筋は大結節に付着する。",
+            "3": "○。肩甲下筋は小結節に付着する。",
+            "4": "小円筋は大結節に付着する。",
+            "5": "上腕二頭筋長頭腱は関節上結節から起こる。"
+          }
+        },
+        "tag": {
+          "id": "Q593",
+          "theme": "上腕骨小結節に付着する筋はどれか",
+          "knowledge_node": "上腕骨小結節には肩甲下筋腱が付着する",
+          "knowledge_node_id": "KN0585",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "上腕骨小結節に付着する筋はどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C2-S01",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN0595",
+    "target_node_label": "四肢からの感覚神経伝導路の特徴",
+    "planned_task": "finding_interpretation",
+    "planned_primary_ability": "INTERPRET",
+    "planned_level": 3,
+    "references": [
+      {
+        "question_id": "Q603",
+        "question": {
+          "id": "Q603",
+          "management_code": "Q603-A-2-P",
+          "category_large": "A",
+          "category_small": 2,
+          "source": "P",
+          "title": null,
+          "question_text": "四肢からの感覚神経伝導路について正しいのはどれか。",
+          "choices": {
+            "1": "触覚の線維は中脳で交叉する。",
+            "2": "圧覚の線維は脊髄視床路を通る。",
+            "3": "温度覚の線維は脊髄節で交叉する。",
+            "4": "一次ニューロンの細胞体は後角にある。",
+            "5": "痛覚の伝導路は延髄で二次ニューロンになる。"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午後",
+            "question_no": 62
+          }
+        },
+        "answer": {
+          "id": "Q603",
+          "display_answer": "3",
+          "accepted_answer_sets": [
+            [
+              "3"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q603",
+          "explanation": "温度覚・痛覚は脊髄後角で二次ニューロンに交代し、脊髄内で対側へ交叉して脊髄視床路を上行する。したがって温度覚線維が脊髄節で交叉する3が正しい。",
+          "choice_explanations": {
+            "1": "識別性触覚は延髄で交叉する後索内側毛帯系が中心である。",
+            "2": "圧覚には複数経路があり、この表現は適切でない。",
+            "3": "○。温度覚は脊髄レベルで交叉する。",
+            "4": "一次ニューロン細胞体は脊髄神経節にある。",
+            "5": "痛覚は脊髄後角で二次ニューロンとなる。"
+          }
+        },
+        "tag": {
+          "id": "Q603",
+          "theme": "四肢からの感覚神経伝導路について正しいのはどれか",
+          "knowledge_node": "四肢からの感覚神経伝導路の特徴",
+          "knowledge_node_id": "KN0595",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "四肢からの感覚神経伝導路について正しいのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C2-S02",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN0596",
+    "target_node_label": "運動時は活動筋への血流が大きく増え、心拍出量・静脈還流も増加する",
+    "planned_task": "intervention_selection",
+    "planned_primary_ability": "PRESCRIBE",
+    "planned_level": 3,
+    "references": [
+      {
+        "question_id": "Q604",
+        "question": {
+          "id": "Q604",
+          "management_code": "Q604-A-2-P",
+          "category_large": "A",
+          "category_small": 2,
+          "source": "P",
+          "title": null,
+          "question_text": "運動時の循環反応で誤っているのはどれか。",
+          "choices": {
+            "1": "脳血流量は減少する。",
+            "2": "腎血流量は減少する。",
+            "3": "静脈還流量は増加する。",
+            "4": "分時心拍出量は増加する。",
+            "5": "骨格筋の血流量は増加する。"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午後",
+            "question_no": 63
+          }
+        },
+        "answer": {
+          "id": "Q604",
+          "display_answer": "1",
+          "accepted_answer_sets": [
+            [
+              "1"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q604",
+          "explanation": "運動時は活動筋への血流が大きく増え、心拍出量・静脈還流も増加する。腎血流は減少するが、脳血流は一定〜軽度増加し、単純に減少するとはいえないため1が誤りである。",
+          "choice_explanations": {
+            "1": "○。脳血流は通常維持され、単純に減少とはしない。",
+            "2": "腎血流は交感神経活動により減少する。",
+            "3": "筋ポンプなどで静脈還流は増える。",
+            "4": "分時心拍出量は増加する。",
+            "5": "活動骨格筋血流は増加する。"
+          }
+        },
+        "tag": {
+          "id": "Q604",
+          "theme": "運動時の循環反応で誤っているのはどれか",
+          "knowledge_node": "運動時は活動筋への血流が大きく増え、心拍出量・静脈還流も増加する",
+          "knowledge_node_id": "KN0596",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "運動時の循環反応で誤っているのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C2-S03",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN0599",
+    "target_node_label": "ペプシンは胃内で蛋白質をポリペプチドへ分解し、リパーゼは脂肪を脂肪酸とグリセリンへ分解する",
+    "planned_task": "finding_interpretation",
+    "planned_primary_ability": "INTERPRET",
+    "planned_level": 3,
+    "references": [
+      {
+        "question_id": "Q607",
+        "question": {
+          "id": "Q607",
+          "management_code": "Q607-A-2-P",
+          "category_large": "A",
+          "category_small": 2,
+          "source": "P",
+          "title": null,
+          "question_text": "消化酵素について正しいのはどれか。2つ選べ。",
+          "choices": {
+            "1": "α アミラーゼはマルトースをブドウ糖に分解する。",
+            "2": "トリプシンはトリペプチドをアミノ酸に分解する。",
+            "3": "ペプシンは蛋白質をポリペプチドに分解する。",
+            "4": "マルターゼはデンプンをデキストリンに分解する。",
+            "5": "リパーゼは脂肪を脂肪酸とグリセリンに分解する。"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午後",
+            "question_no": 66
+          }
+        },
+        "answer": {
+          "id": "Q607",
+          "display_answer": "3・5",
+          "accepted_answer_sets": [
+            [
+              "3",
+              "5"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q607",
+          "explanation": "ペプシンは胃内で蛋白質をポリペプチドへ分解し、リパーゼは脂肪を脂肪酸とグリセリンへ分解する。αアミラーゼやマルターゼの基質、トリプシンの作用説明が誤っている。",
+          "choice_explanations": {
+            "1": "αアミラーゼはデンプンを麦芽糖などへ分解する。",
+            "2": "トリプシンは蛋白・ペプチドをより小さなペプチドへ分解する。",
+            "3": "○。ペプシンは蛋白質をポリペプチドへ分解する。",
+            "4": "マルターゼは麦芽糖をブドウ糖へ分解する。",
+            "5": "○。リパーゼは脂肪を脂肪酸とグリセリンへ分解する。"
+          }
+        },
+        "tag": {
+          "id": "Q607",
+          "theme": "消化酵素について正しいのはどれか",
+          "knowledge_node": "ペプシンは胃内で蛋白質をポリペプチドへ分解し、リパーゼは脂肪を脂肪酸とグリセリンへ分解する",
+          "knowledge_node_id": "KN0599",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "消化酵素について正しいのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C2-M01",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0597",
+    "target_node_label": "交感神経の作用",
+    "planned_task": "safety_priority",
+    "planned_primary_ability": "DECIDE",
+    "planned_level": 4,
+    "references": [
+      {
+        "question_id": "Q605",
+        "question": {
+          "id": "Q605",
+          "management_code": "Q605-A-2-P",
+          "category_large": "A",
+          "category_small": 2,
+          "source": "P",
+          "title": null,
+          "question_text": "交感神経の作用はどれか。",
+          "choices": {
+            "1": "瞳孔の縮小",
+            "2": "膀胱の収縮",
+            "3": "心拍数の減少",
+            "4": "気管支の拡張",
+            "5": "膵液の分泌促進"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午後",
+            "question_no": 64
+          }
+        },
+        "answer": {
+          "id": "Q605",
+          "display_answer": "4",
+          "accepted_answer_sets": [
+            [
+              "4"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q605",
+          "explanation": "交感神経刺激では瞳孔散大、心拍数増加、気管支拡張、消化管・膵外分泌抑制、膀胱排尿筋弛緩が起こる。したがって4が正しい。",
+          "choice_explanations": {
+            "1": "交感神経で瞳孔は散大する。",
+            "2": "排尿筋は弛緩し蓄尿に働く。",
+            "3": "心拍数は増加する。",
+            "4": "○。気管支は拡張する。",
+            "5": "膵液分泌は抑制方向に働く。"
+          }
+        },
+        "tag": {
+          "id": "Q605",
+          "theme": "交感神経の作用はどれか",
+          "knowledge_node": "交感神経の作用",
+          "knowledge_node_id": "KN0597",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "交感神経の作用はどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q815",
+        "question": {
+          "id": "Q815",
+          "management_code": "Q815-A-2-P",
+          "category_large": "A",
+          "category_small": 2,
+          "source": "P",
+          "title": null,
+          "question_text": "交感神経の作用はどれか。",
+          "choices": {
+            "1": "瞳孔を縮小させる。",
+            "2": "排尿を促進させる。",
+            "3": "気管支を拡張させる。",
+            "4": "心拍数を減少させる。",
+            "5": "胃腸の運動を促進させる。"
+          },
+          "exam": {
+            "exam_no": 55,
+            "session": "午前",
+            "question_no": 63
+          }
+        },
+        "answer": {
+          "id": "Q815",
+          "display_answer": "3",
+          "accepted_answer_sets": [
+            [
+              "3"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q815",
+          "explanation": "交感神経刺激は気管支平滑筋を弛緩させ気管支を拡張する。その他は副交感神経優位の作用であるため3が正しい。",
+          "choice_explanations": {
+            "1": "交感神経で瞳孔は散大。",
+            "2": "排尿は抑制方向。",
+            "3": "○。気管支拡張。",
+            "4": "心拍数は増加。",
+            "5": "胃腸運動は抑制。"
+          }
+        },
+        "tag": {
+          "id": "Q815",
+          "theme": "交感神経の作用はどれか",
+          "knowledge_node": "交感神経の作用",
+          "knowledge_node_id": "KN0807",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "その他は副交感神経優位の作用であるため3が正しい。",
+            "交感神経刺激は気管支平滑筋を弛緩させ気管支を拡張する。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  }
+]

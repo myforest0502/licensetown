@@ -353,8 +353,8 @@
       "lot_target_id": "L05-C4-S01",
       "draft_id": "L05-C4-S01",
       "draft_order": 9,
-      "proposed_task": "finding_interpretation",
-      "primary_ability": "INTERPRET",
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
       "level": 3
     },
     {
@@ -1555,8 +1555,8 @@
       "label": "NEW_NODE_C1_PENDING_COLLISION_REVIEW",
       "question_ids": [],
       "existing_demands": [],
-      "proposed_task": "functional_goal_decision",
-      "primary_ability": "DECIDE",
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
       "level": 4
     },
     {
@@ -1601,7 +1601,9 @@
     "L05-C8-M03": "safety_priority",
     "L05-C15-S01": "finding_interpretation",
     "L05-C11-S01": "device_selection",
-    "L05-C2-N01": "prognosis_prediction"
+    "L05-C2-N01": "prognosis_prediction",
+    "L05-C1-N01": "finding_interpretation",
+    "L05-C4-S01": "functional_goal_decision"
   },
   "target_replacement": {
     "L05-C7-S01": "KN0690"

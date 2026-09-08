@@ -1,0 +1,345 @@
+{
+  "lot": 5,
+  "chunk": 4,
+  "formal_baseline": "Q1-Q1953",
+  "status": "authoring_chunk",
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L05-C10-S01",
+      "draft_order": 22,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0632",
+      "target_node_label": "正常圧水頭症、慢性硬膜下血腫、葉酸・B12欠乏などは可逆性認知症の原因となる",
+      "reference_question_ids": [
+        "Q640"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 10,
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C10-M01",
+      "draft_order": 23,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0563",
+      "target_node_label": "断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する",
+      "reference_question_ids": [
+        "Q571",
+        "Q1883"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "safety_priority",
+          "primary_ability": "DECIDE"
+        }
+      ],
+      "proposed_category_small": 10,
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C11-S01",
+      "draft_order": 24,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1231",
+      "target_node_label": "骨盤帯近位筋から筋力低下が進行し、床から立つ際にGowers徴候を示す",
+      "reference_question_ids": [
+        "Q1246"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 11,
+      "proposed_task": "device_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C11-M01",
+      "draft_order": 25,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0559",
+      "target_node_label": "中枢神経の先天奇形とその特徴の組合せの基本事項",
+      "reference_question_ids": [
+        "Q567",
+        "Q1824"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 11,
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C12-M01",
+      "draft_order": 26,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0895",
+      "target_node_label": "内田・クレペリン精神検査は連続加算作業の作業曲線から性格・行動特性、作業態度などをみる",
+      "reference_question_ids": [
+        "Q904",
+        "Q1828"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 12,
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C13-S01",
+      "draft_order": 27,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0605",
+      "target_node_label": "外側半月板は外側側副靱帯と膝窩筋腱で隔てられ直接付着しないため可動性が大きい",
+      "reference_question_ids": [
+        "Q613"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 13,
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C13-M01",
+      "draft_order": 28,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0543",
+      "target_node_label": "肩甲骨の運動とそれに作用する筋の組合せの基本事項",
+      "reference_question_ids": [
+        "Q551",
+        "Q1890"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "intervention_selection",
+          "primary_ability": "PRESCRIBE"
+        }
+      ],
+      "proposed_category_small": 13,
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    }
+  ]
+}

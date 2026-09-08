@@ -1,0 +1,350 @@
+{
+  "lot": 5,
+  "chunk": 3,
+  "formal_baseline": "Q1-Q1953",
+  "status": "authoring_chunk",
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L05-C7-M01",
+      "draft_order": 15,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0608",
+      "target_node_label": "疾患と病因・病理学的変化の組合せの基本事項",
+      "reference_question_ids": [
+        "Q616",
+        "Q1874"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 7,
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C8-S01",
+      "draft_order": 16,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0650",
+      "target_node_label": "下肢動脈狭窄により冷感、しびれ、間欠性跛行、重症例では安静時痛を生じる",
+      "reference_question_ids": [
+        "Q658"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C8-S02",
+      "draft_order": 17,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0683",
+      "target_node_label": "Turner症候群は45,X、Klinefelter症候群は47,XXYなど性染色体数的異常で発症する",
+      "reference_question_ids": [
+        "Q691"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C8-M01",
+      "draft_order": 18,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0515",
+      "target_node_label": "うっ血性心不全の典型所見",
+      "reference_question_ids": [
+        "Q523",
+        "Q1810"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 8,
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C8-M02",
+      "draft_order": 19,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0557",
+      "target_node_label": "福山型筋ジストロフィーは先天性筋ジストロフィーで乳児期早期から症状がみられ、選択肢中で平均発症年齢が最も低い",
+      "reference_question_ids": [
+        "Q565",
+        "Q1811"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 8,
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C8-M03",
+      "draft_order": 20,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0560",
+      "target_node_label": "高齢者では嚥下反射・咳反射の低下や口腔機能低下により誤嚥性肺炎が多い",
+      "reference_question_ids": [
+        "Q568",
+        "Q1812"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C9-M01",
+      "draft_order": 21,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0558",
+      "target_node_label": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である",
+      "reference_question_ids": [
+        "Q566",
+        "Q1763"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "prognosis_prediction",
+          "primary_ability": "PREDICT"
+        }
+      ],
+      "proposed_category_small": 9,
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    }
+  ]
+}

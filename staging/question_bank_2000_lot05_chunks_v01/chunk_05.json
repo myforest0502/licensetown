@@ -1,0 +1,345 @@
+{
+  "lot": 5,
+  "chunk": 5,
+  "formal_baseline": "Q1-Q1953",
+  "status": "authoring_chunk",
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L05-C13-M02",
+      "draft_order": 29,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0544",
+      "target_node_label": "前腕回外に作用する筋",
+      "reference_question_ids": [
+        "Q552",
+        "Q1891"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 13,
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C14-S01",
+      "draft_order": 30,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1551",
+      "target_node_label": "歩行開始前には重心移動を準備する予測的姿勢調節〈APA〉が生じ、第一歩の安定性に寄与する",
+      "reference_question_ids": [
+        "Q1905"
+      ],
+      "existing_demands": [
+        {
+          "task": "functional_goal_decision",
+          "primary_ability": "DECIDE"
+        }
+      ],
+      "proposed_category_small": 14,
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C14-M01",
+      "draft_order": 31,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0987",
+      "target_node_label": "反復拮抗運動障害を評価する前腕回内外試験",
+      "reference_question_ids": [
+        "Q997",
+        "Q1893"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "intervention_selection",
+          "primary_ability": "PRESCRIBE"
+        }
+      ],
+      "proposed_category_small": 14,
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C15-S01",
+      "draft_order": 32,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1400",
+      "target_node_label": "正常歩行では立脚中期に身体重心が支持脚側へ最も側方移動する",
+      "reference_question_ids": [
+        "Q1425"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 15,
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C15-M01",
+      "draft_order": 33,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0815",
+      "target_node_label": "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる",
+      "reference_question_ids": [
+        "Q824",
+        "Q1894"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 15,
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C15-M02",
+      "draft_order": 34,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0863",
+      "target_node_label": "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する",
+      "reference_question_ids": [
+        "Q872",
+        "Q1895"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "prognosis_prediction",
+          "primary_ability": "PREDICT"
+        }
+      ],
+      "proposed_category_small": 15,
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    },
+    {
+      "draft_id": "L05-C17-S01",
+      "draft_order": 35,
+      "status": "authoring",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1225",
+      "target_node_label": "重力を除去した肢位で膝伸展・膝屈曲を評価するため、両者とも側臥位など同じ重力除去肢位となる",
+      "reference_question_ids": [
+        "Q1240"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "evidence": [],
+      "semantic_review": "pending",
+      "expert_signoff": false
+    }
+  ]
+}

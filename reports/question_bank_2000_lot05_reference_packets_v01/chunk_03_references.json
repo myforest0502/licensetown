@@ -1,0 +1,814 @@
+[
+  {
+    "draft_id": "L05-C7-M01",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0608",
+    "target_node_label": "疾患と病因・病理学的変化の組合せの基本事項",
+    "planned_task": "safety_priority",
+    "planned_primary_ability": "DECIDE",
+    "planned_level": 4,
+    "references": [
+      {
+        "question_id": "Q616",
+        "question": {
+          "id": "Q616",
+          "management_code": "Q616-B-7-P",
+          "category_large": "B",
+          "category_small": 7,
+          "source": "P",
+          "title": null,
+          "question_text": "疾患と病因・病理学的変化の組合せで正しいのはどれか。",
+          "choices": {
+            "1": "Creutzfeldt Jakob病　感染性疾患",
+            "2": "Parkinson病　脱髄疾患",
+            "3": "肝性脳症　神経変性疾患",
+            "4": "正常圧水頭症　血行障害",
+            "5": "多発性硬化症　腫瘍性疾患"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午後",
+            "question_no": 75
+          }
+        },
+        "answer": {
+          "id": "Q616",
+          "display_answer": "1",
+          "accepted_answer_sets": [
+            [
+              "1"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q616",
+          "explanation": "Creutzfeldt-Jakob病は異常プリオン蛋白により発症する伝達性海綿状脳症で、感染性（プリオン病）として扱われる。他の組合せは病態分類が一致しない。",
+          "choice_explanations": {
+            "1": "○。CJDはプリオンによる伝達性疾患である。",
+            "2": "Parkinson病は神経変性疾患で、脱髄疾患ではない。",
+            "3": "肝性脳症は代謝性脳症である。",
+            "4": "正常圧水頭症は髄液循環障害である。",
+            "5": "多発性硬化症は炎症性脱髄疾患である。"
+          }
+        },
+        "tag": {
+          "id": "Q616",
+          "theme": "疾患と病因・病理学的変化の組合せで正しいのはどれか",
+          "knowledge_node": "疾患と病因・病理学的変化の組合せの基本事項",
+          "knowledge_node_id": "KN0608",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "疾患と病因・病理学的変化の組合せで正しいのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1874",
+        "question": {
+          "id": "Q1874",
+          "management_code": "Q1874-B-7-O",
+          "category_large": "B",
+          "category_small": 7,
+          "source": "O",
+          "title": "病理所見からみた疾患推定",
+          "question_text": "関節液で針状の結晶を認め、偏光顕微鏡で強い負の複屈折を示した。最も考えられる疾患はどれか。",
+          "choices": {
+            "A": "痛風",
+            "B": "変形性関節症",
+            "C": "関節リウマチ",
+            "D": "化膿性関節炎",
+            "E": "血友病性関節症"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1874",
+          "display_answer": "A",
+          "accepted_answer_sets": [
+            [
+              "A"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1874",
+          "explanation": "痛風では尿酸一ナトリウム結晶が関節内に析出し、針状で強い負の複屈折を示す。病理・検査所見から痛風を推定できる。",
+          "choice_explanations": {
+            "A": "○。尿酸一ナトリウム結晶の典型所見である。",
+            "B": "変形性関節症はこの結晶所見を特徴としない。",
+            "C": "関節リウマチは自己免疫性滑膜炎が主体である。",
+            "D": "化膿性関節炎では細菌感染と好中球増多が重要である。",
+            "E": "血友病性関節症は関節内出血の反復が主体である。"
+          }
+        },
+        "tag": {
+          "id": "Q1874",
+          "theme": "病理所見からみた疾患推定",
+          "knowledge_node": "疾患と病因・病理学的変化の組合せの基本事項",
+          "knowledge_node_id": "KN0608",
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET",
+          "secondary_ability": null,
+          "level": 2,
+          "safety": "moderate",
+          "prerequisite_nodes": [
+            "疾患と病因・病理学的変化の組合せで正しいのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C8-S01",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN0650",
+    "target_node_label": "下肢動脈狭窄により冷感、しびれ、間欠性跛行、重症例では安静時痛を生じる",
+    "planned_task": "safety_priority",
+    "planned_primary_ability": "DECIDE",
+    "planned_level": 4,
+    "references": [
+      {
+        "question_id": "Q658",
+        "question": {
+          "id": "Q658",
+          "management_code": "Q658-B-8-P",
+          "category_large": "B",
+          "category_small": 8,
+          "source": "P",
+          "title": null,
+          "question_text": "閉塞性動脈硬化症で正しいのはどれか。",
+          "choices": {
+            "1": "冷感はない。",
+            "2": "安静時痛はない。",
+            "3": "しびれ感はない。",
+            "4": "間欠性跛行は体幹前傾で改善する。",
+            "5": "好発部位は大腿動脈から膝窩動脈である。"
+          },
+          "exam": {
+            "exam_no": 54,
+            "session": "午前",
+            "question_no": 48
+          }
+        },
+        "answer": {
+          "id": "Q658",
+          "display_answer": "5",
+          "accepted_answer_sets": [
+            [
+              "5"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q658",
+          "explanation": "閉塞性動脈硬化症では下肢動脈狭窄により冷感、しびれ、間欠性跛行、重症例では安静時痛を生じる。好発部位は大腿動脈から膝窩動脈領域であるため5が正しい。",
+          "choice_explanations": {
+            "1": "虚血により冷感を認める。",
+            "2": "重症化すると安静時痛を認める。",
+            "3": "しびれ感を伴うことがある。",
+            "4": "体幹前傾で軽快するのは神経性跛行に典型的である。",
+            "5": "○。大腿動脈〜膝窩動脈は好発部位である。"
+          }
+        },
+        "tag": {
+          "id": "Q658",
+          "theme": "閉塞性動脈硬化症で正しいのはどれか",
+          "knowledge_node": "下肢動脈狭窄により冷感、しびれ、間欠性跛行、重症例では安静時痛を生じる",
+          "knowledge_node_id": "KN0650",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "好発部位は大腿動脈から膝窩動脈領域であるため5が正しい。",
+            "閉塞性動脈硬化症では下肢動脈狭窄により冷感、しびれ、間欠性跛行、重症例では安静時痛を生じる。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C8-S02",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN0683",
+    "target_node_label": "Turner症候群は45,X、Klinefelter症候群は47,XXYなど性染色体数的異常で発症する",
+    "planned_task": "assessment_selection",
+    "planned_primary_ability": "MEASURE",
+    "planned_level": 3,
+    "references": [
+      {
+        "question_id": "Q691",
+        "question": {
+          "id": "Q691",
+          "management_code": "Q691-B-8-P",
+          "category_large": "B",
+          "category_small": 8,
+          "source": "P",
+          "title": null,
+          "question_text": "性染色体異常で発症するのはどれか。2つ選べ。",
+          "choices": {
+            "1": "Down症候群",
+            "2": "Marfan症候群",
+            "3": "Turner症候群",
+            "4": "Williams症候群",
+            "5": "Kleinfelter症候群"
+          },
+          "exam": {
+            "exam_no": 54,
+            "session": "午前",
+            "question_no": 85
+          }
+        },
+        "answer": {
+          "id": "Q691",
+          "display_answer": "3・5",
+          "accepted_answer_sets": [
+            [
+              "3",
+              "5"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q691",
+          "explanation": "Turner症候群は45,X、Klinefelter症候群は47,XXYなど性染色体数的異常で発症する。したがって3・5が正しい。",
+          "choice_explanations": {
+            "1": "Down症候群は21トリソミーで常染色体異常である。",
+            "2": "Marfan症候群はFBN1遺伝子異常である。",
+            "3": "○。Turner症候群はX染色体異常である。",
+            "4": "Williams症候群は7番染色体微細欠失である。",
+            "5": "○。Klinefelter症候群は性染色体異常である。"
+          }
+        },
+        "tag": {
+          "id": "Q691",
+          "theme": "性染色体異常で発症するのはどれか",
+          "knowledge_node": "Turner症候群は45,X、Klinefelter症候群は47,XXYなど性染色体数的異常で発症する",
+          "knowledge_node_id": "KN0683",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "したがって3・5が正しい。",
+            "Turner症候群はX染色体異常である。",
+            "Klinefelter症候群は性染色体異常である。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C8-M01",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0515",
+    "target_node_label": "うっ血性心不全の典型所見",
+    "planned_task": "intervention_selection",
+    "planned_primary_ability": "PRESCRIBE",
+    "planned_level": 3,
+    "references": [
+      {
+        "question_id": "Q523",
+        "question": {
+          "id": "Q523",
+          "management_code": "Q523-B-8-P",
+          "category_large": "B",
+          "category_small": 8,
+          "source": "P",
+          "title": null,
+          "question_text": "うっ血性心不全でみられるのはどれか。",
+          "choices": {
+            "1": "咳嗽",
+            "2": "皮膚紅潮",
+            "3": "頸動脈雑音",
+            "4": "心胸郭比40%",
+            "5": "初期の体重減少"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午前",
+            "question_no": 36
+          }
+        },
+        "answer": {
+          "id": "Q523",
+          "display_answer": "1",
+          "accepted_answer_sets": [
+            [
+              "1"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q523",
+          "explanation": "うっ血性心不全では肺うっ血により咳嗽、呼吸困難、起坐呼吸などを生じることがある。進行時には体液貯留による体重増加もみられる。したがって選択肢の中で典型的な症候は咳嗽である。",
+          "choice_explanations": {
+            "1": "○。肺うっ血により咳嗽が出現することがある。",
+            "2": "皮膚紅潮はうっ血性心不全の代表所見ではない。",
+            "3": "頸動脈雑音は主に頸動脈狭窄などで聴取される。",
+            "4": "心不全では心拡大により心胸郭比が増大することがあり、40％は典型的でない。",
+            "5": "体液貯留により体重は増加しやすく、初期の体重減少は典型的でない。"
+          }
+        },
+        "tag": {
+          "id": "Q523",
+          "theme": "うっ血性心不全でみられるのはどれか",
+          "knowledge_node": "うっ血性心不全の典型所見",
+          "knowledge_node_id": "KN0515",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "うっ血性心不全でみられるのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1810",
+        "question": {
+          "id": "Q1810",
+          "management_code": "Q1810-B-8-O",
+          "category_large": "B",
+          "category_small": 8,
+          "source": "O",
+          "title": "うっ血性心不全の所見統合",
+          "question_text": "76歳男性。労作時息切れが増悪し、夜間は起坐呼吸を認める。両側下肺野に湿性ラ音があり、頸静脈怒張と両下腿浮腫もみられる。病態として最も考えられるのはどれか。",
+          "choices": {
+            "A": "うっ血性心不全",
+            "B": "気管支喘息",
+            "C": "過換気症候群",
+            "D": "閉塞性動脈硬化症",
+            "E": "末梢性顔面神経麻痺"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1810",
+          "display_answer": "A",
+          "accepted_answer_sets": [
+            [
+              "A"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1810",
+          "explanation": "肺うっ血を示す起坐呼吸・湿性ラ音に、体静脈うっ血を示す頸静脈怒張・下腿浮腫が併存しており、うっ血性心不全を最も支持する。",
+          "choice_explanations": {
+            "A": "○。肺うっ血と体静脈うっ血の所見を同時に説明できる。",
+            "B": "喘息では喘鳴が中心で、頸静脈怒張や両下腿浮腫を一括して説明しにくい。",
+            "C": "過換気では急性の呼吸困難やしびれを呈し得るが、慢性のうっ血所見とは合わない。",
+            "D": "閉塞性動脈硬化症は間欠性跛行や末梢循環障害が主体である。",
+            "E": "顔面神経麻痺は本例の呼吸・循環所見を説明しない。"
+          }
+        },
+        "tag": {
+          "id": "Q1810",
+          "theme": "うっ血性心不全の所見統合",
+          "knowledge_node": "うっ血性心不全の典型所見",
+          "knowledge_node_id": "KN0515",
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET",
+          "secondary_ability": null,
+          "level": 2,
+          "safety": "moderate",
+          "prerequisite_nodes": [
+            "うっ血性心不全でみられるのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C8-M02",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0557",
+    "target_node_label": "福山型筋ジストロフィーは先天性筋ジストロフィーで乳児期早期から症状がみられ、選択肢中で平均発症年齢が最も低い",
+    "planned_task": "assessment_selection",
+    "planned_primary_ability": "MEASURE",
+    "planned_level": 2,
+    "references": [
+      {
+        "question_id": "Q565",
+        "question": {
+          "id": "Q565",
+          "management_code": "Q565-B-8-P",
+          "category_large": "B",
+          "category_small": 8,
+          "source": "P",
+          "title": null,
+          "question_text": "平均的な発症年齢が最も低いのはどれか。",
+          "choices": {
+            "1": "筋強直性ジストロフィー",
+            "2": "福山型筋ジストロフィー",
+            "3": "Becker 型筋ジストロフィー",
+            "4": "Duchenne 型筋ジストロフィー",
+            "5": "顔面肩甲上腕型筋ジストロフィー"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午前",
+            "question_no": 89
+          }
+        },
+        "answer": {
+          "id": "Q565",
+          "display_answer": "2",
+          "accepted_answer_sets": [
+            [
+              "2"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q565",
+          "explanation": "福山型筋ジストロフィーは先天性筋ジストロフィーで乳児期早期から症状がみられ、選択肢中で平均発症年齢が最も低い。Duchenne型は幼児期、Becker型などはより遅い。",
+          "choice_explanations": {
+            "1": "筋強直性ジストロフィーは成人発症も多い。",
+            "2": "○。福山型は乳児期から症状が現れる先天性筋ジストロフィーである。",
+            "3": "Becker型はDuchenne型より発症が遅い。",
+            "4": "Duchenne型は通常幼児期に発症する。",
+            "5": "顔面肩甲上腕型は小児〜成人まで幅がある。"
+          }
+        },
+        "tag": {
+          "id": "Q565",
+          "theme": "平均的な発症年齢が最も低いのはどれか",
+          "knowledge_node": "福山型筋ジストロフィーは先天性筋ジストロフィーで乳児期早期から症状がみられ、選択肢中で平均発症年齢が最も低い",
+          "knowledge_node_id": "KN0557",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "平均的な発症年齢が最も低いのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1811",
+        "question": {
+          "id": "Q1811",
+          "management_code": "Q1811-B-8-O",
+          "category_large": "B",
+          "category_small": 8,
+          "source": "O",
+          "title": "福山型先天性筋ジストロフィーの所見統合",
+          "question_text": "8か月男児。出生後から筋緊張低下があり、頸定が遅れている。近位筋優位の筋力低下、股・膝関節拘縮、CK高値を認め、頭部MRIで大脳皮質形成異常がみられた。最も考えられる疾患はどれか。",
+          "choices": {
+            "A": "Duchenne型筋ジストロフィー",
+            "B": "福山型先天性筋ジストロフィー",
+            "C": "Becker型筋ジストロフィー",
+            "D": "筋強直性ジストロフィー",
+            "E": "多発筋炎"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1811",
+          "display_answer": "B",
+          "accepted_answer_sets": [
+            [
+              "B"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1811",
+          "explanation": "福山型先天性筋ジストロフィーは乳児期早期からの筋緊張低下・筋力低下、関節拘縮、CK高値に加え、中枢神経の皮質形成異常を伴うことが特徴である。",
+          "choice_explanations": {
+            "A": "Duchenne型は通常、乳児期早期から大脳皮質形成異常を伴う病像ではない。",
+            "B": "○。乳児期発症の筋症状と脳形成異常の組合せが典型的である。",
+            "C": "Becker型はより軽症で発症が遅いことが多い。",
+            "D": "筋強直性ジストロフィーでは筋強直などが主要所見となる。",
+            "E": "多発筋炎は後天性炎症性筋疾患で、この先天性病像に合わない。"
+          }
+        },
+        "tag": {
+          "id": "Q1811",
+          "theme": "福山型先天性筋ジストロフィーの所見統合",
+          "knowledge_node": "福山型筋ジストロフィーは先天性筋ジストロフィーで乳児期早期から症状がみられ、選択肢中で平均発症年齢が最も低い",
+          "knowledge_node_id": "KN0557",
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET",
+          "secondary_ability": null,
+          "level": 2,
+          "safety": "moderate",
+          "prerequisite_nodes": [
+            "平均的な発症年齢が最も低いのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C8-M03",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0560",
+    "target_node_label": "高齢者では嚥下反射・咳反射の低下や口腔機能低下により誤嚥性肺炎が多い",
+    "planned_task": "safety_priority",
+    "planned_primary_ability": "DECIDE",
+    "planned_level": 3,
+    "references": [
+      {
+        "question_id": "Q568",
+        "question": {
+          "id": "Q568",
+          "management_code": "Q568-B-8-P",
+          "category_large": "B",
+          "category_small": 8,
+          "source": "P",
+          "title": null,
+          "question_text": "高齢者の肺炎の特徴として正しいのはどれか。",
+          "choices": {
+            "1": "高熱がみられる。",
+            "2": "誤嚥性肺炎が多い。",
+            "3": "肺尖部の病巣が多い。",
+            "4": "咳反射の亢進がみられる。",
+            "5": "死因となる例は減少している。"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午前",
+            "question_no": 92
+          }
+        },
+        "answer": {
+          "id": "Q568",
+          "display_answer": "2",
+          "accepted_answer_sets": [
+            [
+              "2"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q568",
+          "explanation": "高齢者では嚥下反射・咳反射の低下や口腔機能低下により誤嚥性肺炎が多い。また発熱など典型症状が目立たないこともあるため2が正しい。",
+          "choice_explanations": {
+            "1": "高齢者肺炎では高熱を示さないことも多い。",
+            "2": "○。誤嚥性肺炎が多い。",
+            "3": "肺尖部に特異的に多いわけではない。",
+            "4": "咳反射はむしろ低下しやすい。",
+            "5": "肺炎は高齢者の重要な死因である。"
+          }
+        },
+        "tag": {
+          "id": "Q568",
+          "theme": "の肺炎の特徴として正しいのはどれか",
+          "knowledge_node": "高齢者では嚥下反射・咳反射の低下や口腔機能低下により誤嚥性肺炎が多い",
+          "knowledge_node_id": "KN0560",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "の肺炎の特徴として正しいのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1812",
+        "question": {
+          "id": "Q1812",
+          "management_code": "Q1812-B-8-O",
+          "category_large": "B",
+          "category_small": 8,
+          "source": "O",
+          "title": "誤嚥疑いに対する嚥下評価",
+          "question_text": "脳梗塞後の82歳男性。食事中のむせ、湿性嗄声、反復する肺炎を認める。誤嚥の有無と嚥下のどの時相で問題が生じるかを直接確認したい。最も適切な評価はどれか。",
+          "choices": {
+            "A": "徒手筋力検査",
+            "B": "改訂長谷川式簡易知能評価スケール",
+            "C": "嚥下造影検査〈VFSS〉",
+            "D": "6分間歩行試験",
+            "E": "関節可動域測定"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1812",
+          "display_answer": "C",
+          "accepted_answer_sets": [
+            [
+              "C"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1812",
+          "explanation": "VFSSは造影剤を含む食塊の動きをX線透視下で観察し、口腔・咽頭期の動態、喉頭侵入・誤嚥の有無や時期を直接評価できる。",
+          "choice_explanations": {
+            "A": "筋力評価では誤嚥を直接確認できない。",
+            "B": "認知機能評価は指示理解などの参考にはなるが、誤嚥の直接評価ではない。",
+            "C": "○。誤嚥と嚥下動態を直接観察できる代表的な機器評価である。",
+            "D": "歩行耐容能評価であり嚥下機能を直接みない。",
+            "E": "関節可動域は嚥下時の食塊動態を評価できない。"
+          }
+        },
+        "tag": {
+          "id": "Q1812",
+          "theme": "誤嚥疑いに対する嚥下評価",
+          "knowledge_node": "高齢者では嚥下反射・咳反射の低下や口腔機能低下により誤嚥性肺炎が多い",
+          "knowledge_node_id": "KN0560",
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE",
+          "secondary_ability": null,
+          "level": 2,
+          "safety": "moderate",
+          "prerequisite_nodes": [
+            "の肺炎の特徴として正しいのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C9-M01",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0558",
+    "target_node_label": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である",
+    "planned_task": "finding_interpretation",
+    "planned_primary_ability": "INTERPRET",
+    "planned_level": 3,
+    "references": [
+      {
+        "question_id": "Q566",
+        "question": {
+          "id": "Q566",
+          "management_code": "Q566-B-9-P",
+          "category_large": "B",
+          "category_small": 9,
+          "source": "P",
+          "title": null,
+          "question_text": "多発性硬化症について正しいのはどれか。",
+          "choices": {
+            "1": "女性よりも男性に多い。",
+            "2": "再発と寛解を繰り返す。",
+            "3": "発症は 50 歳以上が多い。",
+            "4": "後遺障害を残すことは稀である。",
+            "5": "白色人種に比べて黄色人種に多い。"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午前",
+            "question_no": 90
+          }
+        },
+        "answer": {
+          "id": "Q566",
+          "display_answer": "2",
+          "accepted_answer_sets": [
+            [
+              "2"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q566",
+          "explanation": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である。",
+          "choice_explanations": {
+            "1": "女性に多い疾患である。",
+            "2": "○。再発と寛解を反復する経過が代表的である。",
+            "3": "発症は若年成人に多い。",
+            "4": "後遺障害を残す例もあり稀ではない。",
+            "5": "欧米白色人種で頻度が高い。"
+          }
+        },
+        "tag": {
+          "id": "Q566",
+          "theme": "多発性硬化症について正しいのはどれか",
+          "knowledge_node": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である",
+          "knowledge_node_id": "KN0558",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "多発性硬化症について正しいのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1763",
+        "question": {
+          "id": "Q1763",
+          "management_code": "Q1763-B-9-O",
+          "category_large": "B",
+          "category_small": 9,
+          "source": "O",
+          "title": "多発性硬化症の長期予後",
+          "question_text": "再発寛解型多発性硬化症の30歳女性。発症後18か月で3回再発し、各再発後に歩行障害が完全には回復せず障害度が徐々に増している。長期の身体障害進行リスクについて最も適切なのはどれか。",
+          "choices": {
+            "A": "再発頻度は長期障害と関連しない",
+            "B": "早期の反復再発と不完全回復はリスクを高める",
+            "C": "女性であることだけで予後不良と判断する",
+            "D": "30歳発症なら進行性障害は生じない",
+            "E": "初期の障害度は長期予後と関連しない"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1763",
+          "display_answer": "B",
+          "accepted_answer_sets": [
+            [
+              "B"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1763",
+          "explanation": "多発性硬化症では早期の高い疾患活動性、再発、初期からの障害や回復不良などが長期障害進行と関連する。本例は短期間の反復再発と不完全回復があり、より注意を要する経過である。",
+          "choice_explanations": {
+            "A": "再発はその後の障害悪化と関連し、再発頻度が高い経過は予後評価上重要である。",
+            "B": "○。早期の反復再発と障害の残存は長期障害リスクを高める所見として扱われる。",
+            "C": "性別単独の予後効果は一貫せず、本例の疾患活動性より優先して判断する根拠にはならない。",
+            "D": "若年発症でも長期的な障害進行は起こり得る。",
+            "E": "初期の障害度や疾患活動性は長期予後と関連する。"
+          }
+        },
+        "tag": {
+          "id": "Q1763",
+          "theme": "多発性硬化症の長期予後",
+          "knowledge_node": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である",
+          "knowledge_node_id": "KN0558",
+          "task": "prognosis_prediction",
+          "primary_ability": "PREDICT",
+          "secondary_ability": null,
+          "level": 4,
+          "safety": "moderate",
+          "prerequisite_nodes": [
+            "多発性硬化症について正しいのはどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  }
+]

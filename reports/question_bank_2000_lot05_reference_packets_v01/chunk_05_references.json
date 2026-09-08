@@ -1,0 +1,760 @@
+[
+  {
+    "draft_id": "L05-C13-M02",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0544",
+    "target_node_label": "前腕回外に作用する筋",
+    "planned_task": "finding_interpretation",
+    "planned_primary_ability": "INTERPRET",
+    "planned_level": 3,
+    "references": [
+      {
+        "question_id": "Q552",
+        "question": {
+          "id": "Q552",
+          "management_code": "Q552-C-13-P",
+          "category_large": "C",
+          "category_small": 13,
+          "source": "P",
+          "title": null,
+          "question_text": "前腕回外に作用する筋はどれか。",
+          "choices": {
+            "1": "長掌筋",
+            "2": "小指伸筋",
+            "3": "上腕二頭筋",
+            "4": "長母指屈筋",
+            "5": "橈側手根屈筋"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午前",
+            "question_no": 71
+          }
+        },
+        "answer": {
+          "id": "Q552",
+          "display_answer": "3",
+          "accepted_answer_sets": [
+            [
+              "3"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q552",
+          "explanation": "前腕回外の主働筋は上腕二頭筋と回外筋である。上腕二頭筋は肘屈曲だけでなく、特に肘屈曲位で強力な前腕回外作用をもつため3が正しい。",
+          "choice_explanations": {
+            "1": "長掌筋は手関節掌屈に作用する。",
+            "2": "小指伸筋は小指伸展に作用する。",
+            "3": "○。上腕二頭筋は強力な前腕回外筋である。",
+            "4": "長母指屈筋は母指IP関節屈曲に作用する。",
+            "5": "橈側手根屈筋は手関節掌屈・橈屈に作用する。"
+          }
+        },
+        "tag": {
+          "id": "Q552",
+          "theme": "前腕回外に作用する筋はどれか",
+          "knowledge_node": "前腕回外に作用する筋",
+          "knowledge_node_id": "KN0544",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "前腕回外に作用する筋はどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1891",
+        "question": {
+          "id": "Q1891",
+          "management_code": "Q1891-C-13-O",
+          "category_large": "C",
+          "category_small": 13,
+          "source": "O",
+          "title": "前腕回外筋力の評価",
+          "question_text": "前腕回外筋力を徒手的に評価する。回外に主に関与する筋群の作用を確認する動作として最も適切なのはどれか。",
+          "choices": {
+            "A": "前腕を回内位から手掌を上へ向ける",
+            "B": "手関節を尺屈する",
+            "C": "肩関節を内転する",
+            "D": "指を屈曲する",
+            "E": "肘を伸展したまま前腕を回内する"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1891",
+          "display_answer": "A",
+          "accepted_answer_sets": [
+            [
+              "A"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1891",
+          "explanation": "前腕回外は橈骨を回旋させて手掌を前方・上方へ向ける運動で、上腕二頭筋と回外筋が主要な作用筋である。",
+          "choice_explanations": {
+            "A": "○。前腕回外そのものを評価する動作である。",
+            "B": "手関節尺屈は別の関節運動である。",
+            "C": "肩内転は前腕回外を評価しない。",
+            "D": "手指屈曲は回外筋力評価ではない。",
+            "E": "回内は反対方向の運動である。"
+          }
+        },
+        "tag": {
+          "id": "Q1891",
+          "theme": "前腕回外筋力の評価",
+          "knowledge_node": "前腕回外に作用する筋",
+          "knowledge_node_id": "KN0544",
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE",
+          "secondary_ability": null,
+          "level": 2,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "前腕回外に作用する筋はどれかの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C14-S01",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN1551",
+    "target_node_label": "歩行開始前には重心移動を準備する予測的姿勢調節〈APA〉が生じ、第一歩の安定性に寄与する",
+    "planned_task": "intervention_selection",
+    "planned_primary_ability": "PRESCRIBE",
+    "planned_level": 2,
+    "references": [
+      {
+        "question_id": "Q1905",
+        "question": {
+          "id": "Q1905",
+          "management_code": "Q1905-C-14-O",
+          "category_large": "C",
+          "category_small": 14,
+          "source": "O",
+          "title": "歩行開始時APAの機能目標",
+          "question_text": "Parkinson病で歩行開始前の予測的姿勢調節〈APA〉が小さく、第一歩で不安定となる患者がいる。機能目標として最も適切なのはどれか。",
+          "choices": {
+            "A": "適切な重心移動を行い安定して第一歩を開始できる",
+            "B": "立位保持をせず常に座位で生活する",
+            "C": "第一歩の安定性を無視して歩数だけ増やす",
+            "D": "上肢筋力だけを最大化する",
+            "E": "歩行開始前の姿勢調節を完全に抑制する"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1905",
+          "display_answer": "A",
+          "accepted_answer_sets": [
+            [
+              "A"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1905",
+          "explanation": "歩行開始では第一歩に先行して支持基底面内の圧中心移動など予測的姿勢調節が生じる。APAが小さい患者では、適切な重心移動と安定した第一歩の獲得が活動に直結する機能目標となる。",
+          "choice_explanations": {
+            "A": "○。APAの障害と実際の歩行開始能力を結ぶ目標である。",
+            "B": "必要以上に活動を制限する。",
+            "C": "安定性を無視した歩数増加は適切でない。",
+            "D": "主問題である歩行開始時姿勢制御を直接扱わない。",
+            "E": "APAは歩行開始の準備に必要な姿勢調節である。"
+          }
+        },
+        "tag": {
+          "id": "Q1905",
+          "theme": "歩行開始時APAの機能目標",
+          "knowledge_node": "歩行開始前には重心移動を準備する予測的姿勢調節〈APA〉が生じ、第一歩の安定性に寄与する",
+          "knowledge_node_id": "KN1551",
+          "task": "functional_goal_decision",
+          "primary_ability": "DECIDE",
+          "secondary_ability": "INTERPRET",
+          "level": 3,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "歩行開始では静止立位から第一歩へ移るために、重心と足圧中心を調整する姿勢制御が必要である。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C14-M01",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0987",
+    "target_node_label": "反復拮抗運動障害を評価する前腕回内外試験",
+    "planned_task": "finding_interpretation",
+    "planned_primary_ability": "INTERPRET",
+    "planned_level": 2,
+    "references": [
+      {
+        "question_id": "Q997",
+        "question": {
+          "id": "Q997",
+          "management_code": "Q997-C-14-P",
+          "category_large": "C",
+          "category_small": 14,
+          "source": "P",
+          "title": null,
+          "question_text": "反復拮抗運動障害の検査法はどれか。",
+          "choices": {
+            "1": "線引き試験",
+            "2": "継ぎ足歩行",
+            "3": "片足立ち検査",
+            "4": "示指－耳朶試験",
+            "5": "前腕回内外試験"
+          },
+          "exam": {
+            "exam_no": 56,
+            "session": "午後",
+            "question_no": 29
+          }
+        },
+        "answer": {
+          "id": "Q997",
+          "display_answer": "5",
+          "accepted_answer_sets": [
+            [
+              "5"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q997",
+          "explanation": "反復拮抗運動障害（dysdiadochokinesia）は前腕の回内・回外を素早く反復させて評価する。",
+          "choice_explanations": {
+            "1": "線引き試験は測定障害など上肢の協調性評価に用いるが、反復拮抗運動そのものではない。",
+            "2": "継ぎ足歩行は体幹・下肢の平衡や失調をみる。",
+            "3": "片足立ちは静的バランス評価である。",
+            "4": "示指耳朶試験は測定障害・企図振戦などの協調性をみる。",
+            "5": "〇。前腕回内外を素早く反復し、反復拮抗運動障害を評価する。"
+          }
+        },
+        "tag": {
+          "id": "Q997",
+          "theme": "反復拮抗運動障害の検査法はどれか",
+          "knowledge_node": "反復拮抗運動障害を評価する前腕回内外試験",
+          "knowledge_node_id": "KN0987",
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE",
+          "secondary_ability": null,
+          "level": 3,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "反復拮抗運動障害（dysdiadochokinesia）は前腕の回内・回外を素早く反復させて評価する。",
+            "反復拮抗運動障害の検査法はどれか。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1893",
+        "question": {
+          "id": "Q1893",
+          "management_code": "Q1893-C-14-O",
+          "category_large": "C",
+          "category_small": 14,
+          "source": "O",
+          "title": "反復拮抗運動障害への協調運動練習",
+          "question_text": "小脳性運動失調で前腕回内外の反復が不規則な患者に、協調性改善を目的として練習を行う。最も適切なのはどれか。",
+          "choices": {
+            "A": "視覚的確認と一定のリズムを用いて回内外を反復する",
+            "B": "速度だけを最大にして正確性を無視する",
+            "C": "上肢を完全固定して随意運動を行わない",
+            "D": "疲労しても休憩せず反復し続ける",
+            "E": "足趾運動だけを行う"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1893",
+          "display_answer": "A",
+          "accepted_answer_sets": [
+            [
+              "A"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1893",
+          "explanation": "反復拮抗運動障害では運動のタイミング・リズム・正確性が乱れる。視覚や一定のリズムを手掛かりとして、正確な交互運動を反復する課題が適切である。",
+          "choice_explanations": {
+            "A": "○。正確性とタイミングを意識した課題練習である。",
+            "B": "速度のみを優先すると協調性練習になりにくい。",
+            "C": "随意的な協調運動練習の機会を失う。",
+            "D": "疲労は運動の質を悪化させ得る。",
+            "E": "評価で問題となった上肢交互運動を直接練習しない。"
+          }
+        },
+        "tag": {
+          "id": "Q1893",
+          "theme": "反復拮抗運動障害への協調運動練習",
+          "knowledge_node": "反復拮抗運動障害を評価する前腕回内外試験",
+          "knowledge_node_id": "KN0987",
+          "task": "intervention_selection",
+          "primary_ability": "PRESCRIBE",
+          "secondary_ability": null,
+          "level": 3,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "反復拮抗運動障害（dysdiadochokinesia）は前腕の回内・回外を素早く反復させて評価する。",
+            "反復拮抗運動障害の検査法はどれか。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C15-S01",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN1400",
+    "target_node_label": "正常歩行では立脚中期に身体重心が支持脚側へ最も側方移動する",
+    "planned_task": "finding_interpretation",
+    "planned_primary_ability": "INTERPRET",
+    "planned_level": 4,
+    "references": [
+      {
+        "question_id": "Q1425",
+        "question": {
+          "id": "Q1425",
+          "management_code": "Q1425-C-15-P",
+          "category_large": "C",
+          "category_small": 15,
+          "source": "P",
+          "title": null,
+          "question_text": "正常歩行で正しいのはどれか。",
+          "choices": {
+            "1": "立脚相の後半は抑制期である。",
+            "2": "重心は立脚中期で最も側方へ移動する。",
+            "3": "前額面において遊脚側の骨盤は上方傾斜する。",
+            "4": "歩行速度が速くなると遊脚相の比率は低下する。",
+            "5": "遊脚相で下肢が体幹の後方にある時期を減速期という。"
+          },
+          "exam": {
+            "exam_no": 60,
+            "session": "午前",
+            "question_no": 74
+          }
+        },
+        "answer": {
+          "id": "Q1425",
+          "display_answer": "2",
+          "accepted_answer_sets": [
+            [
+              "2"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q1425",
+          "explanation": "正常歩行では立脚中期に身体重心が支持脚側へ最も側方移動する。",
+          "choice_explanations": {
+            "1": "立脚後半を抑制期とは呼ばない。",
+            "2": "○。立脚中期に最大側方移動。",
+            "3": "遊脚側骨盤は下制する。",
+            "4": "速度上昇で遊脚比率は増加傾向。",
+            "5": "減速期は遊脚終期で下肢は体幹前方。"
+          }
+        },
+        "tag": {
+          "id": "Q1425",
+          "theme": "正常歩行で正しいのはどれか",
+          "knowledge_node": "正常歩行では立脚中期に身体重心が支持脚側へ最も側方移動する",
+          "knowledge_node_id": "KN1400",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "正常歩行では立脚中期に身体重心が支持脚側へ最も側方移動する。",
+            "立脚中期に最大側方移動。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C15-M01",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0815",
+    "target_node_label": "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる",
+    "planned_task": "finding_interpretation",
+    "planned_primary_ability": "INTERPRET",
+    "planned_level": 2,
+    "references": [
+      {
+        "question_id": "Q824",
+        "question": {
+          "id": "Q824",
+          "management_code": "Q824-C-15-P",
+          "category_large": "C",
+          "category_small": 15,
+          "source": "P",
+          "title": null,
+          "question_text": "快適歩行から速度を速めた際の変化で正しいのはどれか。",
+          "choices": {
+            "1": "歩幅は減少する。",
+            "2": "重心の上下動は減少する。",
+            "3": "立脚相の時間は減少する。",
+            "4": "股関節の屈曲角度は減少する。",
+            "5": "体幹の水平面内回旋運動は減少する。"
+          },
+          "exam": {
+            "exam_no": 55,
+            "session": "午前",
+            "question_no": 72
+          }
+        },
+        "answer": {
+          "id": "Q824",
+          "display_answer": "3",
+          "accepted_answer_sets": [
+            [
+              "3"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q824",
+          "explanation": "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる。したがって3が正しい。",
+          "choice_explanations": {
+            "1": "歩幅は増加。",
+            "2": "重心上下動は単純に減少とはいえない。",
+            "3": "○。立脚相時間は短縮。",
+            "4": "股関節屈曲角度は増加しやすい。",
+            "5": "体幹回旋は歩幅増加に伴い増える傾向。"
+          }
+        },
+        "tag": {
+          "id": "Q824",
+          "theme": "快適歩行から速度を速めた際の変化で正しいのはどれか",
+          "knowledge_node": "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる",
+          "knowledge_node_id": "KN0815",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "したがって3が正しい。",
+            "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる。",
+            "立脚相時間は短縮。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1894",
+        "question": {
+          "id": "Q1894",
+          "management_code": "Q1894-C-15-O",
+          "category_large": "C",
+          "category_small": 15,
+          "source": "O",
+          "title": "歩行速度変化の時空間評価",
+          "question_text": "歩行練習前後で速度が上がった機序を確認したい。歩幅と歩行率の変化を同時に把握する評価として最も適切なのはどれか。",
+          "choices": {
+            "A": "一定距離の歩行時間と歩数を記録する",
+            "B": "安静時血圧だけを測る",
+            "C": "握力だけを測る",
+            "D": "視力だけを測る",
+            "E": "上腕周径だけを測る"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1894",
+          "display_answer": "A",
+          "accepted_answer_sets": [
+            [
+              "A"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1894",
+          "explanation": "一定距離の歩行時間から歩行速度を、歩数と時間から歩行率を求め、距離と歩数から平均歩幅を算出できる。速度上昇が歩幅・歩行率のどちらに由来するかを評価できる。",
+          "choice_explanations": {
+            "A": "○。歩行速度・歩行率・平均歩幅を同じ試行から算出できる。",
+            "B": "血圧だけでは歩行時空間因子を把握できない。",
+            "C": "握力は歩幅・歩行率を測定しない。",
+            "D": "視力は歩行速度の構成要素を測定しない。",
+            "E": "上腕周径は歩行時空間因子ではない。"
+          }
+        },
+        "tag": {
+          "id": "Q1894",
+          "theme": "歩行速度変化の時空間評価",
+          "knowledge_node": "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる",
+          "knowledge_node_id": "KN0815",
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE",
+          "secondary_ability": null,
+          "level": 2,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "したがって3が正しい。",
+            "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる。",
+            "立脚相時間は短縮。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C15-M02",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0863",
+    "target_node_label": "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する",
+    "planned_task": "functional_goal_decision",
+    "planned_primary_ability": "DECIDE",
+    "planned_level": 2,
+    "references": [
+      {
+        "question_id": "Q872",
+        "question": {
+          "id": "Q872",
+          "management_code": "Q872-C-15-P",
+          "category_large": "C",
+          "category_small": 15,
+          "source": "P",
+          "title": null,
+          "question_text": "歩行（80 m/分）に相当する運動強度に最も近いのはどれか。",
+          "choices": {
+            "1": "1.5 METs",
+            "2": "3.5 METs",
+            "3": "5.0 METs",
+            "4": "6.0 METs",
+            "5": "7.0 METs"
+          },
+          "exam": {
+            "exam_no": 55,
+            "session": "午後",
+            "question_no": 48
+          }
+        },
+        "answer": {
+          "id": "Q872",
+          "display_answer": "2",
+          "accepted_answer_sets": [
+            [
+              "2"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q872",
+          "explanation": "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する。選択肢では3.5METsの2が最も近い。",
+          "choice_explanations": {
+            "1": "1.5METsは低すぎる。",
+            "2": "○。3.5METs程度が近い。",
+            "3": "5METsはやや高い。",
+            "4": "6METsは速歩以上。",
+            "5": "7METsはさらに高強度。"
+          }
+        },
+        "tag": {
+          "id": "Q872",
+          "theme": "歩行（80 m/分）に相当する運動強度に最も近いのはどれか",
+          "knowledge_node": "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する",
+          "knowledge_node_id": "KN0863",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "選択肢では3.5METsの2が最も近い。",
+            "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する。",
+            "3.5METs程度が近い。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1895",
+        "question": {
+          "id": "Q1895",
+          "management_code": "Q1895-C-15-O",
+          "category_large": "C",
+          "category_small": 15,
+          "source": "O",
+          "title": "歩行運動耐容能の予測",
+          "question_text": "運動負荷試験から4 METs程度の活動まで安定して行える患者がいる。平地を80 m/分で歩く課題について最も妥当な予測はどれか。",
+          "choices": {
+            "A": "一般に3〜4 METs程度であり実施可能性を検討できる",
+            "B": "必ず10 METsを超えるため禁忌である",
+            "C": "安静臥床と同じ1 METである",
+            "D": "20 METs以上の最大運動に相当する",
+            "E": "歩行速度と運動強度には全く関係がない"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1895",
+          "display_answer": "A",
+          "accepted_answer_sets": [
+            [
+              "A"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1895",
+          "explanation": "80 m/分は約4.8 km/hの歩行で、一般的には中等度の3〜4 METs程度に相当する。4 METs程度まで安定している患者なら、症状や個別条件を確認しつつ実施可能性を検討できる。",
+          "choice_explanations": {
+            "A": "○。提示された運動耐容能と歩行課題の強度が近い。",
+            "B": "通常の平地歩行80 m/分は10 METsを超える活動ではない。",
+            "C": "1 METは安静時代謝相当である。",
+            "D": "最大級の運動強度ではない。",
+            "E": "一般に歩行速度上昇で代謝要求は増える。"
+          }
+        },
+        "tag": {
+          "id": "Q1895",
+          "theme": "歩行運動耐容能の予測",
+          "knowledge_node": "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する",
+          "knowledge_node_id": "KN0863",
+          "task": "prognosis_prediction",
+          "primary_ability": "PREDICT",
+          "secondary_ability": "INTERPRET",
+          "level": 2,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "選択肢では3.5METsの2が最も近い。",
+            "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する。",
+            "3.5METs程度が近い。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C17-S01",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN1225",
+    "target_node_label": "重力を除去した肢位で膝伸展・膝屈曲を評価するため、両者とも側臥位など同じ重力除去肢位となる",
+    "planned_task": "assessment_selection",
+    "planned_primary_ability": "MEASURE",
+    "planned_level": 2,
+    "references": [
+      {
+        "question_id": "Q1240",
+        "question": {
+          "id": "Q1240",
+          "management_code": "Q1240-C-17-P",
+          "category_large": "C",
+          "category_small": 17,
+          "source": "P",
+          "title": null,
+          "question_text": "Danielsらの徒手筋力テストの検査肢位において、膝関節の伸展と屈曲が同じになる段階はどれか。",
+          "choices": {
+            "1": "段階1",
+            "2": "段階2",
+            "3": "段階3",
+            "4": "段階4",
+            "5": "段階5"
+          },
+          "exam": {
+            "exam_no": 58,
+            "session": "午後",
+            "question_no": 27
+          }
+        },
+        "answer": {
+          "id": "Q1240",
+          "display_answer": "2",
+          "accepted_answer_sets": [
+            [
+              "2"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q1240",
+          "explanation": "MMT段階2では重力を除去した肢位で膝伸展・膝屈曲を評価するため、両者とも側臥位など同じ重力除去肢位となる。",
+          "choice_explanations": {
+            "1": "段階1は触診中心で肢位が異なることがある。",
+            "2": "○。段階2では重力除去肢位。",
+            "3": "段階3以上は抗重力肢位で筋ごとに異なる。",
+            "4": "段階4も抵抗方向が異なる。",
+            "5": "段階5も同様。"
+          }
+        },
+        "tag": {
+          "id": "Q1240",
+          "theme": "Danielsらの徒手筋力テストの検査肢位において、膝関節の伸展と屈曲が同じになる段階はどれか",
+          "knowledge_node": "重力を除去した肢位で膝伸展・膝屈曲を評価するため、両者とも側臥位など同じ重力除去肢位となる",
+          "knowledge_node_id": "KN1225",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "MMT段階2では重力を除去した肢位で膝伸展・膝屈曲を評価するため、両者とも側臥位など同じ重力除去肢位となる。",
+            "段階2では重力除去肢位。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  }
+]
