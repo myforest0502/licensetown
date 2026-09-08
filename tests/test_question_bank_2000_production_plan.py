@@ -30,7 +30,7 @@ def test_remaining_allocation_balances_to_2000():
     assert sum(map(int, remaining["level"].values())) == 137
     assert sum(map(int, remaining["node_slot"].values())) == 137
     assert report["used"]["node_slot"] == {
-        "multi_reinforcement": 22, "new_node": 8, "singleton_second": 90,
+        "multi_reinforcement": 20, "new_node": 8, "singleton_second": 92,
     }
     assert report["used"]["strong_formations"] == 112
     assert report["used"]["weak_or_unproven_formations"] == []
