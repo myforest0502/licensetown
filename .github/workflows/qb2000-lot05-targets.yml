@@ -23,26 +23,35 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Build deterministic Lot05 target roster
+      - name: Build deterministic Lot05 target roster and assignment
         run: |
           python -m reports.question_bank_2000_lot05_targets_v01
+          python -m reports.question_bank_2000_lot05_assignment_v01
           python - <<'PY'
           import json
+          from collections import Counter
           from pathlib import Path
-          p=Path('reports/question_bank_2000_lot05_targets_v01.json')
-          x=json.loads(p.read_text(encoding='utf-8'))
-          assert x['formal_baseline']=='Q1-Q1953'
-          assert x['required_total_questions']==41
-          assert x['required_existing_targets']==38
-          assert x['required_new_nodes']==3
-          assert len(x['existing_node_targets'])==38
-          assert len({r['canonical_node_id'] for r in x['existing_node_targets']})==38
+          t=json.loads(Path('reports/question_bank_2000_lot05_targets_v01.json').read_text(encoding='utf-8'))
+          a=json.loads(Path('reports/question_bank_2000_lot05_assignment_v01.json').read_text(encoding='utf-8'))
+          assert t['formal_baseline']=='Q1-Q1953'
+          assert t['required_total_questions']==41
+          assert t['required_existing_targets']==38
+          assert t['required_new_nodes']==3
+          assert len(t['existing_node_targets'])==38
+          assert len({r['canonical_node_id'] for r in t['existing_node_targets']})==38
+          assert len(a['assignments'])==41
+          assert Counter(x['proposed_task'] for x in a['assignments']) == Counter({k:int(v) for k,v in t['task_quota'].items()})
+          assert Counter(str(x['level']) for x in a['assignments']) == Counter({str(k):int(v) for k,v in t['level_quota'].items()})
           PY
           git diff --check
-      - name: Commit target roster
+      - name: Commit Lot05 prep outputs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add reports/question_bank_2000_lot05_targets_v01.json
-          git commit -m "Generate Question Bank 2000 Lot05 target roster"
-          git push origin HEAD:work/qb2000-lot05-active
+          git add reports/question_bank_2000_lot05_targets_v01.json reports/question_bank_2000_lot05_assignment_v01.json
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+          else
+            git commit -m "Generate Question Bank 2000 Lot05 prep outputs"
+            git push origin HEAD:work/qb2000-lot05-active
+          fi
