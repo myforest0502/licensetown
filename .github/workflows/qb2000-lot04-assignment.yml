@@ -6,6 +6,7 @@ on:
       - work/qb2000-lot04-active
     paths:
       - reports/question_bank_2000_lot04_assignment_v01.py
+      - .github/workflows/qb2000-lot04-assignment.yml
 
 permissions:
   contents: write
