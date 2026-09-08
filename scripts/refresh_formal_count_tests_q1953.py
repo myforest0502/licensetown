@@ -57,6 +57,15 @@ def main() -> int:
             text = text.replace("1537", "1541")
         target.write_text(text, encoding="utf-8")
 
+    # Lot04 converts five weak-only Nodes to strong alternatives; keep the exact
+    # current formal repairability snapshot aligned with the regenerated bank.
+    replace(
+        "tests/test_knowledge_node_repairability.py",
+        'assert summary["weak_alt_question_only_node_count"] == 28',
+        'assert summary["weak_alt_question_only_node_count"] == 23',
+        count=1,
+    )
+
     replace(
         "tests/test_past_exam_normal_import_47_51_lot2_v01.py",
         "assert len(nodes) == 1551",
