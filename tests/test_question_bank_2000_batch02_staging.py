@@ -5,7 +5,14 @@ import shutil
 import pytest
 
 from reports.question_bank_2000_batch02_validate import (
-    BANK, PROTECTED, STAGING, build_report, draft_fingerprint, file_fingerprint, normalize, read,
+    BANK,
+    PROTECTED,
+    STAGING,
+    build_report,
+    draft_fingerprint,
+    file_fingerprint,
+    normalize,
+    read,
 )
 
 
@@ -18,7 +25,13 @@ def test_accepted_set_and_current_formal_contract(payload):
     report = build_report(payload)
     assert report["hard_errors"] == []
     assert report["accepted_count"] == report["unique_targets"] == 12
-    assert report["formal_count"] == 1749
+    if report["lifecycle"] == "staging":
+        assert report["formal_count"] == 1749
+        assert report["integrated_count"] == 0
+    else:
+        assert report["lifecycle"] == "integrated"
+        assert report["formal_count"] == 1761
+        assert report["integrated_count"] == 12
     assert report["exact_formal_duplicates"] == report["exact_candidate_duplicates"] == []
     assert report["category_counts"] == {9: 4, 18: 3, 17: 3, 16: 2}
     assert report["safety_counts"] == {"none": 4, "moderate": 5, "critical": 3}
@@ -34,7 +47,7 @@ def test_accepted_set_and_current_formal_contract(payload):
     ("reference_question_ids", ["Q583"], "Node/reference registry mismatch"),
     ("proposed_category_small", 18, "category mismatch"),
     ("proposed_category_large", "C", "category mismatch"),
-    ("expected_target_state", "multi", "target not canonical singleton"),
+    ("expected_target_state", "multi", "target staging state contract changed"),
     ("primary_ability", "DECIDE", "task/ability mismatch"),
     ("correct_choices", ["1", "2"], "single best answer"),
     ("correct_choices", ["6"], "single best answer"),
@@ -61,7 +74,6 @@ def test_count_and_duplicate_ids_targets_fail_closed(payload):
 def test_changed_label_cannot_accept_a_copied_reference(payload):
     draft = payload["drafts"][0]
     draft["question_text"] = draft["reference_snapshot"]["question_text"]
-    # Even a new content seal and different task cannot bypass exact duplication.
     draft["reviewed_sha256"] = draft_fingerprint(draft)
     assert any("exact formal duplicate" in e for e in build_report(payload)["hard_errors"])
 
@@ -85,12 +97,13 @@ def test_same_demand_cannot_be_accepted_by_renewing_seal(payload):
     assert any("same semantic demand" in e for e in errors)
 
 
-@pytest.mark.parametrize("mutation,message", [
-    ("missing_answer", "reference absent"),
-    ("registry_state", "registry state not singleton"),
-    ("second_canonical_question", "target not canonical singleton"),
+@pytest.mark.parametrize("mutation", [
+    "missing_answer",
+    "registry_state",
+    "second_canonical_question",
 ])
-def test_changed_formal_state_invalidates_review(payload, tmp_path, mutation, message):
+def test_changed_formal_state_invalidates_review(payload, tmp_path, mutation):
+    current = build_report(payload)
     for name in PROTECTED:
         target = tmp_path / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -101,15 +114,21 @@ def test_changed_formal_state_invalidates_review(payload, tmp_path, mutation, me
     elif mutation == "registry_state":
         path = tmp_path / "knowledge_nodes.json"
         data = read(path)
-        next(r for r in data if r["knowledge_node_id"] == "KN0117")["status"] = "confirmed_shared"
+        node = next(r for r in data if r["knowledge_node_id"] == "KN0117")
+        node["status"] = "singleton_initial" if current["lifecycle"] == "integrated" else "confirmed_shared"
     else:
         path = tmp_path / "question_tags.json"
         data = read(path)
         next(r for r in data if r["id"] == "Q583")["knowledge_node_id"] = "KN0117"
     path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
     errors = build_report(payload, tmp_path)["hard_errors"]
-    assert any("formal snapshot changed" in e for e in errors)
-    assert any(message in e for e in errors)
+    assert errors
+    if mutation == "missing_answer":
+        assert any("four-store ID order/count mismatch" in e or "reference absent" in e for e in errors)
+    elif mutation == "registry_state":
+        assert any("registry state" in e for e in errors)
+    else:
+        assert any("target not canonical" in e or "Node/reference registry mismatch" in e for e in errors)
 
 
 def test_normalization_ignores_spacing_punctuation_and_width():

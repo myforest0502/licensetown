@@ -17726,5 +17726,125 @@
       ]
     ],
     "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1750",
+    "display_answer": "C",
+    "accepted_answer_sets": [
+      [
+        "C"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1751",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1752",
+    "display_answer": "D",
+    "accepted_answer_sets": [
+      [
+        "D"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1753",
+    "display_answer": "B",
+    "accepted_answer_sets": [
+      [
+        "B"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1754",
+    "display_answer": "E",
+    "accepted_answer_sets": [
+      [
+        "E"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1755",
+    "display_answer": "C",
+    "accepted_answer_sets": [
+      [
+        "C"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1756",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1757",
+    "display_answer": "D",
+    "accepted_answer_sets": [
+      [
+        "D"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1758",
+    "display_answer": "B",
+    "accepted_answer_sets": [
+      [
+        "B"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1759",
+    "display_answer": "E",
+    "accepted_answer_sets": [
+      [
+        "E"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1760",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1761",
+    "display_answer": "D",
+    "accepted_answer_sets": [
+      [
+        "D"
+      ]
+    ],
+    "answer_basis": "LT_original"
   }
 ]
