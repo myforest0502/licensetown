@@ -1,0 +1,85 @@
+name: qb2000-lot04-seal
+
+on:
+  push:
+    branches: [work/qb2000-lot04-active]
+    paths:
+      - '.github/workflows/qb2000-lot04-seal.yml'
+      - 'reports/question_bank_2000_lot04_chunks.py'
+      - 'reports/question_bank_2000_lot04_validate.py'
+      - 'reports/question_bank_2000_lot04_seal.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  seal-lot04:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot04-active
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Verify aggregate pre-seal audit is green
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('reports/question_bank_2000_lot04_preseal_audit.json')
+          x=json.loads(p.read_text(encoding='utf-8'))
+          assert x['hard_errors']==[], x['hard_errors']
+          assert x['warnings']==[], x['warnings']
+          assert x['draft_count']==48
+          assert x['structural_strong_formations']==44
+          for n,v in x['similarity'].items():
+              assert v['exact']==0 and v['hard_near']==0 and v['near']==0, (n,v)
+          PY
+      - name: Revalidate all six chunks and similarity audits
+        run: |
+          for n in 1 2 3 4 5 6; do
+            python -m reports.question_bank_2000_lot04_chunk_validate $n
+            python -m reports.question_bank_2000_lot04_similarity_audit $n
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for p in sorted(Path('reports/question_bank_2000_lot04_similarity_audits').glob('chunk_*.json')):
+              x=json.loads(p.read_text(encoding='utf-8'))
+              assert x['exact_total']==0 and x['hard_near_total']==0 and x['near_total']==0, (p,x['exact_total'],x['hard_near_total'],x['near_total'])
+          PY
+      - name: Merge and pre-seal validate
+        run: |
+          python -m reports.question_bank_2000_lot04_chunks merge
+          python - <<'PY'
+          import json
+          from reports.question_bank_2000_lot04_validate import build_report
+          r=build_report(require_seals=False)
+          print(json.dumps({k:r[k] for k in ['accepted_count','hard_errors','warnings','category_counts','task_counts','level_counts','slot_counts','safety_counts','structural_strong_formations']},ensure_ascii=False,indent=2))
+          assert r['hard_errors']==[]
+          assert r['warnings']==[]
+          assert r['accepted_count']==48
+          PY
+      - name: Seal and final validate
+        run: |
+          python -m reports.question_bank_2000_lot04_seal
+          python -m reports.question_bank_2000_lot04_validate
+          git diff --check
+      - name: Commit sealed staging
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add staging/question_bank_2000_lot04_v01.json reports/question_bank_2000_lot04_similarity_audits
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "No Lot04 seal changes to commit"
+            exit 0
+          fi
+          git commit -m "Seal Question Bank 2000 Lot04"
+          git push origin HEAD:work/qb2000-lot04-active
