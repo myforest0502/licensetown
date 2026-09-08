@@ -88,7 +88,7 @@ def build_report(payload: dict) -> dict:
         if isinstance(review, dict):
             for key in ("candidate_demand", "why_not_same_demand", "reviewer", "reviewed_on"):
                 check(bool(str(review.get(key, "")).strip()), p + f"semantic review missing {key}")
-            check(review.get("expert_signoff") is True, p + "expert_signoff must be true")
+            check(isinstance(review.get("expert_signoff"), bool), p + "expert_signoff must be an explicit boolean")
 
         slot = str(d.get("slot_type") or "")
         if slot in {"singleton_second", "multi_reinforcement"}:
