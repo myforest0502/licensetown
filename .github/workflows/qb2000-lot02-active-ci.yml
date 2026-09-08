@@ -28,16 +28,33 @@ jobs:
             python -m reports.question_bank_2000_lot02_chunk_validate $n
             python -m reports.question_bank_2000_lot02_similarity_audit $n
           done
+      - name: Merge and pre-seal Lot02
+        run: |
+          python -m reports.question_bank_2000_lot02_chunks merge
+          python - <<'PY'
+          import json
+          from reports.question_bank_2000_lot02_validate import build_report
+          report = build_report(require_seals=False)
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          if report['hard_errors']:
+              raise SystemExit(1)
+          PY
+      - name: Seal and final-validate Lot02
+        run: |
+          python -m reports.question_bank_2000_lot02_seal
+          python -m reports.question_bank_2000_lot02_validate
       - name: Run Lot02 tests
         run: >-
           python -m pytest -q
           tests/test_question_bank_2000_lot02_chunk_validator.py
           tests/test_question_bank_2000_lot02_target_allocation.py
           tests/test_question_bank_2000_lot02_pipeline.py
-      - name: Upload similarity audits
+      - name: Upload Lot02 validation artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: qb2000-lot02-all-chunk-audits
+          name: qb2000-lot02-validation
           if-no-files-found: warn
-          path: reports/question_bank_2000_lot02_similarity_audits/*.json
+          path: |
+            reports/question_bank_2000_lot02_similarity_audits/*.json
+            staging/question_bank_2000_lot02_v01.json
