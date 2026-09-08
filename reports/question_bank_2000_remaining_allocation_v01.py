@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BANK = ROOT / "data" / "question_bank"
 BASE_END = 1737
-CURRENT_END = 1761
+CURRENT_END = 1809
 FINAL_TARGET = 2000
 
 CATEGORY_TARGET = {1:12,2:16,3:4,4:7,5:4,6:8,7:10,8:25,9:28,10:7,11:12,12:10,13:10,14:10,15:14,16:20,17:28,18:32}
@@ -47,10 +47,10 @@ def build_report() -> dict:
     nodes = {row["knowledge_node_id"]: row for row in read("knowledge_nodes.json")}
     added_qids = [f"Q{n}" for n in range(BASE_END + 1, CURRENT_END + 1)]
     if any(qid not in questions or qid not in tags for qid in added_qids):
-        raise ValueError("Q1738-Q1761 missing from formal stores")
+        raise ValueError(f"Q1738-Q{CURRENT_END} missing from formal stores")
     added = [tags[qid] for qid in added_qids]
     if any(row.get("source") != "original" for row in added):
-        raise ValueError("Q1738-Q1761 must all be original")
+        raise ValueError(f"Q1738-Q{CURRENT_END} must all be original")
 
     category_used = Counter(int(questions[row["id"]]["category_small"]) for row in added)
     task_used = Counter(str(row["task"]) for row in added)
@@ -74,7 +74,7 @@ def build_report() -> dict:
         demand = (row.get("task"), row.get("primary_ability"))
         if any(p in tags and (tags[p].get("task"), tags[p].get("primary_ability")) != demand for p in prior):
             strong_used += 1
-        else:
+        elif prior:
             weak.append({"qid":qid,"node":node_id,"prior":prior,"demand":demand})
 
     category_remaining = {k:CATEGORY_TARGET[k]-category_used.get(k,0) for k in CATEGORY_TARGET}
@@ -88,10 +88,10 @@ def build_report() -> dict:
             raise ValueError(f"{label} target overspent: {values}")
 
     original_remaining = sum(category_remaining.values())
-    if original_remaining != 233:
-        raise ValueError(f"expected 233 original remaining, got {original_remaining}")
-    if sum(task_remaining.values()) != 233 or sum(level_remaining.values()) != 233 or sum(slot_remaining.values()) != 233:
-        raise ValueError("remaining allocation dimensions do not sum to 233")
+    if original_remaining != 185:
+        raise ValueError(f"expected 185 original remaining, got {original_remaining}")
+    if sum(task_remaining.values()) != 185 or sum(level_remaining.values()) != 185 or sum(slot_remaining.values()) != 185:
+        raise ValueError("remaining allocation dimensions do not sum to 185")
     total_remaining = FINAL_TARGET - CURRENT_END
     past_exam_remaining = total_remaining - original_remaining
     if past_exam_remaining != 6:
@@ -123,7 +123,7 @@ def build_report() -> dict:
             "strong_formations":STRONG_TARGET-strong_used,
             "safety_augment":SAFETY_AUGMENT_TARGET-safety_aug_used,
         },
-        "production_lots":[48,48,48,48,41],
+        "production_lots":[48,48,48,41],
     }
 
 
@@ -136,7 +136,7 @@ def write_outputs(report: dict) -> None:
         f"Current formal bank: Q1-Q{CURRENT_END} / {CURRENT_END} questions.",
         f"Remaining to 2000: {report['total_remaining']} = original {report['original_remaining']} + past_exam {report['past_exam_remaining']}.","",
         "## Remaining original allocation by category","",
-        "| ID | Category | Target +257 | Used Q1738-Q1761 | Remaining |","|---:|---|---:|---:|---:|",
+        f"| ID | Category | Target +257 | Used Q1738-Q{CURRENT_END} | Remaining |","|---:|---|---:|---:|---:|",
     ]
     for cid in range(1,19):
         lines.append(f"| {cid} | {CATEGORY_NAMES[cid]} | {CATEGORY_TARGET[cid]} | {used['category'].get(str(cid),used['category'].get(cid,0))} | {rem['category'][cid]} |")
@@ -154,13 +154,13 @@ def write_outputs(report: dict) -> None:
         f"- strong formations remaining: {rem['strong_formations']}",
         f"- Safety moderate/critical augmentation remaining: {rem['safety_augment']}","",
         "## Production lots","",
-        "Calibration is complete. Remaining originals are grouped into production lots: 48 / 48 / 48 / 48 / 41, followed by a separate 6-question past-exam acceptance step.","",
+        "Calibration and Lot01 are complete. Remaining originals are grouped into production lots: 48 / 48 / 48 / 41, followed by a separate 6-question past-exam acceptance step.","",
         "Each lot is staging-first, then formal integration only after semantic/duplicate/Node/category validation and full CI.",
     ]
     if used["weak_or_unproven_formations"]:
         lines += ["","## Warning","",f"{len(used['weak_or_unproven_formations'])} calibration additions did not prove a strong pair under the metadata rule and require inspection."]
     else:
-        lines += ["","All 24 calibration additions prove a different-demand strong pair against at least one pre-audit question in their Node."]
+        lines += ["",f"All {used['strong_formations']} existing-Node additions prove a different-demand strong pair against at least one pre-audit question in their Node."]
     (ROOT / "docs" / "question-bank-2000-remaining-allocation-v01.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
 
 

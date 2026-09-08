@@ -1,43 +1,49 @@
 {
   "baseline_audit_end": 1737,
-  "current_formal_end": 1761,
-  "current_formal_count": 1761,
-  "formal_original_added_since_audit": 24,
-  "original_remaining": 233,
+  "current_formal_end": 1809,
+  "current_formal_count": 1809,
+  "formal_original_added_since_audit": 72,
+  "original_remaining": 185,
   "past_exam_remaining": 6,
-  "total_remaining": 239,
+  "total_remaining": 191,
   "used": {
     "category": {
-      "9": 6,
+      "9": 18,
       "13": 1,
       "15": 3,
-      "16": 5,
-      "17": 5,
-      "18": 4
+      "16": 15,
+      "17": 17,
+      "18": 18
     },
     "task": {
-      "assessment_selection": 4,
-      "device_selection": 1,
-      "finding_interpretation": 10,
-      "intervention_selection": 4,
-      "safety_priority": 5
+      "assessment_selection": 13,
+      "device_selection": 3,
+      "fact_recall": 1,
+      "finding_interpretation": 24,
+      "functional_goal_decision": 4,
+      "intervention_selection": 13,
+      "prognosis_prediction": 3,
+      "safety_priority": 11
     },
     "level": {
-      "2": 4,
-      "3": 17,
-      "4": 3
+      "1": 1,
+      "2": 20,
+      "3": 37,
+      "4": 14
     },
     "safety": {
-      "critical": 9,
-      "moderate": 10,
-      "none": 5
+      "critical": 14,
+      "moderate": 17,
+      "none": 41
     },
     "node_slot": {
-      "singleton_second": 24
+      "multi_reinforcement": 10,
+      "new_node": 4,
+      "singleton_second": 58
     },
-    "strong_formations": 24,
+    "strong_formations": 68,
     "weak_or_unproven_formations": [],
-    "safety_augment": 19
+    "safety_augment": 31
   },
   "remaining_original_plan": {
     "category": {
@@ -49,43 +55,42 @@
       "6": 8,
       "7": 10,
       "8": 25,
-      "9": 22,
+      "9": 10,
       "10": 7,
       "11": 12,
       "12": 10,
       "13": 9,
       "14": 10,
       "15": 11,
-      "16": 15,
-      "17": 23,
-      "18": 28
+      "16": 5,
+      "17": 11,
+      "18": 14
     },
     "task": {
-      "assessment_selection": 43,
-      "device_selection": 8,
-      "fact_recall": 6,
-      "finding_interpretation": 69,
-      "functional_goal_decision": 20,
-      "intervention_selection": 42,
-      "prognosis_prediction": 16,
-      "safety_priority": 29
+      "assessment_selection": 34,
+      "device_selection": 6,
+      "fact_recall": 5,
+      "finding_interpretation": 55,
+      "functional_goal_decision": 16,
+      "intervention_selection": 33,
+      "prognosis_prediction": 13,
+      "safety_priority": 23
     },
     "level": {
-      "1": 6,
-      "2": 76,
-      "3": 99,
-      "4": 52
+      "1": 5,
+      "2": 60,
+      "3": 79,
+      "4": 41
     },
     "node_slot": {
-      "singleton_second": 155,
-      "multi_reinforcement": 57,
-      "new_node": 21
+      "singleton_second": 121,
+      "multi_reinforcement": 47,
+      "new_node": 17
     },
-    "strong_formations": 200,
-    "safety_augment": 60
+    "strong_formations": 156,
+    "safety_augment": 48
   },
   "production_lots": [
-    48,
     48,
     48,
     48,

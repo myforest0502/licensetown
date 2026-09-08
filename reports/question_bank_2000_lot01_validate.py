@@ -52,6 +52,9 @@ SAFETY_AUGMENT = 12
 MIN_STRONG = 41
 BASE_COUNT = 1761
 BASE_VERSION = "2026-09-b14"
+INTEGRATED_START = 1762
+INTEGRATED_END = 1809
+INTEGRATED_VERSION = "2026-09-b15"
 NEAR_THRESHOLD = 0.65
 HARD_NEAR_THRESHOLD = 0.78
 
@@ -98,10 +101,6 @@ def build_report(payload: dict | None = None, *, require_seals: bool = True) -> 
             errors.append(message)
 
     manifest = read(BANK / "bank_manifest.json")
-    check(manifest.get("question_count") == BASE_COUNT, "formal baseline count is not 1761")
-    check(manifest.get("last_question_number") == BASE_COUNT, "formal baseline range is not Q1-Q1761")
-    check(manifest.get("bank_version") == BASE_VERSION, "formal baseline version is not 2026-09-b14")
-
     questions = read(BANK / "questions.json")
     answers = read(BANK / "answers.json")
     explanations = read(BANK / "explanations.json")
@@ -113,6 +112,22 @@ def build_report(payload: dict | None = None, *, require_seals: bool = True) -> 
         "explanations": {r["id"]:r for r in explanations},
         "question_tags": {r["id"]:r for r in tags},
     }
+    integrated_ids = [f"Q{number}" for number in range(INTEGRATED_START, INTEGRATED_END + 1)]
+    integrated_count = sum(qid in maps["questions"] for qid in integrated_ids)
+    check(integrated_count in (0, 48), f"partial formal integration: {integrated_count}/48")
+    integrated = integrated_count == 48
+    if integrated:
+        check(manifest.get("question_count", 0) >= INTEGRATED_END,
+              "formal integrated count is below 1809")
+        check(manifest.get("last_question_number") == manifest.get("question_count"),
+              "formal integrated range/count mismatch")
+        if manifest.get("question_count") == INTEGRATED_END:
+            check(manifest.get("bank_version") == INTEGRATED_VERSION,
+                  "formal integrated version is not 2026-09-b15")
+    else:
+        check(manifest.get("question_count") == BASE_COUNT, "formal baseline count is not 1761")
+        check(manifest.get("last_question_number") == BASE_COUNT, "formal baseline range is not Q1-Q1761")
+        check(manifest.get("bank_version") == BASE_VERSION, "formal baseline version is not 2026-09-b14")
     node_index = {r["knowledge_node_id"]:r for r in nodes}
     canon = _canonical_map()
     canonical = lambda node_id: canon.get(str(node_id), str(node_id))
@@ -134,7 +149,11 @@ def build_report(payload: dict | None = None, *, require_seals: bool = True) -> 
         check(payload.get("formal_hash_format") == "sha256-lf-normalized-v1", "formal hash format invalid")
         hashes = payload.get("formal_input_sha256", {})
         check(set(hashes) == set(PROTECTED), "formal protected hash set incomplete")
-        for name in PROTECTED:
+        protected = (
+            ("knowledge_node_canonical_map.json", "strong_different_question_pairs.json")
+            if integrated else PROTECTED
+        )
+        for name in protected:
             check(hashes.get(name) == file_fingerprint(BANK / name), f"formal snapshot changed: {name}")
 
     drafts = payload.get("drafts", [])
@@ -154,7 +173,8 @@ def build_report(payload: dict | None = None, *, require_seals: bool = True) -> 
     candidate_norms: dict[str,str] = {}
     normalized_node_labels = {normalize(r.get("label", "")): r["knowledge_node_id"] for r in nodes if normalize(r.get("label", ""))}
 
-    for d in drafts:
+    new_node_offset = 0
+    for draft_offset, d in enumerate(drafts):
         did = str(d.get("draft_id") or "?")
         prefix = f"{did}: "
         slot = str(d.get("slot_type") or "")
@@ -211,10 +231,15 @@ def build_report(payload: dict | None = None, *, require_seals: bool = True) -> 
 
         norm = normalize(stem)
         candidate_norms[did] = norm
-        exact = [qid for qid,text in formal_stems.items() if text and text == norm]
+        integrated_qid = f"Q{INTEGRATED_START + draft_offset}"
+        comparison_stems = {
+            qid: text for qid, text in formal_stems.items()
+            if not integrated or qid != integrated_qid
+        }
+        exact = [qid for qid,text in comparison_stems.items() if text and text == norm]
         check(not exact, prefix + f"exact formal duplicate: {exact}")
         if norm:
-            ranked = sorted(((SequenceMatcher(None,norm,text,autojunk=False).ratio(),qid) for qid,text in formal_stems.items() if text), reverse=True)[:5]
+            ranked = sorted(((SequenceMatcher(None,norm,text,autojunk=False).ratio(),qid) for qid,text in comparison_stems.items() if text), reverse=True)[:5]
             hard_near = [(qid,score) for score,qid in ranked if score >= HARD_NEAR_THRESHOLD]
             if hard_near:
                 reviewed_related = {str(x.get("qid")) for x in review.get("related_formal_questions", []) if isinstance(x,dict)}
@@ -231,7 +256,9 @@ def build_report(payload: dict | None = None, *, require_seals: bool = True) -> 
                 check(category == target["category_small"], prefix + "category changed from roster")
                 refs = [str(x) for x in d.get("reference_question_ids", [])]
                 check(refs == target["question_ids"], prefix + "reference membership changed from roster")
-                check(formal_groups.get(canonical(node_id), []) == target["question_ids"], prefix + "formal canonical Node membership changed")
+                expected_group = list(target["question_ids"]) + ([integrated_qid] if integrated else [])
+                check(formal_groups.get(canonical(node_id), []) == expected_group,
+                      prefix + "formal canonical Node membership changed")
                 check(all(qid in maps["questions"] and qid in maps["answers"] and qid in maps["explanations"] and qid in maps["question_tags"] for qid in refs), prefix + "reference missing from four formal stores")
                 existing_demands = {(str(x["task"]),str(x["primary_ability"])) for x in target.get("existing_demands", [])}
                 candidate_demand = (task, ability)
@@ -251,12 +278,26 @@ def build_report(payload: dict | None = None, *, require_seals: bool = True) -> 
             check(bool(label), prefix + "proposed new Node label required")
             if label:
                 label_norm = normalize(label)
-                check(label_norm not in normalized_node_labels, prefix + f"new Node label duplicates existing Node {normalized_node_labels.get(label_norm)}")
+                allocated_node_id = f"KN{1539 + new_node_offset:04d}"
+                duplicate_node = normalized_node_labels.get(label_norm)
+                check(not duplicate_node or (integrated and duplicate_node == allocated_node_id),
+                      prefix + f"new Node label duplicates existing Node {duplicate_node}")
+            new_node_offset += 1
             collision = d.get("new_node_collision_review", {})
             check(isinstance(collision,dict) and collision.get("decision") == "accepted_new_node", prefix + "new Node collision review required")
             check(bool(str(collision.get("why_existing_nodes_insufficient","")).strip()), prefix + "new Node collision rationale required")
         else:
             check(False, prefix + f"invalid slot_type {slot!r}")
+
+        if integrated:
+            check(all(integrated_qid in mapping for mapping in maps.values()),
+                  prefix + "integrated Q missing from formal stores")
+            if all(integrated_qid in mapping for mapping in maps.values()):
+                check(maps["questions"][integrated_qid].get("question_text") == d.get("question_text"),
+                      prefix + "formal question differs from sealed staging")
+                formal_tag = maps["question_tags"][integrated_qid]
+                check((formal_tag.get("task"), formal_tag.get("primary_ability")) == (task, ability),
+                      prefix + "formal demand differs from sealed staging")
 
         rows.append({
             "draft_id":did,
@@ -300,6 +341,9 @@ def build_report(payload: dict | None = None, *, require_seals: bool = True) -> 
         "slot_counts":dict(slot_count),
         "safety_counts":dict(safety_count),
         "structural_strong_formations":strong_possible,
+        "lifecycle":"integrated" if integrated else "staging",
+        "integrated_count":integrated_count,
+        "formal_count":manifest.get("question_count"),
         "rows":rows,
     }
 

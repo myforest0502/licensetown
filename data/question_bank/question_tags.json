@@ -32614,5 +32614,856 @@
     "tag_version": "1.0",
     "tag_status": "reviewed",
     "source": "original"
+  },
+  {
+    "id": "Q1762",
+    "theme": "中心性脊髄損傷の臨床像",
+    "knowledge_node": "中心性脊髄損傷は高齢者の頸椎過伸展外傷などで生じやすく、脊髄中心部の障害により下肢より上肢の麻痺が強いことが特徴である",
+    "knowledge_node_id": "KN0553",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "中心性脊髄損傷について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1763",
+    "theme": "多発性硬化症の長期予後",
+    "knowledge_node": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である",
+    "knowledge_node_id": "KN0558",
+    "task": "prognosis_prediction",
+    "primary_ability": "PREDICT",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "多発性硬化症について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1764",
+    "theme": "ALSの所見統合",
+    "knowledge_node": "上位・下位運動ニューロン障害により四肢麻痺、舌萎縮、構音・嚥下障害が進行するが、眼球運動は比較的末期まで保たれやすい",
+    "knowledge_node_id": "KN0574",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "筋萎縮性側索硬化症で生じにくい症状はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1765",
+    "theme": "自律神経過反射の初期対応",
+    "knowledge_node": "脊髄損傷の自律神経過反射の典型所見",
+    "knowledge_node_id": "KN0613",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "脊髄損傷の自律神経過反射でみられるのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1766",
+    "theme": "NIHSS意識項目の解釈",
+    "knowledge_node": "NIHSSには意識水準・質問・命令など意識状態の評価が含まれる",
+    "knowledge_node_id": "KN0638",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "NIHSSには意識水準・質問・命令など意識状態の評価が含まれる。",
+      "SIASには健側上下肢機能など非麻痺側機能の項目があるため4・5が正しい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1767",
+    "theme": "Parkinson病の運動・非運動症状",
+    "knowledge_node": "動作緩慢、安静時振戦、自律神経症状として便秘、前駆症状としてREM睡眠行動障害などがみられる",
+    "knowledge_node_id": "KN0687",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Parkinson病では動作緩慢、安静時振戦、自律神経症状として便秘、前駆症状としてREM睡眠行動障害などがみられる。",
+      "運動失調はParkinson病の主要症候ではない。",
+      "運動失調は小脳障害の代表であり2が「みられない」に該当する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1768",
+    "theme": "ALSの下位運動ニューロン徴候",
+    "knowledge_node": "筋萎縮、筋力低下、線維束性収縮、腱反射低下などがみられる",
+    "knowledge_node_id": "KN0781",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "ALSの下位運動ニューロン障害では筋萎縮、筋力低下、線維束性収縮、腱反射低下などがみられる。",
+      "したがって3が正しい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1769",
+    "theme": "意識が保たれる焦点発作",
+    "knowledge_node": "てんかんは病因により特発性と症候性などに分類され、意識障害を伴わない発作もある",
+    "knowledge_node_id": "KN0830",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "高齢発症もみられるため4が正しい。",
+      "てんかんは病因により特発性と症候性などに分類され、意識障害を伴わない発作もある。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1770",
+    "theme": "Parkinson病の所見統合",
+    "knowledge_node": "Parkinson病の主要徴候には安静時振戦、筋強剛、無動・寡動、姿勢反射障害があり、突進現象や歯車様固縮がみられる",
+    "knowledge_node_id": "KN0513",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Parkinson病で主にみられる徴候はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1771",
+    "theme": "活動記録からみたMS疲労",
+    "knowledge_node": "活動記録による疲労管理",
+    "knowledge_node_id": "KN0068",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "fatigue management",
+      "pacing"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1772",
+    "theme": "半側空間無視の機能予後",
+    "knowledge_node": "両側同時刺激で生じる消去現象の識別",
+    "knowledge_node_id": "KN0208",
+    "task": "prognosis_prediction",
+    "primary_ability": "PREDICT",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "消去現象の定義",
+      "単独刺激と両側同時刺激",
+      "半側空間無視との違い"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1773",
+    "theme": "外側上顆炎の初期運動療法",
+    "knowledge_node": "上腕骨外側上顆炎の特徴",
+    "knowledge_node_id": "KN0556",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "上腕骨外側上顆炎について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1774",
+    "theme": "肘関節脱臼と神経血管障害",
+    "knowledge_node": "肘関節脱臼は転倒時に伸展位で手をつく機転などで生じ、尺骨・橈骨が上腕骨に対して後方へ脱臼する後方脱臼が最も多い",
+    "knowledge_node_id": "KN0572",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "肘関節脱臼で多いのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1775",
+    "theme": "腰椎分離症疑いの競技対応",
+    "knowledge_node": "腰椎分離症は椎弓の関節突起間部に疲労骨折などによる分離が生じる病態である",
+    "knowledge_node_id": "KN0579",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "腰椎分離症で分離するのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1776",
+    "theme": "上腕骨顆上骨折の血流障害",
+    "knowledge_node": "上腕骨顆上骨折の基本事項",
+    "knowledge_node_id": "KN0616",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "上腕骨顆上骨折で正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1777",
+    "theme": "RA患者の機能目標設定",
+    "knowledge_node": "Steinbrockerのclass分類は関節リウマチ患者の機能障害を、身の回り動作・職業活動・余暇活動の可否から4段階に分類する",
+    "knowledge_node_id": "KN0634",
+    "task": "functional_goal_decision",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Steinbrockerのclass分類は関節リウマチ患者の機能障害を、身の回り動作・職業活動・余暇活動の可否から4段階に分類する。",
+      "Steinbrocker classは機能状態を分類する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1778",
+    "theme": "Monteggia骨折脱臼の初期対応",
+    "knowledge_node": "Monteggia骨折は尺骨近位〜骨幹部骨折に橈骨頭脱臼を合併する損傷である",
+    "knowledge_node_id": "KN0635",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "Galeazzi骨折は橈骨骨幹部骨折と遠位橈尺関節脱臼の組合せである。",
+      "Monteggia骨折は尺骨近位〜骨幹部骨折に橈骨頭脱臼を合併する損傷である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1779",
+    "theme": "成長期腰椎分離症の初期対応",
+    "knowledge_node": "国家試験対策では腰椎を正答として覚える",
+    "knowledge_node_id": "KN0636",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "成長期スポーツ選手では腰椎分離症が反復する伸展・回旋ストレスによる疲労骨折として重要である。",
+      "疲労骨折が最も多いのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1780",
+    "theme": "Malgaigne骨折の画像所見",
+    "knowledge_node": "Malgaigne骨折は骨盤輪の垂直不安定性を伴う骨盤骨折である",
+    "knowledge_node_id": "KN0686",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "Bennettは第1中手骨基部、Jeffersonは環椎、Smithは橈骨遠位端骨折であるため4が正しい。",
+      "Malgaigne骨折は骨盤輪の垂直不安定性を伴う骨盤骨折である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1781",
+    "theme": "Jefferson骨折疑いの安全対応",
+    "knowledge_node": "Galeazzi骨折とJefferson骨折の定義",
+    "knowledge_node_id": "KN0962",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "Galeazzi骨折は橈骨骨幹部骨折に遠位橈尺関節脱臼を伴い、Jefferson骨折は環椎破裂骨折である。",
+      "3・4が正しい。",
+      "Galeazzi骨折―橈骨。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1782",
+    "theme": "徒手筋力テストの段階判定",
+    "knowledge_node": "Daniels らの徒手筋力テストの特徴",
+    "knowledge_node_id": "KN0493",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Daniels らの徒手筋力テストについて正しいのはどれの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1783",
+    "theme": "肘関節伸展MMTの実施",
+    "knowledge_node": "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える",
+    "knowledge_node_id": "KN0631",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える。",
+      "したがって2が正しい。",
+      "肘伸展では軽度屈曲位で抵抗を加える。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1784",
+    "theme": "ISNCSCI T1運動機能の採点",
+    "knowledge_node": "T1が小指外転筋に対応する",
+    "knowledge_node_id": "KN0680",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "ASIAのkey muscleではT1が小指外転筋に対応する。",
+      "C5は肘屈筋、C6は手関節伸筋、C7は肘伸筋、C8は中指屈筋、L4は足背屈、L5は母趾伸展である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1785",
+    "theme": "股関節伸展可動域の判定",
+    "knowledge_node": "日本整形外科学会・日本リハビリテーション医学会の参考可動域では股関節伸展15°が基準値である",
+    "knowledge_node_id": "KN0774",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "日本整形外科学会・日本リハビリテーション医学会の参考可動域では股関節伸展15°が基準値である。",
+      "したがって4が正しい。",
+      "伸展は15°が参考可動域である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1786",
+    "theme": "Perthes病が疑われる児の画像評価",
+    "knowledge_node": "選択肢内容から本問の疾患はPerthes病を指すと判断する",
+    "knowledge_node_id": "KN0834",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": "INTERPRET",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Perthes病は小児、特に男児に多い大腿骨頭の無腐性壊死で、可動域制限を生じうるため4が正しい。",
+      "選択肢内容から本問の疾患はPerthes病を指すと判断する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1787",
+    "theme": "棘果長測定値の判定",
+    "knowledge_node": "棘果長は上前腸骨棘から内果までを測定する",
+    "knowledge_node_id": "KN0840",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "棘果長は上前腸骨棘から内果までを測定する。",
+      "四肢長と測定部位の組合せで正しいのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1788",
+    "theme": "後脛骨筋MMTの段階判定",
+    "knowledge_node": "、後脛骨筋の段階2は重力の影響を除いた条件で足部の内反・底屈方向の運動を評価する",
+    "knowledge_node_id": "KN0843",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Danielsらの徒手筋力テストでは、後脛骨筋の段階2は重力の影響を除いた条件で足部の内反・底屈方向の運動を評価する。",
+      "後脛骨筋の段階2の組合せが厚生労働省公式正答である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1789",
+    "theme": "TUG測定時間の算出",
+    "knowledge_node": "TUGは椅子座位から立ち上がり3m歩行し方向転換して戻り、再び背もたれに座るまでの時間を測る",
+    "knowledge_node_id": "KN0844",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "バランス・移動能力評価で4・5が正しい。",
+      "機能的移動・バランス評価。",
+      "TUGは椅子座位から立ち上がり3m歩行し方向転換して戻り、再び背もたれに座るまでの時間を測る。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1790",
+    "theme": "SF-36プロフィールに基づく目標設定",
+    "knowledge_node": "SF-36による健康関連QOLの8下位尺度評価",
+    "knowledge_node_id": "KN0984",
+    "task": "functional_goal_decision",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "SF-36は健康関連QOLを身体機能、日常役割機能、痛み、全体的健康感、活力、社会生活機能、心の健康など8下位尺度で評価する。",
+      "8つの下位尺度で構成されているQOL評価はどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1791",
+    "theme": "視線安定化訓練の効果判定",
+    "knowledge_node": "一側前庭機能低下の代償訓練",
+    "knowledge_node_id": "KN0003",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": "INTERPRET",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "HIT",
+      "前庭代償",
+      "視線安定化"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1792",
+    "theme": "McMurrayテスト所見の解釈",
+    "knowledge_node": "半月板損傷を確認するMcMurray系徒手検査の選択",
+    "knowledge_node_id": "KN0323",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "McMurrayテストは膝を屈曲位から伸展させながら下腿に回旋と内外反ストレスを加え、関節裂隙の疼痛やクリックを確認して内側・外側半月板を評価する。",
+      "問題文の症状と検査対象が直接一致する。",
+      "膝関節裂隙の圧痛と屈伸時のクリック・疼痛は半月板損傷を示唆する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1793",
+    "theme": "発症早期の機能回復機序",
+    "knowledge_node": "アンマスキングは、もともと存在していたが抑制されていた神経回路が、障害後に抑制解除されて機能を示す現象である",
+    "knowledge_node_id": "KN0501",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "中枢神経障害の回復機序に関するアンマスキング（unmasの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1794",
+    "theme": "身体的フレイルへの運動処方",
+    "knowledge_node": "フレイルの説明の基本事項",
+    "knowledge_node_id": "KN0504",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "フレイルの説明で正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1795",
+    "theme": "舌所見を伴う延髄病変の局在",
+    "knowledge_node": "延髄には舌下神経核があり、舌の運動を担う舌下神経機能が障害されやすい",
+    "knowledge_node_id": "KN0506",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "延髄の障害でみられやすい症状はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1796",
+    "theme": "鵞足部痛の臨床解釈",
+    "knowledge_node": "鵞足は縫工筋、薄筋、半腱様筋の腱が脛骨近位内側に付着して形成される",
+    "knowledge_node_id": "KN0511",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "鵞足をつくるのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1797",
+    "theme": "前方動揺に対する姿勢制御目標",
+    "knowledge_node": "重心が前方へ移り、足関節戦略で後方へ戻すため腓腹筋など足関節底屈筋が早期に活動する",
+    "knowledge_node_id": "KN0569",
+    "task": "functional_goal_decision",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "立位で外乱による体の前方への傾きを足関節の運動で制御するの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1798",
+    "theme": "反復高強度運動の休息設定",
+    "knowledge_node": "高強度運動で疲労が進むと解糖系への依存が高まり、乳酸と水素イオンが増加する",
+    "knowledge_node_id": "KN0570",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "運動による疲労時に筋内で増えるのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1799",
+    "theme": "非圧痕性浮腫への対応",
+    "knowledge_node": "ムコ多糖類が皮下に蓄積する粘液水腫を生じ、圧迫しても圧痕を残しにくい非圧痕性浮腫となる",
+    "knowledge_node_id": "KN0571",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "非圧痕性浮腫を生じる疾患はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1800",
+    "theme": "手段的自立低下への課題設定",
+    "knowledge_node": "老研式活動能力指標の手段的自立には公共交通機関の利用、買物、食事準備、金銭管理などが含まれる",
+    "knowledge_node_id": "KN0614",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "老研式活動能力指標の質問項目のうち、手段的 ADL に該の基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1801",
+    "theme": "SOAP記録のPlan作成",
+    "knowledge_node": "SOAPは問題志向型診療記録で、Sは主観情報、Oは客観情報、Aは評価・解釈、Pは今後の計画を記載する",
+    "knowledge_node_id": "KN0630",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "SOAPは問題志向型診療記録で用いられる。",
+      "SOAPは問題志向型診療記録で、Sは主観情報、Oは客観情報、Aは評価・解釈、Pは今後の計画を記載する。",
+      "したがって4が正しい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1802",
+    "theme": "下腿義足の前額面アライメント調整",
+    "knowledge_node": "静的立位で下腿義足の足部内側が床から浮き上がったから病態・機能障害を解釈",
+    "knowledge_node_id": "KN0509",
+    "task": "device_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "静的立位で下腿義足の足部内側が床から浮き上がったに関連する主要所見",
+      "鑑別に必要な所見"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1803",
+    "theme": "荷重軽減を目的とした水中歩行",
+    "knowledge_node": "水中運動療法の生理作用には水圧、浮力、粘性抵抗、熱伝導などが関与する",
+    "knowledge_node_id": "KN0576",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "水の物理的特性で水中運動療法における生理的な作用に影響しの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1804",
+    "theme": "大腿義足の遊脚相制御調整",
+    "knowledge_node": "大腿義足の異常歩行と原因の対応関係",
+    "knowledge_node_id": "KN0643",
+    "task": "device_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "したがって「義足膝の不安定―股関節伸展筋力低下」が正しい。",
+      "大腿義足で股関節伸展筋力が低下すると、立脚初期に骨盤・体幹を安定させにくく、義足膝が屈曲して不安定になりやすい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1805",
+    "theme": "腹圧性尿失禁の機能目標",
+    "knowledge_node": "腹圧性尿失禁に対する骨盤底筋群の筋力強化",
+    "knowledge_node_id": "KN0645",
+    "task": "functional_goal_decision",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "腹圧性尿失禁では、咳や跳躍など腹圧上昇時に尿道閉鎖を支える骨盤底筋群の機能低下が中心となる。",
+      "したがって最優先の筋力増強対象は骨盤底筋群である。",
+      "骨盤底筋群は尿道・膀胱頸部を支持する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1806",
+    "theme": "眼振の視覚固視抑制",
+    "knowledge_node": "視覚固視で抑制されない眼振を中枢性前庭障害の所見として解釈する",
+    "knowledge_node_id": "KN1539",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "末梢性前庭眼振は視覚固視で抑制されやすい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1807",
+    "theme": "アキレス腱断裂後の腱延長と機能予後",
+    "knowledge_node": "アキレス腱断裂後の腱延長から踵上げ高の回復遅延を予測する",
+    "knowledge_node_id": "KN1540",
+    "task": "prognosis_prediction",
+    "primary_ability": "PREDICT",
+    "secondary_ability": "INTERPRET",
+    "level": 4,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "アキレス腱の連続性と適切な長さは足関節底屈筋力と踵上げ機能に関与する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1808",
+    "theme": "評価尺度の反応性",
+    "knowledge_node": "評価尺度の反応性は経時的な構成概念の変化を検出する能力である",
+    "knowledge_node_id": "KN1541",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "評価尺度の測定特性には信頼性、妥当性、反応性がある。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1809",
+    "theme": "脳卒中後の運動観察療法",
+    "knowledge_node": "脳卒中後の運動観察療法では目標動作の観察後に同じ動作を実行する",
+    "knowledge_node_id": "KN1542",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "KNOW",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "運動観察療法は他者の動作観察と自己の動作実行を組み合わせる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
   }
 ]

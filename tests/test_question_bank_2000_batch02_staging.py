@@ -30,7 +30,7 @@ def test_accepted_set_and_current_formal_contract(payload):
         assert report["integrated_count"] == 0
     else:
         assert report["lifecycle"] == "integrated"
-        assert report["formal_count"] == 1761
+        assert report["formal_count"] >= 1761
         assert report["integrated_count"] == 12
     assert report["exact_formal_duplicates"] == report["exact_candidate_duplicates"] == []
     assert report["category_counts"] == {9: 4, 18: 3, 17: 3, 16: 2}

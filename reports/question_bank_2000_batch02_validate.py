@@ -121,14 +121,23 @@ def build_report(payload=None, bank_dir=BANK):
               f"formal snapshot changed: {name}; re-audit required")
 
     expected_end = END_Q if integrated else BASE_END
-    check(manifest["question_count"] == expected_end, "manifest: unexpected question_count")
-    check(manifest["last_question_number"] == expected_end, "manifest: unexpected last_question_number")
+    live_end = int(manifest["last_question_number"])
+    live_count = int(manifest["question_count"])
+    check(live_count == live_end and live_end >= expected_end,
+          "manifest: unexpected question_count/range")
     if integrated:
-        check(manifest.get("bank_version") == TARGET_VERSION, "manifest: unexpected Batch02 version")
-        check(schema["$defs"]["qid"]["pattern"] == QID_PATTERN, "schema: QID pattern mismatch")
+        if live_end == END_Q:
+            check(manifest.get("bank_version") == TARGET_VERSION,
+                  "manifest: unexpected Batch02 version")
+        pattern = schema["$defs"]["qid"]["pattern"]
+        check(re.fullmatch(pattern, f"Q{live_end}") is not None and
+              re.fullmatch(pattern, f"Q{live_end + 1}") is None,
+              "schema: live QID range mismatch")
         for name in STORES:
-            check(schema["properties"][name].get("minItems") == END_Q, f"schema: {name} minItems mismatch")
-            check(schema["properties"][name].get("maxItems") == END_Q, f"schema: {name} maxItems mismatch")
+            check(schema["properties"][name].get("minItems") == live_count,
+                  f"schema: {name} minItems mismatch")
+            check(schema["properties"][name].get("maxItems") == live_count,
+                  f"schema: {name} maxItems mismatch")
 
     expected = [f"Q{n}" for n in range(manifest["first_question_number"],
                                       manifest["last_question_number"] + 1)]
