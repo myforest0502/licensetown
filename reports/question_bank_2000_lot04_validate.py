@@ -12,29 +12,27 @@ BANK = ROOT / "data" / "question_bank"
 ROSTER = ROOT / "reports" / "question_bank_2000_lot04_targets_v01.json"
 STAGING = ROOT / "staging" / "question_bank_2000_lot04_v01.json"
 PROTECTED = base.PROTECTED
-CATEGORY_QUOTA = {1:4,2:6,3:1,4:3,5:1,6:3,7:4,8:6,9:1,10:3,11:2,12:2,13:3,14:2,15:4,17:1,18:2}
+CATEGORY_QUOTA = {1:4,2:5,3:2,4:2,5:2,6:3,7:3,8:6,9:2,10:2,11:3,12:2,13:3,14:2,15:4,17:1,18:2}
 TASK_QUOTA = {
     "assessment_selection":9,
-    "device_selection":1,
-    "fact_recall":1,
+    "device_selection":2,
+    "fact_recall":2,
     "finding_interpretation":14,
     "functional_goal_decision":4,
-    "intervention_selection":9,
-    "prognosis_prediction":4,
+    "intervention_selection":8,
+    "prognosis_prediction":3,
     "safety_priority":6,
 }
-LEVEL_QUOTA = {1:1,2:15,3:21,4:11}
-SLOT_QUOTA = {"singleton_second":30,"multi_reinforcement":13,"new_node":5}
-SAFETY_AUGMENT = 13
-MIN_STRONG = 41
-BASE_COUNT = 1857
-BASE_VERSION = "2026-09-b16"
-INTEGRATED_START = 1858
-INTEGRATED_END = 1905
-INTEGRATED_VERSION = "2026-09-b17"
+LEVEL_QUOTA = {1:2,2:16,3:20,4:10}
+SLOT_QUOTA = {"singleton_second":27,"multi_reinforcement":17,"new_node":4}
+SAFETY_AUGMENT = 12
+MIN_STRONG = 37
+BASE_COUNT = 1905
+BASE_VERSION = "2026-09-b17"
+INTEGRATED_START = 1906
+INTEGRATED_END = 1953
+INTEGRATED_VERSION = "2026-09-b18"
 
-# Reconfigure only data/contracts; validation semantics remain exactly the reviewed
-# Lot02 engine. The engine reads these module globals dynamically.
 base.ROSTER = ROSTER
 base.STAGING = STAGING
 base.CATEGORY_QUOTA = CATEGORY_QUOTA
@@ -55,13 +53,9 @@ draft_fingerprint = base.draft_fingerprint
 
 def build_report(payload: dict | None = None, *, require_seals: bool = True) -> dict:
     source = json.loads(STAGING.read_text(encoding="utf-8-sig")) if payload is None else payload
-    # The reviewed engine's batch discriminator is Lot02-specific; normalize only
-    # that discriminator in memory. Persisted Lot04 provenance is never changed.
     normalized = copy.deepcopy(source)
     normalized["batch"] = "question_bank_2000_production_lot02_v01"
-    report = base.build_report(normalized, require_seals=require_seals)
-    # Replace inherited lifecycle wording only for human-readable output.
-    return report
+    return base.build_report(normalized, require_seals=require_seals)
 
 
 def main() -> int:
