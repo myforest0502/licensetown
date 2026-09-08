@@ -53,7 +53,7 @@ def audit(chunk_no: int) -> dict:
         hard = [x for x in top if x["score"] >= HARD]
         near = [x for x in top if x["score"] >= NEAR]
         exact_total += len(exact); hard_total += len(hard); near_total += len(near)
-        results.append({"draft_id": did, "reference_question_ids": draft.get("reference_question_ids", []), "exact": exact, "hard_near": hard, "near": near, "top10": top})
+        results.append({"draft_id": did, "question_text": stem, "reference_question_ids": draft.get("reference_question_ids", []), "exact": exact, "hard_near": hard, "near": near, "top10": top})
     return {"formal_baseline": "Q1-Q1905", "chunk": chunk_no, "thresholds": {"near": NEAR, "hard_near": HARD}, "exact_total": exact_total, "hard_near_total": hard_total, "near_total": near_total, "results": results}
 
 
@@ -63,7 +63,11 @@ def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     out = OUT_DIR / f"chunk_{args.chunk:02d}.json"
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"chunk": args.chunk, "exact_total": payload["exact_total"], "hard_near_total": payload["hard_near_total"], "near_total": payload["near_total"], "output": str(out.relative_to(ROOT))}, ensure_ascii=False))
+    offenders = []
+    for row in payload["results"]:
+        if row["hard_near"]:
+            offenders.append({"draft_id": row["draft_id"], "question_text": row["question_text"], "matches": row["hard_near"]})
+    print(json.dumps({"chunk": args.chunk, "exact_total": payload["exact_total"], "hard_near_total": payload["hard_near_total"], "near_total": payload["near_total"], "hard_near_offenders": offenders, "output": str(out.relative_to(ROOT))}, ensure_ascii=False, indent=2))
     if payload["exact_total"]:
         raise SystemExit("exact formal duplicate detected")
     return 0
