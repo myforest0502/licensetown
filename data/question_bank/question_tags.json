@@ -34330,5 +34330,849 @@
     "tag_version": "1.0",
     "tag_status": "reviewed",
     "source": "original"
+  },
+  {
+    "id": "Q1858",
+    "theme": "外胚葉由来組織の判定",
+    "knowledge_node": "外胚葉からは神経系や表皮が発生する",
+    "knowledge_node_id": "KN0526",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "外胚葉から発生するのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1859",
+    "theme": "肋骨番号同定の体表指標",
+    "knowledge_node": "体表から触知しやすい骨指標として胸骨角と舟状骨粗面がある",
+    "knowledge_node_id": "KN0527",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "体表から触知できるのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1860",
+    "theme": "ネフロン障害部位の推定",
+    "knowledge_node": "ネフロンは腎小体と尿細管からなり、腎小体は糸球体とBowman嚢で構成される",
+    "knowledge_node_id": "KN0593",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "腎臓の解剖について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1861",
+    "theme": "活動電位波形の解釈",
+    "knowledge_node": "活動電位の脱分極では主にNa+が細胞内へ流入し、再分極ではK+が細胞外へ流出する",
+    "knowledge_node_id": "KN0535",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "細胞膜電位について誤っているのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1862",
+    "theme": "伸張反射弓の評価",
+    "knowledge_node": "腱を叩いて筋が急速に伸張されると筋紡錘のIa求心性線維が興奮し、脊髄でα運動ニューロンを介して同じ筋を収縮させる伸張反射が起こる",
+    "knowledge_node_id": "KN0536",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "腱をたたいて骨格筋を急速に伸ばすと起こる筋単収縮に関与すの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1863",
+    "theme": "安静時呼吸観察の危険所見",
+    "knowledge_node": "健常者の安静時呼吸の特徴",
+    "knowledge_node_id": "KN0537",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "INTERPRET",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "の安静時呼吸について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1864",
+    "theme": "凝固終末相の障害推定",
+    "knowledge_node": "トロンビンは凝固カスケードでプロトロンビンから生成され、フィブリノゲンをフィブリンへ変換する中心的凝固酵素である",
+    "knowledge_node_id": "KN0538",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "血液凝固因子はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1865",
+    "theme": "高強度運動時の乳酸上昇",
+    "knowledge_node": "グルコースが解糖系を通ってピルビン酸となり、酸素供給が不十分な条件では乳酸へ変換される",
+    "knowledge_node_id": "KN0503",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "嫌気的代謝の過程で生成される物質はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1866",
+    "theme": "抑うつ反応を示す患者への関わり",
+    "knowledge_node": "障害受容の過程では抑うつ状態にある患者へ一方的・積極的な指導を押しつけるのではなく、感情を受け止めながら支持的に関わることが重要である",
+    "knowledge_node_id": "KN0745",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "障害受容の過程では抑うつ状態にある患者へ一方的・積極的な指導を押しつけるのではなく、感情を受け止めながら支持的に関わることが重要である。",
+      "したがって3が誤り。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1867",
+    "theme": "老年期の心理社会的課題",
+    "knowledge_node": "老年期の課題は「自我の統合 対 絶望」である",
+    "knowledge_node_id": "KN0612",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Eriksonによる発達段階で老年期に獲得すべき課題はどの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1868",
+    "theme": "残存STNRへの運動課題設定",
+    "knowledge_node": "姿勢反射の成熟が遅れ、対称性緊張性頸反射などの原始反射が長く残存して随意運動を妨げることがある",
+    "knowledge_node_id": "KN0649",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "アテトーゼ型脳性麻痺では姿勢反射の成熟が遅れ、対称性緊張性頸反射などの原始反射が長く残存して随意運動を妨げることがある。",
+      "したがって5が正しい。",
+      "STNRは脳性麻痺で残存しやすい原始反射の一つである。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1869",
+    "theme": "高齢者の社会的孤立リスク評価",
+    "knowledge_node": "高齢期の社会的孤立リスク",
+    "knowledge_node_id": "KN0551",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "老年期における精神保健上の問題として適切なのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1870",
+    "theme": "特別支援学校での参加目標",
+    "knowledge_node": "特別支援学校の教育環境",
+    "knowledge_node_id": "KN1332",
+    "task": "functional_goal_decision",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "特別支援学校の学級編成人数は少人数で設定され、通常1学級10名以上ではない。",
+      "学級人数を10名以上とするのは誤り。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1871",
+    "theme": "脳卒中後の三次予防",
+    "knowledge_node": "三次予防は、すでに発症した疾病や障害について機能低下・合併症・再発を防ぎ、社会復帰を促す段階である",
+    "knowledge_node_id": "KN0522",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "三次予防に含まれるのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1872",
+    "theme": "ヒヤリ・ハット集積の解釈",
+    "knowledge_node": "Heinrich の法則の特徴",
+    "knowledge_node_id": "KN0524",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "Heinrich の法則について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1873",
+    "theme": "ノーマライゼーションに基づく生活目標",
+    "knowledge_node": "ノーマライゼーションは障害の有無にかかわらず、地域で通常の生活を営める社会を目指す理念である",
+    "knowledge_node_id": "KN0795",
+    "task": "functional_goal_decision",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "ノーマライゼーションは障害の有無にかかわらず、地域で通常の生活を営める社会を目指す理念である。",
+      "差別や社会的不利益の解消が中心で4が正しい。",
+      "障害による差別や社会的不利益の解消を目指す。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1874",
+    "theme": "病理所見からみた疾患推定",
+    "knowledge_node": "疾患と病因・病理学的変化の組合せの基本事項",
+    "knowledge_node_id": "KN0608",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "疾患と病因・病理学的変化の組合せで正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1875",
+    "theme": "創部観察で優先する異常所見",
+    "knowledge_node": "正常な肉芽組織は赤〜鮮紅色で湿潤し、新生毛細血管が豊富なため軽い刺激でも出血しやすい",
+    "knowledge_node_id": "KN0610",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "INTERPRET",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "正常な肉芽の特徴はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1876",
+    "theme": "NSAIDs服用中の消化管出血徴候",
+    "knowledge_node": "NSAIDsはプロスタグランジン産生を抑制し、胃粘膜防御を低下させるため胃潰瘍・消化管出血を起こしうる",
+    "knowledge_node_id": "KN1082",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "INTERPRET",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "NSAIDsはプロスタグランジン産生を抑制し、胃粘膜防御を低下させるため胃潰瘍・消化管出血を起こしうる。",
+      "胃潰瘍は代表的副作用。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1877",
+    "theme": "Huntington病の家系図解釈",
+    "knowledge_node": "Huntington病は常染色体優性遺伝で家族性発症が基本である",
+    "knowledge_node_id": "KN0617",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "家族性が孤発性よりも多いのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1878",
+    "theme": "重症筋無力症の所見統合",
+    "knowledge_node": "重症筋無力症は神経筋接合部のアセチルコリン受容体などに対する自己抗体による自己免疫疾患で、易疲労性と日内変動を示す",
+    "knowledge_node_id": "KN0618",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "重症筋無力症について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1879",
+    "theme": "急性閉塞隅角緑内障の危険所見",
+    "knowledge_node": "眼疾患とその病態の組合せの基本事項",
+    "knowledge_node_id": "KN0619",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "INTERPRET",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "眼疾患とその病態の組合せで正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1880",
+    "theme": "10か月児の発達所見",
+    "knowledge_node": "10 か月の正常児の典型所見",
+    "knowledge_node_id": "KN0620",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "10 か月の正常児でみられるのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1881",
+    "theme": "筋強直性ジストロフィーの所見統合",
+    "knowledge_node": "筋強直性ジストロフィー",
+    "knowledge_node_id": "KN0902",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "筋強直性ジストロフィーではミオトニア、顔面・頸部・遠位筋萎縮、白内障、心伝導障害などを認める。",
+      "ミオトニアが特徴。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1882",
+    "theme": "Pusher現象への姿勢練習",
+    "knowledge_node": "患者は麻痺側へ傾き、非麻痺側上下肢で支持面を押す",
+    "knowledge_node_id": "KN1056",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Pusher現象では患者は麻痺側へ傾き、非麻痺側上下肢で支持面を押す。",
+      "したがって「身体軸が非麻痺側に傾斜する」は誤り。",
+      "患者は麻痺側へ身体を傾け、非麻痺側上下肢で押すため「非麻痺側に傾斜」は誤り。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1883",
+    "theme": "アルコール離脱の緊急徴候",
+    "knowledge_node": "断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する",
+    "knowledge_node_id": "KN0563",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "INTERPRET",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "アルコールの離脱症候群はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1884",
+    "theme": "神経性過食症の初期支援",
+    "knowledge_node": "反復する過食と、体重増加を防ぐ自己誘発性嘔吐や下剤乱用などの代償行動がみられる",
+    "knowledge_node_id": "KN0564",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "神経性大食症について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1885",
+    "theme": "前頭側頭型認知症の経過予測",
+    "knowledge_node": "前頭葉・側頭葉優位の限局性萎縮が特徴で、人格変化や脱抑制、言語症状などが目立つ",
+    "knowledge_node_id": "KN0713",
+    "task": "prognosis_prediction",
+    "primary_ability": "PREDICT",
+    "secondary_ability": "INTERPRET",
+    "level": 4,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Pick病を含む前頭側頭型認知症では前頭葉・側頭葉優位の限局性萎縮が特徴で、人格変化や脱抑制、言語症状などが目立つ。",
+      "したがって4が正しい。",
+      "Pick病では前頭・側頭葉の限局性萎縮がみられる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1886",
+    "theme": "上腕骨顆上骨折後の血流障害",
+    "knowledge_node": "小児の上腕骨顆上骨折では上腕動脈障害により前腕虚血を生じ、Volkmann虚血性拘縮へ進む危険がある",
+    "knowledge_node_id": "KN0646",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "INTERPRET",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "受傷後は脈拍、皮膚色、疼痛、感覚など循環・神経所見の確認が重要である。",
+      "小児の上腕骨顆上骨折では上腕動脈障害により前腕虚血を生じ、Volkmann虚血性拘縮へ進む危険がある。",
+      "上腕骨顆上骨折はVolkmann拘縮の代表的原因である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1887",
+    "theme": "Duchenne型の拘縮モニタリング",
+    "knowledge_node": "デュシェンヌ型筋ジストロフィーでは下腿三頭筋短縮による尖足や拘縮が歩行能力低下を促進するため、歩行能力維持には関節拘縮予防と継続的な可動域管理を優先する",
+    "knowledge_node_id": "KN0039",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "DMD進行",
+      "足関節拘縮",
+      "歩行維持"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1888",
+    "theme": "反動形成の事例判断",
+    "knowledge_node": "受け入れ難い欲求と正反対の態度・行動を強く示して不安を処理する防衛機制が反動形成",
+    "knowledge_node_id": "KN1150",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "受け入れ難い欲求と正反対の態度・行動を強く示して不安を処理する防衛機制が反動形成。",
+      "否認は現実を認めない。",
+      "合理化はもっともらしい理由付け。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1889",
+    "theme": "知性化を示す患者への関わり",
+    "knowledge_node": "感情や欲動から距離を置き、抽象的・理論的に分析して処理する防衛機制が知性化",
+    "knowledge_node_id": "KN1205",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "反動形成は反対の態度を示す。",
+      "感情や欲動から距離を置き、抽象的・理論的に分析して処理する防衛機制が知性化。",
+      "抑圧は無意識へ押し込む。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1890",
+    "theme": "肩甲骨上方回旋を促す運動",
+    "knowledge_node": "肩甲骨の運動とそれに作用する筋の組合せの基本事項",
+    "knowledge_node_id": "KN0543",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "肩甲骨の運動とそれに作用する筋の組合せで正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1891",
+    "theme": "前腕回外筋力の評価",
+    "knowledge_node": "前腕回外に作用する筋",
+    "knowledge_node_id": "KN0544",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "前腕回外に作用する筋はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1892",
+    "theme": "関節可動域評価でのend feel確認",
+    "knowledge_node": "関節を他動的に動かしたときの正常な最終域感と関節運動の組合せの基本事項",
+    "knowledge_node_id": "KN0507",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "関節を他動的に動かしたときの正常な最終域感と関節運動の組の基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1893",
+    "theme": "反復拮抗運動障害への協調運動練習",
+    "knowledge_node": "反復拮抗運動障害を評価する前腕回内外試験",
+    "knowledge_node_id": "KN0987",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "反復拮抗運動障害（dysdiadochokinesia）は前腕の回内・回外を素早く反復させて評価する。",
+      "反復拮抗運動障害の検査法はどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1894",
+    "theme": "歩行速度変化の時空間評価",
+    "knowledge_node": "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる",
+    "knowledge_node_id": "KN0815",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "したがって3が正しい。",
+      "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる。",
+      "立脚相時間は短縮。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1895",
+    "theme": "歩行運動耐容能の予測",
+    "knowledge_node": "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する",
+    "knowledge_node_id": "KN0863",
+    "task": "prognosis_prediction",
+    "primary_ability": "PREDICT",
+    "secondary_ability": "INTERPRET",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "選択肢では3.5METsの2が最も近い。",
+      "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する。",
+      "3.5METs程度が近い。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1896",
+    "theme": "遊脚期足関節底屈への装具選択",
+    "knowledge_node": "正常歩行では足関節は荷重応答で底屈、立脚中期に背屈、立脚後期に底屈、遊脚期に背屈し、底背屈がそれぞれ2回現れる",
+    "knowledge_node_id": "KN1145",
+    "task": "device_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "正常歩行では足関節は荷重応答で底屈、立脚中期に背屈、立脚後期に底屈、遊脚期に背屈し、底背屈がそれぞれ2回現れる。",
+      "正常歩行について正しいのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1897",
+    "theme": "蹴り出し低下への筋力訓練",
+    "knowledge_node": "立脚終期から前遊脚期の前方推進に寄与する足関節底屈筋群",
+    "knowledge_node_id": "KN0394",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "正常歩行の蹴り出しと対側歩幅の確保に重要であり、底屈筋機能低下では前方推進力が低下する。",
+      "立脚終期から前遊脚期では、下腿三頭筋を中心とする足関節底屈筋群が遠心性から求心性活動へ移り、床反力を利用して身体を前方へ推進する。",
+      "足関節底屈筋群は立脚終期の蹴り出しで前方推進に大きく寄与する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1898",
+    "theme": "MMT 2に応じた運動設定",
+    "knowledge_node": "Daniels らの徒手筋力テストの特徴",
+    "knowledge_node_id": "KN0493",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Daniels らの徒手筋力テストについて正しいのはどれの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1899",
+    "theme": "アンマスキングによる早期回復予測",
+    "knowledge_node": "アンマスキングは、もともと存在していたが抑制されていた神経回路が、障害後に抑制解除されて機能を示す現象である",
+    "knowledge_node_id": "KN0501",
+    "task": "prognosis_prediction",
+    "primary_ability": "PREDICT",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "中枢神経障害の回復機序に関するアンマスキング（unmasの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1900",
+    "theme": "フレイル患者の転帰予測",
+    "knowledge_node": "フレイルの説明の基本事項",
+    "knowledge_node_id": "KN0504",
+    "task": "prognosis_prediction",
+    "primary_ability": "PREDICT",
+    "secondary_ability": "INTERPRET",
+    "level": 4,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "フレイルの説明で正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1901",
+    "theme": "気管支肺区域の構成",
+    "knowledge_node": "気管支肺区域は区域気管支を単位とする肺葉内の解剖学的区画である",
+    "knowledge_node_id": "KN1547",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "肺葉は葉気管支により換気され、葉気管支はさらに区域気管支へ分岐する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1902",
+    "theme": "Fick法による心拍出量評価",
+    "knowledge_node": "Fickの原理では酸素消費量を動静脈酸素含量較差で除して心拍出量を求める",
+    "knowledge_node_id": "KN1548",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "心拍出量は全身へ送り出される血流量を表し、循環機能を評価する基本指標である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1903",
+    "theme": "急性炎症の短期モニタリング",
+    "knowledge_node": "CRPは急性炎症でESRより早く上昇し、炎症活動性の短期変化を追跡しやすい",
+    "knowledge_node_id": "KN1549",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "炎症では急性期反応物が変化し、血液検査を用いて炎症活動性の推移を評価できる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1904",
+    "theme": "起立性低血圧患者の生活目標",
+    "knowledge_node": "起立性低血圧は立位3分以内に収縮期血圧20mmHg以上または拡張期血圧10mmHg以上低下する",
+    "knowledge_node_id": "KN1550",
+    "task": "functional_goal_decision",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "INTERPRET",
+    "level": 4,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "体位変換に伴う血圧低下は、めまい・失神・転倒などの症状や安全性に関係し得る。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1905",
+    "theme": "歩行開始時APAの機能目標",
+    "knowledge_node": "歩行開始前には重心移動を準備する予測的姿勢調節〈APA〉が生じ、第一歩の安定性に寄与する",
+    "knowledge_node_id": "KN1551",
+    "task": "functional_goal_decision",
+    "primary_ability": "DECIDE",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "歩行開始では静止立位から第一歩へ移るために、重心と足圧中心を調整する姿勢制御が必要である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
   }
 ]
