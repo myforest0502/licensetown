@@ -1,0 +1,33 @@
+name: qb2000 lot01 seed once
+
+on:
+  push:
+    branches:
+      - analysis/qb2000-remaining-allocation-v01
+    paths:
+      - reports/question_bank_2000_lot01_build_seed.py
+      - .github/workflows/qb2000_lot01_seed_once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analysis/qb2000-remaining-allocation-v01
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Build Lot01 authoring seed
+        run: python reports/question_bank_2000_lot01_build_seed.py
+      - name: Commit seed and remove one-shot workflow
+        run: |
+          rm .github/workflows/qb2000_lot01_seed_once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add staging/question_bank_2000_lot01_authoring_seed_v01.json .github/workflows/qb2000_lot01_seed_once.yml
+          git commit -m "Record Question Bank 2000 Lot01 authoring seed"
+          git push
