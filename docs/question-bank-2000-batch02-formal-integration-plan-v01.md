@@ -99,3 +99,21 @@ After generated formal diff:
 10. `git diff --check`
 
 Formal generation and the final generated JSON diff must be reviewed before merge.
+
+## Execution checkpoint — 2026-09-08
+
+The one-shot formal generation workflow completed successfully after the Batch02 validator was hardened so intentionally invalid staging fixtures are reported as validation errors instead of raising uncaught exceptions.
+
+Generated state:
+
+- Q1750-Q1761 integrated: 12/12
+- formal Question Bank: Q1-Q1761 / 1761 questions
+- bank version: `2026-09-b14`
+- four formal stores contiguous and aligned: PASS
+- missing / duplicate / cross-store ID inconsistencies: 0
+- Knowledge Node registry consistency: PASS
+- schema / manifest consistency: PASS
+- generated-diff restriction: PASS
+- one-shot generator removed itself after the successful formal commit
+
+This checkpoint is documentation only and does not change runtime behavior.
