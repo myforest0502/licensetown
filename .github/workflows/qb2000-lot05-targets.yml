@@ -23,12 +23,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Build deterministic Lot05 target roster and assignment
+      - name: Build reviewed Lot05 prep and authoring template
         run: |
           python -m reports.question_bank_2000_lot05_targets_v01
           python -m reports.question_bank_2000_lot05_assignment_v01
           python -m reports.question_bank_2000_lot05_c7_alternatives
           python -m reports.question_bank_2000_lot05_semantic_review
+          python -m reports.question_bank_2000_lot05_build_template
           python - <<'PY'
           import json
           from collections import Counter
@@ -38,23 +39,31 @@ jobs:
           rt=json.loads(Path('reports/question_bank_2000_lot05_targets_reviewed_v01.json').read_text(encoding='utf-8'))
           ra=json.loads(Path('reports/question_bank_2000_lot05_assignment_reviewed_v01.json').read_text(encoding='utf-8'))
           c7=json.loads(Path('reports/question_bank_2000_lot05_c7_alternatives.json').read_text(encoding='utf-8'))
+          template=json.loads(Path('staging/question_bank_2000_lot05_template_v01.json').read_text(encoding='utf-8'))
           assert t['formal_baseline']=='Q1-Q1953'
-          assert t['required_total_questions']==41
-          assert t['required_existing_targets']==38
-          assert t['required_new_nodes']==3
-          assert len(t['existing_node_targets'])==38
-          assert len({r['canonical_node_id'] for r in t['existing_node_targets']})==38
+          assert t['required_total_questions']==41 and t['required_existing_targets']==38 and t['required_new_nodes']==3
+          assert len(t['existing_node_targets'])==38 and len({r['canonical_node_id'] for r in t['existing_node_targets']})==38
           assert len(a['assignments'])==len(ra['assignments'])==41
           assert c7 and rt['review_overrides']['L05-C7-S01']=='KN0690'
           assert Counter(x['proposed_task'] for x in ra['assignments']) == Counter({k:int(v) for k,v in t['task_quota'].items()})
           assert Counter(str(x['level']) for x in ra['assignments']) == Counter({str(k):int(v) for k,v in t['level_quota'].items()})
+          drafts=template['drafts']
+          assert template['status']=='template_only' and template['q_ids_reserved'] is False and template['production_write'] is False and template['db_write'] is False
+          assert len(drafts)==41 and len({d['draft_id'] for d in drafts})==41
+          assert Counter(d['slot_type'] for d in drafts)==Counter({'singleton_second':18,'multi_reinforcement':20,'new_node':3})
+          assert Counter(d['proposed_task'] for d in drafts)==Counter({k:int(v) for k,v in t['task_quota'].items()})
+          assert Counter(str(d['level']) for d in drafts)==Counter({str(k):int(v) for k,v in t['level_quota'].items()})
+          forbidden={'id','qid','q_id','question_id','reserved_qid','new_question_id','management_code'}
+          assert all(not forbidden.intersection(d) for d in drafts)
+          assert all(set(d['choices'])==set(d['choice_explanations'])==set('12345') for d in drafts)
+          assert all(d['target_node_id'] is None and not d['reference_question_ids'] for d in drafts if d['slot_type']=='new_node')
           PY
           git diff --check
       - name: Commit Lot05 prep outputs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add reports/question_bank_2000_lot05_targets_v01.json reports/question_bank_2000_lot05_assignment_v01.json reports/question_bank_2000_lot05_c7_alternatives.json reports/question_bank_2000_lot05_targets_reviewed_v01.json reports/question_bank_2000_lot05_assignment_reviewed_v01.json
+          git add reports/question_bank_2000_lot05_targets_v01.json reports/question_bank_2000_lot05_assignment_v01.json reports/question_bank_2000_lot05_c7_alternatives.json reports/question_bank_2000_lot05_targets_reviewed_v01.json reports/question_bank_2000_lot05_assignment_reviewed_v01.json staging/question_bank_2000_lot05_template_v01.json
           if git diff --cached --quiet; then
             echo "No generated changes"
           else
