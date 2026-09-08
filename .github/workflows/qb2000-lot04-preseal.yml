@@ -25,6 +25,25 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
+      - name: Print authoring deviations from optimizer suggestions
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('reports/question_bank_2000_lot04_assignment_v01.json').read_text(encoding='utf-8'))
+          expected={x['draft_id']:x for x in a['assignments']}
+          actual={}
+          for p in sorted(Path('staging/question_bank_2000_lot04_chunks_v01').glob('chunk_*.json')):
+              for d in json.loads(p.read_text(encoding='utf-8-sig'))['drafts']:
+                  actual[d['draft_id']]=d
+          for did in sorted(actual):
+              d=actual[did]; e=expected[did]
+              diffs=[]
+              if d['proposed_task']!=e['suggested_task']: diffs.append(f"task {e['suggested_task']} -> {d['proposed_task']}")
+              if d['level']!=e['suggested_level']: diffs.append(f"level {e['suggested_level']} -> {d['level']}")
+              if d['safety']!=e['suggested_safety']: diffs.append(f"safety {e['suggested_safety']} -> {d['safety']}")
+              if diffs: print(did, '; '.join(diffs), '|', d.get('title',''))
+          PY
       - name: Run Lot04 aggregate pre-seal audit
         run: python -m reports.question_bank_2000_lot04_preseal_audit
       - name: Commit audit result when valid
