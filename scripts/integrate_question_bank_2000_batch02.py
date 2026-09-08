@@ -40,8 +40,8 @@ def _write(path: Path, payload) -> None:
     path.write_bytes(data)
 
 
-def _accepted_drafts() -> list[dict]:
-    payload = _read(STAGING)
+def _accepted_drafts(staging_path: Path = STAGING) -> list[dict]:
+    payload = _read(staging_path)
     drafts = [draft for draft in payload.get("drafts", []) if draft.get("status") == "accepted"]
     if len(drafts) != 12:
         raise ValueError(f"expected 12 accepted drafts, got {len(drafts)}")
@@ -89,14 +89,14 @@ def _set_schema_contract(schema: dict) -> None:
         schema["properties"][name]["maxItems"] = END_Q
 
 
-def integrate() -> None:
-    questions_path = BANK / "questions.json"
-    answers_path = BANK / "answers.json"
-    explanations_path = BANK / "explanations.json"
-    tags_path = BANK / "question_tags.json"
-    nodes_path = BANK / "knowledge_nodes.json"
-    manifest_path = BANK / "bank_manifest.json"
-    schema_path = BANK / "schema/question_bank_schema_v1.json"
+def integrate(bank_dir: Path = BANK, staging_path: Path = STAGING) -> None:
+    questions_path = bank_dir / "questions.json"
+    answers_path = bank_dir / "answers.json"
+    explanations_path = bank_dir / "explanations.json"
+    tags_path = bank_dir / "question_tags.json"
+    nodes_path = bank_dir / "knowledge_nodes.json"
+    manifest_path = bank_dir / "bank_manifest.json"
+    schema_path = bank_dir / "schema/question_bank_schema_v1.json"
 
     questions = _read(questions_path)
     answers = _read(answers_path)
@@ -109,7 +109,7 @@ def integrate() -> None:
     stores = [questions, answers, explanations, tags]
     indexes = [{row["id"]: row for row in store} for store in stores]
     node_index = {row["knowledge_node_id"]: row for row in nodes}
-    drafts = _accepted_drafts()
+    drafts = _accepted_drafts(staging_path)
 
     target_nodes = [str(draft["target_node_id"]) for draft in drafts]
     if len(set(target_nodes)) != 12 or "KN0779" in target_nodes:
@@ -122,7 +122,8 @@ def integrate() -> None:
         raise ValueError(f"partial Batch02 allocation found: {existing_new}")
 
     if not already_done:
-        report = build_report()
+        payload = _read(staging_path)
+        report = build_report(payload, bank_dir)
         if report["hard_errors"]:
             raise ValueError(f"Batch02 staging validator failed: {report['hard_errors']}")
         if int(report["formal_count"]) != EXPECTED_BASE_END:
