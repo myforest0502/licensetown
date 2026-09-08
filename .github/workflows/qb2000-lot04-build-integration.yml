@@ -1,0 +1,70 @@
+name: qb2000-lot04-build-integration
+
+on:
+  push:
+    branches: [work/qb2000-lot04-active]
+    paths:
+      - '.github/workflows/qb2000-lot04-build-integration.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-dry-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot04-active
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Generate Lot04 integrator and dry-run test from reviewed Lot03 implementation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          src=Path('scripts/integrate_question_bank_2000_lot03.py').read_text(encoding='utf-8')
+          reps=[
+            ('Lot03','Lot04'),('lot03','lot04'),
+            ('Q1858-Q1905','Q1906-Q1953'),
+            ('START_Q = 1858','START_Q = 1906'),('END_Q = 1905','END_Q = 1953'),('EXPECTED_BASE_END = 1857','EXPECTED_BASE_END = 1905'),
+            ('TARGET_VERSION = "2026-09-b17"','TARGET_VERSION = "2026-09-b18"'),
+            ('START_NODE = 1547','START_NODE = 1552'),('END_NODE = 1551','END_NODE = 1555'),
+            ('1[0-8][0-9]{2}|190[0-5]','1[0-8][0-9]{2}|19[0-4][0-9]|195[0-3]'),
+            ('expected five new Node drafts','expected four new Node drafts'),
+            ('contiguous aligned Q1-Q1905 sequence','contiguous aligned Q1-Q1953 sequence'),
+          ]
+          for a,b in reps: src=src.replace(a,b)
+          Path('scripts/integrate_question_bank_2000_lot04.py').write_text(src,encoding='utf-8')
+
+          t=Path('tests/test_question_bank_2000_lot03_integration.py').read_text(encoding='utf-8')
+          reps=[
+            ('lot03','lot04'),('Lot03','Lot04'),
+            ('== 1905','== 1953'),('"2026-09-b17"','"2026-09-b18"'),
+            ('range(1, 1906)','range(1, 1954)'),
+            ('== 1551','== 1555'),('range(1547, 1552)','range(1552, 1556)'),
+            ('range(1901, 1906)','range(1950, 1954)'),('range(1547, 1552)','range(1552, 1556)'),
+            ('== 43','== 44'),('1858 + offset','1906 + offset'),
+          ]
+          for a,b in reps: t=t.replace(a,b)
+          # New-node drafts are not guaranteed to occupy final positions; assert mapping by draft order instead.
+          old='assert [tags[f"Q{i}"]["knowledge_node_id"] for i in range(1950, 1954)] == [f"KN{i:04d}" for i in range(1552, 1556)]'
+          new='''new_drafts=[(offset,row) for offset,row in enumerate(read(STAGING)["drafts"]) if row["slot_type"]=="new_node"]\n    assert len(new_drafts)==4\n    assert [tags[f"Q{1906+offset}"]["knowledge_node_id"] for offset,_ in new_drafts] == [f"KN{i:04d}" for i in range(1552,1556)]'''
+          t=t.replace(old,new)
+          Path('tests/test_question_bank_2000_lot04_integration.py').write_text(t,encoding='utf-8')
+          PY
+      - name: Dry-run Lot04 integration test
+        run: python -m pytest -q tests/test_question_bank_2000_lot04_integration.py
+      - name: Commit generated Lot04 integration files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/integrate_question_bank_2000_lot04.py tests/test_question_bank_2000_lot04_integration.py
+          git diff --cached --check
+          git commit -m "Add Question Bank 2000 Lot04 integration dry run"
+          git push origin HEAD:work/qb2000-lot04-active
