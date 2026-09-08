@@ -1,0 +1,39 @@
+name: qb2000-lot04-scaffold
+
+on:
+  push:
+    branches:
+      - work/qb2000-lot04-active
+    paths:
+      - reports/question_bank_2000_lot04_clone_scaffold.py
+      - .github/workflows/qb2000-lot04-scaffold.yml
+
+permissions:
+  contents: write
+
+jobs:
+  clone-scaffold:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot04-active
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Clone Lot03 scaffold into Lot04
+        run: python -m reports.question_bank_2000_lot04_clone_scaffold
+      - name: Syntax check Lot04 scaffold
+        run: python -m py_compile reports/question_bank_2000_lot04_chunk_validate.py reports/question_bank_2000_lot04_chunks.py reports/question_bank_2000_lot04_similarity_audit.py reports/question_bank_2000_lot04_seal.py reports/question_bank_2000_lot04_validate.py
+      - name: Commit Lot04 scaffold
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/question_bank_2000_lot04_chunk_validate.py reports/question_bank_2000_lot04_chunks.py reports/question_bank_2000_lot04_similarity_audit.py reports/question_bank_2000_lot04_seal.py reports/question_bank_2000_lot04_validate.py
+          git diff --cached --check
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Clone Question Bank 2000 Lot04 validation scaffold"
+          git push origin HEAD:work/qb2000-lot04-active
