@@ -1,0 +1,1692 @@
+{
+  "lot": 5,
+  "formal_baseline": "Q1-Q1953",
+  "scope": "structural_target_selection_only",
+  "recent_node_exclusion_after_q": 1953,
+  "category_totals": {
+    "1": 4,
+    "2": 5,
+    "3": 1,
+    "4": 2,
+    "5": 1,
+    "6": 2,
+    "7": 3,
+    "8": 5,
+    "9": 1,
+    "10": 2,
+    "11": 2,
+    "12": 1,
+    "13": 3,
+    "14": 2,
+    "15": 3,
+    "16": 0,
+    "17": 2,
+    "18": 2
+  },
+  "new_node_by_category": {
+    "1": 1,
+    "2": 1,
+    "7": 1
+  },
+  "actual_category_slot": {
+    "1": {
+      "singleton": 3,
+      "multi": 0,
+      "new": 1
+    },
+    "2": {
+      "singleton": 3,
+      "multi": 1,
+      "new": 1
+    },
+    "3": {
+      "singleton": 0,
+      "multi": 1,
+      "new": 0
+    },
+    "4": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "5": {
+      "singleton": 0,
+      "multi": 1,
+      "new": 0
+    },
+    "6": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "7": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 1
+    },
+    "8": {
+      "singleton": 2,
+      "multi": 3,
+      "new": 0
+    },
+    "9": {
+      "singleton": 0,
+      "multi": 1,
+      "new": 0
+    },
+    "10": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "11": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "12": {
+      "singleton": 0,
+      "multi": 1,
+      "new": 0
+    },
+    "13": {
+      "singleton": 1,
+      "multi": 2,
+      "new": 0
+    },
+    "14": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "15": {
+      "singleton": 1,
+      "multi": 2,
+      "new": 0
+    },
+    "17": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    },
+    "18": {
+      "singleton": 1,
+      "multi": 1,
+      "new": 0
+    }
+  },
+  "existing_node_targets": [
+    {
+      "canonical_node_id": "KN0530",
+      "label": "大内転筋は内転部とハムストリング部で神経支配が異なり、前者は閉鎖神経、後者は坐骨神経脛骨部から支配を受ける",
+      "category_small": 1,
+      "question_ids": [
+        "Q538"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -538
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C1-S01"
+    },
+    {
+      "canonical_node_id": "KN0531",
+      "label": "脳血管とその還流域の組合せの基本事項",
+      "category_small": 1,
+      "question_ids": [
+        "Q539"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -539
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C1-S02"
+    },
+    {
+      "canonical_node_id": "KN0585",
+      "label": "上腕骨小結節には肩甲下筋腱が付着する",
+      "category_small": 1,
+      "question_ids": [
+        "Q593"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -593
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C1-S03"
+    },
+    {
+      "canonical_node_id": "KN0595",
+      "label": "四肢からの感覚神経伝導路の特徴",
+      "category_small": 2,
+      "question_ids": [
+        "Q603"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -603
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C2-S01"
+    },
+    {
+      "canonical_node_id": "KN0596",
+      "label": "運動時は活動筋への血流が大きく増え、心拍出量・静脈還流も増加する",
+      "category_small": 2,
+      "question_ids": [
+        "Q604"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -604
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C2-S02"
+    },
+    {
+      "canonical_node_id": "KN0599",
+      "label": "ペプシンは胃内で蛋白質をポリペプチドへ分解し、リパーゼは脂肪を脂肪酸とグリセリンへ分解する",
+      "category_small": 2,
+      "question_ids": [
+        "Q607"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -607
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C2-S03"
+    },
+    {
+      "canonical_node_id": "KN0597",
+      "label": "交感神経の作用",
+      "category_small": 2,
+      "question_ids": [
+        "Q605",
+        "Q815"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 2
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        2,
+        -605
+      ],
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C2-M01"
+    },
+    {
+      "canonical_node_id": "KN0678",
+      "label": "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める",
+      "category_small": 3,
+      "question_ids": [
+        "Q686",
+        "Q1622"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -686
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C3-M01"
+    },
+    {
+      "canonical_node_id": "KN0720",
+      "label": "Down症候群では筋緊張低下と関節弛緩性により、殿部を床につけて移動するshufflingなど独特の移動様式がみられることがある",
+      "category_small": 4,
+      "question_ids": [
+        "Q728"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -728
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C4-S01"
+    },
+    {
+      "canonical_node_id": "KN0612",
+      "label": "老年期の課題は「自我の統合 対 絶望」である",
+      "category_small": 4,
+      "question_ids": [
+        "Q620",
+        "Q1867"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -620
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C4-M01"
+    },
+    {
+      "canonical_node_id": "KN1332",
+      "label": "特別支援学校の教育環境",
+      "category_small": 5,
+      "question_ids": [
+        "Q1352",
+        "Q1870"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "functional_goal_decision",
+          "primary_ability": "DECIDE"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -1352
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C5-M01"
+    },
+    {
+      "canonical_node_id": "KN0979",
+      "label": "ICFは心身機能・身体構造、活動、参加、環境因子などが相互作用するモデルで、活動・参加の第一評価点は実行状況を表す",
+      "category_small": 6,
+      "question_ids": [
+        "Q989"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -989
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C6-S01"
+    },
+    {
+      "canonical_node_id": "KN0131",
+      "label": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である",
+      "category_small": 6,
+      "question_ids": [
+        "Q131",
+        "Q1574"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "original": 1,
+        "past_exam": 1
+      },
+      "levels": [
+        2
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        -2,
+        1,
+        -131
+      ],
+      "currently_weak_by_metadata": true,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C6-M01"
+    },
+    {
+      "canonical_node_id": "KN0690",
+      "label": "熱傷深度ではⅠ度は発赤のみ、浅達性Ⅱ度は湿潤・水疱で強い痛み、深達性Ⅱ度では知覚低下を伴うことがある",
+      "category_small": 7,
+      "question_ids": [
+        "Q698"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -697
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C7-S01",
+      "review_replacement_reason": "Removed non-medical exam-answer bookkeeping Node; burn-depth Node supports a distinct safety demand."
+    },
+    {
+      "canonical_node_id": "KN0608",
+      "label": "疾患と病因・病理学的変化の組合せの基本事項",
+      "category_small": 7,
+      "question_ids": [
+        "Q616",
+        "Q1874"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        2
+      ],
+      "safety": [
+        "moderate",
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -616
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C7-M01"
+    },
+    {
+      "canonical_node_id": "KN0650",
+      "label": "下肢動脈狭窄により冷感、しびれ、間欠性跛行、重症例では安静時痛を生じる",
+      "category_small": 8,
+      "question_ids": [
+        "Q658"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -658
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C8-S01"
+    },
+    {
+      "canonical_node_id": "KN0683",
+      "label": "Turner症候群は45,X、Klinefelter症候群は47,XXYなど性染色体数的異常で発症する",
+      "category_small": 8,
+      "question_ids": [
+        "Q691"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -691
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C8-S02"
+    },
+    {
+      "canonical_node_id": "KN0515",
+      "label": "うっ血性心不全の典型所見",
+      "category_small": 8,
+      "question_ids": [
+        "Q523",
+        "Q1810"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        2
+      ],
+      "safety": [
+        "moderate",
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -523
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C8-M01"
+    },
+    {
+      "canonical_node_id": "KN0557",
+      "label": "福山型筋ジストロフィーは先天性筋ジストロフィーで乳児期早期から症状がみられ、選択肢中で平均発症年齢が最も低い",
+      "category_small": 8,
+      "question_ids": [
+        "Q565",
+        "Q1811"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        2
+      ],
+      "safety": [
+        "moderate",
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -565
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C8-M02"
+    },
+    {
+      "canonical_node_id": "KN0560",
+      "label": "高齢者では嚥下反射・咳反射の低下や口腔機能低下により誤嚥性肺炎が多い",
+      "category_small": 8,
+      "question_ids": [
+        "Q568",
+        "Q1812"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        2
+      ],
+      "safety": [
+        "moderate",
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -568
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C8-M03"
+    },
+    {
+      "canonical_node_id": "KN0558",
+      "label": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である",
+      "category_small": 9,
+      "question_ids": [
+        "Q566",
+        "Q1763"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "prognosis_prediction",
+          "primary_ability": "PREDICT"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        4
+      ],
+      "safety": [
+        "moderate",
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -566
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C9-M01"
+    },
+    {
+      "canonical_node_id": "KN0632",
+      "label": "正常圧水頭症、慢性硬膜下血腫、葉酸・B12欠乏などは可逆性認知症の原因となる",
+      "category_small": 10,
+      "question_ids": [
+        "Q640"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -640
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C10-S01"
+    },
+    {
+      "canonical_node_id": "KN0563",
+      "label": "断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する",
+      "category_small": 10,
+      "question_ids": [
+        "Q571",
+        "Q1883"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "safety_priority",
+          "primary_ability": "DECIDE"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        4
+      ],
+      "safety": [
+        "critical",
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -571
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C10-M01"
+    },
+    {
+      "canonical_node_id": "KN1231",
+      "label": "骨盤帯近位筋から筋力低下が進行し、床から立つ際にGowers徴候を示す",
+      "category_small": 11,
+      "question_ids": [
+        "Q1246"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1246
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C11-S01"
+    },
+    {
+      "canonical_node_id": "KN0559",
+      "label": "中枢神経の先天奇形とその特徴の組合せの基本事項",
+      "category_small": 11,
+      "question_ids": [
+        "Q567",
+        "Q1824"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -567
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C11-M01"
+    },
+    {
+      "canonical_node_id": "KN0895",
+      "label": "内田・クレペリン精神検査は連続加算作業の作業曲線から性格・行動特性、作業態度などをみる",
+      "category_small": 12,
+      "question_ids": [
+        "Q904",
+        "Q1828"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -904
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C12-M01"
+    },
+    {
+      "canonical_node_id": "KN0605",
+      "label": "外側半月板は外側側副靱帯と膝窩筋腱で隔てられ直接付着しないため可動性が大きい",
+      "category_small": 13,
+      "question_ids": [
+        "Q613"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -613
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C13-S01"
+    },
+    {
+      "canonical_node_id": "KN0543",
+      "label": "肩甲骨の運動とそれに作用する筋の組合せの基本事項",
+      "category_small": 13,
+      "question_ids": [
+        "Q551",
+        "Q1890"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "intervention_selection",
+          "primary_ability": "PRESCRIBE"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -551
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C13-M01"
+    },
+    {
+      "canonical_node_id": "KN0544",
+      "label": "前腕回外に作用する筋",
+      "category_small": 13,
+      "question_ids": [
+        "Q552",
+        "Q1891"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        2
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -552
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C13-M02"
+    },
+    {
+      "canonical_node_id": "KN1551",
+      "label": "歩行開始前には重心移動を準備する予測的姿勢調節〈APA〉が生じ、第一歩の安定性に寄与する",
+      "category_small": 14,
+      "question_ids": [
+        "Q1905"
+      ],
+      "existing_demands": [
+        {
+          "task": "functional_goal_decision",
+          "primary_ability": "DECIDE"
+        }
+      ],
+      "sources": {
+        "original": 1
+      },
+      "levels": [
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        0,
+        0,
+        -1905
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C14-S01"
+    },
+    {
+      "canonical_node_id": "KN0987",
+      "label": "反復拮抗運動障害を評価する前腕回内外試験",
+      "category_small": 14,
+      "question_ids": [
+        "Q997",
+        "Q1893"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "intervention_selection",
+          "primary_ability": "PRESCRIBE"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -997
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C14-M01"
+    },
+    {
+      "canonical_node_id": "KN1400",
+      "label": "正常歩行では立脚中期に身体重心が支持脚側へ最も側方移動する",
+      "category_small": 15,
+      "question_ids": [
+        "Q1425"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1425
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C15-S01"
+    },
+    {
+      "canonical_node_id": "KN0815",
+      "label": "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる",
+      "category_small": 15,
+      "question_ids": [
+        "Q824",
+        "Q1894"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        2
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -824
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C15-M01"
+    },
+    {
+      "canonical_node_id": "KN0863",
+      "label": "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する",
+      "category_small": 15,
+      "question_ids": [
+        "Q872",
+        "Q1895"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "prognosis_prediction",
+          "primary_ability": "PREDICT"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        2
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -872
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C15-M02"
+    },
+    {
+      "canonical_node_id": "KN1225",
+      "label": "重力を除去した肢位で膝伸展・膝屈曲を評価するため、両者とも側臥位など同じ重力除去肢位となる",
+      "category_small": 17,
+      "question_ids": [
+        "Q1240"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -1240
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C17-S01"
+    },
+    {
+      "canonical_node_id": "KN0631",
+      "label": "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える",
+      "category_small": 17,
+      "question_ids": [
+        "Q639",
+        "Q1783"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        2
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -639
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C17-M01"
+    },
+    {
+      "canonical_node_id": "KN0651",
+      "label": "長期不動による廃用では筋量・筋力低下が進み、活動低下を原因とする二次性サルコペニアを生じうる",
+      "category_small": 18,
+      "question_ids": [
+        "Q659"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "sources": {
+        "past_exam": 1
+      },
+      "levels": [
+        1
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        1,
+        1,
+        1,
+        -659
+      ],
+      "slot_type": "singleton_second",
+      "lot_target_id": "L05-C18-S01"
+    },
+    {
+      "canonical_node_id": "KN0511",
+      "label": "鵞足は縫工筋、薄筋、半腱様筋の腱が脛骨近位内側に付着して形成される",
+      "category_small": 18,
+      "question_ids": [
+        "Q519",
+        "Q1796"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "sources": {
+        "past_exam": 1,
+        "original": 1
+      },
+      "levels": [
+        1,
+        3
+      ],
+      "safety": [
+        "none"
+      ],
+      "rank_score": [
+        0,
+        -2,
+        1,
+        -519
+      ],
+      "currently_weak_by_metadata": false,
+      "slot_type": "multi_reinforcement",
+      "lot_target_id": "L05-C18-M01"
+    }
+  ],
+  "new_node_reservations": [
+    {
+      "category_small": 1,
+      "count": 1,
+      "node_id_allocated": false
+    },
+    {
+      "category_small": 2,
+      "count": 1,
+      "node_id_allocated": false
+    },
+    {
+      "category_small": 7,
+      "count": 1,
+      "node_id_allocated": false
+    }
+  ],
+  "inventory_summary": {
+    "1": {
+      "singleton": {
+        "available": 108,
+        "selected": 3
+      },
+      "multi": {
+        "available": 29,
+        "selected": 0
+      },
+      "new_node_reserved": 1
+    },
+    "2": {
+      "singleton": {
+        "available": 123,
+        "selected": 3
+      },
+      "multi": {
+        "available": 25,
+        "selected": 1
+      },
+      "new_node_reserved": 1
+    },
+    "3": {
+      "singleton": {
+        "available": 4,
+        "selected": 0
+      },
+      "multi": {
+        "available": 10,
+        "selected": 1
+      },
+      "new_node_reserved": 0
+    },
+    "4": {
+      "singleton": {
+        "available": 19,
+        "selected": 1
+      },
+      "multi": {
+        "available": 9,
+        "selected": 1
+      },
+      "new_node_reserved": 0
+    },
+    "5": {
+      "singleton": {
+        "available": 2,
+        "selected": 0
+      },
+      "multi": {
+        "available": 3,
+        "selected": 1
+      },
+      "new_node_reserved": 0
+    },
+    "6": {
+      "singleton": {
+        "available": 49,
+        "selected": 1
+      },
+      "multi": {
+        "available": 12,
+        "selected": 1
+      },
+      "new_node_reserved": 0
+    },
+    "7": {
+      "singleton": {
+        "available": 43,
+        "selected": 1
+      },
+      "multi": {
+        "available": 20,
+        "selected": 1
+      },
+      "new_node_reserved": 1
+    },
+    "8": {
+      "singleton": {
+        "available": 113,
+        "selected": 2
+      },
+      "multi": {
+        "available": 34,
+        "selected": 3
+      },
+      "new_node_reserved": 0
+    },
+    "9": {
+      "singleton": {
+        "available": 86,
+        "selected": 0
+      },
+      "multi": {
+        "available": 25,
+        "selected": 1
+      },
+      "new_node_reserved": 0
+    },
+    "10": {
+      "singleton": {
+        "available": 25,
+        "selected": 1
+      },
+      "multi": {
+        "available": 9,
+        "selected": 1
+      },
+      "new_node_reserved": 0
+    },
+    "11": {
+      "singleton": {
+        "available": 35,
+        "selected": 1
+      },
+      "multi": {
+        "available": 9,
+        "selected": 1
+      },
+      "new_node_reserved": 0
+    },
+    "12": {
+      "singleton": {
+        "available": 7,
+        "selected": 0
+      },
+      "multi": {
+        "available": 7,
+        "selected": 1
+      },
+      "new_node_reserved": 0
+    },
+    "13": {
+      "singleton": {
+        "available": 44,
+        "selected": 1
+      },
+      "multi": {
+        "available": 20,
+        "selected": 2
+      },
+      "new_node_reserved": 0
+    },
+    "14": {
+      "singleton": {
+        "available": 1,
+        "selected": 1
+      },
+      "multi": {
+        "available": 5,
+        "selected": 1
+      },
+      "new_node_reserved": 0
+    },
+    "15": {
+      "singleton": {
+        "available": 67,
+        "selected": 1
+      },
+      "multi": {
+        "available": 26,
+        "selected": 2
+      },
+      "new_node_reserved": 0
+    },
+    "17": {
+      "singleton": {
+        "available": 121,
+        "selected": 1
+      },
+      "multi": {
+        "available": 33,
+        "selected": 1
+      },
+      "new_node_reserved": 0
+    },
+    "18": {
+      "singleton": {
+        "available": 254,
+        "selected": 1
+      },
+      "multi": {
+        "available": 31,
+        "selected": 1
+      },
+      "new_node_reserved": 0
+    }
+  },
+  "excluded_recent_node_count": 0,
+  "required_existing_targets": 38,
+  "required_new_nodes": 3,
+  "required_total_questions": 41,
+  "required_strong_formations": 26,
+  "required_safety_augment": 11,
+  "task_quota": {
+    "assessment_selection": 7,
+    "device_selection": 1,
+    "fact_recall": 1,
+    "finding_interpretation": 13,
+    "functional_goal_decision": 4,
+    "intervention_selection": 7,
+    "prognosis_prediction": 3,
+    "safety_priority": 5
+  },
+  "level_quota": {
+    "1": 1,
+    "2": 13,
+    "3": 18,
+    "4": 9
+  },
+  "guardrails": [
+    "No Q IDs are allocated by this target roster.",
+    "No Knowledge Node registry write is performed.",
+    "The final lot may reuse recently supplied Nodes when a category has no older untouched inventory; ranking still favors older/simpler candidates.",
+    "Every existing-Node draft must add a distinct task/ability and semantic demand.",
+    "New-node reservations require explicit collision review before Node ID allocation."
+  ],
+  "status": "reviewed_target_roster",
+  "review_overrides": {
+    "L05-C7-S01": "KN0690"
+  }
+}
