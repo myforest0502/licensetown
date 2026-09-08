@@ -203,12 +203,21 @@ def build_report(payload=None, bank_dir=BANK):
               (tag["task"], tag["primary_ability"]), prefix + "same metadata demand")
 
         choices, reasons = d.get("choices", {}), d.get("choice_explanations", {})
-        check(set(choices) == set(reasons) == set("12345") and
-              all(isinstance(v, str) and v.strip() for v in [*choices.values(), *reasons.values()]),
-              prefix + "five choices and reasons required")
-        check(len({normalize(v) for v in choices.values()}) == 5, prefix + "duplicate choice text")
+        choices_valid = (
+            isinstance(choices, dict) and isinstance(reasons, dict) and
+            set(choices) == set(reasons) == set("12345") and
+            all(isinstance(v, str) and v.strip() for v in [*choices.values(), *reasons.values()])
+        )
+        check(choices_valid, prefix + "five choices and reasons required")
+        check(isinstance(choices, dict) and
+              len({normalize(v) for v in choices.values() if isinstance(v, str)}) == 5,
+              prefix + "duplicate choice text")
         answer = d.get("correct_choices", [])
-        check(len(answer) == 1 and answer[0] in choices, prefix + "single best answer required")
+        answer_valid = (
+            isinstance(answer, list) and len(answer) == 1 and
+            isinstance(choices, dict) and str(answer[0]) in choices and str(answer[0]) in "12345"
+        )
+        check(answer_valid, prefix + "single best answer required")
         check(bool(d.get("explanation")) and bool(d.get("clinical_intent")), prefix + "rationale missing")
         stem = d.get("question_text", "")
         check(isinstance(stem, str) and 0 < len(stem) <= 300, prefix + "stem length outside batch limit")
@@ -243,19 +252,22 @@ def build_report(payload=None, bank_dir=BANK):
                 new_answer = maps["answers"][expected_qid]
                 new_explanation = maps["explanations"][expected_qid]
                 new_tag = maps["question_tags"][expected_qid]
-                expected_choices = _choice_map(d["choices"])
-                expected_correct = _correct_letters(d["correct_choices"])
                 check(new_question.get("question_text") == d["question_text"], prefix + "formal stem differs from staging")
-                check(new_question.get("choices") == expected_choices, prefix + "formal choices differ from staging")
+                if choices_valid:
+                    expected_choices = _choice_map(d["choices"])
+                    check(new_question.get("choices") == expected_choices, prefix + "formal choices differ from staging")
                 check(new_question.get("category_large") == d["proposed_category_large"] and
                       new_question.get("category_small") == d["proposed_category_small"], prefix + "formal category differs from staging")
                 check(new_question.get("source") == "O", prefix + "formal question source mismatch")
-                check(new_answer.get("display_answer") == expected_correct[0] and
-                      new_answer.get("accepted_answer_sets") == [expected_correct] and
-                      new_answer.get("answer_basis") == "LT_original", prefix + "formal answer differs from staging")
-                check(new_explanation.get("explanation") == d["explanation"] and
-                      new_explanation.get("choice_explanations") == _choice_map(d["choice_explanations"]),
-                      prefix + "formal explanation differs from staging")
+                if answer_valid:
+                    expected_correct = _correct_letters(d["correct_choices"])
+                    check(new_answer.get("display_answer") == expected_correct[0] and
+                          new_answer.get("accepted_answer_sets") == [expected_correct] and
+                          new_answer.get("answer_basis") == "LT_original", prefix + "formal answer differs from staging")
+                if choices_valid:
+                    check(new_explanation.get("explanation") == d["explanation"] and
+                          new_explanation.get("choice_explanations") == _choice_map(d["choice_explanations"]),
+                          prefix + "formal explanation differs from staging")
                 expected_tag = {
                     "knowledge_node_id": node,
                     "task": d["proposed_task"],
