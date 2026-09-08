@@ -2,343 +2,190 @@
   "lot": 5,
   "chunk": 4,
   "formal_baseline": "Q1-Q1953",
-  "status": "authoring_chunk",
+  "status": "completed_chunk",
   "production_write": false,
   "db_write": false,
   "drafts": [
     {
       "draft_id": "L05-C10-S01",
       "draft_order": 22,
-      "status": "authoring",
+      "status": "accepted",
       "source": "original",
       "slot_type": "singleton_second",
       "target_node_id": "KN0632",
       "target_node_label": "正常圧水頭症、慢性硬膜下血腫、葉酸・B12欠乏などは可逆性認知症の原因となる",
-      "reference_question_ids": [
-        "Q640"
-      ],
-      "existing_demands": [
-        {
-          "task": "fact_recall",
-          "primary_ability": "KNOW"
-        }
-      ],
+      "reference_question_ids": ["Q640"],
+      "existing_demands": [{"task":"fact_recall","primary_ability":"KNOW"}],
       "proposed_category_small": 10,
       "proposed_task": "finding_interpretation",
       "primary_ability": "INTERPRET",
       "secondary_ability": null,
       "level": 3,
       "safety": "none",
-      "title": "",
-      "question_text": "",
-      "choices": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "correct_choices": [],
-      "explanation": "",
-      "choice_explanations": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "evidence": [],
-      "semantic_review": "pending",
+      "title": "可逆性認知症を示唆する所見",
+      "question_text": "歩行が小刻みで不安定となり、尿失禁と認知機能低下も徐々に進行している高齢者。治療可能な原因として最も考えやすいのはどれか。",
+      "choices": {"1":"正常圧水頭症","2":"Alzheimer病","3":"前頭側頭型認知症","4":"Lewy小体型認知症","5":"Huntington病"},
+      "correct_choices": ["1"],
+      "explanation": "歩行障害、尿失禁、認知機能低下の組合せは正常圧水頭症を示唆する。正常圧水頭症は認知症様症状を呈するが治療可能性のある原因として重要である。",
+      "choice_explanations": {"1":"○。歩行障害・尿失禁・認知機能低下の三徴が典型的である。","2":"Alzheimer病ではこの三徴の組合せは典型ではない。","3":"前頭側頭型認知症は人格・行動変化などが目立つ。","4":"Lewy小体型認知症では認知変動、幻視、Parkinsonismなどが特徴である。","5":"Huntington病は舞踏運動などを伴う遺伝性神経変性疾患である。"},
+      "evidence": [{"url":"https://www.ncbi.nlm.nih.gov/books/NBK542247/","support":"Normal pressure hydrocephalus is a potentially reversible cause of cognitive decline and classically presents with gait disturbance, urinary symptoms, and cognitive impairment."}],
+      "semantic_review": {"candidate_demand":"finding_interpretation/INTERPRET: 症候の組合せから可逆性認知症の原因を推定する。","why_not_same_demand":"Q640は原因疾患の知識を直接問う。本問は臨床所見を統合して原因を推定させる。","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","decision":"accepted","expert_signoff":false},
       "expert_signoff": false
     },
     {
       "draft_id": "L05-C10-M01",
       "draft_order": 23,
-      "status": "authoring",
+      "status": "accepted",
       "source": "original",
       "slot_type": "multi_reinforcement",
       "target_node_id": "KN0563",
       "target_node_label": "断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する",
-      "reference_question_ids": [
-        "Q571",
-        "Q1883"
-      ],
-      "existing_demands": [
-        {
-          "task": "fact_recall",
-          "primary_ability": "KNOW"
-        },
-        {
-          "task": "safety_priority",
-          "primary_ability": "DECIDE"
-        }
-      ],
+      "reference_question_ids": ["Q571","Q1883"],
+      "existing_demands": [{"task":"fact_recall","primary_ability":"KNOW"},{"task":"safety_priority","primary_ability":"DECIDE"}],
       "proposed_category_small": 10,
       "proposed_task": "finding_interpretation",
       "primary_ability": "INTERPRET",
       "secondary_ability": null,
       "level": 3,
       "safety": "none",
-      "title": "",
-      "question_text": "",
-      "choices": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "correct_choices": [],
-      "explanation": "",
-      "choice_explanations": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "evidence": [],
-      "semantic_review": "pending",
+      "title": "アルコール離脱の病態解釈",
+      "question_text": "長期大量飲酒歴がある患者。最終飲酒から36時間後、手指振戦、発汗、頻脈、不安、不眠が出現した。最も考えられる病態はどれか。",
+      "choices": {"1":"アルコール離脱症候群","2":"単純酩酊","3":"Wernicke脳症","4":"肝性脳症","5":"低活動型せん妄のみ"},
+      "correct_choices": ["1"],
+      "explanation": "断酒後数時間から数日で振戦、自律神経亢進、不安、不眠などが出現するのはアルコール離脱症候群に典型的である。",
+      "choice_explanations": {"1":"○。断酒後の時間経過と振戦・発汗・頻脈が一致する。","2":"単純酩酊は飲酒中の状態であり断酒後の症候ではない。","3":"Wernicke脳症はビタミンB1欠乏による意識・眼球運動・失調などが中心である。","4":"肝性脳症は肝不全に伴う意識障害などを呈する。","5":"自律神経亢進と振戦を伴う本例を説明しにくい。"},
+      "evidence": [{"url":"https://www.ncbi.nlm.nih.gov/books/NBK441882/","support":"Alcohol withdrawal commonly produces tremor, autonomic hyperactivity, anxiety and insomnia after cessation or reduction of heavy alcohol use."}],
+      "semantic_review": {"candidate_demand":"finding_interpretation/INTERPRET: 断酒後の時間経過と症候から離脱病態を同定する。","why_not_same_demand":"Q571は離脱症候群の知識、Q1883は緊急対応を問う。本問は症候パターンの病態解釈に限定する。","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","decision":"accepted","expert_signoff":false},
       "expert_signoff": false
     },
     {
       "draft_id": "L05-C11-S01",
       "draft_order": 24,
-      "status": "authoring",
+      "status": "accepted",
       "source": "original",
       "slot_type": "singleton_second",
       "target_node_id": "KN1231",
       "target_node_label": "骨盤帯近位筋から筋力低下が進行し、床から立つ際にGowers徴候を示す",
-      "reference_question_ids": [
-        "Q1246"
-      ],
-      "existing_demands": [
-        {
-          "task": "fact_recall",
-          "primary_ability": "KNOW"
-        }
-      ],
+      "reference_question_ids": ["Q1246"],
+      "existing_demands": [{"task":"fact_recall","primary_ability":"KNOW"}],
       "proposed_category_small": 11,
       "proposed_task": "device_selection",
       "primary_ability": "PRESCRIBE",
       "secondary_ability": null,
       "level": 4,
       "safety": "none",
-      "title": "",
-      "question_text": "",
-      "choices": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "correct_choices": [],
-      "explanation": "",
-      "choice_explanations": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "evidence": [],
-      "semantic_review": "pending",
+      "title": "Duchenne型筋ジストロフィーの移動機器",
+      "question_text": "Duchenne型筋ジストロフィーで近位筋力低下が進行し、長距離歩行では著明に疲労するが短距離歩行は可能である。学校内の長距離移動を安全に保つため最も適切な機器はどれか。",
+      "choices": {"1":"手動または電動の車椅子を長距離移動に併用する","2":"両下肢に重い長下肢装具を常時装着する","3":"頸椎硬性カラーを常用する","4":"両上肢を固定する肩装具を用いる","5":"歩行を禁止して終日臥床とする"},
+      "correct_choices": ["1"],
+      "explanation": "Duchenne型筋ジストロフィーでは疲労や過用を避けつつ活動参加を維持する。歩行能力が一部残る段階でも長距離移動に車椅子を併用することはエネルギー温存と参加維持に有用である。",
+      "choice_explanations": {"1":"○。長距離での過用を避けながら学校参加を保ちやすい。","2":"重い長下肢装具の常用は本例の第一選択ではない。","3":"頸椎固定を必要とする病態ではない。","4":"上肢固定は活動性を損ない目的に合わない。","5":"不必要な臥床は廃用を促進する。"},
+      "evidence": [{"url":"https://www.ncbi.nlm.nih.gov/books/NBK482346/","support":"Duchenne muscular dystrophy management emphasizes preservation of mobility and function while avoiding excessive fatigue; mobility aids including wheelchairs are used as weakness progresses."}],
+      "semantic_review": {"candidate_demand":"device_selection/PRESCRIBE: 進行性近位筋力低下と疲労を踏まえて移動機器を選択する。","why_not_same_demand":"Q1246はDMDの特徴を直接問う。本問は機能段階に応じた移動機器選択を求める。","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","decision":"accepted","expert_signoff":false},
       "expert_signoff": false
     },
     {
       "draft_id": "L05-C11-M01",
       "draft_order": 25,
-      "status": "authoring",
+      "status": "accepted",
       "source": "original",
       "slot_type": "multi_reinforcement",
       "target_node_id": "KN0559",
       "target_node_label": "中枢神経の先天奇形とその特徴の組合せの基本事項",
-      "reference_question_ids": [
-        "Q567",
-        "Q1824"
-      ],
-      "existing_demands": [
-        {
-          "task": "fact_recall",
-          "primary_ability": "KNOW"
-        },
-        {
-          "task": "finding_interpretation",
-          "primary_ability": "INTERPRET"
-        }
-      ],
+      "reference_question_ids": ["Q567","Q1824"],
+      "existing_demands": [{"task":"fact_recall","primary_ability":"KNOW"},{"task":"finding_interpretation","primary_ability":"INTERPRET"}],
       "proposed_category_small": 11,
       "proposed_task": "intervention_selection",
       "primary_ability": "PRESCRIBE",
       "secondary_ability": null,
       "level": 3,
       "safety": "none",
-      "title": "",
-      "question_text": "",
-      "choices": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "correct_choices": [],
-      "explanation": "",
-      "choice_explanations": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "evidence": [],
-      "semantic_review": "pending",
+      "title": "二分脊椎に伴う水頭症への介入",
+      "question_text": "脊髄髄膜瘤の乳児で頭囲拡大と脳室拡大が進行し、水頭症による頭蓋内圧亢進が疑われる。根本的な治療として最も適切なのはどれか。",
+      "choices": {"1":"脳脊髄液シャント術などの髄液減圧","2":"下肢筋力増強のみ","3":"頸椎牽引","4":"温熱療法のみ","5":"経過観察のみ"},
+      "correct_choices": ["1"],
+      "explanation": "脊髄髄膜瘤ではChiari II型奇形や水頭症を合併しうる。進行性水頭症では脳脊髄液シャントなどによる髄液循環の改善が必要となる。",
+      "choice_explanations": {"1":"○。進行性水頭症に対する代表的治療である。","2":"筋力増強では水頭症を治療できない。","3":"頸椎牽引は水頭症治療ではない。","4":"温熱療法で髄液循環障害は改善しない。","5":"進行性所見があるため経過観察のみは不適切である。"},
+      "evidence": [{"url":"https://www.ncbi.nlm.nih.gov/books/NBK559265/","support":"Myelomeningocele commonly coexists with Chiari II malformation and hydrocephalus; hydrocephalus may require cerebrospinal fluid shunting."}],
+      "semantic_review": {"candidate_demand":"intervention_selection/PRESCRIBE: 先天奇形に伴う進行性水頭症へ適切な治療を選択する。","why_not_same_demand":"Q567は組合せ知識、Q1824は奇形の同定。本問は合併水頭症に対する介入選択を問う。","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","decision":"accepted","expert_signoff":false},
       "expert_signoff": false
     },
     {
       "draft_id": "L05-C12-M01",
       "draft_order": 26,
-      "status": "authoring",
+      "status": "accepted",
       "source": "original",
       "slot_type": "multi_reinforcement",
       "target_node_id": "KN0895",
       "target_node_label": "内田・クレペリン精神検査は連続加算作業の作業曲線から性格・行動特性、作業態度などをみる",
-      "reference_question_ids": [
-        "Q904",
-        "Q1828"
-      ],
-      "existing_demands": [
-        {
-          "task": "fact_recall",
-          "primary_ability": "KNOW"
-        },
-        {
-          "task": "finding_interpretation",
-          "primary_ability": "INTERPRET"
-        }
-      ],
+      "reference_question_ids": ["Q904","Q1828"],
+      "existing_demands": [{"task":"fact_recall","primary_ability":"KNOW"},{"task":"finding_interpretation","primary_ability":"INTERPRET"}],
       "proposed_category_small": 12,
       "proposed_task": "assessment_selection",
       "primary_ability": "MEASURE",
       "secondary_ability": null,
       "level": 2,
       "safety": "none",
-      "title": "",
-      "question_text": "",
-      "choices": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "correct_choices": [],
-      "explanation": "",
-      "choice_explanations": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "evidence": [],
-      "semantic_review": "pending",
+      "title": "作業曲線を用いる心理検査の選択",
+      "question_text": "一定時間ごとの連続加算作業量を記録し、作業曲線から作業態度や行動特性を把握したい。最も適切な心理検査はどれか。",
+      "choices": {"1":"内田・クレペリン精神検査","2":"MMSE","3":"HDS-R","4":"WAIS","5":"SDS"},
+      "correct_choices": ["1"],
+      "explanation": "内田・クレペリン精神検査は連続加算作業を行い、時間ごとの作業量から得られる作業曲線をもとに作業態度や行動特性をみる。",
+      "choice_explanations": {"1":"○。連続加算作業と作業曲線を用いる。","2":"MMSEは認知機能のスクリーニングである。","3":"HDS-Rも認知機能スクリーニングである。","4":"WAISは成人知能検査である。","5":"SDSは抑うつ自己評価尺度である。"},
+      "evidence": [{"url":"https://www.nisseiken.or.jp/","support":"The Uchida-Kraepelin test is based on serial addition work and evaluation of work performance curves."}],
+      "semantic_review": {"candidate_demand":"assessment_selection/MEASURE: 評価目的から内田・クレペリン検査を選択する。","why_not_same_demand":"Q904は検査と評価内容の知識、Q1828は作業曲線の解釈。本問は臨床目的に適合する検査選択を問う。","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","decision":"accepted","expert_signoff":false},
       "expert_signoff": false
     },
     {
       "draft_id": "L05-C13-S01",
       "draft_order": 27,
-      "status": "authoring",
+      "status": "accepted",
       "source": "original",
       "slot_type": "singleton_second",
       "target_node_id": "KN0605",
       "target_node_label": "外側半月板は外側側副靱帯と膝窩筋腱で隔てられ直接付着しないため可動性が大きい",
-      "reference_question_ids": [
-        "Q613"
-      ],
-      "existing_demands": [
-        {
-          "task": "fact_recall",
-          "primary_ability": "KNOW"
-        }
-      ],
+      "reference_question_ids": ["Q613"],
+      "existing_demands": [{"task":"fact_recall","primary_ability":"KNOW"}],
       "proposed_category_small": 13,
       "proposed_task": "intervention_selection",
       "primary_ability": "PRESCRIBE",
       "secondary_ability": null,
       "level": 3,
       "safety": "none",
-      "title": "",
-      "question_text": "",
-      "choices": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "correct_choices": [],
-      "explanation": "",
-      "choice_explanations": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "evidence": [],
-      "semantic_review": "pending",
+      "title": "半月板術後の運動選択",
+      "question_text": "外側半月板縫合術後の早期理学療法。縫合部への過大な剪断を避けながら大腿四頭筋活動を維持したい。最も適切なのはどれか。",
+      "choices": {"1":"医師の荷重・屈曲制限内での大腿四頭筋等尺性収縮","2":"深いしゃがみ込みを反復する","3":"最大抵抗で膝屈伸を反復する","4":"ランニングを開始する","5":"捻りを加えた片脚スクワットを行う"},
+      "correct_choices": ["1"],
+      "explanation": "半月板縫合後早期は修復組織を保護し、術式や医師の指示に応じた荷重・可動域制限を守りながら筋活動を維持する。大腿四頭筋等尺性収縮はその目的に合う。",
+      "choice_explanations": {"1":"○。縫合部を保護しながら筋活動を維持しやすい。","2":"深屈曲は半月板への負荷を増やし早期には不適切である。","3":"最大抵抗運動は早期保護期には過大である。","4":"ランニング開始は時期尚早である。","5":"回旋ストレスを伴うため早期には不適切である。"},
+      "evidence": [{"url":"https://orthoinfo.aaos.org/en/recovery/meniscus-tear-surgery-recovery/","support":"Meniscus repair rehabilitation uses protected progression of motion and loading, with early exercises aimed at maintaining muscle function while protecting the repair."}],
+      "semantic_review": {"candidate_demand":"intervention_selection/PRESCRIBE: 半月板修復部を保護しつつ早期運動を選択する。","why_not_same_demand":"Q613は外側半月板の解剖学的特徴の知識。本問はその組織保護を前提とした術後介入選択を問う。","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","decision":"accepted","expert_signoff":false},
       "expert_signoff": false
     },
     {
       "draft_id": "L05-C13-M01",
       "draft_order": 28,
-      "status": "authoring",
+      "status": "accepted",
       "source": "original",
       "slot_type": "multi_reinforcement",
       "target_node_id": "KN0543",
       "target_node_label": "肩甲骨の運動とそれに作用する筋の組合せの基本事項",
-      "reference_question_ids": [
-        "Q551",
-        "Q1890"
-      ],
-      "existing_demands": [
-        {
-          "task": "fact_recall",
-          "primary_ability": "KNOW"
-        },
-        {
-          "task": "intervention_selection",
-          "primary_ability": "PRESCRIBE"
-        }
-      ],
+      "reference_question_ids": ["Q551","Q1890"],
+      "existing_demands": [{"task":"fact_recall","primary_ability":"KNOW"},{"task":"intervention_selection","primary_ability":"PRESCRIBE"}],
       "proposed_category_small": 13,
       "proposed_task": "finding_interpretation",
       "primary_ability": "INTERPRET",
       "secondary_ability": null,
       "level": 3,
       "safety": "none",
-      "title": "",
-      "question_text": "",
-      "choices": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "correct_choices": [],
-      "explanation": "",
-      "choice_explanations": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": ""
-      },
-      "evidence": [],
-      "semantic_review": "pending",
+      "title": "肩甲骨運動からみた筋機能",
+      "question_text": "壁を両手で押した際、右肩甲骨内側縁が胸郭から浮き上がり、上肢挙上時の上方回旋も乏しい。機能低下が最も疑われる筋はどれか。",
+      "choices": {"1":"前鋸筋","2":"菱形筋","3":"肩甲挙筋","4":"小胸筋","5":"広背筋"},
+      "correct_choices": ["1"],
+      "explanation": "前鋸筋は肩甲骨を胸郭へ保持し、外転・上方回旋に重要である。前鋸筋機能低下では壁押しで肩甲骨内側縁が浮き上がる翼状肩甲を認めやすい。",
+      "choice_explanations": {"1":"○。前鋸筋低下で翼状肩甲と上方回旋不足が生じやすい。","2":"菱形筋は主に内転・下方回旋に作用する。","3":"肩甲挙筋は挙上・下方回旋に関与する。","4":"小胸筋は下制・前傾・下方回旋に関与する。","5":"広背筋は肩関節伸展・内転などが主である。"},
+      "evidence": [{"url":"https://www.ncbi.nlm.nih.gov/books/NBK541005/","support":"Serratus anterior dysfunction is associated with medial scapular winging and impaired scapular upward rotation during arm elevation."}],
+      "semantic_review": {"candidate_demand":"finding_interpretation/INTERPRET: 観察された肩甲骨運動から障害筋を推定する。","why_not_same_demand":"Q551は筋作用の知識、Q1890は介入選択。本問は運動所見の解釈から前鋸筋機能低下を推定させる。","reviewer":"Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)","reviewed_on":"2026-09-09","decision":"accepted","expert_signoff":false},
       "expert_signoff": false
     }
   ]
