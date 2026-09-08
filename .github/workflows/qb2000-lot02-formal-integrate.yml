@@ -7,6 +7,7 @@ on:
 permissions:
   contents: write
 
+# This workflow is intentionally push-triggered after its bootstrap commit.
 jobs:
   integrate-and-commit:
     if: ${{ !contains(github.event.head_commit.message, '[lot02-formal-integrated]') }}
