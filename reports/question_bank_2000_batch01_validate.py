@@ -1,12 +1,13 @@
 """Read-only validation for Question Bank 2000 Batch 01 staging drafts.
 
 This module never imports app/database, never writes Question Bank data, and never
-allocates Q IDs.  It compares staging drafts with the current four formal stores
+allocates Q IDs. It compares staging drafts with the current four formal stores
 and Knowledge Node registry so category/reference/duplicate checks are
 reproducible before any integration branch is created.
 """
 from __future__ import annotations
 
+import copy
 import json
 import re
 from difflib import SequenceMatcher
@@ -18,6 +19,7 @@ BANK_DIR = ROOT / "data" / "question_bank"
 STAGING_DIR = ROOT / "staging"
 MAIN_DRAFT_PATH = STAGING_DIR / "question_bank_2000_batch01_v01.json"
 REPLACEMENT_PATH = STAGING_DIR / "question_bank_2000_batch01_replacement_v01.json"
+CATEGORY_CORRECTIONS_PATH = STAGING_DIR / "question_bank_2000_batch01_category_corrections_v01.json"
 
 HOLD_IDS = {"B01-05"}
 REPLACEMENT_ID = "B01-R1"
@@ -38,8 +40,15 @@ def _normalize(text: str) -> str:
 def _accepted_drafts() -> list[dict[str, Any]]:
     primary = _read(MAIN_DRAFT_PATH)["drafts"]
     replacement = _read(REPLACEMENT_PATH)["draft"]
-    accepted = [draft for draft in primary if draft["draft_id"] not in HOLD_IDS]
-    accepted.append(replacement)
+    corrections = _read(CATEGORY_CORRECTIONS_PATH).get("corrections", {})
+    accepted = [copy.deepcopy(draft) for draft in primary if draft["draft_id"] not in HOLD_IDS]
+    accepted.append(copy.deepcopy(replacement))
+    for draft in accepted:
+        correction = corrections.get(str(draft["draft_id"]))
+        if correction:
+            draft["proposed_category_large"] = correction["category_large"]
+            draft["proposed_category_small"] = correction["category_small"]
+            draft["category_correction_applied"] = True
     return accepted
 
 
@@ -111,7 +120,7 @@ def build_report() -> dict[str, Any]:
         category_matches = proposed_small == actual_small and proposed_large == actual_large
         if not category_matches:
             hard_errors.append(
-                f"{draft_id}: proposed category {proposed_large}-{proposed_small} "
+                f"{draft_id}: effective category {proposed_large}-{proposed_small} "
                 f"!= reference {ref_qid} category {actual_large}-{actual_small}"
             )
 
@@ -148,6 +157,8 @@ def build_report() -> dict[str, Any]:
                 "node_status": node.get("status"),
                 "reference_qid": ref_qid,
                 "reference_category": f"{actual_large}-{actual_small}",
+                "effective_draft_category": f"{proposed_large}-{proposed_small}",
+                "category_correction_applied": bool(draft.get("category_correction_applied")),
                 "reference_task": ref_tag.get("task"),
                 "reference_primary_ability": ref_tag.get("primary_ability"),
                 "reference_level": ref_tag.get("level"),
