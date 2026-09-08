@@ -17,22 +17,22 @@ def read(path):
 def test_remaining_allocation_balances_to_2000():
     manifest = read(BANK / "bank_manifest.json")
     report = read(REPORT)
-    assert manifest["question_count"] == manifest["last_question_number"] == 1809
-    assert report["current_formal_count"] == 1809
-    assert report["formal_original_added_since_audit"] == 72
-    assert report["original_remaining"] == 185
+    assert manifest["question_count"] == manifest["last_question_number"] == 1857
+    assert report["current_formal_count"] == 1857
+    assert report["formal_original_added_since_audit"] == 120
+    assert report["original_remaining"] == 137
     assert report["past_exam_remaining"] == 6
-    assert report["total_remaining"] == 191
+    assert report["total_remaining"] == 143
     assert report["current_formal_count"] + report["total_remaining"] == 2000
     remaining = report["remaining_original_plan"]
-    assert sum(map(int, remaining["category"].values())) == 185
-    assert sum(map(int, remaining["task"].values())) == 185
-    assert sum(map(int, remaining["level"].values())) == 185
-    assert sum(map(int, remaining["node_slot"].values())) == 185
+    assert sum(map(int, remaining["category"].values())) == 137
+    assert sum(map(int, remaining["task"].values())) == 137
+    assert sum(map(int, remaining["level"].values())) == 137
+    assert sum(map(int, remaining["node_slot"].values())) == 137
     assert report["used"]["node_slot"] == {
-        "multi_reinforcement": 10, "new_node": 4, "singleton_second": 58,
+        "multi_reinforcement": 22, "new_node": 8, "singleton_second": 90,
     }
-    assert report["used"]["strong_formations"] == 68
+    assert report["used"]["strong_formations"] == 112
     assert report["used"]["weak_or_unproven_formations"] == []
 
 
