@@ -1,0 +1,48 @@
+name: qb2000-lot05-chunk-ci
+
+on:
+  push:
+    branches: [work/qb2000-lot05-active]
+    paths:
+      - '.github/workflows/qb2000-lot05-chunk-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  chunk-ci:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot05-active
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate completed chunks
+        run: |
+          python -m reports.question_bank_2000_lot05_chunk_validate 1
+          python -m reports.question_bank_2000_lot05_similarity_audit 1
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('reports/question_bank_2000_lot05_similarity_audits/chunk_01.json').read_text(encoding='utf-8'))
+          assert a['exact_total']==0
+          assert a['hard_near_total']==0, a
+          PY
+          git diff --check
+      - name: Commit similarity audit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/question_bank_2000_lot05_similarity_audits/chunk_01.json
+          if git diff --cached --quiet; then
+            echo "No audit changes"
+          else
+            git commit -m "Validate Question Bank 2000 Lot05 chunk01"
+            git push origin HEAD:work/qb2000-lot05-active
+          fi
