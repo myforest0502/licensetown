@@ -14,8 +14,18 @@ def read(path: Path):
 
 
 def test_blank_authoring_chunk_fails_closed():
-    payload = read(CHUNK)
+    payload = copy.deepcopy(read(CHUNK))
     payload["status"] = "completed_chunk"
+    draft = payload["drafts"][0]
+    draft["status"] = "authoring"
+    draft["question_text"] = ""
+    draft["choices"] = {key: "" for key in "12345"}
+    draft["correct_choices"] = []
+    draft["explanation"] = ""
+    draft["choice_explanations"] = {key: "" for key in "12345"}
+    draft["clinical_intent"] = ""
+    draft["evidence"] = []
+    draft["semantic_review"]["decision"] = "pending"
     report = build_report(payload)
     assert report["hard_errors"]
     text = "\n".join(report["hard_errors"])

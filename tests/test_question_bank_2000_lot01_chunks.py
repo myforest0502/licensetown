@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from reports import question_bank_2000_lot01_chunks as chunks
+from reports.question_bank_2000_lot01_chunk_validate import build_report
 
 
 ROOT = Path(__file__).parents[1]
@@ -26,11 +27,14 @@ def test_committed_chunk_set_is_exactly_six_by_eight_and_matches_seed_order():
         assert payload["lot"] == "question_bank_2000_production_lot01_v01"
         assert payload["chunk"] == index
         assert payload["chunk_count"] == 6
-        assert payload["status"] == "authoring_chunk"
+        assert payload["status"] in {"authoring_chunk", "completed_chunk"}
         assert payload["q_ids_reserved"] is False
         assert payload["production_write"] is False
         assert payload["db_write"] is False
         assert len(payload["drafts"]) == 8
+        if payload["status"] == "completed_chunk":
+            assert all(draft["status"] == "accepted" for draft in payload["drafts"])
+            assert build_report(payload)["hard_errors"] == []
         actual_ids.extend(d["draft_id"] for d in payload["drafts"])
     assert actual_ids == expected_ids
     assert len(set(actual_ids)) == 48
