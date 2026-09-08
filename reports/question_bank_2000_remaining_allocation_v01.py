@@ -8,8 +8,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BANK = ROOT / "data" / "question_bank"
 BASE_END = 1737
-CURRENT_END = 1857
+CURRENT_END = 1905
 FINAL_TARGET = 2000
+EXPECTED_ORIGINAL_REMAINING = 89
+PAST_EXAM_REMAINING = 6
 
 CATEGORY_TARGET = {1:12,2:16,3:4,4:7,5:4,6:8,7:10,8:25,9:28,10:7,11:12,12:10,13:10,14:10,15:14,16:20,17:28,18:32}
 TASK_TARGET = {
@@ -88,14 +90,24 @@ def build_report() -> dict:
             raise ValueError(f"{label} target overspent: {values}")
 
     original_remaining = sum(category_remaining.values())
-    if original_remaining != 137:
-        raise ValueError(f"expected 137 original remaining, got {original_remaining}")
-    if sum(task_remaining.values()) != 137 or sum(level_remaining.values()) != 137 or sum(slot_remaining.values()) != 137:
-        raise ValueError("remaining allocation dimensions do not sum to 137")
+    if original_remaining != EXPECTED_ORIGINAL_REMAINING:
+        raise ValueError(
+            f"expected {EXPECTED_ORIGINAL_REMAINING} original remaining, got {original_remaining}"
+        )
+    if (
+        sum(task_remaining.values()) != EXPECTED_ORIGINAL_REMAINING
+        or sum(level_remaining.values()) != EXPECTED_ORIGINAL_REMAINING
+        or sum(slot_remaining.values()) != EXPECTED_ORIGINAL_REMAINING
+    ):
+        raise ValueError(
+            f"remaining allocation dimensions do not sum to {EXPECTED_ORIGINAL_REMAINING}"
+        )
     total_remaining = FINAL_TARGET - CURRENT_END
     past_exam_remaining = total_remaining - original_remaining
-    if past_exam_remaining != 6:
-        raise ValueError(f"expected 6 past_exam remaining, got {past_exam_remaining}")
+    if past_exam_remaining != PAST_EXAM_REMAINING:
+        raise ValueError(
+            f"expected {PAST_EXAM_REMAINING} past_exam remaining, got {past_exam_remaining}"
+        )
 
     return {
         "baseline_audit_end":BASE_END,
@@ -123,7 +135,7 @@ def build_report() -> dict:
             "strong_formations":STRONG_TARGET-strong_used,
             "safety_augment":SAFETY_AUGMENT_TARGET-safety_aug_used,
         },
-        "production_lots":[48,48,41],
+        "production_lots":[48,41],
     }
 
 
@@ -154,7 +166,7 @@ def write_outputs(report: dict) -> None:
         f"- strong formations remaining: {rem['strong_formations']}",
         f"- Safety moderate/critical augmentation remaining: {rem['safety_augment']}","",
         "## Production lots","",
-        "Calibration, Lot01, and Lot02 are complete. Remaining originals are grouped into production lots: 48 / 48 / 41, followed by a separate 6-question past-exam acceptance step.","",
+        "Calibration, Lot01, Lot02, and Lot03 are complete. Remaining originals are grouped into production lots: 48 / 41, followed by a separate 6-question past-exam acceptance step.","",
         "Each lot is staging-first, then formal integration only after semantic/duplicate/Node/category validation and full CI.",
     ]
     if used["weak_or_unproven_formations"]:
