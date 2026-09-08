@@ -1,0 +1,205 @@
+"""Read-only Batch02 staging audit. Run: python reports/question_bank_2000_batch02_validate.py.
+
+Content hashes bind an editorial demand review to the reviewed text/answers/tags.
+They detect stale reviews, not medical correctness or semantic novelty by themselves.
+No integration, Q-ID allocation, network, app/database import or file writes.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+import sys
+import unicodedata
+from collections import Counter, defaultdict
+from difflib import SequenceMatcher
+from itertools import combinations
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from knowledge_node_canonical import canonicalize_knowledge_node_id as canonical
+
+BANK = ROOT / "data/question_bank"
+STAGING = ROOT / "staging/question_bank_2000_batch02_v01.json"
+STORES = ("questions", "answers", "explanations", "question_tags")
+PROTECTED = tuple(f"{name}.json" for name in STORES) + (
+    "knowledge_nodes.json", "bank_manifest.json", "schema/question_bank_schema_v1.json",
+    "knowledge_node_canonical_map.json", "strong_different_question_pairs.json",
+)
+TASK_PRIMARY = {
+    "assessment_selection": "MEASURE", "device_selection": "PRESCRIBE",
+    "fact_recall": "KNOW", "finding_interpretation": "INTERPRET",
+    "functional_goal_decision": "DECIDE", "intervention_selection": "PRESCRIBE",
+    "prognosis_prediction": "PREDICT", "safety_priority": "DECIDE",
+}
+NEAR_THRESHOLD = 0.65
+
+
+def read(path):
+    return json.loads(path.read_text(encoding="utf-8-sig"))
+
+
+def file_fingerprint(path):
+    # Git checks out these text files as CRLF on Windows and LF on Ubuntu.
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
+
+def normalize(stem):
+    return re.sub(r"[^\w]", "", unicodedata.normalize("NFKC", stem)).lower()
+
+
+def fingerprint(value):
+    return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True,
+                                    separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def draft_fingerprint(draft):
+    # Exclude only the seal itself. Any content, evidence or review edit needs review again.
+    return fingerprint({key: value for key, value in draft.items() if key != "reviewed_sha256"})
+
+
+def build_report(payload=None, bank_dir=BANK):
+    payload = read(STAGING) if payload is None else payload
+    errors, rows = [], []
+
+    def check(condition, message):
+        if not condition:
+            errors.append(message)
+
+    check(payload.get("status") == "staging_only", "scope: staging_only required")
+    for key in ("q_ids_reserved", "production_write", "db_write"):
+        check(payload.get(key) is False, f"scope: {key} must be false")
+    hashes = payload.get("formal_input_sha256", {})
+    check(payload.get("formal_hash_format") == "sha256-lf-normalized-v1", "formal hash format invalid")
+    check(set(hashes) == set(PROTECTED), "formal snapshot: incomplete protected files")
+    for name in PROTECTED:
+        check(hashes.get(name) == file_fingerprint(bank_dir / name),
+              f"formal snapshot changed: {name}; re-audit required")
+    stores = {name: read(bank_dir / f"{name}.json") for name in STORES}
+    maps = {name: {r["id"]: r for r in records} for name, records in stores.items()}
+    manifest = read(bank_dir / "bank_manifest.json")
+    expected = [f"Q{n}" for n in range(manifest["first_question_number"],
+                                      manifest["last_question_number"] + 1)]
+    check(len(expected) == manifest["question_count"], "manifest: range/count mismatch")
+    for name, records in stores.items():
+        check([r["id"] for r in records] == expected, f"{name}: four-store ID order/count mismatch")
+    registry = {r["knowledge_node_id"]: r for r in read(bank_dir / "knowledge_nodes.json")}
+    groups = defaultdict(set)
+    for tag in stores["question_tags"]:
+        groups[canonical(tag["knowledge_node_id"])].add(tag["id"])
+    batch01_nodes = {canonical(maps["question_tags"][f"Q{n}"]["knowledge_node_id"])
+                     for n in range(1738, 1750)}
+    drafts = payload.get("drafts", [])
+    accepted = [d for d in drafts if d.get("status") == "accepted"]
+    check(len(accepted) == 12, "accepted count must be 12")
+    check(len({d.get("draft_id") for d in drafts}) == len(drafts), "duplicate draft ID")
+    targets = [canonical(d.get("target_node_id", "")) for d in accepted]
+    check(len(set(targets)) == len(targets), "duplicate accepted canonical target")
+    formal_stems = {r["id"]: normalize(r["question_text"]) for r in stores["questions"]}
+    exact_formal, exact_candidate = [], []
+    for d in accepted:
+        did, node = d.get("draft_id", "?"), d.get("target_node_id", "")
+        prefix = f"{did}: "
+        check(re.fullmatch(r"B02-\d{2}", did) is not None, prefix + "invalid draft ID")
+        check(not any(k in d for k in ("id", "qid", "q_id", "question_id", "reserved_qid",
+                                      "new_question_id", "management_code")), prefix + "Q ID allocation forbidden")
+        check(node in registry, prefix + "target Node missing")
+        cn = canonical(node)
+        check(cn in registry and d.get("target_canonical_node_id") == cn,
+              prefix + "canonical resolution mismatch")
+        check(cn not in batch01_nodes and cn != canonical("KN0779"), prefix + "excluded Node")
+        check(d.get("expected_target_state") == "singleton" and len(groups.get(cn, ())) == 1,
+              prefix + "target not canonical singleton")
+        if node in registry:
+            check(registry[node]["status"] == "singleton_initial", prefix + "registry state not singleton")
+        refs = d.get("reference_question_ids", [])
+        if len(refs) != 1 or not all(refs[0] in m for m in maps.values()):
+            errors.append(prefix + "reference absent from four stores or not singular")
+            continue
+        ref = refs[0]
+        tag, question = maps["question_tags"][ref], maps["questions"][ref]
+        check(node in registry and registry[node]["question_ids"] == refs and
+              tag["knowledge_node_id"] == node and groups.get(cn) == set(refs),
+              prefix + "Node/reference registry mismatch")
+        snapshot = {k: tag[k] for k in ("task", "primary_ability", "level", "safety")}
+        snapshot["question_text"] = question["question_text"]
+        check(d.get("reference_snapshot") == snapshot, prefix + "reference snapshot stale")
+        check((d.get("proposed_category_large"), d.get("proposed_category_small")) ==
+              (question["category_large"], question["category_small"]), prefix + "category mismatch")
+        check(d.get("source") == "original", prefix + "source must be original")
+        check(d.get("proposed_task") in TASK_PRIMARY and
+              TASK_PRIMARY.get(d.get("proposed_task")) == d.get("primary_ability"),
+              prefix + "task/ability mismatch")
+        check(d.get("secondary_ability") is None or
+              d.get("secondary_ability") in set(TASK_PRIMARY.values()) - {d.get("primary_ability")},
+              prefix + "secondary ability invalid")
+        check(d.get("level") in (1, 2, 3, 4), prefix + "level invalid")
+        check(d.get("safety") in ("none", "moderate", "critical"), prefix + "safety invalid")
+        check(d.get("proposed_task") != "safety_priority" or d.get("safety") != "none",
+              prefix + "safety task lacks safety tag")
+        check((d.get("proposed_task"), d.get("primary_ability")) !=
+              (tag["task"], tag["primary_ability"]), prefix + "same metadata demand")
+        choices, reasons = d.get("choices", {}), d.get("choice_explanations", {})
+        check(set(choices) == set(reasons) == set("12345") and
+              all(isinstance(v, str) and v.strip() for v in [*choices.values(), *reasons.values()]),
+              prefix + "five choices and reasons required")
+        check(len({normalize(v) for v in choices.values()}) == 5, prefix + "duplicate choice text")
+        answer = d.get("correct_choices", [])
+        check(len(answer) == 1 and answer[0] in choices, prefix + "single best answer required")
+        check(bool(d.get("explanation")) and bool(d.get("clinical_intent")), prefix + "rationale missing")
+        stem = d.get("question_text", "")
+        check(isinstance(stem, str) and 0 < len(stem) <= 300, prefix + "stem length outside batch limit")
+        norm = normalize(stem)
+        ranked = sorted(((SequenceMatcher(None, norm, text, autojunk=False).ratio(), qid)
+                         for qid, text in formal_stems.items()), reverse=True)
+        duplicates = [qid for qid, text in formal_stems.items() if text == norm]
+        exact_formal.extend((did, qid) for qid in duplicates)
+        check(not duplicates, prefix + "exact formal duplicate")
+        review = d.get("semantic_review", {})
+        check(review.get("decision") == "accepted", prefix + "semantic decision missing")
+        for key in ("reference_demand", "candidate_demand", "why_not_same_demand", "reviewer", "reviewed_on"):
+            check(bool(review.get(key)), prefix + f"semantic review missing {key}")
+        check(review.get("reference_demand") != review.get("candidate_demand"), prefix + "same semantic demand")
+        for related in review.get("related_formal_questions", []):
+            check(related.get("qid") in maps["questions"] and bool(related.get("difference")),
+                  prefix + "related semantic evidence invalid")
+        check(d.get("reviewed_sha256") == draft_fingerprint(d), prefix + "content changed after semantic review")
+        check(bool(d.get("evidence")) and all(e.get("url", "").startswith("https://") and
+              e.get("support") for e in d.get("evidence", [])), prefix + "medical sources missing")
+        # Escalate high lexical similarity; no automatic acceptance by a changed tag.
+        check(ranked[0][0] < NEAR_THRESHOLD, prefix + "near formal stem requires revision/review")
+        rows.append({"draft_id": did, "target_node_id": node, "reference_qid": ref,
+                     "reference_snapshot": snapshot, "candidate_task": d["proposed_task"],
+                     "candidate_ability": d["primary_ability"], "candidate_level": d["level"],
+                     "candidate_safety": d["safety"], "nearest_formal": [
+                         {"qid": qid, "similarity": round(score, 6)} for score, qid in ranked[:3]]})
+    pair_max = 0.0
+    for left, right in combinations(accepted, 2):
+        a, b = normalize(left["question_text"]), normalize(right["question_text"])
+        pair = (left["draft_id"], right["draft_id"])
+        if a == b:
+            exact_candidate.append(pair)
+            errors.append(f"{pair}: exact candidate duplicate")
+        score = SequenceMatcher(None, a, b, autojunk=False).ratio()
+        pair_max = max(pair_max, score)
+        check(score < NEAR_THRESHOLD, f"{pair}: near candidate duplicate requires review")
+    return {"accepted_count": len(accepted), "unique_targets": len(set(targets)),
+            "formal_count": manifest["question_count"], "canonical_singletons": sum(len(v) == 1 for v in groups.values()),
+            "excluded_batch01_nodes": sorted(batch01_nodes), "hard_errors": errors,
+            "exact_formal_duplicates": exact_formal, "exact_candidate_duplicates": exact_candidate,
+            "near_threshold": NEAR_THRESHOLD, "max_candidate_similarity": round(pair_max, 6),
+            "category_counts": dict(Counter(d["proposed_category_small"] for d in accepted)),
+            "task_counts": dict(Counter(d["proposed_task"] for d in accepted)),
+            "safety_counts": dict(Counter(d["safety"] for d in accepted)), "rows": rows,
+            "semantic_limit": "Editorial review plus content seal; not an automated proof of clinical novelty."}
+
+
+def main():
+    report = build_report()
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+    return 1 if report["hard_errors"] else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
