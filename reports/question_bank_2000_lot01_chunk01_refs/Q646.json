@@ -1,0 +1,64 @@
+{
+  "qid": "Q646",
+  "question": {
+    "id": "Q646",
+    "management_code": "Q646-B-9-P",
+    "category_large": "B",
+    "category_small": 9,
+    "source": "P",
+    "title": null,
+    "question_text": "脳卒中片麻痺患者に用いられる評価法で正しいのはどれか。2つ選べ。",
+    "choices": {
+      "1": "FMA〈Fugl-Meyer Assessment〉はADLの評価を含む。",
+      "2": "JSS〈Japan Stroke Scale〉は関節可動域の評価を含む。",
+      "3": "mRSは歩行速度の評価を含む。",
+      "4": "NIHSSは意識状態の評価を含む。",
+      "5": "SIASは非麻痺側機能の評価を含む。"
+    },
+    "exam": {
+      "exam_no": 54,
+      "session": "午前",
+      "question_no": 34
+    }
+  },
+  "answer": {
+    "id": "Q646",
+    "display_answer": "4・5",
+    "accepted_answer_sets": [
+      [
+        "4",
+        "5"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  "explanation": {
+    "id": "Q646",
+    "explanation": "NIHSSには意識水準・質問・命令など意識状態の評価が含まれる。SIASには健側上下肢機能など非麻痺側機能の項目があるため4・5が正しい。",
+    "choice_explanations": {
+      "1": "FMAは運動・感覚等を評価するがADL尺度ではない。",
+      "2": "JSSに関節可動域評価は含まれない。",
+      "3": "mRSは障害度・生活自立度を段階評価し歩行速度を測定しない。",
+      "4": "○。NIHSSには意識状態の評価がある。",
+      "5": "○。SIASには非麻痺側機能の評価が含まれる。"
+    }
+  },
+  "tag": {
+    "id": "Q646",
+    "theme": "脳卒中片麻痺患者に用いられる評価法で正しいのはどれか",
+    "knowledge_node": "NIHSSには意識水準・質問・命令など意識状態の評価が含まれる",
+    "knowledge_node_id": "KN0638",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "NIHSSには意識水準・質問・命令など意識状態の評価が含まれる。",
+      "SIASには健側上下肢機能など非麻痺側機能の項目があるため4・5が正しい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  }
+}

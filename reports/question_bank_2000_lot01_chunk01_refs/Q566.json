@@ -1,0 +1,62 @@
+{
+  "qid": "Q566",
+  "question": {
+    "id": "Q566",
+    "management_code": "Q566-B-9-P",
+    "category_large": "B",
+    "category_small": 9,
+    "source": "P",
+    "title": null,
+    "question_text": "多発性硬化症について正しいのはどれか。",
+    "choices": {
+      "1": "女性よりも男性に多い。",
+      "2": "再発と寛解を繰り返す。",
+      "3": "発症は 50 歳以上が多い。",
+      "4": "後遺障害を残すことは稀である。",
+      "5": "白色人種に比べて黄色人種に多い。"
+    },
+    "exam": {
+      "exam_no": 52,
+      "session": "午前",
+      "question_no": 90
+    }
+  },
+  "answer": {
+    "id": "Q566",
+    "display_answer": "2",
+    "accepted_answer_sets": [
+      [
+        "2"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  "explanation": {
+    "id": "Q566",
+    "explanation": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である。",
+    "choice_explanations": {
+      "1": "女性に多い疾患である。",
+      "2": "○。再発と寛解を反復する経過が代表的である。",
+      "3": "発症は若年成人に多い。",
+      "4": "後遺障害を残す例もあり稀ではない。",
+      "5": "欧米白色人種で頻度が高い。"
+    }
+  },
+  "tag": {
+    "id": "Q566",
+    "theme": "多発性硬化症について正しいのはどれか",
+    "knowledge_node": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である",
+    "knowledge_node_id": "KN0558",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "多発性硬化症について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "qid": "Q839",
+  "question": {
+    "id": "Q839",
+    "management_code": "Q839-B-9-P",
+    "category_large": "B",
+    "category_small": 9,
+    "source": "P",
+    "title": null,
+    "question_text": "てんかんで正しいのはどれか。",
+    "choices": {
+      "1": "遺伝素因はない。",
+      "2": "意識障害が必発する。",
+      "3": "高齢発症は稀である。",
+      "4": "病因は特発性と症候性に分けられる。",
+      "5": "我が国の患者は約10万人と推定されている。"
+    },
+    "exam": {
+      "exam_no": 55,
+      "session": "午前",
+      "question_no": 96
+    }
+  },
+  "answer": {
+    "id": "Q839",
+    "display_answer": "4",
+    "accepted_answer_sets": [
+      [
+        "4"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  "explanation": {
+    "id": "Q839",
+    "explanation": "てんかんは病因により特発性と症候性などに分類され、意識障害を伴わない発作もある。高齢発症もみられるため4が正しい。",
+    "choice_explanations": {
+      "1": "遺伝素因が関与する型がある。",
+      "2": "意識障害は必発ではない。",
+      "3": "高齢発症も少なくない。",
+      "4": "○。病因分類として特発性・症候性がある。",
+      "5": "患者数は約100万人規模で10万人では少なすぎる。"
+    }
+  },
+  "tag": {
+    "id": "Q839",
+    "theme": "てんかんで正しいのはどれか",
+    "knowledge_node": "てんかんは病因により特発性と症候性などに分類され、意識障害を伴わない発作もある",
+    "knowledge_node_id": "KN0830",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "高齢発症もみられるため4が正しい。",
+      "てんかんは病因により特発性と症候性などに分類され、意識障害を伴わない発作もある。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  }
+}
