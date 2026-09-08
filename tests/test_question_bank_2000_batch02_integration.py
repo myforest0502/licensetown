@@ -1,7 +1,13 @@
 import json
 import shutil
 
-from reports.question_bank_2000_batch02_validate import BANK, PROTECTED, STAGING, read
+from reports.question_bank_2000_batch02_validate import (
+    BANK,
+    PROTECTED,
+    STAGING,
+    build_report,
+    read,
+)
 from scripts.integrate_question_bank_2000_batch02 import (
     END_Q,
     QID_PATTERN,
@@ -34,7 +40,8 @@ def test_batch02_integrator_dry_run_is_atomic_and_idempotent(tmp_path):
     explanations = _index(tmp_path / "explanations.json")
     tags = _index(tmp_path / "question_tags.json")
     nodes = {row["knowledge_node_id"]: row for row in read(tmp_path / "knowledge_nodes.json")}
-    drafts = [row for row in read(STAGING)["drafts"] if row["status"] == "accepted"]
+    payload = read(STAGING)
+    drafts = [row for row in payload["drafts"] if row["status"] == "accepted"]
 
     assert manifest["bank_version"] == TARGET_VERSION
     assert manifest["question_count"] == manifest["last_question_number"] == END_Q
@@ -63,6 +70,12 @@ def test_batch02_integrator_dry_run_is_atomic_and_idempotent(tmp_path):
         )
         assert answers[qid]["answer_basis"] == "LT_original"
         assert explanations[qid]["explanation"] == draft["explanation"]
+
+    report = build_report(payload, tmp_path)
+    assert report["hard_errors"] == []
+    assert report["lifecycle"] == "integrated"
+    assert report["integrated_count"] == 12
+    assert report["formal_count"] == END_Q
 
     # A second execution must not duplicate records or mutate the contract again.
     integrate(tmp_path, STAGING)
