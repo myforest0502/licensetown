@@ -1,0 +1,2678 @@
+{
+  "batch": "question_bank_2000_production_lot01_v01",
+  "status": "template_only",
+  "formal_baseline": "Q1-Q1761",
+  "q_ids_reserved": false,
+  "production_write": false,
+  "db_write": false,
+  "accepted_target_count": 48,
+  "quotas": {
+    "category": {
+      "9": 12,
+      "16": 10,
+      "17": 12,
+      "18": 14
+    },
+    "task": {
+      "assessment_selection": 9,
+      "device_selection": 2,
+      "fact_recall": 1,
+      "finding_interpretation": 14,
+      "functional_goal_decision": 4,
+      "intervention_selection": 9,
+      "prognosis_prediction": 3,
+      "safety_priority": 6
+    },
+    "level": {
+      "1": 1,
+      "2": 16,
+      "3": 20,
+      "4": 11
+    },
+    "slot_type": {
+      "singleton_second": 32,
+      "multi_reinforcement": 12,
+      "new_node": 4
+    },
+    "minimum_strong_formations": 41,
+    "safety_moderate_or_critical": 12
+  },
+  "drafts": [
+    {
+      "draft_id": "L01-C9-S01",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0553",
+      "target_node_label": "中心性脊髄損傷は高齢者の頸椎過伸展外傷などで生じやすく、脊髄中心部の障害により下肢より上肢の麻痺が強いことが特徴である",
+      "reference_question_ids": [
+        "Q561"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C9-S02",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0558",
+      "target_node_label": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である",
+      "reference_question_ids": [
+        "Q566"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C9-S03",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0574",
+      "target_node_label": "上位・下位運動ニューロン障害により四肢麻痺、舌萎縮、構音・嚥下障害が進行するが、眼球運動は比較的末期まで保たれやすい",
+      "reference_question_ids": [
+        "Q582"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C9-S04",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0613",
+      "target_node_label": "脊髄損傷の自律神経過反射の典型所見",
+      "reference_question_ids": [
+        "Q621"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C9-S05",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0638",
+      "target_node_label": "NIHSSには意識水準・質問・命令など意識状態の評価が含まれる",
+      "reference_question_ids": [
+        "Q646"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C9-S06",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0687",
+      "target_node_label": "動作緩慢、安静時振戦、自律神経症状として便秘、前駆症状としてREM睡眠行動障害などがみられる",
+      "reference_question_ids": [
+        "Q695"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C9-S07",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0781",
+      "target_node_label": "筋萎縮、筋力低下、線維束性収縮、腱反射低下などがみられる",
+      "reference_question_ids": [
+        "Q789"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C9-S08",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0830",
+      "target_node_label": "てんかんは病因により特発性と症候性などに分類され、意識障害を伴わない発作もある",
+      "reference_question_ids": [
+        "Q839"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C9-M01",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0513",
+      "target_node_label": "Parkinson病の主要徴候には安静時振戦、筋強剛、無動・寡動、姿勢反射障害があり、突進現象や歯車様固縮がみられる",
+      "reference_question_ids": [
+        "Q521",
+        "Q1581"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C9-M02",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0068",
+      "target_node_label": "活動記録による疲労管理",
+      "reference_question_ids": [
+        "Q68",
+        "Q191"
+      ],
+      "existing_demands": [
+        {
+          "task": "intervention_selection",
+          "primary_ability": "PRESCRIBE"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C9-M03",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0208",
+      "target_node_label": "両側同時刺激で生じる消去現象の識別",
+      "reference_question_ids": [
+        "Q209",
+        "Q279"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C16-S01",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0556",
+      "target_node_label": "上腕骨外側上顆炎の特徴",
+      "reference_question_ids": [
+        "Q564"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C16-S02",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0572",
+      "target_node_label": "肘関節脱臼は転倒時に伸展位で手をつく機転などで生じ、尺骨・橈骨が上腕骨に対して後方へ脱臼する後方脱臼が最も多い",
+      "reference_question_ids": [
+        "Q580"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C16-S03",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0579",
+      "target_node_label": "腰椎分離症は椎弓の関節突起間部に疲労骨折などによる分離が生じる病態である",
+      "reference_question_ids": [
+        "Q587"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C16-S04",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0616",
+      "target_node_label": "上腕骨顆上骨折の基本事項",
+      "reference_question_ids": [
+        "Q624"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C16-S05",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0634",
+      "target_node_label": "Steinbrockerのclass分類は関節リウマチ患者の機能障害を、身の回り動作・職業活動・余暇活動の可否から4段階に分類する",
+      "reference_question_ids": [
+        "Q642"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C16-S06",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0635",
+      "target_node_label": "Monteggia骨折は尺骨近位〜骨幹部骨折に橈骨頭脱臼を合併する損傷である",
+      "reference_question_ids": [
+        "Q643"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C16-S07",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0636",
+      "target_node_label": "国家試験対策では腰椎を正答として覚える",
+      "reference_question_ids": [
+        "Q644"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C16-M01",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0686",
+      "target_node_label": "Malgaigne骨折は骨盤輪の垂直不安定性を伴う骨盤骨折である",
+      "reference_question_ids": [
+        "Q694",
+        "Q1575"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C16-M02",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0962",
+      "target_node_label": "Galeazzi骨折とJefferson骨折の定義",
+      "reference_question_ids": [
+        "Q972",
+        "Q1354"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C17-S01",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0493",
+      "target_node_label": "Daniels らの徒手筋力テストの特徴",
+      "reference_question_ids": [
+        "Q501"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C17-S02",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0631",
+      "target_node_label": "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える",
+      "reference_question_ids": [
+        "Q639"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C17-S03",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0680",
+      "target_node_label": "T1が小指外転筋に対応する",
+      "reference_question_ids": [
+        "Q688"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C17-S04",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0774",
+      "target_node_label": "日本整形外科学会・日本リハビリテーション医学会の参考可動域では股関節伸展15°が基準値である",
+      "reference_question_ids": [
+        "Q782"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C17-S05",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0834",
+      "target_node_label": "選択肢内容から本問の疾患はPerthes病を指すと判断する",
+      "reference_question_ids": [
+        "Q843"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C17-S06",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0840",
+      "target_node_label": "棘果長は上前腸骨棘から内果までを測定する",
+      "reference_question_ids": [
+        "Q849"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C17-S07",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0843",
+      "target_node_label": "、後脛骨筋の段階2は重力の影響を除いた条件で足部の内反・底屈方向の運動を評価する",
+      "reference_question_ids": [
+        "Q852"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C17-S08",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0844",
+      "target_node_label": "TUGは椅子座位から立ち上がり3m歩行し方向転換して戻り、再び背もたれに座るまでの時間を測る",
+      "reference_question_ids": [
+        "Q853"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C17-M01",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0984",
+      "target_node_label": "SF-36による健康関連QOLの8下位尺度評価",
+      "reference_question_ids": [
+        "Q994",
+        "Q1310"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C17-M02",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0003",
+      "target_node_label": "一側前庭機能低下の代償訓練",
+      "reference_question_ids": [
+        "Q3",
+        "Q1565"
+      ],
+      "existing_demands": [
+        {
+          "task": "intervention_selection",
+          "primary_ability": "PRESCRIBE"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C17-M03",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0323",
+      "target_node_label": "半月板損傷を確認するMcMurray系徒手検査の選択",
+      "reference_question_ids": [
+        "Q325",
+        "Q1584"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-S01",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0501",
+      "target_node_label": "アンマスキングは、もともと存在していたが抑制されていた神経回路が、障害後に抑制解除されて機能を示す現象である",
+      "reference_question_ids": [
+        "Q509"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-S02",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0504",
+      "target_node_label": "フレイルの説明の基本事項",
+      "reference_question_ids": [
+        "Q512"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-S03",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0506",
+      "target_node_label": "延髄には舌下神経核があり、舌の運動を担う舌下神経機能が障害されやすい",
+      "reference_question_ids": [
+        "Q514"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-S04",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0511",
+      "target_node_label": "鵞足は縫工筋、薄筋、半腱様筋の腱が脛骨近位内側に付着して形成される",
+      "reference_question_ids": [
+        "Q519"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-S05",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0569",
+      "target_node_label": "重心が前方へ移り、足関節戦略で後方へ戻すため腓腹筋など足関節底屈筋が早期に活動する",
+      "reference_question_ids": [
+        "Q577"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-S06",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0570",
+      "target_node_label": "高強度運動で疲労が進むと解糖系への依存が高まり、乳酸と水素イオンが増加する",
+      "reference_question_ids": [
+        "Q578"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-S07",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0571",
+      "target_node_label": "ムコ多糖類が皮下に蓄積する粘液水腫を生じ、圧迫しても圧痕を残しにくい非圧痕性浮腫となる",
+      "reference_question_ids": [
+        "Q579"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-S08",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0614",
+      "target_node_label": "老研式活動能力指標の手段的自立には公共交通機関の利用、買物、食事準備、金銭管理などが含まれる",
+      "reference_question_ids": [
+        "Q622"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-S09",
+      "status": "authoring",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0630",
+      "target_node_label": "SOAPは問題志向型診療記録で、Sは主観情報、Oは客観情報、Aは評価・解釈、Pは今後の計画を記載する",
+      "reference_question_ids": [
+        "Q638"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-M01",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0509",
+      "target_node_label": "静的立位で下腿義足の足部内側が床から浮き上がったから病態・機能障害を解釈",
+      "reference_question_ids": [
+        "Q517",
+        "Q936"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-M02",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0576",
+      "target_node_label": "水中運動療法の生理作用には水圧、浮力、粘性抵抗、熱伝導などが関与する",
+      "reference_question_ids": [
+        "Q584",
+        "Q1588"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-M03",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0643",
+      "target_node_label": "大腿義足の異常歩行と原因の対応関係",
+      "reference_question_ids": [
+        "Q651",
+        "Q1573"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-M04",
+      "status": "authoring",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0645",
+      "target_node_label": "腹圧性尿失禁に対する骨盤底筋群の筋力強化",
+      "reference_question_ids": [
+        "Q653",
+        "Q1577"
+      ],
+      "existing_demands": [
+        {
+          "task": "intervention_selection",
+          "primary_ability": "PRESCRIBE"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C9-N01",
+      "status": "authoring",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C16-N01",
+      "status": "authoring",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C17-N01",
+      "status": "authoring",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    },
+    {
+      "draft_id": "L01-C18-N01",
+      "status": "authoring",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "",
+      "question_text": "",
+      "choices": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "correct_choices": [],
+      "explanation": "",
+      "choice_explanations": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      },
+      "proposed_task": "",
+      "primary_ability": "",
+      "secondary_ability": null,
+      "level": null,
+      "safety": "none",
+      "clinical_intent": "",
+      "semantic_review": {
+        "reference_demand": "",
+        "candidate_demand": "",
+        "why_not_same_demand": "",
+        "related_formal_questions": [],
+        "decision": "pending",
+        "reviewer": "",
+        "reviewed_on": "",
+        "expert_signoff": false
+      },
+      "evidence": [],
+      "reviewed_sha256": ""
+    }
+  ],
+  "authoring_rules": [
+    "Do not allocate formal Q IDs in staging.",
+    "Each existing-Node draft must add a genuinely different semantic demand, not only a changed metadata label.",
+    "All five choices and all five choice explanations are required; single-best answer by default.",
+    "Stem <=300 Japanese characters unless a clinically necessary exception is documented and <=400.",
+    "New-Node slots require semantic search against the formal bank before a Node label is proposed.",
+    "Every accepted draft requires evidence URLs/support and a completed semantic_review before sealing."
+  ]
+}
