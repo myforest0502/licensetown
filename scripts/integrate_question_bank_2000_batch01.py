@@ -7,11 +7,15 @@ to confirmed_shared, and advances the bank manifest to Q1749.
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from reports.question_bank_2000_batch01_validate import _accepted_drafts
 
-ROOT = Path(__file__).resolve().parents[1]
 BANK = ROOT / "data" / "question_bank"
 START_Q = 1738
 END_Q = 1749
