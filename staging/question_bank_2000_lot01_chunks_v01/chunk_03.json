@@ -14,8 +14,15 @@
       "slot_type": "singleton_second",
       "target_node_id": "KN0635",
       "target_node_label": "Monteggia骨折は尺骨近位〜骨幹部骨折に橈骨頭脱臼を合併する損傷である",
-      "reference_question_ids": ["Q643"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q643"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 16,
       "source": "original",
       "required_new_demand_outside_existing": true,
@@ -28,7 +35,9 @@
         "4": "神経血管所見を記録し、上肢を固定して緊急整形外科評価へつなぐ",
         "5": "尺骨骨折だけとして翌週まで経過観察する"
       },
-      "correct_choices": ["4"],
+      "correct_choices": [
+        "4"
+      ],
       "explanation": "尺骨近位部骨折にradiocapitellar lineの不整合を伴うためMonteggia骨折脱臼を疑う。後骨間神経障害を含む神経血管合併症を確認し、固定して緊急整形外科評価と整復へつなぐ。",
       "choice_explanations": {
         "1": "骨折脱臼が未整復の急性期に反復運動を行うと、疼痛や組織損傷を増悪させ得る。",
@@ -47,15 +56,26 @@
         "reference_demand": "Q643: fracture-name definition via fact_recall/KNOW",
         "candidate_demand": "safety_priority/DECIDE: radiographic alignment plus nerve finding -> immobilize and obtain urgent orthopedic care",
         "why_not_same_demand": "Q643は尺骨骨折と橈骨頭脱臼の名称を直接問う。本問は画像のradiocapitellar alignmentと手指伸展低下を統合し、危険な運動・待機を避けて緊急対応を決定させる。",
-        "related_formal_questions": [{"qid": "Q643", "relation": "same Node; direct formal reference inspected"}],
+        "related_formal_questions": [
+          {
+            "qid": "Q643",
+            "relation": "same Node; direct formal reference inspected"
+          }
+        ],
         "decision": "accepted",
         "reviewer": "Codex medical-structure review (AI; not human expert)",
         "reviewed_on": "2026-09-08",
         "expert_signoff": false
       },
       "evidence": [
-        {"url": "https://www.rch.org.au/clinicalguide/guideline_index/fractures/monteggia_fracturedislocations_emergency_department_setting/", "support": "Monteggia fracture-dislocations require urgent orthopedic assessment and reduction; the guideline stresses radiocapitellar alignment, splinting, and neurovascular complications."},
-        {"url": "https://www.ncbi.nlm.nih.gov/books/NBK441976/", "support": "Elbow trauma assessment includes neurovascular examination; posterior interosseous nerve injury and disrupted radiocapitellar alignment are important in Monteggia injuries."}
+        {
+          "url": "https://www.rch.org.au/clinicalguide/guideline_index/fractures/monteggia_fracturedislocations_emergency_department_setting/",
+          "support": "Monteggia fracture-dislocations require urgent orthopedic assessment and reduction; the guideline stresses radiocapitellar alignment, splinting, and neurovascular complications."
+        },
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK441976/",
+          "support": "Elbow trauma assessment includes neurovascular examination; posterior interosseous nerve injury and disrupted radiocapitellar alignment are important in Monteggia injuries."
+        }
       ],
       "reviewed_sha256": "",
       "assignment_status": "suggested_not_editorially_approved",
@@ -67,48 +87,68 @@
       "slot_type": "singleton_second",
       "target_node_id": "KN0636",
       "target_node_label": "国家試験対策では腰椎を正答として覚える",
-      "reference_question_ids": ["Q644"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q644"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 16,
       "source": "original",
       "required_new_demand_outside_existing": true,
-      "title": "成長期競技者の腰椎疲労骨折",
-      "question_text": "15歳女子体操選手。腰を反らす動作で増悪する限局性腰痛が続く。MRIでL5椎弓根から関節突起間部に骨髄浮腫を認め、椎体のすべりはない。最も考えられる病態はどれか。",
+      "title": "成長期腰椎分離症の初期対応",
+      "question_text": "15歳女子体操選手。腰を反らす動作で増悪する限局性腰痛が続く。MRIでL5椎弓根から関節突起間部に骨髄浮腫を認め、椎体のすべりはなく神経症状もない。初期対応として最も適切なのはどれか。",
       "choices": {
-        "1": "腰椎分離症の早期骨ストレス損傷",
-        "2": "腰椎椎間板ヘルニア",
-        "3": "化膿性脊椎炎",
-        "4": "脊髄円錐症候群",
-        "5": "強直性脊椎炎"
+        "1": "疼痛を我慢して伸展動作を継続する",
+        "2": "腰椎伸展を伴う競技負荷を一時中止し、症状に応じた段階的リハビリテーションを行う",
+        "3": "神経症状がなくても直ちに脊椎固定術を行う",
+        "4": "完全臥床を長期間継続する",
+        "5": "腰痛とは無関係として競技量を増やす"
       },
-      "correct_choices": ["1"],
-      "explanation": "成長期の体操選手に生じた伸展時腰痛と、L5関節突起間部周囲の骨髄浮腫は、腰椎分離症の早期段階に当たる疲労性骨ストレス損傷を支持する。",
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "成長期競技者の早期腰椎分離症は骨ストレス損傷として扱い、疼痛を誘発する腰椎伸展・競技負荷を一時的に制限し、症状の改善に合わせて段階的に運動・競技復帰を進める。",
       "choice_explanations": {
-        "1": "○。反復伸展負荷を受ける若年競技者ではL5 pars interarticularisの骨ストレス損傷が典型的である。",
-        "2": "椎間板ヘルニアでは神経根性疼痛や椎間板病変が中心で、parsの骨髄浮腫とは一致しない。",
-        "3": "化膿性脊椎炎では発熱、炎症反応、椎体終板・椎間板病変などを検討する。",
-        "4": "脊髄円錐症候群では会陰部感覚や膀胱直腸機能の障害が問題となる。",
-        "5": "強直性脊椎炎は炎症性腰痛や仙腸関節炎を特徴とし、本例の局所的骨ストレス所見とは異なる。"
+        "1": "疼痛を誘発する反復伸展を継続すると骨ストレス損傷の治癒を妨げる。",
+        "2": "○。原因となる負荷を一時制限し、症状に応じて段階的にリハビリテーションを進める。",
+        "3": "すべりや神経症状のない早期病変に直ちに手術を行うのは一般的でない。",
+        "4": "長期完全臥床は不要で、廃用を招く。",
+        "5": "競技負荷の増加は病変を悪化させる可能性がある。"
       },
-      "proposed_task": "finding_interpretation",
-      "primary_ability": "INTERPRET",
-      "secondary_ability": null,
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": "INTERPRET",
       "level": 3,
       "safety": "none",
-      "clinical_intent": "競技負荷、疼痛誘発動作、MRI所見から腰椎の疲労性骨ストレス損傷を識別する。",
+      "clinical_intent": "競技負荷・疼痛誘発動作・MRI所見から早期腰椎骨ストレス損傷を前提化し、安全な初期介入を選択する。",
       "semantic_review": {
         "reference_demand": "Q644: most frequent fatigue-fracture site via fact_recall/KNOW",
-        "candidate_demand": "finding_interpretation/INTERPRET: adolescent loading pattern plus MRI edema -> identify early lumbar pars stress injury",
-        "why_not_same_demand": "Q644は国家試験上の最多部位を直接選ぶ。本問は年齢・競技・伸展痛・MRIを統合して腰椎疲労骨折の臨床像を解釈させ、頻度順位を問わない。",
-        "related_formal_questions": [{"qid": "Q644", "relation": "same Node; direct formal reference inspected"}],
+        "candidate_demand": "intervention_selection/PRESCRIBE: adolescent lumbar pars stress injury -> choose activity restriction and staged rehabilitation",
+        "why_not_same_demand": "Q644は疲労骨折の好発部位をfact_recall/KNOWとして問う。本問は年齢・競技・伸展痛・MRI所見から病態を認識したうえで、具体的な初期介入を選択するPRESCRIBE需要である。",
+        "related_formal_questions": [
+          {
+            "qid": "Q644",
+            "relation": "same Node; direct formal reference inspected"
+          }
+        ],
         "decision": "accepted",
-        "reviewer": "Codex medical-structure review (AI; not human expert)",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
         "reviewed_on": "2026-09-08",
         "expert_signoff": false
       },
       "evidence": [
-        {"url": "https://www.hss.edu/health-library/conditions-and-treatments/list/spondylolysis-pars-fracture", "support": "Spondylolysis is a pars stress fracture seen especially in adolescent athletes exposed to repeated lumbar extension; L5 is the commonest level."},
-        {"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7134351/", "support": "Youth-athlete spondylolysis is a pars interarticularis bone stress injury typically presenting with focal activity- and extension-related low back pain."}
+        {
+          "url": "https://www.hss.edu/health-library/conditions-and-treatments/list/spondylolysis-pars-fracture",
+          "support": "Spondylolysis is a pars stress fracture seen especially in adolescent athletes exposed to repeated lumbar extension; L5 is the commonest level."
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7134351/",
+          "support": "Youth-athlete spondylolysis is a pars interarticularis bone stress injury typically presenting with focal activity- and extension-related low back pain."
+        }
       ],
       "reviewed_sha256": "",
       "assignment_status": "suggested_not_editorially_approved",
@@ -120,8 +160,16 @@
       "slot_type": "multi_reinforcement",
       "target_node_id": "KN0686",
       "target_node_label": "Malgaigne骨折は骨盤輪の垂直不安定性を伴う骨盤骨折である",
-      "reference_question_ids": ["Q694", "Q1575"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q694",
+        "Q1575"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 16,
       "source": "original",
       "required_new_demand_outside_existing": true,
@@ -134,7 +182,9 @@
         "4": "坐骨結節の剥離骨折である",
         "5": "恥骨結合離開だけのopen-book損傷である"
       },
-      "correct_choices": ["2"],
+      "correct_choices": [
+        "2"
+      ],
       "explanation": "前方骨盤輪と後方骨盤輪がともに破綻し、半骨盤が頭側へ転位する所見はvertical shearによる完全不安定性を示し、Malgaigne型骨盤輪損傷に合致する。",
       "choice_explanations": {
         "1": "後方要素の破綻と頭側転位があるため、安定した単独恥骨枝骨折ではない。",
@@ -154,8 +204,14 @@
         "candidate_demand": "finding_interpretation/INTERPRET: CT distribution and hemipelvic displacement -> characterize unstable Malgaigne pattern",
         "why_not_same_demand": "参照2問はMalgaigne骨折が骨盤骨折であることを名称対応で問う。本問は前後方骨盤輪の破綻と垂直転位から損傷型と不安定性を判断させる。",
         "related_formal_questions": [
-          {"qid": "Q694", "relation": "same Node; direct formal reference inspected"},
-          {"qid": "Q1575", "relation": "same Node; direct formal reference inspected"}
+          {
+            "qid": "Q694",
+            "relation": "same Node; direct formal reference inspected"
+          },
+          {
+            "qid": "Q1575",
+            "relation": "same Node; direct formal reference inspected"
+          }
         ],
         "decision": "accepted",
         "reviewer": "Codex medical-structure review (AI; not human expert)",
@@ -163,8 +219,14 @@
         "expert_signoff": false
       },
       "evidence": [
-        {"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4855448/", "support": "Malgaigne described a double anterior/posterior pelvic-ring fracture with displacement of the hemipelvis and limb shortening, historically corresponding to vertical shear injury."},
-        {"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4600881/", "support": "Vertical shear pelvic injury is identified by vertical hemipelvic displacement and is both rotationally and vertically unstable."}
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4855448/",
+          "support": "Malgaigne described a double anterior/posterior pelvic-ring fracture with displacement of the hemipelvis and limb shortening, historically corresponding to vertical shear injury."
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4600881/",
+          "support": "Vertical shear pelvic injury is identified by vertical hemipelvic displacement and is both rotationally and vertically unstable."
+        }
       ],
       "reviewed_sha256": "",
       "assignment_status": "suggested_not_editorially_approved",
@@ -176,8 +238,16 @@
       "slot_type": "multi_reinforcement",
       "target_node_id": "KN0962",
       "target_node_label": "Galeazzi骨折とJefferson骨折の定義",
-      "reference_question_ids": ["Q972", "Q1354"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q972",
+        "Q1354"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 16,
       "source": "original",
       "required_new_demand_outside_existing": true,
@@ -190,7 +260,9 @@
         "4": "頸椎固定を維持し、脊椎専門医の緊急評価へつなぐ",
         "5": "疼痛が軽減する方向へ徒手矯正する"
       },
-      "correct_choices": ["4"],
+      "correct_choices": [
+        "4"
+      ],
       "explanation": "頭頂部への軸圧と環椎前後弓骨折・外側塊開大はJefferson骨折を示す。神経所見が乏しくても不安定性を否定できないため、頸椎固定を維持して専門評価を優先する。",
       "choice_explanations": {
         "1": "不安定な環椎損傷が疑われる段階で終末域運動を加えてはならない。",
@@ -210,8 +282,14 @@
         "candidate_demand": "safety_priority/DECIDE: axial-load C1 burst pattern -> maintain immobilization and escalate",
         "why_not_same_demand": "参照2問はGaleazzi・Jefferson骨折の部位対応を問う。本問はJefferson骨折を示す外傷機転・CT所見から、不用意な運動を避ける緊急安全判断を求める。",
         "related_formal_questions": [
-          {"qid": "Q972", "relation": "same Node; direct formal reference inspected"},
-          {"qid": "Q1354", "relation": "same Node; direct formal reference inspected"}
+          {
+            "qid": "Q972",
+            "relation": "same Node; direct formal reference inspected"
+          },
+          {
+            "qid": "Q1354",
+            "relation": "same Node; direct formal reference inspected"
+          }
         ],
         "decision": "accepted",
         "reviewer": "Codex medical-structure review (AI; not human expert)",
@@ -219,8 +297,14 @@
         "expert_signoff": false
       },
       "evidence": [
-        {"url": "https://www.ncbi.nlm.nih.gov/books/NBK448146/", "support": "Jefferson fracture is an atlas C1 burst fracture caused by severe axial compression, classically including diving mechanisms."},
-        {"url": "https://www.ncbi.nlm.nih.gov/books/NBK534091/", "support": "C1 fractures require stability assessment and external immobilization is a central management approach; specialist follow-up is necessary because instability may occur."}
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK448146/",
+          "support": "Jefferson fracture is an atlas C1 burst fracture caused by severe axial compression, classically including diving mechanisms."
+        },
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK534091/",
+          "support": "C1 fractures require stability assessment and external immobilization is a central management approach; specialist follow-up is necessary because instability may occur."
+        }
       ],
       "reviewed_sha256": "",
       "assignment_status": "suggested_not_editorially_approved",
@@ -232,8 +316,15 @@
       "slot_type": "singleton_second",
       "target_node_id": "KN0493",
       "target_node_label": "Daniels らの徒手筋力テストの特徴",
-      "reference_question_ids": ["Q501"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q501"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 17,
       "source": "original",
       "required_new_demand_outside_existing": true,
@@ -246,7 +337,9 @@
         "4": "段階4",
         "5": "段階5"
       },
-      "correct_choices": ["4"],
+      "correct_choices": [
+        "4"
+      ],
       "explanation": "重力に抗して全可動域を動かし、ある程度の徒手抵抗に耐えるが最大抵抗には耐えない所見は段階4に相当する。",
       "choice_explanations": {
         "1": "段階1は筋収縮を触知できるが関節運動を生じない状態である。",
@@ -265,15 +358,26 @@
         "reference_demand": "Q501: general MMT facts via fact_recall/KNOW",
         "candidate_demand": "assessment_selection/MEASURE: observed antigravity motion and resistance tolerance -> assign MMT grade",
         "why_not_same_demand": "Q501は段階2の肢位など一般則から正しい記述を選ぶ。本問は実測した運動範囲と抵抗反応を用いて段階を判定する測定課題である。",
-        "related_formal_questions": [{"qid": "Q501", "relation": "same Node; direct formal reference inspected"}],
+        "related_formal_questions": [
+          {
+            "qid": "Q501",
+            "relation": "same Node; direct formal reference inspected"
+          }
+        ],
         "decision": "accepted",
         "reviewer": "Codex medical-structure review (AI; not human expert)",
         "reviewed_on": "2026-09-08",
         "expert_signoff": false
       },
       "evidence": [
-        {"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3169254/", "support": "Standard MMT grading assigns grade 3 for full antigravity range without resistance, grade 4 for some resistance, and grade 5 for full resistance."},
-        {"url": "https://www.ncbi.nlm.nih.gov/books/NBK436008/", "support": "Muscle testing grades are based on movement with gravity eliminated, full antigravity motion, and the capacity to resist applied force."}
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3169254/",
+          "support": "Standard MMT grading assigns grade 3 for full antigravity range without resistance, grade 4 for some resistance, and grade 5 for full resistance."
+        },
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK436008/",
+          "support": "Muscle testing grades are based on movement with gravity eliminated, full antigravity motion, and the capacity to resist applied force."
+        }
       ],
       "reviewed_sha256": "",
       "assignment_status": "suggested_not_editorially_approved",
@@ -285,8 +389,15 @@
       "slot_type": "singleton_second",
       "target_node_id": "KN0631",
       "target_node_label": "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える",
-      "reference_question_ids": ["Q639"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q639"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 17,
       "source": "original",
       "required_new_demand_outside_existing": true,
@@ -299,7 +410,9 @@
         "4": "前腕回外位で手関節掌側へ抵抗を加える",
         "5": "肩関節外転位で上腕近位へ内転方向の抵抗を加える"
       },
-      "correct_choices": ["2"],
+      "correct_choices": [
+        "2"
+      ],
       "explanation": "肘伸展MMTの段階5では、肘をわずかに屈曲した位置で伸展位を保持させ、前腕遠位に肘屈曲方向の抵抗を加えて上腕三頭筋の保持力を判定する。",
       "choice_explanations": {
         "1": "関節を完全伸展位でロックすると骨性支持の影響を受けやすく、適切な抵抗位置・方向でもない。",
@@ -318,15 +431,26 @@
         "reference_demand": "Q639: identify which movement uses slight flexion in grade-5 testing via fact_recall/KNOW",
         "candidate_demand": "assessment_selection/MEASURE: execute the elbow-extension grade-5 setup by selecting joint position, resistance site, and force direction",
         "why_not_same_demand": "Q639は軽度屈曲位で抵抗を加える運動名を選ぶ。本問は肘伸展検査を行う状況で、関節角度・抵抗部位・抵抗方向を一体として選択させる測定手順課題である。",
-        "related_formal_questions": [{"qid": "Q639", "relation": "same Node; direct formal reference inspected"}],
+        "related_formal_questions": [
+          {
+            "qid": "Q639",
+            "relation": "same Node; direct formal reference inspected"
+          }
+        ],
         "decision": "accepted",
         "reviewer": "Codex medical-structure review (AI; not human expert)",
         "reviewed_on": "2026-09-08",
         "expert_signoff": false
       },
       "evidence": [
-        {"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3169254/", "support": "Standardized MMT proceeds from full antigravity motion to resistance testing in the test position, with grades 4 and 5 differentiated by resistance tolerance."},
-        {"url": "https://www.niehs.nih.gov/research/resources/assets/docs/muscle_grading_and_testing_procedures_508.pdf", "support": "The manual provides standardized antigravity and gravity-eliminated positions and emphasizes controlled resistance application for reliable manual muscle testing."}
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3169254/",
+          "support": "Standardized MMT proceeds from full antigravity motion to resistance testing in the test position, with grades 4 and 5 differentiated by resistance tolerance."
+        },
+        {
+          "url": "https://www.niehs.nih.gov/research/resources/assets/docs/muscle_grading_and_testing_procedures_508.pdf",
+          "support": "The manual provides standardized antigravity and gravity-eliminated positions and emphasizes controlled resistance application for reliable manual muscle testing."
+        }
       ],
       "reviewed_sha256": "",
       "assignment_status": "suggested_not_editorially_approved",
@@ -338,8 +462,15 @@
       "slot_type": "singleton_second",
       "target_node_id": "KN0680",
       "target_node_label": "T1が小指外転筋に対応する",
-      "reference_question_ids": ["Q688"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q688"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 17,
       "source": "original",
       "required_new_demand_outside_existing": true,
@@ -352,7 +483,9 @@
         "4": "4",
         "5": "5"
       },
-      "correct_choices": ["4"],
+      "correct_choices": [
+        "4"
+      ],
       "explanation": "ISNCSCIではT1のkey muscle actionとして小指外転を検査する。全可動域を動かし、中等度の抵抗には耐えるが最大抵抗には耐えないため運動スコアは4である。",
       "choice_explanations": {
         "1": "スコア1は筋収縮を触知または視認できるが、関節運動を生じない場合である。",
@@ -371,15 +504,26 @@
         "reference_demand": "Q688: match spinal segment and key muscle via fact_recall/KNOW",
         "candidate_demand": "assessment_selection/MEASURE: observed T1 key-muscle range and resistance tolerance -> assign ISNCSCI motor score",
         "why_not_same_demand": "Q688は複数髄節と筋の名称対応から正しい組合せを選ぶ。本問ではT1と小指外転の対応を提示済みとし、実際の可動域と抵抗への応答から運動スコアを測定・判定させる。",
-        "related_formal_questions": [{"qid": "Q688", "relation": "same Node; direct formal reference inspected"}],
+        "related_formal_questions": [
+          {
+            "qid": "Q688",
+            "relation": "same Node; direct formal reference inspected"
+          }
+        ],
         "decision": "accepted",
         "reviewer": "Codex medical-structure review (AI; not human expert)",
         "reviewed_on": "2026-09-08",
         "expert_signoff": false
       },
       "evidence": [
-        {"url": "https://asia-spinalinjury.org/wp-content/uploads/2019/04/ASIA-ISCOS-IntlWorksheet_2019.pdf", "support": "The official ISNCSCI worksheet lists the T1 key muscle action as finger abduction, with adjacent C5-C8 and L2-S1 key actions."},
-        {"url": "https://asia-spinalinjury.org/isncsci-resources/", "support": "ASIA provides the official ISNCSCI worksheet and examination resources used for standardized neurological classification of spinal cord injury."}
+        {
+          "url": "https://asia-spinalinjury.org/wp-content/uploads/2019/04/ASIA-ISCOS-IntlWorksheet_2019.pdf",
+          "support": "The official ISNCSCI worksheet lists the T1 key muscle action as finger abduction, with adjacent C5-C8 and L2-S1 key actions."
+        },
+        {
+          "url": "https://asia-spinalinjury.org/isncsci-resources/",
+          "support": "ASIA provides the official ISNCSCI worksheet and examination resources used for standardized neurological classification of spinal cord injury."
+        }
       ],
       "reviewed_sha256": "",
       "assignment_status": "suggested_not_editorially_approved",
@@ -391,8 +535,15 @@
       "slot_type": "singleton_second",
       "target_node_id": "KN0774",
       "target_node_label": "日本整形外科学会・日本リハビリテーション医学会の参考可動域では股関節伸展15°が基準値である",
-      "reference_question_ids": ["Q782"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q782"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 17,
       "source": "original",
       "required_new_demand_outside_existing": true,
@@ -405,7 +556,9 @@
         "4": "10°と記録し、10°の過可動とする",
         "5": "骨盤前傾を含めて35°と記録する"
       },
-      "correct_choices": ["3"],
+      "correct_choices": [
+        "3"
+      ],
       "explanation": "股関節伸展可動域は骨盤の代償運動を除いて測定する。骨盤前傾が始まる10°を股関節伸展として記録し、参考可動域15°との差から5°の制限と判断する。",
       "choice_explanations": {
         "1": "20°には骨盤前傾による見かけの運動が含まれ、股関節単独の値ではない。",
@@ -424,15 +577,26 @@
         "reference_demand": "Q782: recall the official hip-extension reference angle via fact_recall/KNOW",
         "candidate_demand": "assessment_selection/MEASURE: separate pelvic substitution from hip motion and quantify restriction against the reference value",
         "why_not_same_demand": "Q782は股関節伸展の参考角度15°を直接選ぶ。本問は代償運動を含む見かけの角度から股関節単独の測定値を決定し、制限量を算出させる。",
-        "related_formal_questions": [{"qid": "Q782", "relation": "same Node; direct formal reference inspected"}],
+        "related_formal_questions": [
+          {
+            "qid": "Q782",
+            "relation": "same Node; direct formal reference inspected"
+          }
+        ],
         "decision": "accepted",
         "reviewer": "Codex medical-structure review (AI; not human expert)",
         "reviewed_on": "2026-09-08",
         "expert_signoff": false
       },
       "evidence": [
-        {"url": "https://www.jarm.or.jp/member/document/kadou/04.pdf", "support": "The Japanese Association of Rehabilitation Medicine reference range table includes the standardized reference values used with Japanese joint range-of-motion measurement conventions."},
-        {"url": "https://www.ncbi.nlm.nih.gov/books/NBK558985/", "support": "Goniometric joint measurement requires stabilization and alignment to isolate the joint motion and avoid substitution from adjacent body segments."}
+        {
+          "url": "https://www.jarm.or.jp/member/document/kadou/04.pdf",
+          "support": "The Japanese Association of Rehabilitation Medicine reference range table includes the standardized reference values used with Japanese joint range-of-motion measurement conventions."
+        },
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK558985/",
+          "support": "Goniometric joint measurement requires stabilization and alignment to isolate the joint motion and avoid substitution from adjacent body segments."
+        }
       ],
       "reviewed_sha256": "",
       "assignment_status": "suggested_not_editorially_approved",

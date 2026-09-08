@@ -256,36 +256,36 @@
       "proposed_category_small": 16,
       "source": "original",
       "required_new_demand_outside_existing": true,
-      "title": "外側上顆炎の誘発所見",
-      "question_text": "46歳女性。右肘外側痛があり、ドライバー作業とコーヒーカップを持つ動作で増悪する。外側上顆周囲に圧痛があり、感覚障害はない。診断を支持する誘発所見はどれか。",
+      "title": "外側上顆炎の初期運動療法",
+      "question_text": "46歳女性。右肘外側痛があり、ドライバー作業とコーヒーカップを持つ動作で増悪する。外側上顆周囲に圧痛があり、抵抗下手関節伸展で同部痛が再現する。感覚障害はない。初期の理学療法として最も適切なのはどれか。",
       "choices": {
-        "1": "抵抗下手関節伸展で外側上顆痛が再現する",
-        "2": "抵抗下手関節屈曲で内側上顆痛が再現する",
-        "3": "頸部伸展で上肢放散痛が再現する",
-        "4": "Phalenテストで母指から環指橈側がしびれる",
-        "5": "肘屈曲で尺側手指のしびれだけが再現する"
+        "1": "疼痛を無視して高負荷の手関節伸展運動を反復する",
+        "2": "誘発動作の負荷を調整し、疼痛に応じて手関節伸筋群の段階的運動を行う",
+        "3": "肘関節を完全固定して長期間動かさない",
+        "4": "頸椎牽引のみを行う",
+        "5": "感覚障害がないため介入せず経過観察だけとする"
       },
       "correct_choices": [
-        "1"
+        "2"
       ],
-      "explanation": "上腕骨外側上顆炎では外側上顆付近の圧痛と、抵抗下手関節伸展などでの疼痛再現が典型的である。しびれなど神経症状が主体なら別病態を考える。",
+      "explanation": "外側上顆炎では、症状を誘発する把持・反復作業の負荷を調整しながら、手関節伸筋群に対する段階的な運動療法を行う。完全安静や初期からの高負荷運動は適切でない。",
       "choice_explanations": {
-        "1": "○。抵抗下の手関節伸展は総伸筋腱起始部へ負荷をかけ、外側上顆痛を再現しやすい。",
-        "2": "これは内側上顆炎を示唆する誘発パターンである。",
-        "3": "頸部由来の放散痛なら頸椎神経根症などを考える。",
-        "4": "Phalenテスト陽性は手根管症候群を示唆する。",
-        "5": "尺側手指のしびれは尺骨神経障害を示唆する。"
+        "1": "高負荷を疼痛下で反復すると症状を増悪させる可能性がある。",
+        "2": "○。負荷管理と段階的な手関節伸筋群の運動療法を組み合わせる。",
+        "3": "長期固定は不要で、廃用を招く可能性がある。",
+        "4": "本例は局所所見が外側上顆炎に一致し、頸椎牽引のみを行う根拠はない。",
+        "5": "感覚障害の有無にかかわらず、症状と活動制限に対する介入が必要である。"
       },
-      "proposed_task": "finding_interpretation",
-      "primary_ability": "INTERPRET",
-      "secondary_ability": null,
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": "INTERPRET",
       "level": 3,
       "safety": "none",
-      "clinical_intent": "症状と誘発テストを対応させて外側上顆炎を臨床的に識別する。",
+      "clinical_intent": "外側上顆炎を示す症状・誘発所見を踏まえ、負荷管理と段階的運動療法を選択する。",
       "semantic_review": {
         "reference_demand": "Q564: inspected formal demand(s) in same canonical Node",
-        "candidate_demand": "finding_interpretation/INTERPRET: symptom pattern + provocation test -> support lateral epicondylitis",
-        "why_not_same_demand": "Q564は伸筋腱付着部病変という病態知識を直接問う。本問は作業時痛・圧痛・抵抗下伸展での疼痛再現を臨床所見として解釈させる。",
+        "candidate_demand": "intervention_selection/PRESCRIBE: lateral epicondylitis presentation -> choose initial load management and graded exercise",
+        "why_not_same_demand": "Q564は外側上顆炎の特徴を直接再認するfact_recall/KNOW。本問は症状と誘発所見から病態を前提化し、具体的な初期理学療法を選択するPRESCRIBE需要である。",
         "related_formal_questions": [
           {
             "qid": "Q564",
@@ -548,36 +548,36 @@
       "proposed_category_small": 16,
       "source": "original",
       "required_new_demand_outside_existing": true,
-      "title": "RA機能分類の解釈",
-      "question_text": "関節リウマチの52歳女性。更衣・食事・入浴は自立し、事務職も通常どおり継続できるが、趣味のテニスは関節痛のため行えない。ACRの機能状態分類として最も適切なのはどれか。",
+      "title": "RA患者の機能目標設定",
+      "question_text": "関節リウマチの52歳女性。更衣・食事・入浴は自立し、事務職も通常どおり継続できるが、趣味のテニスは関節痛のため行えない。本人は仕事を続けながら余暇活動も再開したいと希望している。理学療法の機能目標として最も適切なのはどれか。",
       "choices": {
-        "1": "Class I",
-        "2": "Class II",
-        "3": "Class III",
-        "4": "Class IV",
-        "5": "機能分類は疾患活動性だけで決めるため判定不能"
+        "1": "セルフケアだけを自立させる",
+        "2": "職業活動を中止し、安静を最優先する",
+        "3": "現在のセルフケアと就労を維持し、症状に配慮しながら余暇活動への参加拡大を目指す",
+        "4": "関節痛の有無にかかわらず競技テニスへ即時完全復帰する",
+        "5": "ADLが自立しているため機能目標は設定しない"
       },
       "correct_choices": [
-        "2"
+        "3"
       ],
-      "explanation": "ACR revised functional statusでは、self-careとvocational activityは通常どおり可能だがavocational activityが制限される場合はClass IIである。",
+      "explanation": "セルフケアと職業活動は保たれている一方、余暇活動が制限されている。したがって現在の自立と就労を維持しつつ、症状を管理しながら余暇活動への参加を広げる目標が最も適切である。",
       "choice_explanations": {
-        "1": "Class Iはself-care、仕事、余暇の通常活動をすべて行える。",
-        "2": "○。身の回り動作と仕事は可能で、余暇活動のみ制限されるためClass IIである。",
-        "3": "Class IIIはself-careは可能だが仕事と余暇活動が制限される。",
-        "4": "Class IVはself-careを含む通常活動が制限される。",
-        "5": "機能状態分類はself-care、vocational、avocational activitiesの可否から判断できる。"
+        "1": "セルフケアはすでに自立しており、現在の主要な参加制限を反映しない。",
+        "2": "就労は継続可能であり、一律に中止する必要はない。",
+        "3": "○。保たれている機能を維持しつつ、制限されている余暇活動への参加改善を目標とする。",
+        "4": "症状や関節状態を無視した即時完全復帰は適切でない。",
+        "5": "ADL自立でも余暇活動に制限があり、本人の希望に沿った機能目標を設定できる。"
       },
-      "proposed_task": "finding_interpretation",
-      "primary_ability": "INTERPRET",
-      "secondary_ability": null,
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": "INTERPRET",
       "level": 3,
       "safety": "none",
-      "clinical_intent": "分類名の暗記ではなく、患者のself-care・仕事・余暇の実生活情報から機能classを判定する。",
+      "clinical_intent": "セルフケア・職業活動・余暇活動の可否から現在の機能状態を把握し、本人の生活希望に沿う機能目標を決定する。",
       "semantic_review": {
         "reference_demand": "Q642: inspected formal demand(s) in same canonical Node",
-        "candidate_demand": "finding_interpretation/INTERPRET: functional narrative -> assign RA global functional class",
-        "why_not_same_demand": "Q642は余暇・仕事・身の回り動作を用いる指標名を問うfact recall。本問は具体的な生活能力を分類基準へ当てはめてClass IIと解釈させる。",
+        "candidate_demand": "functional_goal_decision/DECIDE: preserved self-care/work with restricted recreation -> choose an appropriate participation-focused goal",
+        "why_not_same_demand": "Q642はSteinbrocker機能分類の構成要素をfact_recall/KNOWとして問う。本問はセルフケア・就労・余暇の実生活情報を用い、どの機能を維持し何を改善目標とするかを決定するDECIDE需要である。",
         "related_formal_questions": [
           {
             "qid": "Q642",
