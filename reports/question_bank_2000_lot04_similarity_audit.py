@@ -27,7 +27,7 @@ def read(path: Path):
 
 def audit(chunk_no: int) -> dict:
     formal = read(BANK / "questions.json")
-    if max(int(row["id"][1:]) for row in formal) != 1857:
+    if max(int(row["id"][1:]) for row in formal) != 1905:
         raise ValueError("Lot04 similarity audit requires formal Q1-Q1905")
     chunk = read(CHUNK_DIR / f"chunk_{chunk_no:02d}.json")
     if chunk.get("status") != "completed_chunk":
@@ -36,9 +36,7 @@ def audit(chunk_no: int) -> dict:
         raise ValueError("Lot04 chunk formal baseline mismatch")
     formal_norm = [(q["id"], q.get("question_text", ""), normalize(q.get("question_text", ""))) for q in formal]
     results = []
-    exact_total = 0
-    hard_total = 0
-    near_total = 0
+    exact_total = hard_total = near_total = 0
     for draft in chunk["drafts"]:
         did = draft["draft_id"]
         stem = draft["question_text"]
@@ -54,32 +52,13 @@ def audit(chunk_no: int) -> dict:
         exact = [x for x in top if x["score"] == 1.0]
         hard = [x for x in top if x["score"] >= HARD]
         near = [x for x in top if x["score"] >= NEAR]
-        exact_total += len(exact)
-        hard_total += len(hard)
-        near_total += len(near)
-        results.append({
-            "draft_id": did,
-            "reference_question_ids": draft.get("reference_question_ids", []),
-            "exact": exact,
-            "hard_near": hard,
-            "near": near,
-            "top10": top,
-        })
-    return {
-        "formal_baseline": "Q1-Q1905",
-        "chunk": chunk_no,
-        "thresholds": {"near": NEAR, "hard_near": HARD},
-        "exact_total": exact_total,
-        "hard_near_total": hard_total,
-        "near_total": near_total,
-        "results": results,
-    }
+        exact_total += len(exact); hard_total += len(hard); near_total += len(near)
+        results.append({"draft_id": did, "reference_question_ids": draft.get("reference_question_ids", []), "exact": exact, "hard_near": hard, "near": near, "top10": top})
+    return {"formal_baseline": "Q1-Q1905", "chunk": chunk_no, "thresholds": {"near": NEAR, "hard_near": HARD}, "exact_total": exact_total, "hard_near_total": hard_total, "near_total": near_total, "results": results}
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("chunk", type=int, choices=range(1, 7))
-    args = parser.parse_args()
+    parser = argparse.ArgumentParser(); parser.add_argument("chunk", type=int, choices=range(1, 7)); args = parser.parse_args()
     payload = audit(args.chunk)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     out = OUT_DIR / f"chunk_{args.chunk:02d}.json"
