@@ -1,3 +1,4 @@
+from question_bank import question_count
 from site_ui import (
     PREVIEW_724_DIR,
     PREVIEW_PC_DIR,
@@ -27,7 +28,7 @@ def test_pc_demo_claims_are_sanitized():
 
 def test_question_count_defaults_to_formal_bank(monkeypatch):
     monkeypatch.delenv("SITE_QUESTION_COUNT_LABEL", raising=False)
-    assert _question_count_label() == "1737問収録"
+    assert _question_count_label() == f"{question_count()}問収録"
 
 
 def test_mobile_copy_typo_free_claim_and_count_are_sanitized(monkeypatch):
@@ -38,7 +39,7 @@ def test_mobile_copy_typo_free_claim_and_count_are_sanitized(monkeypatch):
     assert "金融内容" not in safe
     assert "相談内容（個別のやり取り）は共有されません。" in safe
     assert "1,500問以上収録" not in safe
-    assert "1737問収録" in safe
+    assert f"{question_count()}問収録" in safe
 
 
 def test_public_cta_fails_closed_until_verified_https_url(monkeypatch):
@@ -70,4 +71,4 @@ def test_public_mobile_source_response_is_sale_safe(monkeypatch):
     assert "現在無料" not in html
     assert "金融内容" not in html
     assert "相談内容（個別のやり取り）は共有されません。" in html
-    assert "1737問収録" in html
+    assert f"{question_count()}問収録" in html
