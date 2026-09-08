@@ -1,0 +1,48 @@
+name: qb2000-lot05-targets
+
+on:
+  push:
+    branches: [work/qb2000-lot05-active]
+    paths:
+      - '.github/workflows/qb2000-lot05-targets.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-targets:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot05-active
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Build deterministic Lot05 target roster
+        run: |
+          python -m reports.question_bank_2000_lot05_targets_v01
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('reports/question_bank_2000_lot05_targets_v01.json')
+          x=json.loads(p.read_text(encoding='utf-8'))
+          assert x['formal_baseline']=='Q1-Q1953'
+          assert x['required_total_questions']==41
+          assert x['required_existing_targets']==38
+          assert x['required_new_nodes']==3
+          assert len(x['existing_node_targets'])==38
+          assert len({r['canonical_node_id'] for r in x['existing_node_targets']})==38
+          PY
+          git diff --check
+      - name: Commit target roster
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/question_bank_2000_lot05_targets_v01.json
+          git commit -m "Generate Question Bank 2000 Lot05 target roster"
+          git push origin HEAD:work/qb2000-lot05-active
