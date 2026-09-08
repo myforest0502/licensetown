@@ -1,0 +1,60 @@
+name: qb2000-lot02-label-sync
+
+on:
+  push:
+    branches: [work/qb2000-lot02-active]
+
+permissions:
+  contents: write
+
+jobs:
+  sync-labels:
+    if: ${{ !contains(github.event.head_commit.message, '[lot02-labels-synced]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot02-active
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Rebuild authoritative target roster
+        run: python -m reports.question_bank_2000_lot02_targets_v01
+      - name: Synchronize existing-node labels in completed chunks
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('.')
+          roster = json.loads((root/'reports/question_bank_2000_lot02_targets_v01.json').read_text(encoding='utf-8-sig'))
+          labels = {row['lot_target_id']: row['label'] for row in roster['existing_node_targets']}
+          changed = []
+          for path in sorted((root/'staging/question_bank_2000_lot02_chunks_v01').glob('chunk_*.json')):
+              payload = json.loads(path.read_text(encoding='utf-8-sig'))
+              dirty = False
+              for draft in payload.get('drafts', []):
+                  did = draft.get('draft_id')
+                  if draft.get('slot_type') != 'new_node' and did in labels and draft.get('target_node_label') != labels[did]:
+                      draft['target_node_label'] = labels[did]
+                      dirty = True
+                      changed.append(did)
+              if dirty:
+                  path.write_text(json.dumps(payload, ensure_ascii=False, separators=(',', ':'))+'\n', encoding='utf-8')
+          print('synchronized', len(changed), changed)
+          PY
+      - name: Validate synchronized chunks
+        run: |
+          for n in 1 2 3 4 5 6; do python -m reports.question_bank_2000_lot02_chunk_validate $n; done
+      - name: Commit synchronized labels
+        run: |
+          if git diff --quiet -- staging/question_bank_2000_lot02_chunks_v01; then
+            echo 'No label changes required.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add staging/question_bank_2000_lot02_chunks_v01
+          git commit -m 'Sync Lot02 target Node labels [lot02-labels-synced]'
+          git push origin HEAD:work/qb2000-lot02-active
