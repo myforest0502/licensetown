@@ -17,6 +17,7 @@ Formal baseline: Q1-Q1761. Do not load or rewrite unrelated large artifacts unle
 
 - Chunk01: completed and validated.
 - Chunk02: completed and validated.
+- Overall authored: 16/48.
 - Next: Chunk03, then Chunk04, Chunk05, Chunk06.
 - Process **only the requested chunk in each run**.
 
