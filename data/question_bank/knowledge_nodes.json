@@ -97,9 +97,10 @@
   {
     "knowledge_node_id": "KN0010",
     "label": "急な低酸素・呼吸困難への初期対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q10"
+      "Q10",
+      "Q1749"
     ],
     "aliases": [],
     "successor_ids": []
@@ -157,9 +158,10 @@
   {
     "knowledge_node_id": "KN0016",
     "label": "約300mの歩行で右殿部から下腿後面に疼痛としびれが出現し、前屈休息で軽快することから、神経性間欠性跛行が主な活動制限であるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q16"
+      "Q16",
+      "Q1747"
     ],
     "aliases": [],
     "successor_ids": []
@@ -237,9 +239,10 @@
   {
     "knowledge_node_id": "KN0024",
     "label": "足底のしびれ、振動覚低下、モノフィラメントでの感覚低下があり、暗所歩行に不安を訴えているを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q24"
+      "Q24",
+      "Q1743"
     ],
     "aliases": [],
     "successor_ids": []
@@ -259,9 +262,10 @@
   {
     "knowledge_node_id": "KN0026",
     "label": "過用を避けた中等度運動",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q26"
+      "Q26",
+      "Q1742"
     ],
     "aliases": [],
     "successor_ids": []
@@ -269,9 +273,10 @@
   {
     "knowledge_node_id": "KN0027",
     "label": "母指・示指・中指の夜間しびれ、Phalen試験・Tinel徴候陽性、母指球筋萎縮から正中神経障害による手根管症候群が考えられるから予後を予測する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q27"
+      "Q27",
+      "Q1748"
     ],
     "aliases": [],
     "successor_ids": []
@@ -319,9 +324,10 @@
   {
     "knowledge_node_id": "KN0032",
     "label": "術後14週で他動屈曲170°まで可能である一方、自動屈曲は140°にとどまり、終末域では肩甲骨挙上が目立つを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q32"
+      "Q32",
+      "Q1745"
     ],
     "aliases": [],
     "successor_ids": []
@@ -329,9 +335,10 @@
   {
     "knowledge_node_id": "KN0033",
     "label": "鶏歩へのAFO適応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q33"
+      "Q33",
+      "Q1739"
     ],
     "aliases": [],
     "successor_ids": []
@@ -431,9 +438,10 @@
   {
     "knowledge_node_id": "KN0043",
     "label": "本症例は6分間歩行後にSpO₂91％、Borg指数5まで変化しているため、運動中は酸素飽和度、呼吸困難などの自覚症状、心拍数や血圧を含む循環動態を継続的に監視し、安全な運動強度へ調",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q43"
+      "Q43",
+      "Q1741"
     ],
     "aliases": [],
     "successor_ids": []
@@ -835,9 +843,10 @@
   {
     "knowledge_node_id": "KN0083",
     "label": "運動時低酸素のモニタリング",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q83"
+      "Q83",
+      "Q1744"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1025,9 +1034,10 @@
   {
     "knowledge_node_id": "KN0102",
     "label": "立位時血圧低下への初期対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q102"
+      "Q102",
+      "Q1746"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1035,9 +1045,10 @@
   {
     "knowledge_node_id": "KN0103",
     "label": "段階的競技復帰では、症状が出た場合は無症状で実施できていた前段階へ戻し、十分な無症状期間を確認してから再び負荷を段階的に上げる時の優先対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q103"
+      "Q103",
+      "Q1740"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4038,9 +4049,10 @@
   {
     "knowledge_node_id": "KN0400",
     "label": "Guillain-Barré症候群で筋力低下が上行し、咳が弱くなっているため呼吸筋麻痺の進行に注意するを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q406"
+      "Q406",
+      "Q1738"
     ],
     "aliases": [],
     "successor_ids": []
