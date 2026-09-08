@@ -1,6 +1,8 @@
 import json
 import shutil
 
+import pytest
+
 from knowledge_node_repair_evidence import DIFFERENT_QUESTION_STRONG, classify_repair_confirmation
 from reports.question_bank_2000_lot01_validate import BANK, PROTECTED, STAGING, read
 from scripts.integrate_question_bank_2000_lot01 import (
@@ -20,6 +22,10 @@ def _index(path):
     return {row["id"]: row for row in json.loads(path.read_text(encoding="utf-8-sig"))}
 
 
+@pytest.mark.skipif(
+    read(BANK / "bank_manifest.json")["question_count"] > END_Q,
+    reason="Lot01 integration dry-run is historical after a later formal lot is integrated.",
+)
 def test_lot01_integrator_dry_run_is_atomic_and_idempotent(tmp_path):
     _copy_bank(tmp_path)
     canonical_before = (tmp_path / "knowledge_node_canonical_map.json").read_bytes()
