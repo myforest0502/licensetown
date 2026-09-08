@@ -18,10 +18,16 @@ def read(path):
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
-def test_final_staging_is_not_silently_present_before_authoring():
-    # PR #268 is infrastructure-only. A final authored staging file must be a
-    # deliberate later artifact, never an alias/copy silently created by planning.
-    assert not STAGING.exists()
+def test_final_staging_absent_or_fully_valid():
+    # Planning may legitimately have no final staging artifact yet. Once authoring
+    # creates it, the permanent test switches to requiring the full sealed contract.
+    if not STAGING.exists():
+        return
+    payload = read(STAGING)
+    assert payload["status"] == "staging_only"
+    report = build_report(payload, require_seals=True)
+    assert report["accepted_count"] == 48
+    assert report["hard_errors"] == [], "\n" + "\n".join(report["hard_errors"])
 
 
 def test_blank_template_cannot_be_mislabeled_as_accepted_and_pass_validator():
