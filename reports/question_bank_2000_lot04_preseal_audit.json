@@ -1,0 +1,205 @@
+{
+  "hard_errors": [],
+  "warnings": [],
+  "draft_count": 48,
+  "category_counts": {
+    "1": 4,
+    "2": 5,
+    "3": 2,
+    "4": 2,
+    "5": 2,
+    "6": 3,
+    "7": 3,
+    "8": 6,
+    "9": 2,
+    "10": 2,
+    "11": 3,
+    "12": 2,
+    "13": 3,
+    "14": 2,
+    "15": 4,
+    "17": 1,
+    "18": 2
+  },
+  "task_counts": {
+    "assessment_selection": 9,
+    "finding_interpretation": 14,
+    "intervention_selection": 8,
+    "prognosis_prediction": 3,
+    "device_selection": 2,
+    "functional_goal_decision": 4,
+    "safety_priority": 6,
+    "fact_recall": 2
+  },
+  "level_counts": {
+    "2": 16,
+    "3": 20,
+    "4": 10,
+    "1": 2
+  },
+  "slot_counts": {
+    "singleton_second": 27,
+    "multi_reinforcement": 17,
+    "new_node": 4
+  },
+  "safety_moderate_or_critical": 12,
+  "structural_strong_formations": 44,
+  "similarity": {
+    "1": {
+      "exact": 0,
+      "hard_near": 0,
+      "near": 0
+    },
+    "2": {
+      "exact": 0,
+      "hard_near": 0,
+      "near": 0
+    },
+    "3": {
+      "exact": 0,
+      "hard_near": 0,
+      "near": 0
+    },
+    "4": {
+      "exact": 0,
+      "hard_near": 0,
+      "near": 0
+    },
+    "5": {
+      "exact": 0,
+      "hard_near": 0,
+      "near": 0
+    },
+    "6": {
+      "exact": 0,
+      "hard_near": 0,
+      "near": 0
+    }
+  },
+  "new_node_collision": [
+    {
+      "draft_id": "L04-C1-N01",
+      "label": "胸長神経は主にC5・C6・C7神経根から形成され前鋸筋を支配する",
+      "top_existing": [
+        {
+          "node_id": "KN1505",
+          "score": 0.45614,
+          "label": "橈骨神経は腕神経叢後神経束から分岐し、腕橈骨筋を支配する"
+        },
+        {
+          "node_id": "KN1334",
+          "score": 0.4,
+          "label": "滑車神経は上斜筋のみを支配する"
+        },
+        {
+          "node_id": "KN0919",
+          "score": 0.392857,
+          "label": "第VII脳神経は顔面神経で、表情筋を支配するを評価する"
+        },
+        {
+          "node_id": "KN1011",
+          "score": 0.391304,
+          "label": "橈骨神経は肘筋と回外筋を支配する"
+        },
+        {
+          "node_id": "KN1335",
+          "score": 0.382353,
+          "label": "腋窩神経は腕神経叢後神経束から分岐し、三角筋・小円筋と肩外側部皮膚感覚を支配する"
+        }
+      ]
+    },
+    {
+      "draft_id": "L04-C2-N01",
+      "label": "心室筋活動電位の第2相ではL型Ca2+チャネルからのCa2+流入がK+流出と釣り合いプラトー相を形成する",
+      "top_existing": [
+        {
+          "node_id": "KN1071",
+          "score": 0.391753,
+          "label": "シナプス前終末が脱分極すると電位依存性Ca2+チャネルが開き、Ca2+流入が神経伝達物質放出を誘発する"
+        },
+        {
+          "node_id": "KN0665",
+          "score": 0.390244,
+          "label": "心室筋活動電位の再分極相ではK+が細胞外へ流出するK電流が中心となる"
+        },
+        {
+          "node_id": "KN0535",
+          "score": 0.348837,
+          "label": "活動電位の脱分極では主にNa+が細胞内へ流入し、再分極ではK+が細胞外へ流出する"
+        },
+        {
+          "node_id": "KN1452",
+          "score": 0.266667,
+          "label": "腹直筋は左右の筋腹の間に白線があり、腹壁正中を形成する"
+        },
+        {
+          "node_id": "KN1016",
+          "score": 0.219512,
+          "label": "心筋は骨格筋より受動的な静止張力が大きく、活動電位は長い不応期を持つ"
+        }
+      ]
+    },
+    {
+      "draft_id": "L04-C8-N01",
+      "label": "SIADHでは低張性低Na血症に対して尿が不適切に濃縮され、重症低Na血症では意識障害やけいれんを生じ得る",
+      "top_existing": [
+        {
+          "node_id": "KN1273",
+          "score": 0.268293,
+          "label": "中枢神経症状として頭痛、けいれん、精神症状、気分変動などを生じうる"
+        },
+        {
+          "node_id": "KN0830",
+          "score": 0.266667,
+          "label": "てんかんは病因により特発性と症候性などに分類され、意識障害を伴わない発作もある"
+        },
+        {
+          "node_id": "KN0825",
+          "score": 0.252632,
+          "label": "視床痛では中枢性疼痛としてアロディニアがみられ、非侵害刺激でも強い痛みを感じることがある"
+        },
+        {
+          "node_id": "KN1439",
+          "score": 0.236842,
+          "label": "SIASには非麻痺側機能として握力評価が含まれる"
+        },
+        {
+          "node_id": "KN0932",
+          "score": 0.235294,
+          "label": "訪問理学療法で正しいのはどれかに対して適切な理学療法・介入を選択する"
+        }
+      ]
+    },
+    {
+      "draft_id": "L04-C15-N01",
+      "label": "歩行速度は歩行率とステップ長に規定され、どちらかを高めると他条件が同じなら速度は増加する",
+      "top_existing": [
+        {
+          "node_id": "KN0300",
+          "score": 0.233333,
+          "label": "歩行率と歩幅から歩行速度を算出する"
+        },
+        {
+          "node_id": "KN0706",
+          "score": 0.231884,
+          "label": "歩行速度・歩幅が低下し、両脚支持期が延長、腕振りも減少する"
+        },
+        {
+          "node_id": "KN0570",
+          "score": 0.227848,
+          "label": "高強度運動で疲労が進むと解糖系への依存が高まり、乳酸と水素イオンが増加する"
+        },
+        {
+          "node_id": "KN0115",
+          "score": 0.227848,
+          "label": "歩行とADLは自立しているが、複数課題を同時に行うと反応が遅れるを評価する"
+        },
+        {
+          "node_id": "KN1371",
+          "score": 0.222222,
+          "label": "身体的フレイルの代表要件には歩行速度低下と身体活動量低下が含まれるを評価する"
+        }
+      ]
+    }
+  ]
+}

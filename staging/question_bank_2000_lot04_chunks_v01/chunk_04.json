@@ -1,0 +1,591 @@
+{
+  "lot": "question_bank_2000_production_lot04_v01",
+  "chunk": 4,
+  "chunk_count": 6,
+  "status": "completed_chunk",
+  "formal_baseline": "Q1-Q1905",
+  "q_ids_reserved": false,
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L04-C9-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1097",
+      "target_node_label": "Jackson発作は焦点性運動発作で、意識が保たれたまま局所の間代運動が拡大することがある",
+      "reference_question_ids": [
+        "Q1108"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "焦点性運動発作時の安全対応",
+      "question_text": "訓練中、患者の右手指から始まる間代運動が前腕へ拡大した。意識は保たれている。まず行う対応として最も適切なのはどれか。",
+      "choices": {
+        "1": "転倒や外傷を防ぎ発作の経過を観察する",
+        "2": "四肢を強く押さえて運動を止める",
+        "3": "口の中へ物を入れる",
+        "4": "直ちに高負荷歩行を続ける",
+        "5": "症状を無視して訓練を継続する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "局所から広がる間代運動で意識が保たれている所見は焦点性運動発作を示唆する。発作時は外傷予防を優先し、無理に抑え込まず経過・持続時間を観察して必要な医療対応につなげる。",
+      "choice_explanations": {
+        "1": "○。安全確保と発作観察を優先する。",
+        "2": "強く押さえつけると外傷につながり得る。",
+        "3": "発作中に口へ物を入れるべきではない。",
+        "4": "発作中の高負荷運動は危険である。",
+        "5": "発作所見を無視してはいけない。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "焦点性運動発作を疑う状況で外傷予防と観察を最優先する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "safety_priority/DECIDE: 発作場面で安全行動を決める。",
+        "why_not_same_demand": "Q1108はJackson発作の特徴を問う。本問は実際の発作時に安全対応を選択させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1108",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.cdc.gov/epilepsy/first-aid-for-seizures/index.html",
+          "support": "CDC seizure first-aid guidance emphasizes keeping the person safe, not restraining them, and not putting objects in the mouth."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "author-adjusted-for-medical-fit",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C9-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0553",
+      "target_node_label": "中心性脊髄損傷は高齢者の頸椎過伸展外傷などで生じやすく、脊髄中心部の障害により下肢より上肢の麻痺が強いことが特徴である",
+      "reference_question_ids": [
+        "Q561",
+        "Q1762"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "中心性脊髄損傷の自助具選択",
+      "question_text": "中心性脊髄損傷で歩行は監視下で可能だが、手指の把持力低下が強く食事動作でスプーンを保持できない。自立度を高めるため最も適切な自助具はどれか。",
+      "choices": {
+        "1": "ユニバーサルカフ",
+        "2": "頸椎カラー",
+        "3": "膝装具",
+        "4": "短下肢装具",
+        "5": "弾性ストッキング"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "中心性脊髄損傷では下肢より上肢、とくに手指機能の障害が強く残ることがある。把持が困難でも食具を保持できるユニバーサルカフは食事動作の自立を補助する。",
+      "choice_explanations": {
+        "1": "○。手指把持が弱い場合に食具を手へ固定してADLを補助できる。",
+        "2": "頸椎保護の適応判断は別問題で、食具把持の代償にはならない。",
+        "3": "膝装具は手指把持障害を補償しない。",
+        "4": "短下肢装具は足関節機能を補助する装具である。",
+        "5": "弾性ストッキングは把持障害への自助具ではない。"
+      },
+      "proposed_task": "device_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "中心性脊髄損傷に特徴的な手指優位の障害から、食事動作を補う自助具を選択する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW, finding_interpretation/INTERPRET",
+        "candidate_demand": "device_selection/PRESCRIBE: 手指優位の障害からADL自助具を選ぶ。",
+        "why_not_same_demand": "既存問題は中心性脊髄損傷の特徴・診断的解釈を問う。本問は残存する手指障害を具体的な自助具選択へ結びつける。",
+        "related_formal_questions": [
+          {
+            "qid": "Q561",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1762",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK441932/",
+          "support": "Central cord syndrome typically causes greater upper-extremity than lower-extremity weakness, with hand recovery often lagging."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "author-adjusted-for-medical-fit-and-quota",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C10-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0626",
+      "target_node_label": "感情や対人関係、自己像の不安定さ、空虚感、衝動性、自傷行為などがみられる",
+      "reference_question_ids": [
+        "Q634"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 10,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "自傷を示唆する発言への対応",
+      "question_text": "情動が不安定な患者が訓練中に『今夜、自分を傷つけるかもしれない』と具体的に話した。最も優先すべき対応はどれか。",
+      "choices": {
+        "1": "訓練を中断し安全を確保して直ちに医療チームへ共有する",
+        "2": "冗談として扱い一人で帰宅させる",
+        "3": "秘密にすると約束して誰にも伝えない",
+        "4": "高強度運動で気をそらすだけにする",
+        "5": "次回受診まで何もしない"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "具体的な自傷の可能性を示す発言は安全上の重要所見である。まず患者を一人にせず安全を確保し、所属施設の手順に従って速やかに医療チームへ連携する。",
+      "choice_explanations": {
+        "1": "○。自傷リスクが示唆される場合は安全確保と速やかな連携が優先される。",
+        "2": "危険性を軽視して単独帰宅させるのは不適切である。",
+        "3": "安全確保に必要な共有まで拒む約束はできない。",
+        "4": "運動だけで自傷リスク評価を代替できない。",
+        "5": "差し迫った安全問題を先送りしてはいけない。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "自傷を示唆する具体的発言を安全上の緊急情報として扱い連携する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "safety_priority/DECIDE: 自傷リスク発言から直ちに安全確保・連携を決める。",
+        "why_not_same_demand": "Q634は境界性パーソナリティの特徴を問う。本問は自傷リスクを含む臨床場面で優先行動を決定させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q634",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.nimh.nih.gov/health/topics/suicide-prevention",
+          "support": "NIMH advises taking suicidal or self-harm statements seriously and obtaining immediate help when danger is present."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "author-adjusted-for-medical-fit",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C10-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0746",
+      "target_node_label": "「少数の事実から、すべて同じ結果になる」と一般化する認知の歪みが極端な一般化である",
+      "reference_question_ids": [
+        "Q754",
+        "Q1686"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 10,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "極端な一般化に対する短期目標",
+      "question_text": "一度歩行練習で失敗した後、「私は何をしても必ず失敗する」と話す患者に対する短期目標として最も適切なのはどれか。",
+      "choices": {
+        "1": "成功・失敗を具体的事実ごとに捉え直せる",
+        "2": "失敗を避けるため全活動を中止する",
+        "3": "否定的な出来事だけを記憶する",
+        "4": "一度の失敗を将来すべてに一般化する",
+        "5": "自分の考えを検討せず固定する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "一つの出来事から「何をしても失敗する」と結論づけるのは極端な一般化である。短期目標は、個々の事実を区別し、過度な一般化をせず現実的に捉え直せることが適切である。",
+      "choice_explanations": {
+        "1": "○。極端な一般化を弱める具体的で評価可能な目標である。",
+        "2": "回避を固定化するため適切でない。",
+        "3": "否定的情報への偏りを強める。",
+        "4": "認知の歪みそのものを目標にしてしまう。",
+        "5": "認知を柔軟に検討する方向と逆である。"
+      },
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "極端な一般化を認識し、より具体的で現実的な認知を形成する短期目標を選ぶ。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW, finding_interpretation/INTERPRET",
+        "candidate_demand": "functional_goal_decision/DECIDE: 認知の歪みに対する達成目標を選ぶ。",
+        "why_not_same_demand": "既存問題は歪みの名称・同定を問う。本問は同定した歪みから、治療で目指す具体的状態を決定させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q754",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1686",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK470241/",
+          "support": "Cognitive behavioral therapy uses identification and restructuring of maladaptive automatic thoughts and cognitive distortions."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "author-adjusted-for-medical-fit-and-quota",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C11-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0967",
+      "target_node_label": "遠城寺式発達検査では1歳6か月までに『お菓子の包み紙を取って食べる』ような社会性・手の運動を獲得する",
+      "reference_question_ids": [
+        "Q977"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 11,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "1歳6か月児の発達評価項目",
+      "question_text": "1歳6か月児の社会性と手の運動の発達を遠城寺式発達検査の観点で確認する。月齢相応の行動として最も適切なのはどれか。",
+      "choices": {
+        "1": "お菓子の包み紙を自分で取って食べる",
+        "2": "漢字で自分の住所を書く",
+        "3": "補助輪なしで自転車に乗る",
+        "4": "3桁の暗算を行う",
+        "5": "新聞記事を要約する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "1歳6か月頃には、包み紙を取って食べるような日常生活に関連した手の操作・社会性行動がみられる。その他ははるかに後の発達課題である。",
+      "choice_explanations": {
+        "1": "○。1歳6か月頃にみられる発達行動として適切である。",
+        "2": "学童期以降の高度な書字課題である。",
+        "3": "乳児期の発達評価項目ではない。",
+        "4": "高度な学習課題である。",
+        "5": "言語・認知的により高年齢の課題である。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "月齢に合わせた発達評価項目を選択する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 1歳6か月児に適した観察項目を選ぶ。",
+        "why_not_same_demand": "Q977は発達行動の時期を直接問う。本問は評価場面で月齢相応の項目を選択させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q977",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.jstage.jst.go.jp/article/jjrmc/55/9/55_754/_article/-char/ja/",
+          "support": "Japanese developmental assessment literature describes age-linked observation of social and fine-motor behaviors in early childhood."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C11-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1156",
+      "target_node_label": "脊髄髄膜瘤ではChiariⅡ型奇形や水頭症を高頻度に合併する",
+      "reference_question_ids": [
+        "Q1169"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 11,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "脊髄髄膜瘤児の頭蓋内圧亢進徴候",
+      "question_text": "脊髄髄膜瘤で水頭症を合併する乳児に、嘔吐、傾眠、頭囲の急速な増大がみられた。最も優先すべき対応はどれか。",
+      "choices": {
+        "1": "頭蓋内圧亢進を疑い速やかに医療評価へつなげる",
+        "2": "症状を無視して腹臥位運動を増やす",
+        "3": "数週間そのまま経過観察する",
+        "4": "水分摂取だけを増やして訓練を続ける",
+        "5": "頭囲測定を中止する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "脊髄髄膜瘤ではChiari II型奇形や水頭症を合併しやすい。嘔吐、傾眠、急速な頭囲増大は頭蓋内圧亢進・水頭症悪化を疑う所見であり、速やかな医療評価が必要である。",
+      "choice_explanations": {
+        "1": "○。水頭症悪化を疑う危険徴候として優先対応が必要である。",
+        "2": "危険徴候がある状態で訓練を優先すべきではない。",
+        "3": "神経学的悪化を先送りするのは不適切である。",
+        "4": "水分増量だけでは原因評価にならない。",
+        "5": "頭囲は乳児水頭症の重要な観察項目である。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "水頭症合併児の危険徴候を認識し訓練より医療評価を優先する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "safety_priority/DECIDE: 水頭症悪化徴候から緊急連携を決める。",
+        "why_not_same_demand": "Q1169は合併症の知識を問う。本問は合併症を前提に危険徴候への優先対応を決定させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1169",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK545246/",
+          "support": "Myelomeningocele commonly coexists with Chiari II malformation and hydrocephalus requiring surveillance and treatment."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "author-adjusted-for-medical-fit",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C11-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0514",
+      "target_node_label": "近位筋優位の進行性筋力低下と、脂肪・結合組織増生による下腿三頭筋の仮性肥大が特徴的である",
+      "reference_question_ids": [
+        "Q522",
+        "Q1823"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 11,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "Duchenne型筋ジストロフィーの機能経過",
+      "question_text": "Duchenne型筋ジストロフィー児で近位筋力低下が進行している。一般的な機能経過として最も適切なのはどれか。",
+      "choices": {
+        "1": "成長とともに歩行能力低下が進行し得る",
+        "2": "筋力低下は一過性で自然に完全回復する",
+        "3": "下腿仮性肥大があれば筋機能も正常である",
+        "4": "近位筋力は年齢とともに必ず増強する",
+        "5": "進行性の呼吸筋障害は起こらない"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "Duchenne型筋ジストロフィーは進行性筋疾患で、近位筋力低下から歩行・移動能力が徐々に低下する。下腿仮性肥大は脂肪・結合組織増生によるもので筋力増強を意味しない。",
+      "choice_explanations": {
+        "1": "○。進行性筋力低下に伴い歩行能力は低下し得る。",
+        "2": "自然完全回復する疾患ではない。",
+        "3": "仮性肥大は正常筋機能を意味しない。",
+        "4": "近位筋力は進行性に低下する。",
+        "5": "呼吸筋障害も重要な長期問題となる。"
+      },
+      "proposed_task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "moderate",
+      "clinical_intent": "進行性筋力低下の特徴から将来の移動機能低下を予測する。",
+      "semantic_review": {
+        "reference_demand": "assessment_selection/MEASURE, fact_recall/KNOW",
+        "candidate_demand": "prognosis_prediction/PREDICT: 疾患特徴から将来機能を予測する。",
+        "why_not_same_demand": "既存問題は特徴知識や評価項目を問う。本問は進行性という性質を機能予後へ結びつける。",
+        "related_formal_questions": [
+          {
+            "qid": "Q522",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1823",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK482346/",
+          "support": "Duchenne muscular dystrophy is a progressive myopathy with proximal weakness, calf pseudohypertrophy, and progressive loss of ambulation."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C12-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1347",
+      "target_node_label": "受け入れ難い願望・思考を無意識に意識外へ押し込むのが抑圧",
+      "reference_question_ids": [
+        "Q1370"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 12,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "防衛機制としての抑圧",
+      "question_text": "強い葛藤を伴う出来事について、本人は『全く思い出せない』と述べるが、意図的に忘れようとしている自覚はない。この防衛機制として最も適切なのはどれか。",
+      "choices": {
+        "1": "抑圧",
+        "2": "投影",
+        "3": "合理化",
+        "4": "置き換え",
+        "5": "反動形成"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "抑圧は受け入れ難い欲求・思考・記憶などを無意識に意識外へ押し込む防衛機制である。意図的に考えないようにする抑制とは区別される。",
+      "choice_explanations": {
+        "1": "○。無意識に意識外へ排除するのが抑圧である。",
+        "2": "投影は自分の感情や欲求を他者のものとして捉える。",
+        "3": "合理化は受け入れやすい理由を後づけする。",
+        "4": "置き換えは感情の向け先を別対象へ移す。",
+        "5": "反動形成は受け入れ難い衝動と反対の態度を強く示す。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "無意識性を含む事例記述から防衛機制を同定する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 事例の心理過程から抑圧を同定する。",
+        "why_not_same_demand": "Q1370は抑圧の定義を直接問う。本問は具体的事例から防衛機制を解釈させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1370",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK559106/",
+          "support": "Psychodynamic references describe repression as an unconscious defense excluding unacceptable thoughts or impulses from awareness."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "author-adjusted-for-medical-fit",
+      "assignment_may_change_if_quotas_preserved": true
+    }
+  ]
+}

@@ -8,9 +8,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BANK = ROOT / "data" / "question_bank"
 BASE_END = 1737
-CURRENT_END = 1905
+CURRENT_END = 1953
 FINAL_TARGET = 2000
-EXPECTED_ORIGINAL_REMAINING = 89
+EXPECTED_ORIGINAL_REMAINING = 41
 PAST_EXAM_REMAINING = 6
 
 CATEGORY_TARGET = {1:12,2:16,3:4,4:7,5:4,6:8,7:10,8:25,9:28,10:7,11:12,12:10,13:10,14:10,15:14,16:20,17:28,18:32}
@@ -135,7 +135,7 @@ def build_report() -> dict:
             "strong_formations":STRONG_TARGET-strong_used,
             "safety_augment":SAFETY_AUGMENT_TARGET-safety_aug_used,
         },
-        "production_lots":[48,41],
+        "production_lots":[41],
     }
 
 
@@ -166,11 +166,11 @@ def write_outputs(report: dict) -> None:
         f"- strong formations remaining: {rem['strong_formations']}",
         f"- Safety moderate/critical augmentation remaining: {rem['safety_augment']}","",
         "## Production lots","",
-        "Calibration, Lot01, Lot02, and Lot03 are complete. Remaining originals are grouped into production lots: 48 / 41, followed by a separate 6-question past-exam acceptance step.","",
-        "Each lot is staging-first, then formal integration only after semantic/duplicate/Node/category validation and full CI.",
+        "Calibration and Lot01-Lot04 are complete. Remaining originals form one final 41-question production lot, followed by a separate 6-question past-exam acceptance step.","",
+        "The final lot is staging-first, then formal integration only after semantic/duplicate/Node/category validation and full CI.",
     ]
     if used["weak_or_unproven_formations"]:
-        lines += ["","## Warning","",f"{len(used['weak_or_unproven_formations'])} calibration additions did not prove a strong pair under the metadata rule and require inspection."]
+        lines += ["","## Warning","",f"{len(used['weak_or_unproven_formations'])} additions did not prove a strong pair under the metadata rule and require inspection."]
     else:
         lines += ["",f"All {used['strong_formations']} existing-Node additions prove a different-demand strong pair against at least one pre-audit question in their Node."]
     (ROOT / "docs" / "question-bank-2000-remaining-allocation-v01.md").write_text("\n".join(lines)+"\n",encoding="utf-8")

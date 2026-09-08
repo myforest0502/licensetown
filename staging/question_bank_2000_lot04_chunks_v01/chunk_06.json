@@ -1,0 +1,561 @@
+{
+  "lot": "question_bank_2000_production_lot04_v01",
+  "chunk": 6,
+  "chunk_count": 6,
+  "status": "completed_chunk",
+  "formal_baseline": "Q1-Q1905",
+  "q_ids_reserved": false,
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L04-C15-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0706",
+      "target_node_label": "歩行速度・歩幅が低下し、両脚支持期が延長、腕振りも減少する",
+      "reference_question_ids": [
+        "Q714",
+        "Q1684"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 15,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "歩行の時空間因子評価",
+      "question_text": "歩行速度低下、歩幅短縮、両脚支持期延長を客観的に確認したい。評価方法として最も適切なのはどれか。",
+      "choices": {
+        "1": "歩行路上で時空間歩行因子を計測する",
+        "2": "上肢の握力だけを測定する",
+        "3": "安静時心拍数だけを測定する",
+        "4": "視力検査だけを行う",
+        "5": "関節画像だけで歩行速度を推定する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "歩行速度、歩幅、両脚支持時間は時空間歩行因子であり、歩行路や歩行解析システムを用いて直接計測するのが適切である。",
+      "choice_explanations": {
+        "1": "○。目的とする時空間因子を直接測定できる。",
+        "2": "握力だけでは歩行速度や歩幅を評価できない。",
+        "3": "心拍数だけでは歩行時空間因子を測定できない。",
+        "4": "視力検査は歩行因子の直接測定ではない。",
+        "5": "静止画像だけで実際の歩行速度・両脚支持時間を直接評価できない。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "特徴的な歩行変化を定量化するため適切な時空間評価を選ぶ。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW, finding_interpretation/INTERPRET",
+        "candidate_demand": "assessment_selection/MEASURE: 歩行特徴を定量化する評価方法を選ぶ。",
+        "why_not_same_demand": "既存問題は歩行特徴の知識・解釈を問う。本問はそれらを測定する評価方法の選択を求める。",
+        "related_formal_questions": [
+          {
+            "qid": "Q714",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1684",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK559116/",
+          "support": "Gait analysis commonly quantifies spatiotemporal variables such as velocity, step length and stance or support timing."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C17-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1177",
+      "target_node_label": "SARAは脊髄小脳失調症などの運動失調を、歩行・立位・四肢協調運動などから評価する尺度",
+      "reference_question_ids": [
+        "Q1190"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "運動失調の重症度尺度選択",
+      "question_text": "脊髄小脳失調症患者の歩行、立位、四肢協調運動を含めて運動失調の重症度を経時的に評価したい。最も適切な尺度はどれか。",
+      "choices": {
+        "1": "SARA",
+        "2": "MMSE",
+        "3": "GCS",
+        "4": "Brunnstrom stage",
+        "5": "Hugh-Jones分類"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "SARA（Scale for the Assessment and Rating of Ataxia）は歩行、立位、座位、言語、四肢協調運動などを評価し、運動失調の重症度を定量化する尺度である。",
+      "choice_explanations": {
+        "1": "○。運動失調の重症度評価に用いられる。",
+        "2": "MMSEは認知機能のスクリーニングである。",
+        "3": "GCSは意識レベル評価である。",
+        "4": "Brunnstrom stageは主に脳卒中後の運動回復段階を示す。",
+        "5": "Hugh-Jones分類は呼吸困難の程度に用いられる。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "失調症状の経時評価という目的から適切な尺度を選択する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 失調の重症度評価尺度を選ぶ。",
+        "why_not_same_demand": "Q1190はSARAの対象を直接問う。本問は臨床評価目的から尺度を選択させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q1190",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/16211652/",
+          "support": "The SARA was developed as a clinical scale to assess and rate ataxia across gait, stance, speech and limb-coordination items."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C18-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0647",
+      "target_node_label": "偽関節は血流が乏しい骨折や骨癒合条件の悪い部位で生じやすい",
+      "reference_question_ids": [
+        "Q655"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "骨癒合遅延が疑われる患者への対応",
+      "question_text": "骨折後数か月を経ても骨折部痛と異常可動性が残り、画像でも骨癒合不良が疑われる。理学療法で最も適切な対応はどれか。",
+      "choices": {
+        "1": "荷重量の安易な増加を避け整形外科へ再評価を依頼する",
+        "2": "骨癒合確認なしに最大荷重訓練を開始する",
+        "3": "疼痛を無視して反復ジャンプを行う",
+        "4": "異常可動性を徒手的に繰り返し増大させる",
+        "5": "医療評価を行わず自己判断で固定を解除する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "持続する疼痛、異常可動性、画像上の癒合不良は偽関節・遷延癒合を疑う。荷重条件の変更は骨癒合状態と医師の方針を確認し、再評価後に行うべきである。",
+      "choice_explanations": {
+        "1": "○。骨癒合不良が疑われる場合は再評価と荷重条件確認が優先される。",
+        "2": "癒合不良部への過負荷は不適切である。",
+        "3": "疼痛を無視した衝撃負荷は危険である。",
+        "4": "異常可動性を増やす操作は癒合を妨げ得る。",
+        "5": "固定解除は医療判断と癒合確認を要する。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "moderate",
+      "clinical_intent": "偽関節を疑う所見から荷重進行より再評価を優先する介入方針を選ぶ。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "intervention_selection/PRESCRIBE: 骨癒合不良時の訓練方針を選ぶ。",
+        "why_not_same_demand": "Q655は偽関節の発生条件を問う。本問は疑わしい臨床所見から荷重・連携方針を決めさせる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q655",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK448154/",
+          "support": "Fracture nonunion is characterized by failure of healing and requires reassessment of mechanical and biologic factors before progression of treatment."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C18-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0506",
+      "target_node_label": "延髄には舌下神経核があり、舌の運動を担う舌下神経機能が障害されやすい",
+      "reference_question_ids": [
+        "Q514",
+        "Q1795"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "舌運動障害の機能目標",
+      "question_text": "延髄病変後に舌の運動低下があり、食塊形成と口腔内での送り込みに時間を要している。短期的な機能目標として最も適切なのはどれか。",
+      "choices": {
+        "1": "舌運動を利用した食塊形成・送り込みの効率を高める",
+        "2": "下肢筋力だけを最大化する",
+        "3": "視野を拡大する",
+        "4": "聴力を改善する",
+        "5": "手指巧緻性だけを改善する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "舌下神経は舌運動を担うため、延髄病変で舌運動が低下すると口腔期の食塊形成・送り込みに影響する。障害機能に直接結びつく目標を設定する。",
+      "choice_explanations": {
+        "1": "○。舌運動障害が生じている機能へ直接対応する目標である。",
+        "2": "下肢筋力は提示された主要障害と直接対応しない。",
+        "3": "視野障害は示されていない。",
+        "4": "聴覚障害は示されていない。",
+        "5": "手指巧緻性は本例の主要障害ではない。"
+      },
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "舌下神経機能障害から影響を受ける口腔機能を特定し、短期機能目標を決定する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW, finding_interpretation/INTERPRET",
+        "candidate_demand": "functional_goal_decision/DECIDE: 舌運動障害から口腔機能の目標を決める。",
+        "why_not_same_demand": "既存問題は延髄・舌下神経の知識や所見解釈を問う。本問は障害された舌運動を具体的な機能目標へ変換させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q514",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1795",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK532869/",
+          "support": "Hypoglossal nerve examination includes protrusion and movement of the tongue to assess weakness and deviation."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "author-adjusted-for-medical-fit-and-quota",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C1-N01",
+      "status": "accepted",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "胸長神経は主にC5・C6・C7神経根から形成され前鋸筋を支配する",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 1,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "胸長神経の神経根",
+      "question_text": "前鋸筋を支配する胸長神経を構成する主な神経根の組合せはどれか。",
+      "choices": {
+        "1": "C5・C6・C7",
+        "2": "C1・C2・C3",
+        "3": "C3・C4・C5",
+        "4": "C7・C8・T1",
+        "5": "L2・L3・L4"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "胸長神経は腕神経叢の根部で主にC5、C6、C7前枝から形成され、前鋸筋を支配する。胸長神経障害では前鋸筋麻痺により翼状肩甲を生じ得る。",
+      "choice_explanations": {
+        "1": "○。胸長神経の主要な神経根はC5・C6・C7である。",
+        "2": "上位頸神経のみの組合せであり胸長神経の主要根ではない。",
+        "3": "C3・C4は胸長神経の典型的構成根ではない。",
+        "4": "下位腕神経叢優位の組合せであり胸長神経とは異なる。",
+        "5": "腰神経であり胸長神経を形成しない。"
+      },
+      "proposed_task": "fact_recall",
+      "primary_ability": "KNOW",
+      "secondary_ability": null,
+      "level": 1,
+      "safety": "none",
+      "clinical_intent": "前鋸筋支配神経の根レベルを解剖学的に理解する。",
+      "semantic_review": {
+        "reference_demand": "replacement new Node candidate; previous posterior-cord candidate rejected because Q595 was hard-near and semantically overlapping",
+        "candidate_demand": "fact_recall/KNOW: 胸長神経を形成する主要神経根を同定する。",
+        "why_not_same_demand": "Q595の後神経束終末枝とは異なり、腕神経叢根部から直接生じる胸長神経のC5-C7構成を扱う。",
+        "related_formal_questions": [
+          {
+            "qid": "Q595",
+            "relation": "explicitly reviewed previous collision; replacement demand differs"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "new_node_collision_review": {
+        "decision": "accepted_new_node",
+        "why_existing_nodes_insufficient": "Repository text search for 胸長神経 C5 C6 C7 前枝 returned no indexed result. Q595 was explicitly rejected as a collision with the prior candidate; bank-wide similarity and label collision gates remain required."
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK531473/",
+          "support": "NCBI StatPearls states that the long thoracic nerve originates from the C5, C6, and C7 rami and innervates serratus anterior."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "replacement_after_formal_similarity_collision",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C2-N01",
+      "status": "accepted",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "心室筋活動電位の第2相ではL型Ca2+チャネルからのCa2+流入がK+流出と釣り合いプラトー相を形成する",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 2,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "心室筋活動電位のプラトー相",
+      "question_text": "心室筋細胞の活動電位で、第2相のプラトーを形成する主要な内向き電流はどれか。",
+      "choices": {
+        "1": "L型Ca2+チャネルを介するCa2+流入",
+        "2": "Cl−チャネルを介するCl−流入",
+        "3": "Na+/K+-ATPaseによるK+流入のみ",
+        "4": "K+チャネルを介するK+流出のみ",
+        "5": "Ca2+ポンプによるCa2+排出"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "心室筋活動電位の第2相ではL型Ca2+チャネルからCa2+が流入し、同時に生じるK+流出と電流が釣り合うことでプラトー相が形成される。",
+      "choice_explanations": {
+        "1": "○。第2相の主要な内向き電流である。",
+        "2": "Cl−流入は心室筋第2相の主要機序ではない。",
+        "3": "Na+/K+-ATPaseはイオン勾配維持に重要だがプラトー相の主要内向き電流ではない。",
+        "4": "K+流出は外向き電流であり、Ca2+流入と釣り合う。",
+        "5": "Ca2+排出はプラトー形成の主要内向き電流ではない。"
+      },
+      "proposed_task": "fact_recall",
+      "primary_ability": "KNOW",
+      "secondary_ability": null,
+      "level": 1,
+      "safety": "none",
+      "clinical_intent": "心室筋活動電位第2相の主要イオン電流を想起する。",
+      "semantic_review": {
+        "reference_demand": "new Node candidate; no formal same-Node reference",
+        "candidate_demand": "fact_recall/KNOW: 心室筋活動電位第2相の主要内向きCa2+電流を想起する。",
+        "why_not_same_demand": "既存Nodeへの追加ではなく、正式バンクに同等canonical Nodeがないことを再監査して新規Node候補とする。",
+        "related_formal_questions": [],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "new_node_collision_review": {
+        "decision": "accepted_new_node",
+        "why_existing_nodes_insufficient": "Formal Q1-Q1905 contains no equivalent canonical Node for ventricular-myocyte phase-2 plateau formation by L-type Ca2+ influx balanced against K+ efflux; the prior Fick candidate was rejected because KN1548 is identical.",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09"
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK537194/",
+          "support": "NCBI StatPearls describes phase 2 of the cardiomyocyte action potential as L-type Ca2+ influx balanced by K+ efflux, producing the plateau."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "author-replaced-new-node-after-formal-collision",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C8-N01",
+      "status": "accepted",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "SIADHでは低張性低Na血症に対して尿が不適切に濃縮され、重症低Na血症では意識障害やけいれんを生じ得る",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 8,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "重症低Na血症の安全対応",
+      "question_text": "SIADHが疑われる患者で血清Na 116 mEq/Lとなり、新たにけいれんと意識障害が出現した。最も優先すべき対応はどれか。",
+      "choices": {
+        "1": "運動を中止し緊急の医療対応へつなげる",
+        "2": "歩行訓練を続けて発汗を増やす",
+        "3": "症状を無視して水分を大量摂取させる",
+        "4": "一人で入浴させる",
+        "5": "翌週まで経過観察だけとする"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "重症低Na血症では脳浮腫による意識障害やけいれんを生じ得る。これは緊急対応を要するため、理学療法は中止し速やかに医療評価・治療へつなげる。",
+      "choice_explanations": {
+        "1": "○。けいれんを伴う重症低Na血症は緊急対応が必要である。",
+        "2": "運動継続は安全でない。",
+        "3": "SIADHで無制限の水分摂取は低Na血症を悪化させ得る。",
+        "4": "意識障害・けいれんリスクがある患者を単独入浴させてはいけない。",
+        "5": "急性神経症状を先送りできない。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "重症低Na血症の神経症状を認識し運動中止と緊急医療連携を優先する。",
+      "semantic_review": {
+        "reference_demand": "new Node candidate; repository search for SIADH returned no indexed result",
+        "candidate_demand": "safety_priority/DECIDE: 症候性重症低Na血症で緊急対応を選ぶ。",
+        "why_not_same_demand": "水・電解質一般ではなくSIADHの低張性低Na血症と神経学的緊急性を一つの臨床判断単位として扱う。",
+        "related_formal_questions": [],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "new_node_collision_review": {
+        "decision": "accepted_new_node",
+        "why_existing_nodes_insufficient": "Repository text search for SIADH found no matching indexed content; final bank-wide semantic collision audit remains required before formal creation."
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK507777/",
+          "support": "SIADH causes euvolemic hypotonic hyponatremia with inappropriately concentrated urine; severe hyponatremia can produce seizures and altered consciousness."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C15-N01",
+      "status": "accepted",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "歩行速度は歩行率とステップ長に規定され、どちらかを高めると他条件が同じなら速度は増加する",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 15,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "歩行速度改善目標の選択",
+      "question_text": "歩行率は変わらないがステップ長が短いため歩行速度が低い患者がいる。歩行速度を上げるための直接的な練習目標として最も適切なのはどれか。",
+      "choices": {
+        "1": "安全範囲でステップ長を拡大する",
+        "2": "ステップ長をさらに短くする",
+        "3": "両脚支持時間だけを延長する",
+        "4": "立位時間を減らして歩行を避ける",
+        "5": "上肢握力だけを増やす"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "歩行速度はステップ長と歩行率の組合せで決まる。歩行率が一定でステップ長短縮が速度低下の主因なら、安全にステップ長を拡大することが直接的な目標となる。",
+      "choice_explanations": {
+        "1": "○。原因となっている短いステップ長を改善すれば速度増加につながる。",
+        "2": "速度をさらに低下させる方向である。",
+        "3": "両脚支持時間延長は速度向上の直接目標ではない。",
+        "4": "歩行能力改善の目標に反する。",
+        "5": "握力は歩行速度を直接決める時空間因子ではない。"
+      },
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "歩行速度低下の時空間因子を分解し、直接的な改善目標を決める。",
+      "semantic_review": {
+        "reference_demand": "new Node candidate; repository search found no indexed combination of gait speed, cadence and step length",
+        "candidate_demand": "functional_goal_decision/DECIDE: 速度低下要因から改善目標を選ぶ。",
+        "why_not_same_demand": "既存の個別歩容所見ではなく、歩行速度をステップ長と歩行率へ分解して目標設定に使う関係を扱う。",
+        "related_formal_questions": [],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "new_node_collision_review": {
+        "decision": "accepted_new_node",
+        "why_existing_nodes_insufficient": "Repository text search for 歩行速度・歩行率(cadence)・歩幅/step lengthの組合せ found no matching indexed content; final bank-wide semantic collision audit remains required."
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK559116/",
+          "support": "Gait speed is determined by temporal-spatial parameters including step length and cadence, which are standard gait-analysis variables."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    }
+  ]
+}

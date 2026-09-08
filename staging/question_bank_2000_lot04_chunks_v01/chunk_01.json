@@ -1,0 +1,574 @@
+{
+  "lot": "question_bank_2000_production_lot04_v01",
+  "chunk": 1,
+  "chunk_count": 6,
+  "status": "completed_chunk",
+  "formal_baseline": "Q1-Q1905",
+  "q_ids_reserved": false,
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L04-C1-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0528",
+      "target_node_label": "回旋筋腱板は棘上筋、棘下筋、小円筋、肩甲下筋の4筋で構成され、上腕骨頭を関節窩へ安定させる",
+      "reference_question_ids": [
+        "Q536"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 1,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "回旋筋腱板の選択的評価",
+      "question_text": "肩関節の動的安定化機構の機能低下が疑われる。回旋筋腱板を構成する筋を選択的に評価する際、対象に含めるべき筋はどれか。",
+      "choices": {
+        "1": "棘上筋",
+        "2": "大円筋",
+        "3": "広背筋",
+        "4": "大胸筋",
+        "5": "烏口腕筋"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "回旋筋腱板は棘上筋、棘下筋、小円筋、肩甲下筋からなり、上腕骨頭を関節窩へ圧着して動的安定性に寄与する。選択肢では棘上筋のみが該当する。",
+      "choice_explanations": {
+        "1": "○。棘上筋は回旋筋腱板を構成する。",
+        "2": "大円筋は肩甲骨から上腕骨へ付着するが回旋筋腱板には含まれない。",
+        "3": "広背筋は肩関節運動に関与するが回旋筋腱板ではない。",
+        "4": "大胸筋は肩関節の内転・内旋などに関与するが回旋筋腱板ではない。",
+        "5": "烏口腕筋は肩関節の屈曲・内転に関与するが回旋筋腱板ではない。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "肩の動的安定性評価という目的から回旋筋腱板の構成筋を選択する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 動的安定性評価の対象筋を選ぶ。",
+        "why_not_same_demand": "Q536は回旋筋腱板の構成を直接問う。本問は臨床評価目的を提示して対象筋を選択させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q536",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK441844/",
+          "support": "NCBI StatPearls identifies supraspinatus, infraspinatus, teres minor, and subscapularis as the rotator cuff and describes its glenohumeral stabilizing role."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C1-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0529",
+      "target_node_label": "僧帽筋は後頭骨・項靱帯に加え、第7頸椎から第12胸椎の棘突起などから起こるため胸椎に付着する",
+      "reference_question_ids": [
+        "Q537"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 1,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "僧帽筋下部線維の体表確認",
+      "question_text": "僧帽筋下部線維の走行を体表から確認するため、脊柱側の付着範囲を触診する。最も尾側まで確認すべき棘突起はどれか。",
+      "choices": {
+        "1": "第2胸椎",
+        "2": "第4胸椎",
+        "3": "第7胸椎",
+        "4": "第10胸椎",
+        "5": "第12胸椎"
+      },
+      "correct_choices": [
+        "5"
+      ],
+      "explanation": "僧帽筋は外後頭隆起、項靱帯、C7からT12の棘突起などから起こる。したがって脊柱側の付着範囲を尾側まで確認する場合はT12が適切である。",
+      "choice_explanations": {
+        "1": "T2は付着範囲内だが最尾側ではない。",
+        "2": "T4は付着範囲内だが最尾側ではない。",
+        "3": "T7は付着範囲内だが最尾側ではない。",
+        "4": "T10は付着範囲内だが最尾側ではない。",
+        "5": "○。僧帽筋の起始はT12棘突起付近まで及ぶ。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "筋の付着範囲を体表評価のランドマーク選択へ応用する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 僧帽筋付着範囲を触診ランドマークとして選ぶ。",
+        "why_not_same_demand": "Q537は僧帽筋が胸椎へ付着するという知識を問う。本問は触診目的から最尾側ランドマークを決めさせる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q537",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK518994/",
+          "support": "NCBI StatPearls describes the trapezius as extending from the occipital region to the lower thoracic vertebrae."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C1-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0726",
+      "target_node_label": "筋と支配神経との組合せ",
+      "reference_question_ids": [
+        "Q734",
+        "Q1576"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 1,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "尺骨神経障害の筋力評価",
+      "question_text": "肘部管症候群が疑われる患者で、尺骨神経支配筋の筋力を確認したい。評価対象として最も適切なのはどれか。",
+      "choices": {
+        "1": "第1背側骨間筋",
+        "2": "短母指外転筋",
+        "3": "長母指伸筋",
+        "4": "上腕二頭筋",
+        "5": "三角筋"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "第1背側骨間筋は尺骨神経深枝支配であり、尺骨神経機能の筋力評価に用いられる。ほかの筋は正中神経、橈骨神経、筋皮神経、腋窩神経などの支配である。",
+      "choice_explanations": {
+        "1": "○。骨間筋は尺骨神経支配である。",
+        "2": "短母指外転筋は主に正中神経反回枝支配である。",
+        "3": "長母指伸筋は後骨間神経を介する橈骨神経支配である。",
+        "4": "上腕二頭筋は筋皮神経支配である。",
+        "5": "三角筋は腋窩神経支配である。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "末梢神経障害の評価目的から適切な支配筋を選択する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 疑われる神経障害から評価筋を選ぶ。",
+        "why_not_same_demand": "既存問題は筋と支配神経の対応を直接問う。本問は臨床状況から評価対象筋を選択させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q734",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1576",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK547735/",
+          "support": "NCBI StatPearls details upper-limb motor innervation, including ulnar-nerve supply to the interossei."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C2-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0539",
+      "target_node_label": "胃液分泌は胃壁伸展による局所・迷走神経反射や、G細胞から分泌されるガストリンによって促進される",
+      "reference_question_ids": [
+        "Q547"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 2,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "胃相分泌を誘発する刺激",
+      "question_text": "胃相の胃液分泌反応を誘発して評価したい。胃壁伸展とガストリン分泌の両方を生じやすい刺激として最も適切なのはどれか。",
+      "choices": {
+        "1": "食物が胃内へ入ること",
+        "2": "暗所へ入ること",
+        "3": "深呼吸のみを行うこと",
+        "4": "下肢を冷却すること",
+        "5": "膀胱を空にすること"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "食物が胃内へ入ると胃壁伸展が生じ、局所反射や迷走神経反射が活性化する。また内容物、とくにペプチドなどはG細胞からのガストリン分泌を促し、胃液分泌を増強する。",
+      "choice_explanations": {
+        "1": "○。胃壁伸展と化学刺激を介して胃相の分泌を促す。",
+        "2": "暗所への移動は胃相分泌を直接誘発する主要刺激ではない。",
+        "3": "深呼吸のみでは胃壁伸展やガストリン分泌を直接起こさない。",
+        "4": "下肢冷却は胃相分泌の主要刺激ではない。",
+        "5": "排尿は胃相の胃液分泌を直接誘発しない。"
+      },
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "胃液分泌機序を、評価時に用いる生理的刺激の選択へ応用する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 胃相分泌を誘発する適切な刺激を選ぶ。",
+        "why_not_same_demand": "Q547は胃液分泌を促進する因子を直接問う。本問は評価目的から誘発刺激を選択させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q547",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK545268/",
+          "support": "NCBI StatPearls describes gastric distension activating stretch receptors and neural pathways that stimulate gastric secretion."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C2-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0541",
+      "target_node_label": "老化に伴う生理機能の変化の基本事項",
+      "reference_question_ids": [
+        "Q549"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 2,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "加齢性変化の解釈",
+      "question_text": "健康な高齢者の検査結果を若年成人と比較した。正常な加齢に伴う変化として最も適切なのはどれか。",
+      "choices": {
+        "1": "糸球体濾過率の低下",
+        "2": "最大心拍数の増加",
+        "3": "肺弾性収縮力の増加",
+        "4": "骨格筋量の増加",
+        "5": "動脈壁コンプライアンスの増加"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "正常加齢では機能する糸球体数が減少し、糸球体濾過率は低下傾向となる。一方、最大心拍数や骨格筋量は低下し、動脈は硬くなってコンプライアンスが低下する。",
+      "choice_explanations": {
+        "1": "○。加齢に伴いGFRは低下傾向となる。",
+        "2": "最大心拍数は加齢で低下する。",
+        "3": "肺の弾性収縮力は低下しやすい。",
+        "4": "骨格筋量はサルコペニア方向に低下する。",
+        "5": "動脈硬化性変化によりコンプライアンスは低下する。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "検査値の変化を病的変化ではなく正常加齢として解釈する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 高齢者の検査変化を正常加齢として判定する。",
+        "why_not_same_demand": "Q549は加齢変化の直接知識を問う。本問は比較データの意味を解釈させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q549",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK556106/",
+          "support": "NCBI StatPearls describes normal aging as reducing functional glomeruli and glomerular filtration rate and increasing vascular stiffness."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C2-S03",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0542",
+      "target_node_label": "立位の安定性は、重心が支持基底面内に保たれ、各身体部分の重心線が適切に整列し、余分な姿勢制御トルクが少ないほど高まる",
+      "reference_question_ids": [
+        "Q550"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 2,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "立位安定性の判定",
+      "question_text": "静止立位を4条件で比較した。外乱がないとき、最も不安定になりやすい条件はどれか。",
+      "choices": {
+        "1": "両足を広く開き重心投影点が中央にある",
+        "2": "両足をそろえ重心投影点が中央にある",
+        "3": "片脚立位で重心投影点が支持足中央にある",
+        "4": "片脚立位で重心投影点が支持基底面の外縁近くにある",
+        "5": "両足を広く開き上肢を体側に置く"
+      },
+      "correct_choices": [
+        "4"
+      ],
+      "explanation": "支持基底面が狭く、重心投影点がその外縁へ近いほど安定余裕は小さくなる。片脚立位かつ外縁近くに重心投影点がある条件が最も不安定である。",
+      "choice_explanations": {
+        "1": "支持基底面が広く、中央に重心があるため比較的安定する。",
+        "2": "支持基底面は狭くなるが重心は中央にある。",
+        "3": "片脚で支持基底面は狭いが、重心は中央にある。",
+        "4": "○。支持基底面が狭いうえ重心が外縁近く、安定余裕が最小である。",
+        "5": "支持基底面が広く、重心位置を不利にする条件ではない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "支持基底面と重心位置の組合せから立位安定性を比較する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 支持基底面と重心位置から安定性を比較判定する。",
+        "why_not_same_demand": "Q550は立位安定性の原則を直接問う。本問は複数条件を統合して最も不安定な状況を選ばせる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q550",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK279388/",
+          "support": "Clinical balance principles relate stability to keeping the center of mass within the base of support; narrowing the base reduces stability margins."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C2-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0533",
+      "target_node_label": "カルシトニンは甲状腺傍濾胞細胞から、パラトルモン（PTH）は副甲状腺から分泌されるため、同一臓器から分泌される組合せではない",
+      "reference_question_ids": [
+        "Q541",
+        "Q1594"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 2,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "低カルシウム血症のホルモン反応",
+      "question_text": "血清Ca濃度が低下したときの生理的なホルモン反応として最も適切なのはどれか。",
+      "choices": {
+        "1": "副甲状腺からのPTH分泌が増加する",
+        "2": "甲状腺C細胞からのカルシトニン分泌が増加する",
+        "3": "PTH分泌が完全に抑制される",
+        "4": "カルシトニンによる骨吸収抑制が強まる",
+        "5": "PTHによる腎Ca再吸収が低下する"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "低Ca血症では副甲状腺のCa感知受容体を介してPTH分泌が増加し、腎でのCa再吸収、骨からのCa動員、活性型ビタミンD産生を促して血清Caを上げる方向に働く。",
+      "choice_explanations": {
+        "1": "○。低CaはPTH分泌を促進する。",
+        "2": "カルシトニンは高Ca時に分泌が促される。",
+        "3": "低CaではPTHは抑制ではなく増加する。",
+        "4": "低Ca時にカルシトニン作用が強まるのは不適切である。",
+        "5": "PTHは腎でCa再吸収を促進する。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "血清Ca変化からPTH・カルシトニンの生理的応答を推定する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 低Caという所見から内分泌応答を推定する。",
+        "why_not_same_demand": "既存問題はホルモンの分泌臓器を直接問う。本問は血清Ca低下という状態からホルモン反応を推定させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q541",
+            "relation": "same canonical Node; direct formal reference"
+          },
+          {
+            "qid": "Q1594",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK557683/",
+          "support": "NCBI StatPearls describes PTH as increasing serum calcium and calcitonin from thyroid C cells as lowering serum calcium."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L04-C3-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0747",
+      "target_node_label": "バイオフィードバックは生理反応を視覚・聴覚情報として本人へ返し、望ましい反応を強化するオペラント条件づけを利用した方法である",
+      "reference_question_ids": [
+        "Q755"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 3,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "筋電図バイオフィードバックの学習原理",
+      "question_text": "脳卒中患者の前脛骨筋活動を画面に表示し、目標値を超えたときに音で成功を知らせる練習を行った。主に利用している学習原理はどれか。",
+      "choices": {
+        "1": "オペラント条件づけ",
+        "2": "古典的条件づけのみ",
+        "3": "潜在学習のみ",
+        "4": "馴化のみ",
+        "5": "刷り込み"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "バイオフィードバックでは生理反応を本人へ即時に返し、望ましい反応が生じたときのフィードバックを強化子として用いる。これはオペラント条件づけの考え方に基づく。",
+      "choice_explanations": {
+        "1": "○。望ましい筋活動に対する結果フィードバックで反応を強化する。",
+        "2": "刺激同士の連合だけを形成する古典的条件づけとは異なる。",
+        "3": "明示的な結果フィードバックを用いるため潜在学習のみではない。",
+        "4": "反復刺激への反応低下である馴化とは異なる。",
+        "5": "発達初期の特定時期に成立する刷り込みとは異なる。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "治療場面のフィードバック構造から学習原理を同定する。",
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 具体的な治療場面から学習原理を同定する。",
+        "why_not_same_demand": "Q755はバイオフィードバックの定義を直接問う。本問は治療場面を提示し、そこで使われる学習原理を解釈させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q755",
+            "relation": "same canonical Node; direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK553075/",
+          "support": "NCBI StatPearls describes biofeedback as essentially a form of operant conditioning using feedback to reinforce desired actions or behaviors."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    }
+  ]
+}

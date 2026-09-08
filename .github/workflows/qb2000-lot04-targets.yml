@@ -1,0 +1,53 @@
+name: qb2000-lot04-targets
+
+on:
+  push:
+    branches: [work/qb2000-lot04-active]
+    paths:
+      - '.github/workflows/qb2000-lot04-targets.yml'
+      - 'reports/question_bank_2000_lot04_plan_v01.json'
+      - 'reports/question_bank_2000_lot04_targets_v01.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-targets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot04-active
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Generate deterministic Lot04 targets
+        run: |
+          python -m reports.question_bank_2000_lot04_targets_v01
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('reports/question_bank_2000_lot04_targets_v01.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          assert data['formal_baseline'] == 'Q1-Q1905'
+          assert data['required_total_questions'] == 48
+          assert data['required_existing_targets'] == 44
+          assert data['required_new_nodes'] == 4
+          assert len(data['existing_node_targets']) == 44
+          assert sum(v['singleton'] + v['multi'] + v['new'] for v in data['actual_category_slot'].values()) == 48
+          PY
+          git diff --check
+      - name: Commit target roster
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/question_bank_2000_lot04_targets_v01.json
+          if git diff --cached --quiet; then
+            echo "Lot04 target roster already current"
+            exit 0
+          fi
+          git commit -m "Generate Question Bank 2000 Lot04 target roster"
+          git push origin HEAD:work/qb2000-lot04-active

@@ -1,0 +1,48 @@
+name: qb2000-lot04-repair-newnode
+
+on:
+  push:
+    branches:
+      - work/qb2000-lot04-active
+    paths:
+      - scripts/repair_question_bank_2000_lot04_chunk06_newnode.py
+      - .github/workflows/qb2000-lot04-repair-newnode.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot04-active
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Replace rejected Lot04 new Node candidate
+        run: python -m scripts.repair_question_bank_2000_lot04_chunk06_newnode
+      - name: Validate chunk06 and rerun formal-stem similarity
+        run: |
+          python -m reports.question_bank_2000_lot04_chunk_validate 6
+          python -m reports.question_bank_2000_lot04_similarity_audit 6
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('reports/question_bank_2000_lot04_similarity_audits/chunk_06.json').read_text(encoding='utf-8'))
+          if a['exact_total'] or a['hard_near_total']:
+              raise SystemExit(f"chunk06 similarity gate failed: exact={a['exact_total']} hard={a['hard_near_total']} near={a['near_total']}")
+          PY
+      - name: Commit repaired chunk and audit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add staging/question_bank_2000_lot04_chunks_v01/chunk_06.json reports/question_bank_2000_lot04_similarity_audits/chunk_06.json
+          git diff --cached --check
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Repair Lot04 new Node collision and audit chunk06"
+          git push origin HEAD:work/qb2000-lot04-active

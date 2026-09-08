@@ -1,0 +1,37 @@
+name: qb2000-lot04-assignment
+
+on:
+  push:
+    branches:
+      - work/qb2000-lot04-active
+    paths:
+      - reports/question_bank_2000_lot04_assignment_v01.py
+      - .github/workflows/qb2000-lot04-assignment.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build-assignment:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot04-active
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Generate Lot04 assignment
+        run: python -m reports.question_bank_2000_lot04_assignment_v01
+      - name: Commit assignment
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/question_bank_2000_lot04_assignment_v01.json
+          git diff --cached --check
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Generate Question Bank 2000 Lot04 assignment"
+          git push origin HEAD:work/qb2000-lot04-active
