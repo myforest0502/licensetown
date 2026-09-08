@@ -1,0 +1,94 @@
+{
+  "baseline_audit_end": 1737,
+  "current_formal_end": 1761,
+  "current_formal_count": 1761,
+  "formal_original_added_since_audit": 24,
+  "original_remaining": 233,
+  "past_exam_remaining": 6,
+  "total_remaining": 239,
+  "used": {
+    "category": {
+      "9": 6,
+      "13": 1,
+      "15": 3,
+      "16": 5,
+      "17": 5,
+      "18": 4
+    },
+    "task": {
+      "assessment_selection": 4,
+      "device_selection": 1,
+      "finding_interpretation": 10,
+      "intervention_selection": 4,
+      "safety_priority": 5
+    },
+    "level": {
+      "2": 4,
+      "3": 17,
+      "4": 3
+    },
+    "safety": {
+      "critical": 9,
+      "moderate": 10,
+      "none": 5
+    },
+    "node_slot": {
+      "singleton_second": 24
+    },
+    "strong_formations": 24,
+    "weak_or_unproven_formations": [],
+    "safety_augment": 19
+  },
+  "remaining_original_plan": {
+    "category": {
+      "1": 12,
+      "2": 16,
+      "3": 4,
+      "4": 7,
+      "5": 4,
+      "6": 8,
+      "7": 10,
+      "8": 25,
+      "9": 22,
+      "10": 7,
+      "11": 12,
+      "12": 10,
+      "13": 9,
+      "14": 10,
+      "15": 11,
+      "16": 15,
+      "17": 23,
+      "18": 28
+    },
+    "task": {
+      "assessment_selection": 43,
+      "device_selection": 8,
+      "fact_recall": 6,
+      "finding_interpretation": 69,
+      "functional_goal_decision": 20,
+      "intervention_selection": 42,
+      "prognosis_prediction": 16,
+      "safety_priority": 29
+    },
+    "level": {
+      "1": 6,
+      "2": 76,
+      "3": 99,
+      "4": 52
+    },
+    "node_slot": {
+      "singleton_second": 155,
+      "multi_reinforcement": 57,
+      "new_node": 21
+    },
+    "strong_formations": 200,
+    "safety_augment": 60
+  },
+  "production_lots": [
+    48,
+    48,
+    48,
+    48,
+    41
+  ]
+}
