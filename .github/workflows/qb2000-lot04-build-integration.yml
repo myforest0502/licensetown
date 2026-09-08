@@ -24,6 +24,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
+      - name: Install pytest
+        run: python -m pip install pytest
       - name: Generate Lot04 integrator and dry-run test from reviewed Lot03 implementation
         run: |
           python - <<'PY'
@@ -52,7 +54,6 @@ jobs:
             ('== 43','== 44'),('1858 + offset','1906 + offset'),
           ]
           for a,b in reps: t=t.replace(a,b)
-          # New-node drafts are not guaranteed to occupy final positions; assert mapping by draft order instead.
           old='assert [tags[f"Q{i}"]["knowledge_node_id"] for i in range(1950, 1954)] == [f"KN{i:04d}" for i in range(1552, 1556)]'
           new='''new_drafts=[(offset,row) for offset,row in enumerate(read(STAGING)["drafts"]) if row["slot_type"]=="new_node"]\n    assert len(new_drafts)==4\n    assert [tags[f"Q{1906+offset}"]["knowledge_node_id"] for offset,_ in new_drafts] == [f"KN{i:04d}" for i in range(1552,1556)]'''
           t=t.replace(old,new)
