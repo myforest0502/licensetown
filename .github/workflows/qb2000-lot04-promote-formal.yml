@@ -39,6 +39,7 @@ jobs:
             staging/question_bank_2000_lot04_v01.json \
             reports/question_bank_2000_lot04_validate.py \
             reports/question_bank_2000_lot04_targets_v01.json \
+            reports/question_bank_2000_remaining_allocation_v01.py \
             scripts/integrate_question_bank_2000_lot04.py \
             scripts/set_question_bank_2000_lot04_new_node_prerequisites.py \
             tests/test_question_bank_2000_lot04_integration.py
@@ -80,6 +81,11 @@ jobs:
           tags={x['id']:x for x in json.loads((bank/'question_tags.json').read_text(encoding='utf-8-sig'))}
           assert [tags[f'Q{i}']['knowledge_node_id'] for i in range(1950,1954)] == [f'KN{i:04d}' for i in range(1552,1556)]
           assert all(tags[f'Q{i}'].get('prerequisite_nodes') for i in range(1950,1954))
+          remaining=json.loads(Path('reports/question_bank_2000_remaining_allocation_v01.json').read_text(encoding='utf-8'))
+          assert remaining['current_formal_end']==1953
+          assert remaining['original_remaining']==41
+          assert remaining['past_exam_remaining']==6
+          assert remaining['total_remaining']==47
           PY
           python -m pytest -q tests/test_question_bank_2000_lot04_integration.py
           git diff --check
@@ -89,7 +95,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/question_bank reports/question_bank_2000_lot04_validate.py reports/question_bank_2000_lot04_targets_v01.json reports/question_tags_audit.txt reports/question_bank_2000_remaining_allocation_v01.json docs/question-bank-2000-remaining-allocation-v01.md staging/question_bank_2000_lot04_v01.json scripts/integrate_question_bank_2000_lot04.py scripts/set_question_bank_2000_lot04_new_node_prerequisites.py tests/test_question_bank_2000_lot04_integration.py
+          git add data/question_bank reports/question_bank_2000_lot04_validate.py reports/question_bank_2000_lot04_targets_v01.json reports/question_bank_2000_remaining_allocation_v01.py reports/question_tags_audit.txt reports/question_bank_2000_remaining_allocation_v01.json docs/question-bank-2000-remaining-allocation-v01.md staging/question_bank_2000_lot04_v01.json scripts/integrate_question_bank_2000_lot04.py scripts/set_question_bank_2000_lot04_new_node_prerequisites.py tests/test_question_bank_2000_lot04_integration.py
           git diff --cached --check
           git commit -m "Integrate Question Bank 2000 Lot04 Q1906-Q1953 [lot04-formal-integrated]"
           git push origin HEAD:qb2000-finish
