@@ -1,0 +1,506 @@
+[
+  {
+    "qid": "Q561",
+    "question": {
+      "id": "Q561",
+      "management_code": "Q561-B-9-P",
+      "category_large": "B",
+      "category_small": 9,
+      "source": "P",
+      "title": null,
+      "question_text": "中心性脊髄損傷について正しいのはどれか。2つ選べ。",
+      "choices": {
+        "1": "高齢者に多い。",
+        "2": "骨傷に伴って生じることが多い。",
+        "3": "頸椎の過屈曲によって発生することが多い。",
+        "4": "肛門括約筋の収縮が障害されることが多い。",
+        "5": "下肢より上肢機能が強く障害されることが多い。"
+      },
+      "exam": {
+        "exam_no": 52,
+        "session": "午前",
+        "question_no": 82
+      }
+    },
+    "answer": {
+      "id": "Q561",
+      "display_answer": "1・5",
+      "accepted_answer_sets": [
+        [
+          "1",
+          "5"
+        ]
+      ],
+      "answer_basis": "MHLW_official"
+    },
+    "explanation": {
+      "id": "Q561",
+      "explanation": "中心性脊髄損傷は高齢者の頸椎過伸展外傷などで生じやすく、脊髄中心部の障害により下肢より上肢の麻痺が強いことが特徴である。したがって1・5が正しい。",
+      "choice_explanations": {
+        "1": "○。頸椎症をもつ高齢者に生じやすい。",
+        "2": "骨傷を伴わない例も多い。",
+        "3": "典型的には過伸展機転で生じる。",
+        "4": "仙髄機能が温存されることも多く、肛門括約筋障害が必発ではない。",
+        "5": "○。上肢機能が下肢より強く障害されやすい。"
+      }
+    },
+    "tag": {
+      "id": "Q561",
+      "theme": "中心性脊髄損傷について正しいのはどれか",
+      "knowledge_node": "中心性脊髄損傷は高齢者の頸椎過伸展外傷などで生じやすく、脊髄中心部の障害により下肢より上肢の麻痺が強いことが特徴である",
+      "knowledge_node_id": "KN0553",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "secondary_ability": null,
+      "level": 1,
+      "safety": "none",
+      "prerequisite_nodes": [
+        "中心性脊髄損傷について正しいのはどれかの基本概念"
+      ],
+      "tag_version": "1.0",
+      "tag_status": "reviewed",
+      "source": "past_exam"
+    }
+  },
+  {
+    "qid": "Q566",
+    "question": {
+      "id": "Q566",
+      "management_code": "Q566-B-9-P",
+      "category_large": "B",
+      "category_small": 9,
+      "source": "P",
+      "title": null,
+      "question_text": "多発性硬化症について正しいのはどれか。",
+      "choices": {
+        "1": "女性よりも男性に多い。",
+        "2": "再発と寛解を繰り返す。",
+        "3": "発症は 50 歳以上が多い。",
+        "4": "後遺障害を残すことは稀である。",
+        "5": "白色人種に比べて黄色人種に多い。"
+      },
+      "exam": {
+        "exam_no": 52,
+        "session": "午前",
+        "question_no": 90
+      }
+    },
+    "answer": {
+      "id": "Q566",
+      "display_answer": "2",
+      "accepted_answer_sets": [
+        [
+          "2"
+        ]
+      ],
+      "answer_basis": "MHLW_official"
+    },
+    "explanation": {
+      "id": "Q566",
+      "explanation": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である。",
+      "choice_explanations": {
+        "1": "女性に多い疾患である。",
+        "2": "○。再発と寛解を反復する経過が代表的である。",
+        "3": "発症は若年成人に多い。",
+        "4": "後遺障害を残す例もあり稀ではない。",
+        "5": "欧米白色人種で頻度が高い。"
+      }
+    },
+    "tag": {
+      "id": "Q566",
+      "theme": "多発性硬化症について正しいのはどれか",
+      "knowledge_node": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である",
+      "knowledge_node_id": "KN0558",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "secondary_ability": null,
+      "level": 1,
+      "safety": "none",
+      "prerequisite_nodes": [
+        "多発性硬化症について正しいのはどれかの基本概念"
+      ],
+      "tag_version": "1.0",
+      "tag_status": "reviewed",
+      "source": "past_exam"
+    }
+  },
+  {
+    "qid": "Q582",
+    "question": {
+      "id": "Q582",
+      "management_code": "Q582-B-9-P",
+      "category_large": "B",
+      "category_small": 9,
+      "source": "P",
+      "title": null,
+      "question_text": "筋萎縮性側索硬化症で生じにくい症状はどれか。",
+      "choices": {
+        "1": "舌萎縮",
+        "2": "構音障害",
+        "3": "上下肢麻痺",
+        "4": "眼球運動障害",
+        "5": "摂食嚥下障害"
+      },
+      "exam": {
+        "exam_no": 52,
+        "session": "午後",
+        "question_no": 34
+      }
+    },
+    "answer": {
+      "id": "Q582",
+      "display_answer": "4",
+      "accepted_answer_sets": [
+        [
+          "4"
+        ]
+      ],
+      "answer_basis": "MHLW_official"
+    },
+    "explanation": {
+      "id": "Q582",
+      "explanation": "ALSでは上位・下位運動ニューロン障害により四肢麻痺、舌萎縮、構音・嚥下障害が進行するが、眼球運動は比較的末期まで保たれやすい。したがって4が生じにくい。",
+      "choice_explanations": {
+        "1": "舌萎縮は球症状としてみられる。",
+        "2": "構音障害は球麻痺でみられる。",
+        "3": "上下肢麻痺は代表的症状である。",
+        "4": "○。眼球運動は比較的保たれやすい。",
+        "5": "摂食嚥下障害は進行例でみられる。"
+      }
+    },
+    "tag": {
+      "id": "Q582",
+      "theme": "筋萎縮性側索硬化症で生じにくい症状はどれか",
+      "knowledge_node": "上位・下位運動ニューロン障害により四肢麻痺、舌萎縮、構音・嚥下障害が進行するが、眼球運動は比較的末期まで保たれやすい",
+      "knowledge_node_id": "KN0574",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "secondary_ability": null,
+      "level": 1,
+      "safety": "none",
+      "prerequisite_nodes": [
+        "筋萎縮性側索硬化症で生じにくい症状はどれかの基本概念"
+      ],
+      "tag_version": "1.0",
+      "tag_status": "reviewed",
+      "source": "past_exam"
+    }
+  },
+  {
+    "qid": "Q621",
+    "question": {
+      "id": "Q621",
+      "management_code": "Q621-B-9-P",
+      "category_large": "B",
+      "category_small": 9,
+      "source": "P",
+      "title": null,
+      "question_text": "脊髄損傷の自律神経過反射でみられるのはどれか。2つ選べ。",
+      "choices": {
+        "1": "頻脈",
+        "2": "高血圧",
+        "3": "低血糖",
+        "4": "顔面紅潮",
+        "5": "損傷レベルより下の発汗"
+      },
+      "exam": {
+        "exam_no": 52,
+        "session": "午後",
+        "question_no": 82
+      }
+    },
+    "answer": {
+      "id": "Q621",
+      "display_answer": "2・4",
+      "accepted_answer_sets": [
+        [
+          "2",
+          "4"
+        ]
+      ],
+      "answer_basis": "MHLW_official"
+    },
+    "explanation": {
+      "id": "Q621",
+      "explanation": "自律神経過反射では損傷高位以下の刺激により交感神経反射が暴走し、急激な高血圧を生じる。圧受容体反射で徐脈となり、損傷高位より上では顔面紅潮・発汗がみられる。",
+      "choice_explanations": {
+        "1": "頻脈より徐脈がみられやすい。",
+        "2": "○。著明な高血圧が特徴である。",
+        "3": "低血糖は特徴ではない。",
+        "4": "○。顔面紅潮は損傷高位より上でみられる。",
+        "5": "発汗は主に損傷高位より上にみられる。"
+      }
+    },
+    "tag": {
+      "id": "Q621",
+      "theme": "脊髄損傷の自律神経過反射でみられるのはどれか",
+      "knowledge_node": "脊髄損傷の自律神経過反射の典型所見",
+      "knowledge_node_id": "KN0613",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "secondary_ability": null,
+      "level": 1,
+      "safety": "moderate",
+      "prerequisite_nodes": [
+        "脊髄損傷の自律神経過反射でみられるのはどれかの基本概念"
+      ],
+      "tag_version": "1.0",
+      "tag_status": "reviewed",
+      "source": "past_exam"
+    }
+  },
+  {
+    "qid": "Q646",
+    "question": {
+      "id": "Q646",
+      "management_code": "Q646-B-9-P",
+      "category_large": "B",
+      "category_small": 9,
+      "source": "P",
+      "title": null,
+      "question_text": "脳卒中片麻痺患者に用いられる評価法で正しいのはどれか。2つ選べ。",
+      "choices": {
+        "1": "FMA〈Fugl-Meyer Assessment〉はADLの評価を含む。",
+        "2": "JSS〈Japan Stroke Scale〉は関節可動域の評価を含む。",
+        "3": "mRSは歩行速度の評価を含む。",
+        "4": "NIHSSは意識状態の評価を含む。",
+        "5": "SIASは非麻痺側機能の評価を含む。"
+      },
+      "exam": {
+        "exam_no": 54,
+        "session": "午前",
+        "question_no": 34
+      }
+    },
+    "answer": {
+      "id": "Q646",
+      "display_answer": "4・5",
+      "accepted_answer_sets": [
+        [
+          "4",
+          "5"
+        ]
+      ],
+      "answer_basis": "MHLW_official"
+    },
+    "explanation": {
+      "id": "Q646",
+      "explanation": "NIHSSには意識水準・質問・命令など意識状態の評価が含まれる。SIASには健側上下肢機能など非麻痺側機能の項目があるため4・5が正しい。",
+      "choice_explanations": {
+        "1": "FMAは運動・感覚等を評価するがADL尺度ではない。",
+        "2": "JSSに関節可動域評価は含まれない。",
+        "3": "mRSは障害度・生活自立度を段階評価し歩行速度を測定しない。",
+        "4": "○。NIHSSには意識状態の評価がある。",
+        "5": "○。SIASには非麻痺側機能の評価が含まれる。"
+      }
+    },
+    "tag": {
+      "id": "Q646",
+      "theme": "脳卒中片麻痺患者に用いられる評価法で正しいのはどれか",
+      "knowledge_node": "NIHSSには意識水準・質問・命令など意識状態の評価が含まれる",
+      "knowledge_node_id": "KN0638",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "secondary_ability": null,
+      "level": 1,
+      "safety": "none",
+      "prerequisite_nodes": [
+        "NIHSSには意識水準・質問・命令など意識状態の評価が含まれる。",
+        "SIASには健側上下肢機能など非麻痺側機能の項目があるため4・5が正しい。"
+      ],
+      "tag_version": "1.0",
+      "tag_status": "reviewed",
+      "source": "past_exam"
+    }
+  },
+  {
+    "qid": "Q695",
+    "question": {
+      "id": "Q695",
+      "management_code": "Q695-B-9-P",
+      "category_large": "B",
+      "category_small": 9,
+      "source": "P",
+      "title": null,
+      "question_text": "Parkinson病でみられないのはどれか。",
+      "choices": {
+        "1": "便秘",
+        "2": "運動失調",
+        "3": "動作緩慢",
+        "4": "静止時振戦",
+        "5": "レム睡眠行動障害"
+      },
+      "exam": {
+        "exam_no": 54,
+        "session": "午前",
+        "question_no": 90
+      }
+    },
+    "answer": {
+      "id": "Q695",
+      "display_answer": "2",
+      "accepted_answer_sets": [
+        [
+          "2"
+        ]
+      ],
+      "answer_basis": "MHLW_official"
+    },
+    "explanation": {
+      "id": "Q695",
+      "explanation": "Parkinson病では動作緩慢、安静時振戦、自律神経症状として便秘、前駆症状としてREM睡眠行動障害などがみられる。運動失調は小脳障害の代表であり2が「みられない」に該当する。",
+      "choice_explanations": {
+        "1": "便秘は自律神経症状として多い。",
+        "2": "○。運動失調はParkinson病の主要症候ではない。",
+        "3": "動作緩慢は主要運動症状である。",
+        "4": "安静時振戦は代表的である。",
+        "5": "REM睡眠行動障害を合併しやすい。"
+      }
+    },
+    "tag": {
+      "id": "Q695",
+      "theme": "Parkinson病でみられないのはどれか",
+      "knowledge_node": "動作緩慢、安静時振戦、自律神経症状として便秘、前駆症状としてREM睡眠行動障害などがみられる",
+      "knowledge_node_id": "KN0687",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "secondary_ability": null,
+      "level": 1,
+      "safety": "none",
+      "prerequisite_nodes": [
+        "Parkinson病では動作緩慢、安静時振戦、自律神経症状として便秘、前駆症状としてREM睡眠行動障害などがみられる。",
+        "運動失調はParkinson病の主要症候ではない。",
+        "運動失調は小脳障害の代表であり2が「みられない」に該当する。"
+      ],
+      "tag_version": "1.0",
+      "tag_status": "reviewed",
+      "source": "past_exam"
+    }
+  },
+  {
+    "qid": "Q789",
+    "question": {
+      "id": "Q789",
+      "management_code": "Q789-B-9-P",
+      "category_large": "B",
+      "category_small": 9,
+      "source": "P",
+      "title": null,
+      "question_text": "筋萎縮性側索硬化症で下位運動ニューロン障害の徴候はどれか。",
+      "choices": {
+        "1": "痙縮",
+        "2": "仮性球麻痺",
+        "3": "線維束性収縮",
+        "4": "腹壁反射消失",
+        "5": "アキレス腱反射亢進"
+      },
+      "exam": {
+        "exam_no": 55,
+        "session": "午前",
+        "question_no": 35
+      }
+    },
+    "answer": {
+      "id": "Q789",
+      "display_answer": "3",
+      "accepted_answer_sets": [
+        [
+          "3"
+        ]
+      ],
+      "answer_basis": "MHLW_official"
+    },
+    "explanation": {
+      "id": "Q789",
+      "explanation": "ALSの下位運動ニューロン障害では筋萎縮、筋力低下、線維束性収縮、腱反射低下などがみられる。したがって3が正しい。",
+      "choice_explanations": {
+        "1": "痙縮は上位運動ニューロン徴候である。",
+        "2": "仮性球麻痺は上位運動ニューロン障害である。",
+        "3": "○。線維束性収縮は下位運動ニューロン障害の徴候である。",
+        "4": "腹壁反射消失は錐体路障害でもみられる。",
+        "5": "アキレス腱反射亢進は上位運動ニューロン徴候である。"
+      }
+    },
+    "tag": {
+      "id": "Q789",
+      "theme": "筋萎縮性側索硬化症で下位運動ニューロン障害の徴候はどれか",
+      "knowledge_node": "筋萎縮、筋力低下、線維束性収縮、腱反射低下などがみられる",
+      "knowledge_node_id": "KN0781",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "secondary_ability": null,
+      "level": 1,
+      "safety": "none",
+      "prerequisite_nodes": [
+        "ALSの下位運動ニューロン障害では筋萎縮、筋力低下、線維束性収縮、腱反射低下などがみられる。",
+        "したがって3が正しい。"
+      ],
+      "tag_version": "1.0",
+      "tag_status": "reviewed",
+      "source": "past_exam"
+    }
+  },
+  {
+    "qid": "Q839",
+    "question": {
+      "id": "Q839",
+      "management_code": "Q839-B-9-P",
+      "category_large": "B",
+      "category_small": 9,
+      "source": "P",
+      "title": null,
+      "question_text": "てんかんで正しいのはどれか。",
+      "choices": {
+        "1": "遺伝素因はない。",
+        "2": "意識障害が必発する。",
+        "3": "高齢発症は稀である。",
+        "4": "病因は特発性と症候性に分けられる。",
+        "5": "我が国の患者は約10万人と推定されている。"
+      },
+      "exam": {
+        "exam_no": 55,
+        "session": "午前",
+        "question_no": 96
+      }
+    },
+    "answer": {
+      "id": "Q839",
+      "display_answer": "4",
+      "accepted_answer_sets": [
+        [
+          "4"
+        ]
+      ],
+      "answer_basis": "MHLW_official"
+    },
+    "explanation": {
+      "id": "Q839",
+      "explanation": "てんかんは病因により特発性と症候性などに分類され、意識障害を伴わない発作もある。高齢発症もみられるため4が正しい。",
+      "choice_explanations": {
+        "1": "遺伝素因が関与する型がある。",
+        "2": "意識障害は必発ではない。",
+        "3": "高齢発症も少なくない。",
+        "4": "○。病因分類として特発性・症候性がある。",
+        "5": "患者数は約100万人規模で10万人では少なすぎる。"
+      }
+    },
+    "tag": {
+      "id": "Q839",
+      "theme": "てんかんで正しいのはどれか",
+      "knowledge_node": "てんかんは病因により特発性と症候性などに分類され、意識障害を伴わない発作もある",
+      "knowledge_node_id": "KN0830",
+      "task": "fact_recall",
+      "primary_ability": "KNOW",
+      "secondary_ability": null,
+      "level": 1,
+      "safety": "none",
+      "prerequisite_nodes": [
+        "高齢発症もみられるため4が正しい。",
+        "てんかんは病因により特発性と症候性などに分類され、意識障害を伴わない発作もある。"
+      ],
+      "tag_version": "1.0",
+      "tag_status": "reviewed",
+      "source": "past_exam"
+    }
+  }
+]
