@@ -28,12 +28,15 @@ jobs:
           python -m reports.question_bank_2000_lot05_targets_v01
           python -m reports.question_bank_2000_lot05_assignment_v01
           python -m reports.question_bank_2000_lot05_c7_alternatives
+          python -m reports.question_bank_2000_lot05_semantic_review
           python - <<'PY'
           import json
           from collections import Counter
           from pathlib import Path
           t=json.loads(Path('reports/question_bank_2000_lot05_targets_v01.json').read_text(encoding='utf-8'))
           a=json.loads(Path('reports/question_bank_2000_lot05_assignment_v01.json').read_text(encoding='utf-8'))
+          rt=json.loads(Path('reports/question_bank_2000_lot05_targets_reviewed_v01.json').read_text(encoding='utf-8'))
+          ra=json.loads(Path('reports/question_bank_2000_lot05_assignment_reviewed_v01.json').read_text(encoding='utf-8'))
           c7=json.loads(Path('reports/question_bank_2000_lot05_c7_alternatives.json').read_text(encoding='utf-8'))
           assert t['formal_baseline']=='Q1-Q1953'
           assert t['required_total_questions']==41
@@ -41,20 +44,20 @@ jobs:
           assert t['required_new_nodes']==3
           assert len(t['existing_node_targets'])==38
           assert len({r['canonical_node_id'] for r in t['existing_node_targets']})==38
-          assert len(a['assignments'])==41
-          assert c7
-          assert Counter(x['proposed_task'] for x in a['assignments']) == Counter({k:int(v) for k,v in t['task_quota'].items()})
-          assert Counter(str(x['level']) for x in a['assignments']) == Counter({str(k):int(v) for k,v in t['level_quota'].items()})
+          assert len(a['assignments'])==len(ra['assignments'])==41
+          assert c7 and rt['review_overrides']['L05-C7-S01']=='KN0690'
+          assert Counter(x['proposed_task'] for x in ra['assignments']) == Counter({k:int(v) for k,v in t['task_quota'].items()})
+          assert Counter(str(x['level']) for x in ra['assignments']) == Counter({str(k):int(v) for k,v in t['level_quota'].items()})
           PY
           git diff --check
       - name: Commit Lot05 prep outputs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add reports/question_bank_2000_lot05_targets_v01.json reports/question_bank_2000_lot05_assignment_v01.json reports/question_bank_2000_lot05_c7_alternatives.json
+          git add reports/question_bank_2000_lot05_targets_v01.json reports/question_bank_2000_lot05_assignment_v01.json reports/question_bank_2000_lot05_c7_alternatives.json reports/question_bank_2000_lot05_targets_reviewed_v01.json reports/question_bank_2000_lot05_assignment_reviewed_v01.json
           if git diff --cached --quiet; then
             echo "No generated changes"
           else
-            git commit -m "Generate Question Bank 2000 Lot05 prep outputs"
+            git commit -m "Generate reviewed Question Bank 2000 Lot05 prep outputs"
             git push origin HEAD:work/qb2000-lot05-active
           fi
