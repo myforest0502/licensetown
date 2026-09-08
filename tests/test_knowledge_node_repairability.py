@@ -35,7 +35,7 @@ def test_all_1521_canonical_nodes_are_classified_and_counts_balance():
     # Later formally integrated lots may convert weak-only Nodes into strong alternatives,
     # so the exact weak count tracks the current formal bank rather than the old baseline.
     assert summary["strong_alt_question_available_node_count"] >= 160
-    assert summary["weak_alt_question_only_node_count"] == 35
+    assert summary["weak_alt_question_only_node_count"] == 28
 
 
 def test_multi_question_classification_uses_formal_evidence_not_question_count_only():
