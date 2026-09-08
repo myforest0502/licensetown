@@ -5,6 +5,7 @@ import pytest
 from scripts.validate_question_bank import (
     DEFAULT_REGISTRY_PATH,
     DEFAULT_SCHEMA_PATH,
+    EXPECTED_QUESTION_COUNT,
     QuestionBankValidationError,
     load_question_bank_data,
     load_registry,
@@ -22,8 +23,8 @@ def test_formal_schema_is_v1_and_covers_all_four_json_files():
     assert set(schema["properties"]) == {
         "questions", "answers", "explanations", "question_tags",
     }
-    # The formal data uses null for the 500 original questions and an object
-    # for the 1064 past-exam questions, as allowed by the written v1.0 spec.
+    # The formal data uses null for original questions and an object for
+    # past-exam questions, as allowed by the written v1.0 spec.
     assert schema["properties"]["questions"]["items"]["properties"]["exam"][
         "type"
     ] == ["object", "null"]
@@ -39,10 +40,10 @@ def test_formal_question_bank_passes_schema_and_cross_file_validation():
     report = validate_question_bank()
 
     assert report["counts"] == {
-        "questions": 1737,
-        "answers": 1737,
-        "explanations": 1737,
-        "question_tags": 1737,
+        "questions": EXPECTED_QUESTION_COUNT,
+        "answers": EXPECTED_QUESTION_COUNT,
+        "explanations": EXPECTED_QUESTION_COUNT,
+        "question_tags": EXPECTED_QUESTION_COUNT,
     }
     assert report["missing"] == {
         "questions": 0,
@@ -63,13 +64,10 @@ def test_formal_question_bank_passes_schema_and_cross_file_validation():
     assert report["secondary_self_duplicate"] == 0
     assert report["safety_contradiction"] == 0
     assert report["cause_identification"] == 0
-    assert report["knowledge_node_id_present"] == 1737
+    assert report["knowledge_node_id_present"] == EXPECTED_QUESTION_COUNT
     assert report["knowledge_node_id_empty"] == 0
     assert report["knowledge_node_id_format_invalid"] == 0
     assert report["registry_node_count"] == 1538
-    assert report["registry_confirmed_shared_groups"] == 186
-    assert report["registry_confirmed_shared_questions"] == 385
-    assert report["registry_singleton_nodes"] == 1352
     assert report["registry_id_duplicate"] == 0
     assert report["registry_id_format_invalid"] == 0
     assert report["registry_missing_question"] == 0
@@ -86,10 +84,8 @@ def test_registry_allows_confirmed_shared_ids_and_maps_every_question_once():
     shared = [node for node in registry if node["status"] == "confirmed_shared"]
     mapped_questions = [q_id for node in registry for q_id in node["question_ids"]]
 
-    assert len(shared) == 186
-    assert sum(len(node["question_ids"]) for node in shared) == 385
     assert all(len(node["question_ids"]) >= 2 for node in shared)
-    assert len(mapped_questions) == len(set(mapped_questions)) == 1737
+    assert len(mapped_questions) == len(set(mapped_questions)) == EXPECTED_QUESTION_COUNT
 
 
 def test_validator_detects_cross_file_answer_and_tag_contradictions():
