@@ -35,6 +35,11 @@ TASK_OVERRIDES={
  'L05-C15-S01':'finding_interpretation',
  'L05-C11-S01':'device_selection',
  'L05-C2-N01':'prognosis_prediction',
+ # A new anatomy Node should test anatomy/clinical interpretation rather than a
+ # forced functional-goal judgment. Down-syndrome mobility is a natural place for
+ # the corresponding functional-goal demand, so this pair preserves the quota.
+ 'L05-C1-N01':'finding_interpretation',
+ 'L05-C4-S01':'functional_goal_decision',
 }
 
 # Machine-selected C7 singleton was an exam-answer bookkeeping artifact rather than
