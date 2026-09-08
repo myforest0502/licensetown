@@ -7,6 +7,7 @@ os.environ.setdefault("CHANNEL_SECRET", "test-secret")
 
 import app as bot_app
 from question_bank import (
+    EXPECTED_QUESTION_COUNT,
     CATEGORY_GROUPS,
     CATEGORY_NAMES,
     get_category_group_names,
@@ -85,7 +86,7 @@ def test_small_category_still_keeps_thirty_question_study_flow():
 
 
 def test_formal_bank_has_all_questions_and_boundary_ids():
-    assert question_count() == 1737
+    assert question_count() == EXPECTED_QUESTION_COUNT
     assert get_question("Q1")["id"] == "Q1"
     assert get_answer("Q500")["id"] == "Q500"
     assert get_question("Q501")["id"] == "Q501"

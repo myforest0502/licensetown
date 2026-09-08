@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 import field_evidence
 import knowledge_node_state_transition as transition
 from field_evidence import build_field_evidence
-from question_bank import get_category_small, get_question_tag
+from question_bank import EXPECTED_QUESTION_COUNT, get_category_small, get_question_tag
 
 
 BASE = datetime(2026, 8, 30, tzinfo=timezone.utc)
@@ -33,7 +33,7 @@ def test_empty_user_returns_all_fields_and_formal_totals():
     assert report["status"] == "evidence_only"
     assert report["official_mastery_score"] is None
     assert report["field_count"] == len(report["fields"]) == 18
-    assert report["question_total"] == sum(x["total_question_count"] for x in report["fields"]) == 1737
+    assert report["question_total"] == sum(x["total_question_count"] for x in report["fields"]) == EXPECTED_QUESTION_COUNT
     assert report["canonical_node_total"] == 1508
     assert report["multi_field_node_count"] == 14
     assert report["canonical_node_membership_total"] > report["canonical_node_total"]

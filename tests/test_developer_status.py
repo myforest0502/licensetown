@@ -1,13 +1,17 @@
+import json
+
 import developer_status
 
 
-def test_formal_bank_status_matches_frozen_b12_data():
+def test_formal_bank_status_matches_manifest_and_saved_audit():
     status = developer_status.build_developer_system_status()
     bank = status["question_bank"]
-    assert bank["version"] == "2026-09-b12"
-    assert bank["question_count"] == 1737
-    assert bank["first_question_number"] == 1
-    assert bank["last_question_number"] == 1737
+    manifest = json.loads(developer_status.MANIFEST_PATH.read_text(encoding="utf-8-sig"))
+    assert bank["version"] == manifest["bank_version"]
+    assert bank["question_count"] == manifest["question_count"]
+    assert bank["first_question_number"] == manifest["first_question_number"]
+    assert bank["last_question_number"] == manifest["last_question_number"]
+    # Audit fields are the saved b12 snapshot, not a live recount of the bank.
     assert bank["records"] == 1737
     assert bank["errors"] == 0
     assert bank["status"] == "PASS"

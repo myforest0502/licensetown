@@ -19,11 +19,11 @@ from learning_engine import (
     summarize_initial_assessment,
     summarize_daily_session,
 )
-from question_bank import get_question_tag, get_quiz_question, question_count
+from question_bank import EXPECTED_QUESTION_COUNT, get_question_tag, get_quiz_question, question_count
 
 
 def test_all_formal_question_tags_load_and_match_ids():
-    assert question_count() == 1737
+    assert question_count() == EXPECTED_QUESTION_COUNT
     assert get_question_tag("Q1")["tag_status"] == "reviewed_sample"
     assert get_question_tag("Q1")["tag_version"] == "0.3"
     assert get_question_tag("Q200")["tag_status"] == "reviewed_sample"

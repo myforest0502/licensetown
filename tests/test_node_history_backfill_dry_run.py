@@ -6,6 +6,8 @@ import importlib.util
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+from question_bank import LAST_QUESTION_NUMBER
+
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "backfill_node_learning_history.py"
 SPEC = importlib.util.spec_from_file_location("node_backfill_dry_run", SCRIPT)
@@ -79,7 +81,7 @@ def test_normal_history_becomes_candidate_and_joins_formal_node():
 def test_missing_question_invalid_confidence_and_count_mismatches_are_reported():
     results = [
         {"selected_answers": ["A"], "is_correct": True, "confidence": 7},
-        result("Q1738", False, None),
+        result(f"Q{LAST_QUESTION_NUMBER + 1}", False, None),
     ]
     report, candidates = backfill.audit_learning_history(
         [event(results, answered=3, correct=2)], [], resolver

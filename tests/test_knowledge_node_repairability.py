@@ -1,3 +1,10 @@
+import json
+from collections import Counter
+from pathlib import Path
+
+from knowledge_node_canonical import canonicalize_knowledge_node_id
+from question_bank import EXPECTED_QUESTION_COUNT
+
 from knowledge_node_repairability import (
     SAME_QUESTION_ONLY,
     STRONG_ALT,
@@ -12,10 +19,20 @@ def test_all_1508_canonical_nodes_are_classified_and_counts_balance():
     records = build_repairability_audit()
     summary = summarize_repairability(records)
     assert summary["canonical_node_count"] == 1508
-    assert summary["singleton_node_count"] == 1305
-    assert summary["multi_question_node_count"] == 203
+    tags = json.loads(
+        (Path(__file__).parents[1] / "data/question_bank/question_tags.json").read_text(
+            encoding="utf-8-sig"
+        )
+    )
+    node_counts = Counter(canonicalize_knowledge_node_id(tag["knowledge_node_id"]) for tag in tags)
+    assert len(node_counts) == summary["canonical_node_count"]
+    assert sum(node_counts.values()) == EXPECTED_QUESTION_COUNT
+    assert {item["canonical_node_id"]: item["question_count"] for item in records} == node_counts
+    assert summary["singleton_node_count"] == sum(count == 1 for count in node_counts.values())
+    assert summary["multi_question_node_count"] == sum(count > 1 for count in node_counts.values())
     assert summary["singleton_node_count"] + summary["multi_question_node_count"] == 1508
-    assert summary["strong_alt_question_available_node_count"] == 149
+    # Batch01 adds 11 canonical nodes with differing task/ability evidence.
+    assert summary["strong_alt_question_available_node_count"] == 160
     assert summary["weak_alt_question_only_node_count"] == 54
 
 
