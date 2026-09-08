@@ -1,0 +1,202 @@
+[
+  {
+    "knowledge_node_id": "KN0690",
+    "label": "熱傷深度ではⅠ度は発赤のみ、浅達性Ⅱ度は湿潤・水疱で強い痛み、深達性Ⅱ度では知覚低下を伴うことがある",
+    "question_id": "Q698",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN0743",
+    "label": "Ⅰ型アレルギーはIgEを介する即時型過敏反応で、肥満細胞からヒスタミンなどが放出される",
+    "question_id": "Q751",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN0744",
+    "label": "副腎皮質ステロイドは炎症反応を抑える一方、線維芽細胞増殖やコラーゲン合成を抑制し創傷治癒を遅延させる",
+    "question_id": "Q752",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN0755",
+    "label": "急性灰白髄炎（ポリオ）はポリオウイルス感染で脊髄前角細胞を障害する",
+    "question_id": "Q763",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN0756",
+    "label": "下垂体腺腫が視交叉を圧迫すると、交叉する鼻側網膜線維が障害され両耳側半盲を生じる",
+    "question_id": "Q764",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN0820",
+    "label": "胃全摘後は食道と小腸を吻合するため胆汁・膵液の逆流による逆流性食道炎を起こしやすい",
+    "question_id": "Q829",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN0823",
+    "label": "MRSAは患者・医療者の手や環境表面を介する接触感染が中心",
+    "question_id": "Q832",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN0889",
+    "label": "筋細胞崩壊によりミオグロビンが血中・尿中へ流出し、尿中ミオグロビンが高値となる",
+    "question_id": "Q898",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN0890",
+    "label": "悪性腫瘍細胞は一般に核が大きく、核/細胞質比は大きくなる",
+    "question_id": "Q899",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN0891",
+    "label": "ステロイド長期投与では骨形成抑制・骨吸収亢進により続発性骨粗鬆症を生じやすい",
+    "question_id": "Q900",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN0892",
+    "label": "海綿状血管腫は良性血管性腫瘍・血管奇形として扱われる",
+    "question_id": "Q901",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN0931",
+    "label": "間質性肺炎が重篤な合併症で、とくに急速進行型は主要死因となる",
+    "question_id": "Q940",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN0954",
+    "label": "機能的イレウスは機械的閉塞がなく腸蠕動が低下する麻痺性イレウスなどで、長期臥床は原因となりうる",
+    "question_id": "Q963",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN0955",
+    "label": "記憶過程は記銘（符号化）、保持、想起からなる",
+    "question_id": "Q964",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN1026",
+    "label": "急性期の著明な血管透過性亢進や浮腫より、組織破壊・線維化・血管新生後の毛細血管退縮など修復性変化が目立つ",
+    "question_id": "Q1036",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN1028",
+    "label": "抗コリン作用では口渇、便秘、尿閉、せん妄などが起こり得る一方、唾液分泌は低下するため流涎は生じにくい",
+    "question_id": "Q1038",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN1035",
+    "label": "炎症と原因の組合せ",
+    "question_id": "Q1045",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN1083",
+    "label": "記憶と関係部位の組合せ",
+    "question_id": "Q1094",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN1114",
+    "label": "深達性Ⅱ度熱傷では真皮深層まで損傷し、神経終末も障害されるため痛覚が鈍麻することがある",
+    "question_id": "Q1125",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  },
+  {
+    "knowledge_node_id": "KN1146",
+    "label": "骨髄は造血細胞が常に盛んに増殖・分化しており、再生能力が非常に高い",
+    "question_id": "Q1159",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "level": 1,
+    "safety": "none",
+    "source": "past_exam"
+  }
+]
