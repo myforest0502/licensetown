@@ -1,0 +1,30 @@
+name: qb2000 lot01 chunk01 similarity once
+
+on:
+  push:
+    branches:
+      - analysis/qb2000-remaining-allocation-v01
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analysis/qb2000-remaining-allocation-v01
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Audit Chunk01 against formal bank
+        run: python -m reports.question_bank_2000_lot01_chunk01_similarity_audit
+      - name: Commit audit and remove one-shot workflow
+        run: |
+          rm .github/workflows/qb2000_lot01_chunk01_similarity_once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/question_bank_2000_lot01_chunk01_similarity_audit.json .github/workflows/qb2000_lot01_chunk01_similarity_once.yml
+          git commit -m "Record Lot01 Chunk01 formal similarity audit"
+          git push
