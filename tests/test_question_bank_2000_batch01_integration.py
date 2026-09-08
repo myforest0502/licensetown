@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+from question_bank import EXPECTED_QUESTION_COUNT, FIRST_QUESTION_NUMBER, LAST_QUESTION_NUMBER
 from reports.question_bank_2000_batch01_validate import (
     END_Q,
     START_Q,
@@ -18,28 +19,37 @@ def _read(name):
     return json.loads((BANK / name).read_text(encoding="utf-8-sig"))
 
 
-def test_batch01_is_fully_integrated_and_manifest_advanced():
+def test_batch01_is_fully_integrated_and_remains_a_formal_milestone():
     report = build_report()
     assert report["accepted_count"] == 12
     assert report["integrated_count"] == 12
     assert report["hard_errors"] == [], "\n" + "\n".join(report["hard_errors"])
 
     manifest = _read("bank_manifest.json")
-    assert manifest["bank_version"] == "2026-09-b13"
-    assert manifest["last_question_number"] == END_Q
-    assert manifest["question_count"] == END_Q
+    # Batch01 established Q1-Q1749 / b13. Later batches may advance the live
+    # manifest, but they must never move the bank backwards past this milestone.
+    assert manifest["last_question_number"] >= END_Q
+    assert manifest["question_count"] >= END_Q
+    assert manifest["last_question_number"] == LAST_QUESTION_NUMBER
+    assert manifest["question_count"] == EXPECTED_QUESTION_COUNT
 
 
-def test_batch01_four_formal_stores_are_contiguous_and_aligned():
+def test_batch01_four_formal_stores_keep_prefix_and_live_alignment():
     stores = [_read(name) for name in (
         "questions.json",
         "answers.json",
         "explanations.json",
         "question_tags.json",
     )]
-    expected_ids = [f"Q{number}" for number in range(1, END_Q + 1)]
+    expected_live_ids = [
+        f"Q{number}" for number in range(FIRST_QUESTION_NUMBER, LAST_QUESTION_NUMBER + 1)
+    ]
+    expected_batch01_prefix = [f"Q{number}" for number in range(1, END_Q + 1)]
     for store in stores:
-        assert [row["id"] for row in store] == expected_ids
+        ids = [row["id"] for row in store]
+        assert ids == expected_live_ids
+        assert ids[:END_Q] == expected_batch01_prefix
+        assert len(ids) == len(set(ids)) == EXPECTED_QUESTION_COUNT
 
 
 def test_batch01_formal_records_match_accepted_drafts_and_nodes():
@@ -90,4 +100,6 @@ def test_batch01_formal_records_match_accepted_drafts_and_nodes():
         assert tag["source"] == "original"
 
         assert node["status"] == "confirmed_shared"
-        assert node["question_ids"] == [ref_qid, qid]
+        # Later batches must not rewrite Batch01's established pair. Additional
+        # questions could only be appended deliberately in a future Node-strengthening lot.
+        assert node["question_ids"][:2] == [ref_qid, qid]
