@@ -1,0 +1,30 @@
+name: qb2000 lot01 chunk01 refsplit once
+
+on:
+  push:
+    branches:
+      - analysis/qb2000-remaining-allocation-v01
+
+permissions:
+  contents: write
+
+jobs:
+  split:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analysis/qb2000-remaining-allocation-v01
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Split Chunk01 reference packet
+        run: python reports/question_bank_2000_lot01_chunk01_reference_split.py
+      - name: Commit split refs and remove one-shot workflow
+        run: |
+          rm .github/workflows/qb2000_lot01_chunk01_refsplit_once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/question_bank_2000_lot01_chunk01_refs .github/workflows/qb2000_lot01_chunk01_refsplit_once.yml
+          git commit -m "Record Lot01 Chunk01 split formal references"
+          git push
