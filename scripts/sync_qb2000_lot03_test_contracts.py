@@ -30,6 +30,7 @@ def main() -> int:
 
     replace_exact("tests/test_knowledge_node_repairability.py", 'test_all_1516_canonical_nodes_are_classified_and_counts_balance', 'test_all_1521_canonical_nodes_are_classified_and_counts_balance')
     replace_exact("tests/test_knowledge_node_repairability.py", '== 1516', '== 1521')
+    replace_exact("tests/test_knowledge_node_repairability.py", 'assert summary["weak_alt_question_only_node_count"] == 35', 'assert summary["weak_alt_question_only_node_count"] == 28')
 
     replace_exact("tests/test_overall_progress_ui.py", '== 1516', '== 1521')
     replace_exact("tests/test_overall_progress_ui.py", '1 / 1516', '1 / 1521')
