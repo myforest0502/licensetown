@@ -5,6 +5,7 @@ on:
     branches: [work/qb2000-lot03-active]
     paths:
       - '.github/workflows/qb2000-lot03-integration.yml'
+      - 'scripts/set_question_bank_2000_lot03_new_node_prerequisites.py'
   workflow_dispatch:
 
 permissions:
@@ -48,6 +49,7 @@ jobs:
       - name: Integrate Q1858-Q1905 formally
         run: |
           python -m scripts.integrate_question_bank_2000_lot03
+          python -m scripts.set_question_bank_2000_lot03_new_node_prerequisites
           python -m scripts.generate_question_tags_audit
           python -m reports.question_bank_2000_remaining_allocation_v01
       - name: Validate formal bank and full suite
