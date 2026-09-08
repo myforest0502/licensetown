@@ -1,0 +1,64 @@
+name: qb2000-lot04-chunk-ci
+
+on:
+  push:
+    branches:
+      - work/qb2000-lot04-active
+    paths:
+      - staging/question_bank_2000_lot04_chunks_v01/**
+      - reports/question_bank_2000_lot04_chunk_validate.py
+      - reports/question_bank_2000_lot04_similarity_audit.py
+      - .github/workflows/qb2000-lot04-chunk-ci.yml
+
+permissions:
+  contents: write
+
+jobs:
+  validate-completed-chunks:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot04-active
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate completed Lot04 chunks and run similarity audits
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+
+          chunk_dir = Path('staging/question_bank_2000_lot04_chunks_v01')
+          audit_dir = Path('reports/question_bank_2000_lot04_similarity_audits')
+          completed = []
+          for path in sorted(chunk_dir.glob('chunk_*.json')):
+              payload = json.loads(path.read_text(encoding='utf-8-sig'))
+              if payload.get('status') != 'completed_chunk':
+                  continue
+              n = int(path.stem.split('_')[1])
+              completed.append(n)
+              subprocess.run(['python','-m','reports.question_bank_2000_lot04_chunk_validate',str(n)], check=True)
+              subprocess.run(['python','-m','reports.question_bank_2000_lot04_similarity_audit',str(n)], check=True)
+              audit = json.loads((audit_dir / f'chunk_{n:02d}.json').read_text(encoding='utf-8'))
+              if audit.get('exact_total', 0) != 0:
+                  raise SystemExit(f'chunk {n:02d}: exact duplicate detected')
+              if audit.get('hard_near_total', 0) != 0:
+                  raise SystemExit(f'chunk {n:02d}: hard-near duplicate detected')
+          if not completed:
+              print('No completed chunks yet; nothing to validate')
+          else:
+              print('validated completed chunks:', completed)
+          PY
+      - name: Commit similarity audit artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/question_bank_2000_lot04_similarity_audits 2>/dev/null || true
+          git diff --cached --check
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Audit Question Bank 2000 Lot04 completed chunks"
+          git push origin HEAD:work/qb2000-lot04-active
