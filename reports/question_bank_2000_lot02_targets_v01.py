@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 from collections import Counter, defaultdict
+from functools import lru_cache
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,9 +16,9 @@ FORMAL_BASELINE_END = 1809
 RECENT_EXCLUDE_AFTER = 1737
 EXCLUDE_NODE = "KN0779"
 
-# Lot02 category totals are 8/6/5/5/4/5/7/8. Four new-Node slots are
-# reserved in C8/C11/C12/C14, leaving 44 existing-Node targets. The split below
-# is quota-exact for 32 singleton-second + 12 multi-reinforcement + 4 new Nodes.
+# Category totals are fixed. The singleton/multi values are preferred splits, not
+# impossible hard assumptions: formal inventory can change after earlier lots. We
+# solve the actual split after reading Q1-Q1809 while preserving exactly 32/12/4.
 CATEGORY_SLOT = {
     8: {"singleton": 5, "multi": 2, "new": 1},
     9: {"singleton": 4, "multi": 2, "new": 0},
@@ -28,6 +29,7 @@ CATEGORY_SLOT = {
     17: {"singleton": 5, "multi": 2, "new": 0},
     18: {"singleton": 6, "multi": 2, "new": 0},
 }
+TARGET_MULTI_TOTAL = 12
 
 
 def read(name: str):
@@ -36,6 +38,76 @@ def read(name: str):
 
 def qnum(qid: str) -> int:
     return int(str(qid).removeprefix("Q"))
+
+
+def _solve_slot_split(inventory: dict) -> dict[int, dict[str, int]]:
+    """Find a feasible 32-singleton/12-multi split closest to the approved plan."""
+    categories = tuple(CATEGORY_SLOT)
+    bounds = {}
+    for category in categories:
+        planned = CATEGORY_SLOT[category]
+        existing_total = planned["singleton"] + planned["multi"]
+        singleton_available = len(inventory[category]["singleton"])
+        multi_available = len(inventory[category]["multi"])
+        min_multi = max(0, existing_total - singleton_available)
+        max_multi = min(existing_total, multi_available)
+        if min_multi > max_multi:
+            raise ValueError(
+                f"category {category} lacks total existing-Node inventory: "
+                f"need {existing_total}, singleton={singleton_available}, multi={multi_available}"
+            )
+        bounds[category] = (min_multi, max_multi)
+
+    @lru_cache(maxsize=None)
+    def solve(pos: int, remaining_multi: int):
+        if pos == len(categories):
+            return (0, ()) if remaining_multi == 0 else None
+        category = categories[pos]
+        preferred = CATEGORY_SLOT[category]["multi"]
+        lo, hi = bounds[category]
+        best = None
+        for multi in range(lo, hi + 1):
+            if multi > remaining_multi:
+                break
+            tail = solve(pos + 1, remaining_multi - multi)
+            if tail is None:
+                continue
+            # Penalize movement from the approved preferred split; deterministic
+            # tie-break favors the lower multi count in the earlier category.
+            score = -abs(multi - preferred) + tail[0]
+            candidate = (score, (multi,) + tail[1])
+            if best is None or candidate[0] > best[0] or (
+                candidate[0] == best[0] and candidate[1] < best[1]
+            ):
+                best = candidate
+        return best
+
+    solution = solve(0, TARGET_MULTI_TOTAL)
+    if solution is None:
+        detail = {
+            c: {
+                "existing_required": CATEGORY_SLOT[c]["singleton"] + CATEGORY_SLOT[c]["multi"],
+                "singleton_available": len(inventory[c]["singleton"]),
+                "multi_available": len(inventory[c]["multi"]),
+                "multi_bounds": bounds[c],
+            }
+            for c in categories
+        }
+        raise ValueError(f"no feasible Lot02 32/12 Node-slot allocation: {detail}")
+
+    actual = {}
+    for category, multi in zip(categories, solution[1]):
+        existing_total = CATEGORY_SLOT[category]["singleton"] + CATEGORY_SLOT[category]["multi"]
+        actual[category] = {
+            "singleton": existing_total - multi,
+            "multi": multi,
+            "new": CATEGORY_SLOT[category]["new"],
+        }
+    if sum(v["singleton"] for v in actual.values()) != 32:
+        raise ValueError(f"inventory-aware singleton total is not 32: {actual}")
+    if sum(v["multi"] for v in actual.values()) != 12:
+        raise ValueError(f"inventory-aware multi total is not 12: {actual}")
+    return actual
 
 
 def main() -> int:
@@ -74,10 +146,6 @@ def main() -> int:
     for node_id, qids in groups.items():
         if node_id == canonical(EXCLUDE_NODE):
             continue
-
-        # Do not immediately retarget calibration/Lot01 Nodes. The purpose of Lot02
-        # is to widen repair supply rather than pile another question onto Nodes that
-        # already received fresh supply after the Q1737 audit.
         if any(qnum(qid) > RECENT_EXCLUDE_AFTER for qid in qids):
             excluded_recent_nodes.add(node_id)
             continue
@@ -119,8 +187,7 @@ def main() -> int:
             )
             record["rank_score"] = list(score)
             record["selection_intent"] = (
-                "add a clinically distinct second demand; candidate must not repeat "
-                "the reference task/ability"
+                "add a clinically distinct second demand; candidate must not repeat the reference task/ability"
             )
             inventory[category]["singleton"].append((score, record))
         else:
@@ -134,38 +201,33 @@ def main() -> int:
             record["currently_weak_by_metadata"] = weak_multi
             inventory[category]["multi"].append((score, record))
 
+    actual_slot = _solve_slot_split(inventory)
     selected = []
     summary = {}
-    for category, quota in CATEGORY_SLOT.items():
+    for category, quota in actual_slot.items():
         summary[category] = {}
         for kind in ("singleton", "multi"):
             ranked = sorted(inventory[category][kind], key=lambda item: item[0], reverse=True)
             need = quota[kind]
-            if len(ranked) < need:
-                raise ValueError(
-                    f"category {category} lacks {kind} inventory: need {need}, have {len(ranked)}"
-                )
             picks = [record for _, record in ranked[:need]]
             for index, record in enumerate(picks, start=1):
                 row = dict(record)
-                row["slot_type"] = (
-                    "singleton_second" if kind == "singleton" else "multi_reinforcement"
-                )
+                row["slot_type"] = "singleton_second" if kind == "singleton" else "multi_reinforcement"
                 row["lot_target_id"] = f"L02-C{category}-{kind[:1].upper()}{index:02d}"
                 selected.append(row)
             summary[category][kind] = {"available": len(ranked), "selected": need}
         summary[category]["new_node_reserved"] = quota["new"]
+        summary[category]["preferred_split"] = CATEGORY_SLOT[category]
 
     if len(selected) != 44 or len({row["canonical_node_id"] for row in selected}) != 44:
         raise ValueError("Lot02 existing-Node selection must be 44 unique canonical Nodes")
     slot_counts = Counter(row["slot_type"] for row in selected)
-    expected_slots = Counter({"singleton_second": 32, "multi_reinforcement": 12})
-    if slot_counts != expected_slots:
+    if slot_counts != Counter({"singleton_second": 32, "multi_reinforcement": 12}):
         raise ValueError(f"unexpected slot counts: {slot_counts}")
 
     category_question_totals = {
         category: quota["singleton"] + quota["multi"] + quota["new"]
-        for category, quota in CATEGORY_SLOT.items()
+        for category, quota in actual_slot.items()
     }
     expected_category_totals = {8: 8, 9: 6, 11: 5, 12: 5, 14: 4, 16: 5, 17: 7, 18: 8}
     if category_question_totals != expected_category_totals:
@@ -176,11 +238,12 @@ def main() -> int:
         "formal_baseline": "Q1-Q1809",
         "scope": "structural_target_selection_only",
         "recent_node_exclusion_after_q": RECENT_EXCLUDE_AFTER,
+        "preferred_category_slot": CATEGORY_SLOT,
+        "actual_category_slot": actual_slot,
         "existing_node_targets": selected,
         "new_node_reservations": [
             {"category_small": category, "count": quota["new"], "node_id_allocated": False}
-            for category, quota in CATEGORY_SLOT.items()
-            if quota["new"]
+            for category, quota in actual_slot.items() if quota["new"]
         ],
         "inventory_summary": summary,
         "excluded_recent_node_count": len(excluded_recent_nodes),
@@ -193,6 +256,7 @@ def main() -> int:
             "No Q IDs are allocated by this target roster.",
             "No Knowledge Node registry write is performed.",
             "Nodes receiving calibration/Lot01 supply after Q1737 are not immediately retargeted.",
+            "Per-category singleton/multi split may rebalance only when formal inventory requires it; global 32/12 and category totals remain exact.",
             "Every singleton draft must differ from the reference in task or primary ability and semantic demand.",
             "Every multi-reinforcement draft intended as strong must add a demand not already present in that Node.",
             "A target may be replaced from the same category/slot inventory during medical/semantic review.",
@@ -200,19 +264,14 @@ def main() -> int:
     }
     out = ROOT / "reports" / "question_bank_2000_lot02_targets_v01.json"
     out.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(
-        json.dumps(
-            {
-                "selected": len(selected),
-                "slot_counts": dict(slot_counts),
-                "category_question_totals": category_question_totals,
-                "excluded_recent_node_count": len(excluded_recent_nodes),
-                "inventory_summary": summary,
-            },
-            ensure_ascii=False,
-            indent=2,
-        )
-    )
+    print(json.dumps({
+        "selected": len(selected),
+        "slot_counts": dict(slot_counts),
+        "actual_category_slot": actual_slot,
+        "category_question_totals": category_question_totals,
+        "excluded_recent_node_count": len(excluded_recent_nodes),
+        "inventory_summary": summary,
+    }, ensure_ascii=False, indent=2))
     return 0
 
 
