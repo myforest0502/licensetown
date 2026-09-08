@@ -13,7 +13,7 @@ from knowledge_node_relations import (
     validate_merge_candidates,
     validate_node_relations,
 )
-from question_bank import get_question_tag, question_count
+from question_bank import EXPECTED_QUESTION_COUNT, get_question_tag, question_count
 
 
 BANK_DIR = Path(__file__).parents[1] / "data" / "question_bank"
@@ -132,5 +132,5 @@ def test_invalid_merge_candidate_data_is_rejected(mutation):
 
 
 def test_existing_question_bank_loader_remains_compatible():
-    assert question_count() == 1737
+    assert question_count() == EXPECTED_QUESTION_COUNT
     assert get_question_tag("Q260")["knowledge_node_id"] == "KN0259"
