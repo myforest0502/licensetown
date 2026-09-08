@@ -1,0 +1,61 @@
+name: qb2000-lot02-formal-integrate
+
+on:
+  push:
+    branches: [work/qb2000-lot02-active]
+
+permissions:
+  contents: write
+
+# This workflow is intentionally push-triggered after its bootstrap commit.
+jobs:
+  integrate-and-commit:
+    if: ${{ !contains(github.event.head_commit.message, '[lot02-formal-integrated]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PYTHONPATH: .
+      OPENAI_API_KEY: test-key
+      CHANNEL_ACCESS_TOKEN: test-token
+      CHANNEL_SECRET: test-secret
+      DATABASE_URL: ""
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot02-active
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest
+      - name: Rebuild and seal authoritative Lot02 staging
+        run: |
+          python -m reports.question_bank_2000_lot02_targets_v01
+          python -m reports.question_bank_2000_lot02_chunks merge
+          python -m reports.question_bank_2000_lot02_seal
+          python -m reports.question_bank_2000_lot02_validate
+      - name: Integrate Q1810-Q1857 formally
+        run: |
+          python -m scripts.integrate_question_bank_2000_lot02
+          python -m scripts.generate_question_tags_audit
+      - name: Validate formal integration and runtime strong pairs
+        run: |
+          python -m pytest -q tests/test_question_bank_2000_lot02_integration.py
+          python -m pytest -q
+          git diff --check
+      - name: Commit formal Lot02 integration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git status --short
+          git add data/question_bank staging/question_bank_2000_lot02_v01.json reports/question_bank_2000_lot02_targets_v01.json
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "No integration changes to commit"
+            exit 0
+          fi
+          git commit -m "Integrate Question Bank 2000 Lot02 Q1810-Q1857 [lot02-formal-integrated]"
+          git push origin HEAD:work/qb2000-lot02-active

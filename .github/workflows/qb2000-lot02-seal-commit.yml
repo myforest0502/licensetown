@@ -1,0 +1,48 @@
+name: qb2000-lot02-seal-commit
+
+on:
+  push:
+    branches: [work/qb2000-lot02-active]
+
+permissions:
+  contents: write
+
+jobs:
+  seal-and-commit:
+    if: ${{ !contains(github.event.head_commit.message, '[lot02-sealed]') && !contains(github.event.head_commit.message, '[lot02-labels-synced]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/qb2000-lot02-active
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Rebuild authoritative target roster
+        run: python -m reports.question_bank_2000_lot02_targets_v01
+      - name: Merge, validate, seal, validate
+        run: |
+          python -m reports.question_bank_2000_lot02_chunks merge
+          python - <<'PY'
+          from reports.question_bank_2000_lot02_validate import build_report
+          report = build_report(require_seals=False)
+          print(report)
+          if report['hard_errors'] or report['warnings']:
+              raise SystemExit(1)
+          PY
+          python -m reports.question_bank_2000_lot02_seal
+          python -m reports.question_bank_2000_lot02_validate
+      - name: Commit sealed staging and authoritative roster
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/question_bank_2000_lot02_targets_v01.json staging/question_bank_2000_lot02_v01.json
+          if git diff --cached --quiet; then
+            echo 'Sealed artifacts already committed.'
+            exit 0
+          fi
+          git commit -m 'Seal Question Bank 2000 Lot02 [lot02-sealed]'
+          git push origin HEAD:work/qb2000-lot02-active

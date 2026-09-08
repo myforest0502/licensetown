@@ -15,10 +15,10 @@ from knowledge_node_repairability import (
 )
 
 
-def test_all_1512_canonical_nodes_are_classified_and_counts_balance():
+def test_all_1516_canonical_nodes_are_classified_and_counts_balance():
     records = build_repairability_audit()
     summary = summarize_repairability(records)
-    assert summary["canonical_node_count"] == 1512
+    assert summary["canonical_node_count"] == 1516
     tags = json.loads(
         (Path(__file__).parents[1] / "data/question_bank/question_tags.json").read_text(
             encoding="utf-8-sig"
@@ -30,11 +30,12 @@ def test_all_1512_canonical_nodes_are_classified_and_counts_balance():
     assert {item["canonical_node_id"]: item["question_count"] for item in records} == node_counts
     assert summary["singleton_node_count"] == sum(count == 1 for count in node_counts.values())
     assert summary["multi_question_node_count"] == sum(count > 1 for count in node_counts.values())
-    assert summary["singleton_node_count"] + summary["multi_question_node_count"] == 1512
+    assert summary["singleton_node_count"] + summary["multi_question_node_count"] == 1516
     # The formal bank must never regress below the reviewed Batch01 strong-supply baseline.
-    # Batch-specific integration tests own the exact delta for later growth.
+    # Later formally integrated lots may convert weak-only Nodes into strong alternatives,
+    # so the exact weak count tracks the current formal bank rather than the old baseline.
     assert summary["strong_alt_question_available_node_count"] >= 160
-    assert summary["weak_alt_question_only_node_count"] == 44
+    assert summary["weak_alt_question_only_node_count"] == 35
 
 
 def test_multi_question_classification_uses_formal_evidence_not_question_count_only():

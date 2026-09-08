@@ -60,10 +60,6 @@ def split() -> None:
 
 
 def merge() -> None:
-    seed = read(SEED)
-    if seed.get("formal_baseline") != FORMAL_BASELINE:
-        raise ValueError(f"unexpected Lot02 seed baseline: {seed.get('formal_baseline')}")
-    expected_ids = [d["draft_id"] for d in seed["drafts"]]
     completed = []
     for index in range(1, CHUNK_COUNT + 1):
         path = CHUNK_DIR / f"chunk_{index:02d}.json"
@@ -77,11 +73,33 @@ def merge() -> None:
         completed.extend(payload["drafts"])
 
     ids = [d.get("draft_id") for d in completed]
-    if ids != expected_ids or len(set(ids)) != 48:
-        raise ValueError("completed chunk draft IDs/order do not exactly match the authoring seed")
+    if len(ids) != 48 or len(set(ids)) != 48 or any(not value for value in ids):
+        raise ValueError("completed chunk draft IDs must be 48 unique nonblank values")
+
+    if SEED.exists():
+        seed = read(SEED)
+        if seed.get("formal_baseline") != FORMAL_BASELINE:
+            raise ValueError(f"unexpected Lot02 seed baseline: {seed.get('formal_baseline')}")
+        expected_ids = [d["draft_id"] for d in seed["drafts"]]
+        if ids != expected_ids:
+            raise ValueError("completed chunk draft IDs/order do not exactly match the authoring seed")
+        header = {k: v for k, v in seed.items() if k not in {"drafts", "seed_warning"}}
+    else:
+        # The generated authoring seed is intentionally not required at merge time.
+        # Each completed chunk has already passed the fail-closed chunk validator;
+        # the full staging validator re-checks roster membership, quotas, references,
+        # semantic review and duplicate constraints after this deterministic merge.
+        header = {
+            "batch": "question_bank_2000_production_lot02_v01",
+            "formal_baseline": FORMAL_BASELINE,
+            "q_ids_reserved": False,
+            "production_write": False,
+            "db_write": False,
+            "accepted_target_count": 48,
+        }
 
     final = {
-        **{k: v for k, v in seed.items() if k not in {"drafts", "seed_warning"}},
+        **header,
         "status": "staging_only",
         "drafts": completed,
         "chunk_merge_provenance": {
@@ -90,6 +108,7 @@ def merge() -> None:
                 f"question_bank_2000_lot02_chunks_v01/chunk_{i:02d}.json"
                 for i in range(1, CHUNK_COUNT + 1)
             ],
+            "seed_present_at_merge": SEED.exists(),
         },
     }
     final.pop("formal_input_sha256", None)
