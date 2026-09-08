@@ -19,9 +19,9 @@ jobs:
         with:
           python-version: '3.13'
       - name: Apply Chunk01 authoring
-        run: python reports/question_bank_2000_lot01_chunk01_apply.py
+        run: python -m reports.question_bank_2000_lot01_chunk01_apply
       - name: Validate completed Chunk01
-        run: python reports/question_bank_2000_lot01_chunk_validate.py 1
+        run: python -m reports.question_bank_2000_lot01_chunk_validate 1
       - name: Commit authored chunk and remove one-shot helpers
         run: |
           rm reports/question_bank_2000_lot01_chunk01_apply.py
