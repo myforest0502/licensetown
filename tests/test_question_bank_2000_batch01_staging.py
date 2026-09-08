@@ -10,12 +10,19 @@ def test_batch01_staging_matches_current_formal_bank():
 def test_batch01_changes_task_or_primary_ability_from_reference():
     report = build_report()
     same_demand = [
-        row["draft_id"]
+        row
         for row in report["rows"]
         if row["draft_task"] == row["reference_task"]
         and row["draft_primary_ability"] == row["reference_primary_ability"]
     ]
+    details = "\n\n".join(
+        f"{row['draft_id']} / {row['reference_qid']} / "
+        f"{row['reference_task']} / {row['reference_primary_ability']}\n"
+        f"REF: {row['reference_question_text']}\n"
+        f"NEW: {row['draft_question_text']}"
+        for row in same_demand
+    )
     assert same_demand == [], (
-        "Metadata-level same-demand candidates need content review before STRONG intent: "
-        + ", ".join(same_demand)
+        "Metadata-level same-demand candidates need semantic review before STRONG intent:\n"
+        + details
     )
