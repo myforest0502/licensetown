@@ -1,0 +1,86 @@
+{
+  "lot": 4,
+  "formal_baseline": "Q1-Q1905",
+  "planned_formal_range": "Q1906-Q1953",
+  "question_count": 48,
+  "source": "original",
+  "remaining_before_lot": {
+    "original": 89,
+    "past_exam": 6,
+    "total": 95
+  },
+  "category_quota": {
+    "1": 4,
+    "2": 5,
+    "3": 2,
+    "4": 2,
+    "5": 2,
+    "6": 3,
+    "7": 3,
+    "8": 6,
+    "9": 2,
+    "10": 2,
+    "11": 3,
+    "12": 2,
+    "13": 3,
+    "14": 2,
+    "15": 4,
+    "16": 0,
+    "17": 1,
+    "18": 2
+  },
+  "node_slot_target": {
+    "singleton_second": 27,
+    "multi_reinforcement": 17,
+    "new_node": 4
+  },
+  "preferred_category_slot": {
+    "1": {"singleton": 2, "multi": 1, "new": 1},
+    "2": {"singleton": 3, "multi": 1, "new": 1},
+    "3": {"singleton": 1, "multi": 1, "new": 0},
+    "4": {"singleton": 1, "multi": 1, "new": 0},
+    "5": {"singleton": 1, "multi": 1, "new": 0},
+    "6": {"singleton": 2, "multi": 1, "new": 0},
+    "7": {"singleton": 2, "multi": 1, "new": 0},
+    "8": {"singleton": 3, "multi": 2, "new": 1},
+    "9": {"singleton": 1, "multi": 1, "new": 0},
+    "10": {"singleton": 1, "multi": 1, "new": 0},
+    "11": {"singleton": 2, "multi": 1, "new": 0},
+    "12": {"singleton": 1, "multi": 1, "new": 0},
+    "13": {"singleton": 2, "multi": 1, "new": 0},
+    "14": {"singleton": 1, "multi": 1, "new": 0},
+    "15": {"singleton": 2, "multi": 1, "new": 1},
+    "17": {"singleton": 1, "multi": 0, "new": 0},
+    "18": {"singleton": 1, "multi": 1, "new": 0}
+  },
+  "task_quota": {
+    "assessment_selection": 9,
+    "device_selection": 2,
+    "fact_recall": 2,
+    "finding_interpretation": 14,
+    "functional_goal_decision": 4,
+    "intervention_selection": 8,
+    "prognosis_prediction": 3,
+    "safety_priority": 6
+  },
+  "level_quota": {
+    "1": 2,
+    "2": 16,
+    "3": 20,
+    "4": 10
+  },
+  "safety_augment_target": 12,
+  "minimum_structural_strong_formations": 37,
+  "remaining_after_lot_if_integrated": {
+    "original": 41,
+    "past_exam": 6,
+    "total": 47
+  },
+  "notes": [
+    "Category quota is the largest-remainder allocation of 48 questions across the live 89-original remaining plan after Lot03.",
+    "Node-slot targets are proportional to the remaining 50 singleton / 31 multi / 8 new allocation and sum to 48.",
+    "Task and level quotas are proportional planning targets and must be revalidated against semantic quality before sealing.",
+    "No formal Q IDs or Knowledge Node IDs are allocated by this plan file.",
+    "No DB, Render, LINE production, Phase10/11, main, or public-site changes are permitted in Lot04 authoring."
+  ]
+}
