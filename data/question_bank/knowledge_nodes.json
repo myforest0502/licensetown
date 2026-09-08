@@ -1188,9 +1188,10 @@
   {
     "knowledge_node_id": "KN0117",
     "label": "歩行障害、認知機能低下、排尿障害の組合せから正常圧水頭症が最も考えられるを識別する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q117"
+      "Q117",
+      "Q1750"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2437,9 +2438,10 @@
   {
     "knowledge_node_id": "KN0241",
     "label": "注視方向性眼振から中枢性前庭障害を疑う",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q242"
+      "Q242",
+      "Q1753"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2906,9 +2908,10 @@
   {
     "knowledge_node_id": "KN0287",
     "label": "安定した踵部黒色痂皮の除圧・保護と感染観察",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q289"
+      "Q289",
+      "Q1754"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3311,9 +3314,10 @@
   {
     "knowledge_node_id": "KN0327",
     "label": "他動手指伸展痛を伴う急性コンパートメント症候群の識別",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q329"
+      "Q329",
+      "Q1760"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3684,9 +3688,10 @@
   {
     "knowledge_node_id": "KN0364",
     "label": "呼気筋力低下時の機械的咳介助による排痰支援",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q369"
+      "Q369",
+      "Q1756"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3734,9 +3739,10 @@
   {
     "knowledge_node_id": "KN0369",
     "label": "腹臥位で圧迫を受けやすい顔面・胸郭・骨盤・膝部の褥瘡予防",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q374"
+      "Q374",
+      "Q1759"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3827,9 +3833,10 @@
   {
     "knowledge_node_id": "KN0378",
     "label": "MMT grade 2の判定",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q383"
+      "Q383",
+      "Q1758"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4132,9 +4139,10 @@
   {
     "knowledge_node_id": "KN0408",
     "label": "車椅子後輪車軸前方移動による操作性向上と後方転倒リスク増加",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q415"
+      "Q415",
+      "Q1755"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4284,9 +4292,10 @@
   {
     "knowledge_node_id": "KN0423",
     "label": "連続流型LVADでは拍動が弱く、末梢動脈の触診や通常の自動血圧計だけでは循環状態を正確に把握しにくいを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q431"
+      "Q431",
+      "Q1757"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5823,9 +5832,10 @@
   {
     "knowledge_node_id": "KN0575",
     "label": "neurapraxiaは軸索の連続性が保たれた一過性の伝導ブロックで、Waller変性を伴わず回復が良好である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q583"
+      "Q583",
+      "Q1751"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6472,9 +6482,10 @@
   {
     "knowledge_node_id": "KN0639",
     "label": "UPDRSは精神・認知・気分、ADL、運動機能、治療合併症などを包括的に評価し、姿勢・歩行・ジスキネジアも含む",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q647"
+      "Q647",
+      "Q1752"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15532,9 +15543,10 @@
   {
     "knowledge_node_id": "KN1533",
     "label": "手舟状骨は血流が乏しい部位があり偽関節を生じやすい",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1559"
+      "Q1559",
+      "Q1761"
     ],
     "aliases": [],
     "successor_ids": []

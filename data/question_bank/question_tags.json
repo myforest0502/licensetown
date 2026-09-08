@@ -32390,5 +32390,229 @@
     "tag_version": "1.0",
     "tag_status": "reviewed",
     "source": "original"
+  },
+  {
+    "id": "Q1750",
+    "theme": "髄液排除前後の歩行評価計画",
+    "knowledge_node": "歩行障害、認知機能低下、排尿障害の組合せから正常圧水頭症が最も考えられるを識別する",
+    "knowledge_node_id": "KN0117",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "歩行障害",
+      "認知",
+      "尿失禁"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1751",
+    "theme": "末梢神経損傷後の電気生理所見",
+    "knowledge_node": "neurapraxiaは軸索の連続性が保たれた一過性の伝導ブロックで、Waller変性を伴わず回復が良好である",
+    "knowledge_node_id": "KN0575",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "末梢神経損傷で予後が最も良いのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1752",
+    "theme": "Parkinson病評価の条件統一",
+    "knowledge_node": "UPDRSは精神・認知・気分、ADL、運動機能、治療合併症などを包括的に評価し、姿勢・歩行・ジスキネジアも含む",
+    "knowledge_node_id": "KN0639",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "一方、感覚を独立した主要評価項目とはしない。",
+      "UPDRSは精神・認知・気分、ADL、運動機能、治療合併症などを包括的に評価し、姿勢・歩行・ジスキネジアも含む。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1753",
+    "theme": "持続性めまいの受診優先判断",
+    "knowledge_node": "注視方向性眼振から中枢性前庭障害を疑う",
+    "knowledge_node_id": "KN0241",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "類題では「方向が変わる・垂直性・注視で抑制されない」を中枢性の警告所見として整理する。",
+      "注視方向によって急速相の向きが変わる方向交代性の注視眼振は、注視保持機構の障害を示し、中枢性病変を疑う所見である。",
+      "注視方向で眼振方向が変わる所見は中枢性を疑う。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1754",
+    "theme": "踵部痂皮の経時変化",
+    "knowledge_node": "安定した踵部黒色痂皮の除圧・保護と感染観察",
+    "knowledge_node_id": "KN0287",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "感染徴候のない踵の安定した乾燥痂皮は生体の被覆として機能し得るため、原則として除去せず除圧・保護・観察を行う。",
+      "発赤、浮腫、排膿など不安定化や感染の有無を継続評価する。",
+      "除圧と感染徴候の監視が基本である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1755",
+    "theme": "車軸調整後の段階的導入",
+    "knowledge_node": "車椅子後輪車軸前方移動による操作性向上と後方転倒リスク増加",
+    "knowledge_node_id": "KN0408",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "一方で重心が後方支持基底面の限界に近づくため、後方転倒に対する安定性は低下する。",
+      "手動車椅子で後輪車軸を前方へ移すと、重心が駆動輪に近づき前輪荷重が減るため、駆動やキャスター上げは行いやすくなる。",
+      "━━━━━━━━━━━━━━━━━━━━━━"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1756",
+    "theme": "咳介助効果を捉える測定",
+    "knowledge_node": "呼気筋力低下時の機械的咳介助による排痰支援",
+    "knowledge_node_id": "KN0364",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "神経筋疾患では吸気量と呼気筋力の低下により有効な咳流速を得られない。",
+      "機械的咳嗽補助は陽圧吸気から陰圧呼気へ切り替え、咳に必要な肺気量と呼気流速を補う。",
+      "徒手的咳介助や吸気量増大法を組み合わせることもある。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1757",
+    "theme": "連続流型LVADの脈拍触知不能",
+    "knowledge_node": "連続流型LVADでは拍動が弱く、末梢動脈の触診や通常の自動血圧計だけでは循環状態を正確に把握しにくいを評価する",
+    "knowledge_node_id": "KN0423",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "連続流型LVADでは末梢脈拍が触知しにくいこと",
+      "血圧・平均動脈圧をドプラ法などで評価する方法"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1758",
+    "theme": "肩外転MMTの次の検査条件",
+    "knowledge_node": "MMT grade 2の判定",
+    "knowledge_node_id": "KN0378",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "重力除去位で全可動域を動かせるため段階2である。",
+      "徒手筋力検査の段階2〈Poor〉は、重力の影響を除いた肢位で全可動域を動かせる状態である。",
+      "段階3は抗重力位で全可動域を動かせることが条件となる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1759",
+    "theme": "腹臥位療法中の除圧調整",
+    "knowledge_node": "腹臥位で圧迫を受けやすい顔面・胸郭・骨盤・膝部の褥瘡予防",
+    "knowledge_node_id": "KN0369",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "チューブやカテーテルの圧迫も含め、定期的な除圧、頭部・上肢位置の変更、皮膚評価を行う。",
+      "腹臥位では顔面・頬部、耳、肩前面、胸郭前面、腸骨稜や上前腸骨棘、膝蓋部など前面の突出部に圧が集中しやすい。",
+      "循環や呼吸状態を損なわない範囲で多職種と安全に体位を調整する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1760",
+    "theme": "脈拍がある外傷後の強い疼痛",
+    "knowledge_node": "他動手指伸展痛を伴う急性コンパートメント症候群の識別",
+    "knowledge_node_id": "KN0327",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "骨折後の増悪する疼痛と筋の他動伸張痛は、区画内圧上昇を示す重要所見である。",
+      "骨折後に増強する強い疼痛と、障害区画内の筋を伸張する他動的手指伸展での疼痛増悪は、急性コンパートメント症候群の早期所見である。",
+      "外傷後の「不釣合いな痛み」を見逃さない。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1761",
+    "theme": "舟状骨骨折後の負荷再開判断",
+    "knowledge_node": "手舟状骨は血流が乏しい部位があり偽関節を生じやすい",
+    "knowledge_node_id": "KN1533",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "手舟状骨は血流が乏しい部位があり偽関節を生じやすい。",
+      "橈骨遠位は癒合しやすい。",
+      "中手骨骨幹部は比較的癒合良好。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
   }
 ]
