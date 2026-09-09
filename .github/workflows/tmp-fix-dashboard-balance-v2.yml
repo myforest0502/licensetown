@@ -1,0 +1,64 @@
+name: tmp-fix-dashboard-balance-v2
+on:
+  push:
+    branches:
+      - fix/dashboard-balance-v01
+permissions:
+  contents: write
+jobs:
+  patch-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/dashboard-balance-v01
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Apply layout refinement
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          js=Path('static/goukaku/dashboard-layout-v05.js'); s=js.read_text(encoding='utf-8')
+          old="""  if (footer) {\n    footer.classList.add('dashboard-footer-compact');\n    const leftStack = footer.querySelector('.dashboard-footer-left');\n    if (leftStack) {\n      Array.from(leftStack.children).forEach((card) => footer.appendChild(card));\n      leftStack.remove();\n    }\n    if (weeklyCard && weeklyCard.parentNode === footer) weeklyCard.remove();\n  }\n"""
+          new="""  if (footer) {\n    // Keep the closing cards on the same left/right rails as the story above.\n    const footerLeft = footer.querySelector('.dashboard-footer-left');\n    const footprintCard = footerLeft?.querySelector('.footprint-card');\n    const nextCheckCard = footerLeft?.querySelector('.next-check-card');\n    if (footprintCard) left.appendChild(footprintCard);\n    if (nextCheckCard) guidanceStack.appendChild(nextCheckCard);\n    footer.remove();\n  }\n"""
+          if old not in s: raise SystemExit('footer block missing')
+          js.write_text(s.replace(old,new,1),encoding='utf-8')
+
+          css=Path('static/goukaku/dashboard-layout-v07.css'); c=css.read_text(encoding='utf-8')
+          add='.dashboard-story-left>.footprint-card,.dashboard-story-right .next-check-card{margin:0!important;width:100%;min-width:0;align-self:start}\n'
+          if add not in c: css.write_text(c.rstrip()+'\n'+add,encoding='utf-8')
+
+          base=Path('templates/goukaku/base.html'); b=base.read_text(encoding='utf-8')
+          b=b.replace("filename='goukaku/dashboard-layout-v05.js', v='20260909-v08'","filename='goukaku/dashboard-layout-v05.js', v='20260909-v09'",1)
+          b=b.replace("filename='goukaku/dashboard-layout-v07.css', v='20260907-v07'","filename='goukaku/dashboard-layout-v07.css', v='20260909-v08'",1)
+          base.write_text(b,encoding='utf-8')
+
+          oldtest=Path('tests/test_dashboard_blank_space_layout.py'); t=oldtest.read_text(encoding='utf-8')
+          t=t.replace("dashboard-layout-v05.js', v='20260909-v08'","dashboard-layout-v05.js', v='20260909-v09'")
+          oldtest.write_text(t,encoding='utf-8')
+
+          Path('tests/test_dashboard_balance_layout.py').write_text('''from pathlib import Path\n\ndef test_closing_cards_use_story_columns():\n    js=Path("static/goukaku/dashboard-layout-v05.js").read_text(encoding="utf-8")\n    assert "if (footprintCard) left.appendChild(footprintCard);" in js\n    assert "if (nextCheckCard) guidanceStack.appendChild(nextCheckCard);" in js\n    assert "footer.remove();" in js\n\ndef test_closing_card_rails_and_cache_tokens():\n    css=Path("static/goukaku/dashboard-layout-v07.css").read_text(encoding="utf-8")\n    base=Path("templates/goukaku/base.html").read_text(encoding="utf-8")\n    assert ".dashboard-story-left>.footprint-card,.dashboard-story-right .next-check-card" in css\n    assert "dashboard-layout-v05.js', v='20260909-v09'" in base\n    assert "dashboard-layout-v07.css', v='20260909-v08'" in base\n''',encoding='utf-8')
+
+          state=Path('docs/CURRENT_STATE.md'); cs=state.read_text(encoding='utf-8')
+          old_status='- Status: **real Production screenshot observed: YES / root cause identified: YES / code fix under validation / Production accepted: NO**.'
+          if old_status in cs:
+              cs=cs.replace(old_status,'- PR #290 removed the first oversized gap and was deployed, but the next real Production screenshot still showed a residual lower right-column void plus closing-card rail misalignment. Therefore the visual defect is **not yet product-accepted**.',1)
+          marker='## Current completion contract — MAIN LINE ONLY\n'
+          note='''## 2026-09-09 Dashboard balance refinement\n\n- A second real learner screenshot after PR #290 showed that the page was improved but still not product-finished: the shorter right story column ended above `学習の現在地`, leaving a visible void, while `あなたの足跡を見る` and `次のチェックポイント` started as a separate footer row instead of following the same two column rails.\n- Fix branch: `fix/dashboard-balance-v01`. Keep the dashboard as two natural vertical stacks on desktop: left story ends with `あなたの足跡を見る`; right story ends with `直近7日間の学習記録` then `次のチェックポイント`. Remove the separate footer row entirely. Existing <=1000px breakpoint still collapses the story to one column.\n- Acceptance target: no artificial blank spacer region, closing cards exactly follow the left/right story widths, and mobile remains one-column without horizontal overflow.\n- Status: **real Production screenshot observed: YES / root cause identified: YES / code fix under validation / Production accepted: NO**.\n\n'''
+          if note not in cs: cs=cs.replace(marker,note+marker,1)
+          state.write_text(cs,encoding='utf-8')
+          PY
+      - name: Install and test
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest
+          python -m pytest -q tests/test_dashboard_balance_layout.py tests/test_dashboard_blank_space_layout.py
+          python -m pytest -q --deselect=tests/test_quiz_answer_numbering.py::ConfigurableQuizTest::test_runtime_loader_supports_current_utf16_and_candidate_utf8
+      - name: Commit refinement
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add static/goukaku/dashboard-layout-v05.js static/goukaku/dashboard-layout-v07.css templates/goukaku/base.html tests/test_dashboard_balance_layout.py tests/test_dashboard_blank_space_layout.py docs/CURRENT_STATE.md
+          git commit -m "Finish dashboard column balance"
+          git push origin HEAD:fix/dashboard-balance-v01
