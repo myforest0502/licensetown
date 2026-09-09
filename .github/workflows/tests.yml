@@ -3,7 +3,7 @@ name: tests
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, qb2000-finish]
   workflow_dispatch:
 
 jobs:
