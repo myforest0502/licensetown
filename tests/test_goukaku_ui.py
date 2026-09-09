@@ -153,12 +153,12 @@ def test_dashboard_and_subjects_render_real_field_history_without_demo_values(mo
     assert "50%" in home_text
     assert "今日やること" in home_text
     assert "今日の学習を始める" in home_text
-    assert "チャレンジする！" in home_text
+    assert "チャレンジする！" not in home_text
     assert 'data-recommendation-start-url="/goukaku-no-michi/recommendation/start"' in home_text
     assert f'data-dashboard-token="{token}"' in home_text
     assert 'data-recommendation-field="解剖学"' in home_text
     assert 'data-recommendation-count="10"' in home_text
-    assert 'data-recommendation-line-command="今日のおすすめ学習：解剖学：10問"' in home_text
+    assert 'data-recommendation-source="learner_navigation"' in home_text
     assert 'data-line-message="今日のおすすめ学習：解剖学：10問"' not in home_text
     assert "閲覧のみ" not in home_text
     assert f"/goukaku-no-michi/subjects?token={token}" in home_text
