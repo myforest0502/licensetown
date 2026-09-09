@@ -66,8 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (phaseGrid && !phaseGrid.children.length) phaseGrid.remove();
 
   if (weeklyCard) {
-    weeklyCard.classList.add('weekly-learning-card-full');
-    story.insertAdjacentElement('afterend', weeklyCard);
+    // Keep "学習の現在地" in the left story column and use the natural
+    // empty space on the right for the 7-day learning record instead of
+    // forcing a full-width row below the taller left column.
+    weeklyCard.classList.remove('weekly-learning-card-full');
+    guidanceStack.appendChild(weeklyCard);
   }
 
   if (footer) {
