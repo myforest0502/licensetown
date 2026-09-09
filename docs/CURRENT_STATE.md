@@ -2,130 +2,169 @@
 
 Last updated: 2026-09-09
 Safe integration base: `work/pt-finalization-post-q2000`
+Production branch: `main`
 
 ## How to resume
 1. Read `AGENTS.md`.
 2. Read this file.
 3. Read `docs/PT_V1_PRODUCT_GOAL.md`.
 4. Verify only facts affected by newer commits/data.
-5. Continue from the open work instead of rediscovering the repository.
+5. Continue from the open productization step; do not rediscover the whole repository.
 
-Always distinguish: **code exists / tests pass / real data observed / product accepted**.
-Do not casually change `main`, Production Neon, Render or LINE behavior.
+Always distinguish: **code exists / tests pass / real data observed / production behavior accepted**.
 Practical learner effect and national-exam success outrank architectural elegance.
-
-## Fixed PT v1.0 product finish line
-
-Boss and Aoi fixed the shared definition of **「修正は今後もあるが、一旦完成として商品として出せる物」** on 2026-09-09.
-
-The authoritative detailed contract is `docs/PT_V1_PRODUCT_GOAL.md`.
-
-Do not broaden the finish line in later chats merely because another improvement is possible. New findings must be classified as either:
-- **v1.0 product blocker**, or
-- **v1.1+/backlog**.
-
-PT v1.0 is considered product-ready when a new learner can register, study, have attempts saved, receive weakness-aware next study, pause/resume safely, understand what to do today, and complete ordinary learning without serious data-loss/study-blocking defects; required automated checks are green; production-equivalent flow works; and several days of real use show no major blocker.
-
-The completion target is not perfection, complete long-term proof, or implementation of every future feature.
-
-## Current completion contract — MAIN LINE ONLY
-
-Until PT v1.0 is accepted, do not drift into speculative polish or branch/leaf work.
-
-Car model:
-- **走る**: quiz -> answer -> save -> score -> explanation -> continue.
-- **曲がる**: next questions change according to real weakness/repair/retention state.
-- **止まる**: pause/resume/end/reset safely.
-- **壊れない**: formal question/history/Node/session invariants stay coherent.
-- **壊れた所を特定できる**: evidence shows which Q/Node/state/selection caused the issue.
-- **特定したら修復できる**: learner weakness returns through repair and spaced retention; system defects are reproducible and safely fixable.
-
-Core learner loop:
-
-`wrong -> observable wrong-pattern analysis -> same-Node/different-Q repair -> repair confirmation -> day3 -> day7 -> one-month -> durable OR back to repairing`
-
-A candidate change is in scope now only when it fixes a real current defect, is necessary for this main line, or directly changes learner outcome. Otherwise backlog it.
 
 ---
 
-# 1. Question Bank / Q2000 — CLOSED
+# 0. Fixed PT v1.0 finish line
+
+The authoritative contract is `docs/PT_V1_PRODUCT_GOAL.md`.
+
+PT v1.0 means: a learner can register, study, save history, receive weakness-aware next study, pause/resume safely, understand what to do today, and continue ordinary learning without serious study-blocking/data-loss defects. It does **not** require perfection or complete long-term proof.
+
+New findings must be classified as either:
+- **v1.0 product blocker**, or
+- **v1.1+/backlog**.
+
+Do not expand the finish line merely because another improvement is possible.
+
+Car model remains:
+- **走る**: quiz -> answer -> save -> score -> explanation -> continue.
+- **曲がる**: next questions change according to weakness/repair/retention state.
+- **止まる**: pause/resume/end/reset safely.
+- **壊れない**: question/history/Node/session invariants remain coherent.
+- **壊れた所を特定できる**: Q/Node/state/selection/event evidence identifies the fault.
+- **特定したら修復できる**: learner weakness returns through repair/retention; system defects are reproducible/fixable.
+
+Core learner loop:
+`wrong -> observable wrong-pattern analysis -> same-Node/different-Q repair -> repair confirmation -> day3 -> day7 -> one-month -> durable OR back to repairing`
+
+---
+
+# 1. Productization status — ①〜③ only
+
+Boss explicitly narrowed current work to these three items:
+
+1. **Deploy the tested current main-line candidate to Production.**
+2. **Use the existing learner history and continue natural real use; do not restart data collection.**
+3. **Confirm the learner can understand what to do today; fix only observed v1.0 blockers.**
+
+Important data rule fixed by Boss:
+- The existing primary learner history is the starting evidence base, not disposable pre-test data.
+- Production read-only verification on 2026-09-09 still shows **1525 attempts / 1103 correct / 740 unique questions** for the primary learner.
+- Do **not** reset/rebaseline and do **not** say "data collection starts today".
+- New ordinary attempts simply append to the existing history.
+- Time-dependent evidence (day3/day7/month, natural relevance, etc.) is allowed to accumulate naturally while the learner keeps studying.
+- Do not delay productization by deeply analyzing evidence that cannot exist until the learner actually uses the new behavior.
+- When enough natural data exists, inspect it and fix only demonstrated learner-impacting defects.
+
+### ① Production promotion — DONE
+
+- Promotion PR #286: `work/pt-finalization-post-q2000` -> `main`.
+- Pre-merge CI run #628: **GREEN**.
+- PR #286 merged to `main` at commit `634ac70d8d3bf27a7587cc4bc1711e3ab4a8331e`.
+- Render service `line-bot-project` auto-deploys from `main`.
+- Render deploy `dep-daggcvjbc2fs73fgh460` finished **live** on 2026-09-09.
+- Render startup completed normally; root health request returned HTTP 200.
+- No Production DB reset/migration was performed for this promotion.
+- Post-deploy read-only Neon verification still showed **1525 / 1103 / 740**, confirming existing learner history was not reset by promotion.
+
+Evidence boundary:
+- code exists: YES
+- full tests pass: YES
+- Production candidate deployed: YES
+- existing learner history preserved: YES
+- real-device learner acceptance of the new Production behavior: OPEN
+
+### ② Real learner use — OPEN, NATURAL USE ONLY
+
+Do not manufacture a fresh trial dataset. The primary learner already has substantial history and should simply continue normal study.
+
+Acceptance observation is limited to ordinary use:
+- study starts and continues normally;
+- answers are saved;
+- score/explanation are usable;
+- pause/resume remains safe;
+- next-study behavior changes sensibly with existing + new history;
+- no abnormal repeat loop or study-blocking error appears.
+
+Natural 3-day/7-day/month evidence is useful when it arrives but is not an excuse to keep coding now.
+
+### ③ "今日何をすればいいか" — CODE PATH READY, REAL-DEVICE ACCEPTANCE OPEN
+
+Current learner-facing authority is formal learner navigation.
+- duplicate competing legacy recommendations are hidden when formal navigation exists;
+- learner `repair / recheck / exploration` intent reaches exact-question selection;
+- factual accuracy and formal attainment/recommendation are kept conceptually separate;
+- core wrong-pattern/repair/next-review evidence exists in `companion_record.py`.
+
+Do not build a large new UI before use. The remaining question is product acceptance: on the real device, does the learner naturally understand the next action and does the actual question set match it?
+
+If real use exposes a contradiction/confusion that blocks ordinary study, fix that exact issue. Otherwise classify polish as v1.1+.
+
+---
+
+# 2. Question Bank — CLOSED
 
 - Formal PT Question Bank: **Q1-Q2000 / 2000 questions**.
-- Bank version: **`2026-09-b20`**.
-- Final cross-sectional medical/editorial quality audit is closed on the safe post-Q2000 branch.
-- 33 same-stem groups resolved to 29 legitimate same-stem/different-choice official items plus 4 exact official provenance repeats.
-- Exact-repeat groups: Q972/Q1354, Q1067/Q1391, Q1230/Q1526, Q1411/Q1585.
-- Raw official Q IDs/provenance remain immutable, but exact repeats are one derived learning-evidence identity through `question_equivalence_groups.json`.
-- Equivalent official repeats cannot inflate cross-question weakness, STRONG repair confirmation, or Recent Cooldown behavior.
-- Q1411/Q1585 cross-Node identity is reconciled only in derived evidence under KN1387; raw Production rows are unchanged.
-- KN0597/KN0807 duplicate raw label is already resolved by reviewed canonical alias KNC0001.
-- KN1142/KN1252 share a generic label but are medically different concepts; do not merge.
-- Q2000 final-quality PR #277 was merged only to this safe branch. No `main`/Production promotion occurred.
+- Bank version: `2026-09-b20`.
+- Final medical/editorial/Q-ID integrity review is closed.
+- Official exact repeats are preserved as raw provenance but share derived learning-evidence identity where required.
+- Do not expand above Q2000 merely to add volume.
 
 Detailed record: `reports/q2000_final_quality_review_20260909.md`.
 
 ---
 
-# 2. Formal learning-data authority
+# 3. Formal learning-data authority
 
 Formal truth path:
-
 `question_attempts -> derived Knowledge Node state -> field/strategy/readiness -> selector/presentation`
 
-- `question_attempts` is the authoritative durable attempt history.
+- `question_attempts` is authoritative durable history.
 - `user_node_state` is not formal truth.
-- Formal Node state is pure-derived by `knowledge_node_state_transition.py`.
-- Question equivalence is applied only to derived evidence; raw history is preserved.
+- Question equivalence is applied to derived evidence without rewriting raw history.
 
-Primary learner Production snapshot measured 2026-09-09:
-- **1525 attempts**
-- **1103 correct / 72.3%**
-- **740 unique questions**
-- **572 unique raw Knowledge Nodes**
-- observation window: 2026-08-17 through 2026-09-09 JST
+Primary learner baseline currently retained:
+- 1525 attempts
+- 1103 correct / 72.3%
+- 740 unique questions
+- historical observation began 2026-08-17
 
-Detailed real-history analysis: `reports/primary_learner_history_analysis_20260909.md`.
-
-Important learner-history findings:
-- confidence 1: 850 attempts / 88.5% accuracy;
-- confidence 2: 623 / 54.3%;
-- confidence 3: 42 / 31.0%;
-- confidence-1 wrong: 98 high-value misconception/repair candidates;
-- confidence-2/3 correct: 351 uncertain-correct/checking candidates;
-- 344 questions were attempted at least twice;
-- first wrong -> latest correct: 76;
-- first correct -> latest wrong: 52;
-- first wrong -> latest wrong: 37;
-- first correct -> latest correct: 179.
-
-Conclusion: confidence and longitudinal transitions are materially informative. Do not reduce learner state to raw accuracy alone. Do not expand above Q2000 merely to add volume.
+Detailed analysis: `reports/primary_learner_history_analysis_20260909.md`.
 
 ---
 
-# 3. Core repair / retention loop — CODE + TESTS COMPLETE
+# 4. Core repair / retention — CODE + TESTS COMPLETE
 
-Formal repair semantics:
-- any evaluable wrong or `unknown` starts/returns the Node to `repairing`;
-- same-Q correct does **not** confirm repair;
-- weak different-Q correct does **not** confirm repair;
-- repair confirmation requires **STRONG different-Q + confidence=1**;
-- exact official equivalent repeats are one evidence identity and cannot fake different-Q confirmation.
+Formal semantics:
+- wrong/unknown -> `repairing`;
+- same-Q correct does not confirm repair;
+- weak different-Q correct does not confirm repair;
+- STRONG different-Q + confidence=1 confirms repair;
+- exact official equivalents cannot fake STRONG different-Q evidence;
+- wrong at a retention checkpoint reopens repair.
 
-Spaced retention contract implemented in `knowledge_node_state_transition.py`:
-1. STRONG different-Q confidence=1 after wrong -> `repaired`, next check at **3 days**.
-2. Valid day3 check before day7 horizon -> `day3_passed`, next check at **7 days** from repair confirmation.
-3. Valid check on/after day7 horizon -> `stable`, `day7_passed`, one-month check scheduled.
-4. Valid one-month check -> remains `stable`, `durable`, no further required checkpoint in v0.1.
-5. Wrong/unknown at any retention checkpoint -> fresh `repairing` cycle and old retention schedule is cleared.
-6. If the learner misses day3 and first valid spaced check happens on/after day7, it counts as the day7 horizon instead of manufacturing an overdue backlog.
+Spaced contract:
+1. repair confirmation -> next check at day3;
+2. day3 pass -> next horizon day7;
+3. day7 pass -> one-month check scheduled;
+4. one-month pass -> durable;
+5. missed earlier checkpoint does not create artificial backlog if a later valid horizon is reached.
 
-Selector integration:
-- `recheck_due` is an explicit checking priority;
-- an actually due time-based retention check may deliberately bypass last-30-attempt Recent Cooldown;
-- this bypass is saved as `recent_cooldown_bypassed=True` for auditability;
-- ordinary recent-repeat avoidance and Safety behavior remain intact.
+Selector can surface genuinely due rechecks and audit deliberate cooldown bypass.
 
-Wrong-pattern analysis is evidence-based, not a hidden psychological diagnosis. `companion_record.py` can classify:
+Full validation before production promotion included **1232 passed, 6 skipped, 1 deselected, 125 subtests passed**; promotion PR CI was also GREEN.
+
+Natural end-to-end retention evidence is still time-dependent. Do not force it.
+
+---
+
+# 5. Wrong-pattern / companion evidence
+
+`companion_record.py` derives longitudinal episodes from authoritative attempts; it is not a second persisted truth.
+
+Observable patterns include:
 - retention regression;
 - confidence-1 wrong;
 - repeated cross-question wrong;
@@ -134,139 +173,55 @@ Wrong-pattern analysis is evidence-based, not a hidden psychological diagnosis. 
 - uncertain wrong;
 - single wrong.
 
-It explicitly declares `wrong_pattern_semantics = observable_evidence_not_psychological_diagnosis`.
-
-PR #285 was merged into `work/pt-finalization-post-q2000` at merge commit `314813170a4b25897136e9d67f24428931f24bfa` after GREEN CI.
-
-Full validation on the core implementation:
-- **1232 passed**
-- **6 skipped**
-- **1 deselected**
-- **125 subtests passed**
-- run #626: GREEN
-- run #627 after the state-document update: GREEN
-
-Evidence boundary:
-- **code exists: YES**
-- **full tests pass: YES**
-- **natural learner day3/day7/one-month sequence observed end-to-end: NOT YET**
-- **Production behavior deployed/accepted: NO**
-
-The missing natural 3d/7d/one-month evidence is time-dependent evidence, not a reason to keep adding speculative code before v1.0 acceptance.
+Do not claim hidden psychology. Do not build a large journal UI for v1.0 unless actual learner use proves a concise missing summary is a blocker.
 
 ---
 
-# 4. Phase11 strategy engine — HOLD / Shadow-only
+# 6. Phase11 / adaptive strategy
 
-Implemented strategy intents include Safety repair, confident/repeated wrong repair, ongoing repairing, retention recheck, uncertain checking, coverage expansion and maintenance.
+Phase11 decides intent; selector decides exact Q.
 
-Boundary:
-- Phase11 decides **what / why / how many / intent**.
-- Phase10/selector owns **which exact Q**.
+Implemented intents include repair, recheck, exploration and other safety/coverage priorities. Explicit learner intent now reaches exact-Q adaptive selection.
 
-PR #284 closed an actual main-line gap: learner navigation `learning_intent` now reaches web recommendation session and exact-Q adaptive selection. Explicit `repair`, `recheck`, and `exploration` intents fill the matching selector group first; normal callers without explicit intent retain mixed composition.
-
-Automatic evidence before this core-loop update:
-- repeat audit: PASS;
-- Critical Safety retrospective: PASS-to-date;
-- J2/J3 trigger consistency: PASS;
-- current profile consistency: PASS;
-- retrospective replay coverage for current recommendation anchors: PASS;
-- current automatic FAIL/BLOCKED gates: none.
-
-Still OPEN where real natural/prospective evidence is required:
-- natural spaced retention outcome under the new day3/day7/one-month contract;
-- natural `recheck_due` intent -> exact-Q alignment;
-- retrospective comparison diversity;
-- prospective learner relevance vs baseline;
-- final human promotion review.
-
-Do not self-promote Phase11. Do not keep coding just to force these time-dependent gates closed.
+Long-term/prospective Phase11 proof is not a v1.0 blocker by itself. Do not self-promote based on invented evidence, but do not keep construction open waiting for time-dependent evidence either.
 
 Detailed record: `reports/phase11_promotion_review_20260909.md`.
 
 ---
 
-# 5. Adaptive selector / Recent Cooldown
+# 7. Dashboard / learner navigation
 
-- Node-level adaptive selection works.
-- STRONG different-question repair can be preferred.
-- Formal learner `repair/recheck/exploration` intent reaches exact-Q selection.
-- Recent Question Cooldown avoids gratuitous recent repeats.
-- Time-based `recheck_due` can bypass cooldown intentionally so a scheduled retention check is not starved by the large bank.
-- Adaptive audit metadata persists selection reason/group/score, repair evidence quality, recent repeat and cooldown bypass.
-- Current learner history shows no unexplained or internally inconsistent adaptive-repeat defect.
-- Exact official repeats share one evidence identity for selection/cooldown interpretation.
+Formal learner navigation is the learner-facing decision authority. Duplicate legacy recommendation blocks are suppressed when formal navigation exists. Accuracy may remain as a factual/reference metric.
 
-No further selector polish is in scope unless real use exposes a main-line defect.
-
----
-
-# 6. Dashboard / learner navigation — v0.1 CONSOLIDATED
-
-Learner route `/goukaku-no-michi` builds formal learner navigation from authoritative attempts/readiness/shadow evidence.
-
-Completed consolidation v0.1:
-- top `現在地`, `今日やること`, formal priority TOP3, repair/coverage/retention guidance are the learner-facing decision authority;
-- duplicate lower legacy TOP3/recommendation are hidden when formal learner navigation exists;
-- legacy field percentages, when shown, are labeled **`分野別 正答率（参考）`**, not formal `到達度`;
-- factual counters remain factual counters.
+Do not resume general dashboard polish. Only a demonstrated contradiction that prevents the learner from knowing what to do today is a v1.0 blocker.
 
 Source map: `reports/dashboard_source_map_20260909.md`.
 
-Dashboard polish is **not current main-line work**. Only learner-facing contradictions or missing v1.0-required guidance can block productization.
-
 ---
 
-# 7. Longitudinal companion record — CORE EVIDENCE LAYER IMPLEMENTED
+# 8. Deferred / not default v1.0 blockers
 
-`companion_record.py` derives compact longitudinal episodes from `question_attempts`; it does not create a second persisted truth.
-
-Current core-useful fields/events include:
-- weakness detection;
-- observable wrong pattern;
-- repair confirmation;
-- retention stage/checkpoint/next review;
-- day3/day7 checkpoint pass;
-- retention due;
-- durable retention confirmation;
-- regression back to repairing.
-
-Do not build a large journal UI for v1.0. Only expose the minimum learner-facing summary needed to answer: where weak / how wrong / repaired or not / next review / regressed or not.
-
----
-
-# 8. Learning-time/session linkage — DEFERRED
-
-- Learning time persists separately.
-- Current `attempt_position` resets inside 5-question batches, so `question_attempts` alone cannot validly measure position 1-30 fatigue in a 30-question session.
-- `:time`-style event keys may intentionally differ for idempotency; do not treat event-key equality as a relational join.
-- Add explicit durable session linkage only if real use shows it changes learner outcome.
-- This is not a v1.0 product blocker by itself.
-
----
-
-# 9. PT v1.0 remaining path
-
-The coding task for the repair/retention core is CLOSED. Do not invent another engineering subproject just because the core can be polished further.
-
-The next work must be judged only against `docs/PT_V1_PRODUCT_GOAL.md`.
-
-Remaining productization path:
-1. verify the complete learner-facing path on the safe branch against the v1.0 checklist: registration -> study -> answer/save -> score/explanation -> pause/resume -> next-study guidance;
-2. expose only the minimum weakness/repair/next-review information needed for a learner to know what to do, if current UI does not already make it clear;
-3. prepare/promote the already-tested main-line changes to a production-equivalent environment using normal safety rules;
-4. run real-device acceptance with the primary learner for several days;
-5. fix only observed **v1.0 blockers**;
-6. once no serious study-blocking defect remains, declare **LicenseTown PT版 v1.0 商品化完了** even if v1.1 improvements remain.
-
-Not v1.0 blockers by default:
-- full long-term Phase11 proof;
-- completion of every day3/day7/month natural evidence pattern;
+- full long-term Phase11 statistical proof;
+- observing every natural day3/day7/month pattern before release;
 - large companion/journal UI;
 - dashboard polish beyond contradiction-free guidance;
-- session/fatigue analytics;
-- future HP/Town/avatar/social features;
-- speculative safety work for unobserved edge cases.
+- new session/fatigue analytics;
+- HP/Town/avatar/social/future features;
+- speculative safeguards for unobserved edge cases.
 
-Do not restart Q2000 audit, question-count expansion, speculative branch work, or unrelated product expansion unless Boss explicitly reprioritizes them or real main-line evidence exposes a genuine v1.0 defect.
+---
+
+# 9. Immediate next step
+
+**No new engineering branch should be invented now.**
+
+The Production candidate is live. The next legitimate step is normal learner use on the real device with the existing 1525-attempt history intact.
+
+Only when real use reveals a concrete v1.0 blocker should code be changed. Otherwise allow natural data to accumulate and move toward the v1.0 acceptance decision.
+
+Human acceptance needed next:
+- learner opens/uses the Production app normally;
+- learner studies without a special test script;
+- Boss/learner reports only genuine confusion, contradiction, repeat abnormality, data-loss, or study-stopping behavior.
+
+Until such evidence appears, do not deepen speculative analysis and do not restart data collection.
