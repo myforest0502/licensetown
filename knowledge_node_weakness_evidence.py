@@ -5,7 +5,10 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import Any, Iterable
 
-from knowledge_node_canonical import canonicalize_knowledge_node_id
+from question_equivalence import (
+    canonicalize_question_evidence_id,
+    canonicalize_question_evidence_node,
+)
 
 
 NO_WRONG_EVIDENCE = "NO_WRONG_EVIDENCE"
@@ -25,10 +28,14 @@ def _sort_key(attempt: dict[str, Any]) -> tuple[str, str, int, int]:
     )
 
 
+def _evidence_question_id(item: dict[str, Any]) -> str:
+    return canonicalize_question_evidence_id(str(item.get("question_id") or ""))
+
+
 def _classify(history: list[dict[str, Any]]) -> tuple[str, str]:
     wrong = [item for item in history if item.get("is_correct") is False]
     correct = [item for item in history if item.get("is_correct") is True]
-    wrong_questions = {str(item["question_id"]) for item in wrong}
+    wrong_questions = {_evidence_question_id(item) for item in wrong}
 
     if not wrong:
         return NO_WRONG_EVIDENCE, "No wrong answer is recorded for this canonical Node."
@@ -47,7 +54,7 @@ def _classify(history: list[dict[str, Any]]) -> tuple[str, str]:
     if len(wrong) >= 2:
         return (
             REPEATED_SAME_QUESTION_WRONG,
-            "The same question was answered incorrectly more than once; this is not cross-question evidence.",
+            "The same evidence-equivalent question was answered incorrectly more than once; this is not cross-question evidence.",
         )
     return SINGLE_WRONG, "Only one wrong question is recorded; weakness is not confirmed."
 
@@ -58,8 +65,8 @@ def derive_repeated_weakness_evidence(
     """Return anonymous user/canonical-Node evidence records.
 
     User identifiers are used only as internal grouping keys and never included
-    in returned records. Histories are sorted before classification so callers
-    may provide attempts in any order.
+    in returned records. Exact reviewed official repeats are canonicalized only
+    for derived evidence; raw stored Q/Node IDs remain untouched.
     """
     grouped: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
     for source in attempts:
@@ -68,24 +75,28 @@ def derive_repeated_weakness_evidence(
         raw_node_id = str(item.get("knowledge_node_id") or "")
         if not question_id or not raw_node_id:
             continue
-        canonical = canonicalize_knowledge_node_id(raw_node_id)
-        grouped[(str(item.get("user_id") or ""), canonical)].append(item)
+        canonical = canonicalize_question_evidence_node(question_id, raw_node_id)
+        grouped[(str(item.get("user_id") or ""), str(canonical or ""))].append(item)
 
     result: list[dict[str, Any]] = []
     for (_user_key, canonical), history in sorted(grouped.items()):
         ordered = sorted(history, key=_sort_key)
-        question_ids = {str(item["question_id"]) for item in ordered}
+        question_ids = {_evidence_question_id(item) for item in ordered}
         wrong = [item for item in ordered if item.get("is_correct") is False]
         correct = [item for item in ordered if item.get("is_correct") is True]
         level, reason = _classify(ordered)
         result.append({
             "canonical_node_id": canonical,
             "distinct_question_count": len(question_ids),
-            "wrong_question_count": len({str(item["question_id"]) for item in wrong}),
-            "correct_question_count": len({str(item["question_id"]) for item in correct}),
+            "wrong_question_count": len({_evidence_question_id(item) for item in wrong}),
+            "correct_question_count": len({_evidence_question_id(item) for item in correct}),
             "confident_wrong_count": sum(item.get("confidence") == 1 for item in wrong),
-            "first_wrong_question_id": str(wrong[0]["question_id"]) if wrong else None,
-            "last_wrong_question_id": str(wrong[-1]["question_id"]) if wrong else None,
+            "first_wrong_question_id": (
+                canonicalize_question_evidence_id(str(wrong[0]["question_id"])) if wrong else None
+            ),
+            "last_wrong_question_id": (
+                canonicalize_question_evidence_id(str(wrong[-1]["question_id"])) if wrong else None
+            ),
             "evidence_level": level,
             "evidence_reason": reason,
         })

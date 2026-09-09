@@ -6,12 +6,12 @@ from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from typing import Any, Iterable
 
-from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_weakness_evidence import derive_repeated_weakness_evidence
 from knowledge_node_repair_evidence import (
     DIFFERENT_QUESTION_STRONG,
     classify_repair_confirmation,
 )
+from question_equivalence import canonicalize_question_evidence_node
 
 
 STATES = ("unseen", "checking", "repairing", "repaired", "stable", "recheck_due")
@@ -25,6 +25,16 @@ def _sort_key(attempt: dict[str, Any]) -> tuple[str, str, int, int]:
         str(attempt.get("event_key") or ""),
         int(attempt.get("attempt_position") or 0),
         int(attempt.get("id") or 0),
+    )
+
+
+def _evidence_node(item: dict[str, Any]) -> str:
+    return str(
+        canonicalize_question_evidence_node(
+            str(item.get("question_id") or ""),
+            str(item.get("knowledge_node_id") or ""),
+        )
+        or ""
     )
 
 
@@ -104,15 +114,12 @@ def derive_knowledge_node_state(
     canonical_node_id: str | None = None,
     as_of: datetime | None = None,
 ) -> dict[str, Any]:
-    """Derive the final state for one user's one canonical Node history."""
+    """Derive the final state for one user's one canonical evidence-Node history."""
     ordered = sorted((dict(item) for item in attempts), key=_sort_key)
     if not ordered:
         return _result(str(canonical_node_id or ""), "unseen", "", [], 0)
 
-    canonical_ids = {
-        canonicalize_knowledge_node_id(str(item.get("knowledge_node_id") or ""))
-        for item in ordered
-    }
+    canonical_ids = {_evidence_node(item) for item in ordered}
     user_ids = {str(item.get("user_id") or "") for item in ordered}
     if len(canonical_ids) != 1 or len(user_ids) != 1:
         raise ValueError("attempts must belong to one user and one canonical Node")
@@ -213,11 +220,11 @@ def derive_knowledge_node_state(
 def derive_all_user_node_states(
     attempts: Iterable[dict[str, Any]], as_of: datetime | None = None
 ) -> list[dict[str, Any]]:
-    """Group by user and canonical Node without returning user identifiers."""
+    """Group by user and canonical evidence Node without returning user identifiers."""
     grouped: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
     for source in attempts:
         item = dict(source)
-        canonical = canonicalize_knowledge_node_id(str(item.get("knowledge_node_id") or ""))
+        canonical = _evidence_node(item)
         grouped[(str(item.get("user_id") or ""), canonical)].append(item)
     return [
         derive_knowledge_node_state(history, canonical, as_of=as_of)

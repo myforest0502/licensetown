@@ -3,8 +3,11 @@
 import json
 from pathlib import Path
 
-from knowledge_node_canonical import canonicalize_knowledge_node_id
 from question_bank import QuestionBankError, get_question_tag
+from question_equivalence import (
+    are_equivalent_questions,
+    canonicalize_question_evidence_node,
+)
 
 
 SAME_QUESTION = "same_question"
@@ -43,24 +46,26 @@ _FORMAL_STRONG_PAIRS = _load_formal_strong_pairs()
 def classify_repair_confirmation(previous_question_id: str, candidate_question_id: str) -> str:
     """Classify conservatively using existing reviewed metadata only.
 
-    Strong evidence requires two different questions in the same canonical Node.
-    Different task or primary ability then demonstrates a materially different
-    demand. When metadata cannot prove either condition, fail closed as weak.
+    Strong evidence requires two materially different questions in the same
+    derived evidence Node. Reviewed exact official repeats are same-question
+    evidence even when their raw Q IDs or historical raw Nodes differ.
     """
     previous = str(previous_question_id or "")
     candidate = str(candidate_question_id or "")
-    if not previous or not candidate or previous == candidate:
+    if not previous or not candidate or are_equivalent_questions(previous, candidate):
         return SAME_QUESTION
     try:
         previous_tag = get_question_tag(previous)
         candidate_tag = get_question_tag(candidate)
     except (KeyError, ValueError, QuestionBankError):
         return DIFFERENT_QUESTION_WEAK
-    previous_node = canonicalize_knowledge_node_id(
-        str(previous_tag.get("knowledge_node_id") or "")
+    previous_node = canonicalize_question_evidence_node(
+        previous,
+        str(previous_tag.get("knowledge_node_id") or ""),
     )
-    candidate_node = canonicalize_knowledge_node_id(
-        str(candidate_tag.get("knowledge_node_id") or "")
+    candidate_node = canonicalize_question_evidence_node(
+        candidate,
+        str(candidate_tag.get("knowledge_node_id") or ""),
     )
     if not previous_node or not candidate_node or previous_node != candidate_node:
         return DIFFERENT_QUESTION_WEAK

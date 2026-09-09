@@ -28,30 +28,54 @@ Do not mark something complete only because code exists. Completion requires the
 # 1. Question Bank / Q2000
 
 ## Done / working now
-- Formal Question Bank has reached Q2000 in the post-Q2000 working branch.
+- Formal Question Bank has reached Q2000, bank version `2026-09-b20`.
 - Question delivery uses saved Question Bank data rather than generating each normal-learning question through OpenAI.
-- Q-number remains the stable question ID.
+- Q-number remains the stable immutable question ID.
 - Question, answer/explanation, tags, Knowledge Node relationships, and validators are separated into structured data/contracts.
 - Strong different-question repair pairs exist and are used by repair logic.
+- Final cross-sectional audit refined duplicate identity from generic stem equality to item-level equality (`normalized stem + ordered choices`).
+- The 33 same-stem groups resolve to **29 legitimate same-stem/different-choice official items plus 4 exact official provenance-repeat groups**.
+- On review branch `work/q2000-question-equivalence-v01`, the four exact official repeats are formally registered as one derived learning-evidence identity while preserving both raw Q IDs/provenance:
+  - Q972 / Q1354
+  - Q1067 / Q1391
+  - Q1230 / Q1526
+  - Q1411 / Q1585
+- Equivalent official repeats cannot masquerade as STRONG different-question repair evidence, cannot create artificial cross-question weakness, and cannot bypass Recent Cooldown merely by using the alternate raw Q ID.
+- Q1411/Q1585 are identical official content historically attached to different raw Nodes; review-branch logic reconciles them only for **derived evidence** under KN1387. Raw Production rows are not rewritten.
+- Primary learner impact check found only Q1585 among the eight exact-repeat Q IDs had prior attempts (4/4 correct); the other seven had no attempts at review time.
+- High-similarity non-exact sampling found no evidence supporting bulk rewriting of official items. Examples reviewed include AFO settings, fracture-name mappings, ASIA key muscles, prosthetic alignment, reproductive physiology, muscle action, metabolism and pathology.
+- 14 short-stem heuristic candidates were reviewed as ordinary national-exam prompts with sufficiently specific options/explanations.
+- 3 short global-explanation candidates were reviewed; all contain useful option-by-option rationales, so short summary length alone is not a blocker.
+- Duplicate raw Node label `交感神経の作用` for KN0597/KN0807 was already formally resolved by reviewed canonical alias `KNC0001` (KN0807 -> KN0597). The audit now distinguishes raw duplicate labels already resolved by canonicalization from genuinely unresolved same-label Nodes.
+- Duplicate raw label `筋と作用の組合せ` for KN1142/KN1252 was medically reviewed as **different content** (facial/masticatory muscles vs lower-limb muscles); do not merge. The generic labels may be refined later for learner-facing clarity.
+- Review-branch full CI has already produced green runs including **1207 passed, 6 skipped, 1 deselected, 125 subtests passed** before the latest audit-report refinements.
+- Detailed review record: `reports/q2000_final_quality_review_20260909.md`.
 
 ## Not finished yet
-- Final medical/editorial quality audit for all Q2000 content is not closed.
-- Exact duplicates / hard-near duplicates and any medically questionable items found by the final audit still need explicit disposition.
-- Final release-grade evidence for the Q2000 bank should be consolidated into one reproducible acceptance record.
+- Latest review-branch audit/canonical-label refinements still need their final CI result recorded before the final-quality audit is formally closed.
+- Final zero-blocker audit output and final regression evidence must be captured in the durable record.
+- Review PR #277 must be merged only into the safe post-Q2000 working branch after final green verification; it is not a `main`/Production promotion.
+- Diagnostic PR #276 must be closed without merge after its evidence is fully captured.
 
 ## Known problems / risks
-- A green structural validator does not by itself prove every item is medically ideal.
-- Similarity audits can identify pairs requiring human/editorial judgment rather than automatic deletion.
-- Q2000 must not be treated as a marketing claim if the final medical/editorial acceptance is not complete.
+- A green structural validator does not by itself prove every item is medically ideal; similarity and editorial heuristics still require human/medical interpretation.
+- Official exam provenance repeats must remain traceable, but counting them as independent learning evidence would falsely strengthen repair/weakness signals.
+- Generic Knowledge Node labels can be educationally unhelpful even when the underlying Node separation is correct; label quality and Node identity are separate concerns.
+- Temporary diagnostic PR #276 intentionally fails probes and must never be mistaken for a product regression.
 
 ## Target state / how it should be
-- 2000 questions are structurally valid, medically defensible, non-duplicative enough for learning value, correctly tagged, and usable by adaptive selection.
-- Every final-bank change is followed by validator + relevant Knowledge Node / selector / full regression checks.
+- 2000 questions are structurally valid, medically defensible, correctly tagged, and usable by adaptive selection.
+- Official duplicate provenance is preserved without double-counting learning evidence.
+- Similarity review is conservative: official items are not cosmetically rewritten merely to be unique.
+- Knowledge Node identity reflects the minimum meaningful repair target; labels should become specific enough for useful learner-facing weakness explanations.
+- Every final-bank change is followed by validator + affected Node/selector/repair checks + full regression.
 
 ## Next concrete work
-1. Close final Q2000 quality findings one by one.
-2. Re-run full Question Bank validation and affected selector/Node tests.
-3. Record final acceptance evidence here.
+1. Confirm latest PR #277 CI remains green after canonical-label audit refinement/report update.
+2. Record final zero-blocker audit result and CI evidence.
+3. Merge PR #277 into `work/pt-finalization-post-q2000` only if green.
+4. Close diagnostic PR #276 without merge.
+5. Then move the active completion focus to formal-vs-legacy dashboard source consolidation while Phase11 OPEN gates continue collecting natural evidence.
 
 ---
 
@@ -277,7 +301,7 @@ The seven automatic gates are necessary but not sufficient. The Phase11 ship che
 
 # 9. Current priority order
 
-1. Final Q2000 quality findings and acceptance evidence.
+1. Final Q2000 quality audit closure and safe-branch integration.
 2. Phase11 promotion-gate re-evaluation when new natural retention/recheck/comparison evidence appears.
 3. Formal-vs-legacy dashboard source map and consolidation plan.
 4. Longitudinal companion-record design and implementation.
