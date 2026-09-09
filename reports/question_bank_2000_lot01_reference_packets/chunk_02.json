@@ -1,0 +1,680 @@
+{
+  "chunk": 2,
+  "formal_baseline": "Q1-Q1761",
+  "references": [
+    {
+      "qid": "Q521",
+      "question": {
+        "id": "Q521",
+        "management_code": "Q521-B-9-P",
+        "category_large": "B",
+        "category_small": 9,
+        "source": "P",
+        "title": null,
+        "question_text": "Parkinson病で主にみられる徴候はどれか。2つ選べ。",
+        "choices": {
+          "1": "眼振",
+          "2": "突進現象",
+          "3": "動作時振戦",
+          "4": "歯車様固縮",
+          "5": "ミオクローヌス"
+        },
+        "exam": {
+          "exam_no": 52,
+          "session": "午前",
+          "question_no": 34
+        }
+      },
+      "answer": {
+        "id": "Q521",
+        "display_answer": "2・4",
+        "accepted_answer_sets": [
+          [
+            "2",
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q521",
+        "explanation": "Parkinson病の主要徴候には安静時振戦、筋強剛、無動・寡動、姿勢反射障害があり、突進現象や歯車様固縮がみられる。動作時振戦、眼振、ミオクローヌスは代表的徴候ではないため、正答は2・4である。",
+        "choice_explanations": {
+          "1": "眼振は前庭・小脳系などの障害でみられ、Parkinson病の主要徴候ではない。",
+          "2": "○。姿勢反射障害に関連して突進現象がみられる。",
+          "3": "Parkinson病に典型的なのは安静時振戦で、動作時振戦を主徴としない。",
+          "4": "○。筋強剛の一型として歯車様固縮がみられる。",
+          "5": "ミオクローヌスは急激な不随意運動で、Parkinson病の主要徴候ではない。"
+        }
+      },
+      "tag": {
+        "id": "Q521",
+        "theme": "Parkinson病で主にみられる徴候はどれか",
+        "knowledge_node": "Parkinson病の主要徴候には安静時振戦、筋強剛、無動・寡動、姿勢反射障害があり、突進現象や歯車様固縮がみられる",
+        "knowledge_node_id": "KN0513",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "Parkinson病で主にみられる徴候はどれかの基本概念"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "qid": "Q1581",
+      "question": {
+        "id": "Q1581",
+        "management_code": "Q1581-B-9-P",
+        "category_large": "B",
+        "category_small": 9,
+        "source": "P",
+        "title": null,
+        "question_text": "Parkinson病の症状、徴候について正しいのはどれか。",
+        "choices": {
+          "1": "企図振戦",
+          "2": "アテトーゼ",
+          "3": "Myerson徴候",
+          "4": "ミオクロニー発作",
+          "5": "折りたたみナイフ現象"
+        },
+        "exam": {
+          "exam_no": 49,
+          "session": "午後",
+          "question_no": 89
+        }
+      },
+      "answer": {
+        "id": "Q1581",
+        "display_answer": "3",
+        "accepted_answer_sets": [
+          [
+            "3"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q1581",
+        "explanation": "Myerson徴候は眉間への反復刺激で瞬目が持続する徴候で、Parkinson病でみられる。",
+        "choice_explanations": {
+          "1": "Parkinson病の振戦は代表的には安静時振戦である。",
+          "2": "アテトーゼは不随意運動の一種だがParkinson病の代表徴候ではない。",
+          "3": "正しい。Myerson徴候がみられることがある。",
+          "4": "ミオクロニー発作は代表徴候ではない。",
+          "5": "折りたたみナイフ現象は錐体路障害に伴う痙縮でみられる。"
+        }
+      },
+      "tag": {
+        "id": "Q1581",
+        "theme": "Parkinson病の症状、徴候について正しいのはどれか。",
+        "knowledge_node": "Parkinson病の主要徴候には安静時振戦、筋強剛、無動・寡動、姿勢反射障害があり、突進現象や歯車様固縮がみられる",
+        "knowledge_node_id": "KN0513",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "Parkinson病で主にみられる徴候はどれかの基本概念"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "qid": "Q68",
+      "question": {
+        "id": "Q68",
+        "management_code": "Q68-B-9-O",
+        "category_large": "B",
+        "category_small": 9,
+        "source": "O",
+        "title": "神経疾患・多発性硬化症",
+        "question_text": "33歳の女性。再発寛解型多発性硬化症である。最近の再発はなく、屋内外歩行は自立している。午後になると下肢の重だるさが増し、事務作業中に集中力が低下する。下肢MMTは4＋で、感覚障害は軽度である。疲労重症度尺度では高値を示すが、涼しい環境でも症状に大きな変化はない。本人は仕事を続けながら運動を行いたいと希望している。\n日常生活における疲労管理として最も適切な指導はどれか。",
+        "choices": {
+          "A": "活動記録を用いて疲労が強くなる活動と時間帯を把握し、休息を計画的に配置する。",
+          "B": "疲労感があっても活動量を維持するため、休息を取らず作業を続ける。",
+          "C": "筋力低下を防ぐため、毎日最大負荷で筋力訓練を行う。",
+          "D": "疲労の出現を防ぐため、仕事と運動をすべて中止する。",
+          "E": "午前中の活動を避け、疲労が強い午後に運動を集中させる。"
+        },
+        "exam": null
+      },
+      "answer": {
+        "id": "Q68",
+        "display_answer": "A",
+        "accepted_answer_sets": [
+          [
+            "A"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanation": {
+        "id": "Q68",
+        "explanation": "午後になると下肢の重だるさと集中力低下が増すが、涼しい環境でも症状に大きな変化はなく、仕事と運動の継続を希望している。活動記録で疲労が強くなる作業、時間帯、運動量を把握し、症状が増悪する前に休息を計画的に配置することで、過度な疲労を避けながら仕事と身体活動を両立する。",
+        "choice_explanations": {
+          "A": "〇。疲労と活動の関係を可視化し、負担の大きい時間帯へ適切に休息を組み込める。",
+          "B": "休息を取らずに作業を続けると、午後の重だるさや集中力低下がさらに増悪する。",
+          "C": "最大負荷訓練を毎日行うと疲労が蓄積し、仕事や歩行能力へ悪影響を及ぼす可能性がある。",
+          "D": "仕事と運動を全面的に中止すると、本人の希望に反し、活動能力の低下も招く。",
+          "E": "疲労が強い午後へ運動を集中させると、症状増悪の可能性が高い。"
+        }
+      },
+      "tag": {
+        "id": "Q68",
+        "theme": "神経疾患・多発性硬化症",
+        "knowledge_node": "活動記録による疲労管理",
+        "knowledge_node_id": "KN0068",
+        "task": "intervention_selection",
+        "primary_ability": "PRESCRIBE",
+        "secondary_ability": "INTERPRET",
+        "level": 3,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "fatigue management",
+          "pacing"
+        ],
+        "tag_version": "0.3",
+        "tag_status": "reviewed_sample",
+        "source": "original"
+      }
+    },
+    {
+      "qid": "Q191",
+      "question": {
+        "id": "Q191",
+        "management_code": "Q191-B-9-O",
+        "category_large": "B",
+        "category_small": 9,
+        "source": "O",
+        "title": "神経疾患・多発性硬化症・運動量自己管理",
+        "question_text": "34歳の女性。再発寛解型多発性硬化症。屋内外歩行は自立している。午前中に30分歩行した日は、午後の家事中に強い疲労が出現するが、翌朝には回復している。本人は「仕事と家事を続けながら運動もしたい」と希望している。運動量の自己管理として最も適切なのはどれか。",
+        "choices": {
+          "A": "疲労が出現しないよう、運動日には家事をすべて中止する。",
+          "B": "当日の運動量だけを記録し、翌日の疲労は評価しない。",
+          "C": "活動と疲労の記録を行い、生活活動を含めて運動と休息を配分する。",
+          "D": "疲労耐性を高めるため、疲労が出現しても毎日同じ運動量を継続する。",
+          "E": "歩行が自立しているため、運動量の自己管理は必要ない。"
+        },
+        "exam": null
+      },
+      "answer": {
+        "id": "Q191",
+        "display_answer": "C",
+        "accepted_answer_sets": [
+          [
+            "C"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanation": {
+        "id": "Q191",
+        "explanation": "午前中に30分歩行した日は午後の家事中に強い疲労が出るが、翌朝には回復している。仕事や家事を続けながら運動するには、運動だけを切り離さず生活活動と疲労の関係を記録し、一日の総活動量を把握して運動と休息を配分することが重要である。",
+        "choice_explanations": {
+          "A": "家事をすべて中止すると、本人が希望する仕事・家事と運動の両立につながらない。",
+          "B": "午後の疲労や翌朝の回復状態も、運動量が適切か判断する重要な情報である。",
+          "C": "正しい。運動・仕事・家事を含む活動量と疲労を記録し、休息を含めて調整する。",
+          "D": "強い疲労が出ても毎日同量を続けると、生活活動へ影響する疲労を繰り返す可能性がある。",
+          "E": "歩行自立であっても、午後の家事へ影響する疲労があるため自己管理は必要である。"
+        }
+      },
+      "tag": {
+        "id": "Q191",
+        "theme": "神経疾患・多発性硬化症・運動量自己管理",
+        "knowledge_node": "活動・疲労記録による自己管理",
+        "knowledge_node_id": "KN0190",
+        "task": "intervention_selection",
+        "primary_ability": "PRESCRIBE",
+        "secondary_ability": "INTERPRET",
+        "level": 3,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "fatigue diary",
+          "pacing"
+        ],
+        "tag_version": "0.3",
+        "tag_status": "reviewed_sample",
+        "source": "original"
+      }
+    },
+    {
+      "qid": "Q209",
+      "question": {
+        "id": "Q209",
+        "management_code": "Q209-B-9-O",
+        "category_large": "B",
+        "category_small": 9,
+        "source": "O",
+        "title": "脳血管障害・消去現象",
+        "question_text": "74歳の男性。右頭頂葉梗塞後4週である。左片麻痺は軽度である。左手だけを触れると正しく答えられるが、左右同時に触れると右側だけを答え、左側刺激に気付かない。最も考えられる障害はどれか。",
+        "choices": {
+          "A": "消去現象",
+          "B": "観念失行",
+          "C": "運動失調",
+          "D": "失認",
+          "E": "失語症"
+        },
+        "exam": null
+      },
+      "answer": {
+        "id": "Q209",
+        "display_answer": "A",
+        "accepted_answer_sets": [
+          [
+            "A"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanation": {
+        "id": "Q209",
+        "explanation": "左手だけを刺激すると認識できるが、左右を同時に刺激すると右側だけを認識し、左側刺激に気付かない。単独では認識できる一側刺激が両側同時刺激によって認識されなくなる所見は消去現象である。",
+        "choice_explanations": {
+          "A": "正しい。両側同時刺激時に一側刺激への認識が消失する典型的な消去現象である。",
+          "B": "観念失行は道具使用や動作系列に障害を認める状態である。",
+          "C": "運動失調は運動の正確性や協調性が障害される状態である。",
+          "D": "失認では対象そのものの認識障害が問題となるが、左単独刺激は認識できている。",
+          "E": "失語症は言語機能障害であり、両側刺激時の認知障害とは異なる。"
+        }
+      },
+      "tag": {
+        "id": "Q209",
+        "theme": "脳血管障害・消去現象",
+        "knowledge_node": "両側同時刺激で出現する消去現象の識別",
+        "knowledge_node_id": "KN0208",
+        "task": "finding_interpretation",
+        "primary_ability": "INTERPRET",
+        "secondary_ability": "KNOW",
+        "level": 2,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "消去現象の定義",
+          "単独刺激と両側同時刺激",
+          "半側空間無視との違い"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "original"
+      }
+    },
+    {
+      "qid": "Q279",
+      "question": {
+        "id": "Q279",
+        "management_code": "Q279-B-9-O",
+        "category_large": "B",
+        "category_small": 9,
+        "source": "O",
+        "title": "高次脳機能・半側空間無視",
+        "question_text": "単独刺激では左右とも認識できるが、左右同時刺激では左側刺激を見落とす。最も考えられるのはどれか。",
+        "choices": {
+          "A": "同名半盲",
+          "B": "視覚失認",
+          "C": "失語症",
+          "D": "小脳性運動失調",
+          "E": "消去現象を伴う半側空間無視"
+        },
+        "exam": null
+      },
+      "answer": {
+        "id": "Q279",
+        "display_answer": "E",
+        "accepted_answer_sets": [
+          [
+            "E"
+          ]
+        ],
+        "answer_basis": "LT_original"
+      },
+      "explanation": {
+        "id": "Q279",
+        "explanation": "左右単独では認識でき、同時提示で病巣反対側を見落とす所見は消去現象で、半側空間無視を支持する。半盲は単独刺激でも同じ視野を見落とす。類題では一次視覚障害と注意の競合による見落としを区別する。",
+        "choice_explanations": {
+          "A": "半盲では単独刺激でも障害視野を検出できない。",
+          "B": "視覚失認は見えている物体の認知障害である。",
+          "C": "失語症は言語機能障害である。",
+          "D": "小脳性失調は協調運動障害である。",
+          "E": "正しい。同時刺激で反対側を消去する。"
+        }
+      },
+      "tag": {
+        "id": "Q279",
+        "theme": "高次脳機能・半側空間無視",
+        "knowledge_node": "両側同時刺激で生じる消去現象の識別",
+        "knowledge_node_id": "KN0208",
+        "task": "finding_interpretation",
+        "primary_ability": "INTERPRET",
+        "secondary_ability": null,
+        "level": 3,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "左右単独では認識でき、同時提示で病巣反対側を見落とす所見は消去現象で、半側空間無視を支持する。",
+          "類題では一次視覚障害と注意の競合による見落としを区別する。",
+          "半盲は単独刺激でも同じ視野を見落とす。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "original"
+      }
+    },
+    {
+      "qid": "Q564",
+      "question": {
+        "id": "Q564",
+        "management_code": "Q564-C-16-P",
+        "category_large": "C",
+        "category_small": 16,
+        "source": "P",
+        "title": null,
+        "question_text": "上腕骨外側上顆炎について正しいのはどれか。",
+        "choices": {
+          "1": "男性に多い。",
+          "2": "高齢者に多い。",
+          "3": "自発痛はない。",
+          "4": "手関節伸筋腱の付着部の炎症である。",
+          "5": "物を持ち上げる際は前腕回内位で行うようにする。"
+        },
+        "exam": {
+          "exam_no": 52,
+          "session": "午前",
+          "question_no": 85
+        }
+      },
+      "answer": {
+        "id": "Q564",
+        "display_answer": "4",
+        "accepted_answer_sets": [
+          [
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q564",
+        "explanation": "上腕骨外側上顆炎は手関節伸筋群、とくに短橈側手根伸筋などの総伸筋腱起始部に生じる腱障害である。把持や手関節伸展で疼痛が誘発される。",
+        "choice_explanations": {
+          "1": "性差だけで男性に多いとはいえない。",
+          "2": "中高年に多いが高齢者特有ではない。",
+          "3": "自発痛を認めることもあるため断定できない。",
+          "4": "○。手関節伸筋腱の外側上顆付着部が障害される。",
+          "5": "持ち上げは前腕回外位の方が伸筋群負担を減らしやすい。"
+        }
+      },
+      "tag": {
+        "id": "Q564",
+        "theme": "上腕骨外側上顆炎について正しいのはどれか",
+        "knowledge_node": "上腕骨外側上顆炎の特徴",
+        "knowledge_node_id": "KN0556",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "上腕骨外側上顆炎について正しいのはどれかの基本概念"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "qid": "Q580",
+      "question": {
+        "id": "Q580",
+        "management_code": "Q580-C-16-P",
+        "category_large": "C",
+        "category_small": 16,
+        "source": "P",
+        "title": null,
+        "question_text": "肘関節脱臼で多いのはどれか。",
+        "choices": {
+          "1": "外側",
+          "2": "後方",
+          "3": "前方",
+          "4": "内側",
+          "5": "分散"
+        },
+        "exam": {
+          "exam_no": 52,
+          "session": "午後",
+          "question_no": 31
+        }
+      },
+      "answer": {
+        "id": "Q580",
+        "display_answer": "2",
+        "accepted_answer_sets": [
+          [
+            "2"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q580",
+        "explanation": "肘関節脱臼は転倒時に伸展位で手をつく機転などで生じ、尺骨・橈骨が上腕骨に対して後方へ脱臼する後方脱臼が最も多い。",
+        "choice_explanations": {
+          "1": "外側脱臼は後方脱臼より少ない。",
+          "2": "○。肘関節脱臼は後方脱臼が最も多い。",
+          "3": "前方脱臼は稀である。",
+          "4": "内側脱臼は稀である。",
+          "5": "分散型は代表的な最多型ではない。"
+        }
+      },
+      "tag": {
+        "id": "Q580",
+        "theme": "肘関節脱臼で多いのはどれか",
+        "knowledge_node": "肘関節脱臼は転倒時に伸展位で手をつく機転などで生じ、尺骨・橈骨が上腕骨に対して後方へ脱臼する後方脱臼が最も多い",
+        "knowledge_node_id": "KN0572",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "肘関節脱臼で多いのはどれかの基本概念"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "qid": "Q587",
+      "question": {
+        "id": "Q587",
+        "management_code": "Q587-C-16-P",
+        "category_large": "C",
+        "category_small": 16,
+        "source": "P",
+        "title": null,
+        "question_text": "腰椎分離症で分離するのはどれか。",
+        "choices": {
+          "1": "横突起",
+          "2": "棘突起",
+          "3": "椎間板",
+          "4": "椎弓",
+          "5": "椎体"
+        },
+        "exam": {
+          "exam_no": 52,
+          "session": "午後",
+          "question_no": 41
+        }
+      },
+      "answer": {
+        "id": "Q587",
+        "display_answer": "4",
+        "accepted_answer_sets": [
+          [
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q587",
+        "explanation": "腰椎分離症は椎弓の関節突起間部に疲労骨折などによる分離が生じる病態である。したがって選択肢では椎弓が正しい。",
+        "choice_explanations": {
+          "1": "横突起の分離ではない。",
+          "2": "棘突起の分離ではない。",
+          "3": "椎間板病変ではない。",
+          "4": "○。椎弓の関節突起間部に分離が生じる。",
+          "5": "椎体そのものの分離ではない。"
+        }
+      },
+      "tag": {
+        "id": "Q587",
+        "theme": "腰椎分離症で分離するのはどれか",
+        "knowledge_node": "腰椎分離症は椎弓の関節突起間部に疲労骨折などによる分離が生じる病態である",
+        "knowledge_node_id": "KN0579",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "腰椎分離症で分離するのはどれかの基本概念"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "qid": "Q624",
+      "question": {
+        "id": "Q624",
+        "management_code": "Q624-C-16-P",
+        "category_large": "C",
+        "category_small": 16,
+        "source": "P",
+        "title": null,
+        "question_text": "上腕骨顆上骨折で正しいのはどれか。",
+        "choices": {
+          "1": "老年期に多い。",
+          "2": "原則として手術を行う。",
+          "3": "外反肘を生じることが多い。",
+          "4": "前腕の循環不全を生じやすい。",
+          "5": "肘関節屈曲位での受傷が多い。"
+        },
+        "exam": {
+          "exam_no": 52,
+          "session": "午後",
+          "question_no": 85
+        }
+      },
+      "answer": {
+        "id": "Q624",
+        "display_answer": "4",
+        "accepted_answer_sets": [
+          [
+            "4"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q624",
+        "explanation": "上腕骨顆上骨折は小児に多く、上腕動脈や正中神経などの損傷により前腕の循環不全を起こす危険がある。Volkmann拘縮につながるため循環評価が重要である。",
+        "choice_explanations": {
+          "1": "小児に多く、老年期特有ではない。",
+          "2": "転位の程度により保存療法も行われる。",
+          "3": "後遺変形は内反肘が多い。",
+          "4": "○。上腕動脈障害で前腕循環不全を生じうる。",
+          "5": "多くは肘伸展位で手をついて受傷する。"
+        }
+      },
+      "tag": {
+        "id": "Q624",
+        "theme": "上腕骨顆上骨折で正しいのはどれか",
+        "knowledge_node": "上腕骨顆上骨折の基本事項",
+        "knowledge_node_id": "KN0616",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "moderate",
+        "prerequisite_nodes": [
+          "上腕骨顆上骨折で正しいのはどれかの基本概念"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    },
+    {
+      "qid": "Q642",
+      "question": {
+        "id": "Q642",
+        "management_code": "Q642-C-16-P",
+        "category_large": "C",
+        "category_small": 16,
+        "source": "P",
+        "title": null,
+        "question_text": "関節リウマチにおいて、余暇、仕事、身の回りのことの3つの要素から機能状態の程度を示す指標はどれか。",
+        "choices": {
+          "1": "CMI",
+          "2": "DAS28〈Disease Activity Score 28〉",
+          "3": "Larsen分類",
+          "4": "Sharp score",
+          "5": "Steinbrockerのclass分類"
+        },
+        "exam": {
+          "exam_no": 54,
+          "session": "午前",
+          "question_no": 30
+        }
+      },
+      "answer": {
+        "id": "Q642",
+        "display_answer": "5",
+        "accepted_answer_sets": [
+          [
+            "5"
+          ]
+        ],
+        "answer_basis": "MHLW_official"
+      },
+      "explanation": {
+        "id": "Q642",
+        "explanation": "Steinbrockerのclass分類は関節リウマチ患者の機能障害を、身の回り動作・職業活動・余暇活動の可否から4段階に分類する。",
+        "choice_explanations": {
+          "1": "CMIは心身の自覚症状をみる質問紙である。",
+          "2": "DAS28は疾患活動性を評価する。",
+          "3": "Larsen分類はX線画像で関節破壊を評価する。",
+          "4": "Sharp scoreも画像上の関節破壊を定量化する。",
+          "5": "○。Steinbrocker classは機能状態を分類する。"
+        }
+      },
+      "tag": {
+        "id": "Q642",
+        "theme": "関節リウマチにおいて、余暇、仕事、身の回りのことの3つの要素から機能状態の程度を示す",
+        "knowledge_node": "Steinbrockerのclass分類は関節リウマチ患者の機能障害を、身の回り動作・職業活動・余暇活動の可否から4段階に分類する",
+        "knowledge_node_id": "KN0634",
+        "task": "fact_recall",
+        "primary_ability": "KNOW",
+        "secondary_ability": null,
+        "level": 1,
+        "safety": "none",
+        "prerequisite_nodes": [
+          "Steinbrockerのclass分類は関節リウマチ患者の機能障害を、身の回り動作・職業活動・余暇活動の可否から4段階に分類する。",
+          "Steinbrocker classは機能状態を分類する。"
+        ],
+        "tag_version": "1.0",
+        "tag_status": "reviewed",
+        "source": "past_exam"
+      }
+    }
+  ]
+}

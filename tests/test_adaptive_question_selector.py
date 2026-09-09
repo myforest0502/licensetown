@@ -652,3 +652,22 @@ def test_production_simulation_loader_is_select_only():
     assert not any(word in connection.value.sql.upper() for word in (
         "INSERT", "UPDATE", "DELETE", "TRUNCATE", "ALTER", "CREATE", "DROP"
     ))
+
+
+def test_explicit_exploration_intent_fills_with_exploration_before_higher_score_groups(monkeypatch):
+    fake_bank(monkeypatch, count=80)
+    monkeypatch.setattr(selector, "classify_repair_confirmation", lambda old, new: (
+        "same_question" if old == new else "different_question_strong"
+    ))
+    attempts = [
+        attempt(f"Q{node * 2 - 1}", f"KN{node:04d}", False, minute=node)
+        for node in range(1, 11)
+    ]
+    selected = selector.select_node_adaptive_questions(
+        attempts,
+        10,
+        rng=random.Random(91),
+        learning_intent="exploration",
+    )
+    assert len(selected) == 10
+    assert all(item["priority_group"] == "exploration" for item in selected)

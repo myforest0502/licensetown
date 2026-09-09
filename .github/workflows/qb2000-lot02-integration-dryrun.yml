@@ -1,0 +1,23 @@
+name: qb2000-lot02-integration-dryrun
+
+on:
+  push:
+    branches: [work/qb2000-lot02-active]
+
+jobs:
+  dryrun:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install pytest
+        run: pip install pytest
+      - name: Validate sealed staging and dry-run integration
+        run: |
+          python -m reports.question_bank_2000_lot02_validate
+          python -m pytest -q tests/test_question_bank_2000_lot02_integration.py

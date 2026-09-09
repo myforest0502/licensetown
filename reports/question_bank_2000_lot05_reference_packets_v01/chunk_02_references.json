@@ -1,0 +1,769 @@
+[
+  {
+    "draft_id": "L05-C3-M01",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0678",
+    "target_node_label": "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める",
+    "planned_task": "prognosis_prediction",
+    "planned_primary_ability": "PREDICT",
+    "planned_level": 4,
+    "references": [
+      {
+        "question_id": "Q686",
+        "question": {
+          "id": "Q686",
+          "management_code": "Q686-A-3-P",
+          "category_large": "A",
+          "category_small": 3,
+          "source": "P",
+          "title": null,
+          "question_text": "ライフステージにおける成人期後期（50〜60歳ころ）の特徴で適切なのはどれか。",
+          "choices": {
+            "1": "親しい人の死を経験し、自分の死についても受容的になる。",
+            "2": "心理社会的な猶予期間（モラトリアム）といえる時期である。",
+            "3": "仕事や家庭を持つようになり、社会人としての成長をみせる。",
+            "4": "経験の蓄積により判断力は向上を続けるが記憶力は低下を示す。",
+            "5": "社会的役割の減少や身体的不自由など多くの喪失体験がみられる。"
+          },
+          "exam": {
+            "exam_no": 54,
+            "session": "午前",
+            "question_no": 79
+          }
+        },
+        "answer": {
+          "id": "Q686",
+          "display_answer": "4",
+          "accepted_answer_sets": [
+            [
+              "4"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q686",
+          "explanation": "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める。したがって4が最も適切である。",
+          "choice_explanations": {
+            "1": "死の受容はより高齢期の課題として目立つ。",
+            "2": "モラトリアムは青年期に関連する。",
+            "3": "仕事・家庭の獲得は成人前期の特徴である。",
+            "4": "○。経験による判断力は保たれつつ記憶力低下がみられる。",
+            "5": "社会的役割減少・喪失体験は老年期で顕著になる。"
+          }
+        },
+        "tag": {
+          "id": "Q686",
+          "theme": "ライフステージにおける成人期後期（50〜60歳ころ）の特徴で適切なのはどれか",
+          "knowledge_node": "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める",
+          "knowledge_node_id": "KN0678",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "したがって4が最も適切である。",
+            "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1622",
+        "question": {
+          "id": "Q1622",
+          "management_code": "Q1622-A-3-O",
+          "category_large": "A",
+          "category_small": 3,
+          "source": "O",
+          "title": "加齢・認知機能",
+          "question_text": "健康な高齢者は、語彙問題や日常的でなじみのある状況の判断には正確に答えるが、初めて行う符号・数字課題の習得には時間がかかり、遅延後に再生できる新しい項目も少なかった。正常な高齢期の認知変化として最も適切な解釈はどれか。",
+          "choices": {
+            "A": "蓄積された知識や経験に基づく判断は比較的保たれる一方、処理速度や新しい情報の学習・符号化は低下し得る。",
+            "B": "すべての認知能力は同じ速さで低下する。",
+            "C": "語彙が保たれていれば、加齢による認知変化はない。",
+            "D": "処理速度が遅いだけで認知症と診断できる。",
+            "E": "新しい情報の学習は改善し、結晶性知識が選択的に失われる。"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1622",
+          "display_answer": "A",
+          "accepted_answer_sets": [
+            [
+              "A"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1622",
+          "explanation": "正常加齢の変化には個人差があるが、語彙などの結晶性知識や経験に基づく判断は比較的保たれやすい一方、処理速度や新しい情報の符号化・学習の一部は低下し得る。この所見だけで認知症を診断したり、認知症がないと断定したりすることはできない。",
+          "choice_explanations": {
+            "A": "正しい。蓄積された知識の保持と、処理速度・新規学習の低下が併存するパターンは正常な高齢期でもみられ得る。",
+            "B": "認知機能の各領域は一様かつ同じ速度で変化するとは限らない。",
+            "C": "語彙が保たれていても、処理速度などに加齢性変化が起こることはある。",
+            "D": "処理速度の低下だけで認知症とは診断できない。",
+            "E": "一般的な傾向とは逆であり、新規学習が必ず改善するわけではない。"
+          }
+        },
+        "tag": {
+          "id": "Q1622",
+          "theme": "正常な高齢期における結晶性知識と新規学習の変化",
+          "knowledge_node": "高齢期では経験と知識に基づく判断力は保たれやすいが、記憶力は低下し始める",
+          "knowledge_node_id": "KN0678",
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET",
+          "secondary_ability": "KNOW",
+          "level": 3,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "正常加齢",
+            "結晶性知識",
+            "処理速度",
+            "新規学習",
+            "符号化"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C4-S01",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN0720",
+    "target_node_label": "Down症候群では筋緊張低下と関節弛緩性により、殿部を床につけて移動するshufflingなど独特の移動様式がみられることがある",
+    "planned_task": "functional_goal_decision",
+    "planned_primary_ability": "DECIDE",
+    "planned_level": 3,
+    "references": [
+      {
+        "question_id": "Q728",
+        "question": {
+          "id": "Q728",
+          "management_code": "Q728-A-4-P",
+          "category_large": "A",
+          "category_small": 4,
+          "source": "P",
+          "title": null,
+          "question_text": "Down症候群の子どもの運動発達の特徴で適切なのはどれか。",
+          "choices": {
+            "1": "後弓反張",
+            "2": "はさみ脚歩行",
+            "3": "スカーフ徴候陰性",
+            "4": "シャフリング移動",
+            "5": "緊張性迷路反射亢進"
+          },
+          "exam": {
+            "exam_no": 54,
+            "session": "午後",
+            "question_no": 45
+          }
+        },
+        "answer": {
+          "id": "Q728",
+          "display_answer": "4",
+          "accepted_answer_sets": [
+            [
+              "4"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q728",
+          "explanation": "Down症候群では筋緊張低下と関節弛緩性により、殿部を床につけて移動するshufflingなど独特の移動様式がみられることがある。したがって4が適切である。",
+          "choice_explanations": {
+            "1": "後弓反張は典型的特徴ではない。",
+            "2": "はさみ脚は痙直型脳性麻痺にみられやすい。",
+            "3": "筋緊張低下によりスカーフ徴候は陽性になりやすい。",
+            "4": "○。shuffling移動がみられることがある。",
+            "5": "緊張性迷路反射亢進は典型的ではない。"
+          }
+        },
+        "tag": {
+          "id": "Q728",
+          "theme": "Down症候群の子どもの運動発達の特徴で適切なのはどれか",
+          "knowledge_node": "Down症候群では筋緊張低下と関節弛緩性により、殿部を床につけて移動するshufflingなど独特の移動様式がみられることがある",
+          "knowledge_node_id": "KN0720",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "したがって4が適切である。",
+            "Down症候群では筋緊張低下と関節弛緩性により、殿部を床につけて移動するshufflingなど独特の移動様式がみられることがある。",
+            "shuffling移動がみられることがある。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C4-M01",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0612",
+    "target_node_label": "老年期の課題は「自我の統合 対 絶望」である",
+    "planned_task": "prognosis_prediction",
+    "planned_primary_ability": "PREDICT",
+    "planned_level": 4,
+    "references": [
+      {
+        "question_id": "Q620",
+        "question": {
+          "id": "Q620",
+          "management_code": "Q620-A-4-P",
+          "category_large": "A",
+          "category_small": 4,
+          "source": "P",
+          "title": null,
+          "question_text": "Eriksonによる発達段階で老年期に獲得すべき課題はどれか。",
+          "choices": {
+            "1": "親密",
+            "2": "統合",
+            "3": "勤勉",
+            "4": "自律",
+            "5": "同一性"
+          },
+          "exam": {
+            "exam_no": 52,
+            "session": "午後",
+            "question_no": 80
+          }
+        },
+        "answer": {
+          "id": "Q620",
+          "display_answer": "2",
+          "accepted_answer_sets": [
+            [
+              "2"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q620",
+          "explanation": "Eriksonの心理社会的発達理論では老年期の課題は「自我の統合 対 絶望」である。人生を振り返り意味を受け入れる統合の獲得が重要となる。",
+          "choice_explanations": {
+            "1": "親密性は成人初期の課題である。",
+            "2": "○。老年期は自我の統合が課題となる。",
+            "3": "勤勉性は学童期の課題である。",
+            "4": "自律性は幼児前期の課題である。",
+            "5": "同一性は青年期の課題である。"
+          }
+        },
+        "tag": {
+          "id": "Q620",
+          "theme": "Eriksonによる発達段階で老年期に獲得すべき課題はどれか",
+          "knowledge_node": "老年期の課題は「自我の統合 対 絶望」である",
+          "knowledge_node_id": "KN0612",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "Eriksonによる発達段階で老年期に獲得すべき課題はどの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1867",
+        "question": {
+          "id": "Q1867",
+          "management_code": "Q1867-A-4-O",
+          "category_large": "A",
+          "category_small": 4,
+          "source": "O",
+          "title": "老年期の心理社会的課題",
+          "question_text": "78歳男性が「失敗もあったが、自分の人生には意味があった」と穏やかに振り返っている。Eriksonの発達理論で最も示唆される状態はどれか。",
+          "choices": {
+            "A": "自我の統合",
+            "B": "基本的信頼の獲得",
+            "C": "自律性の確立",
+            "D": "勤勉性の獲得",
+            "E": "同一性の確立"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1867",
+          "display_answer": "A",
+          "accepted_answer_sets": [
+            [
+              "A"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1867",
+          "explanation": "老年期の心理社会的課題は自我の統合対絶望である。自分の人生を肯定的に受け止め、意味のあるものとして統合している発言は自我の統合を示す。",
+          "choice_explanations": {
+            "A": "○。人生を受容し意味づけて振り返る姿勢は自我の統合に合う。",
+            "B": "基本的信頼対不信は乳児期の課題である。",
+            "C": "自律性対恥・疑惑は幼児前期の課題である。",
+            "D": "勤勉性対劣等感は学童期の課題である。",
+            "E": "同一性対同一性拡散は青年期の課題である。"
+          }
+        },
+        "tag": {
+          "id": "Q1867",
+          "theme": "老年期の心理社会的課題",
+          "knowledge_node": "老年期の課題は「自我の統合 対 絶望」である",
+          "knowledge_node_id": "KN0612",
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET",
+          "secondary_ability": null,
+          "level": 3,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "Eriksonによる発達段階で老年期に獲得すべき課題はどの基本概念"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C5-M01",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN1332",
+    "target_node_label": "特別支援学校の教育環境",
+    "planned_task": "intervention_selection",
+    "planned_primary_ability": "PRESCRIBE",
+    "planned_level": 3,
+    "references": [
+      {
+        "question_id": "Q1352",
+        "question": {
+          "id": "Q1352",
+          "management_code": "Q1352-A-5-P",
+          "category_large": "A",
+          "category_small": 5,
+          "source": "P",
+          "title": null,
+          "question_text": "特別支援学校の教育環境で誤っているのはどれか。",
+          "choices": {
+            "1": "自立活動関係教室を設置する。",
+            "2": "発達障害を有する児も在籍する。",
+            "3": "学級編成人数は 10 名以上である。",
+            "4": "複数の食形態での食事が可能である。",
+            "5": "ベッドタイプのトイレが併設された学校もある。"
+          },
+          "exam": {
+            "exam_no": 59,
+            "session": "午後",
+            "question_no": 45
+          }
+        },
+        "answer": {
+          "id": "Q1352",
+          "display_answer": "3",
+          "accepted_answer_sets": [
+            [
+              "3"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q1352",
+          "explanation": "特別支援学校の学級編成人数は少人数で設定され、通常1学級10名以上ではない。",
+          "choice_explanations": {
+            "1": "自立活動関係教室を設置する。",
+            "2": "発達障害児が在籍する場合もある。",
+            "3": "○。学級人数を10名以上とするのは誤り。",
+            "4": "複数食形態へ対応する学校がある。",
+            "5": "ベッド型トイレ等を備える学校もある。"
+          }
+        },
+        "tag": {
+          "id": "Q1352",
+          "theme": "特別支援学校の教育環境で誤っているのはどれか",
+          "knowledge_node": "特別支援学校の教育環境",
+          "knowledge_node_id": "KN1332",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "特別支援学校の学級編成人数は少人数で設定され、通常1学級10名以上ではない。",
+            "学級人数を10名以上とするのは誤り。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      },
+      {
+        "question_id": "Q1870",
+        "question": {
+          "id": "Q1870",
+          "management_code": "Q1870-A-5-O",
+          "category_large": "A",
+          "category_small": 5,
+          "source": "O",
+          "title": "特別支援学校での参加目標",
+          "question_text": "肢体不自由のある中学生。教室移動に時間を要するが、本人は友人と同じ授業や学校行事への参加を希望している。学校での支援目標として最も適切なのはどれか。",
+          "choices": {
+            "A": "必要な環境調整を行い授業・行事への参加機会を確保する",
+            "B": "移動が遅いため学校行事への参加を一律に中止する",
+            "C": "身体機能が完全に正常化するまで学習参加を控える",
+            "D": "本人の希望より介助者の都合を常に優先する",
+            "E": "安全確認をせず単独移動だけを求める"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q1870",
+          "display_answer": "A",
+          "accepted_answer_sets": [
+            [
+              "A"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q1870",
+          "explanation": "特別支援教育では、障害特性に応じた合理的な環境調整と支援によって学習・学校生活への参加を保障する視点が重要である。",
+          "choice_explanations": {
+            "A": "○。本人の希望と安全を踏まえ参加を支える目標である。",
+            "B": "障害を理由に一律に参加機会を奪うのは適切でない。",
+            "C": "機能の完全正常化を参加条件にしない。",
+            "D": "本人中心の目標設定に反する。",
+            "E": "安全への配慮が欠ける。"
+          }
+        },
+        "tag": {
+          "id": "Q1870",
+          "theme": "特別支援学校での参加目標",
+          "knowledge_node": "特別支援学校の教育環境",
+          "knowledge_node_id": "KN1332",
+          "task": "functional_goal_decision",
+          "primary_ability": "DECIDE",
+          "secondary_ability": null,
+          "level": 3,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "特別支援学校の学級編成人数は少人数で設定され、通常1学級10名以上ではない。",
+            "学級人数を10名以上とするのは誤り。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "original"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C6-S01",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN0979",
+    "target_node_label": "ICFは心身機能・身体構造、活動、参加、環境因子などが相互作用するモデルで、活動・参加の第一評価点は実行状況を表す",
+    "planned_task": "functional_goal_decision",
+    "planned_primary_ability": "DECIDE",
+    "planned_level": 3,
+    "references": [
+      {
+        "question_id": "Q989",
+        "question": {
+          "id": "Q989",
+          "management_code": "Q989-A-6-P",
+          "category_large": "A",
+          "category_small": 6,
+          "source": "P",
+          "title": null,
+          "question_text": "ICFで正しいのはどれか。2つ選べ。",
+          "choices": {
+            "1": "各構成要素は相互に関連している。",
+            "2": "障害を有した人のみが対象である。",
+            "3": "ICFコアセットでは全コードを評価する。",
+            "4": "ライフスタイルは環境因子の1つである。",
+            "5": "活動と参加の第一評価点は実行状況を表す。"
+          },
+          "exam": {
+            "exam_no": 56,
+            "session": "午後",
+            "question_no": 21
+          }
+        },
+        "answer": {
+          "id": "Q989",
+          "display_answer": "1・5",
+          "accepted_answer_sets": [
+            [
+              "1",
+              "5"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q989",
+          "explanation": "ICFは心身機能・身体構造、活動、参加、環境因子などが相互作用するモデルで、活動・参加の第一評価点は実行状況を表す。1・5が正しい。",
+          "choice_explanations": {
+            "1": "○。各構成要素は相互に関連。",
+            "2": "すべての人を対象とする。",
+            "3": "コアセットは重要項目を絞ったもの。",
+            "4": "ライフスタイルは個人因子として扱う。",
+            "5": "○。第一評価点は実行状況。"
+          }
+        },
+        "tag": {
+          "id": "Q989",
+          "theme": "ICFで正しいのはどれか",
+          "knowledge_node": "ICFは心身機能・身体構造、活動、参加、環境因子などが相互作用するモデルで、活動・参加の第一評価点は実行状況を表す",
+          "knowledge_node_id": "KN0979",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "ICFは心身機能・身体構造、活動、参加、環境因子などが相互作用するモデルで、活動・参加の第一評価点は実行状況を表す。",
+            "1・5が正しい。",
+            "各構成要素は相互に関連。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C6-M01",
+    "slot_type": "multi_reinforcement",
+    "target_node_id": "KN0131",
+    "target_node_label": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である",
+    "planned_task": "assessment_selection",
+    "planned_primary_ability": "MEASURE",
+    "planned_level": 2,
+    "references": [
+      {
+        "question_id": "Q131",
+        "question": {
+          "id": "Q131",
+          "management_code": "Q131-A-6-O",
+          "category_large": "A",
+          "category_small": 6,
+          "source": "O",
+          "title": "研究法・診断精度",
+          "question_text": "ある疾患の患者20人と非患者80人に検査を実施した。患者のうち18人、非患者のうち16人が陽性であった。この検査の感度はどれか。",
+          "choices": {
+            "A": "20％",
+            "B": "64％",
+            "C": "80％",
+            "D": "90％",
+            "E": "95％"
+          },
+          "exam": null
+        },
+        "answer": {
+          "id": "Q131",
+          "display_answer": "D",
+          "accepted_answer_sets": [
+            [
+              "D"
+            ]
+          ],
+          "answer_basis": "LT_original"
+        },
+        "explanation": {
+          "id": "Q131",
+          "explanation": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である。本問では疾患患者20人中18人が陽性であるため、18÷20×100＝90％となる。非患者80人中16人が陽性という情報は偽陽性に関係し、感度の計算には使用しない。",
+          "choice_explanations": {
+            "A": "20％は非患者80人中16人が陽性となった割合であり、偽陽性率に相当する。",
+            "B": "64％は本問の患者数と陽性者数から算出されない。",
+            "C": "80％は疾患患者中の陽性割合ではない。",
+            "D": "正しい。疾患患者20人中18人が陽性であり、感度は90％である。",
+            "E": "95％は18÷20の計算結果と一致しない。"
+          }
+        },
+        "tag": {
+          "id": "Q131",
+          "theme": "研究法・診断精度",
+          "knowledge_node": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である",
+          "knowledge_node_id": "KN0131",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": "MEASURE",
+          "level": 2,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "真陽性",
+            "患者数",
+            "sensitivity"
+          ],
+          "tag_version": "0.3",
+          "tag_status": "reviewed_sample",
+          "source": "original"
+        }
+      },
+      {
+        "question_id": "Q1574",
+        "question": {
+          "id": "Q1574",
+          "management_code": "Q1574-A-6-P",
+          "category_large": "A",
+          "category_small": 6,
+          "source": "P",
+          "title": null,
+          "question_text": "検査の感度を示す説明で正しいのはどれか。",
+          "choices": {
+            "1": "測定の精密度",
+            "2": "実際の患者が検査で陽性となる確率",
+            "3": "実際の患者でない者が検査で陰性となる確率",
+            "4": "検査が陽性だった場合に実際の患者である確率",
+            "5": "検査が陰性だった場合に実際の患者でない確率"
+          },
+          "exam": {
+            "exam_no": 45,
+            "session": "午前",
+            "question_no": 23
+          }
+        },
+        "answer": {
+          "id": "Q1574",
+          "display_answer": "2",
+          "accepted_answer_sets": [
+            [
+              "2"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q1574",
+          "explanation": "感度は、実際に疾患がある人のうち検査陽性となる人の割合、すなわち真陽性率である。",
+          "choice_explanations": {
+            "1": "精密度は測定値のばらつきの小ささを表し、感度とは異なる。",
+            "2": "正しい。疾患あり群で検査陽性となる確率が感度である。",
+            "3": "疾患なし群で検査陰性となる確率は特異度である。",
+            "4": "検査陽性者が実際に疾患を有する確率は陽性的中率である。",
+            "5": "検査陰性者が実際に疾患を有しない確率は陰性的中率である。"
+          }
+        },
+        "tag": {
+          "id": "Q1574",
+          "theme": "検査の感度の定義",
+          "knowledge_node": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である",
+          "knowledge_node_id": "KN0131",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": "MEASURE",
+          "level": 2,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "真陽性",
+            "患者数",
+            "sensitivity"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  },
+  {
+    "draft_id": "L05-C7-S01",
+    "slot_type": "singleton_second",
+    "target_node_id": "KN0690",
+    "target_node_label": "熱傷深度ではⅠ度は発赤のみ、浅達性Ⅱ度は湿潤・水疱で強い痛み、深達性Ⅱ度では知覚低下を伴うことがある",
+    "planned_task": "safety_priority",
+    "planned_primary_ability": "DECIDE",
+    "planned_level": 4,
+    "references": [
+      {
+        "question_id": "Q698",
+        "question": {
+          "id": "Q698",
+          "management_code": "Q698-B-7-P",
+          "category_large": "B",
+          "category_small": 7,
+          "source": "P",
+          "title": null,
+          "question_text": "熱傷で正しいのはどれか。",
+          "choices": {
+            "1": "熱傷面積はⅠ、Ⅱ、Ⅲ度すべての面積を合わせて計算する。",
+            "2": "Ⅰ度熱傷では水疱がみられる。",
+            "3": "浅達性Ⅱ度熱傷では水疱底は蒼白である。",
+            "4": "深達性Ⅱ度熱傷では疼痛がみられる。",
+            "5": "Ⅲ度熱傷では創底から上皮化が起こる。"
+          },
+          "exam": {
+            "exam_no": 54,
+            "session": "午前",
+            "question_no": 94
+          }
+        },
+        "answer": {
+          "id": "Q698",
+          "display_answer": "4",
+          "accepted_answer_sets": [
+            [
+              "4"
+            ]
+          ],
+          "answer_basis": "MHLW_official"
+        },
+        "explanation": {
+          "id": "Q698",
+          "explanation": "熱傷深度ではⅠ度は発赤のみ、浅達性Ⅱ度は湿潤・水疱で強い痛み、深達性Ⅱ度では知覚低下を伴うことがある。深達性Ⅱ度でも痛みは残るため4が正しい。",
+          "choice_explanations": {
+            "1": "熱傷面積は通常Ⅱ度以上を中心に評価しⅠ度は含めない。",
+            "2": "Ⅰ度では水疱はみられない。",
+            "3": "浅達性Ⅱ度の創底は赤色調で血流が保たれる。",
+            "4": "○。深達性Ⅱ度でも痛みを認める。",
+            "5": "Ⅲ度では皮膚付属器も障害され自然上皮化しにくい。"
+          }
+        },
+        "tag": {
+          "id": "Q698",
+          "theme": "熱傷で正しいのはどれか",
+          "knowledge_node": "熱傷深度ではⅠ度は発赤のみ、浅達性Ⅱ度は湿潤・水疱で強い痛み、深達性Ⅱ度では知覚低下を伴うことがある",
+          "knowledge_node_id": "KN0690",
+          "task": "fact_recall",
+          "primary_ability": "KNOW",
+          "secondary_ability": null,
+          "level": 1,
+          "safety": "none",
+          "prerequisite_nodes": [
+            "深達性Ⅱ度でも痛みは残るため4が正しい。",
+            "熱傷深度ではⅠ度は発赤のみ、浅達性Ⅱ度は湿潤・水疱で強い痛み、深達性Ⅱ度では知覚低下を伴うことがある。"
+          ],
+          "tag_version": "1.0",
+          "tag_status": "reviewed",
+          "source": "past_exam"
+        }
+      }
+    ],
+    "authoring_guard": "Do not copy the reference stem or test the same semantic demand."
+  }
+]

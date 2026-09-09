@@ -1,0 +1,461 @@
+{
+  "lot": 5,
+  "chunk": 2,
+  "formal_baseline": "Q1-Q1953",
+  "status": "completed_chunk",
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L05-C3-M01",
+      "draft_order": 8,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0678",
+      "target_node_label": "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める",
+      "reference_question_ids": [
+        "Q686",
+        "Q1622"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 3,
+      "proposed_task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "title": "成人後期の認知変化の見通し",
+      "question_text": "58歳。仕事上の判断や長年の経験を使う課題は問題ないが、新しい機器の操作を覚えるのに以前より時間がかかるという。正常加齢として今後最も考えやすい経過はどれか。",
+      "choices": {
+        "1": "日常生活が急速に自立不能となる",
+        "2": "新しい情報の学習に時間を要しやすくなるが、生活経験を用いる判断は比較的保たれる",
+        "3": "数か月以内に失語が進行する",
+        "4": "長期記憶が突然すべて失われる",
+        "5": "判断力だけが選択的に急速低下する"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "正常加齢では、新しい情報を学習したり想起したりする速度が遅くなることはあるが、それだけで日常生活の自立を失うとは限らない。本例のように経験を基盤とする判断が保たれ、新規学習に時間を要する変化は正常加齢の範囲として説明可能である。",
+      "choice_explanations": {
+        "1": "急速な自立低下は正常加齢だけでは説明しにくい。",
+        "2": "○。新規学習や想起速度の低下は正常加齢でみられうる一方、経験を用いる日常判断は比較的保たれやすい。",
+        "3": "進行性失語は正常加齢の典型ではない。",
+        "4": "突然の全記憶消失は正常加齢ではない。",
+        "5": "判断力のみの急速低下は正常加齢の一般的経過ではない。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.nia.nih.gov/health/alzheimers-symptoms-and-diagnosis/do-memory-problems-always-mean-alzheimers-disease",
+          "support": "NIA notes that older adults may take longer to learn new information and recall it less quickly, while serious impairment of everyday activities is not a normal aging change."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "prognosis_prediction/PREDICT: 現在の軽度変化から正常加齢の今後を見通す",
+        "why_not_same_demand": "既存の知識・所見解釈ではなく、正常加齢として予測される経過を選ばせる。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW, finding_interpretation/INTERPRET"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "prognosis_prediction/PREDICT: 現在の軽度変化から正常加齢の今後を見通す"
+    },
+    {
+      "draft_id": "L05-C4-S01",
+      "draft_order": 9,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0720",
+      "target_node_label": "Down症候群では筋緊張低下と関節弛緩性により、殿部を床につけて移動するshufflingなど独特の移動様式がみられることがある",
+      "reference_question_ids": [
+        "Q728"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 4,
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "Down症候群児の移動目標",
+      "question_text": "Down症候群の2歳児。筋緊張低下と関節弛緩性があり、殿部を床につけたshufflingで移動している。理学療法の短期目標として最も適切なのはどれか。",
+      "choices": {
+        "1": "shufflingの速度だけを最大化する",
+        "2": "下肢アライメントと姿勢制御に配慮し、床から立位への移行と支持下での歩行経験を増やす",
+        "3": "関節弛緩性をなくすまで移動を禁止する",
+        "4": "すべての移動を介助者による抱き上げに置き換える",
+        "5": "筋緊張を高めるため常に強い共同収縮を強制する"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "Down症候群では筋緊張低下、靱帯弛緩、筋力低下などが運動発達や姿勢制御に影響する。目標は代償的な移動様式そのものを否定するのではなく、より効率的で将来の合併症を減らす運動パターンを育て、立位・歩行など次の移動能力へつなげることである。",
+      "choice_explanations": {
+        "1": "速度だけを上げても、効率的な運動パターン獲得にはつながらない。",
+        "2": "○。姿勢制御とアライメントに配慮しながら次の粗大運動課題へ進む目標が適切である。",
+        "3": "移動経験を一律に禁止する必要はない。",
+        "4": "自発的な運動経験を減らしてしまう。",
+        "5": "強制的な共同収縮そのものを目標にするのは適切でない。"
+      },
+      "evidence": [
+        {
+          "url": "https://ndss.org/resources/pt-ot-down-syndrome",
+          "support": "NDSS describes hypotonia, ligamentous laxity and weakness as affecting motor development and states that PT aims to encourage the best movement patterns and gross motor skills."
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8898616/",
+          "support": "Systematic review reports hypotonia, ligament laxity, reduced strength, postural-control problems and delayed sitting/standing/walking in children with Down syndrome."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "functional_goal_decision/DECIDE: 現在の代償移動から次の機能目標を決める",
+        "why_not_same_demand": "shufflingの知識を直接問わず、発達・姿勢制御を踏まえて短期目標を選ぶ。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "functional_goal_decision/DECIDE: 現在の代償移動から次の機能目標を決める"
+    },
+    {
+      "draft_id": "L05-C4-M01",
+      "draft_order": 10,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0612",
+      "target_node_label": "老年期の課題は「自我の統合 対 絶望」である",
+      "reference_question_ids": [
+        "Q620",
+        "Q1867"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 4,
+      "proposed_task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "title": "老年期のライフレビューと心理的帰結",
+      "question_text": "78歳。退職後、過去の失敗への後悔を繰り返し語り、自分の人生には意味がなかったと否定的に捉えている。この状態が固定化した場合、Eriksonの理論上最も生じやすいのはどれか。",
+      "choices": {
+        "1": "基本的信頼の獲得",
+        "2": "自律性の獲得",
+        "3": "生殖性の増大",
+        "4": "絶望感の強まり",
+        "5": "勤勉性の獲得"
+      },
+      "correct_choices": [
+        "4"
+      ],
+      "explanation": "Eriksonでは老年期の心理社会的課題は自我の統合対絶望である。人生をまとまりあるものとして受容できず、後悔や否定的評価が持続すると、統合より絶望側へ傾きやすい。",
+      "choice_explanations": {
+        "1": "基本的信頼は乳児期の課題である。",
+        "2": "自律性は幼児前期の課題である。",
+        "3": "生殖性は主に成人期の課題である。",
+        "4": "○。老年期に人生の受容が進まず後悔が固定化すると絶望側へ傾きやすい。",
+        "5": "勤勉性は学童期の課題である。"
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12997151/",
+          "support": "Review describes life review in older adults and relates successful integration to ego integrity, while unresolved regrets/conflicts can be associated with despair and poorer psychological outcomes."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "prognosis_prediction/PREDICT: 現在のライフレビューの方向から心理社会的帰結を予測する",
+        "why_not_same_demand": "段階名の暗記・現状態の同定ではなく、未解決の後悔が持続した場合の方向を予測する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW, finding_interpretation/INTERPRET"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "prognosis_prediction/PREDICT: 現在のライフレビューの方向から心理社会的帰結を予測する"
+    },
+    {
+      "draft_id": "L05-C5-M01",
+      "draft_order": 11,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN1332",
+      "target_node_label": "特別支援学校の教育環境",
+      "reference_question_ids": [
+        "Q1352",
+        "Q1870"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "functional_goal_decision",
+          "primary_ability": "DECIDE"
+        }
+      ],
+      "proposed_category_small": 5,
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "特別支援学校での個別指導",
+      "question_text": "特別支援学校に在籍する生徒で、姿勢保持と移動、コミュニケーションに個別の困難がある。自立活動の指導として最も適切なのはどれか。",
+      "choices": {
+        "1": "全生徒に同一の訓練内容を一律に実施する",
+        "2": "障害名だけで年間の指導内容を固定する",
+        "3": "実態把握に基づき個別の指導目標を設定し、必要な項目を関連付けて指導する",
+        "4": "医療職だけに指導内容を決定させ教師は関与しない",
+        "5": "評価を行わず年度末まで計画を変更しない"
+      },
+      "correct_choices": [
+        "3"
+      ],
+      "explanation": "自立活動では、個々の障害の状態、発達段階、生活・学習環境などを的確に把握し、長期・短期の目標を設定して必要な内容を関連付ける。実施状況を評価し、個別の指導計画や具体的指導を改善していくことが求められる。",
+      "choice_explanations": {
+        "1": "個別の実態に応じた指導が必要であり一律実施は適切でない。",
+        "2": "障害名だけでなく発達・経験・環境等の実態把握が必要である。",
+        "3": "○。実態把握に基づき目標と内容を個別化し関連付ける。",
+        "4": "専門家の助言は活用するが、教師を中心とした協力体制で指導する。",
+        "5": "学習状況を評価し計画改善に生かす必要がある。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.mext.go.jp/a_menu/shotou/new-cs/youryou/tokushi/1284629.htm",
+          "support": "文部科学省の特別支援学校学習指導要領は、自立活動で個々の実態把握に基づく目標・内容設定、個別の指導計画、評価と改善を求めている。"
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "intervention_selection/PRESCRIBE: 特別支援教育環境で適切な指導設計を選ぶ",
+        "why_not_same_demand": "教育環境の知識や目標判断だけでなく、具体的な個別指導の組み立て方を選択する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW, functional_goal_decision/DECIDE"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "intervention_selection/PRESCRIBE: 特別支援教育環境で適切な指導設計を選ぶ"
+    },
+    {
+      "draft_id": "L05-C6-S01",
+      "draft_order": 12,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0979",
+      "target_node_label": "ICFは心身機能・身体構造、活動、参加、環境因子などが相互作用するモデルで、活動・参加の第一評価点は実行状況を表す",
+      "reference_question_ids": [
+        "Q989"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 6,
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "ICF実行状況を改善する目標",
+      "question_text": "脳卒中後。訓練室では杖で100m歩けるが、自宅周囲は段差が多く手すりもないため外出していない。ICFの実行状況〈performance〉改善を最も直接ねらう目標はどれか。",
+      "choices": {
+        "1": "訓練室での最大歩行速度だけを上げる",
+        "2": "下肢筋力を測定するだけにする",
+        "3": "自宅周囲の環境調整と実地練習を行い、近所の店まで安全に外出できるようにする",
+        "4": "画像上の梗塞巣を小さくすることを目標にする",
+        "5": "標準環境での歩行能力だけを記録する"
+      },
+      "correct_choices": [
+        "3"
+      ],
+      "explanation": "ICFのperformanceは現在の実際の環境で何をしているかを表し、環境因子の影響を含む。訓練室での能力があっても実生活で外出できていないため、環境調整と実環境での練習を組み合わせた外出目標がperformance改善を直接ねらう。",
+      "choice_explanations": {
+        "1": "標準的な環境での能力向上だけでは実生活のperformance改善を直接保証しない。",
+        "2": "測定だけでは活動・参加の実行状況を改善しない。",
+        "3": "○。現在環境での実際の外出を環境因子とともに改善する目標である。",
+        "4": "ICFの活動・参加に対する直接的な機能目標ではない。",
+        "5": "capacity把握には有用だがperformance改善そのものではない。"
+      },
+      "evidence": [
+        {
+          "url": "https://apps.who.int/classifications/icfbrowser/Browse.aspx?code=d",
+          "support": "WHO ICF browser defines the performance qualifier as what a person does in the current environment and notes that environmental factors are part of this context."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "functional_goal_decision/DECIDE: capacity-performance差から実生活目標を決める",
+        "why_not_same_demand": "ICF構成要素の暗記ではなく、実環境と能力の差を使って目標を決定する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "functional_goal_decision/DECIDE: capacity-performance差から実生活目標を決める"
+    },
+    {
+      "draft_id": "L05-C6-M01",
+      "draft_order": 13,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0131",
+      "target_node_label": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である",
+      "reference_question_ids": [
+        "Q131",
+        "Q1574"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 6,
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "見逃しを減らすスクリーニング検査",
+      "question_text": "重篤な疾患の一次スクリーニングで、疾患がある人を陰性と判定して見逃すことをできるだけ減らしたい。優先すべき検査特性はどれか。",
+      "choices": {
+        "1": "感度が高い",
+        "2": "特異度が高いだけで感度は低い",
+        "3": "陽性的中率だけが高い",
+        "4": "陰性的中率だけが低い",
+        "5": "検査前確率にかかわらず陽性者が少ない"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "感度は真に疾患がある人のうち検査陽性となる割合である。見逃し、すなわち偽陰性を減らすスクリーニング目的では高感度の検査を優先する。",
+      "choice_explanations": {
+        "1": "○。高感度は疾患ありの人を陽性として拾い上げる能力が高く、偽陰性を減らす目的に合う。",
+        "2": "特異度は疾患なしを陰性にする能力で、見逃し低減の第一要件ではない。",
+        "3": "陽性的中率は有病率などにも影響され、ここで求める固有の拾い上げ能力とは異なる。",
+        "4": "陰性的中率が低い検査は陰性結果の安心度が低い。",
+        "5": "陽性者数の少なさ自体はスクリーニング性能の目的ではない。"
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6359896/",
+          "support": "Review defines sensitivity as the true-positive rate among diseased individuals and distinguishes it from specificity and predictive values."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "assessment_selection/MEASURE: 見逃しを減らす目的から検査特性を選ぶ",
+        "why_not_same_demand": "感度の定義暗記ではなく、臨床目的に応じて評価指標を選択する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "assessment_selection/MEASURE: 見逃しを減らす目的から検査特性を選ぶ"
+    },
+    {
+      "draft_id": "L05-C7-S01",
+      "draft_order": 14,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0690",
+      "target_node_label": "熱傷深度ではⅠ度は発赤のみ、浅達性Ⅱ度は湿潤・水疱で強い痛み、深達性Ⅱ度では知覚低下を伴うことがある",
+      "reference_question_ids": [
+        "Q698"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 7,
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "title": "痛みが乏しい深い熱傷の安全判断",
+      "question_text": "手背の熱傷。創面は白っぽく斑状で、圧迫による退色は遅く、水疱があるが痛みは予想より弱い。最優先の判断はどれか。",
+      "choices": {
+        "1": "痛みが弱いので表皮のみの浅い熱傷と判断する",
+        "2": "深達性Ⅱ度以上を疑い、専門的な熱傷評価につなげる",
+        "3": "正常皮膚と同じ強さで摩擦刺激を加える",
+        "4": "水疱をすべて自己処置で除去して運動を続ける",
+        "5": "感覚が弱いほど自然治癒が速いと説明する"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "深達性Ⅱ度熱傷では真皮深層まで障害され、神経終末の損傷により浅達性Ⅱ度より痛み・知覚が低下することがある。白色・斑状、退色遅延、感覚低下は深い熱傷を疑う所見であり、手のような機能的に重要な部位では深度を過小評価せず専門評価につなげる。",
+      "choice_explanations": {
+        "1": "痛みの乏しさはむしろ深い熱傷で神経終末が障害されている可能性がある。",
+        "2": "○。深達性Ⅱ度以上を疑い、深度を過小評価せず専門評価へつなげる。",
+        "3": "感覚低下部への強い摩擦刺激は組織損傷を悪化させうる。",
+        "4": "自己判断で創処置と運動継続を優先すべきではない。",
+        "5": "感覚低下は深い組織損傷を示しうち、治癒が速い根拠にはならない。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK539773/",
+          "support": "StatPearls describes superficial partial-thickness burns as blistered and painful, while deep partial-thickness burns can have sluggish blanching and minimal pain due to deeper injury."
+        },
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK430730/",
+          "support": "StatPearls burn management emphasizes depth/extent assessment and notes deeper burns have diminished sensation and may require specialist/surgical management."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "safety_priority/DECIDE: 痛みの弱さに惑わされず深い熱傷を疑い専門評価へつなぐ",
+        "why_not_same_demand": "熱傷深度所見の暗記ではなく、深度過小評価を避ける安全行動を選ぶ。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "safety_priority/DECIDE: 痛みの弱さに惑わされず深い熱傷を疑い専門評価へつなぐ"
+    }
+  ]
+}

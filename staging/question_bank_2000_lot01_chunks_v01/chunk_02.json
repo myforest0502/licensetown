@@ -1,0 +1,614 @@
+{
+  "lot": "question_bank_2000_production_lot01_v01",
+  "chunk": 2,
+  "chunk_count": 6,
+  "status": "completed_chunk",
+  "formal_baseline": "Q1-Q1761",
+  "q_ids_reserved": false,
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L01-C9-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0513",
+      "target_node_label": "Parkinson病の主要徴候には安静時振戦、筋強剛、無動・寡動、姿勢反射障害があり、突進現象や歯車様固縮がみられる",
+      "reference_question_ids": [
+        "Q521",
+        "Q1581"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "Parkinson病の所見統合",
+      "question_text": "67歳男性。右手の安静時振戦で発症し、右優位の動作緩慢と筋強剛を認める。反復回内外運動では右側で振幅が次第に小さくなり、指鼻試験は正常である。最も考えられる病態はどれか。",
+      "choices": {
+        "1": "Parkinson病",
+        "2": "本態性振戦",
+        "3": "小脳性運動失調",
+        "4": "末梢神経障害",
+        "5": "痙性対麻痺"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "左右差のある安静時振戦、動作緩慢、筋強剛、反復運動での振幅低下はParkinson病を支持する。小脳性運動失調を示す測定障害がない点も鑑別に有用である。",
+      "choice_explanations": {
+        "1": "○。動作緩慢に安静時振戦・筋強剛を伴う非対称性のパーキンソニズムである。",
+        "2": "本態性振戦は主に姿勢時・動作時振戦で、明らかな動作緩慢や筋強剛を通常伴わない。",
+        "3": "小脳障害では測定障害や企図振戦などが中心となる。",
+        "4": "末梢神経障害では感覚障害、筋力低下、腱反射低下などが中心である。",
+        "5": "痙性対麻痺は下肢優位の錐体路徴候で、本例の安静時振戦と筋強剛を説明しない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "複数の運動所見を統合し、単一徴候暗記ではなくParkinson病の臨床像を識別する。",
+      "semantic_review": {
+        "reference_demand": "Q521, Q1581: inspected formal demand(s) in same canonical Node",
+        "candidate_demand": "finding_interpretation/INTERPRET: asymmetric motor examination pattern -> Parkinson disease identification",
+        "why_not_same_demand": "formal2問は突進現象・歯車様固縮・Myerson徴候などを直接選ぶfact recall。本問は左右差、反復運動のsequence effect、安静時振戦、筋強剛を統合して病態を判断させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q521",
+            "relation": "same canonical Node; inspected direct formal reference"
+          },
+          {
+            "qid": "Q1581",
+            "relation": "same canonical Node; inspected direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK535846/",
+          "support": "Parkinson disease is clinically suspected with bradykinesia/slowness plus rigidity, rest tremor and related gait/balance features; signs often begin unilaterally."
+        },
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK536715/table/Ch6-t0001/",
+          "support": "MDS-based parkinsonism criteria require bradykinesia plus rest tremor or rigidity; cerebellar abnormalities are exclusionary for idiopathic PD."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C9-M02",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0068",
+      "target_node_label": "活動記録による疲労管理",
+      "reference_question_ids": [
+        "Q68",
+        "Q191"
+      ],
+      "existing_demands": [
+        {
+          "task": "intervention_selection",
+          "primary_ability": "PRESCRIBE"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "活動記録からみたMS疲労",
+      "question_text": "再発寛解型多発性硬化症の女性。1週間の活動・疲労記録では、午前に通勤と買い物を続けた日は午後の疲労が8/10、途中に20分休息を入れた日は4/10であった。気温との一定した関連はない。この記録から最も適切に解釈できるのはどれか。",
+      "choices": {
+        "1": "疲労は活動量と無関係である",
+        "2": "連続活動による疲労蓄積が示唆される",
+        "3": "Uhthoff現象だけで説明できる",
+        "4": "休息は疲労を必ず悪化させる",
+        "5": "歩行自立なら疲労評価は不要である"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "同じ患者で連続活動時に疲労が強く、計画的な休息を挟むと軽いという記録は、生活活動の累積負荷と疲労の関連を示す。気温との一貫した関連がないため熱のみでは説明できない。",
+      "choice_explanations": {
+        "1": "活動条件によって疲労強度が変化しており、無関係とは解釈できない。",
+        "2": "○。活動記録から連続した生活活動が疲労を増強し、休息配置で軽減するパターンが読み取れる。",
+        "3": "Uhthoff現象は体温上昇に伴う一過性症状増悪であり、本記録では気温との一定した関連がない。",
+        "4": "本例では休息を挟んだ日の方が疲労が軽い。",
+        "5": "歩行自立でもMS関連疲労は仕事・家事・認知活動に影響し得る。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "活動記録を処方するのではなく、記録された時間系列から疲労を増悪させる生活パターンを解釈する。",
+      "semantic_review": {
+        "reference_demand": "Q68, Q191: inspected formal demand(s) in same canonical Node",
+        "candidate_demand": "finding_interpretation/INTERPRET: activity-fatigue diary pattern -> identify cumulative-load association",
+        "why_not_same_demand": "Q68/Q191はいずれも活動記録とpacingを介入として選ぶPRESCRIBE問題。本問は既に得られた活動・疲労記録のデータを読み取るINTERPRET需要である。",
+        "related_formal_questions": [
+          {
+            "qid": "Q68",
+            "relation": "same canonical Node; inspected direct formal reference"
+          },
+          {
+            "qid": "Q191",
+            "relation": "same canonical Node; inspected direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3196037/",
+          "support": "MS fatigue management includes pacing activities through the day, regular rest breaks, energy conservation and individualized assessment of fatigue and its functional impact."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C9-M03",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0208",
+      "target_node_label": "両側同時刺激で生じる消去現象の識別",
+      "reference_question_ids": [
+        "Q209",
+        "Q279"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "半側空間無視の機能予後",
+      "question_text": "右半球脳卒中後3週。左単独刺激には反応できるが両側同時刺激では左を消去し、病棟では左側の物への衝突が頻回である。同程度の運動麻痺で無視のない患者と比べた機能予後として最も適切なのはどれか。",
+      "choices": {
+        "1": "ADL予後は必ず良好である",
+        "2": "転倒や機能自立低下のリスクが高い",
+        "3": "入院期間は必ず短くなる",
+        "4": "無視の程度は退院時機能と関連しない",
+        "5": "運動麻痺が同程度なら予後差は生じない"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "半側空間無視は脳卒中リハビリテーションで機能自立度低下、転倒増加、入院長期化などと関連する。運動麻痺が同程度でも無視の存在・重症度は機能予後を悪化させ得る。",
+      "choice_explanations": {
+        "1": "無視はADL自立を妨げる重要な認知障害であり、必ず良好とはいえない。",
+        "2": "○。無視は低いFIM、転倒増加、長い在院日数など不良なリハビリテーション転帰と関連する。",
+        "3": "無視がある患者ではむしろ在院期間が長くなる関連が報告されている。",
+        "4": "無視重症度は退院時FIMや回復効率と関連する。",
+        "5": "同程度の運動障害でも無視そのものが機能転帰へ影響し得る。"
+      },
+      "proposed_task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "clinical_intent": "消去現象を識別するだけでなく、その存在から病棟ADL・転倒を含む機能予後を推定する。",
+      "semantic_review": {
+        "reference_demand": "Q209, Q279: inspected formal demand(s) in same canonical Node",
+        "candidate_demand": "prognosis_prediction/PREDICT: demonstrated extinction/neglect -> predict rehabilitation functional risk",
+        "why_not_same_demand": "formal2問は両側同時刺激から消去現象を同定するINTERPRET問題。本問では消去現象が確認済みで、その後のADL・転倒・在院期間など機能転帰を予測する。",
+        "related_formal_questions": [
+          {
+            "qid": "Q209",
+            "relation": "same canonical Node; inspected direct formal reference"
+          },
+          {
+            "qid": "Q279",
+            "relation": "same canonical Node; inspected direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/21807144/",
+          "support": "Unilateral spatial neglect severity at rehabilitation admission independently predicts discharge FIM, FIM efficiency and effectiveness."
+        },
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/25862254/",
+          "support": "Spatial neglect severity is associated with lower FIM, longer length of stay, lower improvement rate and substantially more falls."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C16-S01",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0556",
+      "target_node_label": "上腕骨外側上顆炎の特徴",
+      "reference_question_ids": [
+        "Q564"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "外側上顆炎の初期運動療法",
+      "question_text": "46歳女性。右肘外側痛があり、ドライバー作業とコーヒーカップを持つ動作で増悪する。外側上顆周囲に圧痛があり、抵抗下手関節伸展で同部痛が再現する。感覚障害はない。初期の理学療法として最も適切なのはどれか。",
+      "choices": {
+        "1": "疼痛を無視して高負荷の手関節伸展運動を反復する",
+        "2": "誘発動作の負荷を調整し、疼痛に応じて手関節伸筋群の段階的運動を行う",
+        "3": "肘関節を完全固定して長期間動かさない",
+        "4": "頸椎牽引のみを行う",
+        "5": "感覚障害がないため介入せず経過観察だけとする"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "外側上顆炎では、症状を誘発する把持・反復作業の負荷を調整しながら、手関節伸筋群に対する段階的な運動療法を行う。完全安静や初期からの高負荷運動は適切でない。",
+      "choice_explanations": {
+        "1": "高負荷を疼痛下で反復すると症状を増悪させる可能性がある。",
+        "2": "○。負荷管理と段階的な手関節伸筋群の運動療法を組み合わせる。",
+        "3": "長期固定は不要で、廃用を招く可能性がある。",
+        "4": "本例は局所所見が外側上顆炎に一致し、頸椎牽引のみを行う根拠はない。",
+        "5": "感覚障害の有無にかかわらず、症状と活動制限に対する介入が必要である。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": "INTERPRET",
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "外側上顆炎を示す症状・誘発所見を踏まえ、負荷管理と段階的運動療法を選択する。",
+      "semantic_review": {
+        "reference_demand": "Q564: inspected formal demand(s) in same canonical Node",
+        "candidate_demand": "intervention_selection/PRESCRIBE: lateral epicondylitis presentation -> choose initial load management and graded exercise",
+        "why_not_same_demand": "Q564は外側上顆炎の特徴を直接再認するfact_recall/KNOW。本問は症状と誘発所見から病態を前提化し、具体的な初期理学療法を選択するPRESCRIBE需要である。",
+        "related_formal_questions": [
+          {
+            "qid": "Q564",
+            "relation": "same canonical Node; inspected direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK431092/",
+          "support": "Lateral epicondylitis produces lateral elbow tenderness and pain reproduced by resisted wrist extension; sensory symptoms suggest an alternative diagnosis."
+        },
+        {
+          "url": "https://ncbi.nlm.nih.gov/books/NBK585755/",
+          "support": "The tennis elbow test reproduces lateral epicondylar pain when wrist/elbow extension is performed against resistance."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C16-S02",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0572",
+      "target_node_label": "肘関節脱臼は転倒時に伸展位で手をつく機転などで生じ、尺骨・橈骨が上腕骨に対して後方へ脱臼する後方脱臼が最も多い",
+      "reference_question_ids": [
+        "Q580"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "肘関節脱臼と神経血管障害",
+      "question_text": "転倒して伸展位の手をついた直後から肘が変形し、前腕が短く見える。手指にしびれがあり橈骨動脈を触知しにくく、手部は健側より冷たい。最優先の対応はどれか。",
+      "choices": {
+        "1": "疼痛範囲内で自動運動を開始する",
+        "2": "神経血管障害を伴う脱臼として緊急整形外科対応を求める",
+        "3": "翌日までアイシングのみで経過を見る",
+        "4": "抵抗運動で肘周囲筋を評価する",
+        "5": "徒手で反復して可動域を確認する"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "後方肘関節脱臼では上肢が短縮して見えることがあり、血管・神経損傷を伴い得る。脈拍低下と冷感は神経血管障害を示すため、運動評価より緊急の整形外科的整復・評価を優先する。",
+      "choice_explanations": {
+        "1": "脱臼と神経血管障害が疑われる急性期に運動開始を優先してはならない。",
+        "2": "○。冷感や脈拍低下を伴う脱臼は肢の血流障害が疑われ、緊急対応が必要である。",
+        "3": "血管障害を疑う所見があるため翌日まで待機するのは危険である。",
+        "4": "抵抗運動より神経血管評価と緊急整復が優先される。",
+        "5": "不必要な反復操作は行わず、専門的な整復・画像評価につなげる。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "肘脱臼の典型機転・変形に神経血管障害が加わった場面で、運動器評価より肢救済を優先する。",
+      "semantic_review": {
+        "reference_demand": "Q580: inspected formal demand(s) in same canonical Node",
+        "candidate_demand": "safety_priority/DECIDE: suspected posterior elbow dislocation with ischemic signs -> urgent neurovascular/orthopedic management",
+        "why_not_same_demand": "Q580は後方脱臼が最多というfact recall。本問は外傷機転と血流障害から緊急性を判断し、初期対応を選ばせる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q580",
+            "relation": "same canonical Node; inspected direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK470574/",
+          "support": "Posterior elbow dislocation requires careful distal neurovascular assessment; signs of neurovascular compromise require immediate closed reduction and reassessment."
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5721315/",
+          "support": "Neurovascular status should be documented before and after elbow reduction because entrapment can require urgent surgical management."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C16-S03",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0579",
+      "target_node_label": "腰椎分離症は椎弓の関節突起間部に疲労骨折などによる分離が生じる病態である",
+      "reference_question_ids": [
+        "Q587"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "腰椎分離症疑いの競技対応",
+      "question_text": "15歳男子体操選手。2週間前から腰椎伸展・回旋で増悪する限局性腰痛があり、反復ジャンプ後に強くなる。下肢筋力・感覚・腱反射は正常で膀胱直腸障害はない。現時点で最も適切な対応はどれか。",
+      "choices": {
+        "1": "痛みを我慢して伸展練習を継続する",
+        "2": "競技負荷を一時中止し腰椎分離症を含む骨ストレス障害の評価につなげる",
+        "3": "最大負荷の体幹伸展筋力訓練を開始する",
+        "4": "神経症状がないため評価は不要である",
+        "5": "痛みが強い日にだけ反復伸展を増やす"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "成長期競技者で反復する伸展・回旋により増悪する腰痛は腰椎分離症などparsの骨ストレス障害を疑う。神経学的赤旗がなくても、疼痛を誘発する競技負荷を継続せず評価と段階的リハビリテーションにつなげる。",
+      "choice_explanations": {
+        "1": "症状を誘発する反復伸展・回旋を継続すると骨ストレスを増やす可能性がある。",
+        "2": "○。競技負荷を修正し、分離症を含む骨ストレス障害として評価するのが適切である。",
+        "3": "急性期に疼痛を誘発する最大負荷伸展を開始するのは不適切である。",
+        "4": "神経症状がなくても成長期アスリートの反復伸展痛は評価対象となる。",
+        "5": "疼痛時に負荷を増やす根拠はない。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "moderate",
+      "clinical_intent": "成長期スポーツ選手の伸展関連腰痛で骨ストレス障害を疑い、無理な競技継続を止めるSafety判断を行う。",
+      "semantic_review": {
+        "reference_demand": "Q587: inspected formal demand(s) in same canonical Node",
+        "candidate_demand": "safety_priority/DECIDE: adolescent extension-related back pain -> stop provocative load and obtain evaluation",
+        "why_not_same_demand": "Q587は椎弓関節突起間部の分離という解剖学的fact recall。本問は典型的な競技歴・疼痛誘発動作から安全な負荷管理を判断する。Safetyは生命・肢救済級ではないためcriticalからmoderateへ医学的に修正した。",
+        "related_formal_questions": [
+          {
+            "qid": "Q587",
+            "relation": "same canonical Node; inspected direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7134351/",
+          "support": "Adolescent athlete spondylolysis is commonly managed non-operatively with cessation/modification of sport activity and progressive rehabilitation; repetitive forceful extension/rotation stresses the pars interarticularis."
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12911598/",
+          "support": "Recent multicenter trial supports structured physical therapy for active lumbar spondylolysis and symptom/function-guided return rather than continued provocative sport loading."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C16-S04",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0616",
+      "target_node_label": "上腕骨顆上骨折の基本事項",
+      "reference_question_ids": [
+        "Q624"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "上腕骨顆上骨折の血流障害",
+      "question_text": "7歳男児。転倒後に肘周囲の腫脹と変形を認める。手は蒼白で冷たく、橈骨動脈を触知できず毛細血管再充満も遅延している。上腕骨顆上骨折が疑われる。最優先の対応はどれか。",
+      "choices": {
+        "1": "翌日の外来受診まで安静にする",
+        "2": "肘の自動運動を反復させる",
+        "3": "循環障害を伴う骨折として直ちに緊急整形外科対応へつなぐ",
+        "4": "温熱療法で末梢循環を改善する",
+        "5": "前腕筋の抵抗運動で筋力を確認する"
+      },
+      "correct_choices": [
+        "3"
+      ],
+      "explanation": "小児上腕骨顆上骨折では上腕動脈損傷による前腕・手の循環障害が重要な合併症である。脈拍消失に加えて蒼白・冷感・毛細血管再充満遅延がある poorly perfused hand は肢救済を要する緊急状態である。",
+      "choice_explanations": {
+        "1": "血流障害所見があるため翌日まで待つのは危険である。",
+        "2": "急性骨折と虚血が疑われる状況で反復運動は行わない。",
+        "3": "○。poorly perfused pulseless handは緊急整復・血管評価を要する。",
+        "4": "温熱で原因となる動脈障害は解決できず、緊急評価を遅らせてはならない。",
+        "5": "抵抗運動より血流回復を目的とした緊急整形外科対応が優先される。"
+      },
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "clinical_intent": "小児顆上骨折で血管障害を見逃さず、運動療法より肢救済の緊急対応を優先する。",
+      "semantic_review": {
+        "reference_demand": "Q624: inspected formal demand(s) in same canonical Node",
+        "candidate_demand": "safety_priority/DECIDE: supracondylar fracture + poorly perfused pulseless hand -> emergency management",
+        "why_not_same_demand": "Q624は前腕循環不全を起こしやすいという知識を直接問う。本問は実際の虚血所見から緊急性と初期対応を決定させる。",
+        "related_formal_questions": [
+          {
+            "qid": "Q624",
+            "relation": "same canonical Node; inspected direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/26041856/",
+          "support": "A pulseless, poorly perfused hand with pediatric supracondylar humeral fracture requires emergency operative reduction; persistent poor perfusion may require vascular exploration."
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4242976/",
+          "support": "Pulseless pale/cold hand, delayed/absent perfusion signs after supracondylar fracture indicate vascular compromise requiring urgent restoration of circulation."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C16-S05",
+      "status": "accepted",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0634",
+      "target_node_label": "Steinbrockerのclass分類は関節リウマチ患者の機能障害を、身の回り動作・職業活動・余暇活動の可否から4段階に分類する",
+      "reference_question_ids": [
+        "Q642"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "RA患者の機能目標設定",
+      "question_text": "関節リウマチの52歳女性。更衣・食事・入浴は自立し、事務職も通常どおり継続できるが、趣味のテニスは関節痛のため行えない。本人は仕事を続けながら余暇活動も再開したいと希望している。理学療法の機能目標として最も適切なのはどれか。",
+      "choices": {
+        "1": "セルフケアだけを自立させる",
+        "2": "職業活動を中止し、安静を最優先する",
+        "3": "現在のセルフケアと就労を維持し、症状に配慮しながら余暇活動への参加拡大を目指す",
+        "4": "関節痛の有無にかかわらず競技テニスへ即時完全復帰する",
+        "5": "ADLが自立しているため機能目標は設定しない"
+      },
+      "correct_choices": [
+        "3"
+      ],
+      "explanation": "セルフケアと職業活動は保たれている一方、余暇活動が制限されている。したがって現在の自立と就労を維持しつつ、症状を管理しながら余暇活動への参加を広げる目標が最も適切である。",
+      "choice_explanations": {
+        "1": "セルフケアはすでに自立しており、現在の主要な参加制限を反映しない。",
+        "2": "就労は継続可能であり、一律に中止する必要はない。",
+        "3": "○。保たれている機能を維持しつつ、制限されている余暇活動への参加改善を目標とする。",
+        "4": "症状や関節状態を無視した即時完全復帰は適切でない。",
+        "5": "ADL自立でも余暇活動に制限があり、本人の希望に沿った機能目標を設定できる。"
+      },
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": "INTERPRET",
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "セルフケア・職業活動・余暇活動の可否から現在の機能状態を把握し、本人の生活希望に沿う機能目標を決定する。",
+      "semantic_review": {
+        "reference_demand": "Q642: inspected formal demand(s) in same canonical Node",
+        "candidate_demand": "functional_goal_decision/DECIDE: preserved self-care/work with restricted recreation -> choose an appropriate participation-focused goal",
+        "why_not_same_demand": "Q642はSteinbrocker機能分類の構成要素をfact_recall/KNOWとして問う。本問はセルフケア・就労・余暇の実生活情報を用い、どの機能を維持し何を改善目標とするかを決定するDECIDE需要である。",
+        "related_formal_questions": [
+          {
+            "qid": "Q642",
+            "relation": "same canonical Node; inspected direct formal reference"
+          }
+        ],
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/1575785/",
+          "support": "ACR revised RA functional status: Class II means usual self-care and vocational activities are possible while avocational activities are limited; Class III limits vocational and avocational activity while self-care remains possible."
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3941968/",
+          "support": "Published RA studies operationalize the four ACR functional classes using self-care, vocational and avocational activity capability."
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "suggested_not_editorially_approved",
+      "assignment_may_change_if_quotas_preserved": true
+    }
+  ],
+  "rules": [
+    "This is one authoring chunk of Lot01, not an independently integrable batch.",
+    "Do not allocate Q IDs or Knowledge Node IDs.",
+    "Fill only these eight drafts and preserve draft_id/slot/target/reference fields.",
+    "Suggested task/level/Safety may change only for medical quality; final 48-lot quotas are reconciled after all chunks.",
+    "Every completed draft needs evidence and honest semantic review."
+  ]
+}

@@ -1,0 +1,457 @@
+{
+  "lot": 5,
+  "chunk": 5,
+  "formal_baseline": "Q1-Q1953",
+  "status": "completed_chunk",
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L05-C13-M02",
+      "draft_order": 29,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0544",
+      "target_node_label": "前腕回外に作用する筋",
+      "reference_question_ids": [
+        "Q552",
+        "Q1891"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 13,
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "肘位による回外筋力低下の解釈",
+      "question_text": "肘屈曲90°では前腕回外筋力が著明に低下するが、肘伸展位では低下が比較的軽い。選択的な機能低下が最も疑われる筋はどれか。",
+      "choices": {
+        "1": "上腕二頭筋",
+        "2": "円回内筋",
+        "3": "方形回内筋",
+        "4": "尺側手根屈筋",
+        "5": "長掌筋"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "上腕二頭筋は前腕回外に強く作用し、とくに肘屈曲位で回外作用が大きい。肘屈曲90°で回外筋力低下が目立つ所見は上腕二頭筋機能低下と整合する。",
+      "choice_explanations": {
+        "1": "○。上腕二頭筋は肘屈曲位で強力な回外筋として働く。",
+        "2": "円回内筋は前腕回内に作用する。",
+        "3": "方形回内筋も前腕回内に作用する。",
+        "4": "尺側手根屈筋は手関節掌屈・尺屈に作用する。",
+        "5": "長掌筋は主に手関節掌屈に関与する。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK539789/",
+          "support": "The biceps brachii is a major forearm supinator, with strong supination action when the elbow is flexed."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "finding_interpretation/INTERPRET: 肘位による回外筋力の差から障害筋を推定する。",
+        "why_not_same_demand": "Q552は回外筋の知識、Q1891は評価方法。本問は姿勢依存の筋力所見を解釈する。",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "decision": "accepted",
+        "expert_signoff": false,
+        "reference_demand": "assessment_selection/MEASURE, fact_recall/KNOW"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "finding_interpretation/INTERPRET: 肘位による回外筋力の差から障害筋を推定する。"
+    },
+    {
+      "draft_id": "L05-C14-S01",
+      "draft_order": 30,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1551",
+      "target_node_label": "歩行開始前には重心移動を準備する予測的姿勢調節〈APA〉が生じ、第一歩の安定性に寄与する",
+      "reference_question_ids": [
+        "Q1905"
+      ],
+      "existing_demands": [
+        {
+          "task": "functional_goal_decision",
+          "primary_ability": "DECIDE"
+        }
+      ],
+      "proposed_category_small": 14,
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "歩行開始時APAへの練習",
+      "question_text": "Parkinson病で歩行開始前の重心移動が小さく、第一歩が不安定である。予測的姿勢調節〈APA〉を直接練習する方法として最も適切なのはどれか。",
+      "choices": {
+        "1": "合図に合わせて左右への重心移動後に一歩を出す練習",
+        "2": "臥位で上肢だけの筋力増強を行う",
+        "3": "閉眼で静止立位のみを長時間続ける",
+        "4": "第一歩を出さず足関節を固定する",
+        "5": "歩行開始を避け車椅子移動だけにする"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "APAは随意運動開始前に支持基底面内で重心を先行移動させる調節である。歩行開始前の左右重心移動と第一歩を結び付けて反復する課題はAPAを直接練習できる。",
+      "choice_explanations": {
+        "1": "○。歩行開始前の重心移動と第一歩を課題として練習する。",
+        "2": "上肢筋力増強だけでは歩行開始時APAを直接練習しない。",
+        "3": "静止立位のみでは第一歩前の予測的重心移動を十分扱わない。",
+        "4": "足関節固定はAPA練習にならない。",
+        "5": "歩行開始を避けるだけでは機能改善を目指せない。"
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3761589/",
+          "support": "Anticipatory postural adjustments precede gait initiation and involve preparatory center-of-pressure/center-of-mass shifts; impaired APAs are described in Parkinson disease."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "intervention_selection/PRESCRIBE: 歩行開始前のAPAを課題特異的に練習する方法を選ぶ。",
+        "why_not_same_demand": "Q1905は機能目標を問う。本問はAPAを改善する具体的練習選択を問う。",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "decision": "accepted",
+        "expert_signoff": false,
+        "reference_demand": "functional_goal_decision/DECIDE"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "intervention_selection/PRESCRIBE: 歩行開始前のAPAを課題特異的に練習する方法を選ぶ。"
+    },
+    {
+      "draft_id": "L05-C14-M01",
+      "draft_order": 31,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0987",
+      "target_node_label": "反復拮抗運動障害を評価する前腕回内外試験",
+      "reference_question_ids": [
+        "Q997",
+        "Q1893"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "intervention_selection",
+          "primary_ability": "PRESCRIBE"
+        }
+      ],
+      "proposed_category_small": 14,
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "反復拮抗運動障害の解釈",
+      "question_text": "前腕を素早く回内・回外させると、右側だけ運動のリズムと振幅が不規則になり、速度を上げるほど崩れる。最も示唆されるのはどれか。",
+      "choices": {
+        "1": "右側の反復拮抗運動障害",
+        "2": "右側の感覚消去現象",
+        "3": "左側の観念運動失行",
+        "4": "右側のBabinski反射",
+        "5": "左側の半側空間無視"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "素早い回内・回外など反対方向の運動を交互に反復できない所見は反復拮抗運動障害〈dysdiadochokinesia〉であり、小脳性協調運動障害の評価に用いられる。",
+      "choice_explanations": {
+        "1": "○。回内・回外のリズムと振幅が崩れる典型所見である。",
+        "2": "感覚消去は両側同時刺激で一側刺激を認識できない現象である。",
+        "3": "観念運動失行は指示された目的動作の遂行障害である。",
+        "4": "Babinski反射は病的足底反射である。",
+        "5": "半側空間無視は空間の一側への注意障害である。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK562284/",
+          "support": "Dysdiadochokinesia is impaired rapid alternating movement and is a classic sign of cerebellar dysfunction."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "finding_interpretation/INTERPRET: 回内外試験の観察所見から反復拮抗運動障害を同定する。",
+        "why_not_same_demand": "Q997は評価法、Q1893は介入。本問は得られた運動所見の解釈を問う。",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "decision": "accepted",
+        "expert_signoff": false,
+        "reference_demand": "assessment_selection/MEASURE, intervention_selection/PRESCRIBE"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "finding_interpretation/INTERPRET: 回内外試験の観察所見から反復拮抗運動障害を同定する。"
+    },
+    {
+      "draft_id": "L05-C15-S01",
+      "draft_order": 32,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1400",
+      "target_node_label": "正常歩行では立脚中期に身体重心が支持脚側へ最も側方移動する",
+      "reference_question_ids": [
+        "Q1425"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 15,
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "none",
+      "title": "歩行時重心軌跡の解釈",
+      "question_text": "歩行分析で身体重心の左右軌跡を測定した。右支持脚側への側方偏位が最大となった時点として最も妥当なのはどれか。",
+      "choices": {
+        "1": "右立脚中期",
+        "2": "右遊脚中期",
+        "3": "左遊脚終期のみ",
+        "4": "右初期接地直前",
+        "5": "右前遊脚の終了後"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "正常歩行では単脚支持に近づく立脚中期に身体重心が支持脚側へ最も側方移動する。右側への偏位最大は右立脚中期が妥当である。",
+      "choice_explanations": {
+        "1": "○。支持脚側への重心移動は立脚中期で最大となる。",
+        "2": "右遊脚期は右脚が支持脚ではない。",
+        "3": "左遊脚中は右支持期だが、終期だけが最大という説明は適切でない。",
+        "4": "右初期接地前は右脚はまだ遊脚終期である。",
+        "5": "右前遊脚終了後は右遊脚期へ移る。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK559243/",
+          "support": "Normal gait mechanics involve lateral center-of-mass displacement toward the stance limb during single-limb support."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "finding_interpretation/INTERPRET: 重心軌跡データと歩行相を対応付ける。",
+        "why_not_same_demand": "Q1425は正常歩行の知識を直接問う。本問は測定された左右重心軌跡の意味を解釈する。",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "decision": "accepted",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "finding_interpretation/INTERPRET: 重心軌跡データと歩行相を対応付ける。"
+    },
+    {
+      "draft_id": "L05-C15-M01",
+      "draft_order": 33,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0815",
+      "target_node_label": "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる",
+      "reference_question_ids": [
+        "Q824",
+        "Q1894"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 15,
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "歩行速度変化の指標解釈",
+      "question_text": "同一患者の自由歩行と速歩を比較した。速歩時の変化として最も整合する組合せはどれか。",
+      "choices": {
+        "1": "歩幅増加・歩行率増加・両脚支持時間短縮",
+        "2": "歩幅減少・歩行率減少・両脚支持時間延長",
+        "3": "歩幅不変・歩行率減少・両脚支持時間延長",
+        "4": "歩幅減少・歩行率不変・両脚支持時間延長",
+        "5": "歩幅不変・歩行率不変・両脚支持時間延長"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "歩行速度を上げると一般に歩幅と歩行率が増え、立脚時間や両脚支持時間は短縮する。したがって1が整合する。",
+      "choice_explanations": {
+        "1": "○。速歩でみられる典型的な時間・距離因子の変化である。",
+        "2": "全て遅い歩行方向の変化である。",
+        "3": "歩行率低下と両脚支持延長は速歩と合わない。",
+        "4": "歩幅減少と両脚支持延長は合わない。",
+        "5": "速度上昇を説明できない。"
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4415849/",
+          "support": "Increasing gait speed is associated with increased step/stride length and cadence and reduced relative double-support time."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "finding_interpretation/INTERPRET: 速度変化に伴う時空間歩行パラメータの組合せを解釈する。",
+        "why_not_same_demand": "Q824は関係の知識、Q1894は測定方法。本問は同一患者の測定結果の整合性を解釈する。",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "decision": "accepted",
+        "expert_signoff": false,
+        "reference_demand": "assessment_selection/MEASURE, fact_recall/KNOW"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "finding_interpretation/INTERPRET: 速度変化に伴う時空間歩行パラメータの組合せを解釈する。"
+    },
+    {
+      "draft_id": "L05-C15-M02",
+      "draft_order": 34,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0863",
+      "target_node_label": "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する",
+      "reference_question_ids": [
+        "Q872",
+        "Q1895"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "prognosis_prediction",
+          "primary_ability": "PREDICT"
+        }
+      ],
+      "proposed_category_small": 15,
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "歩行耐容能に応じた機能目標",
+      "question_text": "運動負荷評価で3〜4METs程度の活動を症状なく継続できる患者。地域での平地歩行を想定した短期目標として最も適切なのはどれか。",
+      "choices": {
+        "1": "80m/分前後の平地歩行を安全に継続する",
+        "2": "全力疾走を10分間継続する",
+        "3": "高強度の階段駆け上がりを反復する",
+        "4": "終日安静臥床を維持する",
+        "5": "最大挙上重量で下肢筋力訓練を行う"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "80m/分は約4.8km/hで、一般に3〜4METs程度の歩行負荷に相当する。3〜4METsを安定して遂行できる患者の地域平地歩行目標として整合する。",
+      "choice_explanations": {
+        "1": "○。現在確認された運動耐容能と目標負荷が概ね一致する。",
+        "2": "全力疾走はより高い運動強度を要する。",
+        "3": "高強度階段運動も現在の確認負荷を大きく上回る。",
+        "4": "活動可能な患者に終日臥床を目標とするのは不適切である。",
+        "5": "最大負荷筋力訓練は地域歩行という機能目標ではない。"
+      },
+      "evidence": [
+        {
+          "url": "https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories/walking",
+          "support": "The Compendium of Physical Activities provides MET estimates for walking speeds, supporting approximate matching of walking pace to metabolic demand."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "functional_goal_decision/DECIDE: 実測された運動耐容能から現実的な地域歩行目標を決める。",
+        "why_not_same_demand": "Q872は速度とMETsの知識、Q1895は耐容能の予測。本問は現在能力に適合する機能目標を選ぶ。",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "decision": "accepted",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW, prognosis_prediction/PREDICT"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "functional_goal_decision/DECIDE: 実測された運動耐容能から現実的な地域歩行目標を決める。"
+    },
+    {
+      "draft_id": "L05-C17-S01",
+      "draft_order": 35,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN1225",
+      "target_node_label": "重力を除去した肢位で膝伸展・膝屈曲を評価するため、両者とも側臥位など同じ重力除去肢位となる",
+      "reference_question_ids": [
+        "Q1240"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 17,
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "膝伸展MMTの重力除去肢位",
+      "question_text": "座位では重力に抗して膝を完全伸展できない。膝伸展筋力がMMT2相当か確認するため、次に選ぶ評価肢位として最も適切なのはどれか。",
+      "choices": {
+        "1": "側臥位で下肢を支持して膝伸展させる",
+        "2": "立位で片脚スクワットを行わせる",
+        "3": "腹臥位で足関節に最大抵抗を加える",
+        "4": "座位で膝伸展位を保ち最大抵抗を加える",
+        "5": "背臥位でSLRのみを行わせる"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "MMT2は重力を除去した条件で全可動域を動かせる段階である。膝伸展では側臥位などで下肢を支持し、重力の影響を減らして膝伸展を評価する。",
+      "choice_explanations": {
+        "1": "○。重力除去下で膝伸展可動域を確認できる。",
+        "2": "片脚スクワットは重力負荷が大きくMMT2確認には適さない。",
+        "3": "最大抵抗を加える評価ではない。",
+        "4": "MMT4〜5をみるような抵抗条件である。",
+        "5": "SLRは股関節屈曲を含み膝伸展MMT2の直接評価ではない。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK563163/",
+          "support": "Manual muscle testing grade 2 represents full range of motion with gravity eliminated; positioning is adjusted to minimize gravitational resistance."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "assessment_selection/MEASURE: 抗重力運動不能という所見から次に行う重力除去MMT肢位を選ぶ。",
+        "why_not_same_demand": "Q1240は重力除去肢位の知識。本問は評価手順の中で次の適切な肢位を選択させる。",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "decision": "accepted",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "assessment_selection/MEASURE: 抗重力運動不能という所見から次に行う重力除去MMT肢位を選ぶ。"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "qid": "Q1581",
+  "question": {
+    "id": "Q1581",
+    "management_code": "Q1581-B-9-P",
+    "category_large": "B",
+    "category_small": 9,
+    "source": "P",
+    "title": null,
+    "question_text": "Parkinson病の症状、徴候について正しいのはどれか。",
+    "choices": {
+      "1": "企図振戦",
+      "2": "アテトーゼ",
+      "3": "Myerson徴候",
+      "4": "ミオクロニー発作",
+      "5": "折りたたみナイフ現象"
+    },
+    "exam": {
+      "exam_no": 49,
+      "session": "午後",
+      "question_no": 89
+    }
+  },
+  "answer": {
+    "id": "Q1581",
+    "display_answer": "3",
+    "accepted_answer_sets": [
+      [
+        "3"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  "explanation": {
+    "id": "Q1581",
+    "explanation": "Myerson徴候は眉間への反復刺激で瞬目が持続する徴候で、Parkinson病でみられる。",
+    "choice_explanations": {
+      "1": "Parkinson病の振戦は代表的には安静時振戦である。",
+      "2": "アテトーゼは不随意運動の一種だがParkinson病の代表徴候ではない。",
+      "3": "正しい。Myerson徴候がみられることがある。",
+      "4": "ミオクロニー発作は代表徴候ではない。",
+      "5": "折りたたみナイフ現象は錐体路障害に伴う痙縮でみられる。"
+    }
+  },
+  "tag": {
+    "id": "Q1581",
+    "theme": "Parkinson病の症状、徴候について正しいのはどれか。",
+    "knowledge_node": "Parkinson病の主要徴候には安静時振戦、筋強剛、無動・寡動、姿勢反射障害があり、突進現象や歯車様固縮がみられる",
+    "knowledge_node_id": "KN0513",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Parkinson病で主にみられる徴候はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  }
+}

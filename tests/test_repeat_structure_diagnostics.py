@@ -181,7 +181,7 @@ def test_internal_diagnostics_renders_repeat_section_but_learner_page_does_not(m
     monkeypatch.setenv("LT_INTERNAL_ADMIN_TOKEN", "admin-secret")
     client = app.test_client()
     response = client.get(
-        "/internal/pilot-diagnostics?token=admin-secret&learner_user_id=learner&period=7"
+        "/internal/pilot-diagnostics?token=admin-secret&learner_user_id=learner&period=all"
     )
     html = response.get_data(as_text=True)
     assert response.status_code == 200

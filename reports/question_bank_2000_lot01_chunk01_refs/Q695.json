@@ -1,0 +1,64 @@
+{
+  "qid": "Q695",
+  "question": {
+    "id": "Q695",
+    "management_code": "Q695-B-9-P",
+    "category_large": "B",
+    "category_small": 9,
+    "source": "P",
+    "title": null,
+    "question_text": "Parkinson病でみられないのはどれか。",
+    "choices": {
+      "1": "便秘",
+      "2": "運動失調",
+      "3": "動作緩慢",
+      "4": "静止時振戦",
+      "5": "レム睡眠行動障害"
+    },
+    "exam": {
+      "exam_no": 54,
+      "session": "午前",
+      "question_no": 90
+    }
+  },
+  "answer": {
+    "id": "Q695",
+    "display_answer": "2",
+    "accepted_answer_sets": [
+      [
+        "2"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  "explanation": {
+    "id": "Q695",
+    "explanation": "Parkinson病では動作緩慢、安静時振戦、自律神経症状として便秘、前駆症状としてREM睡眠行動障害などがみられる。運動失調は小脳障害の代表であり2が「みられない」に該当する。",
+    "choice_explanations": {
+      "1": "便秘は自律神経症状として多い。",
+      "2": "○。運動失調はParkinson病の主要症候ではない。",
+      "3": "動作緩慢は主要運動症状である。",
+      "4": "安静時振戦は代表的である。",
+      "5": "REM睡眠行動障害を合併しやすい。"
+    }
+  },
+  "tag": {
+    "id": "Q695",
+    "theme": "Parkinson病でみられないのはどれか",
+    "knowledge_node": "動作緩慢、安静時振戦、自律神経症状として便秘、前駆症状としてREM睡眠行動障害などがみられる",
+    "knowledge_node_id": "KN0687",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Parkinson病では動作緩慢、安静時振戦、自律神経症状として便秘、前駆症状としてREM睡眠行動障害などがみられる。",
+      "運動失調はParkinson病の主要症候ではない。",
+      "運動失調は小脳障害の代表であり2が「みられない」に該当する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  }
+}

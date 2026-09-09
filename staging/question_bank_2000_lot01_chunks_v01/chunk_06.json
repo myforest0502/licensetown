@@ -1,0 +1,567 @@
+{
+  "lot": "question_bank_2000_production_lot01_v01",
+  "chunk": 6,
+  "chunk_count": 6,
+  "status": "completed_chunk",
+  "formal_baseline": "Q1-Q1761",
+  "q_ids_reserved": false,
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L01-C18-M01",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0509",
+      "target_node_label": "静的立位で下腿義足の足部内側が床から浮き上がったから病態・機能障害を解釈",
+      "reference_question_ids": [
+        "Q517",
+        "Q936"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "下腿義足の前額面アライメント調整",
+      "question_text": "下腿義足の仮合わせで静的立位を確認したところ、足部内側が床から浮いていた。ソケット適合と断端の疼痛に問題はない。この所見を改善する初期対応として最も適切なのはどれか。",
+      "choices": {
+        "1": "ソケットの初期内転角を増やす。",
+        "2": "ソケットの初期屈曲角を増やす。",
+        "3": "足部のtoe-out角を増やす。",
+        "4": "ソケット外壁を高くする。",
+        "5": "足部をさらに外側へ移動する。"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "足部内側の浮き上がりは、前額面でソケットの初期内転角が不足し、義足が外側へ傾くことで生じる。ソケットの初期内転角を増やして足底を床面へ適合させる調整が第一選択となる。",
+      "choice_explanations": {
+        "1": "正しい。初期内転角を増やすと前額面のアライメントが修正され、足部内側を接地させやすい。",
+        "2": "初期屈曲角は主に矢状面へ作用し、足部内側の浮き上がりを直接修正しない。",
+        "3": "toe-out角は水平面の回旋調整で、前額面異常への第一選択ではない。",
+        "4": "外壁の高さは支持や局所圧迫に関係するが、今回の足底接地異常を修正しない。",
+        "5": "足部を外側へ移すと不適切な前額面モーメントを助長し、所見を悪化させうる。"
+      },
+      "proposed_task": "device_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": "INTERPRET",
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "既知の異常原因を答えるのではなく、観察所見から義足アライメント修正を選択する。",
+      "semantic_review": {
+        "reference_demand": "Q517/Q936は足部内側浮き上がりの原因を解釈する。",
+        "candidate_demand": "原因を前提に具体的アライメント調整を処方する。",
+        "why_not_same_demand": "原因同定ではなく調整方向の臨床決定を求めるため認知要求が異なる。",
+        "related_formal_questions": [
+          "Q517",
+          "Q936"
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex AI semantic review; not human expert signoff",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9831980/",
+          "support": "下腿義足のソケット内外転を含む前額面調整が反力モーメントを変えることを支持する。"
+        },
+        {
+          "url": "https://medcoeckapwstorprd01.blob.core.usgovcloudapi.net/pfw-images/borden/amputee/CCAchapter20.pdf",
+          "support": "ソケット内転と足底の平坦な接地を整える下腿義足アライメント原則を示す。"
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "editorially_accepted_ai_review_pending_human",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-M02",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0576",
+      "target_node_label": "水中運動療法の生理作用には水圧、浮力、粘性抵抗、熱伝導などが関与する",
+      "reference_question_ids": [
+        "Q584",
+        "Q1588"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "荷重軽減を目的とした水中歩行",
+      "question_text": "変形性膝関節症の患者。陸上歩行では荷重時痛が強いが、医師から水中運動の許可が得られ、循環・呼吸状態は安定している。歩容を保ちながら下肢荷重を大きく軽減して歩行練習を開始する方法で最も適切なのはどれか。",
+      "choices": {
+        "1": "足関節まで浸水して速く歩く。",
+        "2": "膝関節まで浸水してジャンプする。",
+        "3": "腰部まで浸水して浮具なしで走る。",
+        "4": "胸部まで浸水してゆっくり歩く。",
+        "5": "水深を浅くして歩行速度を上げる。"
+      },
+      "correct_choices": [
+        "4"
+      ],
+      "explanation": "浸水が深いほど浮力による免荷量は増える。胸部まで浸水した環境でゆっくり歩けば、膝への荷重を大きく減らしつつ歩行パターンを練習できる。",
+      "choice_explanations": {
+        "1": "足関節までの浅い浸水では浮力による免荷が小さい。",
+        "2": "膝までの水深では免荷が限られ、ジャンプは衝撃と運動強度を増す。",
+        "3": "腰部浸水は一定の免荷を得るが、走行は導入として負荷が高い。",
+        "4": "正しい。胸部までの浸水は十分な免荷を得やすく、低速歩行で動作を整えられる。",
+        "5": "浅水位と速度増加はいずれも関節負荷を減らす目的に反する。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": "INTERPRET",
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "水の性質の暗記ではなく、浮力と浸水深を患者の荷重軽減目標へ適用する。",
+      "semantic_review": {
+        "reference_demand": "Q584/Q1588は水の物理特性と生理作用を再認する。",
+        "candidate_demand": "疼痛と歩行目標に合わせて水深と運動様式を選ぶ。",
+        "why_not_same_demand": "特性の知識を臨床的な介入条件へ変換する処方判断であり事実再認ではない。",
+        "related_formal_questions": [
+          "Q584",
+          "Q1588"
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex AI semantic review; not human expert signoff",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6878863/",
+          "support": "浸水深が増すほど浮力による荷重軽減が増え、深い水位で低負荷の歩行再教育が可能になることを示す。"
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "editorially_accepted_ai_review_pending_human",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-M03",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0643",
+      "target_node_label": "大腿義足の異常歩行と原因の対応関係",
+      "reference_question_ids": [
+        "Q651",
+        "Q1573"
+      ],
+      "existing_demands": [
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "大腿義足の遊脚相制御調整",
+      "question_text": "単軸膝継手を用いる大腿義足装着者。平地歩行の遊脚終期に義足膝が急激に完全伸展し、毎歩大きな伸展衝撃音が生じる。ソケット適合と義足長に問題はない。最初に検討する膝継手の調整はどれか。",
+      "choices": {
+        "1": "遊脚相の伸展抵抗を増やす。",
+        "2": "遊脚相の伸展抵抗を減らす。",
+        "3": "立脚相の屈曲抵抗をなくす。",
+        "4": "膝継手を完全固定する。",
+        "5": "足部を底屈位に設定する。"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "遊脚終期の伸展衝撃は、膝伸展を減速する抵抗が不足して急激に終末伸展へ達することで起こる。まず遊脚相の伸展抵抗を増やし、終末伸展を滑らかにする。",
+      "choice_explanations": {
+        "1": "正しい。伸展抵抗を増やすと遊脚終期の急激な膝伸展を減速できる。",
+        "2": "伸展抵抗を減らすと膝がさらに速く完全伸展し、衝撃を増悪させる。",
+        "3": "立脚相の屈曲抵抗は荷重応答の安定性に関係し、遊脚終期への直接調整ではない。",
+        "4": "膝固定は歩行機能を大きく制限し、調整可能な異常への初期対応として過剰である。",
+        "5": "足部底屈設定は立脚期へ影響するが、遊脚終期の伸展速度を直接制御しない。"
+      },
+      "proposed_task": "device_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": "INTERPRET",
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "異常歩行と原因の対応を答えるのではなく、膝継手の制御設定を選択する。",
+      "semantic_review": {
+        "reference_demand": "Q651/Q1573は異常歩行所見に対応する原因を解釈する。",
+        "candidate_demand": "所見と除外情報を基に膝継手の具体的調整を選択する。",
+        "why_not_same_demand": "原因同定から進み、装置設定の処方を求めるため異なる臨床判断である。",
+        "related_formal_questions": [
+          "Q651",
+          "Q1573"
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex AI semantic review; not human expert signoff",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/34018934/",
+          "support": "大腿義足膝の遊脚相抵抗が膝運動と安全な脚振りへ影響することを支持する。"
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "editorially_accepted_ai_review_pending_human",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-M04",
+      "status": "accepted",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0645",
+      "target_node_label": "腹圧性尿失禁に対する骨盤底筋群の筋力強化",
+      "reference_question_ids": [
+        "Q653",
+        "Q1577"
+      ],
+      "existing_demands": [
+        {
+          "task": "intervention_selection",
+          "primary_ability": "PRESCRIBE"
+        }
+      ],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": true,
+      "title": "腹圧性尿失禁の機能目標",
+      "question_text": "腹圧性尿失禁の女性に12週間の骨盤底筋トレーニングを行う。本人は「孫と外出するときの尿漏れをなくしたい」と希望している。介入効果を本人の生活目標に最も直接結び付けて判定する指標はどれか。",
+      "choices": {
+        "1": "安静時心拍数",
+        "2": "咳・歩行・階段昇降時の尿漏れ回数",
+        "3": "股関節外転筋力",
+        "4": "胸郭拡張差",
+        "5": "膝伸展可動域"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "腹圧性尿失禁は咳や身体活動による腹圧上昇時の尿漏れが中心である。本人の外出目標に対する達成度は、実生活の咳・歩行・階段昇降時の尿漏れ回数で直接評価できる。",
+      "choice_explanations": {
+        "1": "安静時心拍数は運動負荷管理に使えるが、尿禁制を直接示さない。",
+        "2": "正しい。腹圧が上がる生活場面での漏れ回数は、本人の参加目標と効果を直接反映する。",
+        "3": "股関節外転筋力は歩行能力の一要素だが、尿失禁改善の主要アウトカムではない。",
+        "4": "胸郭拡張差は呼吸運動の評価で、尿漏れの改善を示さない。",
+        "5": "膝伸展可動域は移動へ影響しうるが、尿失禁の効果を直接判定できない。"
+      },
+      "proposed_task": "functional_goal_decision",
+      "primary_ability": "DECIDE",
+      "secondary_ability": "INTERPRET",
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "治療手段の選択ではなく、生活目標に対応する機能的アウトカムを決定する。",
+      "semantic_review": {
+        "reference_demand": "Q653/Q1577は腹圧性尿失禁に骨盤底筋トレーニングを選ぶ。",
+        "candidate_demand": "介入後の本人中心の機能目標を反映する評価指標を決める。",
+        "why_not_same_demand": "適応治療の選択ではなく参加目標に即した達成判定を求める。",
+        "related_formal_questions": [
+          "Q653",
+          "Q1577"
+        ],
+        "decision": "accepted",
+        "reviewer": "Codex AI semantic review; not human expert signoff",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4894819/",
+          "support": "骨盤底筋訓練後の指標として咳を含むstress eventに伴う尿漏れ回数と生活影響を評価している。"
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "editorially_accepted_ai_review_pending_human",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C9-N01",
+      "status": "accepted",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "視覚固視で抑制されない眼振を中枢性前庭障害の所見として解釈する",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 9,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "眼振の視覚固視抑制",
+      "question_text": "持続する浮動性めまいを訴える患者。暗所で水平性眼振を認め、明所で一点を固視させても眼振の振幅が減少しなかった。この所見から最も疑うべき障害はどれか。",
+      "choices": {
+        "1": "良性発作性頭位めまい症",
+        "2": "一側末梢前庭機能低下",
+        "3": "中枢性前庭障害",
+        "4": "伝音性難聴",
+        "5": "頸原性めまい"
+      },
+      "correct_choices": [
+        "3"
+      ],
+      "explanation": "末梢性前庭眼振は視覚固視で抑制されやすい。固視しても眼振が減弱しない所見は、前庭小脳など固視抑制に関わる中枢系の障害を示唆する。",
+      "choice_explanations": {
+        "1": "良性発作性頭位めまい症は特定頭位で誘発される一過性の頭位眼振が特徴である。",
+        "2": "一側末梢前庭機能低下による自発眼振は一般に視覚固視で減弱する。",
+        "3": "正しい。視覚固視による眼振抑制の障害は中枢性、特に前庭小脳系の障害を示唆する。",
+        "4": "伝音性難聴は外耳・中耳の音伝導障害であり、眼振抑制を障害しない。",
+        "5": "頸原性めまいは除外診断で、この眼球運動所見から最優先に判断する病態ではない。"
+      },
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "clinical_intent": "固視条件による眼振変化を末梢・中枢の鑑別へ用いる。",
+      "semantic_review": {
+        "reference_demand": "新規Node枠のためformal referenceはない。",
+        "candidate_demand": "視覚固視による眼振抑制の有無から中枢性前庭障害を解釈する。",
+        "why_not_same_demand": "Head Impulse Test、skew deviation、眼振方向のNodeは存在したが、固視抑制不良を中心に判定するNodeは見つからなかった。",
+        "related_formal_questions": [],
+        "decision": "accepted",
+        "reviewer": "Codex AI semantic review; not human expert signoff",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "new_node_collision_review": {
+        "decision": "accepted_new_node",
+        "searched": [
+          "視覚固視",
+          "固視抑制",
+          "眼振",
+          "中枢性前庭障害"
+        ],
+        "why_existing_nodes_insufficient": "既存Nodeには他の中枢性めまい徴候があるが、眼振の固視抑制不良を扱う最小単位がない。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK599515/",
+          "support": "眼振が視覚固視で減弱しないこと、および温度眼振を固視で抑制できないことが中枢機能障害を示唆すると説明している。"
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "editorially_accepted_ai_review_pending_human",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C16-N01",
+      "status": "accepted",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "アキレス腱断裂後の腱延長から踵上げ高の回復遅延を予測する",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 16,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "アキレス腱断裂後の腱延長と機能予後",
+      "question_text": "アキレス腱断裂後6か月の患者。疼痛は軽度で再断裂はないが、超音波で患側腱の延長を認める。患側の片脚踵上げ回数は増えてきたものの、挙上高は健側より低い。この所見から予測される経過で最も適切なのはどれか。",
+      "choices": {
+        "1": "踵上げ高の左右差が残存しやすい。",
+        "2": "足関節背屈可動域は必ず消失する。",
+        "3": "前脛骨筋筋力が急速に低下する。",
+        "4": "膝伸展筋力のみで踵上げ高が正常化する。",
+        "5": "腱延長と踵上げ機能には関連がない。"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "アキレス腱の延長は下腿三頭筋―腱複合体の有効な筋腱長とexcursionを変え、片脚踵上げ高の低下と関連する。回数が改善しても挙上高の左右差は長く残る可能性がある。",
+      "choice_explanations": {
+        "1": "正しい。腱延長は踵上げ高の低下と関連し、機能差が長期に残りうる。",
+        "2": "腱延長が足関節背屈可動域の完全消失を必然的に起こすわけではない。",
+        "3": "腱延長から前脛骨筋の急速な筋力低下を予測する根拠はない。",
+        "4": "踵上げは主に足関節底屈筋群とアキレス腱の機能を要し、膝伸展筋力だけでは正常化しない。",
+        "5": "腱長と踵上げ高の低下には負の関連が報告されている。"
+      },
+      "proposed_task": "prognosis_prediction",
+      "primary_ability": "PREDICT",
+      "secondary_ability": "INTERPRET",
+      "level": 4,
+      "safety": "none",
+      "clinical_intent": "筋腱構造の回復所見を踵上げ機能の長期的残存障害へ結び付ける。",
+      "semantic_review": {
+        "reference_demand": "新規Node枠のためformal referenceはない。",
+        "candidate_demand": "アキレス腱の延長所見から踵上げ高の回復予後を予測する。",
+        "why_not_same_demand": "formal bankには踵上げ能力の評価・介入問題があるが、腱延長を予後因子として解釈するNodeは見つからなかった。",
+        "related_formal_questions": [],
+        "decision": "accepted",
+        "reviewer": "Codex AI semantic review; not human expert signoff",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "new_node_collision_review": {
+        "decision": "accepted_new_node",
+        "searched": [
+          "アキレス腱延長",
+          "腱長",
+          "踵上げ高",
+          "アキレス腱予後"
+        ],
+        "why_existing_nodes_insufficient": "既存Nodeは踵上げ能力の評価・介入を扱うが、腱延長と踵上げ高の残存を結ぶ予後判断を扱わない。"
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11022787/",
+          "support": "腱延長が6か月・12か月の踵上げ高低下と関連し、機能障害が長期残存しうることをまとめている。"
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "editorially_accepted_ai_review_pending_human",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C17-N01",
+      "status": "accepted",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "評価尺度の反応性は経時的な構成概念の変化を検出する能力である",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 17,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "評価尺度の反応性",
+      "question_text": "理学療法の介入前後で用いる評価尺度の測定特性のうち、測定対象となる構成概念の経時的変化を検出する能力を表すのはどれか。",
+      "choices": {
+        "1": "内容妥当性",
+        "2": "内的一貫性",
+        "3": "検者間信頼性",
+        "4": "反応性",
+        "5": "天井効果"
+      },
+      "correct_choices": [
+        "4"
+      ],
+      "explanation": "反応性は、測定しようとする構成概念の経時的変化を評価尺度が検出できる能力を表す。治療効果を追跡する尺度を選ぶ際に重要な測定特性である。",
+      "choice_explanations": {
+        "1": "内容妥当性は項目内容が測定対象の構成概念を十分に反映しているかを示す。",
+        "2": "内的一貫性は尺度内の項目同士が同じ構成概念を測る程度を示す。",
+        "3": "検者間信頼性は異なる検者間で測定値がどの程度一致するかを示す。",
+        "4": "正しい。反応性は時間経過に伴う構成概念の変化を検出する能力である。",
+        "5": "天井効果は高得点側への集中により、それ以上の改善を捉えにくくなる現象である。"
+      },
+      "proposed_task": "fact_recall",
+      "primary_ability": "KNOW",
+      "secondary_ability": null,
+      "level": 1,
+      "safety": "none",
+      "clinical_intent": "介入効果を追跡する評価尺度に必要な測定特性の定義を識別する。",
+      "semantic_review": {
+        "reference_demand": "新規Node枠のためformal referenceはない。",
+        "candidate_demand": "反応性という測定特性の定義を識別する。",
+        "why_not_same_demand": "信頼性、SEM、MDC、MCID、床・天井効果のNodeはあるが、反応性の定義を独立して扱うNodeは見つからなかった。",
+        "related_formal_questions": [],
+        "decision": "accepted",
+        "reviewer": "Codex AI semantic review; not human expert signoff",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "new_node_collision_review": {
+        "decision": "accepted_new_node",
+        "searched": [
+          "反応性",
+          "responsiveness",
+          "経時的変化",
+          "測定特性"
+        ],
+        "why_existing_nodes_insufficient": "既存の信頼性・測定誤差・重要変化量とは異なり、尺度が変化を検出する能力そのものの定義が未収載である。"
+      },
+      "evidence": [
+        {
+          "url": "https://cosmin.nl/wp-content/uploads/COSMIN-definitions-domains-measurement-properties.pdf",
+          "support": "COSMINがresponsivenessを、経時的な構成概念の変化を検出する測定器の能力として定義している。"
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "editorially_accepted_ai_review_pending_human",
+      "assignment_may_change_if_quotas_preserved": true
+    },
+    {
+      "draft_id": "L01-C18-N01",
+      "status": "accepted",
+      "slot_type": "new_node",
+      "target_node_id": null,
+      "target_node_label": "脳卒中後の運動観察療法では目標動作の観察後に同じ動作を実行する",
+      "reference_question_ids": [],
+      "existing_demands": [],
+      "proposed_category_small": 18,
+      "source": "original",
+      "required_new_demand_outside_existing": false,
+      "new_node_created_only_at_formal_integration": true,
+      "title": "脳卒中後の運動観察療法",
+      "question_text": "脳卒中後の上肢運動障害に対し、通常練習へ運動観察療法を追加する。カップを口元へ運ぶ動作の再獲得を目標とするとき、運動観察療法として最も適切な実施方法はどれか。",
+      "choices": {
+        "1": "風景映像を見せた後は安静にする。",
+        "2": "目標動作の映像を見せた後、同じ動作を反復する。",
+        "3": "目標動作を説明せず、最大筋力運動のみ行う。",
+        "4": "非麻痺側上肢を固定し、映像は用いない。",
+        "5": "目を閉じて他動運動のみ受ける。"
+      },
+      "correct_choices": [
+        "2"
+      ],
+      "explanation": "運動観察療法は、意味のある目標動作を観察し、その後に観察した動作を実行・反復する方法である。観察と実行を組み合わせ、通常練習の補助として用いる。",
+      "choice_explanations": {
+        "1": "風景映像は目標動作の運動表象を与えず、観察後の実行もない。",
+        "2": "正しい。目標となる機能動作を観察した後に同じ動作を練習するのが基本構成である。",
+        "3": "最大筋力運動だけでは観察した行為と実行を対応させる過程がない。",
+        "4": "非麻痺側の拘束のみはCI療法に近く、運動観察療法の定義を満たさない。",
+        "5": "閉眼での他動運動は視覚的な行為観察と能動的模倣を含まない。"
+      },
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": "KNOW",
+      "level": 3,
+      "safety": "none",
+      "clinical_intent": "脳卒中後の機能課題に対して運動観察と実行を正しく組み合わせた介入を選ぶ。",
+      "semantic_review": {
+        "reference_demand": "新規Node枠のためformal referenceはない。",
+        "candidate_demand": "運動観察療法の構成要素を脳卒中後上肢課題へ適用する。",
+        "why_not_same_demand": "formal stemとNode labelを検索し、観察後に同一動作を実行する介入Nodeは見つからなかった。",
+        "related_formal_questions": [],
+        "decision": "accepted",
+        "reviewer": "Codex AI semantic review; not human expert signoff",
+        "reviewed_on": "2026-09-08",
+        "expert_signoff": false
+      },
+      "new_node_collision_review": {
+        "decision": "accepted_new_node",
+        "searched": [
+          "運動観察",
+          "action observation",
+          "動作観察",
+          "運動イメージ"
+        ],
+        "why_existing_nodes_insufficient": "既存Nodeに鏡療法などはあるが、目標動作の観察後に同じ動作を実行する運動観察療法の最小単位がない。"
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6716645/",
+          "support": "脳卒中後上肢に対する運動観察訓練を、動作の観察後に観察した動作を実行する介入として説明している。"
+        }
+      ],
+      "reviewed_sha256": "",
+      "assignment_status": "editorially_accepted_ai_review_pending_human",
+      "assignment_may_change_if_quotas_preserved": true
+    }
+  ],
+  "rules": [
+    "This is one authoring chunk of Lot01, not an independently integrable batch.",
+    "Do not allocate Q IDs or Knowledge Node IDs.",
+    "Fill only these eight drafts and preserve draft_id/slot/target/reference fields.",
+    "Suggested task/level/Safety may change only for medical quality; final 48-lot quotas are reconciled after all chunks.",
+    "Every completed draft needs evidence and honest semantic review."
+  ]
+}

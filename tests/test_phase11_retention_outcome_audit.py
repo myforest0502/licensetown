@@ -57,7 +57,7 @@ def test_captures_hidden_repaired_to_due_to_stable_review(monkeypatch):
     history = repaired_history() + [attempt("Q3", correct=True, confidence=1, day=8)]
 
     # Prefix timeline jumps directly repaired -> stable; the audit must still
-    # recover the due-before-attempt retention event.
+    # recover the day3 due-before-attempt retention event.
     assert [item["state"] for item in transition.derive_state_timeline(history)] == [
         "repairing", "repaired", "stable"
     ]
@@ -71,7 +71,7 @@ def test_captures_hidden_repaired_to_due_to_stable_review(monkeypatch):
     assert review["outcome"] == "stable"
     assert review["retention_reference_question_id"] == "Q2"
     assert review["question_id"] == "Q3"
-    assert review["hours_after_due"] == 0.0
+    assert review["hours_after_due"] == 96.0
 
 
 def test_due_strong_wrong_is_qualified_repairing_outcome(monkeypatch):
@@ -110,8 +110,9 @@ def test_due_strong_uncertain_correct_stays_due_and_does_not_qualify(monkeypatch
 
 def test_before_due_attempt_is_not_retention_review(monkeypatch):
     install_classifier(monkeypatch, {("Q1", "Q2"), ("Q2", "Q3")})
+    # Repair is confirmed on day1, so day3 is still before the day3 checkpoint at day4.
     result = audit.build_retention_outcome_audit(
-        repaired_history() + [attempt("Q3", correct=True, confidence=1, day=7)]
+        repaired_history() + [attempt("Q3", correct=True, confidence=1, day=3)]
     )
     assert result["review_attempt_count"] == 0
     assert result["qualified_strong_outcome_count"] == 0

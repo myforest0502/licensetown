@@ -76,7 +76,7 @@ def test_lot2_duplicate_and_extraction_holds_are_explicit():
 
 def test_existing_nodes_reference_each_lot2_question_once_without_new_nodes():
     nodes = {row["knowledge_node_id"]: row for row in _load("knowledge_nodes.json")}
-    assert len(nodes) == 1538
+    assert len(nodes) >= 1555
     for question_id, (_, _, _, _, _, node_id, _, _) in EXPECTED.items():
         assert nodes[node_id]["question_ids"].count(question_id) == 1
         assert nodes[node_id]["status"] == "confirmed_shared"

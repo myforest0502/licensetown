@@ -1,0 +1,37 @@
+"""Seal a fully authored and reviewed Lot03 staging file after pre-seal validation."""
+from __future__ import annotations
+
+import json
+from reports.question_bank_2000_lot03_validate import (
+    BANK, PROTECTED, STAGING, build_report, draft_fingerprint, file_fingerprint,
+)
+
+
+def main() -> int:
+    if not STAGING.exists():
+        raise SystemExit(f"missing authored staging file: {STAGING}")
+    payload = json.loads(STAGING.read_text(encoding="utf-8-sig"))
+    report = build_report(payload, require_seals=False)
+    if report["hard_errors"]:
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        raise SystemExit("Lot03 cannot be sealed while pre-seal validation has hard errors")
+    payload["formal_hash_format"] = "sha256-lf-normalized-v1"
+    payload["formal_input_sha256"] = {name: file_fingerprint(BANK / name) for name in PROTECTED}
+    for draft in payload["drafts"]:
+        draft["reviewed_sha256"] = draft_fingerprint(draft)
+    STAGING.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    final_report = build_report(payload, require_seals=True)
+    if final_report["hard_errors"]:
+        print(json.dumps(final_report, ensure_ascii=False, indent=2))
+        raise SystemExit("Lot03 sealing produced an invalid final staging state")
+    print(json.dumps({
+        "sealed": True,
+        "accepted_count": final_report["accepted_count"],
+        "structural_strong_formations": final_report["structural_strong_formations"],
+        "warnings": final_report["warnings"],
+    }, ensure_ascii=False, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

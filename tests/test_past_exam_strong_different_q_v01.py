@@ -71,7 +71,7 @@ def test_45_am_23_resolves_to_sensitivity_node_without_changing_kn0130():
         for item in json.loads((BANK / "knowledge_nodes.json").read_text(encoding="utf-8-sig"))
     }
     assert nodes["KN0130"]["question_ids"] == ["Q130"]
-    assert nodes["KN0131"]["question_ids"] == ["Q131", "Q1574"]
+    assert nodes["KN0131"]["question_ids"][:2] == ["Q131", "Q1574"]
     assert classify_repair_confirmation("Q131", "Q1574") == DIFFERENT_QUESTION_STRONG
 
 

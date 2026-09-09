@@ -1,0 +1,462 @@
+{
+  "lot": 5,
+  "chunk": 3,
+  "formal_baseline": "Q1-Q1953",
+  "status": "completed_chunk",
+  "production_write": false,
+  "db_write": false,
+  "drafts": [
+    {
+      "draft_id": "L05-C7-M01",
+      "draft_order": 15,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0608",
+      "target_node_label": "疾患と病因・病理学的変化の組合せの基本事項",
+      "reference_question_ids": [
+        "Q616",
+        "Q1874"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 7,
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "title": "プリオン病疑いでの器材安全管理",
+      "question_text": "Creutzfeldt-Jakob病が疑われる患者の脳外科手術で、脳組織に接触した再使用可能な耐熱器具がある。最も適切な対応はどれか。",
+      "choices": {
+        "1": "通常の低水準消毒だけで直ちに再使用する",
+        "2": "通常の洗浄のみで十分と判断する",
+        "3": "プリオン対策の専用手順に従い、NaOH等と高圧蒸気滅菌を組み合わせた再処理を行う",
+        "4": "乾燥させてから通常保管する",
+        "5": "アルコール清拭だけを行う"
+      },
+      "correct_choices": [
+        "3"
+      ],
+      "explanation": "CJDは異常プリオン蛋白に関連する伝達性海綿状脳症で、通常の消毒・滅菌だけでは不活化が不十分となり得る。高感染性組織に接触した器具では、CDC等が示すプリオン専用の厳格な再処理手順を用いる。",
+      "choice_explanations": {
+        "1": "プリオンは通常の低水準消毒では十分に不活化できない。",
+        "2": "洗浄のみでは不十分である。",
+        "3": "○。疑い例でもプリオン用の特別な再処理手順を適用する。",
+        "4": "CDCは手術中に器具を乾燥させないことも推奨している。",
+        "5": "アルコール清拭のみではプリオン対策にならない。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.cdc.gov/creutzfeldt-jakob/hcp/infection-control/index.html",
+          "support": "CDC states that suspected/confirmed CJD instruments require dedicated prion reprocessing methods, including stringent NaOH/hypochlorite and autoclave protocols; routine processing alone is not sufficient."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "safety_priority/DECIDE: プリオン病という病因分類を器材感染対策へ適用する",
+        "why_not_same_demand": "疾患分類や病理所見の同定ではなく、プリオンの抵抗性を踏まえた安全手順を選択する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW, finding_interpretation/INTERPRET"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "safety_priority/DECIDE: プリオン病という病因分類を器材感染対策へ適用する"
+    },
+    {
+      "draft_id": "L05-C8-S01",
+      "draft_order": 16,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0650",
+      "target_node_label": "下肢動脈狭窄により冷感、しびれ、間欠性跛行、重症例では安静時痛を生じる",
+      "reference_question_ids": [
+        "Q658"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 4,
+      "safety": "critical",
+      "title": "末梢動脈疾患の安静時痛への対応",
+      "question_text": "末梢動脈疾患で歩行訓練中の患者。最近、夜間の足部安静時痛が出現し、足趾の小潰瘍も治りにくくなった。最優先の対応はどれか。",
+      "choices": {
+        "1": "歩行距離を倍にして経過を見る",
+        "2": "安静時痛は通常の間欠性跛行として無視する",
+        "3": "慢性下肢虚血の重症化を疑い、速やかに血管評価へつなげる",
+        "4": "足部を強くマッサージして血流を増やす",
+        "5": "潰瘍部に強い抵抗運動を加える"
+      },
+      "correct_choices": [
+        "3"
+      ],
+      "explanation": "PADで虚血性安静時痛や治癒しない創傷が出現した場合は、慢性下肢脅威虚血〈CLTI〉を疑う。CLTIでは組織損失と切断リスクが高く、再血行再建を含む迅速な多職種評価が必要である。",
+      "choice_explanations": {
+        "1": "重症虚血を疑う所見がある状態で訓練量を増やすべきではない。",
+        "2": "安静時痛は単なる跛行より重症な虚血所見である。",
+        "3": "○。安静時痛と難治性潰瘍はCLTIを疑い、速やかな血管評価が必要である。",
+        "4": "強いマッサージは虚血肢の標準対応ではない。",
+        "5": "潰瘍部への強い負荷は安全でない。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.acc.org/latest-in-cardiology/ten-points-to-remember/2024/05/09/15/00/2024-guideline-for-lower-extremity-pad",
+          "support": "2024 ACC/AHA PAD guidance describes chronic limb-threatening ischemia with ischemic rest pain/tissue loss and recommends revascularization assessment to preserve the limb."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "safety_priority/DECIDE: 跛行から安静時痛・創傷へ進んだ重症化を見抜き訓練を止める",
+        "why_not_same_demand": "PAD症状の暗記ではなく、重症虚血への変化を安全行動へ結び付ける。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "safety_priority/DECIDE: 跛行から安静時痛・創傷へ進んだ重症化を見抜き訓練を止める"
+    },
+    {
+      "draft_id": "L05-C8-S02",
+      "draft_order": 17,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "singleton_second",
+      "target_node_id": "KN0683",
+      "target_node_label": "Turner症候群は45,X、Klinefelter症候群は47,XXYなど性染色体数的異常で発症する",
+      "reference_question_ids": [
+        "Q691"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "Turner症候群疑いの確定評価",
+      "question_text": "15歳女子。著明な低身長と二次性徴の遅れ、原発性無月経がある。Turner症候群が疑われる。診断を確認するため最も適切な検査はどれか。",
+      "choices": {
+        "1": "末梢血染色体分析〈核型検査〉",
+        "2": "便潜血検査",
+        "3": "呼気一酸化窒素測定",
+        "4": "脳波検査",
+        "5": "ツベルクリン反応"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "Turner症候群はX染色体の完全または部分的欠失などで生じ、典型例では45,Xである。低身長と原発性無月経などの臨床像から疑い、核型検査で性染色体異常を確認する。",
+      "choice_explanations": {
+        "1": "○。末梢血核型検査は45,Xやモザイクなどの性染色体構成を確認する。",
+        "2": "消化管出血の評価でありTurner症候群確定には用いない。",
+        "3": "気道炎症の評価である。",
+        "4": "てんかん等の評価であり核型診断ではない。",
+        "5": "結核感染の評価である。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK554621/",
+          "support": "StatPearls describes Turner syndrome as caused by X-chromosome monosomy/structural abnormalities, most commonly 45,X, and discusses karyotype analysis for diagnosis and mosaicism."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "assessment_selection/MEASURE: 性染色体異常を疑う臨床像から確定検査を選ぶ",
+        "why_not_same_demand": "Turner/Klinefelterが性染色体異常であるという暗記ではなく、疑い例で核型検査を選択する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "assessment_selection/MEASURE: 性染色体異常を疑う臨床像から確定検査を選ぶ"
+    },
+    {
+      "draft_id": "L05-C8-M01",
+      "draft_order": 18,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0515",
+      "target_node_label": "うっ血性心不全の典型所見",
+      "reference_question_ids": [
+        "Q523",
+        "Q1810"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 8,
+      "proposed_task": "intervention_selection",
+      "primary_ability": "PRESCRIBE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "moderate",
+      "title": "安定心不全の運動療法選択",
+      "question_text": "心不全で入院後、薬物治療により呼吸困難と浮腫が改善し、安静時の循環動態は安定した。退院後の理学療法として最も適切なのはどれか。",
+      "choices": {
+        "1": "症状とバイタルを監視しながら個別化した心臓リハビリテーションを行う",
+        "2": "毎回、息こらえを伴う最大等尺性運動だけを行う",
+        "3": "循環状態に関係なく全例で最大強度運動から開始する",
+        "4": "心不全では身体活動を永久に禁止する",
+        "5": "浮腫が再燃しても運動強度を上げ続ける"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "安定した心不全では、医学的監視のもと個別化した心臓リハビリテーションを行い、身体機能や生活の改善を図る。一方、急性増悪やうっ血再燃時には運動を進めず再評価が必要である。",
+      "choice_explanations": {
+        "1": "○。安定心不全では監視下の個別化心臓リハビリが適切である。",
+        "2": "最大等尺性運動だけを行う方法は適切でない。",
+        "3": "強度は症状・機能・リスクに応じて調整する。",
+        "4": "安定例で活動を一律に永久禁止する必要はない。",
+        "5": "うっ血再燃は再評価すべき所見であり、強度を上げ続けない。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.heart.org/en/health-topics/heart-failure/treatment-options-for-heart-failure/cardiac-rehab-for-heart-failure",
+          "support": "American Heart Association describes cardiac rehabilitation as a medically supervised program that can help manage heart failure and improve physical, mental and social function."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "intervention_selection/PRESCRIBE: うっ血所見が改善した安定期に適切なリハビリ介入を選ぶ",
+        "why_not_same_demand": "心不全所見の認識ではなく、病期を踏まえて安全な運動介入を選ぶ。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW, finding_interpretation/INTERPRET"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "intervention_selection/PRESCRIBE: うっ血所見が改善した安定期に適切なリハビリ介入を選ぶ"
+    },
+    {
+      "draft_id": "L05-C8-M02",
+      "draft_order": 19,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0557",
+      "target_node_label": "福山型筋ジストロフィーは先天性筋ジストロフィーで乳児期早期から症状がみられ、選択肢中で平均発症年齢が最も低い",
+      "reference_question_ids": [
+        "Q565",
+        "Q1811"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "finding_interpretation",
+          "primary_ability": "INTERPRET"
+        }
+      ],
+      "proposed_category_small": 8,
+      "proposed_task": "assessment_selection",
+      "primary_ability": "MEASURE",
+      "secondary_ability": null,
+      "level": 2,
+      "safety": "none",
+      "title": "福山型先天性筋ジストロフィーの確定検査",
+      "question_text": "乳児期早期から筋緊張低下と筋力低下があり、CK高値と特徴的な脳MRI所見から福山型先天性筋ジストロフィーが疑われる。診断確定に最も適切なのはどれか。",
+      "choices": {
+        "1": "FKTN遺伝子の分子遺伝学的検査",
+        "2": "便潜血検査",
+        "3": "ツベルクリン反応",
+        "4": "呼気流量測定のみ",
+        "5": "関節液結晶検査"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "福山型先天性筋ジストロフィー〈FCMD〉は乳児期早期から発症し、CK高値や脳形成異常などを伴う。現在はFKTNの両アレル病的バリアントを分子遺伝学的検査で確認することで診断を確立する。",
+      "choice_explanations": {
+        "1": "○。FCMDはFKTN病的バリアントの同定で確定する。",
+        "2": "消化管出血評価でありFCMD診断ではない。",
+        "3": "結核感染評価である。",
+        "4": "呼吸機能監視は重要だが診断確定検査ではない。",
+        "5": "結晶誘発性関節炎の評価である。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK1206/",
+          "support": "GeneReviews states that FCMD is established by identifying biallelic pathogenic FKTN variants and lists early infantile hypotonia/weakness, CK elevation and characteristic brain imaging as suggestive findings."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "assessment_selection/MEASURE: 乳児期発症・CK・MRIからFCMDを疑い確定検査を選ぶ",
+        "why_not_same_demand": "発症年齢や臨床像の同定ではなく、疑い例で分子遺伝学的確定検査を選択する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW, finding_interpretation/INTERPRET"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "assessment_selection/MEASURE: 乳児期発症・CK・MRIからFCMDを疑い確定検査を選ぶ"
+    },
+    {
+      "draft_id": "L05-C8-M03",
+      "draft_order": 20,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0560",
+      "target_node_label": "高齢者では嚥下反射・咳反射の低下や口腔機能低下により誤嚥性肺炎が多い",
+      "reference_question_ids": [
+        "Q568",
+        "Q1812"
+      ],
+      "existing_demands": [
+        {
+          "task": "assessment_selection",
+          "primary_ability": "MEASURE"
+        },
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
+      "proposed_category_small": 8,
+      "proposed_task": "safety_priority",
+      "primary_ability": "DECIDE",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "critical",
+      "title": "食事中の誤嚥徴候への安全対応",
+      "question_text": "高齢患者の経口摂取中にむせが増え、嚥下後に湿性嗄声が出現した。最近は発熱と呼吸器感染も反復している。最優先の対応はどれか。",
+      "choices": {
+        "1": "同じ量と速度で経口摂取を続ける",
+        "2": "一度に飲む量を増やして反射を促す",
+        "3": "安全性を再評価するまで経口試行を中止し、嚥下評価と医療的評価につなげる",
+        "4": "むせを無視して食事時間だけ短縮する",
+        "5": "背臥位で飲水を反復する"
+      },
+      "correct_choices": [
+        "3"
+      ],
+      "explanation": "食事中の咳、嚥下後の湿性嗄声、反復する呼吸器感染は嚥下障害・誤嚥リスクを示す重要な手掛かりである。誤嚥性肺炎などの合併症を避けるため、危険な経口試行を続けず、嚥下機能と全身状態を再評価する。",
+      "choice_explanations": {
+        "1": "誤嚥徴候があるまま同条件で継続するのは危険である。",
+        "2": "一回量を増やすと誤嚥リスクを高めうる。",
+        "3": "○。経口試行を止め、安全な嚥下評価と医療評価につなげる。",
+        "4": "むせや湿性嗄声を無視すべきではない。",
+        "5": "背臥位での反復飲水は安全性を高めない。"
+      },
+      "evidence": [
+        {
+          "url": "https://www.asha.org/practice-portal/clinical-topics/adult-dysphagia/",
+          "support": "ASHA lists coughing/throat clearing, wet/gurgly voice after intake, recurrent aspiration pneumonia/respiratory infection and fever among dysphagia signs and emphasizes swallowing safety evaluation."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "safety_priority/DECIDE: 食事中の誤嚥徴候を捉え、経口継続より安全再評価を優先する",
+        "why_not_same_demand": "評価法の選択や高齢者リスクの暗記ではなく、実際の摂食場面で危険回避を判断する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "assessment_selection/MEASURE, fact_recall/KNOW"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "safety_priority/DECIDE: 食事中の誤嚥徴候を捉え、経口継続より安全再評価を優先する"
+    },
+    {
+      "draft_id": "L05-C9-M01",
+      "draft_order": 21,
+      "status": "accepted",
+      "source": "original",
+      "slot_type": "multi_reinforcement",
+      "target_node_id": "KN0558",
+      "target_node_label": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である",
+      "reference_question_ids": [
+        "Q566",
+        "Q1763"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        },
+        {
+          "task": "prognosis_prediction",
+          "primary_ability": "PREDICT"
+        }
+      ],
+      "proposed_category_small": 9,
+      "proposed_task": "finding_interpretation",
+      "primary_ability": "INTERPRET",
+      "secondary_ability": null,
+      "level": 3,
+      "safety": "none",
+      "title": "時間的・空間的多発からみた多発性硬化症",
+      "question_text": "20代女性。数か月前に片眼の視力低下が改善した既往がある。今回は反対側下肢に新たな感覚障害と痙性を認め、画像では脳と頸髄に複数の脱髄病変がみられた。最も考えられる疾患はどれか。",
+      "choices": {
+        "1": "多発性硬化症",
+        "2": "単一末梢神経障害",
+        "3": "筋萎縮性側索硬化症",
+        "4": "重症筋無力症",
+        "5": "変形性膝関節症"
+      },
+      "correct_choices": [
+        "1"
+      ],
+      "explanation": "異なる時期に視神経と脊髄など異なる中枢神経部位の症候が出現し、MRIでも複数領域の脱髄病変を認める。時間的・空間的多発は再発寛解型多発性硬化症を強く示唆する。",
+      "choice_explanations": {
+        "1": "○。時間的・空間的に離れた中枢神経脱髄イベントがMSに合う。",
+        "2": "単一末梢神経障害では視神経炎と頸髄・脳室周囲病変を統一できない。",
+        "3": "ALSは主に運動ニューロン疾患で感覚障害や脱髄病変を特徴としない。",
+        "4": "重症筋無力症は神経筋接合部疾患で感覚障害を生じない。",
+        "5": "膝OAでは中枢脱髄病変を説明できない。"
+      },
+      "evidence": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11886981/",
+          "support": "Review of MS diagnostic criteria describes dissemination in space across typical CNS regions and dissemination in time by separate attacks or new/enhancing MRI lesions."
+        }
+      ],
+      "semantic_review": {
+        "candidate_demand": "finding_interpretation/INTERPRET: 複数時点・複数中枢部位の所見を統合してMSを推定する",
+        "why_not_same_demand": "一般特徴の暗記や将来再発予測ではなく、時間的・空間的多発という現症の統合解釈を行う。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false,
+        "reference_demand": "fact_recall/KNOW, prognosis_prediction/PREDICT"
+      },
+      "expert_signoff": false,
+      "clinical_intent": "finding_interpretation/INTERPRET: 複数時点・複数中枢部位の所見を統合してMSを推定する"
+    }
+  ]
+}

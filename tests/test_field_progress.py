@@ -74,8 +74,8 @@ def test_cases_i_and_j_use_formal_retention_replay(monkeypatch):
         attempt("Q269", "KN0268", False, 2, 0),
         attempt("Q361", "KN0268", True, 1, 1),
     ]
-    repaired = build_field_progress(build_field_evidence(repaired_history, as_of=BASE + timedelta(days=7)))
-    due = build_field_progress(build_field_evidence(repaired_history, as_of=BASE + timedelta(days=9)))
+    repaired = build_field_progress(build_field_evidence(repaired_history, as_of=BASE + timedelta(days=3)))
+    due = build_field_progress(build_field_evidence(repaired_history, as_of=BASE + timedelta(days=5)))
     assert node_score(repaired, "KN0268")["state_score"] == 0.70
     assert node_score(due, "KN0268")["state_score"] == 0.60
 
@@ -95,12 +95,12 @@ def test_aliases_are_unique_overall_and_multi_field_memberships_repeat_only_by_f
         attempt("Q1363", "KN0609", False, 2, 1),
     ])
     report = build_field_progress(evidence)
-    assert report["overall"]["total_unique_canonical_nodes"] == 1508
+    assert report["overall"]["total_unique_canonical_nodes"] == 1532
     assert len(report["canonical_node_scores"]) == len({
         x["canonical_node_id"] for x in report["canonical_node_scores"]
-    }) == 1508
+    }) == 1532
     assert sum(x["total_canonical_nodes"] for x in report["fields"]) == report["canonical_node_membership_total"]
-    assert report["canonical_node_membership_total"] > 1508
+    assert report["canonical_node_membership_total"] > 1532
     memberships = [x for x in report["fields"] if "KN0609" in next(
         field["multi_field_canonical_node_ids"] for field in evidence["fields"] if field["field_id"] == x["field_id"]
     )]

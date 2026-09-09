@@ -11,23 +11,23 @@ def test_formal_bank_status_matches_manifest_and_saved_audit():
     assert bank["question_count"] == manifest["question_count"]
     assert bank["first_question_number"] == manifest["first_question_number"]
     assert bank["last_question_number"] == manifest["last_question_number"]
-    # Audit fields are the saved b12 snapshot, not a live recount of the bank.
-    assert bank["records"] == 1737
+    # Audit fields are the saved formal-bank audit, regenerated at integration.
+    assert bank["records"] == 1953
     assert bank["errors"] == 0
     assert bank["status"] == "PASS"
-    assert bank["original"] == 643
+    assert bank["original"] == 859
     assert bank["past_exam"] == 1094
 
 
 def test_status_reports_knowledge_node_and_safety_counts():
     bank = developer_status.build_developer_system_status()["question_bank"]
-    assert bank["canonical_registry"] == 1538
-    assert bank["canonical_represented"] == 1508
-    assert bank["canonical_singleton"] == 1305
-    assert bank["canonical_multi"] == 203
-    assert bank["shared_groups"] == 186
-    assert bank["safety_critical"] == 65
-    assert bank["safety_moderate"] == 232
+    assert bank["canonical_registry"] == 1555
+    assert bank["canonical_represented"] == 1525
+    assert bank["canonical_singleton"] == 1178
+    assert bank["canonical_multi"] == 347
+    assert bank["shared_groups"] == 340
+    assert bank["safety_critical"] == 98
+    assert bank["safety_moderate"] == 267
 
 
 def test_feature_flags_are_boolean_and_do_not_expose_values(monkeypatch):

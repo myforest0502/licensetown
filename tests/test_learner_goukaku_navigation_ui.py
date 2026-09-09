@@ -140,7 +140,8 @@ def test_legacy_weak_field_action_is_removed_from_formal_learner_path(monkeypatc
 
     assert "/goukaku-no-michi/learning?" not in text
     assert "Ver.1では選択内容の確認まで利用できます" not in text
-    assert "今日の学習ナビで確認" in text
+    assert "今日の学習ナビで確認" not in text
+    assert "内科学" not in text
     assert 'data-recommendation-source="learner_navigation"' in text
 
 
@@ -268,8 +269,8 @@ def test_navigation_cta_accepts_validated_intent_then_uses_central_session_creat
     monkeypatch.setattr(
         app_module,
         "create_web_recommendation_session",
-        lambda user_id, category_small, question_count, token, attempts=None: calls.append(
-            (user_id, category_small, question_count, token, attempts)
+        lambda user_id, category_small, question_count, token, attempts=None, learning_intent=None: calls.append(
+            (user_id, category_small, question_count, token, attempts, learning_intent)
         ) or ("session-1", True),
     )
     response = app_module.app.test_client().post(
@@ -287,6 +288,7 @@ def test_navigation_cta_accepts_validated_intent_then_uses_central_session_creat
     assert response.get_json()["redirect_url"] == "/goukaku-no-michi/learning/session-1"
     assert len(calls) == 1
     assert calls[0][4] is attempts
+    assert calls[0][5] == "exploration"
 
 
 def test_web_session_uses_supplied_attempts_without_second_read(monkeypatch):
@@ -351,3 +353,27 @@ def test_javascript_forces_structured_web_post_for_learner_navigation():
     assert "!structuredNavigation && await liffReady" in js
     assert "recommendationIntent" in js
     assert "recommendationReason" in js
+
+
+def test_gensan_uses_formal_navigation_target_when_learner_navigation_is_enabled(monkeypatch):
+    captured = {}
+    monkeypatch.setattr(
+        goukaku_ui,
+        "build_learner_navigation_from_formal_inputs",
+        lambda *args, **kwargs: _navigation(),
+    )
+
+    def fake_gensan(total_answers, fields, weak_fields, recommended_study, *args):
+        captured["recommended_study"] = recommended_study
+        return "formal navigation aligned"
+
+    monkeypatch.setattr(goukaku_ui, "build_gensan_comment", fake_gensan)
+
+    dashboard = goukaku_ui.build_dashboard(
+        "gensan-formal-navigation-user",
+        include_learner_navigation=True,
+    )
+
+    assert dashboard["learner_navigation_enabled"] is True
+    assert dashboard["gensan_comment"] == "formal navigation aligned"
+    assert captured["recommended_study"] == [("神経医学", 10)]

@@ -1,0 +1,63 @@
+{
+  "qid": "Q561",
+  "question": {
+    "id": "Q561",
+    "management_code": "Q561-B-9-P",
+    "category_large": "B",
+    "category_small": 9,
+    "source": "P",
+    "title": null,
+    "question_text": "中心性脊髄損傷について正しいのはどれか。2つ選べ。",
+    "choices": {
+      "1": "高齢者に多い。",
+      "2": "骨傷に伴って生じることが多い。",
+      "3": "頸椎の過屈曲によって発生することが多い。",
+      "4": "肛門括約筋の収縮が障害されることが多い。",
+      "5": "下肢より上肢機能が強く障害されることが多い。"
+    },
+    "exam": {
+      "exam_no": 52,
+      "session": "午前",
+      "question_no": 82
+    }
+  },
+  "answer": {
+    "id": "Q561",
+    "display_answer": "1・5",
+    "accepted_answer_sets": [
+      [
+        "1",
+        "5"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  "explanation": {
+    "id": "Q561",
+    "explanation": "中心性脊髄損傷は高齢者の頸椎過伸展外傷などで生じやすく、脊髄中心部の障害により下肢より上肢の麻痺が強いことが特徴である。したがって1・5が正しい。",
+    "choice_explanations": {
+      "1": "○。頸椎症をもつ高齢者に生じやすい。",
+      "2": "骨傷を伴わない例も多い。",
+      "3": "典型的には過伸展機転で生じる。",
+      "4": "仙髄機能が温存されることも多く、肛門括約筋障害が必発ではない。",
+      "5": "○。上肢機能が下肢より強く障害されやすい。"
+    }
+  },
+  "tag": {
+    "id": "Q561",
+    "theme": "中心性脊髄損傷について正しいのはどれか",
+    "knowledge_node": "中心性脊髄損傷は高齢者の頸椎過伸展外傷などで生じやすく、脊髄中心部の障害により下肢より上肢の麻痺が強いことが特徴である",
+    "knowledge_node_id": "KN0553",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "中心性脊髄損傷について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  }
+}

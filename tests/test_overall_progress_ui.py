@@ -59,11 +59,11 @@ def test_overall_presentation_state_fixtures_and_ratios():
 def test_one_checking_node_is_unique_low_progress():
     progress = build_field_progress(build_field_evidence([_attempt()]))
     result = build_overall_progress_presentation(progress)
-    assert result["total_unique_canonical_nodes"] == 1508
+    assert result["total_unique_canonical_nodes"] == 1532
     assert result["touched_unique_canonical_nodes"] == 1
     assert 0 < result["progress_raw"] < 0.01
     assert result["progress_display"] == "1%未満"
-    assert result["coverage_raw"] == 1 / 1508
+    assert result["coverage_raw"] == 1 / 1532
 
 
 def test_flag_off_preserves_direct_builder_but_learner_route_uses_formal_overall(monkeypatch):
@@ -105,8 +105,8 @@ def test_overall_preview_renders_for_owner_and_supporter_without_cta_change(monk
     owner = app.test_client().get(f"/goukaku-no-michi?token={token}").get_data(as_text=True)
     assert "合格への到達度" in owner
     assert "学習範囲" in owner and "修復済み" in owner and "定着" in owner
-    assert "チャレンジする！" in owner
-    assert "field-progress-row" not in owner
+    assert "今日の学習を始める" in owner
+    assert "field-progress-row" in owner
     monkeypatch.setattr(goukaku_ui, "authorized_supporter_learner", lambda *_: ("supporter", "learner"))
     supporter = app.test_client().get("/supporter/goukaku-no-michi?token=test").get_data(as_text=True)
     assert "合格への到達度" in supporter

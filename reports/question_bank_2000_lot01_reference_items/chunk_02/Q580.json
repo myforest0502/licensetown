@@ -1,0 +1,62 @@
+{
+  "qid": "Q580",
+  "question": {
+    "id": "Q580",
+    "management_code": "Q580-C-16-P",
+    "category_large": "C",
+    "category_small": 16,
+    "source": "P",
+    "title": null,
+    "question_text": "肘関節脱臼で多いのはどれか。",
+    "choices": {
+      "1": "外側",
+      "2": "後方",
+      "3": "前方",
+      "4": "内側",
+      "5": "分散"
+    },
+    "exam": {
+      "exam_no": 52,
+      "session": "午後",
+      "question_no": 31
+    }
+  },
+  "answer": {
+    "id": "Q580",
+    "display_answer": "2",
+    "accepted_answer_sets": [
+      [
+        "2"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  "explanation": {
+    "id": "Q580",
+    "explanation": "肘関節脱臼は転倒時に伸展位で手をつく機転などで生じ、尺骨・橈骨が上腕骨に対して後方へ脱臼する後方脱臼が最も多い。",
+    "choice_explanations": {
+      "1": "外側脱臼は後方脱臼より少ない。",
+      "2": "○。肘関節脱臼は後方脱臼が最も多い。",
+      "3": "前方脱臼は稀である。",
+      "4": "内側脱臼は稀である。",
+      "5": "分散型は代表的な最多型ではない。"
+    }
+  },
+  "tag": {
+    "id": "Q580",
+    "theme": "肘関節脱臼で多いのはどれか",
+    "knowledge_node": "肘関節脱臼は転倒時に伸展位で手をつく機転などで生じ、尺骨・橈骨が上腕骨に対して後方へ脱臼する後方脱臼が最も多い",
+    "knowledge_node_id": "KN0572",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "肘関節脱臼で多いのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  }
+}

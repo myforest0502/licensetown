@@ -1,0 +1,63 @@
+{
+  "qid": "Q789",
+  "question": {
+    "id": "Q789",
+    "management_code": "Q789-B-9-P",
+    "category_large": "B",
+    "category_small": 9,
+    "source": "P",
+    "title": null,
+    "question_text": "筋萎縮性側索硬化症で下位運動ニューロン障害の徴候はどれか。",
+    "choices": {
+      "1": "痙縮",
+      "2": "仮性球麻痺",
+      "3": "線維束性収縮",
+      "4": "腹壁反射消失",
+      "5": "アキレス腱反射亢進"
+    },
+    "exam": {
+      "exam_no": 55,
+      "session": "午前",
+      "question_no": 35
+    }
+  },
+  "answer": {
+    "id": "Q789",
+    "display_answer": "3",
+    "accepted_answer_sets": [
+      [
+        "3"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  "explanation": {
+    "id": "Q789",
+    "explanation": "ALSの下位運動ニューロン障害では筋萎縮、筋力低下、線維束性収縮、腱反射低下などがみられる。したがって3が正しい。",
+    "choice_explanations": {
+      "1": "痙縮は上位運動ニューロン徴候である。",
+      "2": "仮性球麻痺は上位運動ニューロン障害である。",
+      "3": "○。線維束性収縮は下位運動ニューロン障害の徴候である。",
+      "4": "腹壁反射消失は錐体路障害でもみられる。",
+      "5": "アキレス腱反射亢進は上位運動ニューロン徴候である。"
+    }
+  },
+  "tag": {
+    "id": "Q789",
+    "theme": "筋萎縮性側索硬化症で下位運動ニューロン障害の徴候はどれか",
+    "knowledge_node": "筋萎縮、筋力低下、線維束性収縮、腱反射低下などがみられる",
+    "knowledge_node_id": "KN0781",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "ALSの下位運動ニューロン障害では筋萎縮、筋力低下、線維束性収縮、腱反射低下などがみられる。",
+      "したがって3が正しい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  }
+}
