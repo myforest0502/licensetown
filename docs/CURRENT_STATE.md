@@ -57,6 +57,14 @@ The completion target is not perfection, complete long-term proof, or implementa
 - Implementation branch: `fix/dashboard-approved-layout-v01`, using `dashboard-approved-layout-v01.js/css` loaded last so the approved hierarchy wins over older layout scripts without deleting their content-generation logic.
 - Status: **Boss layout approval: YES / code exists: YES / automated validation pending / Production deployed: NO / real-device acceptance: PENDING**.
 
+## 2026-09-09 Dashboard reference-halves correction
+
+- The previous PR #291 production layout did not reproduce Boss's two attached reference screenshots faithfully and produced a broken/chaotic visual composition in real use. That production acceptance is revoked.
+- Boss supplied two screenshots that together define the desktop layout: top half = date/priority on the left with overall progress on the right, then summary, learner decision/navigation, and the large `合格までの推奨ルート`; lower half = `分野別到達度` opposite `源さんの一言` -> `知識の確認状況` -> `今の学習カルテ` -> `定着までの進み方`, then `LTの作戦メモ` + `学習の現在地` opposite `直近7日間の学習記録`, finishing with `あなたの足跡を見る` and `次のチェックポイント`.
+- No learner-facing card is deleted. The formal Gen-san asset remains `static/images/characters/gensan_main.png`.
+- Corrective branch: `fix/dashboard-match-reference-halves-v01`. `dashboard-approved-layout-v01.js/css` is now a final deterministic override loaded last; desktop uses explicit top and lower grids, mobile remains one column.
+- Status: **real Production defect observed: YES / Boss reference supplied: YES / corrective code exists: YES / automated validation pending / Production deployed: NO / real-device acceptance: PENDING**.
+
 ## Current completion contract — MAIN LINE ONLY
 
 Until PT v1.0 is accepted, do not drift into speculative polish or branch/leaf work.
