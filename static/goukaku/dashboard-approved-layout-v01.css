@@ -1,0 +1,40 @@
+.dashboard-grid.dashboard-approved-layout{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  align-items:start;
+}
+.dashboard-approved-layout>.date-card{grid-column:1;grid-row:auto;min-width:0;margin:0}
+.dashboard-approved-layout>.overall-progress-preview,
+.dashboard-approved-layout>.card.achievement{grid-column:2;grid-row:auto;min-width:0;margin:0}
+.dashboard-approved-layout>.lt-exam-plan-card,
+.dashboard-approved-layout>.learner-navigation,
+.dashboard-approved-layout>.summary-grid,
+.dashboard-approved-layout>.dashboard-story-layout{grid-column:1/-1;width:100%;min-width:0;margin-left:0;margin-right:0}
+.dashboard-approved-layout>.lt-exam-plan-card{margin-top:0}
+.dashboard-approved-layout>.dashboard-story-layout{align-items:start}
+.dashboard-approved-layout .dashboard-story-left,
+.dashboard-approved-layout .dashboard-story-right,
+.dashboard-approved-layout .guidance-stack{min-width:0;align-content:start}
+.dashboard-approved-layout .dashboard-story-left,
+.dashboard-approved-layout .guidance-stack{display:flex;flex-direction:column;gap:16px}
+.dashboard-approved-layout .dashboard-story-left>* ,
+.dashboard-approved-layout .guidance-stack>*{width:100%;min-width:0;margin:0!important;box-sizing:border-box}
+.dashboard-approved-layout .gensan-card img{object-fit:contain;object-position:center;flex:0 0 auto}
+.dashboard-approved-layout .footprint-card,
+.dashboard-approved-layout .next-check-card{align-self:stretch}
+@media (min-width:1001px){
+  .dashboard-approved-layout>.date-card,
+  .dashboard-approved-layout>.overall-progress-preview{height:100%}
+  .dashboard-approved-layout .dashboard-story-layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+}
+@media (max-width:1000px){
+  .dashboard-grid.dashboard-approved-layout{grid-template-columns:1fr}
+  .dashboard-approved-layout>.date-card,
+  .dashboard-approved-layout>.overall-progress-preview,
+  .dashboard-approved-layout>.card.achievement,
+  .dashboard-approved-layout>.lt-exam-plan-card,
+  .dashboard-approved-layout>.learner-navigation,
+  .dashboard-approved-layout>.summary-grid,
+  .dashboard-approved-layout>.dashboard-story-layout{grid-column:1;width:100%}
+  .dashboard-approved-layout .dashboard-story-left,
+  .dashboard-approved-layout .guidance-stack{gap:12px}
+}
