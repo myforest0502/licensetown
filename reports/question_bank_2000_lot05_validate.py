@@ -15,18 +15,31 @@ SLOT_QUOTA={'singleton_second':18,'multi_reinforcement':20,'new_node':3}
 SAFETY_AUGMENT=11
 MIN_STRONG=26
 ACCEPTED_COUNT=41
+START_NEW_NODE=1556
 BASE_COUNT=1953
 BASE_VERSION='2026-09-b18'
 INTEGRATED_START=1954
 INTEGRATED_END=1994
 INTEGRATED_VERSION='2026-09-b19'
-base.ROSTER=ROSTER;base.STAGING=STAGING;base.CATEGORY_QUOTA=CATEGORY_QUOTA;base.TASK_QUOTA=TASK_QUOTA;base.LEVEL_QUOTA=LEVEL_QUOTA;base.SLOT_QUOTA=SLOT_QUOTA;base.SAFETY_AUGMENT=SAFETY_AUGMENT;base.MIN_STRONG=MIN_STRONG;base.ACCEPTED_COUNT=ACCEPTED_COUNT;base.BASE_COUNT=BASE_COUNT;base.BASE_VERSION=BASE_VERSION;base.INTEGRATED_START=INTEGRATED_START;base.INTEGRATED_END=INTEGRATED_END;base.INTEGRATED_VERSION=INTEGRATED_VERSION
 file_fingerprint=base.file_fingerprint
 draft_fingerprint=base.draft_fingerprint
 def build_report(payload=None,*,require_seals=True):
     source=json.loads(STAGING.read_text(encoding='utf-8-sig')) if payload is None else payload
     normalized=copy.deepcopy(source); normalized['batch']='question_bank_2000_production_lot02_v01'
-    return base.build_report(normalized,require_seals=require_seals)
+    settings={
+        'ROSTER':ROSTER,'STAGING':STAGING,'CATEGORY_QUOTA':CATEGORY_QUOTA,
+        'TASK_QUOTA':TASK_QUOTA,'LEVEL_QUOTA':LEVEL_QUOTA,'SLOT_QUOTA':SLOT_QUOTA,
+        'SAFETY_AUGMENT':SAFETY_AUGMENT,'MIN_STRONG':MIN_STRONG,
+        'ACCEPTED_COUNT':ACCEPTED_COUNT,'START_NEW_NODE':START_NEW_NODE,'BASE_COUNT':BASE_COUNT,
+        'BASE_VERSION':BASE_VERSION,'INTEGRATED_START':INTEGRATED_START,
+        'INTEGRATED_END':INTEGRATED_END,'INTEGRATED_VERSION':INTEGRATED_VERSION,
+    }
+    previous={name:getattr(base,name) for name in settings}
+    try:
+        for name,value in settings.items(): setattr(base,name,value)
+        return base.build_report(normalized,require_seals=require_seals)
+    finally:
+        for name,value in previous.items(): setattr(base,name,value)
 def main():
     report=build_report(); print(json.dumps(report,ensure_ascii=False,indent=2)); return 1 if report['hard_errors'] else 0
 if __name__=='__main__': raise SystemExit(main())

@@ -36023,5 +36023,728 @@
     "tag_version": "1.0",
     "tag_status": "reviewed",
     "source": "original"
+  },
+  {
+    "id": "Q1954",
+    "theme": "閉鎖神経障害での評価筋選択",
+    "knowledge_node": "大内転筋は内転部とハムストリング部で神経支配が異なり、前者は閉鎖神経、後者は坐骨神経脛骨部から支配を受ける",
+    "knowledge_node_id": "KN0530",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "二重神経支配の筋はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1955",
+    "theme": "症候からみた中大脳動脈領域",
+    "knowledge_node": "脳血管とその還流域の組合せの基本事項",
+    "knowledge_node_id": "KN0531",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "脳血管とその還流域の組合せで正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1956",
+    "theme": "肩甲下筋の選択的評価",
+    "knowledge_node": "上腕骨小結節には肩甲下筋腱が付着する",
+    "knowledge_node_id": "KN0585",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "上腕骨小結節に付着する筋はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1957",
+    "theme": "感覚障害からみた上行路",
+    "knowledge_node": "四肢からの感覚神経伝導路の特徴",
+    "knowledge_node_id": "KN0595",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "四肢からの感覚神経伝導路について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1958",
+    "theme": "活動筋血流を利用する運動選択",
+    "knowledge_node": "運動時は活動筋への血流が大きく増え、心拍出量・静脈還流も増加する",
+    "knowledge_node_id": "KN0596",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "運動時の循環反応で誤っているのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1959",
+    "theme": "消化酵素障害からみた臨床所見",
+    "knowledge_node": "ペプシンは胃内で蛋白質をポリペプチドへ分解し、リパーゼは脂肪を脂肪酸とグリセリンへ分解する",
+    "knowledge_node_id": "KN0599",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "消化酵素について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1960",
+    "theme": "起立時自律神経反応の安全判断",
+    "knowledge_node": "交感神経の作用",
+    "knowledge_node_id": "KN0597",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "交感神経の作用はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1961",
+    "theme": "成人後期の認知変化の見通し",
+    "knowledge_node": "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める",
+    "knowledge_node_id": "KN0678",
+    "task": "prognosis_prediction",
+    "primary_ability": "PREDICT",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "したがって4が最も適切である。",
+      "成人期後期では経験と知識を基盤にした判断力は保たれやすい一方、記銘や処理速度など一部認知機能は低下し始める。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1962",
+    "theme": "Down症候群児の移動目標",
+    "knowledge_node": "Down症候群では筋緊張低下と関節弛緩性により、殿部を床につけて移動するshufflingなど独特の移動様式がみられることがある",
+    "knowledge_node_id": "KN0720",
+    "task": "functional_goal_decision",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "したがって4が適切である。",
+      "Down症候群では筋緊張低下と関節弛緩性により、殿部を床につけて移動するshufflingなど独特の移動様式がみられることがある。",
+      "shuffling移動がみられることがある。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1963",
+    "theme": "老年期のライフレビューと心理的帰結",
+    "knowledge_node": "老年期の課題は「自我の統合 対 絶望」である",
+    "knowledge_node_id": "KN0612",
+    "task": "prognosis_prediction",
+    "primary_ability": "PREDICT",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Eriksonによる発達段階で老年期に獲得すべき課題はどの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1964",
+    "theme": "特別支援学校での個別指導",
+    "knowledge_node": "特別支援学校の教育環境",
+    "knowledge_node_id": "KN1332",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "特別支援学校の学級編成人数は少人数で設定され、通常1学級10名以上ではない。",
+      "学級人数を10名以上とするのは誤り。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1965",
+    "theme": "ICF実行状況を改善する目標",
+    "knowledge_node": "ICFは心身機能・身体構造、活動、参加、環境因子などが相互作用するモデルで、活動・参加の第一評価点は実行状況を表す",
+    "knowledge_node_id": "KN0979",
+    "task": "functional_goal_decision",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "ICFは心身機能・身体構造、活動、参加、環境因子などが相互作用するモデルで、活動・参加の第一評価点は実行状況を表す。",
+      "1・5が正しい。",
+      "各構成要素は相互に関連。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1966",
+    "theme": "見逃しを減らすスクリーニング検査",
+    "knowledge_node": "感度は、実際に疾患がある患者のうち検査陽性となった者の割合である",
+    "knowledge_node_id": "KN0131",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "真陽性",
+      "患者数",
+      "sensitivity"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1967",
+    "theme": "痛みが乏しい深い熱傷の安全判断",
+    "knowledge_node": "熱傷深度ではⅠ度は発赤のみ、浅達性Ⅱ度は湿潤・水疱で強い痛み、深達性Ⅱ度では知覚低下を伴うことがある",
+    "knowledge_node_id": "KN0690",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "深達性Ⅱ度でも痛みは残るため4が正しい。",
+      "熱傷深度ではⅠ度は発赤のみ、浅達性Ⅱ度は湿潤・水疱で強い痛み、深達性Ⅱ度では知覚低下を伴うことがある。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1968",
+    "theme": "プリオン病疑いでの器材安全管理",
+    "knowledge_node": "疾患と病因・病理学的変化の組合せの基本事項",
+    "knowledge_node_id": "KN0608",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "疾患と病因・病理学的変化の組合せで正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1969",
+    "theme": "末梢動脈疾患の安静時痛への対応",
+    "knowledge_node": "下肢動脈狭窄により冷感、しびれ、間欠性跛行、重症例では安静時痛を生じる",
+    "knowledge_node_id": "KN0650",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "好発部位は大腿動脈から膝窩動脈領域であるため5が正しい。",
+      "閉塞性動脈硬化症では下肢動脈狭窄により冷感、しびれ、間欠性跛行、重症例では安静時痛を生じる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1970",
+    "theme": "Turner症候群疑いの確定評価",
+    "knowledge_node": "Turner症候群は45,X、Klinefelter症候群は47,XXYなど性染色体数的異常で発症する",
+    "knowledge_node_id": "KN0683",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "したがって3・5が正しい。",
+      "Turner症候群はX染色体異常である。",
+      "Klinefelter症候群は性染色体異常である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1971",
+    "theme": "安定心不全の運動療法選択",
+    "knowledge_node": "うっ血性心不全の典型所見",
+    "knowledge_node_id": "KN0515",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "うっ血性心不全でみられるのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1972",
+    "theme": "福山型先天性筋ジストロフィーの確定検査",
+    "knowledge_node": "福山型筋ジストロフィーは先天性筋ジストロフィーで乳児期早期から症状がみられ、選択肢中で平均発症年齢が最も低い",
+    "knowledge_node_id": "KN0557",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "平均的な発症年齢が最も低いのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1973",
+    "theme": "食事中の誤嚥徴候への安全対応",
+    "knowledge_node": "高齢者では嚥下反射・咳反射の低下や口腔機能低下により誤嚥性肺炎が多い",
+    "knowledge_node_id": "KN0560",
+    "task": "safety_priority",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "の肺炎の特徴として正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1974",
+    "theme": "時間的・空間的多発からみた多発性硬化症",
+    "knowledge_node": "多発性硬化症は中枢神経の炎症性脱髄疾患で、若年成人女性に多く、時間的・空間的多発性を示して再発と寛解を繰り返すことが典型である",
+    "knowledge_node_id": "KN0558",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "多発性硬化症について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1975",
+    "theme": "可逆性認知症を示唆する所見",
+    "knowledge_node": "正常圧水頭症、慢性硬膜下血腫、葉酸・B12欠乏などは可逆性認知症の原因となる",
+    "knowledge_node_id": "KN0632",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "甲状腺機能では一般に低下症が認知機能低下と関連しやすく、亢進症は原因になりにくい。",
+      "甲状腺機能亢進症は典型的な認知症原因ではない。",
+      "正常圧水頭症、慢性硬膜下血腫、葉酸・B12欠乏などは可逆性認知症の原因となる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1976",
+    "theme": "アルコール離脱の病態解釈",
+    "knowledge_node": "断酒後に振戦、自律神経症状、けいれん発作、重症例では振戦せん妄が出現する",
+    "knowledge_node_id": "KN0563",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "アルコールの離脱症候群はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1977",
+    "theme": "Duchenne型筋ジストロフィーの移動機器",
+    "knowledge_node": "骨盤帯近位筋から筋力低下が進行し、床から立つ際にGowers徴候を示す",
+    "knowledge_node_id": "KN1231",
+    "task": "device_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "Duchenne型筋ジストロフィーでは骨盤帯近位筋から筋力低下が進行し、床から立つ際にGowers徴候を示す。",
+      "筋力低下進行でGowers徴候。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1978",
+    "theme": "二分脊椎に伴う水頭症への介入",
+    "knowledge_node": "中枢神経の先天奇形とその特徴の組合せの基本事項",
+    "knowledge_node_id": "KN0559",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "中枢神経の先天奇形とその特徴の組合せで正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1979",
+    "theme": "作業曲線を用いる心理検査の選択",
+    "knowledge_node": "内田・クレペリン精神検査は連続加算作業の作業曲線から性格・行動特性、作業態度などをみる",
+    "knowledge_node_id": "KN0895",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "内田・クレペリンは性格・行動面の特徴をみる。",
+      "内田・クレペリン精神検査は連続加算作業の作業曲線から性格・行動特性、作業態度などをみる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1980",
+    "theme": "半月板術後の運動選択",
+    "knowledge_node": "外側半月板は外側側副靱帯と膝窩筋腱で隔てられ直接付着しないため可動性が大きい",
+    "knowledge_node_id": "KN0605",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "膝関節半月板について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1981",
+    "theme": "肩甲骨運動からみた筋機能",
+    "knowledge_node": "肩甲骨の運動とそれに作用する筋の組合せの基本事項",
+    "knowledge_node_id": "KN0543",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "肩甲骨の運動とそれに作用する筋の組合せで正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1982",
+    "theme": "肘位による回外筋力低下の解釈",
+    "knowledge_node": "前腕回外に作用する筋",
+    "knowledge_node_id": "KN0544",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "前腕回外に作用する筋はどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1983",
+    "theme": "歩行開始時APAへの練習",
+    "knowledge_node": "歩行開始前には重心移動を準備する予測的姿勢調節〈APA〉が生じ、第一歩の安定性に寄与する",
+    "knowledge_node_id": "KN1551",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "歩行開始では静止立位から第一歩へ移るために、重心と足圧中心を調整する姿勢制御が必要である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1984",
+    "theme": "反復拮抗運動障害の解釈",
+    "knowledge_node": "反復拮抗運動障害を評価する前腕回内外試験",
+    "knowledge_node_id": "KN0987",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "反復拮抗運動障害（dysdiadochokinesia）は前腕の回内・回外を素早く反復させて評価する。",
+      "反復拮抗運動障害の検査法はどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1985",
+    "theme": "歩行時重心軌跡の解釈",
+    "knowledge_node": "正常歩行では立脚中期に身体重心が支持脚側へ最も側方移動する",
+    "knowledge_node_id": "KN1400",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "正常歩行では立脚中期に身体重心が支持脚側へ最も側方移動する。",
+      "立脚中期に最大側方移動。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1986",
+    "theme": "歩行速度変化の指標解釈",
+    "knowledge_node": "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる",
+    "knowledge_node_id": "KN0815",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "したがって3が正しい。",
+      "歩行速度を上げると歩幅と歩行率が増え、立脚時間・両脚支持時間は短くなる。",
+      "立脚相時間は短縮。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1987",
+    "theme": "歩行耐容能に応じた機能目標",
+    "knowledge_node": "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する",
+    "knowledge_node_id": "KN0863",
+    "task": "functional_goal_decision",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "選択肢では3.5METsの2が最も近い。",
+      "80m/分は約4.8km/hの歩行で、一般に3〜4METs程度に相当する。",
+      "3.5METs程度が近い。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1988",
+    "theme": "膝伸展MMTの重力除去肢位",
+    "knowledge_node": "重力を除去した肢位で膝伸展・膝屈曲を評価するため、両者とも側臥位など同じ重力除去肢位となる",
+    "knowledge_node_id": "KN1225",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "MMT段階2では重力を除去した肢位で膝伸展・膝屈曲を評価するため、両者とも側臥位など同じ重力除去肢位となる。",
+      "段階2では重力除去肢位。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1989",
+    "theme": "肘伸展MMT結果の解釈",
+    "knowledge_node": "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える",
+    "knowledge_node_id": "KN0631",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Daniels法の肘関節伸展MMTでは、段階5で肘をわずかに屈曲させた位置から伸展保持させ、前腕遠位へ屈曲方向の抵抗を加える。",
+      "したがって2が正しい。",
+      "肘伸展では軽度屈曲位で抵抗を加える。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1990",
+    "theme": "廃用後の機能目標設定",
+    "knowledge_node": "長期不動による廃用では筋量・筋力低下が進み、活動低下を原因とする二次性サルコペニアを生じうる",
+    "knowledge_node_id": "KN0651",
+    "task": "functional_goal_decision",
+    "primary_ability": "DECIDE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "高齢者では影響が大きく、嚥下機能や栄養状態も低下しうる。",
+      "長期不動による廃用では筋量・筋力低下が進み、活動低下を原因とする二次性サルコペニアを生じうる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1991",
+    "theme": "鵞足部痛への運動選択",
+    "knowledge_node": "鵞足は縫工筋、薄筋、半腱様筋の腱が脛骨近位内側に付着して形成される",
+    "knowledge_node_id": "KN0511",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "鵞足をつくるのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1992",
+    "theme": "伏在神経障害の局在",
+    "knowledge_node": "大腿神経の伏在神経は運動枝を持たない純粋な感覚枝で、下腿内側から足関節内側の知覚を担う",
+    "knowledge_node_id": "KN1556",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 4,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "下肢末梢神経の障害部位は、感覚分布と運動・反射所見を組み合わせて局在する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1993",
+    "theme": "低酸素時の換気応答予測",
+    "knowledge_node": "末梢化学受容器である頸動脈小体は動脈血酸素分圧低下に反応し、低酸素時の換気を促進する",
+    "knowledge_node_id": "KN1557",
+    "task": "prognosis_prediction",
+    "primary_ability": "PREDICT",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "動脈血酸素分圧の変化は化学受容器を介して呼吸調節へ影響する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q1994",
+    "theme": "アミロイドの特殊染色",
+    "knowledge_node": "アミロイド沈着はCongo red染色で赤橙色に染まり、偏光下で特徴的な緑色系複屈折を示す",
+    "knowledge_node_id": "KN1558",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "組織内沈着物の同定には、対象物質に応じた特殊染色と観察法を用いる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
   }
 ]

@@ -51,6 +51,7 @@ SLOT_QUOTA = {"singleton_second":32,"multi_reinforcement":12,"new_node":4}
 SAFETY_AUGMENT = 12
 MIN_STRONG = 41
 ACCEPTED_COUNT = 48
+START_NEW_NODE = 1543
 BASE_COUNT = 1809
 BASE_VERSION = "2026-09-b15"
 INTEGRATED_START = 1810
@@ -279,7 +280,7 @@ def build_report(payload: dict | None = None, *, require_seals: bool = True) -> 
             check(bool(label), prefix + "proposed new Node label required")
             if label:
                 label_norm = normalize(label)
-                allocated_node_id = f"KN{1543 + new_node_offset:04d}"
+                allocated_node_id = f"KN{START_NEW_NODE + new_node_offset:04d}"
                 duplicate_node = normalized_node_labels.get(label_norm)
                 check(not duplicate_node or (integrated and duplicate_node == allocated_node_id),
                       prefix + f"new Node label duplicates existing Node {duplicate_node}")

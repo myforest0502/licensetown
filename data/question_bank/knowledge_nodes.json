@@ -1335,7 +1335,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q131",
-      "Q1574"
+      "Q1574",
+      "Q1966"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5206,7 +5207,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q519",
-      "Q1796"
+      "Q1796",
+      "Q1991"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5253,7 +5255,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q523",
-      "Q1810"
+      "Q1810",
+      "Q1971"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5407,9 +5410,10 @@
   {
     "knowledge_node_id": "KN0530",
     "label": "大内転筋は内転部とハムストリング部で神経支配が異なり、前者は閉鎖神経、後者は坐骨神経脛骨部から支配を受ける",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q538"
+      "Q538",
+      "Q1954"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5417,9 +5421,10 @@
   {
     "knowledge_node_id": "KN0531",
     "label": "脳血管とその還流域の組合せの基本事項",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q539"
+      "Q539",
+      "Q1955"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5553,7 +5558,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q551",
-      "Q1890"
+      "Q1890",
+      "Q1981"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5564,7 +5570,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q552",
-      "Q1891"
+      "Q1891",
+      "Q1982"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5712,7 +5719,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q565",
-      "Q1811"
+      "Q1811",
+      "Q1972"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5723,7 +5731,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q566",
-      "Q1763"
+      "Q1763",
+      "Q1974"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5734,7 +5743,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q567",
-      "Q1824"
+      "Q1824",
+      "Q1978"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5745,7 +5755,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q568",
-      "Q1812"
+      "Q1812",
+      "Q1973"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5778,7 +5789,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q571",
-      "Q1883"
+      "Q1883",
+      "Q1976"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6008,9 +6020,10 @@
   {
     "knowledge_node_id": "KN0585",
     "label": "上腕骨小結節には肩甲下筋腱が付着する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q593"
+      "Q593",
+      "Q1956"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6110,9 +6123,10 @@
   {
     "knowledge_node_id": "KN0595",
     "label": "四肢からの感覚神経伝導路の特徴",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q603"
+      "Q603",
+      "Q1957"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6120,9 +6134,10 @@
   {
     "knowledge_node_id": "KN0596",
     "label": "運動時は活動筋への血流が大きく増え、心拍出量・静脈還流も増加する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q604"
+      "Q604",
+      "Q1958"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6130,9 +6145,10 @@
   {
     "knowledge_node_id": "KN0597",
     "label": "交感神経の作用",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q605"
+      "Q605",
+      "Q1960"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6152,9 +6168,10 @@
   {
     "knowledge_node_id": "KN0599",
     "label": "ペプシンは胃内で蛋白質をポリペプチドへ分解し、リパーゼは脂肪を脂肪酸とグリセリンへ分解する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q607"
+      "Q607",
+      "Q1959"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6216,9 +6233,10 @@
   {
     "knowledge_node_id": "KN0605",
     "label": "外側半月板は外側側副靱帯と膝窩筋腱で隔てられ直接付着しないため可動性が大きい",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q613"
+      "Q613",
+      "Q1980"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6250,7 +6268,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q616",
-      "Q1874"
+      "Q1874",
+      "Q1968"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6296,7 +6315,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q620",
-      "Q1867"
+      "Q1867",
+      "Q1963"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6500,7 +6520,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q639",
-      "Q1783"
+      "Q1783",
+      "Q1989"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6508,9 +6529,10 @@
   {
     "knowledge_node_id": "KN0632",
     "label": "正常圧水頭症、慢性硬膜下血腫、葉酸・B12欠乏などは可逆性認知症の原因となる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q640"
+      "Q640",
+      "Q1975"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6704,9 +6726,10 @@
   {
     "knowledge_node_id": "KN0650",
     "label": "下肢動脈狭窄により冷感、しびれ、間欠性跛行、重症例では安静時痛を生じる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q658"
+      "Q658",
+      "Q1969"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6714,9 +6737,10 @@
   {
     "knowledge_node_id": "KN0651",
     "label": "長期不動による廃用では筋量・筋力低下が進み、活動低下を原因とする二次性サルコペニアを生じうる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q659"
+      "Q659",
+      "Q1990"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6996,7 +7020,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q686",
-      "Q1622"
+      "Q1622",
+      "Q1961"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7045,9 +7070,10 @@
   {
     "knowledge_node_id": "KN0683",
     "label": "Turner症候群は45,X、Klinefelter症候群は47,XXYなど性染色体数的異常で発症する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q691"
+      "Q691",
+      "Q1970"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7119,9 +7145,10 @@
   {
     "knowledge_node_id": "KN0690",
     "label": "熱傷深度ではⅠ度は発赤のみ、浅達性Ⅱ度は湿潤・水疱で強い痛み、深達性Ⅱ度では知覚低下を伴うことがある",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q698"
+      "Q698",
+      "Q1967"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7431,9 +7458,10 @@
   {
     "knowledge_node_id": "KN0720",
     "label": "Down症候群では筋緊張低下と関節弛緩性により、殿部を床につけて移動するshufflingなど独特の移動様式がみられることがある",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q728"
+      "Q728",
+      "Q1962"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8405,7 +8433,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q824",
-      "Q1894"
+      "Q1894",
+      "Q1986"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8899,7 +8928,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q872",
-      "Q1895"
+      "Q1895",
+      "Q1987"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9222,7 +9252,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q904",
-      "Q1828"
+      "Q1828",
+      "Q1979"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10074,9 +10105,10 @@
   {
     "knowledge_node_id": "KN0979",
     "label": "ICFは心身機能・身体構造、活動、参加、環境因子などが相互作用するモデルで、活動・参加の第一評価点は実行状況を表す",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q989"
+      "Q989",
+      "Q1965"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10160,7 +10192,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q997",
-      "Q1893"
+      "Q1893",
+      "Q1984"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12588,9 +12621,10 @@
   {
     "knowledge_node_id": "KN1225",
     "label": "重力を除去した肢位で膝伸展・膝屈曲を評価するため、両者とも側臥位など同じ重力除去肢位となる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1240"
+      "Q1240",
+      "Q1988"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12649,9 +12683,10 @@
   {
     "knowledge_node_id": "KN1231",
     "label": "骨盤帯近位筋から筋力低下が進行し、床から立つ際にGowers徴候を示す",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1246"
+      "Q1246",
+      "Q1977"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13680,7 +13715,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1352",
-      "Q1870"
+      "Q1870",
+      "Q1964"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14369,9 +14405,10 @@
   {
     "knowledge_node_id": "KN1400",
     "label": "正常歩行では立脚中期に身体重心が支持脚側へ最も側方移動する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1425"
+      "Q1425",
+      "Q1985"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15900,9 +15937,10 @@
   {
     "knowledge_node_id": "KN1551",
     "label": "歩行開始前には重心移動を準備する予測的姿勢調節〈APA〉が生じ、第一歩の安定性に寄与する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1905"
+      "Q1905",
+      "Q1983"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15943,6 +15981,36 @@
     "status": "singleton_initial",
     "question_ids": [
       "Q1953"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1556",
+    "label": "大腿神経の伏在神経は運動枝を持たない純粋な感覚枝で、下腿内側から足関節内側の知覚を担う",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1992"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1557",
+    "label": "末梢化学受容器である頸動脈小体は動脈血酸素分圧低下に反応し、低酸素時の換気を促進する",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1993"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1558",
+    "label": "アミロイド沈着はCongo red染色で赤橙色に染まり、偏光下で特徴的な緑色系複屈折を示す",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1994"
     ],
     "aliases": [],
     "successor_ids": []

@@ -31,6 +31,8 @@ END_NODE = 1555
 LETTERS = "ABCDE"
 QID_PATTERN = r"^Q(?:[1-9]|[1-9][0-9]{1,2}|1[0-8][0-9]{2}|19[0-4][0-9]|195[0-3])$"
 IMMUTABLE_FILES = ("knowledge_node_canonical_map.json", "strong_different_question_pairs.json")
+EXPECTED_DRAFT_COUNT = END_Q - START_Q + 1
+NEW_NODE_PREREQUISITES = {}
 
 
 def _write(path: Path, payload) -> None:
@@ -42,9 +44,9 @@ def _write(path: Path, payload) -> None:
 def _accepted_drafts(staging_path: Path) -> list[dict]:
     payload = read(staging_path)
     drafts = [row for row in payload.get("drafts", []) if row.get("status") == "accepted"]
-    if len(drafts) != 48:
-        raise ValueError(f"expected 48 accepted drafts, got {len(drafts)}")
-    if len({row.get("draft_id") for row in drafts}) != 48:
+    if len(drafts) != EXPECTED_DRAFT_COUNT:
+        raise ValueError(f"expected {EXPECTED_DRAFT_COUNT} accepted drafts, got {len(drafts)}")
+    if len({row.get("draft_id") for row in drafts}) != EXPECTED_DRAFT_COUNT:
         raise ValueError("duplicate draft ids")
     for draft in drafts:
         if draft.get("reviewed_sha256") != draft_fingerprint(draft):
@@ -159,7 +161,9 @@ def integrate(bank_dir: Path = BANK, staging_path: Path = STAGING) -> None:
                 }
                 nodes.append(node)
                 node_index[node_id] = node
-                prerequisites = []
+                prerequisites = list(NEW_NODE_PREREQUISITES.get(draft["draft_id"], []))
+                if not prerequisites:
+                    raise ValueError(f"{draft['draft_id']}: new Node prerequisite metadata missing")
                 large = category_large[int(draft["proposed_category_small"])]
             else:
                 node = node_index.get(node_id)

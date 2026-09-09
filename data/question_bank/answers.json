@@ -19766,5 +19766,415 @@
       ]
     ],
     "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1954",
+    "display_answer": "E",
+    "accepted_answer_sets": [
+      [
+        "E"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1955",
+    "display_answer": "B",
+    "accepted_answer_sets": [
+      [
+        "B"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1956",
+    "display_answer": "D",
+    "accepted_answer_sets": [
+      [
+        "D"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1957",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1958",
+    "display_answer": "B",
+    "accepted_answer_sets": [
+      [
+        "B"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1959",
+    "display_answer": "B",
+    "accepted_answer_sets": [
+      [
+        "B"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1960",
+    "display_answer": "D",
+    "accepted_answer_sets": [
+      [
+        "D"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1961",
+    "display_answer": "B",
+    "accepted_answer_sets": [
+      [
+        "B"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1962",
+    "display_answer": "B",
+    "accepted_answer_sets": [
+      [
+        "B"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1963",
+    "display_answer": "D",
+    "accepted_answer_sets": [
+      [
+        "D"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1964",
+    "display_answer": "C",
+    "accepted_answer_sets": [
+      [
+        "C"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1965",
+    "display_answer": "C",
+    "accepted_answer_sets": [
+      [
+        "C"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1966",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1967",
+    "display_answer": "B",
+    "accepted_answer_sets": [
+      [
+        "B"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1968",
+    "display_answer": "C",
+    "accepted_answer_sets": [
+      [
+        "C"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1969",
+    "display_answer": "C",
+    "accepted_answer_sets": [
+      [
+        "C"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1970",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1971",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1972",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1973",
+    "display_answer": "C",
+    "accepted_answer_sets": [
+      [
+        "C"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1974",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1975",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1976",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1977",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1978",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1979",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1980",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1981",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1982",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1983",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1984",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1985",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1986",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1987",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1988",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1989",
+    "display_answer": "C",
+    "accepted_answer_sets": [
+      [
+        "C"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1990",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1991",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1992",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1993",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1994",
+    "display_answer": "A",
+    "accepted_answer_sets": [
+      [
+        "A"
+      ]
+    ],
+    "answer_basis": "LT_original"
   }
 ]
