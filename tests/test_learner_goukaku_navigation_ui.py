@@ -140,7 +140,8 @@ def test_legacy_weak_field_action_is_removed_from_formal_learner_path(monkeypatc
 
     assert "/goukaku-no-michi/learning?" not in text
     assert "Ver.1では選択内容の確認まで利用できます" not in text
-    assert "今日の学習ナビで確認" in text
+    assert "今日の学習ナビで確認" not in text
+    assert "内科学" not in text
     assert 'data-recommendation-source="learner_navigation"' in text
 
 

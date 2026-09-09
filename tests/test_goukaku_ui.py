@@ -29,8 +29,8 @@ def test_goukaku_home_renders(monkeypatch):
     assert "images/characters/gensan_main.png" in text
     assert 'class="app-header title-only"' in text
     assert "data-close" not in text
-    assert "今日のおすすめ学習" in text
-    assert "おすすめ進捗" in text
+    assert "今日やること" in text
+    assert "今日の学習を始める" in text
     assert "（暫定）" in text
     assert "field-progress-row" in text
     assert "正答率" in text
@@ -50,7 +50,7 @@ def test_goukaku_home_renders(monkeypatch):
     assert 'class="learning-overview"' in text
     assert 'class="guidance-stack"' in text
     assert 'class="motivation-grid dashboard-footer-cards"' in text
-    guidance_labels = ["優先課題 TOP3", "今日のおすすめ学習", "源さんの一言"]
+    guidance_labels = ["今日やること", "源さんの一言"]
     assert [text.index(label) for label in guidance_labels] == sorted(text.index(label) for label in guidance_labels)
     assert text.index("分野別 到達度") < text.index("次の報酬まで")
     assert text.index("源さんの一言") < text.index("次の報酬まで")
@@ -151,7 +151,7 @@ def test_dashboard_and_subjects_render_real_field_history_without_demo_values(mo
     assert category_name in home_text
     assert "2問" in home_text
     assert "50%" in home_text
-    assert "100問を目標に基礎を固めましょう" in home_text
+    assert "今日やること" in home_text
     assert "今日は解剖学を10問解こう" in home_text
     assert "チャレンジする！" in home_text
     assert 'data-recommendation-start-url="/goukaku-no-michi/recommendation/start"' in home_text

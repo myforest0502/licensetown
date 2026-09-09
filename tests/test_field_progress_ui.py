@@ -74,7 +74,7 @@ def test_enabled_home_separates_three_metrics_and_keeps_overall_and_cta(monkeypa
     assert "正答率" in text
     assert "1%未満" in text
     assert "合格への到達度" in text
-    assert "今日のおすすめ学習" in text
+    assert "今日やること" in text
     assert "チャレンジする！" in text
 
 
