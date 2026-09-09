@@ -1,5 +1,19 @@
 # LicenseTown agent/development instructions
 
+## Cross-chat / new-session startup rule
+
+Whenever a new chat, new agent session, Codex session, or resumed development thread is clearly about LicenseTown, **do not wait for the user to remind you of project state**.
+
+Your first repository action must be to read `docs/CURRENT_STATE.md` from the current working branch (or the designated safe branch if already known). Use that file as the starting source of truth, then verify only facts that may have changed since its last update.
+
+If the branch is unknown, first determine the active/designated working branch, then read that branch's `docs/CURRENT_STATE.md` before re-investigating architecture or status.
+
+Do not ask the user to paste a handoff again merely because the chat room changed. The durable handoff is the repository state plus `docs/CURRENT_STATE.md`.
+
+If `docs/CURRENT_STATE.md` is missing, stale, or contradicted by the code/data being touched, repair the document during that work cycle before proceeding broadly.
+
+## Ongoing source-of-truth rule
+
 Before changing code, data, tests, workflows, or product behavior, read `docs/CURRENT_STATE.md`.
 
 That file is the durable development source of truth for:
