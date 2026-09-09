@@ -14,7 +14,7 @@ This is a read-only acceptance record. It does not authorize learner-facing prom
 - valid historical `recommendation_plan` anchors: 9
 - historical replay linkage at all 9 anchors: 0 missing attempts, 0 question-ID mismatches
 
-## Promotion gate matrix
+## Automatic promotion gate matrix
 
 | Gate | Status | Evidence / disposition |
 | --- | --- | --- |
@@ -26,13 +26,31 @@ This is a read-only acceptance record. It does not authorize learner-facing prom
 | Comparison diversity | OPEN | Historical review already documented eligible retrospective snapshots in the Shadow-stronger direction, while a separate prospective natural sample favored the Baseline for learner-perceived immediate priority. The automatic comparison-diversity gate, however, is defined from retrospective replay buckets; a second retrospective direction has not yet been reproduced strongly enough to claim PASS. |
 | Current profile consistency | PASS | Current unresolved Critical `KN0613` makes formal Shadow reason `safety_repair`; symmetric field profiles are built from the same active facts and therefore expose the same strongest reason for the target field. |
 
+## Manual / product promotion criteria from the ship checklist and review runbook
+
+The automatic seven-gate status is necessary but not sufficient. The project runbook also requires a learner-facing review before a limited pilot.
+
+| Criterion | Status now | Evidence / disposition |
+| --- | --- | --- |
+| Architecture / read-only ownership boundaries | PASS | Phase11 remains deterministic/read-only; exact Q selection stays in Phase10; no learner-facing self-promotion. |
+| Phase10 adaptive dependency | PASS | Natural adaptive use and audit metadata persistence have already been validated; current repeat audit has no unexplained/inconsistent adaptive repeat defect. |
+| Natural ordinary-single-wrong overreaction | PASS-to-date / monitor | Formal mismatch count is zero and prior Production review found no current red flag pattern. Continue surveillance; this is broader than the formal invariant alone. |
+| Sparse-coverage conservatism | PASS-to-date / monitor | Formal policy does not manufacture weakness from unknown/zero-answer evidence, and earlier natural snapshots exercised `insufficient_coverage` behavior without a recorded policy-consistency defect. |
+| Repair mechanics / STRONG supply use | PASS-to-date | Natural 2026-09-06 use recorded 35 STRONG different-question repairing attempts, 26/35 correct, and 13 confidence-1 correct formal-confirmation candidates, with zero recent-repeat flags and zero cooldown bypasses among those STRONG attempts. |
+| Repair durability after spacing | OPEN | This is the same core evidence gap as retention: repair confirmation exists, but durable `recheck_due -> stable` versus return-to-repairing outcomes are not yet naturally observed. |
+| Prospective recommendation relevance vs Baseline | OPEN | The 2026-09-02 prospective sample favored Baseline (神経医学) over Shadow (心理学) for the learner's immediate priority, while still rating Shadow's field as important. This is useful mixed evidence, not a failure by itself, but it prevents claiming learner-facing superiority from current evidence. |
+| Symmetric disagreement review | OPEN | Retrospective evidence is still one-directional for the automatic diversity gate; a Baseline-favorable prospective case exists but must not be substituted for a missing retrospective direction. |
+| Human learner-facing promotion review | OPEN by design | Must occur only after the evidence gates are sufficiently green. Automatic diagnostics never authorize promotion. |
+
 ## Current decision
 
-- BLOCKED gates: **none identified**
-- OPEN gates: **retention, intent-selection alignment, comparison diversity**
+- known BLOCKED/FAIL gates: **none identified**
+- automatic OPEN gates: **retention, intent-selection alignment, comparison diversity**
+- additional manual/product OPEN criteria: **repair durability, prospective recommendation relevance, symmetric disagreement breadth, final human promotion review**
 - automatic state: **HOLD / Shadow-only**
-- learner-facing promotion allowed automatically: **no**
-- manual review required after all checkable gates clear: **yes**
+- learner-facing promotion now: **not justified**
+
+This means Phase11 is not waiting on an obvious code defect. It is waiting mainly on natural evidence that cannot responsibly be manufactured.
 
 ## Why comparison diversity remains OPEN
 
@@ -43,7 +61,8 @@ The automatic gate requires at least two observed retrospective comparison direc
 1. After a natural `recheck_due` question is actually answered, re-run retention outcome audit.
 2. On the same event, re-run exact-Q intent-selection alignment; a valid retention selection should use STRONG different-question evidence against the retention reference.
 3. Continue accumulating recommendation-plan anchors. If a second retrospective comparison direction appears naturally, re-run comparison diversity.
-4. Only after all checkable gates are PASS, perform explicit human learner-facing promotion review.
+4. Continue collecting learner-relevance evidence only through ordinary use; do not repeatedly prompt solely to manufacture a favorable sample.
+5. Only after the evidence set is sufficiently green, perform explicit human review for a limited feature-flagged learner-facing pilot; do not jump directly to full replacement.
 
 ## Policy
 
