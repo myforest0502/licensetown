@@ -138,9 +138,9 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <p class="lt-route-lead">残り${Number.isFinite(countdownNumber) ? `${countdownNumber}日` : '日数'}を、今の現在地から逆算して進めます。学習結果に合わせてルートは更新されます。</p>
       <div class="lt-route-pace-panel">
-        <div><small>この時点の推奨</small><strong>${recommendedDisplay}</strong><span>LT学習到達指標</span></div>
-        <div><small>現在</small><strong>${currentDisplay}</strong><span>推奨との差 ${gapDisplay}</span></div>
-        <div class="lt-route-pace-result"><small>推奨ルートとの位置</small><strong>${scheduleDetail}</strong><span>${scheduleLabel}</span></div>
+        <div><small>この時点の推奨</small><strong>${recommendedDisplay}</strong><span>LT学習到達指標</span><p class="lt-route-pace-note">現在の学習記録から見た到達目安です</p></div>
+        <div><small>現在</small><strong>${currentDisplay}</strong><span>推奨との差 ${gapDisplay}</span><p class="lt-route-pace-note">いまの進み具合を毎日更新しています</p></div>
+        <div class="lt-route-pace-result"><small>推奨ルートとの位置</small><strong>${scheduleDetail}</strong><span>${scheduleLabel}</span><p class="lt-route-pace-note">推奨ペースと現在地の差を示しています</p></div>
       </div>
       <p class="lt-route-evidence">${activityCopy} <b>回答数だけではなく、修復・再確認・定着まで含めて現在地を判定します。</b></p>
       <div class="lt-route-now-grid">

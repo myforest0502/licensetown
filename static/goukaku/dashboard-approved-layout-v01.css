@@ -135,6 +135,12 @@
 .dashboard-reference-source-only{
   display:none!important;
 }
+.lt-route-pace-note{
+  margin:8px 0 0;
+  color:#53625a;
+  font-size:10px;
+  line-height:1.45;
+}
 
 /* LOWER HALF: frozen to the already approved reference. */
 .dashboard-reference-lower{
@@ -210,5 +216,19 @@
       "footprints"
       "checkpoint";
     gap:12px;
+  }
+}
+
+@media (min-width:701px) and (max-width:1000px){
+  .dashboard-reference-top>.summary-grid{
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:10px;
+  }
+  .dashboard-reference-top>.summary-grid .mini-card{
+    padding-left:8px;
+    padding-right:8px;
+  }
+  .dashboard-reference-top>.summary-grid .mini-card strong{
+    font-size:29px;
   }
 }
