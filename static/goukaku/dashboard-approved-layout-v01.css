@@ -26,12 +26,12 @@
   gap:16px;
 }
 .dashboard-reference-top-left>.date-card,
-.dashboard-reference-top-left>.learner-attention-card,
+.dashboard-reference-top-left>.learner-today-card,
 .dashboard-reference-top-right>.overall-progress-preview,
 .dashboard-reference-top-right>.card.achievement,
 .dashboard-reference-top>.summary-grid,
-.dashboard-reference-top>.learner-navigation,
-.dashboard-reference-top>.lt-exam-plan-card{
+.dashboard-reference-top>.lt-exam-plan-card,
+.dashboard-reference-top>.learner-current-card{
   width:100%;
   min-width:0;
   margin:0!important;
@@ -42,22 +42,101 @@
   flex:1 1 auto;
   height:100%;
 }
-.dashboard-reference-top>.learner-navigation{
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+
+/* Today's task is directly below the date card in the approved upper reference. */
+.dashboard-reference-top-left>.learner-today-card{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(220px,.55fr);
+  column-gap:18px;
+  align-items:start;
+  padding:20px;
+  border-radius:18px;
+  border:1px solid rgba(26,116,75,.2);
+  background:linear-gradient(135deg,rgba(238,248,242,.98),rgba(255,255,255,.98));
+  box-shadow:0 8px 22px rgba(26,91,62,.08);
 }
-.dashboard-reference-top>.learner-navigation>.learner-current-card{
+.dashboard-reference-top-left>.learner-today-card .learner-nav-kicker{
   grid-column:1/-1;
+  margin:0 0 8px;
+  padding:0;
+  min-height:0;
+  font-size:0;
+  color:#0b7040;
+  font-weight:900;
 }
-.dashboard-reference-top>.learner-navigation>.learner-today-card{
+.dashboard-reference-top-left>.learner-today-card .learner-nav-kicker::after{
+  content:"今日やること";
+  font-size:16px;
+}
+.dashboard-reference-top-left>.learner-today-card h2{
   grid-column:1;
+  margin:2px 0 6px;
+  font-size:24px;
+  line-height:1.25;
 }
-.dashboard-reference-top>.learner-navigation>.learner-nav-details{
+.dashboard-reference-top-left>.learner-today-card>p:not(.recommend-challenge-status){
+  grid-column:1;
+  margin:0;
+  font-size:13px;
+  line-height:1.65;
+}
+.dashboard-reference-top-left>.learner-today-card .learner-nav-action,
+.dashboard-reference-top-left>.learner-today-card .recommend-challenge{
   grid-column:2;
+  grid-row:2/span 2;
+  width:100%;
+  min-height:58px;
+  margin:0;
+  border-radius:12px;
+  font-size:15px;
+  font-weight:900;
 }
+.dashboard-reference-top-left>.learner-today-card .learner-today-summary{
+  grid-column:1/-1;
+  margin-top:12px;
+  padding-top:12px;
+}
+
+/* The current/priority overview is the final full-width card of the approved upper half. */
+.dashboard-reference-top>.learner-current-card{
+  padding:22px 26px;
+  border-radius:18px;
+  border:1px solid rgba(34,94,70,.16);
+  background:linear-gradient(135deg,rgba(238,248,242,.98),rgba(255,255,255,.98));
+  box-shadow:0 8px 22px rgba(28,67,50,.06);
+}
+.dashboard-reference-top>.learner-current-card .learner-nav-kicker{
+  margin:0 0 4px;
+  padding:0;
+  min-height:0;
+  font-size:13px;
+  font-weight:900;
+  color:#0b7040;
+}
+.dashboard-reference-top>.learner-current-card h2{
+  margin:2px 0 8px;
+  font-size:26px;
+  line-height:1.25;
+}
+.dashboard-reference-top>.learner-current-card>p{
+  margin:0;
+  font-size:13px;
+  line-height:1.65;
+}
+.dashboard-reference-top>.learner-current-card .learner-current-detail-grid{
+  margin-top:14px;
+  padding-top:12px;
+}
+
+.dashboard-reference-top>.summary-grid,
 .dashboard-reference-top>.lt-exam-plan-card{
   margin-top:0!important;
 }
+.dashboard-reference-source-only{
+  display:none!important;
+}
 
+/* LOWER HALF: frozen to the already approved reference. */
 .dashboard-reference-lower{
   margin-top:16px;
   display:grid;
@@ -107,13 +186,14 @@
   }
   .dashboard-reference-top-left,
   .dashboard-reference-top-right{gap:12px}
-  .dashboard-reference-top>.learner-navigation{
+  .dashboard-reference-top-left>.learner-today-card{
     grid-template-columns:1fr;
   }
-  .dashboard-reference-top>.learner-navigation>.learner-current-card,
-  .dashboard-reference-top>.learner-navigation>.learner-today-card,
-  .dashboard-reference-top>.learner-navigation>.learner-nav-details{
+  .dashboard-reference-top-left>.learner-today-card .learner-nav-action,
+  .dashboard-reference-top-left>.learner-today-card .recommend-challenge{
     grid-column:1;
+    grid-row:auto;
+    margin-top:12px;
   }
   .dashboard-reference-lower{
     margin-top:12px;

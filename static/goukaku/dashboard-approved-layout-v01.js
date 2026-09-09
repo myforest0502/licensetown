@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const overallCard = document.querySelector('.overall-progress-preview, .card.achievement');
   const routeCard = document.querySelector('.lt-exam-plan-card');
   const learnerNavigation = document.querySelector('.learner-navigation');
+  const currentCard = document.querySelector('.learner-current-card');
+  const todayCard = document.querySelector('.learner-today-card');
   const attentionCard = document.querySelector('.learner-attention-card');
   const summaryGrid = document.querySelector('.summary-grid');
   const story = document.querySelector('.dashboard-story-layout');
@@ -23,10 +25,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const guidanceStack = document.querySelector('.guidance-stack');
   const footer = document.querySelector('.dashboard-footer-cards');
 
-  // Rebuild the page to match the two reference screenshots exactly in hierarchy:
-  // TOP: date + priority / overall progress -> summary -> learner decision -> recommended route.
-  // BOTTOM: subject progress opposite four guidance cards, then strategy + current position
-  // opposite the weekly record, finishing with footprints + next checkpoint.
+  const move = (parent, child) => {
+    if (parent && child && child.parentElement !== parent) parent.appendChild(child);
+  };
+
+  // Boss-approved TOP reference only:
+  // 1) left = date -> today's task, right = overall progress
+  // 2) five summary cards
+  // 3) large recommended route
+  // 4) current/priority overview
+  // No independent rearrangement is allowed here.
   let top = document.querySelector('.dashboard-reference-top');
   if (!top) {
     top = document.createElement('section');
@@ -38,18 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
     else grid.appendChild(top);
   }
 
-  const move = (parent, child) => {
-    if (parent && child && child.parentElement !== parent) parent.appendChild(child);
-  };
-
-  // Pull cards out of legacy wrappers before re-placing them.
-  [dateCard, overallCard, routeCard, learnerNavigation, summaryGrid, story].forEach((el) => {
+  [dateCard, overallCard, routeCard, learnerNavigation, summaryGrid, currentCard, todayCard].forEach((el) => {
     if (el && el.parentElement && el.parentElement !== grid && el.parentElement !== top) grid.appendChild(el);
   });
-  if (attentionCard && attentionCard.parentElement === learnerNavigation) learnerNavigation.removeChild(attentionCard);
   if (oldTopStack && !oldTopStack.children.length) oldTopStack.remove();
 
-  // Top half from reference image 1.
+  const oldSplit = top.querySelector('.dashboard-reference-top-split');
+  if (oldSplit) oldSplit.remove();
+
   const topSplit = document.createElement('div');
   topSplit.className = 'dashboard-reference-top-split';
   const topLeft = document.createElement('div');
@@ -57,16 +61,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const topRight = document.createElement('div');
   topRight.className = 'dashboard-reference-top-right';
   topSplit.append(topLeft, topRight);
-  top.appendChild(topSplit);
+  top.prepend(topSplit);
 
   move(topLeft, dateCard);
-  move(topLeft, attentionCard);
+  move(topLeft, todayCard);
   move(topRight, overallCard);
   move(top, summaryGrid);
-  move(top, learnerNavigation);
   move(top, routeCard);
+  move(top, currentCard);
 
-  // Lower half from reference image 2. Use one explicit grid so row alignment is deterministic.
+  // Keep the source navigation in DOM for its data/behavior, but do not let its
+  // redundant cards alter the approved visual layout. Visible today/current cards
+  // were moved above; attention/detail data already feed the visible derived cards.
+  if (learnerNavigation) {
+    learnerNavigation.classList.add('dashboard-reference-source-only');
+    if (attentionCard && attentionCard.parentElement !== learnerNavigation) learnerNavigation.appendChild(attentionCard);
+  }
+
+  // LOWER reference was already approved by Boss. Do not change its composition.
   let lower = document.querySelector('.dashboard-reference-lower');
   if (!lower) {
     lower = document.createElement('section');
@@ -78,12 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
     .filter(Boolean)
     .forEach((card) => lower.appendChild(card));
 
-  // Legacy containers are no longer layout authorities once their cards have been moved.
   if (story && !story.children.length) story.remove();
   if (guidanceStack && !guidanceStack.children.length) guidanceStack.remove();
   if (footer && !footer.children.length) footer.remove();
 
-  // Always use the established production Gen-san asset; mockup/generated faces are never used.
   const gensanImage = gensanCard?.querySelector('img');
   if (gensanImage) gensanImage.src = '/static/images/characters/gensan_main.png';
 
