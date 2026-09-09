@@ -91,14 +91,17 @@ Do not mark something complete only because code exists. Completion requires the
 - Retention states include `repaired`, `recheck_due`, and `stable`.
 - The confirmed KN0394 repair reference is Q399 answered correctly with confidence 1 at **2026-09-02 18:32:30 JST**. Its 7-day retention checkpoint is **2026-09-09 18:32:30 JST**.
 - As of the current 2026-09-09 midday measurement, no later attempt has yet supplied the natural spaced-retention outcome for this checkpoint.
+- Natural 2026-09-06 use already exercised Repair Supply: 35 STRONG different-question repairing attempts, 26/35 correct, 13 confidence-1 correct formal-confirmation candidates, with zero recent-repeat flags and zero cooldown bypasses among those STRONG attempts.
 
 ## Not finished yet
 - Natural real-data confirmation of the full sequence `repair -> time gap -> recheck_due -> stable or repairing` is not yet sufficiently accumulated.
 - Retention outcome evidence is still a promotion gate rather than a fully proven production behavior across many Nodes/users.
+- Repair mechanics and STRONG supply are exercised, but **repair durability after spacing** is still OPEN.
 
 ## Known problems / risks
 - Synthetic tests passing is not equivalent to natural spaced-retention evidence.
 - Forcing special learner behavior only to satisfy a test would reduce the value of the natural pilot.
+- A structurally STRONG alternate is not automatically educationally discriminative; content-quality cautions remain separate from formal mechanics.
 
 ## Target state / how it should be
 - The learner naturally studies; the system detects weakness, repairs it preferably with a different strong question, waits an appropriate interval, and later confirms retention with minimal unnecessary repetition.
@@ -107,6 +110,7 @@ Do not mark something complete only because code exists. Completion requires the
 ## Next concrete work
 1. Observe the natural KN0394 retention cycle and later cycles without forcing special behavior.
 2. Evaluate retention outcome diagnostics and promotion-gate status from those real attempts.
+3. Interpret later retention outcomes separately from item-discrimination quality.
 
 ---
 
@@ -118,42 +122,59 @@ Do not mark something complete only because code exists. Completion requires the
 - Phase11 has retrospective diagnostics, repeat audits, retention diagnostics, intent/selection alignment checks, and a promotion-gate status.
 - Automatic diagnostics are intentionally unable to self-promote learner-facing Phase11; manual review is required.
 - Current rollout state remains **HOLD / Shadow-only**; code existence is not treated as learner-facing promotion.
+- Detailed 2026-09-09 review is recorded in `reports/phase11_promotion_review_20260909.md`.
 
-### Current real-data gate evidence (2026-09-09 midday)
-- **Repeat audit: PASS.** Among same-question repeats, current formal categories measured from Production data were: adaptive spaced repeat 293, justified cooldown bypass 12, non-adaptive repeat 237, audit-metadata-unavailable 252, **adaptive unexplained repeat 0, metadata inconsistent 0**. The promotion gate blocks only on the last two defect categories.
-- **Safety retrospective: PASS.** The real history contains an exercised Critical Safety case: `KN0613` / `Q621` (神経医学) was wrong on 2026-09-03 and remained unresolved through later repeated wrong attempts. Formal Phase11 J1 reads the same current-cycle active evidence as the symmetric field profile and therefore selects `safety_repair` whenever such Critical evidence exists. The retrospective safety diagnostic separately treats a weaker legacy/baseline target as a baseline miss, not as a Phase11 miss. No contradictory real-data path has been identified.
-- **Formal trigger consistency: PASS.** J2 and J3 candidate creation and the retrospective single-wrong takeover diagnostic use the same explicit thresholds: J2 requires cross-question confident-wrong evidence or at least two active confident-wrong repairing Nodes; J3 requires cross-question wrong evidence or at least two repeated-weakness Nodes. A single ordinary wrong cannot legitimately become a J2/J3 formal reason under the current deterministic policy. Regression tests explicitly cover valid and invalid trigger shapes.
-- **Profile consistency: PASS for the current natural state.** The unresolved Critical `KN0613` makes the current formal Shadow reason `safety_repair`; the field profile is built from the same active field facts, so the Shadow target profile's strongest reason is also `safety_repair`. No current reason/profile contradiction is present.
-- **Retention: OPEN.** No qualified natural spaced-retention outcome has yet been observed for the first confirmed strong repair checkpoint; the KN0394 checkpoint becomes due at 2026-09-09 18:32:30 JST.
-- **Intent-selection alignment: OPEN.** Persisted adaptive history currently contains **0 saved `recheck_due` selections**, so the J4/J5 recheck alignment audit has no evaluable real sample yet. Existing adaptive metadata does contain substantial non-recheck evidence (repairing 171, safety_wrong 50, confident_wrong 113, cross_question_wrong 9, unseen 93), showing the audit metadata pipeline itself is active.
-- **Retrospective replay coverage prerequisite: PASS for all 9 current recommendation-plan anchors.** Production history has 9 valid `recommendation_plan` anchors (2026-09-01 through 2026-09-09). For every anchor, persisted formal result rows could be matched to `question_attempts` by `(event_key, attempt_position)` with **0 missing attempts and 0 question-ID mismatches** in the rechecked SQL reproduction.
-- **Comparison diversity: OPEN.** A real `shadow_stronger` direction is already demonstrable after the unresolved Critical `KN0613` appeared: later baseline plans targeted non-Safety fields while formal J1 must prioritize 神経医学 Safety repair. A second independent comparison direction (agreement / current-stronger / inconclusive) has not yet been proven from a fully reproduced historical Shadow replay, so this gate is intentionally left OPEN rather than inferred.
-- **Currently identified BLOCKED gates: none.** The unresolved items are evidence gates, not known defects.
-- **Overall Phase11 decision remains HOLD / Shadow-only** because OPEN evidence gates cannot be treated as complete, and even an all-PASS automatic result still requires explicit human review before learner-facing promotion.
+### Current automatic gate evidence (2026-09-09 midday)
+- **Repeat audit: PASS.** Same-question repeat categories measured from Production data: adaptive spaced repeat 293, justified cooldown bypass 12, non-adaptive repeat 237, audit-metadata-unavailable 252, **adaptive unexplained repeat 0, metadata inconsistent 0**.
+- **Safety retrospective: PASS-to-date.** Current policy is fail-closed for Phase11 Critical Safety misses, and real history contains unresolved Critical `KN0613` / `Q621`. No contradictory Phase11 Safety defect is currently identified.
+- **Formal trigger consistency: PASS.** J2/J3 candidate builders and retrospective mismatch detector use the same thresholds. Single ordinary wrong evidence cannot validly trigger J2/J3, and regression tests cover the valid/invalid shapes.
+- **Current profile consistency: PASS.** Current unresolved Critical evidence makes the formal Shadow reason `safety_repair`; the symmetric target profile is built from the same active facts and exposes the same strongest reason.
+- **Retrospective replay coverage prerequisite: PASS for all 9 current recommendation-plan anchors.** Persisted formal result rows match `question_attempts` by `(event_key, attempt_position)` with **0 missing attempts and 0 question-ID mismatches**.
+- **Retention: OPEN.** No qualified natural spaced strong outcome exists yet. The first confirmed KN0394 checkpoint becomes due 2026-09-09 18:32:30 JST, and there were no persisted attempts after that due timestamp at the review time.
+- **Intent-selection alignment: OPEN.** Saved adaptive history contains **0 `recheck_due` selections**, so J4 exact-Q alignment has no evaluable natural sample yet.
+- **Comparison diversity: OPEN.** Earlier evidence established eligible retrospective Shadow-stronger snapshots. A separate 2026-09-02 prospective sample favored Baseline for learner-perceived immediate priority, but the automatic diversity gate is retrospective and requires a second retrospective direction; prospective evidence must not be substituted for it.
+- **Currently identified automatic BLOCKED gates: none.**
+
+### Manual / product promotion criteria
+The seven automatic gates are necessary but not sufficient. The Phase11 ship checklist and promotion review runbook also require learner-facing/product evidence before a limited pilot.
+
+- **Architecture / ownership boundaries: PASS.** Phase11 stays deterministic/read-only; Phase10 owns exact Q; automatic diagnostics cannot promote themselves.
+- **Phase10 adaptive dependency: PASS.** Natural adaptive use and audit metadata persistence have been validated; current repeat evidence has no unexplained/inconsistent adaptive-repeat defect.
+- **Natural ordinary-single-wrong overreaction: PASS-to-date / monitor.** Formal mismatch is zero and prior natural reviews found no current systematic red-flag pattern. Continue surveillance because the natural-behavior criterion is broader than the formal invariant.
+- **Sparse-coverage conservatism: PASS-to-date / monitor.** Formal policy separates unknown/zero-answer evidence from confirmed weakness, and earlier natural snapshots exercised `insufficient_coverage` behavior without a recorded policy-consistency defect.
+- **Repair mechanics / STRONG supply use: PASS-to-date.** Natural STRONG repair selection is being exercised.
+- **Repair durability after spacing: OPEN.** Tied to the retention evidence boundary.
+- **Prospective recommendation relevance vs Baseline: OPEN.** The 2026-09-02 direct learner-rated disagreement favored Baseline (神経医学) over Shadow (心理学) for immediate priority while still rating the Shadow field as important. This is useful mixed evidence and means learner-facing superiority cannot be claimed yet.
+- **Symmetric disagreement breadth: OPEN.** Retrospective evidence remains one-directional for the automatic diversity gate; the Baseline-favorable prospective case must not be used as a substitute for a missing retrospective direction.
+- **Final human learner-facing promotion review: OPEN by design.** It occurs only after the evidence set is sufficiently green.
 
 ## Not finished yet
-- Phase11 is not yet formally promoted as fully learner-facing/authoritative strategy based on sufficient natural production evidence.
-- Remaining OPEN gates are: **retention, intent-selection alignment, comparison diversity**.
+- Phase11 is not yet formally promoted as fully learner-facing/authoritative strategy.
+- Automatic OPEN gates: **retention, intent-selection alignment, comparison diversity**.
+- Additional manual/product OPEN criteria: **repair durability, prospective recommendation relevance, symmetric disagreement breadth, final human promotion review**.
 - Retention and recheck intent-selection alignment require natural real data rather than manufactured examples.
-- Comparison diversity requires one more independently verified historical comparison direction or a full reproducible replay showing one already exists.
+- Prospective recommendation relevance requires additional natural cases; one Baseline-favorable sample is not enough to tune weights or to promote either policy.
 
 ## Known problems / risks
 - Promoting because the code looks complete would bypass the intended evidence-gated rollout.
 - A mismatch between recommendation intent and actual selector output would make learner guidance misleading even if both modules individually work.
 - `audit_metadata_unavailable` repeat rows are historical observability gaps, but they are not currently defined as promotion-blocking defects; do not confuse them with unexplained or internally inconsistent adaptive repeats.
-- Do not manufacture retention/recheck activity merely to turn OPEN into PASS; natural learner behavior is part of the acceptance evidence.
+- Do not manufacture retention/recheck activity or learner-feedback samples merely to turn OPEN into PASS.
+- Do not merge prospective learner preference with retrospective formal-comparison buckets just to satisfy comparison diversity.
 
 ## Target state / how it should be
 - Strategy decides **what / why / how many / repair-vs-recheck-vs-exploration / new-vs-review / Safety priority**.
 - Selector decides **which exact questions** while respecting cooldown, repair evidence quality, and supply constraints.
 - Saved audit metadata makes each adaptive choice explainable after the fact.
-- Promotion requires all checkable gates PASS plus explicit human review; automatic diagnostics never self-promote Phase11.
+- Promotion requires all checkable gates sufficiently green plus explicit human review; automatic diagnostics never self-promote Phase11.
+- First learner-facing move, if approved, should be a **limited feature-flagged pilot**, not immediate full replacement.
 
 ## Next concrete work
-1. Reproduce historical comparison directions for the 9 valid recommendation-plan anchors and determine whether comparison diversity can move from OPEN to PASS.
-2. After the first natural `recheck_due` execution, re-run retention outcome and intent-selection alignment immediately.
-3. Fix only genuine BLOCKED defects; do not manufacture data to close OPEN evidence gates.
-4. When all checkable gates are PASS, perform the explicit manual learner-facing promotion review.
+1. After the first natural `recheck_due` execution, re-run retention outcome and exact-Q intent-selection alignment immediately.
+2. Continue natural recommendation-plan history; if a second retrospective comparison direction appears, re-run comparison diversity.
+3. Continue learner-relevance evidence through ordinary use only; do not repeatedly questionnaire solely to manufacture favorable samples.
+4. Fix only genuine BLOCKED defects; OPEN evidence gates stay OPEN until the evidence exists.
+5. When the evidence set is sufficiently green, perform explicit human review for a limited learner-facing pilot.
 
 ---
 
@@ -166,7 +187,7 @@ Do not mark something complete only because code exists. Completion requires the
 - Production evidence currently shows no `adaptive_unexplained_repeat` and no `adaptive_metadata_inconsistent` same-question repeats in the primary learner history.
 
 ## Not finished yet
-- Continued production validation is needed to ensure strategy intent and selector output stay aligned under real learner histories and Q2000 supply.
+- Continued Production validation is needed to ensure strategy intent and selector output stay aligned under real learner histories and Q2000 supply.
 - Recheck-specific intent/selection compatibility cannot yet be judged because there are no persisted `recheck_due` selections in the current learner history.
 
 ## Known problems / risks
@@ -257,7 +278,7 @@ Do not mark something complete only because code exists. Completion requires the
 # 9. Current priority order
 
 1. Final Q2000 quality findings and acceptance evidence.
-2. Phase11 promotion-gate evaluation using current real learner data.
+2. Phase11 promotion-gate re-evaluation when new natural retention/recheck/comparison evidence appears.
 3. Formal-vs-legacy dashboard source map and consolidation plan.
 4. Longitudinal companion-record design and implementation.
 5. Lower-priority session/time linkage improvement.
