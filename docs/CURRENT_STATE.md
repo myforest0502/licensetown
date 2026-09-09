@@ -62,6 +62,7 @@ Do not mark something complete only because code exists. Completion requires the
 - Knowledge Node state is formally derived from attempt history using pure derivation logic rather than trusting `user_node_state` as the source of truth.
 - Dashboard/formal logic identifies its authoritative Node-state source as `pure_derive_all_user_node_states`.
 - Unknown/unanswered-like attempts are distinguished from evaluable answers in the formal logic.
+- Current primary learner snapshot measured from Production Neon on 2026-09-09: **1525 attempts, 1103 correct, 740 unique questions, 572 unique raw Knowledge Nodes**. Latest recorded attempt at the time of measurement was 2026-09-09 08:24 JST.
 
 ## Not finished yet
 - The role of legacy/supporting `user_node_state` should remain explicitly documented so future work does not accidentally restore it as formal truth.
@@ -88,7 +89,8 @@ Do not mark something complete only because code exists. Completion requires the
 - Regression after repair can return the Node to `repairing`.
 - Real production-shaped learner history already contains at least one concrete strong-pair repair example: KN0394 using Q399 / Q1572.
 - Retention states include `repaired`, `recheck_due`, and `stable`.
-- The first natural 7-day retention checkpoint for the confirmed KN0394 repair becomes due around 2026-09-09 18:32 JST.
+- The confirmed KN0394 repair reference is Q399 answered correctly with confidence 1 at **2026-09-02 18:32:30 JST**. Its 7-day retention checkpoint is **2026-09-09 18:32:30 JST**.
+- As of the current 2026-09-09 midday measurement, no later attempt has yet supplied the natural spaced-retention outcome for this checkpoint.
 
 ## Not finished yet
 - Natural real-data confirmation of the full sequence `repair -> time gap -> recheck_due -> stable or repairing` is not yet sufficiently accumulated.
@@ -115,14 +117,23 @@ Do not mark something complete only because code exists. Completion requires the
 - Strategy produces a recommendation intent; exact Q-number selection remains the selector's responsibility.
 - Phase11 has retrospective diagnostics, repeat audits, retention diagnostics, intent/selection alignment checks, and a promotion-gate status.
 - Automatic diagnostics are intentionally unable to self-promote learner-facing Phase11; manual review is required.
+- Current rollout state remains **HOLD / Shadow-only**; code existence is not treated as learner-facing promotion.
+
+### Current real-data gate evidence (2026-09-09 midday)
+- **Repeat audit: PASS.** Among same-question repeats, current formal categories measured from Production data were: adaptive spaced repeat 293, justified cooldown bypass 12, non-adaptive repeat 237, audit-metadata-unavailable 252, **adaptive unexplained repeat 0, metadata inconsistent 0**. The promotion gate blocks only on the last two defect categories.
+- **Retention: OPEN.** No qualified natural spaced-retention outcome has yet been observed for the first confirmed strong repair checkpoint; the KN0394 checkpoint becomes due at 2026-09-09 18:32:30 JST.
+- **Intent-selection alignment: OPEN.** Persisted adaptive history currently contains **0 saved `recheck_due` selections**, so the J4/J5 recheck alignment audit has no evaluable real sample yet. Existing adaptive metadata does contain substantial non-recheck evidence (repairing 171, safety_wrong 50, confident_wrong 113, cross_question_wrong 9, unseen 93), showing the audit metadata pipeline itself is active.
+- **Overall Phase11 decision therefore remains HOLD**, even before evaluating any still-unverified gate classes, because OPEN evidence gates cannot be treated as complete.
 
 ## Not finished yet
 - Phase11 is not yet formally promoted as fully learner-facing/authoritative strategy based on sufficient natural production evidence.
-- The remaining open promotion gates need to be evaluated against the current real learner history, not guessed from code existence.
+- Still need a reproducible current evaluation of the remaining gate classes: Safety retrospective miss check, formal trigger consistency, comparison diversity, and profile consistency.
+- Retention and recheck intent-selection alignment require natural real data rather than manufactured examples.
 
 ## Known problems / risks
 - Promoting because the code looks complete would bypass the intended evidence-gated rollout.
 - A mismatch between recommendation intent and actual selector output would make learner guidance misleading even if both modules individually work.
+- `audit_metadata_unavailable` repeat rows are historical observability gaps, but they are not currently defined as promotion-blocking defects; do not confuse them with unexplained or internally inconsistent adaptive repeats.
 
 ## Target state / how it should be
 - Strategy decides **what / why / how many / repair-vs-recheck-vs-exploration / new-vs-review / Safety priority**.
@@ -130,9 +141,10 @@ Do not mark something complete only because code exists. Completion requires the
 - Saved audit metadata makes each adaptive choice explainable after the fact.
 
 ## Next concrete work
-1. Run the Phase11 promotion-gate evaluation against current real data.
-2. List each gate as PASS / OPEN / BLOCKED with concrete counts.
+1. Reproduce the remaining Phase11 gate classes against current real data.
+2. List every gate as PASS / OPEN / BLOCKED with concrete counts.
 3. Fix only genuine BLOCKED defects; do not manufacture data to close OPEN evidence gates.
+4. After the first natural `recheck_due` execution, re-run retention outcome and intent-selection alignment immediately.
 
 ---
 
@@ -142,9 +154,11 @@ Do not mark something complete only because code exists. Completion requires the
 - Adaptive selection works at Knowledge Node level and can prefer strong different-question repair confirmation.
 - Recent Question Cooldown avoids recent repeats when enough non-recent questions exist, with limited Safety exceptions.
 - Adaptive selection audit metadata is persisted for adaptive-daily events so later diagnostics can inspect selection reason/group/score, repair evidence, recent repeat, and cooldown bypass.
+- Production evidence currently shows no `adaptive_unexplained_repeat` and no `adaptive_metadata_inconsistent` same-question repeats in the primary learner history.
 
 ## Not finished yet
 - Continued production validation is needed to ensure strategy intent and selector output stay aligned under real learner histories and Q2000 supply.
+- Recheck-specific intent/selection compatibility cannot yet be judged because there are no persisted `recheck_due` selections in the current learner history.
 
 ## Known problems / risks
 - Same-Q repetition can be educationally harmful if used merely because it is available.
@@ -154,7 +168,7 @@ Do not mark something complete only because code exists. Completion requires the
 - Prefer useful different-question confirmation, avoid gratuitous repeats, preserve Safety behavior, and retain enough saved metadata to reconstruct why a question was selected.
 
 ## Next concrete work
-- Keep intent-selection alignment in the Phase11 acceptance gate and inspect any misalignment as a first-class defect.
+- Keep intent-selection alignment in the Phase11 acceptance gate and inspect any first `recheck_due` sample as a first-class acceptance event.
 
 ---
 
