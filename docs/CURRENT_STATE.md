@@ -33,6 +33,14 @@ The completion target is not perfection, complete long-term proof, or implementa
 - Public marketing stats must show the closed Q2000 composition as **新規問題 900問 / 過去問 1100問 / 合計 2000問収録**.
 - Do not expose stale preview-source counts such as 643 / 1094.
 
+## 2026-09-09 Production blocker: 合格への道 500
+
+- Real learner reported HTTP 500 on `/goukaku-no-michi`. Render traceback confirmed `ValueError: attempts must belong to one user and one canonical Node`.
+- Root cause: `phase11_active_weakness.build_active_repair_weakness()` grouped histories by raw/canonical Knowledge Node only, while exact-repeat evidence can deliberately remap a question to a different derived evidence Node (`Q1585`: raw `KN0659` -> evidence `KN1387`). This mixed two evidence Nodes in one history and violated the formal state-transition invariant.
+- Fix branch: `fix/goukaku-500-evidence-node-grouping-v01`. Group active-weakness histories by `canonicalize_question_evidence_node(question_id, raw_node_id)` so grouping matches the same derived evidence authority used by `knowledge_node_state_transition.py`.
+- Regression coverage explicitly includes the cross-node exact-repeat case.
+- Status at branch creation: **real Production failure observed: YES / root cause identified: YES / code fix pending validation / Production accepted: NO**.
+
 ## Current completion contract — MAIN LINE ONLY
 
 Until PT v1.0 is accepted, do not drift into speculative polish or branch/leaf work.
