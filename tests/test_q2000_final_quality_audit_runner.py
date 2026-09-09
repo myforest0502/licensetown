@@ -5,6 +5,7 @@ from reports.question_bank_q2000_final_quality_audit import main
 
 
 def test_q2000_final_quality_audit_runner():
+    """Temporary CI-only runner for the read-only Q1-Q2000 final quality audit."""
     rc = main()
     report_path = Path(__file__).resolve().parents[1] / "reports" / "question_bank_q2000_final_quality_audit.json"
     report = json.loads(report_path.read_text(encoding="utf-8"))
