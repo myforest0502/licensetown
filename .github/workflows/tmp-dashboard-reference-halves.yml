@@ -1,0 +1,49 @@
+name: tmp-dashboard-reference-halves
+on:
+  push:
+    branches:
+      - fix/dashboard-match-reference-halves-v01
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/dashboard-match-reference-halves-v01
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Update CURRENT_STATE
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('docs/CURRENT_STATE.md')
+          s = p.read_text(encoding='utf-8')
+          marker = '## Current completion contract — MAIN LINE ONLY\n'
+          note = '''## 2026-09-09 Dashboard reference-halves correction\n\n- The previous PR #291 production layout did not reproduce Boss's two attached reference screenshots faithfully and produced a broken/chaotic visual composition in real use. That production acceptance is revoked.\n- Boss supplied two screenshots that together define the desktop layout: top half = date/priority on the left with overall progress on the right, then summary, learner decision/navigation, and the large `合格までの推奨ルート`; lower half = `分野別到達度` opposite `源さんの一言` -> `知識の確認状況` -> `今の学習カルテ` -> `定着までの進み方`, then `LTの作戦メモ` + `学習の現在地` opposite `直近7日間の学習記録`, finishing with `あなたの足跡を見る` and `次のチェックポイント`.\n- No learner-facing card is deleted. The formal Gen-san asset remains `static/images/characters/gensan_main.png`.\n- Corrective branch: `fix/dashboard-match-reference-halves-v01`. `dashboard-approved-layout-v01.js/css` is now a final deterministic override loaded last; desktop uses explicit top and lower grids, mobile remains one column.\n- Status: **real Production defect observed: YES / Boss reference supplied: YES / corrective code exists: YES / automated validation pending / Production deployed: NO / real-device acceptance: PENDING**.\n\n'''
+          if note not in s:
+              if marker not in s:
+                  raise SystemExit('CURRENT_STATE marker missing')
+              s = s.replace(marker, note + marker, 1)
+              p.write_text(s, encoding='utf-8')
+          PY
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest
+      - name: Run focused tests
+        run: |
+          python -m pytest -q tests/test_dashboard_approved_layout.py tests/test_dashboard_blank_space_layout.py
+      - name: Run full tests
+        run: |
+          python -m pytest -q --deselect=tests/test_quiz_answer_numbering.py::ConfigurableQuizTest::test_runtime_loader_supports_current_utf16_and_candidate_utf8
+      - name: Commit state update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/CURRENT_STATE.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record dashboard reference-halves correction"
+          git push origin HEAD:fix/dashboard-match-reference-halves-v01
