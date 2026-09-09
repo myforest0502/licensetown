@@ -1,0 +1,43 @@
+name: temporary supporter learner preview formal patch
+
+on:
+  push:
+    branches:
+      - work/supporter-learner-preview-formal-v02
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/supporter-learner-preview-formal-v02
+          fetch-depth: 0
+      - name: Make supporter learner preview match formal learner view
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('goukaku_ui.py')
+          text = path.read_text(encoding='utf-8')
+          old = '        dashboard=build_dashboard(learner_id),\n        dashboard_token=None,\n        dashboard_title="合格への道",\n        read_only=False,\n        learner_preview=True,\n'
+          new = '        dashboard=build_dashboard(learner_id, include_learner_navigation=True),\n        dashboard_token=None,\n        dashboard_title="合格への道",\n        read_only=False,\n        learner_preview=True,\n'
+          if old not in text:
+              raise SystemExit('supporter learner preview target not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          test_path = Path('tests/test_learner_goukaku_navigation_ui.py')
+          tests = test_path.read_text(encoding='utf-8')
+          marker = 'def test_supporter_learner_preview_uses_formal_learner_navigation'
+          if marker not in tests:
+              tests += '''\n\ndef test_supporter_learner_preview_uses_formal_learner_navigation(monkeypatch):\n    calls = []\n    monkeypatch.setattr(\n        goukaku_ui,\n        "authorized_supporter_learner",\n        lambda *args: ("supporter", "learner"),\n    )\n    monkeypatch.setattr(\n        goukaku_ui,\n        "build_dashboard",\n        lambda user_id=None, include_learner_navigation=False: (\n            calls.append((user_id, include_learner_navigation))\n            or _dashboard(nav=include_learner_navigation)\n        ),\n    )\n\n    response = app_module.app.test_client().get(\n        "/supporter/goukaku-no-michi/learner-preview?token=ok"\n    )\n    text = response.get_data(as_text=True)\n\n    assert response.status_code == 200\n    assert calls == [("learner", True)]\n    assert "本人画面プレビュー（操作はできません）" in text\n    assert "現在地" in text\n    assert "今日やること" in text\n    assert "今日の学習を始める" in text\n    assert "チャレンジする！" not in text\n'''\n              test_path.write_text(tests, encoding='utf-8')
+          PY
+          git config user.name "LicenseTown CI"
+          git config user.email "licensetown.support@gmail.com"
+          git add goukaku_ui.py tests/test_learner_goukaku_navigation_ui.py
+          git commit -m "Show formal learner navigation in supporter preview"
+          git push origin HEAD:work/supporter-learner-preview-formal-v02
