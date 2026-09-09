@@ -220,6 +220,9 @@ def select_node_adaptive_questions(
     normal_candidates = [
         item for item in candidates
         if not item["recent_question_repeat"]
+        # A time-based retention checkpoint must remain actionable even when
+        # its evidence question is still inside the last-30-attempt cooldown.
+        or item["priority_reason"] == "recheck_due"
         or (
             item["priority_reason"] in {"safety_wrong", "safety_unresolved"}
             and item["canonical_node_id"] not in non_recent_nodes

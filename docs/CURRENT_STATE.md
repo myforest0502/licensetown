@@ -13,6 +13,24 @@ Always distinguish: **code exists / tests pass / real data observed / product ac
 Do not casually change `main`, Production Neon, Render or LINE behavior.
 Practical learner effect and national-exam success outrank architectural elegance.
 
+## Current completion contract — MAIN LINE ONLY
+
+Boss fixed the active completion rule on 2026-09-09. Until the core PT learning loop is accepted, do not drift into speculative polish or branch/leaf work.
+
+Car model:
+- **走る**: quiz -> answer -> save -> score -> explanation -> continue.
+- **曲がる**: next questions change according to real weakness/repair/retention state.
+- **止まる**: pause/resume/end/reset safely.
+- **壊れない**: formal question/history/Node/session invariants stay coherent.
+- **壊れた所を特定できる**: evidence shows which Q/Node/state/selection caused the issue.
+- **特定したら修復できる**: learner weakness returns through repair and spaced retention; system defects are reproducible and safely fixable.
+
+Core learner loop:
+
+`wrong -> observable wrong-pattern analysis -> same-Node/different-Q repair -> repair confirmation -> day3 -> day7 -> one-month -> durable OR back to repairing`
+
+A candidate change is in scope now only when it fixes a real current defect, is necessary for this main line, or directly changes learner outcome. Otherwise backlog it.
+
 ---
 
 # 1. Question Bank / Q2000 — CLOSED
@@ -69,25 +87,54 @@ Conclusion: confidence and longitudinal transitions are materially informative. 
 
 ---
 
-# 3. Repair / retention
+# 3. Core repair / retention loop — CODE + TESTS COMPLETE
 
-Working:
-- same-question, weak different-question and STRONG different-question evidence are separated;
-- confident STRONG confirmation can move `repairing -> repaired`;
-- later wrong evidence can regress to `repairing`;
-- retention states include `repaired`, `recheck_due`, `stable`;
-- exact official repeats cannot masquerade as STRONG different-question evidence;
-- natural STRONG repair supply is already exercised.
+Formal repair semantics:
+- any evaluable wrong or `unknown` starts/returns the Node to `repairing`;
+- same-Q correct does **not** confirm repair;
+- weak different-Q correct does **not** confirm repair;
+- repair confirmation requires **STRONG different-Q + confidence=1**;
+- exact official equivalent repeats are one evidence identity and cannot fake different-Q confirmation.
 
-Natural reference example:
-- KN0394, Q399/Q1572;
-- repair reference Q399 at 2026-09-02 18:32:30 JST;
-- first 7-day recheck boundary 2026-09-09 18:32:30 JST.
+Spaced retention contract implemented in `knowledge_node_state_transition.py`:
+1. STRONG different-Q confidence=1 after wrong -> `repaired`, next check at **3 days**.
+2. Valid day3 check before day7 horizon -> `day3_passed`, next check at **7 days** from repair confirmation.
+3. Valid check on/after day7 horizon -> `stable`, `day7_passed`, one-month check scheduled.
+4. Valid one-month check -> remains `stable`, `durable`, no further required checkpoint in v0.1.
+5. Wrong/unknown at any retention checkpoint -> fresh `repairing` cycle and old retention schedule is cleared.
+6. If the learner misses day3 and first valid spaced check happens on/after day7, it counts as the day7 horizon instead of manufacturing an overdue backlog.
 
-OPEN:
-- natural proof of the complete spaced cycle `wrong -> STRONG repair -> spacing -> recheck_due -> stable/repairing`.
+Selector integration:
+- `recheck_due` is an explicit checking priority;
+- an actually due time-based retention check may deliberately bypass last-30-attempt Recent Cooldown;
+- this bypass is saved as `recent_cooldown_bypassed=True` for auditability;
+- ordinary recent-repeat avoidance and Safety behavior remain intact.
 
-Do not manufacture learner activity just to close this gate.
+Wrong-pattern analysis is evidence-based, not a hidden psychological diagnosis. `companion_record.py` can classify:
+- retention regression;
+- confidence-1 wrong;
+- repeated cross-question wrong;
+- repeated same-question wrong;
+- unknown answer;
+- uncertain wrong;
+- single wrong.
+
+It explicitly declares `wrong_pattern_semantics = observable_evidence_not_psychological_diagnosis`.
+
+Full PR #285 CI after the core implementation and policy-aligned regression updates:
+- **1232 passed**
+- **6 skipped**
+- **1 deselected**
+- **125 subtests passed**
+- run #626: GREEN
+
+Evidence boundary:
+- **code exists: YES**
+- **full tests pass: YES**
+- **natural learner day3/day7/one-month sequence observed end-to-end: NOT YET**
+- **Production behavior deployed/accepted: NO**
+
+The missing natural 3d/7d/one-month evidence is time-dependent evidence, not a reason to keep adding speculative code today.
 
 ---
 
@@ -99,7 +146,9 @@ Boundary:
 - Phase11 decides **what / why / how many / intent**.
 - Phase10/selector owns **which exact Q**.
 
-Automatic evidence:
+PR #284 closed an actual main-line gap: learner navigation `learning_intent` now reaches web recommendation session and exact-Q adaptive selection. Explicit `repair`, `recheck`, and `exploration` intents fill the matching selector group first; normal callers without explicit intent retain mixed composition.
+
+Automatic evidence before this core-loop update:
 - repeat audit: PASS;
 - Critical Safety retrospective: PASS-to-date;
 - J2/J3 trigger consistency: PASS;
@@ -107,15 +156,14 @@ Automatic evidence:
 - retrospective replay coverage for current recommendation anchors: PASS;
 - current automatic FAIL/BLOCKED gates: none.
 
-Still OPEN because natural/prospective evidence is required:
-- spaced retention outcome;
-- first natural `recheck_due` intent -> exact-Q alignment;
+Still OPEN where real natural/prospective evidence is required:
+- natural spaced retention outcome under the new day3/day7/one-month contract;
+- natural `recheck_due` intent -> exact-Q alignment;
 - retrospective comparison diversity;
 - prospective learner relevance vs baseline;
-- repair durability after spacing;
 - final human promotion review.
 
-Do not self-promote Phase11. First learner-facing promotion, if later approved, must be limited/feature-gated.
+Do not self-promote Phase11. Do not keep coding just to force these time-dependent gates closed.
 
 Detailed record: `reports/phase11_promotion_review_20260909.md`.
 
@@ -125,62 +173,48 @@ Detailed record: `reports/phase11_promotion_review_20260909.md`.
 
 - Node-level adaptive selection works.
 - STRONG different-question repair can be preferred.
-- Recent Question Cooldown avoids gratuitous recent repeats with limited Safety exceptions.
+- Formal learner `repair/recheck/exploration` intent reaches exact-Q selection.
+- Recent Question Cooldown avoids gratuitous recent repeats.
+- Time-based `recheck_due` can bypass cooldown intentionally so a scheduled retention check is not starved by the large bank.
 - Adaptive audit metadata persists selection reason/group/score, repair evidence quality, recent repeat and cooldown bypass.
 - Current learner history shows no unexplained or internally inconsistent adaptive-repeat defect.
 - Exact official repeats share one evidence identity for selection/cooldown interpretation.
 
-OPEN only where natural recheck-specific evidence is still missing.
+No further selector polish is in scope unless real use exposes a main-line defect.
 
 ---
 
 # 6. Dashboard / learner navigation — v0.1 CONSOLIDATED
 
-Learner route `/goukaku-no-michi` already builds formal learner navigation from authoritative attempts/readiness/shadow evidence.
+Learner route `/goukaku-no-michi` builds formal learner navigation from authoritative attempts/readiness/shadow evidence.
 
 Completed consolidation v0.1:
-- top `現在地`, `今日やること`, formal priority TOP3, repair/coverage/retention guidance remain the learner-facing decision authority;
-- lower legacy `優先課題 TOP3` is hidden whenever formal learner navigation exists;
-- lower legacy `今日のおすすめ学習` is hidden whenever formal learner navigation exists;
-- therefore one learner page no longer shows two competing recommendation authorities;
-- if formal field-progress rows are not enabled, legacy field percentages are labeled **`分野別 正答率（参考）`**, not formal `到達度`;
-- factual counters such as total answers, study time, recent/average accuracy and streak remain;
-- supporter/read-only/legacy fallback behavior was not intentionally changed.
+- top `現在地`, `今日やること`, formal priority TOP3, repair/coverage/retention guidance are the learner-facing decision authority;
+- duplicate lower legacy TOP3/recommendation are hidden when formal learner navigation exists;
+- legacy field percentages, when shown, are labeled **`分野別 正答率（参考）`**, not formal `到達度`;
+- factual counters remain factual counters.
 
 Source map: `reports/dashboard_source_map_20260909.md`.
 
-Remaining small dashboard improvement:
-- activate formal per-field progress on the signed learner route so learner-facing `分野別 到達度` uses the same formal evidence family as overall progress, while ordinary accuracy stays a separate sub-metric.
-
-This is a small cleanup, not a reason to redesign the dashboard again.
+Dashboard polish is **not current main-line work**. Do not resume it until core real use exposes a learner-impacting need or Boss explicitly chooses it.
 
 ---
 
-# 7. Longitudinal companion record — v0.1 IMPLEMENTED
+# 7. Longitudinal companion record — CORE EVIDENCE LAYER IMPLEMENTED
 
-`companion_record.py` now derives a compact longitudinal record directly from authoritative `question_attempts` and the existing formal Node-state transition logic.
+`companion_record.py` derives compact longitudinal episodes from `question_attempts`; it does not create a second persisted truth.
 
-Properties:
-- no new DB table;
-- no second persisted state authority;
-- raw attempts remain source of truth;
-- reviewed question-equivalence semantics are reused;
-- exact official repeat Q IDs stay one derived evidence identity;
-- learner episodes can capture weakness detection, repair confirmation, retention recheck due, retention confirmation and regression;
-- confidence-aware priority reason is retained;
-- correct-only checking Nodes are omitted by default to keep the record useful rather than noisy;
-- multi-user input is rejected.
+Current core-useful fields/events include:
+- weakness detection;
+- observable wrong pattern;
+- repair confirmation;
+- retention stage/checkpoint/next review;
+- day3/day7 checkpoint pass;
+- retention due;
+- durable retention confirmation;
+- regression back to repairing.
 
-PR #279 full CI before safe-branch merge:
-- **1217 passed**
-- **6 skipped**
-- **1 deselected**
-- **125 subtests passed**
-
-PR #279 merged only to `work/pt-finalization-post-q2000` at `d645a3167a769e670ea53b59b0f3cf647fc4e5a8`.
-No Production write, Render/LINE change, `main` merge or Phase11 promotion occurred.
-
-Next companion step should be product-facing only if it materially helps learner/supporter decisions; do not build a large journal UI just because the derivation exists.
+Do not build a large journal UI now. The derivation exists to support the main learner loop and later concise presentation if needed.
 
 ---
 
@@ -189,16 +223,24 @@ Next companion step should be product-facing only if it materially helps learner
 - Learning time persists separately.
 - Current `attempt_position` resets inside 5-question batches, so `question_attempts` alone cannot validly measure position 1-30 fatigue in a 30-question session.
 - `:time`-style event keys may intentionally differ for idempotency; do not treat event-key equality as a relational join.
-- Add explicit durable session linkage only if fatigue/time-efficiency analysis becomes useful enough to change learner behavior.
+- Add explicit durable session linkage only if real use shows it changes learner outcome.
 
 ---
 
-# 9. Current priority
+# 9. Current priority / finish line
 
-1. Finish the **small learner-route formal field-progress cleanup**; do not redesign the dashboard.
-2. Re-evaluate Phase11 automatically when natural retention/recheck/comparison evidence appears; do not force data.
-3. Decide the smallest learner/supporter use of `companion_record.py` that changes behavior; avoid a large new UI unless needed.
-4. After major post-Q2000 changes settle, use roughly **100-200 new ordinary attempts** as a post-change acceptance sample rather than restarting validation from zero.
-5. Session/time linkage remains lower priority.
+The current implementation task is considered complete when PR #285 is merged into `work/pt-finalization-post-q2000` after GREEN CI and this state file is updated.
 
-Do not restart Q2000 audit or question-count expansion unless new evidence exposes a genuine need.
+After that, **do not invent another branch/leaf task**.
+
+Next legitimate step is real learner use of the main line:
+- normal study produces wrong/correct/confidence evidence;
+- wrong Node enters repair;
+- STRONG different-Q confirmation closes repair;
+- scheduled day3/day7/one-month checks surface naturally;
+- wrong retention check reopens repair;
+- observed defects are fixed only when they affect the main line.
+
+Natural time-dependent evidence cannot be completed instantly and is not an excuse to keep construction open. Code/test completion and natural/product acceptance must remain separate facts.
+
+Do not restart Q2000 audit, dashboard polish, speculative safety scaffolding, session analytics, or unrelated product expansion unless Boss explicitly reprioritizes them or real main-line evidence exposes a genuine defect.

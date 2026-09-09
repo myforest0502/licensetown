@@ -122,9 +122,9 @@ def test_recheck_same_reference_question_is_misaligned(monkeypatch):
 
 def test_saved_recheck_is_open_when_answer_time_state_is_not_due(monkeypatch):
     install(monkeypatch, {("Q1", "Q2"), ("Q2", "Q3")})
-    # day 7 is still repaired under the formal seven-day policy.
+    # Repair is confirmed on day 1; day 3 is still before the day-3 checkpoint.
     history = repaired_history() + [
-        attempt("Q3", correct=True, confidence=1, day=7, event="session:1")
+        attempt("Q3", correct=True, confidence=1, day=3, event="session:1")
     ]
     result = audit.build_phase11_intent_selection_alignment(
         history,

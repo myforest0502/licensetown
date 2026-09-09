@@ -74,8 +74,8 @@ def test_cases_i_and_j_use_formal_retention_replay(monkeypatch):
         attempt("Q269", "KN0268", False, 2, 0),
         attempt("Q361", "KN0268", True, 1, 1),
     ]
-    repaired = build_field_progress(build_field_evidence(repaired_history, as_of=BASE + timedelta(days=7)))
-    due = build_field_progress(build_field_evidence(repaired_history, as_of=BASE + timedelta(days=9)))
+    repaired = build_field_progress(build_field_evidence(repaired_history, as_of=BASE + timedelta(days=3)))
+    due = build_field_progress(build_field_evidence(repaired_history, as_of=BASE + timedelta(days=5)))
     assert node_score(repaired, "KN0268")["state_score"] == 0.70
     assert node_score(due, "KN0268")["state_score"] == 0.60
 

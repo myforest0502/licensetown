@@ -15,8 +15,12 @@ from question_equivalence import canonicalize_question_evidence_node
 
 
 STATES = ("unseen", "checking", "repairing", "repaired", "stable", "recheck_due")
-REPAIRED_RECHECK_AFTER = timedelta(days=7)
-STABLE_RECHECK_AFTER = timedelta(days=30)
+DAY3_RECHECK_AFTER = timedelta(days=3)
+DAY7_RECHECK_AFTER = timedelta(days=7)
+DAY30_RECHECK_AFTER = timedelta(days=30)
+# Compatibility aliases used by older diagnostics/tests.
+REPAIRED_RECHECK_AFTER = DAY3_RECHECK_AFTER
+STABLE_RECHECK_AFTER = DAY30_RECHECK_AFTER
 
 
 def _sort_key(attempt: dict[str, Any]) -> tuple[str, str, int, int]:
@@ -39,7 +43,7 @@ def _evidence_node(item: dict[str, Any]) -> str:
 
 
 def is_recheck_due(state: str, last_attempted_at: datetime, as_of: datetime) -> bool:
-    interval = REPAIRED_RECHECK_AFTER if state == "repaired" else STABLE_RECHECK_AFTER
+    interval = DAY3_RECHECK_AFTER if state == "repaired" else DAY30_RECHECK_AFTER
     return state in {"repaired", "stable"} and as_of - last_attempted_at >= interval
 
 
@@ -114,10 +118,30 @@ def derive_knowledge_node_state(
     canonical_node_id: str | None = None,
     as_of: datetime | None = None,
 ) -> dict[str, Any]:
-    """Derive the final state for one user's one canonical evidence-Node history."""
+    """Derive the final state for one user's one canonical evidence-Node history.
+
+    Core learning loop:
+      wrong -> repairing
+      strong different-question confidence=1 -> repaired
+      3-day check -> repaired/day3_passed
+      7-day check -> stable/day7_passed
+      30-day check -> stable/durable
+
+    If the learner does not study at day 3 and the first valid spaced check happens
+    on/after day 7, that check is accepted as the day-7 horizon instead of creating
+    artificial overdue backlog. Any wrong answer starts a fresh repair cycle.
+    """
     ordered = sorted((dict(item) for item in attempts), key=_sort_key)
     if not ordered:
-        return _result(str(canonical_node_id or ""), "unseen", "", [], 0)
+        result = _result(str(canonical_node_id or ""), "unseen", "", [], 0)
+        result.update({
+            "retention_stage": None,
+            "retention_checkpoint": None,
+            "retention_origin_at": None,
+            "next_review_at": None,
+            "due_overdue_days": 0,
+        })
+        return result
 
     canonical_ids = {_evidence_node(item) for item in ordered}
     user_ids = {str(item.get("user_id") or "") for item in ordered}
@@ -130,6 +154,9 @@ def derive_knowledge_node_state(
     repair_wrong_questions: set[str] = set()
     confident_correct_after_wrong_count = 0
     has_prior_wrong = False
+    retention_origin_at: datetime | None = None
+    retention_stage: str | None = None
+    retention_checkpoint: str | None = None
     next_review_at: datetime | None = None
     retention_reference_question: str | None = None
     history: list[dict[str, Any]] = []
@@ -138,7 +165,8 @@ def derive_knowledge_node_state(
         attempted_at = _as_datetime(item.get("attempted_at") or item.get("answered_at"))
         if state in {"repaired", "stable"} and next_review_at and attempted_at and attempted_at >= next_review_at:
             state = "recheck_due"
-            reason = "The spaced retention review date has arrived."
+            reason = f"The {retention_checkpoint} retention checkpoint is due."
+
         history.append(item)
         question_id = str(item.get("question_id") or "")
         is_correct = (
@@ -156,6 +184,9 @@ def derive_knowledge_node_state(
             else:
                 repair_wrong_questions.add(question_id)
             has_prior_wrong = True
+            retention_origin_at = None
+            retention_stage = None
+            retention_checkpoint = None
             next_review_at = None
             retention_reference_question = None
             continue
@@ -176,25 +207,61 @@ def derive_knowledge_node_state(
             for wrong_question in repair_wrong_questions
         }
         is_strong_confirmation = DIFFERENT_QUESTION_STRONG in evidence_strengths
+
         if state == "recheck_due":
-            retention_strength = classify_repair_confirmation(retention_reference_question, question_id)
+            retention_strength = classify_repair_confirmation(
+                retention_reference_question, question_id
+            )
             if confidence == 1 and retention_strength == DIFFERENT_QUESTION_STRONG:
-                state = "stable"
                 retention_reference_question = question_id
-                next_review_at = attempted_at + STABLE_RECHECK_AFTER if attempted_at else None
-                reason = "A spaced strong different-question check was correct with confidence=1."
+                if retention_checkpoint == "day3":
+                    elapsed = (
+                        attempted_at - retention_origin_at
+                        if attempted_at and retention_origin_at
+                        else timedelta(0)
+                    )
+                    if elapsed >= DAY7_RECHECK_AFTER:
+                        state = "stable"
+                        retention_stage = "day7_passed"
+                        retention_checkpoint = "day30"
+                        next_review_at = attempted_at + DAY30_RECHECK_AFTER if attempted_at else None
+                        reason = "A valid spaced check on/after the day7 horizon confirmed retention."
+                    else:
+                        state = "repaired"
+                        retention_stage = "day3_passed"
+                        retention_checkpoint = "day7"
+                        next_review_at = retention_origin_at + DAY7_RECHECK_AFTER if retention_origin_at else None
+                        reason = "The day3 retention checkpoint passed; day7 is scheduled."
+                elif retention_checkpoint == "day7":
+                    state = "stable"
+                    retention_stage = "day7_passed"
+                    retention_checkpoint = "day30"
+                    next_review_at = attempted_at + DAY30_RECHECK_AFTER if attempted_at else None
+                    reason = "The day7 retention checkpoint passed; the one-month check is scheduled."
+                elif retention_checkpoint == "day30":
+                    state = "stable"
+                    retention_stage = "durable"
+                    retention_checkpoint = None
+                    next_review_at = None
+                    reason = "The one-month retention checkpoint passed with strong different-question confidence=1 evidence."
+                else:
+                    reason = "Retention checkpoint metadata was unavailable; review remains due."
             else:
-                reason = "Retention evidence was same/weak or lacked confidence=1; review remains due."
+                reason = "Retention evidence was same/weak or lacked confidence=1; the current checkpoint remains due."
             continue
+
         if confidence == 1 and is_strong_confirmation:
             confident_correct_after_wrong_count += 1
             if state == "repairing":
                 state = "repaired"
                 retention_reference_question = question_id
-                next_review_at = attempted_at + REPAIRED_RECHECK_AFTER if attempted_at else None
+                retention_origin_at = attempted_at
+                retention_stage = "repair_confirmed"
+                retention_checkpoint = "day3"
+                next_review_at = attempted_at + DAY3_RECHECK_AFTER if attempted_at else None
                 reason = "A strong different-question confirmation was correct with confidence=1 after a wrong answer."
-            elif state == "repaired":
-                reason = "Short-term repair remains repaired; stable requires the future time-based policy."
+            elif state in {"repaired", "stable"}:
+                reason = "Retention remains confirmed; the scheduled spaced checkpoint has not arrived yet."
         elif state == "repairing":
             reason = (
                 "The correct answer is same/weakly different or lacks confidence=1; repair remains unconfirmed."
@@ -211,9 +278,17 @@ def derive_knowledge_node_state(
     as_of = _as_datetime(as_of)
     if state in {"repaired", "stable"} and next_review_at and as_of and as_of >= next_review_at:
         result["state"] = "recheck_due"
-        result["reason"] = "The spaced retention review date has arrived."
+        result["reason"] = f"The {retention_checkpoint} retention checkpoint is due."
+
+    result["retention_stage"] = retention_stage
+    result["retention_checkpoint"] = retention_checkpoint
+    result["retention_origin_at"] = retention_origin_at
     result["next_review_at"] = next_review_at
-    result["due_overdue_days"] = max(0, (as_of - next_review_at).days) if as_of and next_review_at and as_of >= next_review_at else 0
+    result["due_overdue_days"] = (
+        max(0, (as_of - next_review_at).days)
+        if as_of and next_review_at and as_of >= next_review_at
+        else 0
+    )
     return result
 
 

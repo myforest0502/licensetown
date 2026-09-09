@@ -22,13 +22,14 @@ def repaired_history():
     return [item("Q1", False, 2, 0), item("Q2", True, 1, 1)]
 
 
-def test_repaired_due_at_seven_days_not_six(monkeypatch):
+def test_repaired_due_at_three_days_not_before(monkeypatch):
     monkeypatch.setattr(transition, "classify_repair_confirmation", strong_classifier)
     history = repaired_history()
-    assert transition.derive_knowledge_node_state(history, as_of=BASE + timedelta(days=7))["state"] == "repaired"
-    result = transition.derive_knowledge_node_state(history, as_of=BASE + timedelta(days=8))
+    assert transition.derive_knowledge_node_state(history, as_of=BASE + timedelta(days=3))["state"] == "repaired"
+    result = transition.derive_knowledge_node_state(history, as_of=BASE + timedelta(days=4))
     assert result["state"] == "recheck_due"
-    assert result["next_review_at"] == BASE + timedelta(days=8)
+    assert result["retention_checkpoint"] == "day3"
+    assert result["next_review_at"] == BASE + timedelta(days=4)
 
 
 def test_due_checks_require_strong_confident_different_question(monkeypatch):
@@ -37,7 +38,10 @@ def test_due_checks_require_strong_confident_different_question(monkeypatch):
     assert transition.derive_knowledge_node_state(base + [item("Q2", True, 1, 8)])["state"] == "recheck_due"
     assert transition.derive_knowledge_node_state(base + [item("Q3", True, 2, 8)])["state"] == "recheck_due"
     assert transition.derive_knowledge_node_state(base + [item("Q3", True, 3, 8)])["state"] == "recheck_due"
-    assert transition.derive_knowledge_node_state(base + [item("Q3", True, 1, 8)])["state"] == "stable"
+    result = transition.derive_knowledge_node_state(base + [item("Q3", True, 1, 8)])
+    assert result["state"] == "stable"
+    assert result["retention_stage"] == "day7_passed"
+    assert result["retention_checkpoint"] == "day30"
 
 
 def test_due_wrong_or_unknown_returns_to_repairing(monkeypatch):
@@ -52,5 +56,8 @@ def test_stable_due_at_thirty_days_and_can_reconfirm(monkeypatch):
     stable = repaired_history() + [item("Q3", True, 1, 8)]
     assert transition.derive_knowledge_node_state(stable, as_of=BASE + timedelta(days=37))["state"] == "stable"
     assert transition.derive_knowledge_node_state(stable, as_of=BASE + timedelta(days=38))["state"] == "recheck_due"
-    assert transition.derive_knowledge_node_state(stable + [item("Q4", True, 1, 38)])["state"] == "stable"
+    durable = transition.derive_knowledge_node_state(stable + [item("Q4", True, 1, 38)])
+    assert durable["state"] == "stable"
+    assert durable["retention_stage"] == "durable"
+    assert durable["next_review_at"] is None
     assert transition.derive_knowledge_node_state(stable + [item("Q4", False, 1, 38)])["state"] == "repairing"
