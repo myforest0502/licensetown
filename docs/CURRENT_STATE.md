@@ -48,6 +48,15 @@ The completion target is not perfection, complete long-term proof, or implementa
 - Fix branch: `fix/dashboard-blank-space-v01`. Keep `学習の現在地` on the left and place the 7-day learning record into the right story stack so the existing space is used naturally; mobile remains one-column through the existing breakpoint.
 - Status: **real Production screenshot observed: YES / root cause identified: YES / code fix under validation / Production accepted: NO**.
 
+## 2026-09-09 Dashboard approved production layout
+
+- Boss approved the final desktop composition for `/goukaku-no-michi`: the large `合格までの推奨ルート` is placed immediately below the top date/exam/progress summary and before the daily-action/navigation area.
+- No learner-facing information card may be deleted to make the route larger. The preserved content set includes `今日やること`, `分野別到達度`, `源さんの一言`, `知識の確認状況`, `今の学習カルテ`, `定着までの進み方`, `直近7日間の学習記録`, `LTの作戦メモ`, `学習の現在地`, `あなたの足跡を見る`, and `次のチェックポイント`.
+- Desktop story rails are intentionally balanced: left = field progress -> LT strategy memo -> learning position -> footprints; right = Gen-san -> knowledge status -> learning chart/profile -> retention flow -> weekly record -> next checkpoint. Mobile remains a single-column flow.
+- The formal Gen-san production asset remains `static/images/characters/gensan_main.png`; generated mockup faces are never production assets.
+- Implementation branch: `fix/dashboard-approved-layout-v01`, using `dashboard-approved-layout-v01.js/css` loaded last so the approved hierarchy wins over older layout scripts without deleting their content-generation logic.
+- Status: **Boss layout approval: YES / code exists: YES / automated validation pending / Production deployed: NO / real-device acceptance: PENDING**.
+
 ## Current completion contract — MAIN LINE ONLY
 
 Until PT v1.0 is accepted, do not drift into speculative polish or branch/leaf work.
