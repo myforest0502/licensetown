@@ -1,0 +1,55 @@
+name: tmp-q2000-source-audit
+on:
+  push:
+    branches:
+      - audit/q2000-source-counts-v01
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: audit/q2000-source-counts-v01
+      - name: Count Q1-Q2000 source values
+        run: |
+          python - <<'PY'
+          import json
+          from collections import Counter
+          from pathlib import Path
+
+          path = Path('data/question_bank/question_tags.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          if isinstance(data, dict):
+              if 'questions' in data and isinstance(data['questions'], list):
+                  rows = data['questions']
+              elif 'records' in data and isinstance(data['records'], list):
+                  rows = data['records']
+              else:
+                  rows = list(data.values()) if all(isinstance(v, dict) for v in data.values()) else []
+          else:
+              rows = data
+          selected = []
+          for row in rows:
+              if not isinstance(row, dict):
+                  continue
+              q = row.get('question_id') or row.get('q_id') or row.get('id') or row.get('question_number')
+              s = str(q)
+              digits = ''.join(ch for ch in s if ch.isdigit())
+              if not digits:
+                  continue
+              n = int(digits)
+              if 1 <= n <= 2000:
+                  selected.append((n, row.get('source')))
+          selected.sort()
+          counts = Counter(src for _, src in selected)
+          print('ROWS', len(selected))
+          print('MINMAX', selected[0][0] if selected else None, selected[-1][0] if selected else None)
+          print('COUNTS', dict(counts))
+          print('TAIL')
+          for item in selected[-60:]:
+              print(item)
+          missing = sorted(set(range(1,2001)) - {n for n,_ in selected})
+          print('MISSING', missing[:100], 'COUNT', len(missing))
+          PY
