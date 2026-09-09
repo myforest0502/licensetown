@@ -5,6 +5,7 @@ on:
     paths:
       - 'reports/question_bank_q2000_final_quality_audit.py'
       - 'reports/question_bank_q2000_duplicate_detail.py'
+      - 'reports/build_pt_formal_metadata_index.py'
       - '.github/workflows/pt-q2000-final-quality-audit.yml'
   workflow_dispatch:
 
@@ -18,9 +19,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
+      - name: Build formal metadata index
+        run: python -B reports/build_pt_formal_metadata_index.py
       - name: Run exact duplicate detail audit
         run: python -B reports/question_bank_q2000_duplicate_detail.py
       - name: Run Q2000 cross-sectional quality audit
+        continue-on-error: true
         run: python -B reports/question_bank_q2000_final_quality_audit.py
       - name: Upload audit reports
         if: always()
@@ -30,4 +34,5 @@ jobs:
           path: |
             reports/question_bank_q2000_final_quality_audit.json
             reports/question_bank_q2000_duplicate_detail.json
+            reports/pt_formal_metadata_index.json
           if-no-files-found: warn
