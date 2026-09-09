@@ -1,0 +1,28 @@
+name: pt-q2000-final-quality-audit
+on:
+  push:
+    branches: [work/pt-finalization-post-q2000]
+    paths:
+      - 'reports/question_bank_q2000_final_quality_audit.py'
+      - '.github/workflows/pt-q2000-final-quality-audit.yml'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Run Q2000 cross-sectional quality audit
+        run: python -B reports/question_bank_q2000_final_quality_audit.py
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: q2000-final-quality-audit
+          path: reports/question_bank_q2000_final_quality_audit.json
+          if-no-files-found: warn
