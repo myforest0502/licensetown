@@ -23,6 +23,9 @@ def test_top_half_matches_latest_boss_reference_exact_order():
     assert positions == sorted(positions)
     assert "grid-template-columns:minmax(0,58%) minmax(0,42%)" in css
     assert ".dashboard-reference-source-only" in css
+    assert "@media (min-width:701px) and (max-width:1000px)" in css
+    assert "grid-template-columns:repeat(5,minmax(0,1fr))" in css
+    assert ".lt-route-pace-note" in css
 
 
 def test_lower_half_remains_frozen_to_previous_approved_reference():

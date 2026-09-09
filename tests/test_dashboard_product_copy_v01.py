@@ -38,5 +38,8 @@ def test_paid_route_compares_current_progress_with_recommended_pace():
     assert "equivalentDaysRemaining" in js
     assert "この時点の推奨" in js
     assert "推奨ルートとの位置" in js
+    assert "現在の学習記録から見た到達目安です" in js
+    assert "いまの進み具合を毎日更新しています" in js
+    assert "推奨ペースと現在地の差を示しています" in js
     assert "合格確率ではありません" in js
     assert "lt-route-pace-panel" in css
