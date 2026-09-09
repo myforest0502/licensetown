@@ -120,6 +120,7 @@ def select_node_adaptive_questions(
     rng=None,
     as_of: datetime | None = None,
     category_small: int | None = None,
+    learning_intent: str | None = None,
 ) -> list[dict[str, Any]]:
     """Return unique recommendation records with balanced repair/exploration."""
     attempts = [dict(item) for item in attempts]
@@ -226,11 +227,20 @@ def select_node_adaptive_questions(
     ]
     recent_candidates = [item for item in candidates if item["recent_question_repeat"]]
 
-    targets = {
-        "repair": (question_count + 1) // 2,
-        "checking": question_count // 3,
-        "exploration": max(1, question_count - ((question_count + 1) // 2) - (question_count // 3)),
-    }
+    intent_group = {
+        "repair": "repair",
+        "recheck": "checking",
+        "exploration": "exploration",
+    }.get(learning_intent)
+    targets = (
+        {intent_group: question_count}
+        if intent_group
+        else {
+            "repair": (question_count + 1) // 2,
+            "checking": question_count // 3,
+            "exploration": max(1, question_count - ((question_count + 1) // 2) - (question_count // 3)),
+        }
+    )
     selected: list[dict[str, Any]] = []
     selected_ids: set[str] = set()
     selected_evidence_ids: set[str] = set()
@@ -291,11 +301,11 @@ def select_node_adaptive_questions(
 
 def build_node_adaptive_session(
     attempts, question_count=30, exclude_ids=(), rng=None, *, audit_out=None,
-    category_small: int | None = None,
+    category_small: int | None = None, learning_intent: str | None = None,
 ):
     records = select_node_adaptive_questions(
         attempts, question_count, exclude_ids=exclude_ids, rng=rng,
-        category_small=category_small,
+        category_small=category_small, learning_intent=learning_intent,
     )
     if len(records) < question_count:
         raise ValueError("Not enough questions for Node adaptive session")

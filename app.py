@@ -2207,6 +2207,7 @@ def create_web_recommendation_session(
     question_count,
     token,
     attempts=None,
+    learning_intent=None,
 ):
     """正式分野のWeb学習セッションを作成する。LINEセッションとは共有しない。"""
     with web_recommendation_start_lock:
@@ -2226,6 +2227,7 @@ def create_web_recommendation_session(
             question_count=question_count,
             category_small=category_small,
             audit_out=selection_audit,
+            learning_intent=learning_intent,
         )
         session_id = secrets.token_urlsafe(24)
         web_recommendation_sessions[session_id] = {
@@ -2316,6 +2318,7 @@ def start_dashboard_recommendation():
                         question_count,
                         payload.get("token"),
                         attempts=attempts,
+                        learning_intent=action.get("learning_intent"),
                     )
             except QuestionBankError:
                 logging.exception("Web recommendation session creation failed")
