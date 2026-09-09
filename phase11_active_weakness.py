@@ -6,7 +6,7 @@ from collections import defaultdict
 from datetime import datetime
 from typing import Any, Iterable
 
-from knowledge_node_canonical import canonicalize_knowledge_node_id
+from question_equivalence import canonicalize_question_evidence_node
 from knowledge_node_repair_cycle import (
     current_evaluable_repair_cycle,
     current_repair_cycle,
@@ -39,12 +39,14 @@ def build_active_repair_weakness(
 
     histories: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for item in attempts:
-        node = canonicalize_knowledge_node_id(
-            str(item.get("knowledge_node_id") or "")
+        question_id = str(item.get("question_id") or "")
+        node = canonicalize_question_evidence_node(
+            question_id,
+            str(item.get("knowledge_node_id") or ""),
         )
-        if not node or not item.get("question_id"):
+        if not node or not question_id:
             continue
-        histories[node].append(item)
+        histories[str(node)].append(item)
 
     result: dict[str, dict[str, Any]] = {}
     for node, history in sorted(histories.items()):
