@@ -24,3 +24,18 @@ def test_q2000_final_quality_audit_has_no_structural_blockers():
         frozenset(("Q1230", "Q1526")),
         frozenset(("Q1411", "Q1585")),
     }
+
+    canonicalized = report["review_candidates"].get(
+        "duplicate_node_labels_already_canonicalized", []
+    )
+    assert any(
+        set(item["raw_node_ids"]) == {"KN0597", "KN0807"}
+        and item["canonical_node_ids"] == ["KN0597"]
+        for item in canonicalized
+    )
+
+    unresolved = report["review_candidates"].get("duplicate_node_label_candidates", [])
+    assert all(
+        set(item["raw_node_ids"]) != {"KN0597", "KN0807"}
+        for item in unresolved
+    )
