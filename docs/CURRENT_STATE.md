@@ -41,6 +41,13 @@ The completion target is not perfection, complete long-term proof, or implementa
 - Regression coverage explicitly includes the cross-node exact-repeat case.
 - Resolution status: **real Production failure observed: YES / root cause identified: YES / targeted regression: 21 passed / full CI run #632: 1233 passed, 6 skipped, 1 deselected, 125 subtests passed / PR #288 merged to main at `c1209ebb2c7a38df95e532831e5a31e49cff400d` / Render deploy `dep-dagjv59srm7s73fh96ug`: live / real post-fix learner-device acceptance: PENDING**.
 
+## 2026-09-09 Dashboard whitespace defect
+
+- Real learner screenshot after the `/goukaku-no-michi` 500 repair showed a large unnecessary blank region in the right story column beside `学習の現在地`.
+- Cause: `dashboard-layout-v05.js` kept `学習の現在地` in the taller left column but forcibly moved the 7-day learning card to a new full-width row below the two-column story. CSS Grid therefore had to preserve the left-column height and left a large empty right area.
+- Fix branch: `fix/dashboard-blank-space-v01`. Keep `学習の現在地` on the left and place the 7-day learning record into the right story stack so the existing space is used naturally; mobile remains one-column through the existing breakpoint.
+- Status: **real Production screenshot observed: YES / root cause identified: YES / code fix under validation / Production accepted: NO**.
+
 ## Current completion contract — MAIN LINE ONLY
 
 Until PT v1.0 is accepted, do not drift into speculative polish or branch/leaf work.
