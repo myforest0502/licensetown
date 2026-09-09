@@ -7,7 +7,6 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from typing import Any, Iterable
 
-from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import derive_all_user_node_states
 from knowledge_node_repair_evidence import (
     DIFFERENT_QUESTION_WEAK,
@@ -16,6 +15,10 @@ from knowledge_node_repair_evidence import (
     classify_repair_confirmation,
 )
 from question_bank import get_category_small, get_question_tag, get_quiz_question, question_ids
+from question_equivalence import (
+    canonicalize_question_evidence_id,
+    canonicalize_question_evidence_node,
+)
 from prerequisite_backtrack_pilot import (
     is_prerequisite_backtrack_pilot_enabled,
     parse_prerequisite_backtrack_pilot_user_ids,
@@ -53,11 +56,15 @@ def _node_attempt_summary(attempts: Iterable[dict[str, Any]]) -> dict[str, dict[
         "uncertain_correct": False, "unknown": False,
     })
     for item in sorted((dict(value) for value in attempts), key=_attempt_time):
-        node = canonicalize_knowledge_node_id(str(item.get("knowledge_node_id") or ""))
+        raw_question_id = str(item.get("question_id") or "")
+        node = canonicalize_question_evidence_node(
+            raw_question_id,
+            str(item.get("knowledge_node_id") or ""),
+        )
         if not node:
             continue
-        question_id = str(item.get("question_id") or "")
-        summary = summaries[node]
+        question_id = canonicalize_question_evidence_id(raw_question_id)
+        summary = summaries[str(node)]
         is_unknown = item.get("answer_status") == "unknown"
         is_correct = False if is_unknown else item.get("is_correct") is True
         if is_correct:
@@ -124,36 +131,47 @@ def select_node_adaptive_questions(
     state_records = {item["canonical_node_id"]: item for item in derive_all_user_node_states(attempts, as_of=as_of)}
     states = {node: item["state"] for node, item in state_records.items()}
     summaries = _node_attempt_summary(attempts)
-    seen_question_ids = {str(item.get("question_id") or "") for item in attempts}
+    seen_question_ids = {
+        canonicalize_question_evidence_id(str(item.get("question_id") or ""))
+        for item in attempts
+        if item.get("question_id")
+    }
     recent_attempts = sorted(attempts, key=_attempt_time, reverse=True)[:30]
     recent_question_ids = {
-        str(item.get("question_id") or "")
+        canonicalize_question_evidence_id(str(item.get("question_id") or ""))
         for item in recent_attempts
         if item.get("question_id")
     }
-    excluded = {str(value) for value in (exclude_ids or ())}
+    excluded = {
+        canonicalize_question_evidence_id(str(value))
+        for value in (exclude_ids or ())
+    }
     candidates = []
     for question_id in question_ids():
-        if question_id in excluded:
+        evidence_question_id = canonicalize_question_evidence_id(question_id)
+        if evidence_question_id in excluded:
             continue
         if category_small is not None and get_category_small(question_id) != category_small:
             continue
         tag = get_question_tag(question_id)
-        node = canonicalize_knowledge_node_id(tag["knowledge_node_id"])
-        state = states.get(node, "unseen")
-        summary = summaries.get(node, {
+        node = canonicalize_question_evidence_node(
+            question_id,
+            str(tag["knowledge_node_id"]),
+        )
+        state = states.get(str(node), "unseen")
+        summary = summaries.get(str(node), {
             "wrong_questions": set(), "evaluable_wrong_questions": set(),
             "correct_questions": set(), "confident_wrong": False,
             "uncertain_correct": False, "unknown": False,
         })
         score, reason, group = _priority(state, summary, str(tag.get("safety", "none")))
         if state == "recheck_due":
-            score += min(int(state_records.get(node, {}).get("due_overdue_days", 0)), 30)
+            score += min(int(state_records.get(str(node), {}).get("due_overdue_days", 0)), 30)
         evidence_strengths = {
             classify_repair_confirmation(wrong_id, question_id)
             for wrong_id in summary["wrong_questions"]
         }
-        is_same_q_repeat = question_id in summary["wrong_questions"]
+        is_same_q_repeat = evidence_question_id in summary["wrong_questions"]
         strong_confirmation = DIFFERENT_QUESTION_STRONG in evidence_strengths
         if is_same_q_repeat:
             repair_evidence_quality = SAME_QUESTION
@@ -169,11 +187,12 @@ def select_node_adaptive_questions(
             score += 80
         elif summary["wrong_questions"]:
             score += 20
-        if question_id not in seen_question_ids:
+        if evidence_question_id not in seen_question_ids:
             score += 10
         candidates.append({
             "question_id": question_id,
-            "canonical_node_id": node,
+            "evidence_question_id": evidence_question_id,
+            "canonical_node_id": str(node),
             "state": state,
             "priority_reason": reason,
             "priority_group": group,
@@ -181,7 +200,7 @@ def select_node_adaptive_questions(
             "previous_wrong_count": len(summary["wrong_questions"]),
             "previous_correct_count": len(summary["correct_questions"]),
             "same_question_repeat": is_same_q_repeat,
-            "recent_question_repeat": question_id in recent_question_ids,
+            "recent_question_repeat": evidence_question_id in recent_question_ids,
             "recent_cooldown_bypassed": False,
             "strong_repair_confirmation": strong_confirmation,
             "repair_evidence_quality": repair_evidence_quality,
@@ -207,7 +226,6 @@ def select_node_adaptive_questions(
     ]
     recent_candidates = [item for item in candidates if item["recent_question_repeat"]]
 
-    # Soft composition targets: repair half, checking about a third, exploration remainder.
     targets = {
         "repair": (question_count + 1) // 2,
         "checking": question_count // 3,
@@ -215,6 +233,7 @@ def select_node_adaptive_questions(
     }
     selected: list[dict[str, Any]] = []
     selected_ids: set[str] = set()
+    selected_evidence_ids: set[str] = set()
     node_counts: Counter[str] = Counter()
 
     def append_item(item: dict[str, Any]):
@@ -224,42 +243,45 @@ def select_node_adaptive_questions(
         )
         selected.append(selected_item)
         selected_ids.add(selected_item["question_id"])
+        selected_evidence_ids.add(selected_item["evidence_question_id"])
         node_counts[selected_item["canonical_node_id"]] += 1
+
+    def available(item: dict[str, Any], node_cap: int) -> bool:
+        return (
+            item["question_id"] not in selected_ids
+            and item["evidence_question_id"] not in selected_evidence_ids
+            and node_counts[item["canonical_node_id"]] < node_cap
+        )
 
     def take(pool, group: str, limit: int, node_cap: int):
         for item in pool:
             if len([value for value in selected if value["priority_group"] == group]) >= limit:
                 break
-            if item["priority_group"] != group or item["question_id"] in selected_ids:
-                continue
-            if node_counts[item["canonical_node_id"]] >= node_cap:
+            if item["priority_group"] != group or not available(item, node_cap):
                 continue
             append_item(item)
 
-    # Prefer one representative question per canonical Node. Only use a second
-    # question when a bucket cannot otherwise reach its existing composition target.
     for group, limit in targets.items():
         take(normal_candidates, group, limit, node_cap=1)
         take(normal_candidates, group, limit, node_cap=2)
 
-    # Maintenance and unused groups fill natural shortages with the same two-pass rule.
     for cap in (1, 2, 3, question_count):
         for item in normal_candidates:
             if len(selected) >= question_count:
                 break
-            if item["question_id"] in selected_ids or node_counts[item["canonical_node_id"]] >= cap:
+            if not available(item, cap):
                 continue
             append_item(item)
         if len(selected) >= question_count:
             break
 
     # Controlled final fallback: only a real bank shortage can bypass cooldown.
-    # Explicit exclude_ids never entered candidates and therefore cannot return.
+    # Equivalent official repeats remain one evidence identity even in fallback.
     for cap in (1, 2, 3, question_count):
         for item in recent_candidates:
             if len(selected) >= question_count:
                 break
-            if item["question_id"] in selected_ids or node_counts[item["canonical_node_id"]] >= cap:
+            if not available(item, cap):
                 continue
             append_item(item)
         if len(selected) >= question_count:
