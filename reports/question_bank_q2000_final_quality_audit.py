@@ -1,8 +1,9 @@
 """Cross-sectional final quality audit for the formal Q1-Q2000 PT Question Bank.
 
 Read-only with respect to formal bank data. The script writes one JSON report under reports/.
-It is intentionally conservative: structural/data-integrity failures are blockers; editorial
-heuristics are review candidates, not automatic failures.
+Structural/data-integrity failures are blockers; editorial heuristics are review candidates.
+Reviewed exact official provenance repeats may remain as raw Q records only when a formal
+question-equivalence group makes them one derived learning-evidence identity.
 """
 from __future__ import annotations
 
@@ -11,6 +12,8 @@ import re
 from collections import Counter, defaultdict
 from difflib import SequenceMatcher
 from pathlib import Path
+
+from question_equivalence import get_question_equivalence_groups
 
 ROOT = Path(__file__).resolve().parents[1]
 BANK = ROOT / "data" / "question_bank"
@@ -49,12 +52,6 @@ def choice_keys(q: dict) -> set[str]:
 
 
 def choice_signature(q: dict) -> tuple[str, ...]:
-    """Normalized ordered choice text for true item-level duplicate detection.
-
-    Repeated generic past-exam stems are not duplicates when their choice sets test
-    materially different facts. A blocker requires the same normalized stem and the
-    same normalized ordered choices.
-    """
     choices = q.get("choices") or q.get("options") or []
     if isinstance(choices, dict):
         def order_key(item):
@@ -94,6 +91,7 @@ def main() -> int:
     tags = load("question_tags.json")
     nodes = load("knowledge_nodes.json")
     manifest = load("bank_manifest.json")
+    equivalence_groups = get_question_equivalence_groups()
 
     stores = {
         "questions": questions,
@@ -142,14 +140,17 @@ def main() -> int:
 
     normalized_to_ids = defaultdict(list)
     item_signature_to_ids = defaultdict(list)
+    item_signature_by_qid: dict[str, tuple[str, tuple[str, ...]]] = {}
     for qid in expected:
         q = qmap[qid]
         a = amap[qid]
         e = emap[qid]
         stem = get_stem(q).strip()
         norm = norm_text(stem)
+        signature = (norm, choice_signature(q))
         normalized_to_ids[norm].append(qid)
-        item_signature_to_ids[(norm, choice_signature(q))].append(qid)
+        item_signature_to_ids[signature].append(qid)
+        item_signature_by_qid[qid] = signature
         keys = choice_keys(q)
         sets = accepted_sets(a)
         if not stem:
@@ -190,8 +191,51 @@ def main() -> int:
         if stem and choices and len(v) > 1
     ]
     true_item_duplicates.sort(key=lambda group: int(group[0][1:]))
-    if true_item_duplicates:
-        blockers.append({"type": "exact_duplicate_items", "groups": true_item_duplicates})
+
+    reviewed_equivalence = {
+        frozenset(str(qid) for qid in record.get("question_ids") or []): record
+        for record in equivalence_groups
+        if record.get("review_status") == "reviewed"
+    }
+    registered_exact_repeats = []
+    unregistered_exact_duplicates = []
+    true_duplicate_sets = {frozenset(group) for group in true_item_duplicates}
+    for group in true_item_duplicates:
+        record = reviewed_equivalence.get(frozenset(group))
+        if record is None:
+            unregistered_exact_duplicates.append(group)
+        else:
+            registered_exact_repeats.append({
+                "equivalence_id": record.get("equivalence_id"),
+                "canonical_question_id": record.get("canonical_question_id"),
+                "canonical_knowledge_node_id": record.get("canonical_knowledge_node_id"),
+                "question_ids": group,
+                "equivalence_type": record.get("equivalence_type"),
+            })
+    if unregistered_exact_duplicates:
+        blockers.append({"type": "unregistered_exact_duplicate_items", "groups": unregistered_exact_duplicates})
+
+    invalid_equivalence_groups = []
+    for member_set, record in reviewed_equivalence.items():
+        if member_set not in true_duplicate_sets:
+            invalid_equivalence_groups.append({
+                "equivalence_id": record.get("equivalence_id"),
+                "question_ids": sorted(member_set, key=lambda value: int(value[1:])),
+                "reason": "reviewed equivalence group does not exactly match one item-level duplicate signature",
+            })
+        answer_signatures = {
+            tuple(tuple(values) for values in accepted_sets(amap[qid]))
+            for qid in member_set
+            if qid in amap
+        }
+        if len(answer_signatures) != 1:
+            invalid_equivalence_groups.append({
+                "equivalence_id": record.get("equivalence_id"),
+                "question_ids": sorted(member_set, key=lambda value: int(value[1:])),
+                "reason": "equivalent item records do not share the same accepted answer sets",
+            })
+    if invalid_equivalence_groups:
+        blockers.append({"type": "invalid_question_equivalence", "items": invalid_equivalence_groups})
 
     same_stem_different_choices = []
     for group in same_stem_groups:
@@ -266,6 +310,7 @@ def main() -> int:
         "question_count": len(questions),
         "blocker_count": len(blockers),
         "blockers": blockers,
+        "registered_exact_provenance_repeats": registered_exact_repeats,
         "distributions": distributions,
         "knowledge_nodes": node_summary,
         "review_candidate_counts": {k: len(v) for k, v in review.items()},
@@ -273,7 +318,9 @@ def main() -> int:
         "interpretation": {
             "blockers": "must be zero before PT bank is treated as structurally final",
             "review_candidates": "heuristic sampling targets; human/medical review decides whether changes are required",
-            "duplicate_policy": "same normalized past-exam stem is review-only when choices differ; same normalized stem plus same ordered choices is an item-level duplicate blocker",
+            "duplicate_policy": (
+                "same normalized past-exam stem is review-only when choices differ; exact item repeats are blockers unless a reviewed equivalence group preserves provenance while collapsing derived learning evidence"
+            ),
         },
     }
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -283,6 +330,7 @@ def main() -> int:
         "question_count": report["question_count"],
         "blocker_count": report["blocker_count"],
         "blockers": report["blockers"],
+        "registered_exact_provenance_repeat_count": len(registered_exact_repeats),
         "distributions": report["distributions"],
         "knowledge_nodes": report["knowledge_nodes"],
         "review_candidate_counts": report["review_candidate_counts"],
