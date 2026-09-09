@@ -6,16 +6,31 @@ Safe integration base: `work/pt-finalization-post-q2000`
 ## How to resume
 1. Read `AGENTS.md`.
 2. Read this file.
-3. Verify only facts affected by newer commits/data.
-4. Continue from the open work instead of rediscovering the repository.
+3. Read `docs/PT_V1_PRODUCT_GOAL.md`.
+4. Verify only facts affected by newer commits/data.
+5. Continue from the open work instead of rediscovering the repository.
 
 Always distinguish: **code exists / tests pass / real data observed / product accepted**.
 Do not casually change `main`, Production Neon, Render or LINE behavior.
 Practical learner effect and national-exam success outrank architectural elegance.
 
+## Fixed PT v1.0 product finish line
+
+Boss and Aoi fixed the shared definition of **「修正は今後もあるが、一旦完成として商品として出せる物」** on 2026-09-09.
+
+The authoritative detailed contract is `docs/PT_V1_PRODUCT_GOAL.md`.
+
+Do not broaden the finish line in later chats merely because another improvement is possible. New findings must be classified as either:
+- **v1.0 product blocker**, or
+- **v1.1+/backlog**.
+
+PT v1.0 is considered product-ready when a new learner can register, study, have attempts saved, receive weakness-aware next study, pause/resume safely, understand what to do today, and complete ordinary learning without serious data-loss/study-blocking defects; required automated checks are green; production-equivalent flow works; and several days of real use show no major blocker.
+
+The completion target is not perfection, complete long-term proof, or implementation of every future feature.
+
 ## Current completion contract — MAIN LINE ONLY
 
-Boss fixed the active completion rule on 2026-09-09. Until the core PT learning loop is accepted, do not drift into speculative polish or branch/leaf work.
+Until PT v1.0 is accepted, do not drift into speculative polish or branch/leaf work.
 
 Car model:
 - **走る**: quiz -> answer -> save -> score -> explanation -> continue.
@@ -121,12 +136,15 @@ Wrong-pattern analysis is evidence-based, not a hidden psychological diagnosis. 
 
 It explicitly declares `wrong_pattern_semantics = observable_evidence_not_psychological_diagnosis`.
 
-Full PR #285 CI after the core implementation and policy-aligned regression updates:
+PR #285 was merged into `work/pt-finalization-post-q2000` at merge commit `314813170a4b25897136e9d67f24428931f24bfa` after GREEN CI.
+
+Full validation on the core implementation:
 - **1232 passed**
 - **6 skipped**
 - **1 deselected**
 - **125 subtests passed**
 - run #626: GREEN
+- run #627 after the state-document update: GREEN
 
 Evidence boundary:
 - **code exists: YES**
@@ -134,7 +152,7 @@ Evidence boundary:
 - **natural learner day3/day7/one-month sequence observed end-to-end: NOT YET**
 - **Production behavior deployed/accepted: NO**
 
-The missing natural 3d/7d/one-month evidence is time-dependent evidence, not a reason to keep adding speculative code today.
+The missing natural 3d/7d/one-month evidence is time-dependent evidence, not a reason to keep adding speculative code before v1.0 acceptance.
 
 ---
 
@@ -196,7 +214,7 @@ Completed consolidation v0.1:
 
 Source map: `reports/dashboard_source_map_20260909.md`.
 
-Dashboard polish is **not current main-line work**. Do not resume it until core real use exposes a learner-impacting need or Boss explicitly chooses it.
+Dashboard polish is **not current main-line work**. Only learner-facing contradictions or missing v1.0-required guidance can block productization.
 
 ---
 
@@ -214,7 +232,7 @@ Current core-useful fields/events include:
 - durable retention confirmation;
 - regression back to repairing.
 
-Do not build a large journal UI now. The derivation exists to support the main learner loop and later concise presentation if needed.
+Do not build a large journal UI for v1.0. Only expose the minimum learner-facing summary needed to answer: where weak / how wrong / repaired or not / next review / regressed or not.
 
 ---
 
@@ -224,23 +242,31 @@ Do not build a large journal UI now. The derivation exists to support the main l
 - Current `attempt_position` resets inside 5-question batches, so `question_attempts` alone cannot validly measure position 1-30 fatigue in a 30-question session.
 - `:time`-style event keys may intentionally differ for idempotency; do not treat event-key equality as a relational join.
 - Add explicit durable session linkage only if real use shows it changes learner outcome.
+- This is not a v1.0 product blocker by itself.
 
 ---
 
-# 9. Current priority / finish line
+# 9. PT v1.0 remaining path
 
-The current implementation task is considered complete when PR #285 is merged into `work/pt-finalization-post-q2000` after GREEN CI and this state file is updated.
+The coding task for the repair/retention core is CLOSED. Do not invent another engineering subproject just because the core can be polished further.
 
-After that, **do not invent another branch/leaf task**.
+The next work must be judged only against `docs/PT_V1_PRODUCT_GOAL.md`.
 
-Next legitimate step is real learner use of the main line:
-- normal study produces wrong/correct/confidence evidence;
-- wrong Node enters repair;
-- STRONG different-Q confirmation closes repair;
-- scheduled day3/day7/one-month checks surface naturally;
-- wrong retention check reopens repair;
-- observed defects are fixed only when they affect the main line.
+Remaining productization path:
+1. verify the complete learner-facing path on the safe branch against the v1.0 checklist: registration -> study -> answer/save -> score/explanation -> pause/resume -> next-study guidance;
+2. expose only the minimum weakness/repair/next-review information needed for a learner to know what to do, if current UI does not already make it clear;
+3. prepare/promote the already-tested main-line changes to a production-equivalent environment using normal safety rules;
+4. run real-device acceptance with the primary learner for several days;
+5. fix only observed **v1.0 blockers**;
+6. once no serious study-blocking defect remains, declare **LicenseTown PT版 v1.0 商品化完了** even if v1.1 improvements remain.
 
-Natural time-dependent evidence cannot be completed instantly and is not an excuse to keep construction open. Code/test completion and natural/product acceptance must remain separate facts.
+Not v1.0 blockers by default:
+- full long-term Phase11 proof;
+- completion of every day3/day7/month natural evidence pattern;
+- large companion/journal UI;
+- dashboard polish beyond contradiction-free guidance;
+- session/fatigue analytics;
+- future HP/Town/avatar/social features;
+- speculative safety work for unobserved edge cases.
 
-Do not restart Q2000 audit, dashboard polish, speculative safety scaffolding, session analytics, or unrelated product expansion unless Boss explicitly reprioritizes them or real main-line evidence exposes a genuine defect.
+Do not restart Q2000 audit, question-count expansion, speculative branch work, or unrelated product expansion unless Boss explicitly reprioritizes them or real main-line evidence exposes a genuine v1.0 defect.
