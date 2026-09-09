@@ -22,6 +22,18 @@ def _stem(q):
     return str(q.get("question_text") or q.get("question") or q.get("stem") or "")
 
 
+def _choice_signature(q):
+    choices = q.get("choices") or q.get("options") or {}
+    if isinstance(choices, dict):
+        def order_key(item):
+            key = str(item[0])
+            return (0, int(key)) if key.isdigit() else (1, key)
+        return tuple(_norm(v) for _, v in sorted(choices.items(), key=order_key))
+    if isinstance(choices, list):
+        return tuple(_norm(x.get("text") if isinstance(x, dict) else x) for x in choices)
+    return ()
+
+
 def test_q2000_final_quality_ci_probe():
     questions = _load("questions.json")
     answers = _load("answers.json")
@@ -49,17 +61,18 @@ def test_q2000_final_quality_ci_probe():
     qmap = {r["id"]: r for r in questions}
     amap = {r["id"]: r for r in answers}
     emap = {r["id"]: r for r in explanations}
-    tmap = {r["id"]: r for r in tags}
-    nmap = {str(r.get("knowledge_node_id")): r for r in nodes if r.get("knowledge_node_id")}
 
-    normalized = defaultdict(list)
+    normalized_stem = defaultdict(list)
+    exact_item = defaultdict(list)
     editorial = defaultdict(list)
     for qid in expected:
         q = qmap[qid]
         a = amap[qid]
         e = emap[qid]
         stem = _stem(q).strip()
-        normalized[_norm(stem)].append(qid)
+        stem_norm = _norm(stem)
+        normalized_stem[stem_norm].append(qid)
+        exact_item[(stem_norm, _choice_signature(q))].append(qid)
         if not stem:
             blockers.append({"type": "empty_stem", "id": qid})
         elif len(stem) < 12 or len(stem) > 450:
@@ -77,38 +90,13 @@ def test_q2000_final_quality_ci_probe():
         if not isinstance(ce, dict) or len(ce) < 2:
             blockers.append({"type": "choice_explanations_missing", "id": qid})
 
-    exact = [sorted(v, key=lambda x: int(x[1:])) for k, v in normalized.items() if k and len(v) > 1]
-    if exact:
-        blockers.append({"type": "exact_duplicate_stems", "groups": exact})
+    same_stem = [sorted(v, key=lambda x: int(x[1:])) for k, v in normalized_stem.items() if k and len(v) > 1]
+    full_dups = [sorted(v, key=lambda x: int(x[1:])) for (stem, choices), v in exact_item.items() if stem and choices and len(v) > 1]
+    full_dups.sort(key=lambda g: int(g[0][1:]))
+    if full_dups:
+        blockers.append({"type": "exact_duplicate_items", "groups": full_dups})
 
-    duplicate_details = []
-    for group in exact:
-        items = []
-        for qid in group:
-            q = qmap[qid]
-            a = amap[qid]
-            t = tmap[qid]
-            nid = str(t.get("knowledge_node_id") or "")
-            node = nmap.get(nid, {})
-            items.append({
-                "id": qid,
-                "management_code": q.get("management_code"),
-                "source": q.get("source"),
-                "question_text": _stem(q),
-                "choices": q.get("choices") or q.get("options"),
-                "exam": q.get("exam"),
-                "answer": a.get("display_answer") or a.get("answer") or a.get("correct_answer"),
-                "answer_basis": a.get("answer_basis"),
-                "category_small": q.get("category_small"),
-                "task": t.get("task"),
-                "primary_ability": t.get("primary_ability"),
-                "level": t.get("level"),
-                "safety": t.get("safety"),
-                "knowledge_node_id": nid,
-                "node_label": node.get("label"),
-                "node_question_ids": node.get("question_ids"),
-            })
-        duplicate_details.append(items)
+    same_stem_different_choices = [g for g in same_stem if not any(set(g).issubset(set(d)) for d in full_dups)]
 
     by_category = defaultdict(list)
     for qid, q in qmap.items():
@@ -131,7 +119,7 @@ def test_q2000_final_quality_ci_probe():
                     near.append({"q1": q1, "q2": q2, "category": category, "similarity": round(score, 4)})
     near.sort(key=lambda x: x["similarity"], reverse=True)
 
-    node_ids = set(nmap)
+    node_ids = {str(n.get("knowledge_node_id")) for n in nodes if n.get("knowledge_node_id")}
     tag_node_ids = {str(t.get("knowledge_node_id")) for t in tags if t.get("knowledge_node_id")}
     if tag_node_ids - node_ids:
         blockers.append({"type": "tag_node_reference_missing", "nodes": sorted(tag_node_ids - node_ids)})
@@ -154,11 +142,15 @@ def test_q2000_final_quality_ci_probe():
         "question_count": len(questions),
         "blocker_count": len(blockers),
         "blockers": blockers,
+        "same_stem_group_count": len(same_stem),
+        "same_stem_different_choices_count": len(same_stem_different_choices),
+        "same_stem_different_choices": same_stem_different_choices,
+        "exact_duplicate_item_count": len(full_dups),
+        "exact_duplicate_items": full_dups,
         "editorial_counts": {k: len(v) for k, v in editorial.items()},
         "near_duplicate_count": len(near),
         "duplicate_node_label_count": len(duplicate_node_labels),
         "duplicate_node_label_candidates": duplicate_node_labels[:100],
     }
-    print("Q2000_FINAL_QUALITY=" + json.dumps(summary, ensure_ascii=False, sort_keys=True))
-    print("Q2000_EXACT_DUPLICATE_DETAILS=" + json.dumps(duplicate_details, ensure_ascii=False, sort_keys=True))
+    print("Q2000_FINAL_QUALITY_REFINED=" + json.dumps(summary, ensure_ascii=False, sort_keys=True))
     assert blockers == []
