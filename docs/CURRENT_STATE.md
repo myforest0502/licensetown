@@ -39,7 +39,7 @@ The completion target is not perfection, complete long-term proof, or implementa
 - Root cause: `phase11_active_weakness.build_active_repair_weakness()` grouped histories by raw/canonical Knowledge Node only, while exact-repeat evidence can deliberately remap a question to a different derived evidence Node (`Q1585`: raw `KN0659` -> evidence `KN1387`). This mixed two evidence Nodes in one history and violated the formal state-transition invariant.
 - Fix branch: `fix/goukaku-500-evidence-node-grouping-v01`. Group active-weakness histories by `canonicalize_question_evidence_node(question_id, raw_node_id)` so grouping matches the same derived evidence authority used by `knowledge_node_state_transition.py`.
 - Regression coverage explicitly includes the cross-node exact-repeat case.
-- Status at branch creation: **real Production failure observed: YES / root cause identified: YES / code fix pending validation / Production accepted: NO**.
+- Resolution status: **real Production failure observed: YES / root cause identified: YES / targeted regression: 21 passed / full CI run #632: 1233 passed, 6 skipped, 1 deselected, 125 subtests passed / PR #288 merged to main at `c1209ebb2c7a38df95e532831e5a31e49cff400d` / Render deploy `dep-dagjv59srm7s73fh96ug`: live / real post-fix learner-device acceptance: PENDING**.
 
 ## Current completion contract — MAIN LINE ONLY
 
