@@ -1,0 +1,38 @@
+[
+  {
+    "equivalence_id": "QEQ0001",
+    "canonical_question_id": "Q972",
+    "canonical_knowledge_node_id": "KN0962",
+    "question_ids": ["Q972", "Q1354"],
+    "equivalence_type": "official_exact_repeat",
+    "review_status": "reviewed",
+    "reason": "MHLW official items from different exam years have the same normalized stem, ordered choices, and keyed answer. Preserve both provenance records but treat them as one learning-evidence identity."
+  },
+  {
+    "equivalence_id": "QEQ0002",
+    "canonical_question_id": "Q1067",
+    "canonical_knowledge_node_id": "KN1057",
+    "question_ids": ["Q1067", "Q1391"],
+    "equivalence_type": "official_exact_repeat",
+    "review_status": "reviewed",
+    "reason": "MHLW official items from different exam years have the same normalized stem, ordered choices, and keyed answer. Preserve both provenance records but treat them as one learning-evidence identity."
+  },
+  {
+    "equivalence_id": "QEQ0003",
+    "canonical_question_id": "Q1230",
+    "canonical_knowledge_node_id": "KN1215",
+    "question_ids": ["Q1230", "Q1526"],
+    "equivalence_type": "official_exact_repeat",
+    "review_status": "reviewed",
+    "reason": "MHLW official items from different exam years have the same normalized stem, ordered choices, and keyed answer. Preserve both provenance records but treat them as one learning-evidence identity."
+  },
+  {
+    "equivalence_id": "QEQ0004",
+    "canonical_question_id": "Q1411",
+    "canonical_knowledge_node_id": "KN1387",
+    "question_ids": ["Q1411", "Q1585"],
+    "equivalence_type": "official_exact_repeat_cross_node",
+    "review_status": "reviewed",
+    "reason": "The two MHLW official items are identical. Q1585 was historically stored under the narrower ADH Node KN0659; for derived learning evidence this exact item belongs with Q1411 under the posterior-pituitary-hormone Node KN1387. Raw attempts remain unchanged."
+  }
+]
