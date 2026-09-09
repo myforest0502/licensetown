@@ -590,7 +590,7 @@ def supporter_learner_preview():
     )
     return render_template(
         "goukaku/home.html",
-        dashboard=build_dashboard(learner_id),
+        dashboard=build_dashboard(learner_id, include_learner_navigation=True),
         dashboard_token=None,
         dashboard_title="合格への道",
         read_only=False,

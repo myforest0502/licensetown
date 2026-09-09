@@ -376,3 +376,33 @@ def test_gensan_uses_formal_navigation_target_when_learner_navigation_is_enabled
     assert dashboard["learner_navigation_enabled"] is True
     assert dashboard["gensan_comment"] == "formal navigation aligned"
     assert captured["recommended_study"] == [("神経医学", 10)]
+
+
+def test_supporter_learner_preview_uses_formal_learner_navigation(monkeypatch):
+    calls = []
+    monkeypatch.setattr(
+        goukaku_ui,
+        "authorized_supporter_learner",
+        lambda *args: ("supporter", "learner"),
+    )
+    monkeypatch.setattr(
+        goukaku_ui,
+        "build_dashboard",
+        lambda user_id=None, include_learner_navigation=False: (
+            calls.append((user_id, include_learner_navigation))
+            or _dashboard(nav=include_learner_navigation)
+        ),
+    )
+
+    response = app_module.app.test_client().get(
+        "/supporter/goukaku-no-michi/learner-preview?token=ok"
+    )
+    text = response.get_data(as_text=True)
+
+    assert response.status_code == 200
+    assert calls == [("learner", True)]
+    assert "本人画面プレビュー（操作はできません）" in text
+    assert "現在地" in text
+    assert "今日やること" in text
+    assert "今日の学習を始める" in text
+    assert "チャレンジする！" not in text
