@@ -19,7 +19,9 @@ def test_pc_demo_claims_are_sanitized():
         '合格まで あと <b>123</b>日 総合達成度</small>'
     )
     safe = _sale_safe_html(html)
-    assert "2000<em>問収録</em>" not in safe
+    assert "新規問題</small><b>900<em>問</em>" in safe
+    assert "過去問</small><b>1100<em>問</em>" in safe
+    assert "合計</small><b>2000<em>問収録</em>" in safe
     assert "1000<em>問</em>" not in safe
     assert "無料期間実施中！" not in safe
     assert "すべての機能を無料で体験できます。" not in safe
