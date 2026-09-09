@@ -47,11 +47,11 @@ def test_repair_confirmation_schedules_day3_not_day7():
     assert due["retention_checkpoint"] == "day3"
 
 
-def test_day3_day7_day30_successes_reach_stable():
+def test_day3_day7_then_one_month_successes_complete_retention_loop():
     repaired_at = NOW + timedelta(minutes=1)
     day3 = repaired_at + timedelta(days=3)
     day7 = repaired_at + timedelta(days=7)
-    day30 = repaired_at + timedelta(days=30)
+    one_month_after_day7 = day7 + timedelta(days=30)
 
     history = repaired_history()
     history.append(attempt("Q269", True, 1, day3))
@@ -63,28 +63,29 @@ def test_day3_day7_day30_successes_reach_stable():
 
     history.append(attempt("Q361", True, 1, day7))
     after_day7 = derive_knowledge_node_state(history, as_of=day7)
-    assert after_day7["state"] == "repaired"
+    assert after_day7["state"] == "stable"
     assert after_day7["retention_stage"] == "day7_passed"
     assert after_day7["retention_checkpoint"] == "day30"
-    assert after_day7["next_review_at"] == day30
+    assert after_day7["next_review_at"] == one_month_after_day7
 
-    history.append(attempt("Q269", True, 1, day30))
-    after_day30 = derive_knowledge_node_state(history, as_of=day30)
-    assert after_day30["state"] == "stable"
-    assert after_day30["retention_stage"] == "durable"
-    assert after_day30["retention_checkpoint"] is None
-    assert after_day30["next_review_at"] is None
+    history.append(attempt("Q269", True, 1, one_month_after_day7))
+    durable = derive_knowledge_node_state(history, as_of=one_month_after_day7)
+    assert durable["state"] == "stable"
+    assert durable["retention_stage"] == "durable"
+    assert durable["retention_checkpoint"] is None
+    assert durable["next_review_at"] is None
 
 
-def test_one_late_correct_cannot_skip_multiple_retention_checkpoints():
+def test_late_first_retention_check_uses_day7_horizon_without_fake_backlog():
     repaired_at = NOW + timedelta(minutes=1)
-    late = repaired_at + timedelta(days=31)
+    late = repaired_at + timedelta(days=8)
     history = repaired_history() + [attempt("Q269", True, 1, late)]
 
     result = derive_knowledge_node_state(history, as_of=late)
-    assert result["state"] == "recheck_due"
-    assert result["retention_stage"] == "day3_passed"
-    assert result["retention_checkpoint"] == "day7"
+    assert result["state"] == "stable"
+    assert result["retention_stage"] == "day7_passed"
+    assert result["retention_checkpoint"] == "day30"
+    assert result["next_review_at"] == late + timedelta(days=30)
 
 
 def test_wrong_at_retention_checkpoint_starts_new_repair_cycle():
