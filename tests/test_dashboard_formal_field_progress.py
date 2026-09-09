@@ -41,8 +41,8 @@ def test_learner_navigation_enables_formal_field_progress_without_preview_flag(m
     assert dashboard["learner_navigation_enabled"] is True
     assert dashboard["field_progress_ui_enabled"] is True
     assert dashboard["field_progress_fields"]
-    assert all("progress_percent" in field for field in dashboard["field_progress_fields"])
-    assert all("accuracy_label" in field for field in dashboard["field_progress_fields"])
+    assert all("progress_display" in field for field in dashboard["field_progress_fields"])
+    assert all("accuracy_display" in field for field in dashboard["field_progress_fields"])
     _clear_local_history()
 
 
