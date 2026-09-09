@@ -49,6 +49,8 @@ def test_q2000_final_quality_ci_probe():
     qmap = {r["id"]: r for r in questions}
     amap = {r["id"]: r for r in answers}
     emap = {r["id"]: r for r in explanations}
+    tmap = {r["id"]: r for r in tags}
+    nmap = {str(r.get("knowledge_node_id")): r for r in nodes if r.get("knowledge_node_id")}
 
     normalized = defaultdict(list)
     editorial = defaultdict(list)
@@ -79,6 +81,35 @@ def test_q2000_final_quality_ci_probe():
     if exact:
         blockers.append({"type": "exact_duplicate_stems", "groups": exact})
 
+    duplicate_details = []
+    for group in exact:
+        items = []
+        for qid in group:
+            q = qmap[qid]
+            a = amap[qid]
+            t = tmap[qid]
+            nid = str(t.get("knowledge_node_id") or "")
+            node = nmap.get(nid, {})
+            items.append({
+                "id": qid,
+                "management_code": q.get("management_code"),
+                "source": q.get("source"),
+                "question_text": _stem(q),
+                "choices": q.get("choices") or q.get("options"),
+                "exam": q.get("exam"),
+                "answer": a.get("display_answer") or a.get("answer") or a.get("correct_answer"),
+                "answer_basis": a.get("answer_basis"),
+                "category_small": q.get("category_small"),
+                "task": t.get("task"),
+                "primary_ability": t.get("primary_ability"),
+                "level": t.get("level"),
+                "safety": t.get("safety"),
+                "knowledge_node_id": nid,
+                "node_label": node.get("label"),
+                "node_question_ids": node.get("question_ids"),
+            })
+        duplicate_details.append(items)
+
     by_category = defaultdict(list)
     for qid, q in qmap.items():
         n = _norm(_stem(q))
@@ -100,7 +131,7 @@ def test_q2000_final_quality_ci_probe():
                     near.append({"q1": q1, "q2": q2, "category": category, "similarity": round(score, 4)})
     near.sort(key=lambda x: x["similarity"], reverse=True)
 
-    node_ids = {str(n.get("knowledge_node_id")) for n in nodes if n.get("knowledge_node_id")}
+    node_ids = set(nmap)
     tag_node_ids = {str(t.get("knowledge_node_id")) for t in tags if t.get("knowledge_node_id")}
     if tag_node_ids - node_ids:
         blockers.append({"type": "tag_node_reference_missing", "nodes": sorted(tag_node_ids - node_ids)})
@@ -125,9 +156,9 @@ def test_q2000_final_quality_ci_probe():
         "blockers": blockers,
         "editorial_counts": {k: len(v) for k, v in editorial.items()},
         "near_duplicate_count": len(near),
-        "top_near_duplicate_candidates": near[:100],
         "duplicate_node_label_count": len(duplicate_node_labels),
         "duplicate_node_label_candidates": duplicate_node_labels[:100],
     }
     print("Q2000_FINAL_QUALITY=" + json.dumps(summary, ensure_ascii=False, sort_keys=True))
+    print("Q2000_EXACT_DUPLICATE_DETAILS=" + json.dumps(duplicate_details, ensure_ascii=False, sort_keys=True))
     assert blockers == []
