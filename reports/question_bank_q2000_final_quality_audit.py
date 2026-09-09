@@ -37,7 +37,6 @@ def choice_keys(q: dict) -> set[str]:
     if isinstance(choices, dict):
         return {str(k) for k in choices}
     if isinstance(choices, list):
-        # Formal bank is five-choice. Support both raw strings and keyed objects.
         keys = set()
         for idx, item in enumerate(choices, 1):
             if isinstance(item, dict):
@@ -47,6 +46,28 @@ def choice_keys(q: dict) -> set[str]:
             keys.add(str(key))
         return keys
     return set()
+
+
+def choice_signature(q: dict) -> tuple[str, ...]:
+    """Normalized ordered choice text for true item-level duplicate detection.
+
+    Repeated generic past-exam stems are not duplicates when their choice sets test
+    materially different facts. A blocker requires the same normalized stem and the
+    same normalized ordered choices.
+    """
+    choices = q.get("choices") or q.get("options") or []
+    if isinstance(choices, dict):
+        def order_key(item):
+            key = str(item[0])
+            return (0, int(key)) if key.isdigit() else (1, key)
+        return tuple(norm_text(v) for _, v in sorted(choices.items(), key=order_key))
+    if isinstance(choices, list):
+        out = []
+        for item in choices:
+            value = item.get("text") if isinstance(item, dict) else item
+            out.append(norm_text(value))
+        return tuple(out)
+    return ()
 
 
 def accepted_sets(a: dict) -> list[list[str]]:
@@ -86,7 +107,6 @@ def main() -> int:
     blockers: list[dict] = []
     review: dict[str, list] = defaultdict(list)
 
-    # Fundamental store integrity.
     for name, store_ids in ids.items():
         c = Counter(store_ids)
         dups = sorted(k for k, v in c.items() if k and v > 1)
@@ -114,15 +134,14 @@ def main() -> int:
     emap = {r["id"]: r for r in explanations}
     tmap = {r["id"]: r for r in tags}
 
-    # Distributions requested for the final cross-sectional audit.
     distributions = {}
     for field in ("category_small", "category_large", "source"):
         distributions[field] = dict(sorted(Counter(str(q.get(field)) for q in questions).items()))
     for field in ("task", "level", "safety", "primary_ability", "secondary_ability"):
         distributions[field] = dict(sorted(Counter(str(t.get(field)) for t in tags).items()))
 
-    # Answer / explanation / stem quality heuristics.
     normalized_to_ids = defaultdict(list)
+    item_signature_to_ids = defaultdict(list)
     for qid in expected:
         q = qmap[qid]
         a = amap[qid]
@@ -130,6 +149,7 @@ def main() -> int:
         stem = get_stem(q).strip()
         norm = norm_text(stem)
         normalized_to_ids[norm].append(qid)
+        item_signature_to_ids[(norm, choice_signature(q))].append(qid)
         keys = choice_keys(q)
         sets = accepted_sets(a)
         if not stem:
@@ -144,8 +164,6 @@ def main() -> int:
             blockers.append({"type": "answer_missing", "id": qid})
         elif keys:
             invalid = sorted({x for s in sets for x in s if x not in keys})
-            # Formal choices may be numbered while old records use A-E; only block when
-            # no accepted value can be mapped to the actual choice set.
             if invalid and all(not set(s).intersection(keys) for s in sets):
                 blockers.append({"type": "answer_outside_choices", "id": qid, "answer_sets": sets, "choice_keys": sorted(keys)})
         explanation = str(e.get("explanation") or "").strip()
@@ -158,16 +176,31 @@ def main() -> int:
             blockers.append({"type": "choice_explanations_missing", "id": qid})
         elif keys:
             missing_ce = sorted(k for k in keys if k not in {str(x) for x in ce})
-            # Keep as editorial review because legacy records can use A-E vs 1-5 keys.
             if missing_ce:
                 review["choice_explanation_key_mismatch"].append({"id": qid, "missing": missing_ce})
 
-    exact_dups = [sorted(v, key=lambda x: int(x[1:])) for k, v in normalized_to_ids.items() if k and len(v) > 1]
-    if exact_dups:
-        blockers.append({"type": "exact_duplicate_stems", "groups": exact_dups})
+    same_stem_groups = [
+        sorted(v, key=lambda x: int(x[1:]))
+        for k, v in normalized_to_ids.items()
+        if k and len(v) > 1
+    ]
+    true_item_duplicates = [
+        sorted(v, key=lambda x: int(x[1:]))
+        for (stem, choices), v in item_signature_to_ids.items()
+        if stem and choices and len(v) > 1
+    ]
+    true_item_duplicates.sort(key=lambda group: int(group[0][1:]))
+    if true_item_duplicates:
+        blockers.append({"type": "exact_duplicate_items", "groups": true_item_duplicates})
 
-    # High-similarity candidates. Compare within category only and use a length gate;
-    # these are sampling targets, not automatic failures.
+    same_stem_different_choices = []
+    for group in same_stem_groups:
+        if any(set(group).issubset(set(dup)) for dup in true_item_duplicates):
+            continue
+        same_stem_different_choices.append(group)
+    if same_stem_different_choices:
+        review["same_stem_different_choices"] = same_stem_different_choices
+
     by_category = defaultdict(list)
     for qid, q in qmap.items():
         n = norm_text(get_stem(q))
@@ -191,7 +224,6 @@ def main() -> int:
     near.sort(key=lambda x: x["similarity"], reverse=True)
     review["near_duplicate_candidates"] = near[:100]
 
-    # Knowledge Node cross-checks.
     node_ids = {str(n.get("knowledge_node_id")) for n in nodes if n.get("knowledge_node_id")}
     tag_node_ids = {str(t.get("knowledge_node_id")) for t in tags if t.get("knowledge_node_id")}
     missing_nodes = sorted(tag_node_ids - node_ids)
@@ -241,6 +273,7 @@ def main() -> int:
         "interpretation": {
             "blockers": "must be zero before PT bank is treated as structurally final",
             "review_candidates": "heuristic sampling targets; human/medical review decides whether changes are required",
+            "duplicate_policy": "same normalized past-exam stem is review-only when choices differ; same normalized stem plus same ordered choices is an item-level duplicate blocker",
         },
     }
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -249,6 +282,7 @@ def main() -> int:
         "bank_version": report["bank_version"],
         "question_count": report["question_count"],
         "blocker_count": report["blocker_count"],
+        "blockers": report["blockers"],
         "distributions": report["distributions"],
         "knowledge_nodes": report["knowledge_nodes"],
         "review_candidate_counts": report["review_candidate_counts"],
