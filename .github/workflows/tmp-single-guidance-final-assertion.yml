@@ -1,0 +1,36 @@
+name: temporary single guidance final assertion
+
+on:
+  push:
+    branches:
+      - work/dashboard-single-guidance-authority-v02
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/dashboard-single-guidance-authority-v02
+          fetch-depth: 0
+      - name: Update final stale learner assertion
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('tests/test_goukaku_ui.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''    assert "チャレンジする！" in home_text\n    assert 'data-recommendation-start-url="/goukaku-no-michi/recommendation/start"' in home_text\n    assert f'data-dashboard-token="{token}"' in home_text\n    assert 'data-recommendation-field="解剖学"' in home_text\n    assert 'data-recommendation-count="10"' in home_text\n    assert 'data-recommendation-line-command="今日のおすすめ学習：解剖学：10問"' in home_text\n    assert 'data-line-message="今日のおすすめ学習：解剖学：10問"' not in home_text\n'''
+          new = '''    assert "チャレンジする！" not in home_text\n    assert 'data-recommendation-start-url="/goukaku-no-michi/recommendation/start"' in home_text\n    assert f'data-dashboard-token="{token}"' in home_text\n    assert 'data-recommendation-field="解剖学"' in home_text\n    assert 'data-recommendation-count="10"' in home_text\n    assert 'data-recommendation-source="learner_navigation"' in home_text\n    assert 'data-line-message="今日のおすすめ学習：解剖学：10問"' not in home_text\n'''
+          if old not in text:
+              raise SystemExit('target block not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+          git config user.name "LicenseTown CI"
+          git config user.email "licensetown.support@gmail.com"
+          git add tests/test_goukaku_ui.py
+          git commit -m "Align final dashboard test with learner navigation"
+          git push origin HEAD:work/dashboard-single-guidance-authority-v02
