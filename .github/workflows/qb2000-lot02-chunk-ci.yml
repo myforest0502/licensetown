@@ -1,0 +1,32 @@
+name: qb2000-lot02-chunk-ci
+
+on:
+  pull_request:
+
+jobs:
+  validate-chunks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install pytest
+        run: python -m pip install pytest
+      - name: Validate completed chunks
+        run: |
+          python -m reports.question_bank_2000_lot02_chunk_validate 1
+          python -m reports.question_bank_2000_lot02_similarity_audit 1
+          python -m reports.question_bank_2000_lot02_chunk_validate 2
+          python -m reports.question_bank_2000_lot02_similarity_audit 2
+          python -m pytest -q tests/test_question_bank_2000_lot02_chunk_validator.py tests/test_question_bank_2000_lot02_target_allocation.py
+      - name: Upload similarity audits
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qb2000-lot02-chunks01-02-audit
+          if-no-files-found: warn
+          path: reports/question_bank_2000_lot02_similarity_audits/*.json
