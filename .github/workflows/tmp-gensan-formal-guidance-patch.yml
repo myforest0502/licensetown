@@ -1,0 +1,44 @@
+name: temporary gensan formal guidance patch
+
+on:
+  push:
+    branches:
+      - work/dashboard-gensan-formal-guidance-v02
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/dashboard-gensan-formal-guidance-v02
+          fetch-depth: 0
+      - name: Align Gen-san with formal learner navigation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('goukaku_ui.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''        dashboard.update(get_reward_progress(dashboard["total_answers"]))\n        dashboard["gensan_comment"] = build_gensan_comment(\n            dashboard["total_answers"],\n            fields,\n            dashboard["weak_fields"],\n            dashboard["recommended_study"],\n            dashboard["streak_days"],\n            dashboard["today_progress"],\n        )\n'''
+          new = '''        dashboard.update(get_reward_progress(dashboard["total_answers"]))\n        gensan_recommended_study = dashboard["recommended_study"]\n        if dashboard["learner_navigation_enabled"]:\n            formal_action = (dashboard["learner_navigation"] or {}).get("today_action") or {}\n            if formal_action.get("field"):\n                gensan_recommended_study = [(\n                    formal_action["field"],\n                    int(formal_action.get("count") or 5),\n                )]\n        dashboard["gensan_comment"] = build_gensan_comment(\n            dashboard["total_answers"],\n            fields,\n            dashboard["weak_fields"],\n            gensan_recommended_study,\n            dashboard["streak_days"],\n            dashboard["today_progress"],\n        )\n'''
+          if old not in text:
+              raise SystemExit('goukaku_ui target block not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          test_path = Path('tests/test_learner_goukaku_navigation_ui.py')
+          tests = test_path.read_text(encoding='utf-8')
+          marker = 'def test_gensan_uses_formal_navigation_target_when_learner_navigation_is_enabled'
+          if marker not in tests:
+              tests += '''\n\ndef test_gensan_uses_formal_navigation_target_when_learner_navigation_is_enabled(monkeypatch):\n    captured = {}\n    monkeypatch.setattr(\n        goukaku_ui,\n        "build_learner_navigation_from_formal_inputs",\n        lambda *args, **kwargs: _navigation(),\n    )\n\n    def fake_gensan(total_answers, fields, weak_fields, recommended_study, *args):\n        captured["recommended_study"] = recommended_study\n        return "formal navigation aligned"\n\n    monkeypatch.setattr(goukaku_ui, "build_gensan_comment", fake_gensan)\n\n    dashboard = goukaku_ui.build_dashboard(\n        "gensan-formal-navigation-user",\n        include_learner_navigation=True,\n    )\n\n    assert dashboard["learner_navigation_enabled"] is True\n    assert dashboard["gensan_comment"] == "formal navigation aligned"\n    assert captured["recommended_study"] == [("神経医学", 10)]\n'''
+              test_path.write_text(tests, encoding='utf-8')
+          PY
+          git config user.name "LicenseTown CI"
+          git config user.email "licensetown.support@gmail.com"
+          git add goukaku_ui.py tests/test_learner_goukaku_navigation_ui.py
+          git commit -m "Align Gen-san with formal learner guidance"
+          git push origin HEAD:work/dashboard-gensan-formal-guidance-v02
