@@ -34,50 +34,66 @@ Legacy learning summary/activity data remains useful for factual counters such a
 | 平均正答率 | saved dashboard summary | FACTUAL AGGREGATE | RETAIN |
 | 連続学習日数 | saved activity aggregate | FACTUAL AGGREGATE | RETAIN |
 | 分野別 到達度 | formal only when `ENABLE_FIELD_PROGRESS_UI` is enabled; otherwise legacy field accuracy list | MIXED / FLAGGED | FORMALIZE |
-| lower-page 優先課題 TOP3 (`dashboard.weak_fields`) | `build_learning_guidance(...)` legacy path | LEGACY INTERPRETATION | REPLACE/DEMOTE; duplicates formal TOP3 |
-| lower-page 今日のおすすめ学習 (`dashboard.recommended_study`) | `build_learning_guidance(...)` legacy path | LEGACY INTERPRETATION | REPLACE with formal today action; currently duplicate authority |
+| lower-page 優先課題 TOP3 (`dashboard.weak_fields`) | `build_learning_guidance(...)` legacy path | LEGACY INTERPRETATION | HIDE on formal learner page; retain fallback data for legacy callers |
+| lower-page 今日のおすすめ学習 (`dashboard.recommended_study`) | `build_learning_guidance(...)` legacy path | LEGACY INTERPRETATION | HIDE on formal learner page; retain fallback data for legacy callers |
 | 源さんの一言 | `build_gensan_comment(...)` using legacy fields/weak/recommended inputs | LEGACY/MIXED PRESENTATION | KEEP temporarily; later make formal-input aware |
 | reward/milestone progress | saved answer-count reward calculation | FACTUAL/GAMIFICATION | RETAIN |
 
 ## Main inconsistency found
 
-The page currently contains **two recommendation systems at once**:
+The page originally contained **two recommendation systems at once**:
 
 1. top learner-navigation block: formal evidence and strategy intent;
 2. lower `優先課題 TOP3` + `今日のおすすめ学習`: legacy `build_learning_guidance` output.
 
-This can show different fields or different reasons on one page. The top formal CTA already carries field, question count, learning intent and reason code into the recommendation-start endpoint, so the lower legacy recommendation is no longer needed as an independent authority.
+This could show different fields or different reasons on one page. The top formal CTA already carries field, question count, learning intent and reason code into the recommendation-start endpoint, so the lower legacy recommendation is not needed as an independent authority.
+
+## Consolidation v0.1 implemented on `work/dashboard-formal-consolidation-v01`
+
+The learner-page layout now detects the formal `.learner-navigation` block and, only when that formal block exists:
+
+- removes the lower legacy `.weak-card`;
+- removes the lower legacy `.recommend-card`;
+- preserves factual counters, source data and legacy fallback structures in Python;
+- leaves supporter/read-only/legacy contexts unchanged because the DOM change is conditional on formal learner navigation;
+- if formal field-progress rows are not present yet, relabels the old subject percentage section from `分野別 到達度` to **`分野別 正答率（参考）`** so accuracy is not presented as formal attainment.
+
+This is deliberately a small source-authority fix rather than a dashboard redesign.
 
 ## Field-progress inconsistency
 
-`include_learner_navigation=True` forces formal overall-progress presentation, but **does not force formal field-progress UI**. Field-level display still depends on `ENABLE_FIELD_PROGRESS_UI`.
+`include_learner_navigation=True` forces formal overall-progress presentation, but **does not yet force formal field-progress UI**. Field-level display still depends on `ENABLE_FIELD_PROGRESS_UI`.
 
-Therefore a learner can currently see:
+Until that backend activation is completed, the learner page no longer calls legacy per-field accuracy `到達度`; it is explicitly shown as reference accuracy only.
+
+Target end state remains:
 - formal overall progress based on coverage/state evidence;
-- legacy per-field accuracy bars labeled as `分野別 到達度` when the field-progress flag is off.
+- formal per-field progress based on the same evidence;
+- accuracy shown separately as accuracy.
 
-That is semantically inconsistent. Accuracy is useful, but it is not the same thing as formal field progress.
+## Recommended minimal consolidation v0.2
 
-## Recommended minimal consolidation v0.1
+1. Make formal field-progress presentation active on the signed learner route without silently changing supporter/read-only legacy behavior.
+2. Keep ordinary accuracy visible as a sub-metric.
+3. Preserve factual counters (answers/time/accuracy/streak); they are not competing strategy authorities.
+4. Do not promote Phase11 merely because the dashboard uses formal navigation. Learner-facing strategy remains constrained by the existing promotion/feature-gate contract where applicable.
+5. Keep `build_learning_guidance` available for legacy/supporter compatibility until every caller is mapped; do not delete it yet.
 
-Do not redesign the whole dashboard at once.
+## Acceptance criteria
 
-1. When `learner_navigation_enabled=True`, make formal field-progress presentation active as well. Keep ordinary accuracy visible as a sub-metric.
-2. Replace the lower legacy `優先課題 TOP3` content with the same formal `attention_items` already used by learner navigation, or hide the duplicate lower block. Prefer one recommendation authority.
-3. Replace lower `今日のおすすめ学習` with `learner_navigation.today_action` when formal navigation exists. Legacy recommendation remains fallback only for non-formal/read-only legacy contexts.
-4. Preserve factual counters (answers/time/accuracy/streak); they are not competing strategy authorities.
-5. Do not promote Phase11 merely because the dashboard uses formal navigation. Learner-facing strategy remains constrained by the existing promotion/feature-gate contract where applicable.
-6. Keep `build_learning_guidance` available for legacy/supporter compatibility until every caller is mapped; do not delete it in this first change.
-
-## Acceptance criteria for consolidation change
-
+### v0.1
 - Learner page never displays two conflicting recommended fields from formal and legacy systems.
-- `分野別 到達度` on the learner page uses formal field-progress calculation, with accuracy clearly shown only as accuracy.
+- Legacy field accuracy is not mislabeled as formal attainment.
 - Existing factual counters remain unchanged.
 - Existing authentication and recommendation-start behavior remain unchanged.
-- Supporter/read-only pages are not silently changed unless explicitly covered by tests.
+- Supporter/read-only pages are not silently changed.
+- Full regression suite remains green.
+
+### final dashboard consolidation
+- `分野別 到達度` on the learner page uses formal field-progress calculation, with accuracy clearly shown only as accuracy.
+- One formal recommendation/priority authority remains learner-facing.
 - Full regression suite remains green.
 
 ## Next implementation step
 
-Create a small learner-page-only consolidation change on `work/dashboard-formal-consolidation-v01`, add regression tests for source authority, run targeted dashboard tests, then full CI before any safe-branch integration.
+After v0.1 CI is green, integrate it into `work/pt-finalization-post-q2000`, then complete the small backend learner-route-only formal field-progress activation as v0.2.
