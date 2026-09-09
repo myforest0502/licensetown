@@ -32,7 +32,8 @@ def test_goukaku_home_renders(monkeypatch):
     assert "今日のおすすめ学習" in text
     assert "おすすめ進捗" in text
     assert "（暫定）" in text
-    assert "まだデータがありません。勉強するとここに表示されます＾＾" in text
+    assert "field-progress-row" in text
+    assert "正答率" in text
     assert "2027/02/20" in text
     assert ">0<small>問</small>" in text
     assert "data-line-message=\"相談する\"" in text

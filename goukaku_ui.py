@@ -324,7 +324,7 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
             evidence = build_field_evidence(attempts)
         if field_preview or overall_preview or shadow_preview or include_learner_navigation:
             progress = build_field_progress(evidence)
-        if field_preview:
+        if field_preview or include_learner_navigation:
             dashboard["field_progress_ui_enabled"] = True
             dashboard["field_progress_fields"] = build_field_progress_presentation_from_calculation(
                 evidence, progress, legacy_fields=fields
