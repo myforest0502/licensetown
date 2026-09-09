@@ -8,14 +8,22 @@ def test_approved_layout_assets_are_loaded_last():
     assert base.rfind("dashboard-approved-layout-v01.js") > base.rfind("dashboard-product-copy-v01.js")
 
 
-def test_route_is_promoted_immediately_after_top_summary():
+def test_top_half_matches_reference_hierarchy():
     js = Path("static/goukaku/dashboard-approved-layout-v01.js").read_text(encoding="utf-8")
-    assert "overallCard?.insertAdjacentElement('afterend', routeCard)" in js
-    assert "routeCard?.insertAdjacentElement('afterend', learnerNavigation)" in js
+    css = Path("static/goukaku/dashboard-approved-layout-v01.css").read_text(encoding="utf-8")
+    assert "dashboard-reference-top-split" in js
+    assert "move(topLeft, dateCard)" in js
+    assert "move(topLeft, attentionCard)" in js
+    assert "move(topRight, overallCard)" in js
+    assert "move(top, summaryGrid)" in js
+    assert "move(top, learnerNavigation)" in js
+    assert "move(top, routeCard)" in js
+    assert "grid-template-columns:minmax(0,58%) minmax(0,42%)" in css
 
 
-def test_all_paid_dashboard_sections_are_preserved_and_distributed():
+def test_lower_half_matches_reference_grid_and_preserves_every_card():
     js = Path("static/goukaku/dashboard-approved-layout-v01.js").read_text(encoding="utf-8")
+    css = Path("static/goukaku/dashboard-approved-layout-v01.css").read_text(encoding="utf-8")
     required = [
         ".subject-card",
         ".strategy-note-card",
@@ -30,6 +38,16 @@ def test_all_paid_dashboard_sections_are_preserved_and_distributed():
     ]
     for selector in required:
         assert selector in js
+    for area in [
+        '"subjects gensan"',
+        '"subjects knowledge"',
+        '"subjects profile"',
+        '"subjects retention"',
+        '"strategy weekly"',
+        '"position weekly"',
+        '"footprints checkpoint"',
+    ]:
+        assert area in css
 
 
 def test_formal_gensan_asset_is_reasserted():
