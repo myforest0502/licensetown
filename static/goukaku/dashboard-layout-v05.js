@@ -12,6 +12,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!grid || !subjectCard || !guidanceStack) return;
 
+  // The signed learner page already has a formal learner-navigation block built
+  // from question_attempts -> derived Node state. When that block exists, do
+  // not leave the legacy weakness/recommendation cards on screen as a second
+  // competing decision authority.
+  if (learnerNavigation) {
+    const legacyWeakCard = guidanceStack.querySelector('.weak-card');
+    const legacyRecommendCard = guidanceStack.querySelector('.recommend-card');
+    if (legacyWeakCard) legacyWeakCard.remove();
+    if (legacyRecommendCard) legacyRecommendCard.remove();
+
+    // Until the backend formally enables field-progress presentation on this
+    // route, the old subject rows are factual accuracy summaries only. Do not
+    // label them as formal attainment.
+    if (!subjectCard.querySelector('.field-progress-list')) {
+      const subjectHeading = subjectCard.querySelector('.section-title h2');
+      if (subjectHeading) subjectHeading.textContent = '分野別 正答率（参考）';
+    }
+  }
+
   const story = document.createElement('section');
   story.className = 'dashboard-story-layout';
 
