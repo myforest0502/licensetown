@@ -1,40 +1,134 @@
-.dashboard-grid.dashboard-approved-layout{
+.dashboard-grid.dashboard-reference-layout{
+  display:block;
+}
+.dashboard-reference-top,
+.dashboard-reference-lower{
+  width:100%;
+  min-width:0;
+  box-sizing:border-box;
+}
+.dashboard-reference-top{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.dashboard-reference-top-split{
+  display:grid;
+  grid-template-columns:minmax(0,58%) minmax(0,42%);
+  gap:16px;
+  align-items:stretch;
+}
+.dashboard-reference-top-left,
+.dashboard-reference-top-right{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.dashboard-reference-top-left>.date-card,
+.dashboard-reference-top-left>.learner-attention-card,
+.dashboard-reference-top-right>.overall-progress-preview,
+.dashboard-reference-top-right>.card.achievement,
+.dashboard-reference-top>.summary-grid,
+.dashboard-reference-top>.learner-navigation,
+.dashboard-reference-top>.lt-exam-plan-card{
+  width:100%;
+  min-width:0;
+  margin:0!important;
+  box-sizing:border-box;
+}
+.dashboard-reference-top-right>.overall-progress-preview,
+.dashboard-reference-top-right>.card.achievement{
+  flex:1 1 auto;
+  height:100%;
+}
+.dashboard-reference-top>.learner-navigation{
   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  align-items:start;
 }
-.dashboard-approved-layout>.date-card{grid-column:1;grid-row:auto;min-width:0;margin:0}
-.dashboard-approved-layout>.overall-progress-preview,
-.dashboard-approved-layout>.card.achievement{grid-column:2;grid-row:auto;min-width:0;margin:0}
-.dashboard-approved-layout>.lt-exam-plan-card,
-.dashboard-approved-layout>.learner-navigation,
-.dashboard-approved-layout>.summary-grid,
-.dashboard-approved-layout>.dashboard-story-layout{grid-column:1/-1;width:100%;min-width:0;margin-left:0;margin-right:0}
-.dashboard-approved-layout>.lt-exam-plan-card{margin-top:0}
-.dashboard-approved-layout>.dashboard-story-layout{align-items:start}
-.dashboard-approved-layout .dashboard-story-left,
-.dashboard-approved-layout .dashboard-story-right,
-.dashboard-approved-layout .guidance-stack{min-width:0;align-content:start}
-.dashboard-approved-layout .dashboard-story-left,
-.dashboard-approved-layout .guidance-stack{display:flex;flex-direction:column;gap:16px}
-.dashboard-approved-layout .dashboard-story-left>* ,
-.dashboard-approved-layout .guidance-stack>*{width:100%;min-width:0;margin:0!important;box-sizing:border-box}
-.dashboard-approved-layout .gensan-card img{object-fit:contain;object-position:center;flex:0 0 auto}
-.dashboard-approved-layout .footprint-card,
-.dashboard-approved-layout .next-check-card{align-self:stretch}
-@media (min-width:1001px){
-  .dashboard-approved-layout>.date-card,
-  .dashboard-approved-layout>.overall-progress-preview{height:100%}
-  .dashboard-approved-layout .dashboard-story-layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.dashboard-reference-top>.learner-navigation>.learner-current-card{
+  grid-column:1/-1;
 }
+.dashboard-reference-top>.learner-navigation>.learner-today-card{
+  grid-column:1;
+}
+.dashboard-reference-top>.learner-navigation>.learner-nav-details{
+  grid-column:2;
+}
+.dashboard-reference-top>.lt-exam-plan-card{
+  margin-top:0!important;
+}
+
+.dashboard-reference-lower{
+  margin-top:16px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  grid-template-areas:
+    "subjects gensan"
+    "subjects knowledge"
+    "subjects profile"
+    "subjects retention"
+    "strategy weekly"
+    "position weekly"
+    "footprints checkpoint";
+  gap:16px 18px;
+  align-items:stretch;
+}
+.dashboard-reference-lower>*{
+  width:100%;
+  min-width:0;
+  margin:0!important;
+  box-sizing:border-box;
+}
+.dashboard-reference-lower>.subject-card{grid-area:subjects}
+.dashboard-reference-lower>.gensan-card{grid-area:gensan}
+.dashboard-reference-lower>.knowledge-state-card{grid-area:knowledge}
+.dashboard-reference-lower>.study-profile-card{grid-area:profile}
+.dashboard-reference-lower>.state-progress-card{grid-area:retention}
+.dashboard-reference-lower>.strategy-note-card{grid-area:strategy}
+.dashboard-reference-lower>.weekly-learning-card{grid-area:weekly}
+.dashboard-reference-lower>.learning-position-card{grid-area:position}
+.dashboard-reference-lower>.footprint-card{grid-area:footprints}
+.dashboard-reference-lower>.next-check-card{grid-area:checkpoint}
+.dashboard-reference-lower>.gensan-card img{
+  object-fit:contain;
+  object-position:center;
+  flex:0 0 auto;
+}
+.dashboard-reference-lower>.footprint-card,
+.dashboard-reference-lower>.next-check-card{
+  align-self:stretch;
+}
+
 @media (max-width:1000px){
-  .dashboard-grid.dashboard-approved-layout{grid-template-columns:1fr}
-  .dashboard-approved-layout>.date-card,
-  .dashboard-approved-layout>.overall-progress-preview,
-  .dashboard-approved-layout>.card.achievement,
-  .dashboard-approved-layout>.lt-exam-plan-card,
-  .dashboard-approved-layout>.learner-navigation,
-  .dashboard-approved-layout>.summary-grid,
-  .dashboard-approved-layout>.dashboard-story-layout{grid-column:1;width:100%}
-  .dashboard-approved-layout .dashboard-story-left,
-  .dashboard-approved-layout .guidance-stack{gap:12px}
+  .dashboard-reference-top{gap:12px}
+  .dashboard-reference-top-split{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+  .dashboard-reference-top-left,
+  .dashboard-reference-top-right{gap:12px}
+  .dashboard-reference-top>.learner-navigation{
+    grid-template-columns:1fr;
+  }
+  .dashboard-reference-top>.learner-navigation>.learner-current-card,
+  .dashboard-reference-top>.learner-navigation>.learner-today-card,
+  .dashboard-reference-top>.learner-navigation>.learner-nav-details{
+    grid-column:1;
+  }
+  .dashboard-reference-lower{
+    margin-top:12px;
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "subjects"
+      "gensan"
+      "knowledge"
+      "profile"
+      "retention"
+      "strategy"
+      "weekly"
+      "position"
+      "footprints"
+      "checkpoint";
+    gap:12px;
+  }
 }
