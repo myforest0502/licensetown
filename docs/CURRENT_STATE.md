@@ -65,6 +65,16 @@ The completion target is not perfection, complete long-term proof, or implementa
 - Corrective branch: `fix/dashboard-match-reference-halves-v01`. `dashboard-approved-layout-v01.js/css` is now a final deterministic override loaded last; desktop uses explicit top and lower grids, mobile remains one column.
 - Status: **real Production defect observed: YES / Boss reference supplied: YES / corrective code exists: YES / automated validation pending / Production deployed: NO / real-device acceptance: PENDING**.
 
+## 2026-09-09 Dashboard upper-reference lock
+
+- Boss supplied a new authoritative screenshot for the **upper half only** and explicitly froze the previously approved lower half. No independent layout judgement is allowed.
+- Upper desktop order is fixed to: left column `date-card -> 今日やること`, right column `合格への到達度`; then full-width `summary-grid`; then full-width `合格までの推奨ルート`; then full-width current/priority overview (`learner-current-card`).
+- The redundant source-only learner navigation remains in DOM for data/behavior but is not a visual layout authority; its visible `today` and `current` cards are moved into the approved positions.
+- Lower desktop composition is unchanged from the preceding Boss-approved screenshot and is treated as frozen: subjects / Gen-san / knowledge state / study profile / retention / LT strategy / weekly record / learning position / footprints / checkpoint.
+- Formal Gen-san production asset remains `static/images/characters/gensan_main.png`. Mobile remains one column.
+- Corrective branch: `fix/dashboard-upper-reference-only-v01`; asset cache version bumped to `20260909-v03`.
+- Status: **Boss upper reference supplied: YES / lower half frozen: YES / code exists: YES / automated validation pending / Production deployed: NO / real-device acceptance: PENDING**.
+
 ## Current completion contract — MAIN LINE ONLY
 
 Until PT v1.0 is accepted, do not drift into speculative polish or branch/leaf work.
