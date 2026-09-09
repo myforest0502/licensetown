@@ -2,141 +2,130 @@
 
 Scope: formal PT Question Bank `Q1-Q2000`, bank version `2026-09-b20`.
 
-Status: **OPEN — count/structure is complete; final quality acceptance has been narrowed to four true duplicate-item dispositions plus editorial/Node review candidates.**
+Status: **NEAR-CLOSE — structural blockers are resolved on the review branch; remaining work is acceptance sampling/documentation and final regression evidence.**
 
-This record is based on read-only CI audits against `qb2000-finish` plus read-only Production attempt-history cross-checks. No Production DB write, Render change, LINE change, or `main` mutation was performed.
+No Production DB write, Render change, LINE change, or `main` mutation was performed.
 
-## CI evidence
+## 1. Audit progression
 
-Temporary draft PR #276 runs a read-only final-quality probe against `qb2000-finish`. It is diagnostic only and must not be merged.
+The first read-only audit found:
+- 2000 questions / bank version `2026-09-b20`
+- 33 normalized same-stem groups
+- 72 near-duplicate candidates at normalized similarity >= 0.90 within the same category
+- 14 short-stem heuristic candidates
+- 3 short-explanation heuristic candidates
+- 2 duplicate raw Knowledge Node label groups
 
-### First pass — stem-only duplicate detector
+The original stem-only duplicate detector was too coarse because official MHLW exams reuse generic stems with different choice sets. The permanent audit was therefore refined so a true item-level duplicate requires:
 
-Run `34309025255`:
-- existing suite apart from the intentionally failing audit probe: **1198 passed, 6 skipped, 1 deselected, 125 subtests passed**
-- question count: 2000
-- bank version: `2026-09-b20`
-- normalized same-stem groups: 33
-- near-duplicate candidates (same category, normalized similarity >= 0.90): 72
-- duplicate normalized Knowledge Node label candidates: 2
-- editorial heuristics: stem-length candidates 14, explanation-length candidates 3
+`same normalized stem + same normalized ordered choices`
 
-Review of the 33 groups showed that all are MHLW past-exam records from different exam years. A repeated generic exam stem is not, by itself, a duplicate learning item when the choices test different facts. Therefore the original stem-only blocker semantics were too coarse.
+That reduced the real exact-item repeat set from 33 stem groups to four groups.
 
-### Refined pass — item-level duplicate detector
+## 2. Four exact official provenance repeats — RESOLVED on review branch
 
-Run `34309589005` refined duplicate identity to:
+All four groups are MHLW official items repeated in different exam years. They are preserved as immutable raw Q records but registered as one **derived learning-evidence identity**.
 
-`same normalized stem + same normalized ordered choice set`
+1. Q972 / Q1354 -> canonical evidence Q972 / `KN0962`
+2. Q1067 / Q1391 -> canonical evidence Q1067 / `KN1057`
+3. Q1230 / Q1526 -> canonical evidence Q1230 / `KN1215`
+4. Q1411 / Q1585 -> canonical evidence Q1411 / `KN1387`
 
-Result:
-- same-stem groups: **33**
-- same-stem but different-choice groups: **29** -> review-only, not blockers
-- true exact duplicate item groups: **4** -> blockers pending explicit disposition
-- existing suite apart from the intentionally failing audit probe: **1198 passed, 6 skipped, 1 deselected, 125 subtests passed**
+Formal master: `data/question_bank/question_equivalence_groups.json`.
 
-The permanent audit implementation on `work/pt-finalization-post-q2000` was updated to the same item-level semantics in commit `2a4403d188ddd0ea82572abbb1bcfba79ebcacfd`.
+Implemented semantics:
+- equivalent Q IDs can never become STRONG different-question repair evidence;
+- weakness evidence counts equivalent Q IDs as one question identity;
+- Recent Cooldown / exclude / same-session selection applies to the whole equivalence group;
+- raw Q IDs, official provenance, and Production attempt rows remain unchanged;
+- Q1411/Q1585 are reconciled only in **derived learning evidence**, because identical content was historically assigned to different raw Nodes.
 
-## Four true exact duplicate official-item groups
+Primary learner impact check:
+- Q972/Q1354/Q1067/Q1391/Q1230/Q1526/Q1411: no recorded attempts at review time;
+- Q1585: 4 attempts, all correct;
+- Q1585's historical raw Node `KN0659` also has Q667 attempts, but no raw history is rewritten.
 
-All four are repeated MHLW official items from different exam years. They must not be mechanically rewritten merely to make text unique.
+This avoids treating a repeated official item as independent understanding evidence while preserving historical identity.
 
-### 1. Q972 / Q1354
-- identical stem and identical five choices
-- identical official answer: `3・4`
-- Q972: 第56回 午前86
-- Q1354: 第59回 午後49
-- same canonical learning Node: `KN0962`
-- primary learner attempts: Q972=0, Q1354=0
+## 3. Same-stem / different-choice groups — REVIEWED AS NON-BLOCKERS
 
-### 2. Q1067 / Q1391
-- identical stem and identical five choices
-- identical official answer: `3`
-- Q1067: 第57回 午前41
-- Q1391: 第60回 午前27
-- same Node: `KN1057`
-- primary learner attempts: Q1067=0, Q1391=0
+The other 29 same-stem groups have materially different choice sets and are legitimate distinct official exam records. They must not be deleted merely because the exam stem is reused.
 
-### 3. Q1230 / Q1526
-- identical stem and identical five choices
-- identical official answer: `4`
-- Q1230: 第58回 午前91
-- Q1526: 第61回 午後42
-- same Node: `KN1215`
-- primary learner attempts: Q1230=0, Q1526=0
+Examples include recurring generic stems for SIAS, GMFM, ASIA, sympathetic actions, endocrine physiology, anatomy and pathology. Their distinct options test different facts.
 
-### 4. Q1411 / Q1585
-- identical stem and identical five choices
-- identical official answer: `3・4`
-- Q1411: 第60回 午前56
-- Q1585: 第49回 午前68
-- **currently assigned to different raw Nodes**:
-  - Q1411 -> `KN1387`: 下垂体後葉からはオキシトシンとバソプレシンが放出される
-  - Q1585 -> `KN0659`: バソプレシン（ADH）は視床下部で合成され、下垂体後葉から放出される
-- primary learner attempts: Q1411=0, Q1585=4/4 correct
+Disposition: **retain raw questions; review-only, not duplicate blockers.**
 
-The fourth pair is the highest-priority semantic issue because identical evidence can currently be represented as two different Node concepts.
+## 4. Near-duplicate sampling — no bulk rewrite justified
 
-## Same-stem / different-choice groups
+The highest-similarity non-exact sample was reviewed with stems, choices, answers, tags and explanations.
 
-The other 29 groups are **not automatically duplicates**. They preserve distinct official exam items whose generic stems recur while the choice sets test different facts. Many of these Q IDs have already been used in the primary learner's real history, so preserving Q-number/provenance is especially important.
+### Highly similar but acceptably distinct
+- Q1306 / Q855 — same AFO concept and same Node; very similar official questions. Retain. Same task/ability means they are not promoted to independent STRONG repair evidence merely from wording difference.
+- Q1575 / Q694 — same fracture-name knowledge and same Node; near-redundant official questions. Retain as provenance-distinct records.
+- Q949 / Q734 — same template but eye-muscle vs lower-limb nerve knowledge; clearly different content.
+- Q688 / Q1098 — both ASIA key muscles, but one is factual mapping while the other is broader assessment selection; different learning demand.
+- Q517/Q936 vs Q1192 — inner-foot lift vs outer-foot lift prosthetic alignment; opposite findings/causes, not duplicates.
+- Q1540 / Q891 — male reproductive system, but different facts and answer structures.
+- Q553 / Q611 — hip vs shoulder muscle action; template similarity only.
+- Q1489 / Q1392 — different basal-metabolism facts.
+- Q750 / Q616 — different disease/pathology combinations.
 
-Examples with both/all members already attempted include:
-- Q542 / Q1412 / Q1591: 7 attempts total
-- Q605 / Q815: 10 attempts total
-- Q617 / Q1225: 9 attempts total
-- Q1153 / Q1263: 8 attempts total
-- Q1261 / Q1358 / Q1535: 10 attempts total
+Disposition: **similarity >=0.90 remains a sampling trigger, not an automatic rewrite rule.** Current high-risk sample does not support bulk rewriting official items.
 
-These groups remain editorial/semantic review targets, not blocker-class duplicates.
+## 5. Editorial heuristics — sampled and accepted
 
-## Duplicate Knowledge Node label candidates
+### 14 short stems
+Examples such as `血液凝固因子はどれか。`, `発達評価はどれか。`, `錐体路徴候はどれか。`, `排便中枢はどれか。` are short because they are ordinary national-exam fact prompts. The options and explanations provide sufficient specificity.
 
-Two normalized label collisions remain:
+Q2000 itself (`排便中枢はどれか。`) has a substantive explanation identifying S2-S4 and the pelvic-nerve parasympathetic pathway.
+
+Disposition: **short stem alone is not a quality defect.**
+
+### 3 short global explanations
+- Q1434: 加齢で骨塩量は低下する。
+- Q1532: 三叉神経は橋外側から出る。
+- Q1576: 腸骨筋は大腿神経支配である。
+
+Each also has useful option-by-option rationale covering the distractors. Therefore the short summary explanation alone is not a blocker.
+
+Disposition: **accepted under the current explanation contract because option rationales are present and informative.**
+
+## 6. Duplicate Knowledge Node label review
 
 ### KN0597 / KN0807 — `交感神経の作用`
-Q605 and Q815 use the same generic stem with different choices and strongly overlapping concepts. This pair needs canonical/semantic review; simple label equality should not by itself decide the merge.
+This was already formally resolved before the Q2000 audit:
+- `KNC0001` is reviewed;
+- `KN0807` aliases to canonical `KN0597` in `knowledge_node_canonical_map.json`.
+
+Q605/Q815 are overlapping sympathetic-action fact questions; Q1960 extends the canonical concept into critical safety judgment. The raw duplicate labels are therefore **already one formal canonical Node**, not an unresolved duplicate.
+
+The audit has been corrected to report same-label raw Nodes that already canonicalize to one Node as informational rather than unresolved candidates.
 
 ### KN1142 / KN1252 — `筋と作用の組合せ`
-Q1155 tests facial/masticatory muscle actions while Q1268 tests lower-limb muscle actions. The identical label is too generic, but the concepts are not the same Node. Preferred disposition is more specific labeling, **not** an automatic merge.
+These are **not the same Node** despite identical generic labels:
+- Q1155 tests facial/masticatory muscle actions (e.g. frontalis, temporalis);
+- Q1268 tests lower-limb muscle actions (e.g. fibularis brevis, gracilis).
 
-## Learner-history preservation rule
+Disposition: **do not merge**. The label is overly generic and may be refined later for learner-facing clarity, but this is not evidence duplication and is not a structural blocker.
 
-Read-only Production inspection confirms that many repeated-stem Q IDs already have real attempt history. Therefore:
+## 7. CI evidence on the question-equivalence review branch
 
-1. Q-number remains immutable historical identity.
-2. Existing official past-exam records are not silently deleted or rewritten.
-3. A provenance repeat must not be counted as independent learning evidence merely because it has a different Q number.
-4. Any equivalence handling must preserve raw attempt history while canonicalizing only the evidence/selection interpretation.
+Draft PR #277 targets `work/pt-finalization-post-q2000` and remains non-Production.
 
-## Duplicate/equivalence implementation target
+Confirmed green full-suite runs include:
+- run `34310188257`: success
+- run `34310333706`: success
+- observed full-suite result: **1207 passed, 6 skipped, 1 deselected, 125 subtests passed**
 
-The preferred design is to retain all official exam records and formally register the four exact official provenance-repeat groups as **question-equivalence groups**.
+The temporary diagnostic PR #276 intentionally contains failing probes and must never be interpreted as an application regression or merged.
 
-Required semantics:
-- selector/cooldown treats equivalent Qs as the same evidence identity for recent/seen logic;
-- weakness evidence does not count two equivalent Q IDs as cross-question confirmation;
-- repair confirmation treats equivalent Q IDs as same-question evidence, never STRONG different-question evidence;
-- exact duplicate records remain traceable to both official exam years;
-- Q1411/Q1585 also requires Node-semantic reconciliation so identical content cannot independently influence two unrelated Node states.
+## 8. Completion contract remaining
 
-This is preferable to rewriting an official MHLW item or inventing replacement wording under an official Q ID.
+Before calling the Q2000 final-quality audit fully closed:
+1. confirm the latest audit/Node-canonicalization changes remain green in PR #277;
+2. record the final zero-blocker audit output;
+3. update `docs/CURRENT_STATE.md` with the accepted dispositions and final CI evidence;
+4. merge PR #277 only into the safe post-Q2000 working branch after green verification;
+5. close diagnostic PR #276 without merge.
 
-## Other review candidates
-
-- near-duplicate candidates at >=0.90 similarity: 72
-- stem-length heuristic candidates: 14
-- explanation-length heuristic candidates: 3
-
-These are sampling/review targets rather than automatic failures. Medical correctness and learning value decide disposition.
-
-## Current completion judgment
-
-`Q1-Q2000 / 2000` is a valid **count milestone**. The final bank is not yet accepted under the current completion contract because four true exact official-item repeats still need formal equivalence/Node disposition and the remaining review candidates need sampled closure.
-
-Next concrete work:
-1. formalize question-equivalence semantics for the four exact groups without changing Q identity;
-2. resolve Q1411/Q1585 Node semantics and the two duplicate-label Node candidates;
-3. inspect the highest-value near-duplicate/editorial candidates;
-4. re-run Question Bank validator, Node/selector/repair tests, final quality audit, and full regression suite;
-5. close temporary PR #276 after its evidence is fully captured; never merge it.
+No `main`, Render, LINE, or Production DB promotion is part of this closure step.
