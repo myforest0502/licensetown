@@ -1,0 +1,49 @@
+name: tmp-dashboard-upper-reference
+on:
+  push:
+    branches:
+      - fix/dashboard-upper-reference-only-v01
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/dashboard-upper-reference-only-v01
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Update CURRENT_STATE
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('docs/CURRENT_STATE.md')
+          s = p.read_text(encoding='utf-8')
+          marker = '## Current completion contract — MAIN LINE ONLY\n'
+          note = '''## 2026-09-09 Dashboard upper-reference lock\n\n- Boss supplied a new authoritative screenshot for the **upper half only** and explicitly froze the previously approved lower half. No independent layout judgement is allowed.\n- Upper desktop order is fixed to: left column `date-card -> 今日やること`, right column `合格への到達度`; then full-width `summary-grid`; then full-width `合格までの推奨ルート`; then full-width current/priority overview (`learner-current-card`).\n- The redundant source-only learner navigation remains in DOM for data/behavior but is not a visual layout authority; its visible `today` and `current` cards are moved into the approved positions.\n- Lower desktop composition is unchanged from the preceding Boss-approved screenshot and is treated as frozen: subjects / Gen-san / knowledge state / study profile / retention / LT strategy / weekly record / learning position / footprints / checkpoint.\n- Formal Gen-san production asset remains `static/images/characters/gensan_main.png`. Mobile remains one column.\n- Corrective branch: `fix/dashboard-upper-reference-only-v01`; asset cache version bumped to `20260909-v03`.\n- Status: **Boss upper reference supplied: YES / lower half frozen: YES / code exists: YES / automated validation pending / Production deployed: NO / real-device acceptance: PENDING**.\n\n'''
+          if note not in s:
+              if marker not in s:
+                  raise SystemExit('CURRENT_STATE marker missing')
+              s = s.replace(marker, note + marker, 1)
+              p.write_text(s, encoding='utf-8')
+          PY
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest
+      - name: Run focused tests
+        run: |
+          python -m pytest -q tests/test_dashboard_approved_layout.py tests/test_dashboard_blank_space_layout.py
+      - name: Run full tests
+        run: |
+          python -m pytest -q --deselect=tests/test_quiz_answer_numbering.py::ConfigurableQuizTest::test_runtime_loader_supports_current_utf16_and_candidate_utf8
+      - name: Commit state update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/CURRENT_STATE.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record dashboard upper-reference lock"
+          git push origin HEAD:fix/dashboard-upper-reference-only-v01
