@@ -352,3 +352,27 @@ def test_javascript_forces_structured_web_post_for_learner_navigation():
     assert "!structuredNavigation && await liffReady" in js
     assert "recommendationIntent" in js
     assert "recommendationReason" in js
+
+
+def test_gensan_uses_formal_navigation_target_when_learner_navigation_is_enabled(monkeypatch):
+    captured = {}
+    monkeypatch.setattr(
+        goukaku_ui,
+        "build_learner_navigation_from_formal_inputs",
+        lambda *args, **kwargs: _navigation(),
+    )
+
+    def fake_gensan(total_answers, fields, weak_fields, recommended_study, *args):
+        captured["recommended_study"] = recommended_study
+        return "formal navigation aligned"
+
+    monkeypatch.setattr(goukaku_ui, "build_gensan_comment", fake_gensan)
+
+    dashboard = goukaku_ui.build_dashboard(
+        "gensan-formal-navigation-user",
+        include_learner_navigation=True,
+    )
+
+    assert dashboard["learner_navigation_enabled"] is True
+    assert dashboard["gensan_comment"] == "formal navigation aligned"
+    assert captured["recommended_study"] == [("神経医学", 10)]

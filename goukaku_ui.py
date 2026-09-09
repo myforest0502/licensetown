@@ -390,11 +390,19 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
                 recommended_count,
             )
         dashboard.update(get_reward_progress(dashboard["total_answers"]))
+        gensan_recommended_study = dashboard["recommended_study"]
+        if dashboard["learner_navigation_enabled"]:
+            formal_action = (dashboard["learner_navigation"] or {}).get("today_action") or {}
+            if formal_action.get("field"):
+                gensan_recommended_study = [(
+                    formal_action["field"],
+                    int(formal_action.get("count") or 5),
+                )]
         dashboard["gensan_comment"] = build_gensan_comment(
             dashboard["total_answers"],
             fields,
             dashboard["weak_fields"],
-            dashboard["recommended_study"],
+            gensan_recommended_study,
             dashboard["streak_days"],
             dashboard["today_progress"],
         )
