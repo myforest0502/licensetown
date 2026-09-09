@@ -76,7 +76,7 @@ def test_q2000_final_quality_ci_probe():
         if not stem:
             blockers.append({"type": "empty_stem", "id": qid})
         elif len(stem) < 12 or len(stem) > 450:
-            editorial["stem_length"].append({"id": qid, "length": len(stem)})
+            editorial["stem_length"].append({"id": qid, "length": len(stem), "stem": stem})
         if re.search(r"(?:TODO|TBD|XXX|PLACEHOLDER|未作成|仮問題)", stem, re.I):
             editorial["placeholder_like_stem"].append(qid)
         if not (a.get("accepted_answer_sets") or a.get("display_answer") or a.get("answer") or a.get("correct_answer")):
@@ -85,7 +85,7 @@ def test_q2000_final_quality_ci_probe():
         if not explanation:
             blockers.append({"type": "missing_explanation", "id": qid})
         elif len(explanation) < 15 or len(explanation) > 1200:
-            editorial["explanation_length"].append({"id": qid, "length": len(explanation)})
+            editorial["explanation_length"].append({"id": qid, "length": len(explanation), "explanation": explanation})
         ce = e.get("choice_explanations")
         if not isinstance(ce, dict) or len(ce) < 2:
             blockers.append({"type": "choice_explanations_missing", "id": qid})
@@ -116,7 +116,14 @@ def test_q2000_final_quality_ci_probe():
                     continue
                 score = SequenceMatcher(None, s1, s2, autojunk=False).ratio()
                 if score >= 0.90:
-                    near.append({"q1": q1, "q2": q2, "category": category, "similarity": round(score, 4)})
+                    near.append({
+                        "q1": q1,
+                        "q2": q2,
+                        "category": category,
+                        "similarity": round(score, 4),
+                        "stem1": _stem(qmap[q1]),
+                        "stem2": _stem(qmap[q2]),
+                    })
     near.sort(key=lambda x: x["similarity"], reverse=True)
 
     node_ids = {str(n.get("knowledge_node_id")) for n in nodes if n.get("knowledge_node_id")}
@@ -144,13 +151,13 @@ def test_q2000_final_quality_ci_probe():
         "blockers": blockers,
         "same_stem_group_count": len(same_stem),
         "same_stem_different_choices_count": len(same_stem_different_choices),
-        "same_stem_different_choices": same_stem_different_choices,
         "exact_duplicate_item_count": len(full_dups),
         "exact_duplicate_items": full_dups,
-        "editorial_counts": {k: len(v) for k, v in editorial.items()},
+        "editorial": editorial,
         "near_duplicate_count": len(near),
+        "near_duplicates": near,
         "duplicate_node_label_count": len(duplicate_node_labels),
         "duplicate_node_label_candidates": duplicate_node_labels[:100],
     }
-    print("Q2000_FINAL_QUALITY_REFINED=" + json.dumps(summary, ensure_ascii=False, sort_keys=True))
+    print("Q2000_REVIEW_CANDIDATES=" + json.dumps(summary, ensure_ascii=False, sort_keys=True))
     assert blockers == []
