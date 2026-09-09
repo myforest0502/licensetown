@@ -1,0 +1,159 @@
+name: temporary formal intent selector patch
+
+on:
+  push:
+    branches:
+      - work/formal-intent-selector-v02
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/formal-intent-selector-v02
+          fetch-depth: 0
+      - name: Thread formal learner intent into exact-question selector
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('adaptive_question_selector.py')
+          t = p.read_text(encoding='utf-8')
+          old = '''    as_of: datetime | None = None,
+    category_small: int | None = None,
+) -> list[dict[str, Any]]:
+'''
+          new = '''    as_of: datetime | None = None,
+    category_small: int | None = None,
+    learning_intent: str | None = None,
+) -> list[dict[str, Any]]:
+'''
+          assert old in t
+          t = t.replace(old, new, 1)
+          old = '''    targets = {
+        "repair": (question_count + 1) // 2,
+        "checking": question_count // 3,
+        "exploration": max(1, question_count - ((question_count + 1) // 2) - (question_count // 3)),
+    }
+'''
+          new = '''    intent_group = {
+        "repair": "repair",
+        "recheck": "checking",
+        "exploration": "exploration",
+    }.get(learning_intent)
+    targets = (
+        {intent_group: question_count}
+        if intent_group
+        else {
+            "repair": (question_count + 1) // 2,
+            "checking": question_count // 3,
+            "exploration": max(1, question_count - ((question_count + 1) // 2) - (question_count // 3)),
+        }
+    )
+'''
+          assert old in t
+          t = t.replace(old, new, 1)
+          old = '''def build_node_adaptive_session(
+    attempts, question_count=30, exclude_ids=(), rng=None, *, audit_out=None,
+    category_small: int | None = None,
+):
+    records = select_node_adaptive_questions(
+        attempts, question_count, exclude_ids=exclude_ids, rng=rng,
+        category_small=category_small,
+    )
+'''
+          new = '''def build_node_adaptive_session(
+    attempts, question_count=30, exclude_ids=(), rng=None, *, audit_out=None,
+    category_small: int | None = None, learning_intent: str | None = None,
+):
+    records = select_node_adaptive_questions(
+        attempts, question_count, exclude_ids=exclude_ids, rng=rng,
+        category_small=category_small, learning_intent=learning_intent,
+    )
+'''
+          assert old in t
+          p.write_text(t.replace(old, new, 1), encoding='utf-8')
+
+          p = Path('app.py')
+          t = p.read_text(encoding='utf-8')
+          old = '''def create_web_recommendation_session(
+    user_id,
+    category_small,
+    question_count,
+    token,
+    attempts=None,
+'''
+          new = '''def create_web_recommendation_session(
+    user_id,
+    category_small,
+    question_count,
+    token,
+    attempts=None,
+    learning_intent=None,
+'''
+          assert old in t
+          t = t.replace(old, new, 1)
+          old = '''        questions = build_node_adaptive_session(
+            attempts,
+            question_count=question_count,
+            category_small=category_small,
+            audit_out=selection_audit,
+        )
+'''
+          new = '''        questions = build_node_adaptive_session(
+            attempts,
+            question_count=question_count,
+            category_small=category_small,
+            audit_out=selection_audit,
+            learning_intent=learning_intent,
+        )
+'''
+          assert old in t
+          t = t.replace(old, new, 1)
+          old = '''                        payload.get("token"),
+                        attempts=attempts,
+                    )
+'''
+          new = '''                        payload.get("token"),
+                        attempts=attempts,
+                        learning_intent=action.get("learning_intent"),
+                    )
+'''
+          assert old in t
+          p.write_text(t.replace(old, new, 1), encoding='utf-8')
+
+          p = Path('tests/test_learner_goukaku_navigation_ui.py')
+          t = p.read_text(encoding='utf-8')
+          old = '''        lambda user_id, category_small, question_count, token, attempts=None: calls.append(
+            (user_id, category_small, question_count, token, attempts)
+        ) or ("session-1", True),
+'''
+          new = '''        lambda user_id, category_small, question_count, token, attempts=None, learning_intent=None: calls.append(
+            (user_id, category_small, question_count, token, attempts, learning_intent)
+        ) or ("session-1", True),
+'''
+          assert old in t
+          t = t.replace(old, new, 1)
+          old = '''    assert len(calls) == 1
+    assert calls[0][4] is attempts
+'''
+          new = '''    assert len(calls) == 1
+    assert calls[0][4] is attempts
+    assert calls[0][5] == "exploration"
+'''
+          assert old in t
+          p.write_text(t.replace(old, new, 1), encoding='utf-8')
+          PY
+          if ! grep -q 'def test_explicit_exploration_intent_fills_with_exploration_before_higher_score_groups' tests/test_adaptive_question_selector.py; then
+            echo 'CgpkZWYgdGVzdF9leHBsaWNpdF9leHBsb3JhdGlvbl9pbnRlbnRfZmlsbHNfd2l0aF9leHBsb3JhdGlvbl9iZWZvcmVfaGlnaGVyX3Njb3JlX2dyb3Vwcyhtb25rZXlwYXRjaCk6CiAgICBmYWtlX2JhbmsobW9ua2V5cGF0Y2gsIGNvdW50PTgwKQogICAgbW9ua2V5cGF0Y2guc2V0YXR0cihzZWxlY3RvciwgImNsYXNzaWZ5X3JlcGFpcl9jb25maXJtYXRpb24iLCBsYW1iZGEgb2xkLCBuZXc6ICgKICAgICAgICAic2FtZV9xdWVzdGlvbiIgaWYgb2xkID09IG5ldyBlbHNlICJkaWZmZXJlbnRfcXVlc3Rpb25fc3Ryb25nIgogICAgKSkKICAgIGF0dGVtcHRzID0gWwogICAgICAgIGF0dGVtcHQoZiJRe25vZGUgKiAyIC0gMX0iLCBmIktOe25vZGU6MDRkfSIsIEZhbHNlLCBtaW51dGU9bm9kZSkKICAgICAgICBmb3Igbm9kZSBpbiByYW5nZSgxLCAxMSkKICAgIF0KICAgIHNlbGVjdGVkID0gc2VsZWN0b3Iuc2VsZWN0X25vZGVfYWRhcHRpdmVfcXVlc3Rpb25zKAogICAgICAgIGF0dGVtcHRzLAogICAgICAgIDEwLAogICAgICAgIHJuZz1yYW5kb20uUmFuZG9tKDkxKSwKICAgICAgICBsZWFybmluZ19pbnRlbnQ9ImV4cGxvcmF0aW9uIiwKICAgICkKICAgIGFzc2VydCBsZW4oc2VsZWN0ZWQpID09IDEwCiAgICBhc3NlcnQgYWxsKGl0ZW1bInByaW9yaXR5X2dyb3VwIl0gPT0gImV4cGxvcmF0aW9uIiBmb3IgaXRlbSBpbiBzZWxlY3RlZCkK' | base64 --decode >> tests/test_adaptive_question_selector.py
+          fi
+          git config user.name "LicenseTown CI"
+          git config user.email "licensetown.support@gmail.com"
+          git add adaptive_question_selector.py app.py tests/test_learner_goukaku_navigation_ui.py tests/test_adaptive_question_selector.py
+          git commit -m "Honor formal learner intent in adaptive selection"
+          git push origin HEAD:work/formal-intent-selector-v02
