@@ -4,19 +4,36 @@
 
 Whenever a new chat, new agent session, Codex session, or resumed development thread is clearly about LicenseTown, **do not wait for the user to remind you of project state**.
 
-Your first repository action must be to read `docs/CURRENT_STATE.md` from the current working branch (or the designated safe branch if already known). Use that file as the starting source of truth, then verify only facts that may have changed since its last update.
+Your first repository actions must be:
+1. read `docs/CURRENT_STATE.md` from the current working branch (or the designated safe branch if already known),
+2. read `docs/PT_V1_PRODUCT_GOAL.md`,
+3. use both as the starting source of truth, then verify only facts that may have changed since their last update.
 
-If the branch is unknown, first determine the active/designated working branch, then read that branch's `docs/CURRENT_STATE.md` before re-investigating architecture or status.
+If the branch is unknown, first determine the active/designated working branch, then read those files before re-investigating architecture or status.
 
-Do not ask the user to paste a handoff again merely because the chat room changed. The durable handoff is the repository state plus `docs/CURRENT_STATE.md`.
+Do not ask the user to paste a handoff again merely because the chat room changed. The durable handoff is the repository state plus `docs/CURRENT_STATE.md` plus the fixed PT v1 product goal.
 
 If `docs/CURRENT_STATE.md` is missing, stale, or contradicted by the code/data being touched, repair the document during that work cycle before proceeding broadly.
 
+## PT v1.0 completion contract
+
+`docs/PT_V1_PRODUCT_GOAL.md` is the durable shared definition of **「修正は今後もあるが、一旦完成として商品として出せる物」**.
+
+Until Boss explicitly changes that definition:
+- do not expand the v1.0 finish line merely because another improvement is possible;
+- do not add speculative safeguards based only on "maybe someday" risk;
+- classify new findings as either **v1.0 product blocker** or **v1.1+/backlog**;
+- current priority is the main learner line: run, steer, stop, remain coherent, diagnose failures, and repair them;
+- core learner loop is `wrong -> observable wrong-pattern analysis -> same-Node/different-Q repair -> repair confirmation -> day3 -> day7 -> one-month -> durable OR back to repairing`;
+- product completion requires real learner usability and absence of serious study-blocking defects, not perfection or completion of every future feature.
+
+Do not silently replace this goal with a broader engineering-quality goal.
+
 ## Ongoing source-of-truth rule
 
-Before changing code, data, tests, workflows, or product behavior, read `docs/CURRENT_STATE.md`.
+Before changing code, data, tests, workflows, or product behavior, read `docs/CURRENT_STATE.md` and ensure the change is compatible with `docs/PT_V1_PRODUCT_GOAL.md`.
 
-That file is the durable development source of truth for:
+`docs/CURRENT_STATE.md` is the durable development source of truth for:
 - what is already working,
 - what is not finished,
 - known problems/risks,
