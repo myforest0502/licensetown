@@ -13,6 +13,7 @@ from collections import Counter, defaultdict
 from difflib import SequenceMatcher
 from pathlib import Path
 
+from knowledge_node_canonical import canonicalize_knowledge_node_id
 from question_equivalence import get_question_equivalence_groups
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -140,17 +141,14 @@ def main() -> int:
 
     normalized_to_ids = defaultdict(list)
     item_signature_to_ids = defaultdict(list)
-    item_signature_by_qid: dict[str, tuple[str, tuple[str, ...]]] = {}
     for qid in expected:
         q = qmap[qid]
         a = amap[qid]
         e = emap[qid]
         stem = get_stem(q).strip()
         norm = norm_text(stem)
-        signature = (norm, choice_signature(q))
         normalized_to_ids[norm].append(qid)
-        item_signature_to_ids[signature].append(qid)
-        item_signature_by_qid[qid] = signature
+        item_signature_to_ids[(norm, choice_signature(q))].append(qid)
         keys = choice_keys(q)
         sets = accepted_sets(a)
         if not stem:
@@ -290,9 +288,23 @@ def main() -> int:
             duplicate_node_labels[label_norm].append(nid)
     if bad_node_qrefs:
         blockers.append({"type": "node_question_reference_missing", "items": bad_node_qrefs})
-    same_label_nodes = [v for v in duplicate_node_labels.values() if len(v) > 1]
-    if same_label_nodes:
-        review["duplicate_node_label_candidates"] = same_label_nodes[:100]
+
+    unresolved_same_label_nodes = []
+    canonicalized_same_label_nodes = []
+    for raw_group in (v for v in duplicate_node_labels.values() if len(v) > 1):
+        canonical_ids = {str(canonicalize_knowledge_node_id(node_id)) for node_id in raw_group}
+        item = {
+            "raw_node_ids": raw_group,
+            "canonical_node_ids": sorted(canonical_ids),
+        }
+        if len(canonical_ids) == 1:
+            canonicalized_same_label_nodes.append(item)
+        else:
+            unresolved_same_label_nodes.append(item)
+    if unresolved_same_label_nodes:
+        review["duplicate_node_label_candidates"] = unresolved_same_label_nodes[:100]
+    if canonicalized_same_label_nodes:
+        review["duplicate_node_labels_already_canonicalized"] = canonicalized_same_label_nodes[:100]
 
     node_summary = {
         "registry_nodes": len(nodes),
@@ -320,6 +332,9 @@ def main() -> int:
             "review_candidates": "heuristic sampling targets; human/medical review decides whether changes are required",
             "duplicate_policy": (
                 "same normalized past-exam stem is review-only when choices differ; exact item repeats are blockers unless a reviewed equivalence group preserves provenance while collapsing derived learning evidence"
+            ),
+            "node_label_policy": (
+                "raw Nodes sharing a label are informational when they already resolve to one reviewed canonical Node; only labels spanning different canonical Nodes remain review candidates"
             ),
         },
     }
