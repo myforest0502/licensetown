@@ -37,3 +37,16 @@ def test_paid_dashboard_v05_recomposes_story_into_balanced_columns():
 
     assert ".dashboard-story-layout{align-items:start}" in balance_css
     assert ".dashboard-story-left>.learning-position-card{margin-top:0!important}" in balance_css
+
+
+def test_formal_learner_navigation_removes_competing_legacy_guidance():
+    root = Path(__file__).resolve().parents[1]
+    js = (root / "static" / "goukaku" / "dashboard-layout-v05.js").read_text(encoding="utf-8")
+
+    assert "if (learnerNavigation)" in js
+    assert "guidanceStack.querySelector('.weak-card')" in js
+    assert "guidanceStack.querySelector('.recommend-card')" in js
+    assert "legacyWeakCard.remove()" in js
+    assert "legacyRecommendCard.remove()" in js
+    assert "分野別 正答率（参考）" in js
+    assert "subjectCard.querySelector('.field-progress-list')" in js
