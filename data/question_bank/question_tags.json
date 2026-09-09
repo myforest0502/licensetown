@@ -36746,5 +36746,108 @@
     "tag_version": "1.0",
     "tag_status": "reviewed",
     "source": "original"
+  },
+  {
+    "id": "Q1995",
+    "theme": "Karvonen法（k＝0.5）を用いて計算した全身持久力運動の目標心拍数で正しいのはどれか。",
+    "knowledge_node": "Karvonen法では目標心拍数を（予測最大心拍数－安静時心拍数）×運動強度＋安静時心拍数で求める",
+    "knowledge_node_id": "KN1559",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "目標心拍数の計算では年齢から予測最大心拍数を求め、安静時心拍数との差を心拍予備能とする。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1996",
+    "theme": "運動療法で適切なのはどれか。",
+    "knowledge_node": "Frenkel体操は視覚代償を用いて四肢運動を反復し、深部感覚障害による脊髄性運動失調の協調性改善を図る",
+    "knowledge_node_id": "KN1560",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "深部感覚障害による運動失調では、視覚情報により姿勢や運動を代償できる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1997",
+    "theme": "この患者の運動耐容能を評価する検査はどれか。",
+    "knowledge_node": "心肺運動負荷試験（CPX）は呼気ガスと循環応答を測定し、全身の運動耐容能を評価する",
+    "knowledge_node_id": "KN1561",
+    "task": "assessment_selection",
+    "primary_ability": "MEASURE",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "運動耐容能は全身運動中の呼吸・循環・代謝応答を統合して評価する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1998",
+    "theme": "右足関節背屈筋力低下に対する物理療法で適切なのはどれか。",
+    "knowledge_node": "末梢神経障害による随意収縮困難な筋には、筋収縮の誘発と廃用予防を目的に神経筋電気刺激療法を用いる",
+    "knowledge_node_id": "KN1562",
+    "task": "intervention_selection",
+    "primary_ability": "PRESCRIBE",
+    "secondary_ability": null,
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "末梢神経障害で随意収縮が困難な筋では、廃用性筋萎縮の予防と筋収縮誘発を検討する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q1999",
+    "theme": "神経伝導検査でF波の潜時延長と出現率減少がみられる疾患はどれか。",
+    "knowledge_node": "F波は運動神経を最大上刺激した際に興奮が脊髄前角細胞付近まで逆行し、再び末梢へ戻って生じる遅発反応で、神経根を含む近位運動神経伝導の評価に役…",
+    "knowledge_node_id": "KN0307",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "F波は運動神経を最大上刺激した際に興奮が脊髄前角細胞付近まで逆行し、再び末梢へ戻って生じる遅発反応で、神経根を含む近位運動神経伝導の評価に役立つ。",
+      "遠位刺激でも近位部の伝導情報を得られる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
+  },
+  {
+    "id": "Q2000",
+    "theme": "排便中枢はどれか。",
+    "knowledge_node": "排便中枢は仙髄にあり、大脳皮質から随意的な抑制・促通を受ける",
+    "knowledge_node_id": "KN0600",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": null,
+    "level": 1,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "排便機構について正しいのはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "past_exam"
   }
 ]

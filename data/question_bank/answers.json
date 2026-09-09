@@ -20176,5 +20176,65 @@
       ]
     ],
     "answer_basis": "LT_original"
+  },
+  {
+    "id": "Q1995",
+    "display_answer": "3",
+    "accepted_answer_sets": [
+      [
+        "3"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1996",
+    "display_answer": "3",
+    "accepted_answer_sets": [
+      [
+        "3"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1997",
+    "display_answer": "5",
+    "accepted_answer_sets": [
+      [
+        "5"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1998",
+    "display_answer": "5",
+    "accepted_answer_sets": [
+      [
+        "5"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q1999",
+    "display_answer": "1",
+    "accepted_answer_sets": [
+      [
+        "1"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
+  },
+  {
+    "id": "Q2000",
+    "display_answer": "5",
+    "accepted_answer_sets": [
+      [
+        "5"
+      ]
+    ],
+    "answer_basis": "MHLW_official"
   }
 ]

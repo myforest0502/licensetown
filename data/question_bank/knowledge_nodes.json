@@ -3121,9 +3121,10 @@
   {
     "knowledge_node_id": "KN0307",
     "label": "F波は運動神経を最大上刺激した際に興奮が脊髄前角細胞付近まで逆行し、再び末梢へ戻って生じる遅発反応で、神経根を含む近位運動神経伝導の評価に役…",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q309"
+      "Q309",
+      "Q1999"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6179,9 +6180,10 @@
   {
     "knowledge_node_id": "KN0600",
     "label": "排便中枢は仙髄にあり、大脳皮質から随意的な抑制・促通を受ける",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q608"
+      "Q608",
+      "Q2000"
     ],
     "aliases": [],
     "successor_ids": []
@@ -16011,6 +16013,46 @@
     "status": "singleton_initial",
     "question_ids": [
       "Q1994"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1559",
+    "label": "Karvonen法では目標心拍数を（予測最大心拍数－安静時心拍数）×運動強度＋安静時心拍数で求める",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1995"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1560",
+    "label": "Frenkel体操は視覚代償を用いて四肢運動を反復し、深部感覚障害による脊髄性運動失調の協調性改善を図る",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1996"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1561",
+    "label": "心肺運動負荷試験（CPX）は呼気ガスと循環応答を測定し、全身の運動耐容能を評価する",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1997"
+    ],
+    "aliases": [],
+    "successor_ids": []
+  },
+  {
+    "knowledge_node_id": "KN1562",
+    "label": "末梢神経障害による随意収縮困難な筋には、筋収縮の誘発と廃用予防を目的に神経筋電気刺激療法を用いる",
+    "status": "singleton_initial",
+    "question_ids": [
+      "Q1998"
     ],
     "aliases": [],
     "successor_ids": []
