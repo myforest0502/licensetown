@@ -269,8 +269,8 @@ def test_navigation_cta_accepts_validated_intent_then_uses_central_session_creat
     monkeypatch.setattr(
         app_module,
         "create_web_recommendation_session",
-        lambda user_id, category_small, question_count, token, attempts=None: calls.append(
-            (user_id, category_small, question_count, token, attempts)
+        lambda user_id, category_small, question_count, token, attempts=None, learning_intent=None: calls.append(
+            (user_id, category_small, question_count, token, attempts, learning_intent)
         ) or ("session-1", True),
     )
     response = app_module.app.test_client().post(
@@ -288,6 +288,7 @@ def test_navigation_cta_accepts_validated_intent_then_uses_central_session_creat
     assert response.get_json()["redirect_url"] == "/goukaku-no-michi/learning/session-1"
     assert len(calls) == 1
     assert calls[0][4] is attempts
+    assert calls[0][5] == "exploration"
 
 
 def test_web_session_uses_supplied_attempts_without_second_read(monkeypatch):
