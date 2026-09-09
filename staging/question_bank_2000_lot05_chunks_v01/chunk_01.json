@@ -14,8 +14,15 @@
       "slot_type": "singleton_second",
       "target_node_id": "KN0530",
       "target_node_label": "大内転筋は内転部とハムストリング部で神経支配が異なり、前者は閉鎖神経、後者は坐骨神経脛骨部から支配を受ける",
-      "reference_question_ids": ["Q538"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q538"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 1,
       "proposed_task": "assessment_selection",
       "primary_ability": "MEASURE",
@@ -31,7 +38,9 @@
         "4": "外閉鎖筋",
         "5": "大内転筋"
       },
-      "correct_choices": ["5"],
+      "correct_choices": [
+        "5"
+      ],
       "explanation": "大内転筋は閉鎖神経だけでなく坐骨神経脛骨部からも支配を受ける領域をもつため、閉鎖神経の単独機能をみる指標としては解釈が複雑になる。閉鎖神経障害の評価では、より選択的に閉鎖神経支配を反映する内転筋群と組み合わせて判断する。",
       "choice_explanations": {
         "1": "長内転筋は主に閉鎖神経支配で、閉鎖神経機能の評価対象となる。",
@@ -40,9 +49,23 @@
         "4": "外閉鎖筋は閉鎖神経支配である。",
         "5": "○。大内転筋には閉鎖神経と坐骨神経脛骨部の二重支配があり、閉鎖神経の単独指標には適しにくい。"
       },
-      "evidence": [{"url": "https://pubmed.ncbi.nlm.nih.gov/23813615/", "support": "Cadaveric study demonstrates obturator and tibial-division sciatic contributions to adductor magnus innervation and notes clinical implications for motor assessment."}],
-      "semantic_review": {"reference_demand": "fact_recall/KNOW", "candidate_demand": "assessment_selection/MEASURE: 閉鎖神経単独評価に使う筋を選別する", "why_not_same_demand": "Q538の神経支配知識を、電気生理学的評価筋の選択へ適用させる。", "decision": "accepted", "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)", "reviewed_on": "2026-09-09", "expert_signoff": false},
-      "expert_signoff": false
+      "evidence": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/23813615/",
+          "support": "Cadaveric study demonstrates obturator and tibial-division sciatic contributions to adductor magnus innervation and notes clinical implications for motor assessment."
+        }
+      ],
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 閉鎖神経単独評価に使う筋を選別する",
+        "why_not_same_demand": "Q538の神経支配知識を、電気生理学的評価筋の選択へ適用させる。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "expert_signoff": false,
+      "clinical_intent": "assessment_selection/MEASURE: 閉鎖神経単独評価に使う筋を選別する"
     },
     {
       "draft_id": "L05-C1-S02",
@@ -52,8 +75,15 @@
       "slot_type": "singleton_second",
       "target_node_id": "KN0531",
       "target_node_label": "脳血管とその還流域の組合せの基本事項",
-      "reference_question_ids": ["Q539"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q539"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 1,
       "proposed_task": "finding_interpretation",
       "primary_ability": "INTERPRET",
@@ -69,7 +99,9 @@
         "4": "右後大脳動脈領域",
         "5": "脳底動脈領域"
       },
-      "correct_choices": ["2"],
+      "correct_choices": [
+        "2"
+      ],
       "explanation": "優位半球の中大脳動脈上枝梗塞では外側前頭葉が障害され、対側の顔面・上肢優位の運動障害とBroca失語を生じやすい。非流暢な発話と比較的保たれた理解、右顔面・上肢優位の麻痺は左中大脳動脈上枝領域に合う。",
       "choice_explanations": {
         "1": "前大脳動脈領域では対側下肢優位の運動・感覚障害が典型である。",
@@ -78,9 +110,23 @@
         "4": "後大脳動脈領域では視野障害などが中心となる。",
         "5": "脳底動脈領域では脳幹症候が主体となり、本症例の皮質症候とは合いにくい。"
       },
-      "evidence": [{"url": "https://www.ncbi.nlm.nih.gov/books/NBK526002/", "support": "StatPearls describes dominant MCA superior-division infarction with Broca aphasia and contralateral face/upper-limb weakness."}],
-      "semantic_review": {"reference_demand": "fact_recall/KNOW", "candidate_demand": "finding_interpretation/INTERPRET: 症候の組合せから灌流領域を局在する", "why_not_same_demand": "血管と領域の暗記ではなく、運動分布と言語症候を統合して病変血管を判断する。", "decision": "accepted", "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)", "reviewed_on": "2026-09-09", "expert_signoff": false},
-      "expert_signoff": false
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK526002/",
+          "support": "StatPearls describes dominant MCA superior-division infarction with Broca aphasia and contralateral face/upper-limb weakness."
+        }
+      ],
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 症候の組合せから灌流領域を局在する",
+        "why_not_same_demand": "血管と領域の暗記ではなく、運動分布と言語症候を統合して病変血管を判断する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "expert_signoff": false,
+      "clinical_intent": "finding_interpretation/INTERPRET: 症候の組合せから灌流領域を局在する"
     },
     {
       "draft_id": "L05-C1-S03",
@@ -90,8 +136,15 @@
       "slot_type": "singleton_second",
       "target_node_id": "KN0585",
       "target_node_label": "上腕骨小結節には肩甲下筋腱が付着する",
-      "reference_question_ids": ["Q593"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q593"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 1,
       "proposed_task": "assessment_selection",
       "primary_ability": "MEASURE",
@@ -107,7 +160,9 @@
         "4": "lift-offテスト",
         "5": "apprehensionテスト"
       },
-      "correct_choices": ["4"],
+      "correct_choices": [
+        "4"
+      ],
       "explanation": "肩甲下筋は上腕骨小結節に停止し、肩関節内旋に働く。lift-offテストは肩甲下筋機能を評価する代表的な検査で、手背を腰から離せない、または抵抗に抗せない場合に陽性となる。",
       "choice_explanations": {
         "1": "Jobeテストは主に棘上筋機能の評価に用いる。",
@@ -116,9 +171,23 @@
         "4": "○。lift-offテストは肩甲下筋障害の評価に用いる。",
         "5": "apprehensionテストは肩関節前方不安定性の評価である。"
       },
-      "evidence": [{"url": "https://www.ncbi.nlm.nih.gov/books/NBK513344/", "support": "StatPearls describes the subscapularis insertion near the lesser tubercle and the lift-off/belly-press tests for subscapularis assessment."}],
-      "semantic_review": {"reference_demand": "fact_recall/KNOW", "candidate_demand": "assessment_selection/MEASURE: 小結節付着から疑う肩甲下筋を選択的に検査する", "why_not_same_demand": "停止部位の暗記ではなく、臨床所見から適切な筋機能検査を選択する。", "decision": "accepted", "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)", "reviewed_on": "2026-09-09", "expert_signoff": false},
-      "expert_signoff": false
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK513344/",
+          "support": "StatPearls describes the subscapularis insertion near the lesser tubercle and the lift-off/belly-press tests for subscapularis assessment."
+        }
+      ],
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "assessment_selection/MEASURE: 小結節付着から疑う肩甲下筋を選択的に検査する",
+        "why_not_same_demand": "停止部位の暗記ではなく、臨床所見から適切な筋機能検査を選択する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "expert_signoff": false,
+      "clinical_intent": "assessment_selection/MEASURE: 小結節付着から疑う肩甲下筋を選択的に検査する"
     },
     {
       "draft_id": "L05-C2-S01",
@@ -128,8 +197,15 @@
       "slot_type": "singleton_second",
       "target_node_id": "KN0595",
       "target_node_label": "四肢からの感覚神経伝導路の特徴",
-      "reference_question_ids": ["Q603"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q603"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 2,
       "proposed_task": "finding_interpretation",
       "primary_ability": "INTERPRET",
@@ -145,7 +221,9 @@
         "4": "前脊髄小脳路",
         "5": "網様体脊髄路"
       },
-      "correct_choices": ["1"],
+      "correct_choices": [
+        "1"
+      ],
       "explanation": "後索－内側毛帯路は識別性触覚、振動覚、意識性固有感覚を伝える。脊髄内では同側を上行して延髄で交叉するため、胸髄右側の後索障害では病変以下の右側で振動覚・位置覚低下を生じる。",
       "choice_explanations": {
         "1": "○。後索－内側毛帯路は振動覚・位置覚などを伝える。",
@@ -154,9 +232,23 @@
         "4": "脊髄小脳路は無意識性固有感覚を小脳へ伝えるが、本設問の振動覚・意識性位置覚の主経路ではない。",
         "5": "網様体脊髄路は下行性運動路である。"
       },
-      "evidence": [{"url": "https://www.ncbi.nlm.nih.gov/books/NBK11142/", "support": "NCBI Neuroscience describes the dorsal column-medial lemniscus pathway as carrying tactile discrimination and proprioceptive mechanosensory information, while pain/temperature travel in the anterolateral system."}],
-      "semantic_review": {"reference_demand": "fact_recall/KNOW", "candidate_demand": "finding_interpretation/INTERPRET: 感覚モダリティと左右差から障害路を推定する", "why_not_same_demand": "伝導路の特徴を直接答えるのではなく、臨床的な感覚脱落パターンから局在を解釈する。", "decision": "accepted", "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)", "reviewed_on": "2026-09-09", "expert_signoff": false},
-      "expert_signoff": false
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK11142/",
+          "support": "NCBI Neuroscience describes the dorsal column-medial lemniscus pathway as carrying tactile discrimination and proprioceptive mechanosensory information, while pain/temperature travel in the anterolateral system."
+        }
+      ],
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 感覚モダリティと左右差から障害路を推定する",
+        "why_not_same_demand": "伝導路の特徴を直接答えるのではなく、臨床的な感覚脱落パターンから局在を解釈する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "expert_signoff": false,
+      "clinical_intent": "finding_interpretation/INTERPRET: 感覚モダリティと左右差から障害路を推定する"
     },
     {
       "draft_id": "L05-C2-S02",
@@ -166,8 +258,15 @@
       "slot_type": "singleton_second",
       "target_node_id": "KN0596",
       "target_node_label": "運動時は活動筋への血流が大きく増え、心拍出量・静脈還流も増加する",
-      "reference_question_ids": ["Q604"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q604"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 2,
       "proposed_task": "intervention_selection",
       "primary_ability": "PRESCRIBE",
@@ -183,7 +282,9 @@
         "4": "下腿を駆血したまま筋収縮を続ける",
         "5": "筋活動を伴わない完全他動運動のみを行う"
       },
-      "correct_choices": ["2"],
+      "correct_choices": [
+        "2"
+      ],
       "explanation": "活動筋では代謝需要に応じて血流が増える。リズミカルな収縮と弛緩では、弛緩期に筋血流が得られやすく、筋ポンプによる静脈還流も利用できる。持続的な強収縮は筋内血管を圧迫して血流を妨げうる。",
       "choice_explanations": {
         "1": "持続的な強収縮は筋内血管を圧迫し、活動筋血流を阻害しうる。",
@@ -192,9 +293,23 @@
         "4": "駆血は局所血流を妨げる。",
         "5": "他動運動のみでは活動筋の代謝性血流増加を十分に利用できない。"
       },
-      "evidence": [{"url": "https://www.ncbi.nlm.nih.gov/books/NBK57139/", "support": "NCBI text describes exercise hyperemia, increased blood flow in contracting muscle, increased cardiac output, and reduced arterial inflow during sustained contraction with higher flow during relaxation."}],
-      "semantic_review": {"reference_demand": "fact_recall/KNOW", "candidate_demand": "intervention_selection/PRESCRIBE: 運動時循環生理を利用して運動様式を選ぶ", "why_not_same_demand": "生理変化の暗記ではなく、血流と筋ポンプを活かす具体的運動を処方する。", "decision": "accepted", "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)", "reviewed_on": "2026-09-09", "expert_signoff": false},
-      "expert_signoff": false
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK57139/",
+          "support": "NCBI text describes exercise hyperemia, increased blood flow in contracting muscle, increased cardiac output, and reduced arterial inflow during sustained contraction with higher flow during relaxation."
+        }
+      ],
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "intervention_selection/PRESCRIBE: 運動時循環生理を利用して運動様式を選ぶ",
+        "why_not_same_demand": "生理変化の暗記ではなく、血流と筋ポンプを活かす具体的運動を処方する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "expert_signoff": false,
+      "clinical_intent": "intervention_selection/PRESCRIBE: 運動時循環生理を利用して運動様式を選ぶ"
     },
     {
       "draft_id": "L05-C2-S03",
@@ -204,8 +319,15 @@
       "slot_type": "singleton_second",
       "target_node_id": "KN0599",
       "target_node_label": "ペプシンは胃内で蛋白質をポリペプチドへ分解し、リパーゼは脂肪を脂肪酸とグリセリンへ分解する",
-      "reference_question_ids": ["Q607"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q607"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 2,
       "proposed_task": "finding_interpretation",
       "primary_ability": "INTERPRET",
@@ -221,7 +343,9 @@
         "4": "唾液分泌が完全に停止する",
         "5": "大腸での水分吸収が直ちに消失する"
       },
-      "correct_choices": ["2"],
+      "correct_choices": [
+        "2"
+      ],
       "explanation": "リパーゼは脂質消化に重要で、膵外分泌不全で膵リパーゼが不足すると脂肪の消化・吸収が障害され、脂肪便を生じやすい。一方、胃内の蛋白質消化は酸性環境で働くペプシンにより開始されるため、本症例では保たれる。",
       "choice_explanations": {
         "1": "ペプシン活性が保たれているため胃内蛋白質消化は完全には消失しない。",
@@ -230,9 +354,23 @@
         "4": "膵リパーゼ低下と唾液分泌停止は直接結び付かない。",
         "5": "膵リパーゼ低下が直ちに大腸の水吸収を消失させるわけではない。"
       },
-      "evidence": [{"url": "https://www.ncbi.nlm.nih.gov/books/NBK544242/", "support": "StatPearls describes gastric pepsin-mediated protein digestion and pancreatic lipase-mediated lipid digestion in the small intestine; enzyme defects can cause malabsorption."}],
-      "semantic_review": {"reference_demand": "fact_recall/KNOW", "candidate_demand": "finding_interpretation/INTERPRET: 消化酵素機能低下から臨床所見を予測する", "why_not_same_demand": "酵素と基質の対応を直接問わず、選択的酵素低下の臨床的帰結を解釈する。", "decision": "accepted", "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)", "reviewed_on": "2026-09-09", "expert_signoff": false},
-      "expert_signoff": false
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK544242/",
+          "support": "StatPearls describes gastric pepsin-mediated protein digestion and pancreatic lipase-mediated lipid digestion in the small intestine; enzyme defects can cause malabsorption."
+        }
+      ],
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "finding_interpretation/INTERPRET: 消化酵素機能低下から臨床所見を予測する",
+        "why_not_same_demand": "酵素と基質の対応を直接問わず、選択的酵素低下の臨床的帰結を解釈する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "expert_signoff": false,
+      "clinical_intent": "finding_interpretation/INTERPRET: 消化酵素機能低下から臨床所見を予測する"
     },
     {
       "draft_id": "L05-C2-M01",
@@ -242,8 +380,16 @@
       "slot_type": "multi_reinforcement",
       "target_node_id": "KN0597",
       "target_node_label": "交感神経の作用",
-      "reference_question_ids": ["Q605", "Q815"],
-      "existing_demands": [{"task": "fact_recall", "primary_ability": "KNOW"}],
+      "reference_question_ids": [
+        "Q605",
+        "Q815"
+      ],
+      "existing_demands": [
+        {
+          "task": "fact_recall",
+          "primary_ability": "KNOW"
+        }
+      ],
       "proposed_category_small": 2,
       "proposed_task": "safety_priority",
       "primary_ability": "DECIDE",
@@ -259,7 +405,9 @@
         "4": "直ちに臥位とし、必要に応じて下肢を挙上する",
         "5": "立位のまま水分摂取だけを行わせる"
       },
-      "correct_choices": ["4"],
+      "correct_choices": [
+        "4"
+      ],
       "explanation": "起立時の血圧低下に対しては交感神経性の血管収縮と心拍増加が血圧維持に働く。著明な血圧低下、症状、心拍増加の乏しさは自律神経性代償不全を示唆する。失神・転倒を防ぐため試験を中止し、直ちに臥位として脳灌流を回復させる。",
       "choice_explanations": {
         "1": "症候性低血圧で立位を継続すると失神・転倒の危険がある。",
@@ -268,9 +416,23 @@
         "4": "○。直ちに臥位とし、必要に応じ下肢挙上で脳灌流回復を図る。",
         "5": "症候性低血圧の最中に立位を維持すべきではない。"
       },
-      "evidence": [{"url": "https://www.ncbi.nlm.nih.gov/books/NBK402/", "support": "NCBI Clinical Methods states that symptomatic orthostatic BP reduction without appropriate heart-rate increase suggests autonomic dysfunction and that syncope during testing requires immediate head-down/legs-elevated positioning to restore cerebral perfusion."}],
-      "semantic_review": {"reference_demand": "fact_recall/KNOW", "candidate_demand": "safety_priority/DECIDE: 交感神経性代償不全を示す起立反応で安全行動を選ぶ", "why_not_same_demand": "交感神経作用の暗記ではなく、実測された循環反応を安全管理へ適用する。", "decision": "accepted", "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)", "reviewed_on": "2026-09-09", "expert_signoff": false},
-      "expert_signoff": false
+      "evidence": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK402/",
+          "support": "NCBI Clinical Methods states that symptomatic orthostatic BP reduction without appropriate heart-rate increase suggests autonomic dysfunction and that syncope during testing requires immediate head-down/legs-elevated positioning to restore cerebral perfusion."
+        }
+      ],
+      "semantic_review": {
+        "reference_demand": "fact_recall/KNOW",
+        "candidate_demand": "safety_priority/DECIDE: 交感神経性代償不全を示す起立反応で安全行動を選ぶ",
+        "why_not_same_demand": "交感神経作用の暗記ではなく、実測された循環反応を安全管理へ適用する。",
+        "decision": "accepted",
+        "reviewer": "Aoi/GPT-5.6 Sol medical-structure review (AI; not human expert)",
+        "reviewed_on": "2026-09-09",
+        "expert_signoff": false
+      },
+      "expert_signoff": false,
+      "clinical_intent": "safety_priority/DECIDE: 交感神経性代償不全を示す起立反応で安全行動を選ぶ"
     }
   ]
 }

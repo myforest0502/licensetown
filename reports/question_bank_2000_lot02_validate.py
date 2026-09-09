@@ -50,6 +50,7 @@ LEVEL_QUOTA = {1:1,2:16,3:20,4:11}
 SLOT_QUOTA = {"singleton_second":32,"multi_reinforcement":12,"new_node":4}
 SAFETY_AUGMENT = 12
 MIN_STRONG = 41
+ACCEPTED_COUNT = 48
 BASE_COUNT = 1809
 BASE_VERSION = "2026-09-b15"
 INTEGRATED_START = 1810
@@ -114,8 +115,8 @@ def build_report(payload: dict | None = None, *, require_seals: bool = True) -> 
     }
     integrated_ids = [f"Q{number}" for number in range(INTEGRATED_START, INTEGRATED_END + 1)]
     integrated_count = sum(qid in maps["questions"] for qid in integrated_ids)
-    check(integrated_count in (0, 48), f"partial formal integration: {integrated_count}/48")
-    integrated = integrated_count == 48
+    check(integrated_count in (0, ACCEPTED_COUNT), f"partial formal integration: {integrated_count}/{ACCEPTED_COUNT}")
+    integrated = integrated_count == ACCEPTED_COUNT
     if integrated:
         check(manifest.get("question_count", 0) >= INTEGRATED_END,
               "formal integrated count is below 1857")
@@ -157,7 +158,7 @@ def build_report(payload: dict | None = None, *, require_seals: bool = True) -> 
             check(hashes.get(name) == file_fingerprint(BANK / name), f"formal snapshot changed: {name}")
 
     drafts = payload.get("drafts", [])
-    check(len(drafts) == 48, f"accepted draft count must be 48, got {len(drafts)}")
+    check(len(drafts) == ACCEPTED_COUNT, f"accepted draft count must be {ACCEPTED_COUNT}, got {len(drafts)}")
     ids = [str(d.get("draft_id")) for d in drafts]
     check(len(set(ids)) == len(ids), "duplicate draft IDs")
     check(all(d.get("status") == "accepted" for d in drafts), "all drafts must be accepted before staging seal")
