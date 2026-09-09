@@ -75,6 +75,14 @@ The completion target is not perfection, complete long-term proof, or implementa
 - Corrective branch: `fix/dashboard-upper-reference-only-v01`; asset cache version bumped to `20260909-v03`.
 - Status: **Boss upper reference supplied: YES / lower half frozen: YES / code exists: YES / automated validation pending / Production deployed: NO / real-device acceptance: PENDING**.
 
+## 2026-09-09 Dashboard summary-row production correction
+
+- Real Production screenshot showed PR #294 did not visually satisfy Boss's instruction: the five summary cards still wrapped 3+2 on wide desktop and the new route-card guidance could be hidden by stale asset cache.
+- Root cause: the five-column override was scoped only to 701-1000px, so widths above 1000px fell back to the legacy three-column rule; `dashboard-product-copy-v01.js` and the approved-layout CSS cache keys were also not bumped.
+- Corrective branch: `fix/dashboard-summary-row-cache-v01`. For every viewport >=701px the summary grid is forced to five columns in the fixed order already present in the DOM: total answers / cumulative study time / 7-day accuracy / average accuracy / consecutive learning days. Mobile <=700px is unchanged.
+- Route top-card guidance remains the PR #294 copy and is now forced fresh by cache-key updates. No lower-half layout or other dashboard composition is changed.
+- Status: **real Production mismatch observed: YES / root cause identified: YES / code fix exists: YES / automated validation performed in branch workflow / Production deployed: NO / real-device acceptance: PENDING**.
+
 ## Current completion contract — MAIN LINE ONLY
 
 Until PT v1.0 is accepted, do not drift into speculative polish or branch/leaf work.
