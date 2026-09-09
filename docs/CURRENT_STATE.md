@@ -28,6 +28,11 @@ PT v1.0 is considered product-ready when a new learner can register, study, have
 
 The completion target is not perfection, complete long-term proof, or implementation of every future feature.
 
+## Public Question Bank display
+
+- Public marketing stats must show the closed Q2000 composition as **新規問題 900問 / 過去問 1100問 / 合計 2000問収録**.
+- Do not expose stale preview-source counts such as 643 / 1094.
+
 ## Current completion contract — MAIN LINE ONLY
 
 Until PT v1.0 is accepted, do not drift into speculative polish or branch/leaf work.

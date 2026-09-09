@@ -229,20 +229,18 @@ def _sale_safe_html(html: str) -> str:
     dashboard values without an explicit image label.
     """
     count_label = _question_count_label()
-    stats = (
-        '<section class="stats"><div class="container"><div><i>▰</i><span><small>新規問題</small>'
-        '<b>1000<em>問</em></b></span></div><div><i>▤</i><span><small>過去問</small>'
-        '<b>1000<em>問</em></b></span></div><div><i>▥</i><span><small>合計</small>'
-        '<b>2000<em>問収録</em></b></span></div></div></section>'
-    )
-    safe_stats = (
-        '<section class="stats"><div class="container"><div><i>▥</i><span>'
-        f'<small>問題演習</small><b>{count_label}</b>'
-        '</span></div></div></section>'
-    )
-    html = html.replace(stats, safe_stats)
     html = re.sub(
-        r'(合計</small><b>)\d+(<em>問収録</em>)',
+        r'(新規問題</small>\s*<b>)\d+(<em>問</em>)',
+        r'\g<1>900\g<2>',
+        html,
+    )
+    html = re.sub(
+        r'(過去問</small>\s*<b>)\d+(<em>問</em>)',
+        r'\g<1>1100\g<2>',
+        html,
+    )
+    html = re.sub(
+        r'(合計</small>\s*<b>)\d+(<em>問収録</em>)',
         lambda match: f"{match.group(1)}{count_label.removesuffix('問収録')}{match.group(2)}"
         if count_label.endswith("問収録") and count_label[:-3].isdigit()
         else f"{match.group(1)}{escape(count_label)}{match.group(2)}",
