@@ -42,6 +42,7 @@ def test_q2000_review_probe_details():
             "safety": t.get("safety"),
             "knowledge_node_id": t.get("knowledge_node_id"),
             "explanation": e.get("explanation"),
+            "choice_explanations": e.get("choice_explanations"),
         }
 
     report = {
