@@ -219,12 +219,14 @@
   }
 }
 
-@media (min-width:701px) and (max-width:1000px){
+/* Boss-approved summary order: keep all five cards on one row for tablet/desktop. */
+@media (min-width:701px){
   .dashboard-reference-top>.summary-grid{
     grid-template-columns:repeat(5,minmax(0,1fr));
     gap:10px;
   }
   .dashboard-reference-top>.summary-grid .mini-card{
+    min-width:0;
     padding-left:8px;
     padding-right:8px;
   }

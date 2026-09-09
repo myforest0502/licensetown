@@ -11,6 +11,7 @@ def test_approved_layout_assets_are_loaded_last():
 def test_top_half_matches_latest_boss_reference_exact_order():
     js = Path("static/goukaku/dashboard-approved-layout-v01.js").read_text(encoding="utf-8")
     css = Path("static/goukaku/dashboard-approved-layout-v01.css").read_text(encoding="utf-8")
+    base = Path("templates/goukaku/base.html").read_text(encoding="utf-8")
     expected = [
         "move(topLeft, dateCard)",
         "move(topLeft, todayCard)",
@@ -23,9 +24,12 @@ def test_top_half_matches_latest_boss_reference_exact_order():
     assert positions == sorted(positions)
     assert "grid-template-columns:minmax(0,58%) minmax(0,42%)" in css
     assert ".dashboard-reference-source-only" in css
-    assert "@media (min-width:701px) and (max-width:1000px)" in css
+    assert "@media (min-width:701px)" in css
+    assert "@media (min-width:701px) and (max-width:1000px)" not in css
     assert "grid-template-columns:repeat(5,minmax(0,1fr))" in css
     assert ".lt-route-pace-note" in css
+    assert "dashboard-approved-layout-v01.css', v='20260909-v04'" in base
+    assert "dashboard-product-copy-v01.js', v='20260909-v04'" in base
 
 
 def test_lower_half_remains_frozen_to_previous_approved_reference():
