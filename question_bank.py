@@ -51,6 +51,10 @@ QUESTION_BANK_ERROR_MESSAGE = (
     "おう、悪い。今は正式問題バンクを読み込めない状態だ。\n"
     "自由会話の問題には切り替えず、ここで止めておくぞ。少し待ってからもう一度試してくれ。"
 )
+QUESTION_AVAILABILITY_MESSAGE = (
+    "おう、今は直前に解いた問題を避けると必要な問題数を用意できない。\n"
+    "同じ問題をすぐ出し直さず、少し時間を空けてからもう一度試してくれ。"
+)
 CATEGORY_NAMES = {
     1: "解剖学", 2: "生理学", 3: "心理学", 4: "人間発達学", 5: "教育学", 6: "医学概論",
     7: "病理学", 8: "内科学", 9: "神経医学", 10: "精神医学", 11: "小児学", 12: "臨床心理学",
@@ -82,6 +86,10 @@ BASIC_CATEGORY_SMALLS = frozenset(
 
 class QuestionBankError(RuntimeError):
     pass
+
+
+class QuestionAvailabilityError(QuestionBankError):
+    """Cooldown constraints leave too few unique evidence questions."""
 
 
 def _read_json(name: str) -> list[dict]:
@@ -358,7 +366,9 @@ def select_random_questions(question_count: int, *, exclude_ids=()) -> list[dict
             eligible_by_evidence.setdefault(evidence_id, []).append(q_id)
     eligible_ids = [random.choice(ids) for ids in eligible_by_evidence.values()]
     if question_count > len(eligible_ids):
-        raise QuestionBankError("Requested question count exceeds formal bank")
+        raise QuestionAvailabilityError(
+            "Not enough non-blocked unique evidence questions"
+        )
     ids = random.sample(eligible_ids, question_count)
     return [get_quiz_question(q_id) for q_id in ids]
 
@@ -412,7 +422,9 @@ def select_questions_by_category(
             fallback_ids = [random.choice(ids) for ids in fallback_by_evidence.values()]
             needed = question_count - len(selected_ids)
             if needed > len(fallback_ids):
-                raise QuestionBankError("Requested question count exceeds formal bank")
+                raise QuestionAvailabilityError(
+                    "Not enough non-blocked unique evidence questions"
+                )
             selected_ids.extend(random.sample(fallback_ids, needed))
     else:
         selected_ids = []

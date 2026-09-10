@@ -6,7 +6,13 @@ import random
 from collections import defaultdict
 from datetime import datetime, timezone
 
-from question_bank import get_question, get_question_tag, get_quiz_question, question_ids
+from question_bank import (
+    QuestionAvailabilityError,
+    get_question,
+    get_question_tag,
+    get_quiz_question,
+    question_ids,
+)
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import derive_all_user_node_states
 from question_equivalence import (
@@ -259,7 +265,9 @@ def build_daily_session(
     scored.sort(reverse=True)
     selected = [q_id for _score, _tie, q_id in scored[:question_count]]
     if len(selected) < question_count:
-        raise ValueError("Not enough questions for daily session")
+        raise QuestionAvailabilityError(
+            "Not enough non-blocked questions for daily session"
+        )
     return [get_quiz_question(q_id) for q_id in selected]
 
 

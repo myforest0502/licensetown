@@ -1,5 +1,13 @@
 # LicenseTown Current State
 
+## 2026-09-10 PR #306 all-path repeat-guard hardening v0.2
+
+- Additional acceptance hardening keeps the formal under-three-day exact-evidence block authoritative across random, category, nekketsu, adaptive daily, and web recommendation starts.
+- Category/intent shortages relax progressively to the global non-blocked bank; a missing alternate question skips that Node instead of reopening recent evidence.
+- A physically impossible global shortage now fails explicitly with a learner-safe availability response instead of padding with blocked questions or returning an opaque 500/503.
+- Selector, Safety priority, repair evidence, retention/state transitions, Phase 11, Question Bank content, and database schema remain unchanged.
+- Status: **focused regression: 201 passed, 1 deselected, 125 subtests / Question Bank validator: 2000 records, 0 issues / full LF CI-equivalent pytest: 1283 passed, 6 skipped, 1 deselected, 125 subtests / Production deployed: NO / real learner acceptance: PENDING**.
+
 ## 2026-09-10 Production blocker: global short-term same-Q repeats
 
 - Production attempts showed the same evidence question recurring within minutes through non-adaptive learner paths, despite the adaptive Recent Cooldown repair.
