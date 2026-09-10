@@ -18,7 +18,7 @@ FAQ_ITEMS = (
     ),
     (
         "現在、料金はかかりますか？",
-        "現在は検証期間中のため、利用料金はいただいていません。実際に使っていただきながら改善を続けています。",
+        "正式公開前の無料モニターとして、先着30名まで月額料金なしでご利用いただけます。30名に達した時点で、新規受付を終了します。",
     ),
     (
         "あとから勝手に料金が発生することはありますか？",
@@ -154,13 +154,13 @@ def _cta_contents() -> str:
         button = '<a class="marketing-line-button" href="/site/legal/contact">利用開始について問い合わせる　›</a>'
         desktop_help = '<p class="marketing-qr-help">LINEの利用開始リンクを準備中です。</p>'
     return (
-        '<h2>検証期間中 無料公開</h2>'
-        '<p class="marketing-free-copy">LicenseTownは現在、実際に使っていただきながら改善を続けています。<br>'
-        '検証期間中は利用料金をいただいていません。</p>'
+        '<h2>無料モニター 先着30名限定</h2>'
+        '<p class="marketing-free-copy">正式公開前の無料モニターとして、先着30名まで月額料金なしでご利用いただけます。<br>'
+        '実際に使っていただきながら、学習に役立つサービスへ改善していきます。</p>'
         '<p class="marketing-line-copy"><strong>LINEですぐに始められます。</strong></p>'
         f'<div class="marketing-line-start">{qr}<div>{button}{desktop_help}</div></div>'
-        '<small class="marketing-free-note">※将来、有料化する場合は事前にHPなどでお知らせします。'
-        '知らないうちに料金が発生することはありません。</small>'
+        '<small class="marketing-free-note">※30名に達した時点で、新規の無料モニター受付を終了します。'
+        '将来、料金が発生する場合は事前にご案内します。</small>'
     )
 
 
@@ -274,8 +274,8 @@ def refresh_public_site_html(html: str, mobile: bool) -> str:
         html = _replace_pc_brand(html)
     html = _replace_mobile_faq(html) if mobile else _replace_pc_faq(html)
     html = _replace_mobile_cta(html) if mobile else _replace_pc_cta(html)
-    html = html.replace("提供条件を準備中", "検証期間中 無料公開")
-    html = html.replace("料金・提供条件は公開準備中", "検証期間中 無料公開")
+    html = html.replace("提供条件を準備中", "無料モニター 先着30名限定")
+    html = html.replace("料金・提供条件は公開準備中", "無料モニター 先着30名限定")
     html = re.sub(r'<style id="marketing-refresh-v0[12]">.*?</style>', "", html, flags=re.DOTALL)
     html = html.replace("</head>", _marketing_styles() + "</head>", 1)
     return html

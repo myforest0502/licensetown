@@ -100,8 +100,8 @@ def _inject_mobile_faq_answers(html: str) -> str:
 
     answers = {
         "料金はかかりますか？": (
-            "現在は多くの方に使っていただき、改善する段階です。"
-            "月額料金はお願いしていません。正式な料金・提供条件を決める際は、このページでご案内します。"
+            "正式公開前の無料モニターとして、先着30名まで月額料金なしでご利用いただけます。"
+            "30名に達した時点で、新規受付を終了します。"
         ),
         "LINEだけで使えますか？": (
             "学習の中心はLINEで利用できます。合格への道や見守りなど、"
@@ -220,6 +220,43 @@ def _make_public_dead_interactions_static(html: str) -> str:
     )
 
 
+def _apply_free_monitor_copy(html: str) -> str:
+    title = "無料モニター 先着30名限定"
+    description = (
+        "正式公開前の無料モニターとして、先着30名まで月額料金なしでご利用いただけます。"
+        "実際に使っていただきながら、学習に役立つサービスへ改善していきます。"
+    )
+    note = "※30名に達した時点で、新規の無料モニター受付を終了します。"
+    html = re.sub(
+        r'<article class="try-panel" id="try">.*?</article>',
+        '<article class="try-panel" id="try">'
+        f'<h2>{title}</h2><p>{description}</p>'
+        f'<small class="free-monitor-note">{note}</small>'
+        '<a>まずは使ってみる　›</a></article>',
+        html,
+        count=1,
+        flags=re.DOTALL,
+    )
+    html = re.sub(
+        r'(<section class="final-cta" id="try"><div class="cta-banner">)'
+        r'<h2>.*?</h2><p>.*?</p>',
+        lambda match: (
+            match.group(1) + f'<h2>{title}</h2><p>{description}</p>'
+            f'<small class="free-monitor-note">{note}</small>'
+        ),
+        html,
+        count=1,
+        flags=re.DOTALL,
+    )
+    html = html.replace("<li>提供条件を準備中</li>", "<li>無料モニター 先着30名限定</li>")
+    html = html.replace("料金・提供条件は公開準備中", title)
+    html = html.replace(
+        "十分に胸を張って「料金をいただける」と思えるまでは、月額料金をお願いしません。",
+        "正式公開前は、先着30名の無料モニターとしてご利用いただけます。",
+    )
+    return html
+
+
 def _sale_safe_html(html: str) -> str:
     """Remove prototype claims that must not appear as factual sale copy yet.
 
@@ -286,6 +323,7 @@ def _sale_safe_html(html: str) -> str:
     html = _inject_mobile_faq_answers(html)
     html = _inject_mobile_trust_support(html)
     html = _wire_primary_ctas(html)
+    html = _apply_free_monitor_copy(html)
     return _make_public_dead_interactions_static(html)
 
 

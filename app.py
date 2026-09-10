@@ -33,6 +33,7 @@ from docx import Document
 from pypdf import PdfReader
 from database import (
     add_learning_time,
+    claim_free_monitor_slot,
     get_question_attempts,
     get_question_history,
     is_initial_assessment_completed,
@@ -3962,6 +3963,14 @@ def handle_text_message(event):
         return
 
     if current_state == "waiting_name":
+        if claim_free_monitor_slot(user_id) is None:
+            reply_to_line(
+                event.reply_token,
+                "無料モニター30名の受付は終了しました。"
+                "ご興味を持っていただきありがとうございます。"
+                "今後の募集・正式公開についてはLicenseTown公式サイトでご案内します。",
+            )
+            return
         user_names[user_id] = user_message
         user_states.pop(user_id, None)
 

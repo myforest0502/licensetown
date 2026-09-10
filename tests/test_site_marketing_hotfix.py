@@ -33,7 +33,7 @@ def test_hp_preview_shows_three_readable_answers_and_in_page_actions(monkeypatch
     assert response.status_code == 200
     assert html.count('class="marketing-faq-preview-item"') == 3
     assert "理学療法士国家試験に向けて" in html
-    assert "現在は検証期間中のため" in html
+    assert "正式公開前の無料モニターとして" in html
     assert "ありません。将来、有料化する場合" in html
     assert 'href="/site/view/pc#faq-all-panel">その他の質問はこちら' in html
     assert 'href="/site/view/pc#line-start-panel">LINEで無料ではじめる' in html

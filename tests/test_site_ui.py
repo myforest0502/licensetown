@@ -116,7 +116,7 @@ def test_mobile_public_view_gets_trust_support_copy_without_mutating_frozen_724_
     assert 'class="mobile-trust-support"' in mobile_html
     assert "迷ったときは、「それは誠実か？」で考える。" in mobile_html
     assert "まだ完成したサービスだとは考えていません" in mobile_html
-    assert "月額料金をお願いしません" in mobile_html
+    assert "先着30名の無料モニターとしてご利用いただけます" in mobile_html
     assert "100円からの開発支援" in mobile_html
     assert "1回あたり1,000円まで" in mobile_html
     assert "支援は完全に任意" in mobile_html
