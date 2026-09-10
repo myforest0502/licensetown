@@ -27,6 +27,7 @@ from linebot.models import (
 from daily_wrong_review import REVIEW_COMMAND, install_daily_wrong_review
 from dashboard_progress_trend import install_dashboard_progress_trend
 from developer_access_recovery import install_developer_access_recovery
+from durable_paused_session import install_durable_paused_sessions
 from learning_time_guard import install_learning_time_guard
 from one_question_starter import install_one_question_starter, one_question_quick_reply_item
 from phase11_gate_ui import install_phase11_gate_ui
@@ -120,6 +121,7 @@ def _apply_rich_menu_v2_if_requested() -> None:
 
 # Registered LINE callbacks resolve these names from the legacy app module at
 # call time, so production behavior can be composed without rewriting app.py.
+install_durable_paused_sessions(legacy, database_module)
 install_learning_time_guard(legacy, database_module)
 install_prerequisite_attempt_cache(legacy)
 install_dashboard_progress_trend(legacy, goukaku_module)
