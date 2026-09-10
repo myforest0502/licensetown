@@ -228,6 +228,7 @@ def load_current_app_functions() -> SimpleNamespace:
         },
         "known_user_ids": known_user_ids,
         "claim_free_monitor_slot": lambda _user_id: 1,
+        "get_question_attempts": lambda _user_id: [],
         "line_replies": line_replies,
         "user_profile_exists": lambda user_id: user_id in known_user_ids,
     }

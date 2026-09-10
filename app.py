@@ -619,15 +619,21 @@ def load_question_master(path=None):
     return questions
 
 
-def select_random_questions(question_count):
+def select_random_questions(question_count, *, exclude_ids=()):
     """
     起動時ロード済みの正式問題バンクからランダムに取得する。
     """
+    if exclude_ids:
+        return select_formal_questions(question_count, exclude_ids=exclude_ids)
     return select_formal_questions(question_count)
 
 
-def select_category_questions(category_small, question_count):
+def select_category_questions(category_small, question_count, *, exclude_ids=()):
     """正式問題バンクから指定分野の問題だけを取得する。"""
+    if exclude_ids:
+        return select_formal_questions_by_category(
+            category_small, question_count, exclude_ids=exclude_ids
+        )
     return select_formal_questions_by_category(category_small, question_count)
 
 # 回答時に使用する自信度
@@ -928,7 +934,12 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
     adaptive_selection_audit = None
     if session_kind == "initial_assessment":
         all_questions = build_initial_assessment(total_question_count)
-    elif session_kind == "adaptive_daily":
+    else:
+        attempts = get_question_attempts(user_id)
+        from short_term_repeat_guard import blocked_short_term_evidence_ids
+        short_term_blocked = blocked_short_term_evidence_ids(attempts)
+        short_term_blocked.update(str(value) for value in (exclude_ids or ()))
+    if session_kind == "adaptive_daily":
         if is_node_adaptive_recommendation_enabled(
             ENABLE_NODE_ADAPTIVE_RECOMMENDATION,
             user_id,
@@ -936,19 +947,30 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
         ):
             adaptive_selection_audit = {}
             all_questions = build_node_adaptive_session(
-                get_question_attempts(user_id),
+                attempts,
                 total_question_count,
-                exclude_ids=exclude_ids,
+                exclude_ids=short_term_blocked,
                 audit_out=adaptive_selection_audit,
             )
         else:
             all_questions = build_daily_session(
-                get_question_history(user_id), total_question_count, exclude_ids=exclude_ids
+                attempts, total_question_count, exclude_ids=short_term_blocked
             )
-    elif category_small is None:
-        all_questions = select_random_questions(total_question_count)
-    else:
-        all_questions = select_category_questions(category_small, total_question_count)
+    elif session_kind != "initial_assessment":
+        if category_small is None:
+            all_questions = (
+                select_random_questions(total_question_count, exclude_ids=short_term_blocked)
+                if short_term_blocked
+                else select_random_questions(total_question_count)
+            )
+        else:
+            all_questions = (
+                select_category_questions(
+                    category_small, total_question_count, exclude_ids=short_term_blocked
+                )
+                if short_term_blocked
+                else select_category_questions(category_small, total_question_count)
+            )
     # Keep the import at the session boundary so isolated app test harnesses
     # cannot accidentally drop the guard from this function's module globals.
     from question_order_quality import arrange_five_question_sets
@@ -1962,6 +1984,14 @@ def queue_prerequisite_backtrack_for_next_set(user_id, session):
         get_reviewed_node_relations(),
         excluded_question_ids=excluded,
     )
+    if candidate:
+        from short_term_repeat_guard import (
+            blocked_short_term_evidence_ids,
+            is_short_term_repeat_blocked,
+        )
+        blocked = blocked_short_term_evidence_ids(attempts)
+        if is_short_term_repeat_blocked(candidate["question_id"], blocked):
+            candidate = None
     if candidate:
         session["pending_prerequisite_backtrack"] = candidate
     return candidate

@@ -544,17 +544,18 @@ def test_user_histories_cannot_be_mixed(monkeypatch):
         raise AssertionError("mixed users must be rejected")
 
 
-def test_flag_false_uses_legacy_without_attempt_db_read(monkeypatch):
+def test_flag_false_uses_legacy_with_one_formal_attempt_read(monkeypatch):
     legacy = [{"id": f"Q{i}"} for i in range(1, 31)]
     monkeypatch.setattr(app, "ENABLE_NODE_ADAPTIVE_RECOMMENDATION", False)
     monkeypatch.setattr(app, "NODE_ADAPTIVE_RECOMMENDATION_PILOT_USER_IDS", {"flag-off"})
-    monkeypatch.setattr(app, "get_question_history", lambda _u: [])
     monkeypatch.setattr(app, "build_daily_session", lambda *args, **kwargs: legacy)
     monkeypatch.setattr(app, "format_quiz_messages", lambda _questions: ["quiz"])
-    monkeypatch.setattr(app, "get_question_attempts", lambda _u: (_ for _ in ()).throw(AssertionError("extra DB read")))
+    reads = []
+    monkeypatch.setattr(app, "get_question_attempts", lambda user_id: reads.append(user_id) or [])
     app.user_modes["flag-off"] = "study"
     app.start_quiz("flag-off", session_kind="adaptive_daily")
     assert app.study_sessions["flag-off"]["all_questions"] == legacy
+    assert reads == ["flag-off"]
     app.study_sessions.pop("flag-off", None)
 
 
@@ -616,17 +617,18 @@ def test_node_adaptive_allowlist_is_fail_closed():
     assert enabled(True, "son", {"son", "other"})
 
 
-def test_flag_true_non_allowlisted_user_preserves_legacy_and_no_attempt_read(monkeypatch):
+def test_flag_true_non_allowlisted_user_preserves_legacy_with_formal_attempt_guard(monkeypatch):
     legacy = [{"id": f"Q{i}"} for i in range(1, 31)]
     monkeypatch.setattr(app, "ENABLE_NODE_ADAPTIVE_RECOMMENDATION", True)
     monkeypatch.setattr(app, "NODE_ADAPTIVE_RECOMMENDATION_PILOT_USER_IDS", {"son"})
-    monkeypatch.setattr(app, "get_question_history", lambda _u: [])
     monkeypatch.setattr(app, "build_daily_session", lambda *args, **kwargs: legacy)
     monkeypatch.setattr(app, "format_quiz_messages", lambda _questions: ["quiz"])
-    monkeypatch.setattr(app, "get_question_attempts", lambda _u: (_ for _ in ()).throw(AssertionError("extra DB read")))
+    reads = []
+    monkeypatch.setattr(app, "get_question_attempts", lambda user_id: reads.append(user_id) or [])
     app.user_modes["not-son"] = "study"
     app.start_quiz("not-son", session_kind="adaptive_daily")
     assert app.study_sessions["not-son"]["all_questions"] == legacy
+    assert reads == ["not-son"]
     app.study_sessions.pop("not-son", None)
 
 
