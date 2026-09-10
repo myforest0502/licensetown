@@ -1,6 +1,14 @@
 # LicenseTown Current State
 
-Last updated: 2026-09-09
+## 2026-09-10 Production blocker: global short-term same-Q repeats
+
+- Production attempts showed the same evidence question recurring within minutes through non-adaptive learner paths, despite the adaptive Recent Cooldown repair.
+- Root cause: the PR #296 protection lived inside the adaptive/daily selectors; ordinary random/category session creation and prerequisite backtrack did not consistently apply the authoritative `question_attempts` history.
+- Fix branch: `fix/global-short-term-repeat-guard-v01`. All ordinary learner session paths now derive one shared blocked exact-evidence set from formal Node-state replay. Previously attempted evidence stays blocked until the formal state is `recheck_due`; same-Node different-Q repair remains eligible.
+- Random/category selection accepts that blocked set, category shortage fills from other non-recent evidence instead of immediately repeating a Q, and prerequisite backtrack cannot reinsert blocked evidence. Initial assessment remains unchanged.
+- Status: **real Production defect observed: YES / cause identified: YES / focused regression: GREEN / full local pytest: one unrelated Windows CRLF idempotence failure only; Linux CI pending / Production deployed: NO / real learner acceptance: PENDING**.
+
+Last updated: 2026-09-10
 Safe integration base: `work/pt-finalization-post-q2000`
 
 ## How to resume
@@ -13,6 +21,14 @@ Safe integration base: `work/pt-finalization-post-q2000`
 Always distinguish: **code exists / tests pass / real data observed / product accepted**.
 Do not casually change `main`, Production Neon, Render or LINE behavior.
 Practical learner effect and national-exam success outrank architectural elegance.
+
+## 2026-09-10 Production blocker: global short-term same-Q repeats
+
+- Production evidence showed same raw questions recurring within minutes across ordinary learning sessions, including Q1702 at 17:34 / 17:39 / 17:45 and Q1595 at 19:16 / 19:24.
+- PR #296 protected the Node-adaptive and legacy daily builders, but ordinary random/category starts and prerequisite backtrack still had paths that did not apply the formal attempt-based guard.
+- Fix branch: `fix/global-short-term-repeat-guard-v01`. Every non-initial-assessment start reads `question_attempts` as formal truth, canonicalizes exact-repeat evidence identity, and blocks previously attempted evidence until the formal Node replay reaches `recheck_due`; same-Node different-Q repair remains eligible.
+- Random/category selection accepts the same evidence exclusions, and prerequisite backtrack cannot inject a blocked recent evidence question. Initial assessment remains on its fixed contract.
+- Status: **real Production defect observed: YES / code fix exists: YES / focused regression green / full CI pending / Production deployed: NO / real-device acceptance: PENDING**.
 
 ## Fixed PT v1.0 product finish line
 

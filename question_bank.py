@@ -9,6 +9,8 @@ import random
 import re
 from pathlib import Path
 
+from question_equivalence import canonicalize_question_evidence_id
+
 
 logger = logging.getLogger(__name__)
 QUESTION_BANK_DIR = Path(__file__).resolve().parent / "data" / "question_bank"
@@ -343,16 +345,31 @@ def get_quiz_question(q_id) -> dict:
     }
 
 
-def select_random_questions(question_count: int) -> list[dict]:
+def select_random_questions(question_count: int, *, exclude_ids=()) -> list[dict]:
     _require_loaded()
-    if question_count > len(_QUESTIONS):
+    excluded = {
+        canonicalize_question_evidence_id(str(value))
+        for value in (exclude_ids or ())
+    }
+    eligible_by_evidence = {}
+    for q_id in _QUESTIONS:
+        evidence_id = canonicalize_question_evidence_id(q_id)
+        if evidence_id not in excluded:
+            eligible_by_evidence.setdefault(evidence_id, []).append(q_id)
+    eligible_ids = [random.choice(ids) for ids in eligible_by_evidence.values()]
+    if question_count > len(eligible_ids):
         raise QuestionBankError("Requested question count exceeds formal bank")
-    ids = random.sample(list(_QUESTIONS), question_count)
+    ids = random.sample(eligible_ids, question_count)
     return [get_quiz_question(q_id) for q_id in ids]
 
 
-def select_questions_by_category(category_small: int, question_count: int) -> list[dict]:
-    """正式JSONから指定分野だけを抽出する。少数分野は一巡後に再抽出する。"""
+def select_questions_by_category(
+    category_small: int,
+    question_count: int,
+    *,
+    exclude_ids=(),
+) -> list[dict]:
+    """正式JSONから指定分野だけを、同一evidenceの重複なしで抽出する。"""
     _require_loaded()
     try:
         category_number = int(category_small)
@@ -363,17 +380,45 @@ def select_questions_by_category(category_small: int, question_count: int) -> li
     if question_count < 1:
         raise QuestionBankError("Requested question count must be positive")
 
-    matching_ids = [
-        q_id for q_id, question in _QUESTIONS.items()
-        if int(question.get("category_small", 0)) == category_number
-    ]
+    excluded = {
+        canonicalize_question_evidence_id(str(value))
+        for value in (exclude_ids or ())
+    }
+    matching_by_evidence = {}
+    for q_id, question in _QUESTIONS.items():
+        evidence_id = canonicalize_question_evidence_id(q_id)
+        if (
+            int(question.get("category_small", 0)) == category_number
+            and evidence_id not in excluded
+        ):
+            matching_by_evidence.setdefault(evidence_id, []).append(q_id)
+    matching_ids = [random.choice(ids) for ids in matching_by_evidence.values()]
     if not matching_ids:
         raise QuestionBankError(f"No questions found for category_small={category_number}")
 
-    selected_ids = []
-    while len(selected_ids) < question_count:
-        shuffled_ids = random.sample(matching_ids, len(matching_ids))
-        selected_ids.extend(shuffled_ids[: question_count - len(selected_ids)])
+    if excluded:
+        selected_ids = random.sample(
+            matching_ids, min(question_count, len(matching_ids))
+        )
+        if len(selected_ids) < question_count:
+            selected_evidence = {
+                canonicalize_question_evidence_id(q_id) for q_id in selected_ids
+            }
+            fallback_by_evidence = {}
+            for q_id in _QUESTIONS:
+                evidence_id = canonicalize_question_evidence_id(q_id)
+                if evidence_id not in excluded and evidence_id not in selected_evidence:
+                    fallback_by_evidence.setdefault(evidence_id, []).append(q_id)
+            fallback_ids = [random.choice(ids) for ids in fallback_by_evidence.values()]
+            needed = question_count - len(selected_ids)
+            if needed > len(fallback_ids):
+                raise QuestionBankError("Requested question count exceeds formal bank")
+            selected_ids.extend(random.sample(fallback_ids, needed))
+    else:
+        selected_ids = []
+        while len(selected_ids) < question_count:
+            shuffled_ids = random.sample(matching_ids, len(matching_ids))
+            selected_ids.extend(shuffled_ids[: question_count - len(selected_ids)])
     return [get_quiz_question(q_id) for q_id in selected_ids]
 
 

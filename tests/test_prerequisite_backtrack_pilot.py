@@ -190,14 +190,13 @@ def test_feature_flag_false_skips_history_and_preserves_existing_next_set(monkey
 def test_feature_flag_true_queues_one_mip_candidate_without_recursion(monkeypatch, caplog):
     caplog.set_level(logging.INFO)
     session = make_session()
-    source = attempt("Q260", MIP["source_node_id"], True, 2, 1, "old-event", "pilot-user")
     target = attempt(
         "Q386", MIP["target_node_id"], False, 2, 2, "pilot-session:1", "pilot-user"
     )
     app.study_sessions["pilot-user"] = session
     monkeypatch.setattr(app, "ENABLE_PREREQUISITE_BACKTRACK", True)
     monkeypatch.setattr(app, "PREREQUISITE_BACKTRACK_PILOT_USER_IDS", {"pilot-user"})
-    monkeypatch.setattr(app, "get_question_attempts", lambda _user_id: [source, target])
+    monkeypatch.setattr(app, "get_question_attempts", lambda _user_id: [target])
     monkeypatch.setattr(app, "get_reviewed_node_relations", lambda: [MIP])
     monkeypatch.setattr(app, "get_quiz_question", lambda question_id: {"id": question_id})
     monkeypatch.setattr(app, "format_quiz_messages", lambda *args, **kwargs: ["ok"])
@@ -215,11 +214,28 @@ def test_feature_flag_true_queues_one_mip_candidate_without_recursion(monkeypatc
         assert "relation_id=KNR0003" in caplog.text
         assert "source_question_id=Q260" in caplog.text
         assert "target_question_id=Q386" in caplog.text
-        assert "diagnosis=SOURCE_UNSTABLE" in caplog.text
-        assert "reason=uncertain_or_guessed_correct_source" in caplog.text
+        assert "diagnosis=SOURCE_UNSEEN" in caplog.text
+        assert "reason=unanswered_source" in caplog.text
         assert "pilot-user" not in caplog.text
     finally:
         app.study_sessions.pop("pilot-user", None)
+
+
+def test_recent_same_question_is_not_queued_by_prerequisite_backtrack(monkeypatch):
+    session = make_session()
+    source = attempt(
+        "Q260", MIP["source_node_id"], True, 2, 1, "old-event", "pilot-user"
+    )
+    target = attempt(
+        "Q386", MIP["target_node_id"], False, 2, 2, "pilot-session:1", "pilot-user"
+    )
+    monkeypatch.setattr(app, "ENABLE_PREREQUISITE_BACKTRACK", True)
+    monkeypatch.setattr(app, "PREREQUISITE_BACKTRACK_PILOT_USER_IDS", {"pilot-user"})
+    monkeypatch.setattr(app, "get_question_attempts", lambda _user_id: [source, target])
+    monkeypatch.setattr(app, "get_reviewed_node_relations", lambda: [MIP])
+
+    assert app.queue_prerequisite_backtrack_for_next_set("pilot-user", session) is None
+    assert "pending_prerequisite_backtrack" not in session
 
 
 def test_non_allowlisted_and_empty_allowlist_skip_history(monkeypatch):
