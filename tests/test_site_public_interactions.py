@@ -46,7 +46,7 @@ def test_mobile_faq_has_compact_answer_preview_and_single_open_accordion_behavio
     css = client.get("/site/preview-responsive/mobile.css").get_data(as_text=True)
 
     assert html.count('class="faq-answer"') == 3
-    assert "β期間のため、完全版の機能を無料で開放しています" in html
+    assert "正式公開前の無料モニターとして、先着30名まで月額料金なしでご利用いただけます" in html
     assert "理学療法士国家試験に向けて" in html
     assert (
         'href="/site/view/mobile#faq-all-panel">その他の質問はこちら' in html

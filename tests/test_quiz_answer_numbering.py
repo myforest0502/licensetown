@@ -227,6 +227,7 @@ def load_current_app_functions() -> SimpleNamespace:
             "3": "あてずっぽう",
         },
         "known_user_ids": known_user_ids,
+        "claim_free_monitor_slot": lambda _user_id: 1,
         "line_replies": line_replies,
         "user_profile_exists": lambda user_id: user_id in known_user_ids,
     }

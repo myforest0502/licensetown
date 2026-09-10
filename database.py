@@ -4,6 +4,7 @@ import os
 import json
 import copy
 import hashlib
+import threading
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from typing import Any
@@ -23,6 +24,8 @@ _local_learning_seconds: dict[str, float] = {}
 _local_learning_time_events: list[dict[str, Any]] = []
 _local_supporter_links: dict[tuple[str, str], bool] = {}
 _local_initial_assessment_completed: set[str] = set()
+_local_free_monitor_slots: dict[str, int] = {}
+_local_free_monitor_lock = threading.Lock()
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +33,7 @@ STANDARD_STUDY_MINUTES = 500 * 60
 STANDARD_TOTAL_ANSWERS = 3000
 STANDARD_UNIQUE_QUESTIONS = 1000
 NODE_LEARNING_SCHEMA_VERSION = "2026_08_node_learning_state_v1"
+FREE_MONITOR_CAPACITY = 30
 
 
 def database_is_available() -> bool:
@@ -58,6 +62,53 @@ def _connection_or_existing(connection=None):
         yield created_connection
 
 
+def _claim_free_monitor_slot_with_cursor(cur, user_id: str) -> int | None:
+    """Claim one fixed slot while serializing retries for the same LINE user."""
+    cur.execute("SELECT pg_advisory_xact_lock(hashtextextended(%s, 0))", (user_id,))
+    cur.execute("SELECT slot_number FROM free_monitor_slots WHERE user_id = %s", (user_id,))
+    existing = cur.fetchone()
+    if existing:
+        return int(existing[0])
+    cur.execute(
+        """
+        WITH candidate AS (
+            SELECT slot_number FROM free_monitor_slots
+            WHERE user_id IS NULL
+            ORDER BY slot_number
+            FOR UPDATE SKIP LOCKED
+            LIMIT 1
+        )
+        UPDATE free_monitor_slots AS slots
+        SET user_id = %s, claimed_at = NOW()
+        FROM candidate
+        WHERE slots.slot_number = candidate.slot_number
+        RETURNING slots.slot_number
+        """,
+        (user_id,),
+    )
+    claimed = cur.fetchone()
+    return int(claimed[0]) if claimed else None
+
+
+def claim_free_monitor_slot(user_id: str) -> int | None:
+    """Return the existing/new slot, or None when all 30 are claimed."""
+    if not user_id:
+        return None
+    if not database_is_available():
+        with _local_free_monitor_lock:
+            existing = _local_free_monitor_slots.get(user_id)
+            if existing is not None:
+                return existing
+            if len(_local_free_monitor_slots) >= FREE_MONITOR_CAPACITY:
+                return None
+            slot_number = len(_local_free_monitor_slots) + 1
+            _local_free_monitor_slots[user_id] = slot_number
+            return slot_number
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            return _claim_free_monitor_slot_with_cursor(cur, user_id)
+
+
 def init_database() -> None:
     """ユーザー名とモードを保存するテーブルを作る。"""
     if not database_is_available():
@@ -83,6 +134,24 @@ def init_database() -> None:
                 """
                 ALTER TABLE user_profiles
                 ADD COLUMN IF NOT EXISTS initial_assessment_completed BOOLEAN NOT NULL DEFAULT FALSE
+                """
+            )
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS free_monitor_slots (
+                    slot_number SMALLINT PRIMARY KEY,
+                    user_id TEXT UNIQUE,
+                    claimed_at TIMESTAMPTZ,
+                    CHECK (slot_number BETWEEN 1 AND 30),
+                    CHECK ((user_id IS NULL) = (claimed_at IS NULL))
+                )
+                """
+            )
+            cur.execute(
+                """
+                INSERT INTO free_monitor_slots (slot_number)
+                SELECT slot_number FROM generate_series(1, 30) AS slot_number
+                ON CONFLICT (slot_number) DO NOTHING
                 """
             )
             cur.execute(
@@ -291,6 +360,53 @@ def init_database() -> None:
                 ON CONFLICT (version) DO NOTHING
                 """,
                 (NODE_LEARNING_SCHEMA_VERSION,),
+            )
+            cur.execute(
+                "SELECT pg_advisory_xact_lock(hashtext('free_monitor_slots_backfill_v01'))"
+            )
+            cur.execute(
+                """
+                DO $$
+                BEGIN
+                    IF (
+                        SELECT COUNT(*) FROM (
+                            SELECT user_id FROM free_monitor_slots WHERE user_id IS NOT NULL
+                            UNION
+                            SELECT user_id FROM user_profiles WHERE name IS NOT NULL
+                            UNION
+                            SELECT user_id FROM learning_events WHERE answered_count > 0
+                        ) AS protected_users
+                    ) > 30 THEN
+                        RAISE EXCEPTION 'existing free monitor learners exceed capacity';
+                    END IF;
+                END $$
+                """
+            )
+            cur.execute(
+                """
+                WITH protected_users AS (
+                    SELECT user_id FROM user_profiles WHERE name IS NOT NULL
+                    UNION
+                    SELECT user_id FROM learning_events WHERE answered_count > 0
+                ),
+                unclaimed AS (
+                    SELECT users.user_id, ROW_NUMBER() OVER (ORDER BY users.user_id) AS position
+                    FROM protected_users AS users
+                    WHERE NOT EXISTS (
+                        SELECT 1 FROM free_monitor_slots AS slots
+                        WHERE slots.user_id = users.user_id
+                    )
+                ),
+                available AS (
+                    SELECT slot_number, ROW_NUMBER() OVER (ORDER BY slot_number) AS position
+                    FROM free_monitor_slots WHERE user_id IS NULL
+                )
+                UPDATE free_monitor_slots AS slots
+                SET user_id = unclaimed.user_id, claimed_at = NOW()
+                FROM unclaimed
+                JOIN available USING (position)
+                WHERE slots.slot_number = available.slot_number
+                """
             )
 
     logger.info("Neonデータベースの準備が完了しました。")

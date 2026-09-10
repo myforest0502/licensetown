@@ -21,7 +21,7 @@ def test_pc_refresh_balances_bottom_cards_and_keeps_three_faq_items(monkeypatch)
     html = refresh_public_site_html(source, mobile=False)
     assert "ログイン" not in html
     assert "サービス提供準備中" not in html
-    assert "検証期間中 無料公開" in html
+    assert "無料モニター 先着30名限定" in html
     assert "LINEで無料ではじめる" in html
     assert "/site/line-qr.svg" in html
     assert 'href="/site/faq">その他の質問はこちら' in html
@@ -43,7 +43,7 @@ def test_mobile_refresh_keeps_three_preview_questions_and_full_faq_link(monkeypa
     html = refresh_public_site_html(source, mobile=True)
     assert html.count("<details>") == 3
     assert 'href="/site/faq">その他の質問はこちら' in html
-    assert "検証期間中 無料公開" in html
+    assert "無料モニター 先着30名限定" in html
     assert "marketing-mobile-free" in html
 
 
