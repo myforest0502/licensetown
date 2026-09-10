@@ -13,7 +13,10 @@ NOINDEX_PREFIXES = (
     "/site/preview-responsive/",
 )
 
-GSC_VERIFICATION_FILE = "google5328e7e8be120ade.html"
+GSC_VERIFICATION_FILES = (
+    "google5328e7e8be120ade.html",
+    "googlef6f9c91620140fb4.html",
+)
 
 
 def _origin() -> str:
@@ -23,11 +26,18 @@ def _origin() -> str:
 def install_site_seo_foundation(app) -> None:
     """Install public SEO discovery routes without changing the frozen site UI."""
 
-    @app.get(f"/{GSC_VERIFICATION_FILE}")
-    def licensetown_gsc_verification():
+    def licensetown_gsc_verification(filename: str):
         return Response(
-            f"google-site-verification: {GSC_VERIFICATION_FILE}\n",
+            f"google-site-verification: {filename}\n",
             mimetype="text/plain",
+        )
+
+    for filename in GSC_VERIFICATION_FILES:
+        app.add_url_rule(
+            f"/{filename}",
+            endpoint=f"licensetown_gsc_verification_{filename}",
+            view_func=lambda filename=filename: licensetown_gsc_verification(filename),
+            methods=["GET"],
         )
 
     @app.get("/robots.txt")
