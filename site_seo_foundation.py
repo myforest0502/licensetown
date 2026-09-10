@@ -14,7 +14,6 @@ NOINDEX_PREFIXES = (
 )
 
 GSC_VERIFICATION_FILES = (
-    "google5328e7e8be120ade.html",
     "googlef6f9c91620140fb4.html",
 )
 
