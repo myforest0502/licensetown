@@ -69,7 +69,9 @@ from question_bank import (
     get_question_tag,
     get_quiz_question,
     resolve_category_small,
+    QUESTION_AVAILABILITY_MESSAGE,
     QUESTION_BANK_ERROR_MESSAGE,
+    QuestionAvailabilityError,
     QuestionBankError,
     display_answer as get_display_answer,
     is_answer_correct,
@@ -1099,6 +1101,10 @@ def prepare_and_send_quiz(user_id):
             with learner_path_perf.measure("study_start_async.line_send"):
                 push_quiz_to_line(user_id, quiz_message)
 
+    except QuestionAvailabilityError:
+        logging.warning("Quiz start paused: insufficient non-recent unique questions")
+        study_sessions.pop(user_id, None)
+        push_to_line(user_id, QUESTION_AVAILABILITY_MESSAGE)
     except QuestionBankError:
         logging.exception("Formal question bank quiz preparation failed: user_id=%s", user_id)
         study_sessions.pop(user_id, None)
@@ -2202,6 +2208,10 @@ def start_and_reply_quiz(
                 ),
             )
         return True
+    except QuestionAvailabilityError:
+        logging.warning("Quiz start paused: insufficient non-recent unique questions")
+        study_sessions.pop(user_id, None)
+        reply_to_line(reply_token, QUESTION_AVAILABILITY_MESSAGE)
     except QuestionBankError:
         logging.exception("Formal question bank initial reply failed: user_id=%s", user_id)
         study_sessions.pop(user_id, None)
@@ -2355,6 +2365,12 @@ def start_dashboard_recommendation():
                         attempts=attempts,
                         learning_intent=action.get("learning_intent"),
                     )
+            except QuestionAvailabilityError:
+                response_status = 409
+                return {
+                    "ok": False,
+                    "message": "直前に解いた問題を避けるため、今は必要な問題数を用意できません。少し時間を空けてください。",
+                }, response_status
             except QuestionBankError:
                 logging.exception("Web recommendation session creation failed")
                 response_status = 503
@@ -2379,6 +2395,11 @@ def start_dashboard_recommendation():
         session_id, started = create_web_recommendation_session(
             user_id, category_small, question_count, payload.get("token")
         )
+    except QuestionAvailabilityError:
+        return {
+            "ok": False,
+            "message": "直前に解いた問題を避けるため、今は必要な問題数を用意できません。少し時間を空けてください。",
+        }, 409
     except QuestionBankError:
         logging.exception("Web recommendation session creation failed")
         return {"ok": False, "message": "問題を準備できませんでした。"}, 503

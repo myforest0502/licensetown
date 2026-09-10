@@ -6,7 +6,13 @@ import random
 from collections import defaultdict
 from datetime import datetime, timezone
 
-from question_bank import get_question, get_question_tag, get_quiz_question, question_ids
+from question_bank import (
+    QuestionAvailabilityError,
+    get_question,
+    get_question_tag,
+    get_quiz_question,
+    question_ids,
+)
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import derive_all_user_node_states
 from question_equivalence import (
@@ -45,11 +51,14 @@ def build_initial_assessment(question_count=10, exclude_ids=None, rng=None):
     """能力とLevelが偏りすぎない現在地チェックを作る（最大15問）。"""
     if question_count < 1 or question_count > 15:
         raise ValueError("Initial assessment must contain 1-15 questions")
-    excluded = set(exclude_ids or ())
+    excluded_evidence = {
+        canonicalize_question_evidence_id(str(q_id))
+        for q_id in (exclude_ids or ())
+    }
     randomizer = rng or random
     buckets = defaultdict(list)
     for q_id in _candidate_ids():
-        if q_id in excluded:
+        if canonicalize_question_evidence_id(q_id) in excluded_evidence:
             continue
         tag = get_question_tag(q_id)
         buckets[tag.get("primary_ability")].append(q_id)
@@ -70,7 +79,17 @@ def build_initial_assessment(question_count=10, exclude_ids=None, rng=None):
             chosen = randomizer.choice(candidates)
             selected.append(chosen)
             used_levels[ability].add(get_question_tag(chosen).get("level"))
-            buckets[ability].remove(chosen)
+
+            # Raw official IDs are immutable, but exact official repeats are one
+            # learner-facing evidence identity.  Never put the same problem twice
+            # into the one-time current-position assessment under two raw Q IDs.
+            chosen_evidence = canonicalize_question_evidence_id(chosen)
+            for bucket in buckets.values():
+                bucket[:] = [
+                    q_id for q_id in bucket
+                    if canonicalize_question_evidence_id(q_id) != chosen_evidence
+                ]
+
             if buckets[ability]:
                 next_abilities.append(ability)
             if len(selected) == question_count:
@@ -246,7 +265,9 @@ def build_daily_session(
     scored.sort(reverse=True)
     selected = [q_id for _score, _tie, q_id in scored[:question_count]]
     if len(selected) < question_count:
-        raise ValueError("Not enough questions for daily session")
+        raise QuestionAvailabilityError(
+            "Not enough non-blocked questions for daily session"
+        )
     return [get_quiz_question(q_id) for q_id in selected]
 
 
@@ -307,7 +328,7 @@ def select_questions_for_session(
 ):
     """UIから利用する共通入口。"""
     if kind == "initial_assessment":
-        return build_initial_assessment(question_count)
+        return build_initial_assessment(question_count, exclude_ids=exclude_ids)
     return build_daily_session(
         history or (), question_count, category_small, exclude_ids=exclude_ids
     )

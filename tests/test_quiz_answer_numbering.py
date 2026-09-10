@@ -219,6 +219,8 @@ def load_current_app_functions() -> SimpleNamespace:
             "解剖学": 1, "医学概論": 6, "内科学": 8, "運動器": 16,
         }[category_name],
         "QuestionBankError": ValueError,
+        "QuestionAvailabilityError": ValueError,
+        "QUESTION_AVAILABILITY_MESSAGE": "問題数不足",
         "QUIZ_QUESTION_COUNT": 30,
         "QUESTIONS_PER_SET": 5,
         "CONFIDENCE_LEVELS": {

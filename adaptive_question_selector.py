@@ -14,7 +14,13 @@ from knowledge_node_repair_evidence import (
     SAME_QUESTION,
     classify_repair_confirmation,
 )
-from question_bank import get_category_small, get_question_tag, get_quiz_question, question_ids
+from question_bank import (
+    QuestionAvailabilityError,
+    get_category_small,
+    get_question_tag,
+    get_quiz_question,
+    question_ids,
+)
 from question_equivalence import (
     canonicalize_question_evidence_id,
     canonicalize_question_evidence_node,
@@ -286,12 +292,46 @@ def build_node_adaptive_session(
     attempts, question_count=30, exclude_ids=(), rng=None, *, audit_out=None,
     category_small: int | None = None, learning_intent: str | None = None,
 ):
-    records = select_node_adaptive_questions(
-        attempts, question_count, exclude_ids=exclude_ids, rng=rng,
-        category_small=category_small, learning_intent=learning_intent,
-    )
+    # Production callers include LINE adaptive study and Web recommendations.
+    # The selector already owns formal Node/recheck eligibility.  Add only the
+    # invariant hard floor here: no evidence attempted within three real days
+    # can be reopened merely because another item in the same Node is due.
+    from short_term_repeat_guard import recent_short_term_evidence_ids
+
+    effective_exclude_ids = {
+        canonicalize_question_evidence_id(str(value))
+        for value in (exclude_ids or ())
+    }
+    effective_exclude_ids.update(recent_short_term_evidence_ids(attempts))
+    records = []
+    phases = [
+        (category_small, learning_intent),
+        (category_small, None),
+        (None, learning_intent),
+        (None, None),
+    ]
+    visited = set()
+    for phase_category, phase_intent in phases:
+        phase = (phase_category, phase_intent)
+        if phase in visited or len(records) >= question_count:
+            continue
+        visited.add(phase)
+        selected_evidence = {
+            item["evidence_question_id"] for item in records
+        }
+        phase_records = select_node_adaptive_questions(
+            attempts,
+            question_count - len(records),
+            exclude_ids=effective_exclude_ids | selected_evidence,
+            rng=rng,
+            category_small=phase_category,
+            learning_intent=phase_intent,
+        )
+        records.extend(phase_records)
     if len(records) < question_count:
-        raise ValueError("Not enough questions for Node adaptive session")
+        raise QuestionAvailabilityError(
+            "Not enough non-blocked questions for Node adaptive session"
+        )
     if audit_out is not None:
         audit_out.update({
             item["question_id"]: {
