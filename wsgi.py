@@ -34,6 +34,7 @@ from site_direct_line_cta import install_site_direct_line_cta
 from site_marketing_hotfix import install_site_marketing_hotfix
 from site_marketing_refresh import install_site_marketing_refresh
 from site_marketing_viewport_fix import install_site_marketing_viewport_fix
+from site_seo_foundation import install_site_seo_foundation
 from supporter_learner_preview_bridge import install_supporter_learner_preview_bridge
 from term_explainer import explain_term
 
@@ -144,6 +145,7 @@ install_site_marketing_viewport_fix(legacy.app)
 install_site_direct_line_cta(legacy.app)
 install_site_marketing_hotfix(legacy.app)
 install_site_marketing_refresh(legacy.app)
+install_site_seo_foundation(legacy.app)
 install_phase11_gate_ui(legacy.app)
 install_supporter_learner_preview_bridge(legacy.app)
 install_developer_access_recovery(legacy.app)
