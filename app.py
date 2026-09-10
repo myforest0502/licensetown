@@ -948,6 +948,10 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
         all_questions = select_random_questions(total_question_count)
     else:
         all_questions = select_category_questions(category_small, total_question_count)
+    # Keep the import at the session boundary so isolated app test harnesses
+    # cannot accidentally drop the guard from this function's module globals.
+    from question_order_quality import arrange_five_question_sets
+    all_questions = arrange_five_question_sets(all_questions, QUESTIONS_PER_SET)
     questions = all_questions[:QUESTIONS_PER_SET]
 
     study_sessions[user_id] = {
