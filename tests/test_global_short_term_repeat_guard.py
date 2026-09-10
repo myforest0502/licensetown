@@ -207,7 +207,7 @@ def test_adaptive_session_boundary_applies_guard_for_web_style_direct_call(monke
     received = []
     monkeypatch.setattr(
         guard,
-        "blocked_short_term_evidence_ids",
+        "recent_short_term_evidence_ids",
         lambda _attempts, **_kwargs: {"Q1"},
     )
     monkeypatch.setattr(
