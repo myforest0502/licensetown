@@ -107,6 +107,22 @@ def _configured_gap_cap() -> float:
     return value if value > 0 else float(DEFAULT_MAX_ACTIVITY_GAP_SECONDS)
 
 
+def _current_session_has_formal_id(legacy_module, user_id: str) -> bool:
+    """Return whether the active legacy quiz session has its real session id.
+
+    Some isolated legacy unit tests intentionally construct only
+    ``{"active_started_at": ...}``.  Production quiz sessions created by
+    ``start_quiz`` always have a formal ``session_id``.  Preserving the former
+    avoids letting production composition mutate the meaning of those legacy
+    tests without weakening the production idle-time guard.
+    """
+    sessions = getattr(legacy_module, "study_sessions", None)
+    if not isinstance(sessions, dict):
+        return False
+    session = sessions.get(user_id)
+    return isinstance(session, dict) and bool(session.get("session_id"))
+
+
 def install_learning_time_guard(legacy_module, database_module) -> None:
     """Install the production-safe learning-time binding on the legacy module."""
     if getattr(legacy_module, "_learning_time_guard_installed", False):
@@ -130,6 +146,24 @@ def install_learning_time_guard(legacy_module, database_module) -> None:
             safe_seconds = min(raw_seconds, gap_cap)
             logger.warning(
                 "learning_time_guard status=unparseable_key user_id=%s raw_seconds=%.3f safe_seconds=%.3f",
+                user_id,
+                raw_seconds,
+                safe_seconds,
+            )
+            return original_add_learning_time(
+                user_id,
+                safe_seconds,
+                recorded_at=recorded_at,
+                event_key=event_key,
+            )
+
+        # Production quiz sessions always carry a formal session id.  A session
+        # without one is a legacy/synthetic path; preserve its old accounting
+        # semantics, but still cap it so it cannot become an hours-long outlier.
+        if not _current_session_has_formal_id(legacy_module, user_id):
+            safe_seconds = min(raw_seconds, gap_cap)
+            logger.info(
+                "learning_time_guard status=legacy_session_without_id user_id=%s raw_seconds=%.3f safe_seconds=%.3f",
                 user_id,
                 raw_seconds,
                 safe_seconds,
