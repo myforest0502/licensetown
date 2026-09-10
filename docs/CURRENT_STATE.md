@@ -6,7 +6,7 @@
 - Root cause: the PR #296 protection lived inside the adaptive/daily selectors; ordinary random/category session creation and prerequisite backtrack did not consistently apply the authoritative `question_attempts` history.
 - Fix branch: `fix/global-short-term-repeat-guard-v01`. All ordinary learner session paths now derive one shared blocked exact-evidence set from formal Node-state replay. Previously attempted evidence stays blocked until the formal state is `recheck_due`; same-Node different-Q repair remains eligible.
 - Random/category selection accepts that blocked set, category shortage fills from other non-recent evidence instead of immediately repeating a Q, and prerequisite backtrack cannot reinsert blocked evidence. Initial assessment remains unchanged.
-- Status: **real Production defect observed: YES / cause identified: YES / focused regression: GREEN / full local pytest: one unrelated Windows CRLF idempotence failure only; Linux CI pending / Production deployed: NO / real learner acceptance: PENDING**.
+- Status: **real Production defect observed: YES / cause identified: YES / focused regression: 173 passed plus 125 subtests / LF CI-equivalent full pytest: 1268 passed, 6 skipped, 1 deselected, 125 subtests passed / Production deployed: NO / real learner acceptance: PENDING**.
 
 Last updated: 2026-09-10
 Safe integration base: `work/pt-finalization-post-q2000`
