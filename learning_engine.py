@@ -4,9 +4,15 @@ from __future__ import annotations
 
 import random
 from collections import defaultdict
+from datetime import datetime, timezone
 
 from question_bank import get_question, get_question_tag, get_quiz_question, question_ids
 from knowledge_node_canonical import canonicalize_knowledge_node_id
+from knowledge_node_state_transition import derive_all_user_node_states
+from question_equivalence import (
+    canonicalize_question_evidence_id,
+    canonicalize_question_evidence_node,
+)
 
 
 ABILITY_LABELS = {
@@ -169,27 +175,56 @@ def summarize_initial_assessment(question_results):
 
 
 def build_daily_session(
-    history, question_count=30, category_small=None, exclude_ids=None, rng=None
+    history, question_count=30, category_small=None, exclude_ids=None, rng=None,
+    *, as_of=None,
 ):
     """誤概念候補・未習得候補・新規領域を優先した30問を返す。"""
     randomizer = rng or random
     latest = {}
     node_results = defaultdict(list)
+    replay_history = []
     for result in history or ():
         q_id = str(result.get("question_id", "")).upper()
         if not q_id:
             continue
-        latest[q_id] = result
-        node = _knowledge_node_key(get_question_tag(q_id))
+        evidence_q_id = canonicalize_question_evidence_id(q_id)
+        latest[evidence_q_id] = result
+        tag = get_question_tag(q_id)
+        node = canonicalize_question_evidence_node(
+            q_id, _knowledge_node_key(tag)
+        )
         node_results[node].append(bool(result.get("is_correct")))
+        replay_item = dict(result)
+        replay_item.setdefault("user_id", "legacy-daily-session")
+        replay_item["knowledge_node_id"] = node
+        replay_item.setdefault(
+            "answered_at", result.get("timestamp") or result.get("attempted_at")
+        )
+        replay_history.append(replay_item)
 
-    excluded = set(exclude_ids or ())
+    state_by_node = {
+        item["canonical_node_id"]: item["state"]
+        for item in derive_all_user_node_states(
+            replay_history, as_of=as_of or datetime.now(timezone.utc)
+        )
+    }
+    seen_evidence_ids = set(latest)
+
+    excluded = {
+        canonicalize_question_evidence_id(str(q_id).upper())
+        for q_id in (exclude_ids or ())
+    }
     scored = []
     for q_id in _candidate_ids(category_small):
-        if q_id in excluded:
+        evidence_q_id = canonicalize_question_evidence_id(q_id)
+        if evidence_q_id in excluded:
             continue
         tag = get_question_tag(q_id)
-        result = latest.get(q_id)
+        node = canonicalize_question_evidence_node(q_id, _knowledge_node_key(tag))
+        state = state_by_node.get(node, "unseen")
+        if evidence_q_id in seen_evidence_ids and state != "recheck_due":
+            continue
+        result = latest.get(evidence_q_id)
         if result is None:
             score = 250
         elif not result.get("is_correct") and result.get("confidence") == 1:
@@ -200,7 +235,9 @@ def build_daily_session(
             score = 400
         else:
             score = 50
-        node_history = node_results.get(_knowledge_node_key(tag), ())
+        if state == "recheck_due":
+            score = max(score, 700)
+        node_history = node_results.get(node, ())
         if len(node_history) >= 2 and sum(node_history) / len(node_history) < 0.6:
             score += 150
         if tag.get("safety") not in {None, "", "none"}:

@@ -87,7 +87,7 @@ def test_one_node_one_question_first_pass_preserves_repair_diversity(monkeypatch
     assert sum(item["canonical_node_id"] == "KN0001" for item in repair) == 1
 
 
-def test_second_question_is_allowed_only_as_shortage_fallback(monkeypatch):
+def test_answered_question_is_not_reused_for_shortage(monkeypatch):
     node_by_q = {"Q1": "KN0001", "Q2": "KN0001", "Q3": "KN0002"}
     custom_bank(monkeypatch, node_by_q)
     monkeypatch.setattr(selector, "classify_repair_confirmation", lambda old, new: (
@@ -96,12 +96,12 @@ def test_second_question_is_allowed_only_as_shortage_fallback(monkeypatch):
     selected = selector.select_node_adaptive_questions([
         attempt("Q1", "KN0001", False),
     ], 3, rng=random.Random(32))
-    assert len(selected) == 3
-    assert len({item["question_id"] for item in selected}) == 3
-    assert sum(item["canonical_node_id"] == "KN0001" for item in selected) == 2
+    assert len(selected) == 2
+    assert {item["question_id"] for item in selected} == {"Q2", "Q3"}
+    assert sum(item["canonical_node_id"] == "KN0001" for item in selected) == 1
 
 
-def test_safety_repair_uses_strong_then_weak_then_same(monkeypatch):
+def test_safety_repair_uses_strong_then_weak_but_not_immediate_same(monkeypatch):
     node_by_q = {"Q1": "KN0001", "Q2": "KN0001", "Q3": "KN0001"}
     node_by_q.update({f"Q{i}": f"KN{i:04d}" for i in range(4, 45)})
     custom_bank(monkeypatch, node_by_q, {"KN0001": "critical"})
@@ -135,9 +135,7 @@ def test_safety_repair_uses_strong_then_weak_then_same(monkeypatch):
     selected = selector.select_node_adaptive_questions([
         attempt("Q1", "KN0001", False),
     ], 10, rng=random.Random(35))
-    node_item = next(item for item in selected if item["canonical_node_id"] == "KN0001")
-    assert node_item["question_id"] == "Q1"
-    assert node_item["repair_evidence_quality"] == "same_question"
+    assert not any(item["canonical_node_id"] == "KN0001" for item in selected)
 
 
 def test_full_session_keeps_composition_unique_questions_and_node_diversity(monkeypatch):
@@ -391,18 +389,15 @@ def test_recent_wrong_prefers_non_recent_strong_then_weak(monkeypatch):
     assert node_item["repair_evidence_quality"] == "different_question_weak"
 
 
-def test_safety_singleton_can_bypass_recent_cooldown(monkeypatch):
+def test_safety_singleton_cannot_bypass_before_retention_due(monkeypatch):
     node_by_q = {"Q1": "KN0001"}
     node_by_q.update({f"Q{i}": f"KN{i:04d}" for i in range(2, 15)})
     custom_bank(monkeypatch, node_by_q, {"KN0001": "critical"})
     selected = selector.select_node_adaptive_questions(
         [attempt("Q1", "KN0001", False)], 10, rng=random.Random(46)
     )
-    q1 = next(item for item in selected if item["question_id"] == "Q1")
-    assert q1["priority_reason"] == "safety_wrong"
-    assert q1["recent_question_repeat"] is True
-    assert q1["same_question_repeat"] is True
-    assert q1["recent_cooldown_bypassed"] is True
+    assert "Q1" not in {item["question_id"] for item in selected}
+    assert len(selected) == 10
 
 
 def test_recent_repair_singleton_does_not_fill_soft_repair_shortage(monkeypatch):
@@ -428,7 +423,7 @@ def test_recent_repair_singleton_does_not_fill_soft_repair_shortage(monkeypatch)
     assert len(selected) == 10
 
 
-def test_small_bank_uses_recent_only_as_final_fallback(monkeypatch):
+def test_small_bank_fails_closed_instead_of_reusing_answered_questions(monkeypatch):
     fake_bank(monkeypatch, count=12)
     attempts = [
         attempt(f"Q{i}", f"KN{((i - 1) // 2) + 1:04d}", True, 1, minute=i)
@@ -437,12 +432,11 @@ def test_small_bank_uses_recent_only_as_final_fallback(monkeypatch):
     selected = selector.select_node_adaptive_questions(
         attempts, 10, rng=random.Random(49)
     )
-    assert len(selected) == 10
-    assert len({item["question_id"] for item in selected}) == 10
-    assert sum(item["recent_cooldown_bypassed"] for item in selected) == 4
+    assert len(selected) == 6
+    assert all(not item["recent_cooldown_bypassed"] for item in selected)
 
 
-def test_twenty_five_non_recent_candidates_use_exactly_five_recent_fallbacks(monkeypatch):
+def test_shortage_does_not_unlock_five_answered_questions(monkeypatch):
     fake_bank(monkeypatch, count=30)
     attempts = [
         attempt(f"Q{i}", f"KN{((i - 1) // 2) + 1:04d}", True, 1, minute=i)
@@ -451,32 +445,38 @@ def test_twenty_five_non_recent_candidates_use_exactly_five_recent_fallbacks(mon
     selected = selector.select_node_adaptive_questions(
         attempts, 30, rng=random.Random(55)
     )
-    assert len(selected) == 30
-    bypassed = [item for item in selected if item["recent_cooldown_bypassed"]]
-    assert len(bypassed) == 5
-    assert {item["question_id"] for item in bypassed} == {
-        "Q1", "Q2", "Q3", "Q4", "Q5"
-    }
+    assert len(selected) == 25
+    assert not any(item["recent_cooldown_bypassed"] for item in selected)
 
 
-def test_recent_and_same_question_flags_are_independent(monkeypatch):
+def test_answered_questions_are_excluded_before_due(monkeypatch):
     fake_bank(monkeypatch, count=50)
     attempts = [
         attempt("Q1", "KN0001", False, minute=1),
         attempt("Q2", "KN0001", True, 1, minute=2),
     ]
+    selected = selector.select_node_adaptive_questions(attempts, 50, rng=random.Random(50))
+    assert not ({"Q1", "Q2"} & {item["question_id"] for item in selected})
+    assert len(selected) == 48
+
+
+def test_exact_repeat_equivalence_waits_for_formal_due(monkeypatch):
+    node_by_q = {"Q1": "KN0001", "Q2": "KN0001", "Q3": "KN0002"}
+    custom_bank(monkeypatch, node_by_q)
+    monkeypatch.setattr(selector, "canonicalize_question_evidence_id", lambda q_id: (
+        "Q1" if q_id in {"Q1", "Q2"} else q_id
+    ))
     selected = selector.select_node_adaptive_questions(
-        attempts, 50, rng=random.Random(50)
+        [attempt("Q1", "KN0001", False)], 3, rng=random.Random(57)
     )
-    by_id = {item["question_id"]: item for item in selected}
-    assert by_id["Q1"]["same_question_repeat"] is True
-    assert by_id["Q1"]["recent_question_repeat"] is True
-    assert by_id["Q2"]["same_question_repeat"] is False
-    assert by_id["Q2"]["recent_question_repeat"] is True
+    assert {item["question_id"] for item in selected} == {"Q3"}
 
 
 def test_session_builder_exports_only_six_selection_audit_fields(monkeypatch):
-    fake_bank(monkeypatch, count=5)
+    fake_bank(monkeypatch, count=6)
+    monkeypatch.setattr(selector, "derive_all_user_node_states", lambda *_args, **_kwargs: [
+        {"canonical_node_id": "KN0001", "state": "recheck_due"}
+    ])
     monkeypatch.setattr(selector, "get_quiz_question", lambda q: {"id": q})
     audit = {}
     questions = selector.build_node_adaptive_session(
@@ -498,27 +498,26 @@ def test_session_builder_exports_only_six_selection_audit_fields(monkeypatch):
     assert audit["Q1"]["recent_cooldown_bypassed"] is True
 
 
-def test_only_latest_thirty_attempts_are_cooled_down(monkeypatch):
+def test_all_answered_questions_wait_for_formal_due_not_only_latest_thirty(monkeypatch):
     fake_bank(monkeypatch, count=70)
     attempts = [
         attempt(f"Q{i}", f"KN{((i - 1) // 2) + 1:04d}", True, 1, minute=i)
         for i in range(1, 32)
     ]
-    selected = selector.select_node_adaptive_questions(
-        attempts, 70, rng=random.Random(51)
-    )
-    by_id = {item["question_id"]: item for item in selected}
-    assert by_id["Q1"]["recent_question_repeat"] is False
-    assert all(by_id[f"Q{i}"]["recent_question_repeat"] is True for i in range(2, 32))
+    selected = selector.select_node_adaptive_questions(attempts, 70, rng=random.Random(51))
+    assert len(selected) == 39
+    assert not ({f"Q{i}" for i in range(1, 32)} & {
+        item["question_id"] for item in selected
+    })
 
 
-def test_exclusions_never_return_through_recent_fallback(monkeypatch):
+def test_answered_and_explicitly_excluded_questions_never_return(monkeypatch):
     fake_bank(monkeypatch, count=8)
     attempts = [attempt(f"Q{i}", f"KN{i:04d}", True, 1, minute=i) for i in range(1, 9)]
     selected = selector.select_node_adaptive_questions(
         attempts, 8, exclude_ids={"Q1", "Q2"}, rng=random.Random(52)
     )
-    assert len(selected) == 6
+    assert len(selected) == 0
     assert not ({"Q1", "Q2"} & {item["question_id"] for item in selected})
 
 

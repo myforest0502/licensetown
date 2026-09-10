@@ -30,8 +30,8 @@ def custom_bank(monkeypatch, node_by_q, safety_by_node=None):
 
 
 def test_safety_unknown_only_uses_unresolved_reason_and_preserves_priority(monkeypatch):
-    node_by_q = {"Q1": "KN0001"}
-    node_by_q.update({f"Q{i}": f"KN{i:04d}" for i in range(2, 45)})
+    node_by_q = {"Q1": "KN0001", "Q2": "KN0001"}
+    node_by_q.update({f"Q{i}": f"KN{i:04d}" for i in range(3, 45)})
     custom_bank(monkeypatch, node_by_q, {"KN0001": "moderate"})
     selected = selector.select_node_adaptive_questions([
         attempt("Q1", "KN0001", False, None, status="unknown")
@@ -40,13 +40,14 @@ def test_safety_unknown_only_uses_unresolved_reason_and_preserves_priority(monke
     assert node["priority_reason"] == "safety_unresolved"
     assert node["priority_group"] == "repair"
     assert node["unknown_evidence"] is True
-    assert node["recent_question_repeat"] is True
-    assert node["recent_cooldown_bypassed"] is True
+    assert node["question_id"] == "Q2"
+    assert node["recent_question_repeat"] is False
+    assert node["recent_cooldown_bypassed"] is False
 
 
 def test_safety_real_wrong_stays_safety_wrong_even_with_unknown(monkeypatch):
-    node_by_q = {"Q1": "KN0001", "Q2": "KN0001"}
-    node_by_q.update({f"Q{i}": f"KN{i:04d}" for i in range(3, 45)})
+    node_by_q = {"Q1": "KN0001", "Q2": "KN0001", "Q3": "KN0001"}
+    node_by_q.update({f"Q{i}": f"KN{i:04d}" for i in range(4, 45)})
     custom_bank(monkeypatch, node_by_q, {"KN0001": "critical"})
     selected = selector.select_node_adaptive_questions([
         attempt("Q1", "KN0001", False, 2, minute=1),
@@ -54,6 +55,7 @@ def test_safety_real_wrong_stays_safety_wrong_even_with_unknown(monkeypatch):
     ], 10, rng=random.Random(102))
     node = next(item for item in selected if item["canonical_node_id"] == "KN0001")
     assert node["priority_reason"] == "safety_wrong"
+    assert node["question_id"] == "Q3"
 
 
 def test_safety_unknown_prefers_nonrecent_same_node_alternate_without_bypass(monkeypatch):

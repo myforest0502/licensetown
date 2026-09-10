@@ -212,23 +212,14 @@ def select_node_adaptive_questions(
         })
     candidates.sort(key=lambda item: (item["priority_score"], item["tie"]), reverse=True)
 
-    non_recent_nodes = {
-        item["canonical_node_id"]
-        for item in candidates
-        if not item["recent_question_repeat"]
-    }
+    # An attempted evidence identity is not eligible again until its formal
+    # retention checkpoint is due.  Same-Node/different-Q candidates remain
+    # eligible and are the normal repair path.
     normal_candidates = [
         item for item in candidates
-        if not item["recent_question_repeat"]
-        # A time-based retention checkpoint must remain actionable even when
-        # its evidence question is still inside the last-30-attempt cooldown.
-        or item["priority_reason"] == "recheck_due"
-        or (
-            item["priority_reason"] in {"safety_wrong", "safety_unresolved"}
-            and item["canonical_node_id"] not in non_recent_nodes
-        )
+        if item["evidence_question_id"] not in seen_question_ids
+        or item["state"] == "recheck_due"
     ]
-    recent_candidates = [item for item in candidates if item["recent_question_repeat"]]
 
     intent_group = {
         "repair": "repair",
@@ -288,17 +279,6 @@ def select_node_adaptive_questions(
         if len(selected) >= question_count:
             break
 
-    # Controlled final fallback: only a real bank shortage can bypass cooldown.
-    # Equivalent official repeats remain one evidence identity even in fallback.
-    for cap in (1, 2, 3, question_count):
-        for item in recent_candidates:
-            if len(selected) >= question_count:
-                break
-            if not available(item, cap):
-                continue
-            append_item(item)
-        if len(selected) >= question_count:
-            break
     return selected[:question_count]
 
 

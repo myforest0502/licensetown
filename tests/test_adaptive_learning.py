@@ -88,16 +88,34 @@ def test_initial_assessment_only_extends_when_evidence_is_insufficient():
     assert initial_assessment_needs_extension(repeated)
 
 
-def test_daily_session_prioritizes_confident_errors_without_exposing_tags():
+def test_daily_session_does_not_immediately_repeat_confident_error():
     selected = build_daily_session([
         {"question_id": "Q1", "is_correct": False, "confidence": 1},
         {"question_id": "Q2", "is_correct": True, "confidence": 1},
     ], question_count=30)
     assert len(selected) == 30
-    assert "Q1" in {question["id"] for question in selected}
+    assert not ({"Q1", "Q2"} & {question["id"] for question in selected})
     assert all("primary_ability" not in question for question in selected)
     assert all("knowledge_node" not in question for question in selected)
     assert all("knowledge_node_id" not in question for question in selected)
+
+
+def test_daily_session_allows_answered_question_only_at_formal_recheck_due(monkeypatch):
+    monkeypatch.setattr(learning_engine, "_candidate_ids", lambda _category=None: ["Q1", "Q2"])
+    monkeypatch.setattr(learning_engine, "get_question_tag", lambda q_id: {
+        "knowledge_node_id": "KN0001" if q_id == "Q1" else "KN0002",
+        "safety": "none",
+    })
+    monkeypatch.setattr(learning_engine, "get_quiz_question", lambda q_id: {"id": q_id})
+    monkeypatch.setattr(learning_engine, "derive_all_user_node_states", lambda *_args, **_kwargs: [
+        {"canonical_node_id": "KN0001", "state": "recheck_due"}
+    ])
+    selected = learning_engine.build_daily_session(
+        [{"question_id": "Q1", "is_correct": True, "confidence": 1}],
+        question_count=1,
+        rng=SimpleNamespace(random=lambda: 0.0),
+    )
+    assert selected == [{"id": "Q1"}]
 
 
 def _assert_node_history_prioritizes_second_question(monkeypatch, tags):
