@@ -82,7 +82,10 @@ def test_guard_persists_evidence_time_instead_of_raw_wall_clock(monkeypatch):
         calls.append((user_id, elapsed_seconds, recorded_at, event_key))
         return True
 
-    legacy = SimpleNamespace(add_learning_time=original_add)
+    legacy = SimpleNamespace(
+        add_learning_time=original_add,
+        study_sessions={"user": {"session_id": "session"}},
+    )
     database = SimpleNamespace(
         get_question_attempts=lambda user_id, start_at=None: [
             _attempt("session", start + timedelta(minutes=12), "1"),
@@ -109,7 +112,8 @@ def test_guard_does_not_persist_abandoned_session_without_answers(monkeypatch):
     start = datetime(2026, 9, 10, 9, 0, tzinfo=timezone.utc)
     calls = []
     legacy = SimpleNamespace(
-        add_learning_time=lambda *args, **kwargs: calls.append((args, kwargs)) or True
+        add_learning_time=lambda *args, **kwargs: calls.append((args, kwargs)) or True,
+        study_sessions={"user": {"session_id": "session"}},
     )
     database = SimpleNamespace(get_question_attempts=lambda *args, **kwargs: [])
     monkeypatch.delenv("LT_LEARNING_ACTIVITY_GAP_CAP_SECONDS", raising=False)
@@ -124,10 +128,32 @@ def test_guard_does_not_persist_abandoned_session_without_answers(monkeypatch):
     assert calls == []
 
 
+def test_guard_preserves_legacy_session_without_formal_id_but_caps_it(monkeypatch):
+    start = datetime(2026, 9, 10, 9, 0, tzinfo=timezone.utc)
+    calls = []
+    legacy = SimpleNamespace(
+        add_learning_time=lambda *args, **kwargs: calls.append((args, kwargs)) or True,
+        study_sessions={"user": {"active_started_at": start.timestamp()}},
+    )
+    database = SimpleNamespace(get_question_attempts=lambda *args, **kwargs: [])
+    monkeypatch.delenv("LT_LEARNING_ACTIVITY_GAP_CAP_SECONDS", raising=False)
+
+    install_learning_time_guard(legacy, database)
+    assert legacy.add_learning_time(
+        "user",
+        120,
+        recorded_at=start + timedelta(minutes=2),
+        event_key=f"user:{start.timestamp()}",
+    ) is True
+    assert len(calls) == 1
+    assert calls[0][0][1] == 120
+
+
 def test_guard_is_idempotent(monkeypatch):
     calls = []
     legacy = SimpleNamespace(
-        add_learning_time=lambda *args, **kwargs: calls.append((args, kwargs)) or True
+        add_learning_time=lambda *args, **kwargs: calls.append((args, kwargs)) or True,
+        study_sessions={},
     )
     database = SimpleNamespace(get_question_attempts=lambda *args, **kwargs: [])
     monkeypatch.delenv("LT_LEARNING_ACTIVITY_GAP_CAP_SECONDS", raising=False)
