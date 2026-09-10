@@ -1,0 +1,1 @@
+Temporary implementation note for Google Search Console ownership verification. This file is intentionally small and can be removed later; production change is limited to the verification meta tag in templates/site/home.html.
