@@ -286,8 +286,18 @@ def build_node_adaptive_session(
     attempts, question_count=30, exclude_ids=(), rng=None, *, audit_out=None,
     category_small: int | None = None, learning_intent: str | None = None,
 ):
+    # Production callers include LINE adaptive study and Web recommendations.
+    # Enforce the shared short-term guard here as the common adaptive boundary,
+    # so a caller cannot accidentally bypass it by omitting exclude_ids.
+    from short_term_repeat_guard import blocked_short_term_evidence_ids
+
+    effective_exclude_ids = {
+        canonicalize_question_evidence_id(str(value))
+        for value in (exclude_ids or ())
+    }
+    effective_exclude_ids.update(blocked_short_term_evidence_ids(attempts))
     records = select_node_adaptive_questions(
-        attempts, question_count, exclude_ids=exclude_ids, rng=rng,
+        attempts, question_count, exclude_ids=effective_exclude_ids, rng=rng,
         category_small=category_small, learning_intent=learning_intent,
     )
     if len(records) < question_count:
