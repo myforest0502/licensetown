@@ -13,6 +13,8 @@ NOINDEX_PREFIXES = (
     "/site/preview-responsive/",
 )
 
+GSC_VERIFICATION_FILE = "google5328e7e8be120ade.html"
+
 
 def _origin() -> str:
     return request.url_root.rstrip("/")
@@ -20,6 +22,13 @@ def _origin() -> str:
 
 def install_site_seo_foundation(app) -> None:
     """Install public SEO discovery routes without changing the frozen site UI."""
+
+    @app.get(f"/{GSC_VERIFICATION_FILE}")
+    def licensetown_gsc_verification():
+        return Response(
+            f"google-site-verification: {GSC_VERIFICATION_FILE}\n",
+            mimetype="text/plain",
+        )
 
     @app.get("/robots.txt")
     def licensetown_robots():
