@@ -1,10 +1,9 @@
 """Read bundle for the learner dashboard.
 
-Production uses one Neon connection for legacy dashboard aggregates, durable
-question attempts, and Trial100 evidence. This keeps item-12 factual inputs
-consistent without adding another serverless connection just for Trial100.
-The formal attempt portion is explicitly PT-scoped during multi-qualification
-migration; legacy aggregate readers remain unchanged until their own cutover.
+Production uses one Neon connection for dashboard aggregates, durable question
+attempts, and Trial100 evidence. Formal PT evidence reads are qualification-
+scoped during multi-qualification migration; summary/activity SQL remains on
+its legacy path until its own small cutover.
 """
 
 from __future__ import annotations
@@ -50,6 +49,23 @@ def _attempts_with_connection(user_id: str, connection) -> list[dict[str, Any]]:
             "unknown" if not attempt.get("selected_answers") else "answered"
         )
     return attempts
+
+
+def _question_result_rows_with_connection(user_id: str, connection):
+    """Return only PT learning-event question results on the shared connection."""
+    with connection.cursor() as cur:
+        cur.execute(
+            """
+            SELECT question_results, answered_at
+            FROM learning_events
+            WHERE user_id = %s
+              AND qualification_id = %s
+              AND question_results IS NOT NULL
+            ORDER BY answered_at, event_key
+            """,
+            (user_id, _QUALIFICATION_ID),
+        )
+        return cur.fetchall()
 
 
 def get_learner_navigation_read_bundle(user_id: str) -> dict[str, Any]:
@@ -108,7 +124,7 @@ def get_dashboard_read_bundle(
         }
 
     with database.get_db_connection() as conn:
-        question_rows = database._get_question_result_rows(user_id, conn)
+        question_rows = _question_result_rows_with_connection(user_id, conn)
         activity = database.get_learning_activity(user_id, _connection=conn)
         activity.update(
             build_today_recommendation_summary(
