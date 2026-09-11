@@ -6,7 +6,7 @@ from zoneinfo import ZoneInfo
 
 
 TOKYO = ZoneInfo("Asia/Tokyo")
-SYSTEM_DEFAULT_EXAM_DATE = date(2027, 2, 20)
+SYSTEM_DEFAULT_EXAM_DATE = date(2027, 2, 21)
 SYSTEM_DEFAULT_DAILY_QUESTION_GOAL = 30
 REWARD_INTERVAL = 100
 
