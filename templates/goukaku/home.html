@@ -56,11 +56,11 @@
   <section class="date-card">
     <div class="date-list">
       <div><span class="line-icon">▣</span><p><b>今日</b><strong>{{ dashboard.current_date.strftime('%Y/%m/%d') }}</strong></p></div>
-      <div><span class="line-icon target">◎</span><p><b>試験日</b><strong>{% if dashboard.exam_date %}{{ dashboard.exam_date.strftime('%Y/%m/%d') }}（暫定） <button class="help" data-dialog-open aria-label="試験日の説明">?</button>{% else %}未設定{% endif %}</strong></p></div>
+      <div><span class="line-icon target">◎</span><p><b>試験日</b><strong>{% if dashboard.exam_date %}{{ dashboard.exam_date.strftime('%Y/%m/%d') }} <button class="help" data-dialog-open aria-label="試験日の説明">?</button>{% else %}未設定{% endif %}</strong></p></div>
     </div>
     <div class="countdown"><span>試験まで</span><strong>{% if dashboard.days_until_exam is not none %}{{ dashboard.days_until_exam }}<small>日</small>{% else %}未設定{% endif %}</strong><em>毎日コツコツ、合格はぐっと近づく！</em></div>
   </section>
-  <dialog id="exam-dialog"><h2>試験日について</h2><p>現在表示している試験日は暫定です。<br>正式な試験日が発表され次第、正式日程へ更新されます。<br>それに伴い、試験日までの日数も自動的に修正されます。</p><button data-dialog-close>閉じる</button></dialog>
+  <dialog id="exam-dialog"><h2>試験日について</h2><p>現在表示している試験日は正式日程です。<br>第62回理学療法士国家試験は2027年2月21日（日）に実施されます。<br>試験日までの日数は、この正式日程を基準に自動計算されます。</p><button data-dialog-close>閉じる</button></dialog>
 
   {% if dashboard.overall_progress_ui_enabled %}
   {% set overall = dashboard.overall_progress_preview %}
