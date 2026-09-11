@@ -1,8 +1,10 @@
 """Read bundle for the learner dashboard.
 
 Production uses one Neon connection for legacy dashboard aggregates, durable
-question attempts, and Trial100 evidence.  This keeps item-12 factual inputs
+question attempts, and Trial100 evidence. This keeps item-12 factual inputs
 consistent without adding another serverless connection just for Trial100.
+The formal attempt portion is explicitly PT-scoped during multi-qualification
+migration; legacy aggregate readers remain unchanged until their own cutover.
 """
 
 from __future__ import annotations
@@ -14,6 +16,7 @@ from recommendation_daily_summary import build_today_recommendation_summary
 from trial100_store import get_trial100_records
 
 
+_QUALIFICATION_ID = "pt"
 _ATTEMPT_COLUMNS = (
     "event_key",
     "user_id",
@@ -36,10 +39,10 @@ def _attempts_with_connection(user_id: str, connection) -> list[dict[str, Any]]:
                    mode, selected_answers, is_correct, confidence,
                    answered_at, attempt_position
             FROM question_attempts
-            WHERE user_id = %s
+            WHERE user_id = %s AND qualification_id = %s
             ORDER BY answered_at, event_key, attempt_position
             """,
-            (user_id,),
+            (user_id, _QUALIFICATION_ID),
         )
         attempts = [dict(zip(_ATTEMPT_COLUMNS, row)) for row in cur.fetchall()]
     for attempt in attempts:
