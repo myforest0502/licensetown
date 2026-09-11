@@ -14,13 +14,8 @@ from knowledge_node_repair_evidence import (
     SAME_QUESTION,
     classify_repair_confirmation,
 )
-from question_bank import (
-    QuestionAvailabilityError,
-    get_category_small,
-    get_question_tag,
-    get_quiz_question,
-    question_ids,
-)
+from question_bank import QuestionAvailabilityError, get_category_small
+from qualifications.pt.provider import PTQuestionBankProvider
 from question_equivalence import (
     canonicalize_question_evidence_id,
     canonicalize_question_evidence_node,
@@ -29,6 +24,13 @@ from prerequisite_backtrack_pilot import (
     is_prerequisite_backtrack_pilot_enabled,
     parse_prerequisite_backtrack_pilot_user_ids,
 )
+
+
+_PT_BANK = PTQuestionBankProvider()
+# Keep the existing module-local names available to callers and test patches.
+question_ids = _PT_BANK.question_ids
+get_question_tag = _PT_BANK.get_question_tag
+get_quiz_question = _PT_BANK.get_quiz_question
 
 
 REPAIR_REASONS = {
