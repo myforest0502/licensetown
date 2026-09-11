@@ -3,8 +3,8 @@
 The learner-facing Web recommendation flow historically kept every session in
 process memory. A normal Render restart therefore turned an in-progress
 learning URL into a 404 even though the learner's already-confirmed attempts
-were safely stored. This production composition layer persists the small Web
-session snapshot and restores it lazily after a process restart.
+were safely stored. This production composition layer currently serves PT only
+and restores PT-qualified snapshots only; Takken runtime remains disabled.
 """
 
 from __future__ import annotations
@@ -20,12 +20,20 @@ from typing import Any
 logger = logging.getLogger(__name__)
 _TABLE = "web_learning_sessions"
 _RETENTION_DAYS = 7
+_QUALIFICATION_ID = "pt"
 _local_snapshots: dict[str, dict[str, Any]] = {}
 _local_lock = threading.RLock()
 
 
 def _snapshot(session: dict[str, Any]) -> dict[str, Any]:
-    return json.loads(json.dumps(session, ensure_ascii=False))
+    payload = json.loads(json.dumps(session, ensure_ascii=False))
+    existing = payload.get("qualification_id")
+    if existing not in {None, _QUALIFICATION_ID}:
+        raise ValueError(
+            f"web session qualification mismatch: expected {_QUALIFICATION_ID}, got {existing}"
+        )
+    payload["qualification_id"] = _QUALIFICATION_ID
+    return payload
 
 
 def _restore(payload: Any) -> dict[str, Any] | None:
@@ -36,15 +44,21 @@ def _restore(payload: Any) -> dict[str, Any] | None:
             return None
     if not isinstance(payload, dict):
         return None
+    qualification_id = payload.get("qualification_id", _QUALIFICATION_ID)
+    if qualification_id != _QUALIFICATION_ID:
+        return None
     required = {"user_id", "dashboard_token", "question_count", "questions", "current_index"}
     if not required.issubset(payload):
         return None
-    return copy.deepcopy(payload)
+    restored = copy.deepcopy(payload)
+    restored["qualification_id"] = _QUALIFICATION_ID
+    return restored
 
 
 class WebLearningSessionStore:
     def __init__(self, database_module):
         self.database = database_module
+        self.qualification_id = _QUALIFICATION_ID
 
     def save(self, session_id: str, session: dict[str, Any]) -> bool:
         payload = _snapshot(session)
@@ -56,18 +70,32 @@ class WebLearningSessionStore:
             with self.database.get_db_connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        f"DELETE FROM {_TABLE} WHERE updated_at < NOW() - INTERVAL '{_RETENTION_DAYS} days'"
+                        f"""
+                        DELETE FROM {_TABLE}
+                        WHERE qualification_id = %s
+                          AND updated_at < NOW() - INTERVAL '{_RETENTION_DAYS} days'
+                        """,
+                        (self.qualification_id,),
                     )
                     cur.execute(
                         f"""
-                        INSERT INTO {_TABLE} (session_id, user_id, session_payload, updated_at)
-                        VALUES (%s, %s, %s::jsonb, NOW())
+                        INSERT INTO {_TABLE} (
+                            session_id, user_id, qualification_id,
+                            session_payload, updated_at
+                        )
+                        VALUES (%s, %s, %s, %s::jsonb, NOW())
                         ON CONFLICT (session_id) DO UPDATE
                         SET user_id = EXCLUDED.user_id,
+                            qualification_id = EXCLUDED.qualification_id,
                             session_payload = EXCLUDED.session_payload,
                             updated_at = EXCLUDED.updated_at
                         """,
-                        (session_id, str(session.get("user_id", "")), json.dumps(payload, ensure_ascii=False)),
+                        (
+                            session_id,
+                            str(session.get("user_id", "")),
+                            self.qualification_id,
+                            json.dumps(payload, ensure_ascii=False),
+                        ),
                     )
             return True
         except Exception:
@@ -85,9 +113,10 @@ class WebLearningSessionStore:
                         f"""
                         SELECT session_payload FROM {_TABLE}
                         WHERE session_id = %s
+                          AND qualification_id = %s
                           AND updated_at >= NOW() - INTERVAL '{_RETENTION_DAYS} days'
                         """,
-                        (session_id,),
+                        (session_id, self.qualification_id),
                     )
                     row = cur.fetchone()
             return _restore(row[0]) if row else None
@@ -109,9 +138,11 @@ class WebLearningSessionStore:
                     cur.execute(
                         f"""
                         SELECT session_id, session_payload FROM {_TABLE}
-                        WHERE updated_at >= NOW() - INTERVAL '{_RETENTION_DAYS} days'
+                        WHERE qualification_id = %s
+                          AND updated_at >= NOW() - INTERVAL '{_RETENTION_DAYS} days'
                         ORDER BY updated_at
-                        """
+                        """,
+                        (self.qualification_id,),
                     )
                     rows = cur.fetchall()
             restored = {}
@@ -132,7 +163,13 @@ class WebLearningSessionStore:
         try:
             with self.database.get_db_connection() as conn:
                 with conn.cursor() as cur:
-                    cur.execute(f"DELETE FROM {_TABLE} WHERE session_id = %s", (session_id,))
+                    cur.execute(
+                        f"""
+                        DELETE FROM {_TABLE}
+                        WHERE session_id = %s AND qualification_id = %s
+                        """,
+                        (session_id, self.qualification_id),
+                    )
             return True
         except Exception:
             logger.exception("web_learning_session delete_failed session_id=%s", session_id)
@@ -187,7 +224,7 @@ class DurableWebLearningSessions(dict):
 
 
 def install_durable_web_learning_sessions(legacy_module, database_module) -> None:
-    """Compose restart-safe Web recommendation sessions onto the Flask app."""
+    """Compose restart-safe PT Web recommendation sessions onto the Flask app."""
     if getattr(legacy_module, "_durable_web_learning_sessions_installed", False):
         return
 
