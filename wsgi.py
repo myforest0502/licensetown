@@ -36,6 +36,7 @@ from prerequisite_attempt_cache import install_prerequisite_attempt_cache
 from qualification_dashboard_scope import install_pt_dashboard_history_scope
 from qualification_history_scope import install_pt_learning_history_scope
 from qualification_learning_time_scope import install_pt_learning_time_scope
+from qualification_learning_writer_scope import install_pt_learning_writer_scope
 from site_beta_copy import install_site_beta_copy
 from site_direct_line_cta import install_site_direct_line_cta
 from site_marketing_hotfix import install_site_marketing_hotfix
@@ -127,6 +128,7 @@ def _apply_rich_menu_v2_if_requested() -> None:
 # call time, so production behavior can be composed without rewriting app.py.
 install_pt_learning_history_scope(legacy)
 install_pt_dashboard_history_scope(goukaku_module)
+install_pt_learning_writer_scope(legacy, goukaku_module)
 install_durable_paused_sessions(legacy, database_module)
 install_durable_web_learning_sessions(legacy, database_module)
 install_pt_learning_time_scope(legacy, database_module)
