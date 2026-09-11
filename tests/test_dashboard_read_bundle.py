@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import datetime, timedelta, timezone
+
 import dashboard_read_bundle
 
 
@@ -141,6 +143,79 @@ def test_question_result_rows_require_explicit_pt_scope():
     assert "FROM learning_events" in sql
     assert "qualification_id = %s" in sql
     assert params == ("learner", "pt")
+
+
+def test_summary_reads_only_pt_events_and_pt_time_total():
+    calls = []
+    fetches = iter([(5, 4, 3, 2, 1), (600,)])
+
+    class Cursor:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def execute(self, sql, params):
+            calls.append((" ".join(sql.split()), params))
+
+        def fetchone(self):
+            return next(fetches)
+
+    class Connection:
+        def cursor(self):
+            return Cursor()
+
+    result = dashboard_read_bundle._summary_with_connection(
+        "learner",
+        Connection(),
+        now=datetime(2026, 9, 12, tzinfo=timezone.utc),
+    )
+
+    assert result["total_answers"] == 5
+    assert result["study_minutes"] == 10
+    assert "FROM learning_events" in calls[0][0]
+    assert "qualification_id = %s" in calls[0][0]
+    assert calls[0][1][-2:] == ("learner", "pt")
+    assert "FROM qualification_learning_time_totals" in calls[1][0]
+    assert calls[1][1] == ("learner", "pt")
+
+
+def test_activity_reads_only_pt_events_and_pt_time_events():
+    calls = []
+    now = datetime(2026, 9, 12, 0, 0, tzinfo=timezone.utc)
+    answered_at = now - timedelta(days=1)
+    result_sets = iter([
+        [(2, 1, answered_at)],
+        [(300.0, answered_at)],
+    ])
+
+    class Cursor:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def execute(self, sql, params):
+            calls.append((" ".join(sql.split()), params))
+
+        def fetchall(self):
+            return next(result_sets)
+
+    class Connection:
+        def cursor(self):
+            return Cursor()
+
+    result = dashboard_read_bundle._activity_with_connection(
+        "learner", Connection(), now=now
+    )
+
+    assert result["weekly_answers"] == 2
+    assert result["weekly_correct"] == 1
+    assert result["weekly_study_minutes"] == 5
+    assert all("qualification_id = %s" in sql for sql, _ in calls)
+    assert all(params == ("learner", "pt") for _, params in calls)
 
 
 def test_learner_navigation_bundle_shares_one_production_connection(monkeypatch):
