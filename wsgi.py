@@ -33,6 +33,7 @@ from learning_time_guard import install_learning_time_guard
 from one_question_starter import install_one_question_starter, one_question_quick_reply_item
 from phase11_gate_ui import install_phase11_gate_ui
 from prerequisite_attempt_cache import install_prerequisite_attempt_cache
+from qualification_history_scope import install_pt_learning_history_scope
 from site_beta_copy import install_site_beta_copy
 from site_direct_line_cta import install_site_direct_line_cta
 from site_marketing_hotfix import install_site_marketing_hotfix
@@ -122,6 +123,7 @@ def _apply_rich_menu_v2_if_requested() -> None:
 
 # Registered LINE callbacks resolve these names from the legacy app module at
 # call time, so production behavior can be composed without rewriting app.py.
+install_pt_learning_history_scope(legacy)
 install_durable_paused_sessions(legacy, database_module)
 install_durable_web_learning_sessions(legacy, database_module)
 install_learning_time_guard(legacy, database_module)
