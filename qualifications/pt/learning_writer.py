@@ -175,7 +175,12 @@ class PTLearningWriter:
     ) -> bool:
         """Persist a PT non-answer activity using the same daily key contract."""
         timestamp = occurred_at or datetime.now(timezone.utc)
-        jst_date = timestamp.astimezone(ZoneInfo("Asia/Tokyo")).date().isoformat()
+        jst_date = (
+            database._as_utc(timestamp)
+            .astimezone(ZoneInfo("Asia/Tokyo"))
+            .date()
+            .isoformat()
+        )
         user_hash = hashlib.sha256(user_id.encode("utf-8")).hexdigest()[:16]
         activity_metadata = {"activity_type": activity_type}
         if metadata:
