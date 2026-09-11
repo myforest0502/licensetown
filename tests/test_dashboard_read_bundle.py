@@ -71,7 +71,7 @@ def test_optional_evidence_reads_are_skipped(monkeypatch):
     assert result["trial100_records"] == []
 
 
-def test_attempt_rows_match_formal_database_shape():
+def test_attempt_rows_match_formal_database_shape_and_pt_scope():
     class Cursor:
         def __enter__(self):
             return self
@@ -81,7 +81,8 @@ def test_attempt_rows_match_formal_database_shape():
 
         def execute(self, sql, params):
             assert "FROM question_attempts" in sql
-            assert params == ("learner",)
+            assert "qualification_id = %s" in sql
+            assert params == ("learner", "pt")
 
         def fetchall(self):
             return [
