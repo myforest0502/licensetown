@@ -112,6 +112,37 @@ def test_attempt_rows_match_formal_database_shape_and_pt_scope():
     assert attempts[0]["answer_status"] == "unknown"
 
 
+def test_question_result_rows_require_explicit_pt_scope():
+    calls = []
+
+    class Cursor:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def execute(self, sql, params):
+            calls.append((" ".join(sql.split()), params))
+
+        def fetchall(self):
+            return [([{"question_id": "Q1"}], "2026-09-04T00:00:00+00:00")]
+
+    class Connection:
+        def cursor(self):
+            return Cursor()
+
+    rows = dashboard_read_bundle._question_result_rows_with_connection(
+        "learner", Connection()
+    )
+
+    assert rows[0][0][0]["question_id"] == "Q1"
+    sql, params = calls[0]
+    assert "FROM learning_events" in sql
+    assert "qualification_id = %s" in sql
+    assert params == ("learner", "pt")
+
+
 def test_learner_navigation_bundle_shares_one_production_connection(monkeypatch):
     connection_obj = object()
     connection_entries = []
