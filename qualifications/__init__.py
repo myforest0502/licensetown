@@ -4,7 +4,7 @@ The default describes the legacy PT compatibility contract only. It does not
 select a bank or infer the qualification of stored sessions or database rows.
 """
 
-from .base import QualificationConfig
+from .common.base import QualificationConfig
 from .pt.config import PT
 from .takken.config import TAKKEN
 
