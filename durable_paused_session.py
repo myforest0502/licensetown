@@ -1,9 +1,10 @@
 """Durable storage for paused LINE quiz sessions.
 
-The legacy learner flow intentionally keeps active sessions in memory.  A
-paused session, however, is a user-visible promise ("源さんに預ける") and must
-survive a normal Render process restart.  This production composition layer
-persists only paused snapshots; active sessions remain in memory.
+The legacy learner flow intentionally keeps active sessions in memory. A paused
+session, however, is a user-visible promise ("源さんに預ける") and must survive
+a normal Render process restart. This production composition layer currently
+serves the PT runtime and therefore persists/restores PT-qualified snapshots
+only; Takken runtime remains disabled.
 """
 
 from __future__ import annotations
@@ -18,6 +19,7 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 _TABLE = "paused_quiz_sessions"
+_QUALIFICATION_ID = "pt"
 _local_snapshots: dict[str, dict[str, Any]] = {}
 _local_lock = threading.RLock()
 
@@ -31,8 +33,15 @@ def _json_default(value: Any):
 
 
 def _serializable_snapshot(session: dict[str, Any]) -> dict[str, Any]:
-    """Return a detached JSON-compatible snapshot."""
-    return json.loads(json.dumps(session, ensure_ascii=False, default=_json_default))
+    """Return a detached JSON-compatible PT snapshot."""
+    snapshot = json.loads(json.dumps(session, ensure_ascii=False, default=_json_default))
+    existing = snapshot.get("qualification_id")
+    if existing not in {None, _QUALIFICATION_ID}:
+        raise ValueError(
+            f"paused session qualification mismatch: expected {_QUALIFICATION_ID}, got {existing}"
+        )
+    snapshot["qualification_id"] = _QUALIFICATION_ID
+    return snapshot
 
 
 def _restore_snapshot(payload: Any) -> dict[str, Any] | None:
@@ -43,7 +52,11 @@ def _restore_snapshot(payload: Any) -> dict[str, Any] | None:
             return None
     if not isinstance(payload, dict) or payload.get("status") != "paused":
         return None
+    qualification_id = payload.get("qualification_id", _QUALIFICATION_ID)
+    if qualification_id != _QUALIFICATION_ID:
+        return None
     restored = copy.deepcopy(payload)
+    restored["qualification_id"] = _QUALIFICATION_ID
     answers = restored.get("all_answers")
     if isinstance(answers, dict):
         converted = {}
@@ -59,6 +72,7 @@ def _restore_snapshot(payload: Any) -> dict[str, Any] | None:
 class PausedSessionStore:
     def __init__(self, database_module):
         self.database = database_module
+        self.qualification_id = _QUALIFICATION_ID
 
     def save(self, user_id: str, session: dict[str, Any]) -> bool:
         snapshot = _serializable_snapshot(session)
@@ -71,13 +85,20 @@ class PausedSessionStore:
                 with conn.cursor() as cur:
                     cur.execute(
                         f"""
-                        INSERT INTO {_TABLE} (user_id, session_payload, paused_at)
-                        VALUES (%s, %s::jsonb, NOW())
+                        INSERT INTO {_TABLE} (
+                            user_id, qualification_id, session_payload, paused_at
+                        )
+                        VALUES (%s, %s, %s::jsonb, NOW())
                         ON CONFLICT (user_id) DO UPDATE
-                        SET session_payload = EXCLUDED.session_payload,
+                        SET qualification_id = EXCLUDED.qualification_id,
+                            session_payload = EXCLUDED.session_payload,
                             paused_at = EXCLUDED.paused_at
                         """,
-                        (user_id, json.dumps(snapshot, ensure_ascii=False)),
+                        (
+                            user_id,
+                            self.qualification_id,
+                            json.dumps(snapshot, ensure_ascii=False),
+                        ),
                     )
             return True
         except Exception:
@@ -92,8 +113,11 @@ class PausedSessionStore:
             with self.database.get_db_connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        f"SELECT session_payload FROM {_TABLE} WHERE user_id = %s",
-                        (user_id,),
+                        f"""
+                        SELECT session_payload FROM {_TABLE}
+                        WHERE user_id = %s AND qualification_id = %s
+                        """,
+                        (user_id, self.qualification_id),
                     )
                     row = cur.fetchone()
             return _restore_snapshot(row[0]) if row else None
@@ -109,7 +133,13 @@ class PausedSessionStore:
         try:
             with self.database.get_db_connection() as conn:
                 with conn.cursor() as cur:
-                    cur.execute(f"DELETE FROM {_TABLE} WHERE user_id = %s", (user_id,))
+                    cur.execute(
+                        f"""
+                        DELETE FROM {_TABLE}
+                        WHERE user_id = %s AND qualification_id = %s
+                        """,
+                        (user_id, self.qualification_id),
+                    )
             return True
         except Exception:
             logger.exception("paused_session_store delete_failed user_id=%s", user_id)
@@ -117,7 +147,7 @@ class PausedSessionStore:
 
 
 class DurableStudySessions(dict):
-    """Legacy-compatible dict that lazily restores only paused sessions."""
+    """Legacy-compatible dict that lazily restores only paused PT sessions."""
 
     def __init__(self, initial: dict[str, Any], store: PausedSessionStore):
         super().__init__(initial)
@@ -146,8 +176,8 @@ class DurableStudySessions(dict):
         return dict.__contains__(self, user_id)
 
     def __setitem__(self, user_id, session):
-        # Creating/replacing a live session explicitly abandons any old paused
-        # snapshot.  Restoration bypasses this method via dict.__setitem__.
+        # Creating/replacing a live PT session explicitly abandons any old
+        # paused PT snapshot. Restoration bypasses this via dict.__setitem__.
         self.store.delete(user_id)
         dict.__setitem__(self, user_id, session)
 
@@ -157,7 +187,7 @@ class DurableStudySessions(dict):
 
 
 def install_durable_paused_sessions(legacy_module, database_module) -> None:
-    """Compose durable pause/resume behavior onto the legacy learner flow."""
+    """Compose durable PT pause/resume behavior onto the legacy learner flow."""
     if getattr(legacy_module, "_durable_paused_sessions_installed", False):
         return
 
