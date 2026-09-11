@@ -6,19 +6,22 @@ import random
 from collections import defaultdict
 from datetime import datetime, timezone
 
-from question_bank import (
-    QuestionAvailabilityError,
-    get_question,
-    get_question_tag,
-    get_quiz_question,
-    question_ids,
-)
+from question_bank import QuestionAvailabilityError
+from qualifications.pt.provider import PTQuestionBankProvider
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import derive_all_user_node_states
 from question_equivalence import (
     canonicalize_question_evidence_id,
     canonicalize_question_evidence_node,
 )
+
+
+_PT_BANK = PTQuestionBankProvider()
+# Keep the existing module-local names available to callers and test patches.
+question_ids = _PT_BANK.question_ids
+get_question = _PT_BANK.get_question
+get_question_tag = _PT_BANK.get_question_tag
+get_quiz_question = _PT_BANK.get_quiz_question
 
 
 ABILITY_LABELS = {
