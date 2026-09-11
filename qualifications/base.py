@@ -1,11 +1,5 @@
-"""Metadata only: no runtime, storage, or question-bank integration."""
+"""Compatibility import for shared qualification metadata."""
 
-from dataclasses import dataclass
+from .common.base import QualificationConfig
 
-
-@dataclass(frozen=True)
-class QualificationConfig:
-    """Stable qualification identity and its learner-facing name."""
-
-    qualification_id: str
-    display_name: str
+__all__ = ["QualificationConfig"]
