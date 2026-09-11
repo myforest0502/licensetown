@@ -7,7 +7,9 @@ PT. Runtime qualification selection is not implemented here.
 
 from __future__ import annotations
 
+from .pt.config import PT
 from .pt.provider import PTQuestionBankProvider
+from .takken.config import TAKKEN
 
 
 class QuestionBankProviderNotConfigured(LookupError):
@@ -16,9 +18,9 @@ class QuestionBankProviderNotConfigured(LookupError):
 
 _PT_PROVIDER = PTQuestionBankProvider()
 _PROVIDERS = {
-    _PT_PROVIDER.qualification_id: _PT_PROVIDER,
+    PT.qualification_id: _PT_PROVIDER,
 }
-_KNOWN_QUALIFICATION_IDS = frozenset({"pt", "takken"})
+_KNOWN_QUALIFICATION_IDS = frozenset({PT.qualification_id, TAKKEN.qualification_id})
 
 
 def get_question_bank_provider(qualification_id: str):
