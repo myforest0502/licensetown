@@ -1,7 +1,7 @@
 """Shared contract for qualification-scoped learner history access.
 
-This is an interface only. It does not change the existing database schema or
-runtime storage behavior.
+This interface keeps qualification identity explicit and does not select another
+qualification implicitly.
 """
 
 from __future__ import annotations
@@ -11,7 +11,7 @@ from typing import Protocol
 
 
 class LearningHistoryStore(Protocol):
-    """Small read/assessment-state boundary needed before storage is qualified."""
+    """Qualification-scoped learner history and state boundary."""
 
     qualification_id: str
 
@@ -28,3 +28,6 @@ class LearningHistoryStore(Protocol):
 
     def mark_initial_assessment_completed(self, user_id: str) -> None:
         """Mark this qualification's initial assessment complete."""
+
+    def reset_qualification_state(self, user_id: str) -> None:
+        """Clear learning state for this qualification without deleting the account."""
