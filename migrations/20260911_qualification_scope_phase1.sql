@@ -29,51 +29,26 @@ ALTER TABLE paused_quiz_sessions
 ALTER TABLE web_learning_sessions
     ADD COLUMN IF NOT EXISTS qualification_id TEXT NOT NULL DEFAULT 'pt';
 
-DO $$
-BEGIN
-    IF NOT EXISTS (
-        SELECT 1 FROM pg_constraint WHERE conname = 'question_attempts_qualification_id_check'
-    ) THEN
-        ALTER TABLE question_attempts
-            ADD CONSTRAINT question_attempts_qualification_id_check
-            CHECK (qualification_id ~ '^[a-z][a-z0-9_]*$');
-    END IF;
-    IF NOT EXISTS (
-        SELECT 1 FROM pg_constraint WHERE conname = 'learning_events_qualification_id_check'
-    ) THEN
-        ALTER TABLE learning_events
-            ADD CONSTRAINT learning_events_qualification_id_check
-            CHECK (qualification_id ~ '^[a-z][a-z0-9_]*$');
-    END IF;
-    IF NOT EXISTS (
-        SELECT 1 FROM pg_constraint WHERE conname = 'user_node_state_qualification_id_check'
-    ) THEN
-        ALTER TABLE user_node_state
-            ADD CONSTRAINT user_node_state_qualification_id_check
-            CHECK (qualification_id ~ '^[a-z][a-z0-9_]*$');
-    END IF;
-    IF NOT EXISTS (
-        SELECT 1 FROM pg_constraint WHERE conname = 'learning_time_events_qualification_id_check'
-    ) THEN
-        ALTER TABLE learning_time_events
-            ADD CONSTRAINT learning_time_events_qualification_id_check
-            CHECK (qualification_id ~ '^[a-z][a-z0-9_]*$');
-    END IF;
-    IF NOT EXISTS (
-        SELECT 1 FROM pg_constraint WHERE conname = 'paused_quiz_sessions_qualification_id_check'
-    ) THEN
-        ALTER TABLE paused_quiz_sessions
-            ADD CONSTRAINT paused_quiz_sessions_qualification_id_check
-            CHECK (qualification_id ~ '^[a-z][a-z0-9_]*$');
-    END IF;
-    IF NOT EXISTS (
-        SELECT 1 FROM pg_constraint WHERE conname = 'web_learning_sessions_qualification_id_check'
-    ) THEN
-        ALTER TABLE web_learning_sessions
-            ADD CONSTRAINT web_learning_sessions_qualification_id_check
-            CHECK (qualification_id ~ '^[a-z][a-z0-9_]*$');
-    END IF;
-END $$;
+-- These constraints are intentionally plain one-time migration steps rather than
+-- a PL/pgSQL DO block so the same SQL can be validated by Neon migration tooling.
+ALTER TABLE question_attempts
+    ADD CONSTRAINT question_attempts_qualification_id_check
+    CHECK (qualification_id ~ '^[a-z][a-z0-9_]*$');
+ALTER TABLE learning_events
+    ADD CONSTRAINT learning_events_qualification_id_check
+    CHECK (qualification_id ~ '^[a-z][a-z0-9_]*$');
+ALTER TABLE user_node_state
+    ADD CONSTRAINT user_node_state_qualification_id_check
+    CHECK (qualification_id ~ '^[a-z][a-z0-9_]*$');
+ALTER TABLE learning_time_events
+    ADD CONSTRAINT learning_time_events_qualification_id_check
+    CHECK (qualification_id ~ '^[a-z][a-z0-9_]*$');
+ALTER TABLE paused_quiz_sessions
+    ADD CONSTRAINT paused_quiz_sessions_qualification_id_check
+    CHECK (qualification_id ~ '^[a-z][a-z0-9_]*$');
+ALTER TABLE web_learning_sessions
+    ADD CONSTRAINT web_learning_sessions_qualification_id_check
+    CHECK (qualification_id ~ '^[a-z][a-z0-9_]*$');
 
 CREATE INDEX IF NOT EXISTS question_attempts_qualification_user_date_idx
     ON question_attempts (qualification_id, user_id, answered_at DESC);
