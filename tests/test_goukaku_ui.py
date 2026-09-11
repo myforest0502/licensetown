@@ -31,10 +31,10 @@ def test_goukaku_home_renders(monkeypatch):
     assert "data-close" not in text
     assert "今日やること" in text
     assert "今日の学習を始める" in text
-    assert "（暫定）" in text
+    assert "（暫定）" not in text
     assert "field-progress-row" in text
     assert "正答率" in text
-    assert "2027/02/20" in text
+    assert "2027/02/21" in text
     assert ">0<small>問</small>" in text
     assert "data-line-message=\"相談する\"" in text
     assert 'class="app-shell"' in text
