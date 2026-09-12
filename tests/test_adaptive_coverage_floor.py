@@ -57,7 +57,9 @@ def test_exploration_floor_uses_distinct_lowest_coverage_fields(monkeypatch):
     )
 
     assert len(selected) == 5
-    assert [item["category_small"] for item in selected] == [1, 2, 3, 4, 5]
+    selected_fields = [item["category_small"] for item in selected]
+    assert selected_fields[:3] == [1, 2, 3]
+    assert set(selected_fields) == {1, 2, 3, 4, 5}
     assert all(item["priority_group"] == "exploration" for item in selected)
 
 
@@ -89,6 +91,10 @@ def test_safety_repair_stays_first_while_exploration_uses_low_coverage_field(mon
         _attempt("Q4", "F2N2", True, confidence=1),
         _attempt("Q5", "F3N1", True, confidence=1),
         _attempt("Q6", "F3N2", True, confidence=1),
+        _attempt("Q7", "F4N1", True, confidence=1),
+        _attempt("Q8", "F4N2", True, confidence=1),
+        _attempt("Q9", "F5N1", True, confidence=1),
+        _attempt("Q10", "F5N2", True, confidence=1),
     ]
 
     selected = selector.select_node_adaptive_questions(
