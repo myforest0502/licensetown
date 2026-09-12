@@ -120,6 +120,49 @@ def _priority(state: str, summary: dict[str, Any], safety: str) -> tuple[int, st
     return 100, "stable_maintenance", "maintenance"
 
 
+def _field_node_coverage(attempts: Iterable[dict[str, Any]]) -> tuple[dict[str, int], dict[int, tuple[int, int]]]:
+    """Return evidence-Q -> field and per-field (seen nodes, total nodes).
+
+    Coverage is based on canonical Knowledge Nodes, not raw answer volume. This
+    keeps the exploration floor aligned with the same semantic unit used by the
+    repair engine while leaving Safety/repair priority scores unchanged.
+    """
+    field_by_evidence: dict[str, int] = {}
+    total_nodes: dict[int, set[str]] = defaultdict(set)
+    seen_nodes: dict[int, set[str]] = defaultdict(set)
+
+    for question_id in question_ids():
+        field_id = get_category_small(question_id)
+        evidence_question_id = canonicalize_question_evidence_id(question_id)
+        tag = get_question_tag(question_id)
+        node = canonicalize_question_evidence_node(
+            question_id,
+            str(tag["knowledge_node_id"]),
+        )
+        field_by_evidence.setdefault(evidence_question_id, field_id)
+        if node:
+            total_nodes[field_id].add(str(node))
+
+    for item in attempts:
+        raw_question_id = str(item.get("question_id") or "")
+        evidence_question_id = canonicalize_question_evidence_id(raw_question_id)
+        field_id = field_by_evidence.get(evidence_question_id)
+        if field_id is None:
+            continue
+        node = canonicalize_question_evidence_node(
+            raw_question_id,
+            str(item.get("knowledge_node_id") or ""),
+        )
+        if node:
+            seen_nodes[field_id].add(str(node))
+
+    coverage = {
+        field_id: (len(seen_nodes[field_id]), len(nodes))
+        for field_id, nodes in total_nodes.items()
+    }
+    return field_by_evidence, coverage
+
+
 def select_node_adaptive_questions(
     attempts: Iterable[dict[str, Any]],
     question_count: int = 30,
@@ -155,12 +198,17 @@ def select_node_adaptive_questions(
         canonicalize_question_evidence_id(str(value))
         for value in (exclude_ids or ())
     }
+    field_by_evidence, field_coverage = _field_node_coverage(attempts)
     candidates = []
     for question_id in question_ids():
         evidence_question_id = canonicalize_question_evidence_id(question_id)
         if evidence_question_id in excluded:
             continue
-        if category_small is not None and get_category_small(question_id) != category_small:
+        field_id = field_by_evidence.get(
+            evidence_question_id,
+            get_category_small(question_id),
+        )
+        if category_small is not None and field_id != category_small:
             continue
         tag = get_question_tag(question_id)
         node = canonicalize_question_evidence_node(
@@ -198,10 +246,16 @@ def select_node_adaptive_questions(
             score += 20
         if evidence_question_id not in seen_question_ids:
             score += 10
+        seen_nodes, total_nodes = field_coverage.get(field_id, (0, 0))
+        coverage_ratio = seen_nodes / total_nodes if total_nodes else 1.0
         candidates.append({
             "question_id": question_id,
             "evidence_question_id": evidence_question_id,
             "canonical_node_id": str(node),
+            "category_small": field_id,
+            "field_seen_nodes": seen_nodes,
+            "field_total_nodes": total_nodes,
+            "field_node_coverage": coverage_ratio,
             "state": state,
             "priority_reason": reason,
             "priority_group": group,
@@ -228,6 +282,15 @@ def select_node_adaptive_questions(
         if item["evidence_question_id"] not in seen_question_ids
         or item["state"] == "recheck_due"
     ]
+    exploration_candidates = sorted(
+        normal_candidates,
+        key=lambda item: (
+            item["field_node_coverage"],
+            item["field_seen_nodes"],
+            -item["priority_score"],
+            -item["tie"],
+        ),
+    )
 
     intent_group = {
         "repair": "repair",
@@ -273,9 +336,43 @@ def select_node_adaptive_questions(
                 continue
             append_item(item)
 
+    def take_exploration(limit: int, node_cap: int):
+        """Fill exploration from lowest-coverage fields, one field each first."""
+        def selected_count() -> int:
+            return sum(value["priority_group"] == "exploration" for value in selected)
+
+        used_fields = {
+            value["category_small"]
+            for value in selected
+            if value["priority_group"] == "exploration"
+        }
+        for item in exploration_candidates:
+            if selected_count() >= limit:
+                return
+            if item["priority_group"] != "exploration" or not available(item, node_cap):
+                continue
+            if item["category_small"] in used_fields:
+                continue
+            append_item(item)
+            used_fields.add(item["category_small"])
+
+        # A field-filtered session, a small bank, or exhausted low-coverage
+        # fields may not have enough distinct fields. Fill the remaining floor
+        # without weakening uniqueness or Node caps.
+        for item in exploration_candidates:
+            if selected_count() >= limit:
+                return
+            if item["priority_group"] != "exploration" or not available(item, node_cap):
+                continue
+            append_item(item)
+
     for group, limit in targets.items():
-        take(normal_candidates, group, limit, node_cap=1)
-        take(normal_candidates, group, limit, node_cap=2)
+        if group == "exploration":
+            take_exploration(limit, node_cap=1)
+            take_exploration(limit, node_cap=2)
+        else:
+            take(normal_candidates, group, limit, node_cap=1)
+            take(normal_candidates, group, limit, node_cap=2)
 
     for cap in (1, 2, 3, question_count):
         for item in normal_candidates:
