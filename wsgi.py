@@ -29,6 +29,7 @@ from dashboard_progress_trend import install_dashboard_progress_trend
 from developer_access_recovery import install_developer_access_recovery
 from durable_paused_session import install_durable_paused_sessions
 from durable_web_learning_session import install_durable_web_learning_sessions
+from initial_assessment_repeat_guard import install_initial_assessment_repeat_guard
 from learning_time_guard import install_learning_time_guard
 from one_question_starter import install_one_question_starter, one_question_quick_reply_item
 from phase11_gate_ui import install_phase11_gate_ui
@@ -127,6 +128,7 @@ def _apply_rich_menu_v2_if_requested() -> None:
 # Registered LINE callbacks resolve these names from the legacy app module at
 # call time, so production behavior can be composed without rewriting app.py.
 install_pt_learning_history_scope(legacy)
+install_initial_assessment_repeat_guard(legacy)
 install_pt_dashboard_history_scope(goukaku_module)
 install_pt_learning_writer_scope(legacy, goukaku_module)
 install_durable_paused_sessions(legacy, database_module)

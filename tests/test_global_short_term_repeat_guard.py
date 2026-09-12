@@ -224,12 +224,8 @@ def test_adaptive_session_boundary_applies_guard_for_web_style_direct_call(monke
     assert result == [{"id": "Q2"}]
 
 
-def test_initial_assessment_fixed_contract_does_not_read_attempts(monkeypatch):
-    monkeypatch.setattr(
-        app,
-        "get_question_attempts",
-        lambda _user_id: (_ for _ in ()).throw(AssertionError("must not read attempts")),
-    )
+def test_initial_assessment_runtime_reads_attempts_for_repeat_guard(monkeypatch):
+    monkeypatch.setattr(app, "get_question_attempts", lambda _user_id: [])
     monkeypatch.setattr(app, "build_initial_assessment", lambda count: questions(count))
     monkeypatch.setattr(app, "format_quiz_messages", lambda _questions: ["quiz"])
     assert app.start_quiz("initial-user", session_kind="initial_assessment", question_count=10) == ["quiz"]
