@@ -112,8 +112,13 @@ class PTLearningHistoryStore:
                     (user_id, self.qualification_id),
                 )
                 row = cur.fetchone()
-                if row is not None:
-                    return bool(row[0])
+                # A completed qualification state is authoritative. During the
+                # PT migration, however, a stale legacy FALSE may have been
+                # copied for a learner who already has substantial PT history.
+                # In that case preserve the pre-migration evidence contract
+                # instead of forcing a mature learner through onboarding again.
+                if row is not None and bool(row[0]):
+                    return True
                 cur.execute(
                     """
                     SELECT EXISTS (
