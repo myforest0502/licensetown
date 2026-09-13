@@ -9,6 +9,13 @@ from knowledge_node_canonical import canonicalize_knowledge_node_id
 
 EVALUATIONS = {"PASS", "PARTIAL", "FAIL"}
 
+# Emergency kill switch.
+# The production OpenAI evaluator is currently unavailable. Keep the optional
+# written check out of the learning flow so a learner can finish recommended
+# study without seeing an ungradeable prompt. Re-enable only after the
+# evaluator is confirmed healthy and the grading policy has regression tests.
+WRITTEN_CHECK_TEMPORARILY_DISABLED = True
+
 
 def should_offer_written_check(attempts: list[dict]) -> bool:
     """Return true only when a Node has both saved correct and wrong evidence."""
@@ -22,8 +29,14 @@ def select_written_check_candidate(
     history: list[dict],
     *,
     used_canonical_node_ids=(),
+    temporarily_disabled: bool | None = None,
 ) -> dict | None:
     """Select one current-session Node with past/current correct and wrong evidence."""
+    if temporarily_disabled is None:
+        temporarily_disabled = WRITTEN_CHECK_TEMPORARILY_DISABLED
+    if temporarily_disabled:
+        return None
+
     used = {str(value) for value in used_canonical_node_ids}
     grouped: dict[str, list[dict]] = {}
     for item in history:
@@ -76,9 +89,12 @@ def unknown_evaluation() -> dict:
 
 
 def evaluation_fallback() -> dict:
-    """Allowed structured fallback; persistence still happens after AI failure."""
+    """Neutral fallback for an evaluator outage; never grade the learner by accident."""
     return {
-        "result": "PARTIAL",
-        "reason": "AI判定を完了できなかったため保留",
-        "feedback": "今ちょっとうまく判定できなかった。\nでも回答はちゃんと預かったぞ。ここは判定を保留にしておくな。",
+        "result": "UNKNOWN",
+        "reason": "AI判定機能を利用できないため正誤判定なし",
+        "feedback": (
+            "今は判定機能を利用できないため、この回答の正誤判定はしていないぞ。\n"
+            "回答は保存してあるが、学習成績には影響しないからそのまま進んで大丈夫だ。"
+        ),
     }
