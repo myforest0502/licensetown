@@ -116,6 +116,11 @@ A field must not absorb unlimited blocks simply because it remains weak. Repeate
 
 ## Stage C — Exam Weight data audit
 
+Implemented Shadow v0.1 in PR #345 (merged 2026-09-14). Formal repository counts
+are 900 original / 1100 past_exam, with 36 year-provenance items and 1064 gaps.
+Only 18-field aggregate frequency is used; relative mean is 1.0. Temporal windows
+and volatility remain unsupported. See [complete specification](PT_LEARNING_STRATEGY_SPEC_V1.md).
+
 Derive what is reproducible from the closed Q1-Q2000 dataset before adding outside assumptions.
 
 Required outputs per field:
@@ -126,9 +131,15 @@ Required outputs per field:
 - recent-window trends only when the stored provenance actually supports the window;
 - stability/volatility of field appearance.
 
-Current repository evidence includes audited official provenance for parts of rounds 47-51 and round 60, but a complete 20-year per-question provenance series has not yet been established. Missing years must not be guessed. The next task is to inventory all source-audit artifacts and quantify exactly which rounds are supported before defining Exam Weight v0.1.
+Current repository evidence includes audited official provenance for parts of rounds 47-51 and round 60, but a complete 20-year per-question provenance series has not been established. Missing years are not guessed; further provenance recovery is deferred rather than required for the aggregate-frequency proxy.
 
 ## Stage D — field-specific targets
+
+Implemented in `field_learning_target_shadow.py`, disconnected from Production.
+Supply-capped first-pass budgets remain distinct from the unchanged 60-answer
+classification floor. Targets vary by provisional Exam Weight; additional review
+is capped at three 30-question blocks, with observed strategy-change and maintenance
+signals. Current Field Progress is not changed.
 
 Keep raw Field Progress unchanged. Add separate strategy targets per field:
 - minimum evidence amount;
@@ -139,6 +150,12 @@ Keep raw Field Progress unchanged. Add separate strategy targets per field:
 Represent current and target separately; never inflate displayed progress.
 
 ## Stage E — final strategy engine
+
+Implemented in `learning_strategy_shadow.py`, with all 18 fields, bounded components,
+reason codes, critical Safety tier, concentration cap, explicit optional time and
+missing-context flags. Returns a candidate 30-question budget (or defer), no Q IDs.
+`shadow_only=True`, `selection_authority=False`; no today_action/selector wiring.
+Code completion is not natural-use acceptance or Production promotion.
 
 Create a deterministic shadow-only strategy score using:
 - Exam Weight;
@@ -171,7 +188,7 @@ Production DB writes, paid operations, and Production behavior changes remain se
 
 ## Immediate next action
 
-1. Merge the shadow-only Stage B implementation after green CI.
-2. Inventory official-exam provenance available in Q1-Q2000 and produce a reproducible Stage C support matrix.
-3. Derive Exam Weight v0.1 only from supported evidence; explicitly mark unsupported historical windows.
-4. Then derive field-specific targets and implement the final strategy engine shadow-only.
+1. Stage B and C are merged; Stage D/E implement the versioned Shadow-only contract.
+2. Verify full tests, bank validator and CI for the Stage D/E PR before merge.
+3. Collect natural-use comparison evidence and missing observation context under Stage F.
+4. Keep #337/#342 and Phase11 authority unchanged until a separate promotion decision.

@@ -1,5 +1,26 @@
 # LicenseTown Current State
 
+## 2026-09-14 Learning strategy Stage C/D/E — Shadow only
+
+- Stage C PR #345 merged at `d7d2b6039b4aa45f6f45c6ce1fbbe2fc2af95770`: provisional
+  18-field repository-frequency Exam Weight; 900 original / 1100 past_exam;
+  year provenance 36, gap 1064. No fabricated historical windows.
+- Stage D/E code adds pure field targets and explainable ranked strategy candidates.
+  Inputs are existing evidence/progress snapshots plus explicit observed context.
+  No Production caller, DB write/schema, selector/session/event-key or UI changes.
+- Stage B's 60-answer + canonical-spread gate remains intact. Supply-capped first
+  passes, three-block additional ceiling, maintenance and critical Safety are
+  separate strategy policies; they cannot authorize Q repeats or bypass #337/#342.
+- Status: **code exists: YES / targeted tests: 94 PASS / full local suite: 1425 PASS,
+  6 skipped, 1 deselected, 141 subtests / bank validator: 2000 records, 0 issues /
+  natural Stage D/E comparison: NOT YET / promotion: NO**. CI and deployment
+  acceptance are recorded against the delivery PR/merge SHA; neither promotes authority.
+- Phase11 stays HOLD / Shadow only. Missing Safety/timing/concentration context
+  and unsupported year windows remain explicit rather than inferred.
+- Specification: `docs/PT_LEARNING_STRATEGY_SPEC_V1.md`; roadmap:
+  `docs/LEARNING_STRATEGY_ROADMAP_20260913.md`. Next work is natural-history
+  comparison and acceptance, not automatic Production promotion.
+
 ## 2026-09-10 PR #306 all-path repeat-guard hardening v0.2
 
 - Additional acceptance hardening keeps the formal under-three-day exact-evidence block authoritative across random, category, nekketsu, adaptive daily, and web recommendation starts.
