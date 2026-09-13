@@ -29,11 +29,27 @@ def test_candidate_uses_canonical_node_and_avoids_same_session_duplicate():
         {"question_id": "Q1", "knowledge_node_id": "KN0807", "is_correct": True},
         {"question_id": "Q2", "knowledge_node_id": "KN0597", "is_correct": False},
     ]
-    candidate = select_written_check_candidate(session, history)
+    candidate = select_written_check_candidate(
+        session,
+        history,
+        temporarily_disabled=False,
+    )
     assert candidate == {"canonical_node_id": "KN0597", "source_question_id": "Q1"}
     assert select_written_check_candidate(
-        session, history, used_canonical_node_ids=["KN0597"]
+        session,
+        history,
+        used_canonical_node_ids=["KN0597"],
+        temporarily_disabled=False,
     ) is None
+
+
+def test_written_check_is_temporarily_disabled_by_default():
+    session = [{"question_id": "Q1", "knowledge_node_id": "KN0807", "is_correct": True}]
+    history = [
+        {"question_id": "Q1", "knowledge_node_id": "KN0807", "is_correct": True},
+        {"question_id": "Q2", "knowledge_node_id": "KN0597", "is_correct": False},
+    ]
+    assert select_written_check_candidate(session, history) is None
 
 
 def test_fixed_prompt_is_short_and_does_not_use_ai():
@@ -52,7 +68,10 @@ def test_structured_evaluation_accepts_three_levels():
 
 def test_unknown_and_ai_failure_fallback_are_short_and_structured():
     assert unknown_evaluation()["result"] == "UNKNOWN"
-    assert evaluation_fallback()["result"] == "PARTIAL"
+    fallback = evaluation_fallback()
+    assert fallback["result"] == "UNKNOWN"
+    assert "正誤判定はしていない" in fallback["feedback"]
+    assert "学習成績には影響しない" in fallback["feedback"]
 
 
 def _waiting_session():
@@ -98,7 +117,7 @@ def test_written_zero_skips_ai_and_persists_unknown(monkeypatch):
     app.study_sessions.pop(user_id, None)
 
 
-def test_ai_failure_uses_fallback_and_still_saves(monkeypatch):
+def test_ai_failure_uses_neutral_fallback_and_still_saves(monkeypatch):
     user_id = "written-fallback"
     app.study_sessions[user_id] = _waiting_session()
     saved = []
@@ -106,7 +125,7 @@ def test_ai_failure_uses_fallback_and_still_saves(monkeypatch):
     monkeypatch.setattr(app, "save_written_check_result", lambda *args: saved.append(args))
     monkeypatch.setattr(app, "reply_written_check_result", lambda *_: None)
     assert app.process_study_flow_command("token", user_id, "説明")
-    assert saved and saved[0][4]["result"] == "PARTIAL"
+    assert saved and saved[0][4]["result"] == "UNKNOWN"
     app.study_sessions.pop(user_id, None)
 
 
