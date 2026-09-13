@@ -16,10 +16,17 @@ MIN_NODE_SPREAD = 6
 
 
 def required_node_spread(total_nodes: int) -> int:
+    """Return a field-size-aware spread target that is attainable at 60 answers.
+
+    A raw percentage alone is invalid for very large fields because 35% of the
+    field may exceed the entire initial 60-question evidence budget. The target
+    therefore scales with field supply but is capped by the initial budget.
+    """
     total_nodes = max(0, int(total_nodes))
     if not total_nodes:
         return 0
-    return min(total_nodes, max(MIN_NODE_SPREAD, ceil(total_nodes * NODE_COVERAGE_FLOOR)))
+    proportional = max(MIN_NODE_SPREAD, ceil(total_nodes * NODE_COVERAGE_FLOOR))
+    return min(total_nodes, INITIAL_QUESTION_FLOOR, proportional)
 
 
 def _ratio(value: int, denominator: int) -> float:
