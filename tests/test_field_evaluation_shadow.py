@@ -34,10 +34,11 @@ def _progress(**overrides):
     return row
 
 
-def test_node_spread_scales_with_field_supply():
+def test_node_spread_scales_with_field_supply_and_stays_attainable():
     assert required_node_spread(10) == 6
     assert required_node_spread(100) == 35
-    assert required_node_spread(200) == 70
+    assert required_node_spread(200) == 60
+    assert required_node_spread(291) == 60
 
 
 def test_under_sixty_answers_remains_assessing():
@@ -122,6 +123,24 @@ def test_recovery_is_not_raw_accuracy_only():
         ),
     )
     assert result["recovery_level"] == "provisional_recovery"
+
+
+def test_durable_recovery_requires_stability_and_no_active_repair():
+    result = evaluate_field(
+        _evidence(evaluable_accuracy=0.90, different_question_repair_confirmation_count=4),
+        _progress(
+            touched_canonical_nodes=50,
+            state_counts={
+                "unseen": 50,
+                "repairing": 0,
+                "checking": 5,
+                "recheck_due": 5,
+                "repaired": 10,
+                "stable": 30,
+            },
+        ),
+    )
+    assert result["recovery_level"] == "durable_recovery"
 
 
 def test_overconcentration_marks_strategy_change_without_erasing_weakness():
