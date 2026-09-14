@@ -1,5 +1,25 @@
 # LicenseTown Current State
 
+## 2026-09-14 Stage F natural-history audit — HOLD / NOT YET
+
+- Offline replay of 2545 anonymous PT attempts at 85 checkpoints on main #346.
+  Top1 agreement 12/83; top3 23/83; eligible30 supply 85/85 (minimum34).
+  Critical Safety priority contradictions0; post-#337 observed same/exact repeats0
+  across535 attempts. No runtime, selector, DB or authority changes.
+- Promotion blockers: maximum26 consecutive recommendation observations;
+  additional/consecutive block context unavailable; two small-bank raw weak
+  classifications conflict with Stage F's small-supply policy. Audit labels these
+  assessing while preserving raw outputs. Current #342 stays accepted and intact.
+- Status: code exists YES / audit tests8 PASS / full local suite1433 PASS,
+  6 skipped,1 deselected,141 subtests / bank validator2000 records,0 issues /
+  real history observed YES / promotion accepted NO.
+  Audit/tests/docs delivery is subject to full CI and read-only auto-deploy checks;
+  their exact SHA/results are recorded in the delivery PR and completion report.
+- Details and all18 field rows: `PT_LEARNING_STRATEGY_STAGE_F_AUDIT_20260914.md`
+  and companion JSON. Next work is a separate promotion decision addressing the
+  context/policy gaps; do not connect Stage D/E to Production. These are strategy
+  promotion blockers, not newly demonstrated PT v1.0 runtime defects.
+
 ## 2026-09-14 Learning strategy Stage C/D/E — Shadow only
 
 - Stage C PR #345 merged at `d7d2b6039b4aa45f6f45c6ce1fbbe2fc2af95770`: provisional

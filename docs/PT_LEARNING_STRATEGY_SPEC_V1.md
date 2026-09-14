@@ -1,7 +1,10 @@
 # PT learning strategy v0.1 — Stage C/D/E, Shadow only
 
 Status (2026-09-14): deterministic code and synthetic/fixture tests exist.
-Natural-use strategy comparison and promotion acceptance are pending. This is
+Natural-history comparison is now recorded in
+`PT_LEARNING_STRATEGY_STAGE_F_AUDIT_20260914.md`: HOLD / NOT YET, 85 checkpoints,
+85/85 eligible30 supply, but missing block context and two small-bank policy
+conflicts prevent promotion. Raw Stage B/D/E semantics remain unchanged. This is
 not a claim of improved exam outcomes or an estimate of passing probability.
 
 ## Boundary and input contract
