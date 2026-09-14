@@ -8,7 +8,7 @@ from __future__ import annotations
 from math import ceil
 from typing import Any, Mapping
 
-VERSION = "field_evaluation_shadow_v0.1"
+VERSION = "field_evaluation_shadow_v0.2"
 INITIAL_QUESTION_FLOOR = 60
 REEVALUATION_BLOCK = 30
 NODE_COVERAGE_FLOOR = 0.35
@@ -42,10 +42,17 @@ def evaluate_field(
     previous_progress_score: float | None = None,
 ) -> dict[str, Any]:
     answers = int(evidence.get("evaluable_answer_count") or 0)
+    total_questions = int(evidence.get("total_question_count") or 0)
     total_nodes = int(progress.get("total_canonical_nodes") or evidence.get("total_canonical_node_count") or 0)
     touched = int(progress.get("touched_canonical_nodes") or evidence.get("attempted_canonical_node_count") or 0)
     required_nodes = required_node_spread(total_nodes)
-    sufficient = answers >= INITIAL_QUESTION_FLOOR and touched >= required_nodes and total_nodes > 0
+    question_supply_sufficient = total_questions >= INITIAL_QUESTION_FLOOR
+    sufficient = (
+        answers >= INITIAL_QUESTION_FLOOR
+        and question_supply_sufficient
+        and touched >= required_nodes
+        and total_nodes > 0
+    )
 
     counts = dict(progress.get("state_counts") or evidence.get("state_counts") or {})
     repairing = int(counts.get("repairing") or 0)
@@ -65,6 +72,8 @@ def evaluate_field(
     reasons: list[str] = []
     if not sufficient:
         state = "assessing" if answers or touched else "unassessed"
+        if total_questions < INITIAL_QUESTION_FLOOR:
+            reasons.append("small_bank_supply_limited")
         if answers < INITIAL_QUESTION_FLOOR:
             reasons.append("question_floor_not_met")
         if touched < required_nodes:
@@ -127,6 +136,8 @@ def evaluate_field(
         "strategy_priority_hint": priority_hint,
         "evidence_sufficient": sufficient,
         "evaluable_answer_count": answers,
+        "total_question_count": total_questions,
+        "question_supply_sufficient": question_supply_sufficient,
         "required_node_spread": required_nodes,
         "touched_canonical_nodes": touched,
         "node_spread_met": touched >= required_nodes,
