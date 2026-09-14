@@ -5,6 +5,7 @@ def _evidence(**overrides):
     row = {
         "field_id": 1,
         "field_name": "test",
+        "total_question_count": 200,
         "evaluable_answer_count": 60,
         "evaluable_accuracy": 0.75,
         "repeated_weakness_evidence_count": 0,
@@ -52,6 +53,42 @@ def test_sixty_answers_without_node_spread_remains_assessing():
     result = evaluate_field(_evidence(), _progress(touched_canonical_nodes=20))
     assert result["field_state"] == "assessing"
     assert result["node_spread_met"] is False
+
+
+def test_small_bank_never_declares_weak_or_strong_from_repeat_volume():
+    weakish = evaluate_field(
+        _evidence(total_question_count=29, evaluable_answer_count=119, evaluable_accuracy=0.55),
+        _progress(total_canonical_nodes=15, touched_canonical_nodes=15,
+                  state_counts={"repairing": 8, "checking": 4, "stable": 3},
+                  field_progress_score=0.2),
+    )
+    assert weakish["field_state"] == "assessing"
+    assert weakish["evidence_sufficient"] is False
+    assert weakish["question_supply_sufficient"] is False
+    assert "small_bank_supply_limited" in weakish["reasons"]
+
+    strongish = evaluate_field(
+        _evidence(total_question_count=58, evaluable_answer_count=72, evaluable_accuracy=0.95),
+        _progress(total_canonical_nodes=40, touched_canonical_nodes=40,
+                  state_counts={"checking": 2, "repaired": 8, "stable": 30},
+                  field_progress_score=0.8),
+    )
+    assert strongish["field_state"] == "assessing"
+    assert strongish["evidence_sufficient"] is False
+    assert "small_bank_supply_limited" in strongish["reasons"]
+
+
+def test_small_bank_safety_keeps_priority_without_ability_classification():
+    result = evaluate_field(
+        _evidence(total_question_count=29, evaluable_answer_count=119, evaluable_accuracy=0.95),
+        _progress(total_canonical_nodes=15, touched_canonical_nodes=15,
+                  state_counts={"checking": 5, "stable": 10},
+                  field_progress_score=0.7),
+        critical_safety_unresolved_count=1,
+    )
+    assert result["field_state"] == "assessing"
+    assert result["strategy_priority_hint"] == "safety"
+    assert "small_bank_supply_limited" in result["reasons"]
 
 
 def test_weak_field_rechecks_every_thirty_questions():
