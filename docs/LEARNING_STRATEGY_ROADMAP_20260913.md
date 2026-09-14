@@ -1,5 +1,14 @@
 # LicenseTown Learning Strategy Roadmap — 2026-09-13
 
+## 2026-09-14 F.2 and gated integration update
+
+F.2 #351 is PASS WITH CONDITIONS:14 real plans, small-bank conflicts resolved,
+Safety0 contradictions, supply14/14 and measured concentration penalties. Prior
+Stage F HOLD below is historical. See `PT_LEARNING_STRATEGY_STAGE_F2_20260914.md`.
+Separate LINE adaptive30 pilot preparation defaults OFF, retains baseline safety
+and #342, and needs explicit later activation. Contract:
+`PT_LEARNING_STRATEGY_RUNTIME_PILOT_V1.md`. No efficacy claim or Phase11 promotion.
+
 ## Stage F observation update — 2026-09-14
 
 Natural-history replay completed on 2545 PT attempts / 85 checkpoints.

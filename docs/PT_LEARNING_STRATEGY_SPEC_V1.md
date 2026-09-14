@@ -1,5 +1,10 @@
 # PT learning strategy v0.1 — Stage C/D/E, Shadow only
 
+Runtime preparation update: `PT_LEARNING_STRATEGY_RUNTIME_PILOT_V1.md` specifies
+the separate default-OFF LINE adaptive30 adapter. Stage E remains a pure field
+strategy; the existing selector supplies all Q candidates. Safety/due/#342 slots
+and repeat exclusions override the soft field target. No Production activation.
+
 Stage F.2 update: see `PT_LEARNING_STRATEGY_STAGE_F2_20260914.md`.
 PASS WITH CONDITIONS permits separate default-OFF pilot preparation only.
 PR #348 requires bank supply>=60 as well as answer/spread sufficiency; repeated
@@ -30,9 +35,11 @@ Callers must provide one learner's snapshots derived at the same observation tim
 Canonical Nodes belonging to several fields retain existing per-field membership;
 this strategy does not sum field counts into a unique learner total.
 
-No Production caller imports these new modules. `today_action`, question IDs,
-selector ratios, #337 repeat guard, #342 coverage-aware exploration, Recent
-Cooldown, Safety rules, sessions, DB schema and learner presentation are unchanged.
+The separately gated LINE adaptive30 adapter can now call the pure modules for
+explicit pilots; OFF/non-pilot preserves the original behavior. `today_action`,
+the existing selector implementation, #337/#342, Recent Cooldown, Safety rules,
+DB schema and learner presentation are unchanged. Pilot field preference and
+metadata are described in the runtime contract above.
 Phase11 remains HOLD / Shadow only. Every strategy/target output has
 `shadow_only=True`, `selection_authority=False`.
 
