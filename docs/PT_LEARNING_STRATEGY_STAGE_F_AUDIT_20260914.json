@@ -1,0 +1,5436 @@
+{
+  "version": "stage_f_v1",
+  "shadow_only": true,
+  "selection_authority": false,
+  "observed_repeat_counts": {
+    "post_337_attempts": 535,
+    "all_history_same_q_72h": 658,
+    "all_history_exact_72h": 658,
+    "post_337_same_q_72h": 0,
+    "post_337_exact_72h": 0,
+    "post_337_cross_q_exact_72h": 0
+  },
+  "judgment": "HOLD",
+  "production_connection": "NOT YET",
+  "hold_reasons": [
+    "additional_and_consecutive_block_context_unavailable",
+    "observational_replay_cannot_establish_coverage_noninferiority",
+    "single_learner_no_prospective_shadow_following_outcomes",
+    "repeated_recommendations_exceed_three_observations",
+    "small_supply_classification_policy_conflict"
+  ],
+  "history": {
+    "attempts": 2545,
+    "distinct_questions": 1470,
+    "distinct_raw_nodes": 1086,
+    "accuracy": 0.7324165029469548,
+    "unknown_answers": 13,
+    "first": "2026-08-17T12:00:36.189000+00:00",
+    "last": "2026-09-13T23:50:23.960000+00:00"
+  },
+  "summary": {
+    "checkpoint_count": 85,
+    "comparison_count": 83,
+    "top1_matches": 12,
+    "top3_matches": 23,
+    "recommended_fields": {
+      "18": 26,
+      "9": 10,
+      "7": 7,
+      "2": 25,
+      "8": 17
+    },
+    "intent_counts": {
+      "coverage": 26,
+      "repair": 0,
+      "retention": 0,
+      "attainment": 0,
+      "maintenance": 0,
+      "safety_review": 59,
+      "strategy_change": 0,
+      "defer": 0
+    },
+    "supply_sufficient": 85,
+    "supply_checked": 85,
+    "max_recommendation_streak": 26,
+    "safety_priority_contradictions": 0,
+    "high_weight_recommendations": 85,
+    "low_weight_weak_recommendations": 0
+  },
+  "checkpoints": [
+    {
+      "answers": 30,
+      "as_of": "2026-08-17T12:38:30.249000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 1,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "3": 30
+      },
+      "actual_modal_fields": [
+        3
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 1.0,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "unassessed",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 340,
+      "after_exact_and_formal_state": 339,
+      "eligible_supply": 339,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 60,
+      "as_of": "2026-08-18T14:39:47.466000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 2,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "1": 8,
+        "18": 2,
+        "8": 3,
+        "17": 2,
+        "9": 3,
+        "2": 2,
+        "4": 1,
+        "6": 1,
+        "16": 2,
+        "13": 2,
+        "15": 3,
+        "7": 1
+      },
+      "actual_modal_fields": [
+        1
+      ],
+      "top1_match": false,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 1.0,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "unassessed",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 340,
+      "after_exact_and_formal_state": 339,
+      "eligible_supply": 339,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 90,
+      "as_of": "2026-08-20T13:31:54.589000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 3,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "9": 2,
+        "18": 1,
+        "11": 1,
+        "13": 1,
+        "1": 25
+      },
+      "actual_modal_fields": [
+        1
+      ],
+      "top1_match": false,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.993127147766323,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 338,
+      "after_exact_and_formal_state": 337,
+      "eligible_supply": 337,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 120,
+      "as_of": "2026-08-21T11:18:26.616000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 4,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "1": 30
+      },
+      "actual_modal_fields": [
+        1
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9896907216494846,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 337,
+      "after_exact_and_formal_state": 336,
+      "eligible_supply": 336,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 150,
+      "as_of": "2026-08-21T11:39:12.957000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 5,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "1": 5,
+        "3": 25
+      },
+      "actual_modal_fields": [
+        3
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9896907216494846,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 337,
+      "after_exact_and_formal_state": 336,
+      "eligible_supply": 336,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 180,
+      "as_of": "2026-08-23T12:43:14.766000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 6,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "3": 5,
+        "8": 25
+      },
+      "actual_modal_fields": [
+        8
+      ],
+      "top1_match": false,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9896907216494846,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 337,
+      "after_exact_and_formal_state": 336,
+      "eligible_supply": 336,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 210,
+      "as_of": "2026-08-23T13:11:06.353000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 7,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "8": 5,
+        "15": 25
+      },
+      "actual_modal_fields": [
+        15
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9896907216494846,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 337,
+      "after_exact_and_formal_state": 336,
+      "eligible_supply": 336,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 240,
+      "as_of": "2026-08-24T12:53:30.897000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 8,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "15": 5,
+        "7": 25
+      },
+      "actual_modal_fields": [
+        7
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9896907216494846,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 340,
+      "after_exact_and_formal_state": 336,
+      "eligible_supply": 336,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 270,
+      "as_of": "2026-08-25T12:34:39.129000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 9,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "7": 6,
+        "13": 10,
+        "1": 3,
+        "3": 1,
+        "2": 10
+      },
+      "actual_modal_fields": [
+        2,
+        13
+      ],
+      "top1_match": false,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9896907216494846,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 340,
+      "after_exact_and_formal_state": 336,
+      "eligible_supply": 336,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 300,
+      "as_of": "2026-08-27T12:11:42.114000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 10,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 6,
+        "3": 2,
+        "13": 7,
+        "15": 7,
+        "1": 3,
+        "8": 3,
+        "7": 2
+      },
+      "actual_modal_fields": [
+        13,
+        15
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9896907216494846,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 340,
+      "after_exact_and_formal_state": 336,
+      "eligible_supply": 336,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 330,
+      "as_of": "2026-08-27T12:48:27.518000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 11,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "15": 3,
+        "2": 1,
+        "1": 1,
+        "17": 25
+      },
+      "actual_modal_fields": [
+        17
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9896907216494846,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 340,
+      "after_exact_and_formal_state": 336,
+      "eligible_supply": 336,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 360,
+      "as_of": "2026-08-28T11:58:56.461000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 12,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "17": 8,
+        "15": 3,
+        "7": 2,
+        "13": 8,
+        "1": 3,
+        "3": 1,
+        "8": 3,
+        "2": 2
+      },
+      "actual_modal_fields": [
+        13,
+        17
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9896907216494846,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.5,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 340,
+      "after_exact_and_formal_state": 336,
+      "eligible_supply": 336,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 390,
+      "as_of": "2026-08-29T10:37:02.135000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 13,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "8": 8,
+        "7": 6,
+        "17": 3,
+        "2": 3,
+        "1": 4,
+        "15": 5,
+        "13": 1
+      },
+      "actual_modal_fields": [
+        8
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9896907216494846,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.5,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 340,
+      "after_exact_and_formal_state": 336,
+      "eligible_supply": 336,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 420,
+      "as_of": "2026-08-29T12:23:32.933000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 14,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "15": 3,
+        "7": 4,
+        "8": 1,
+        "13": 3,
+        "17": 2,
+        "4": 1,
+        "18": 2,
+        "6": 10,
+        "1": 2,
+        "2": 2
+      },
+      "actual_modal_fields": [
+        6
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9896907216494846,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.5,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 340,
+      "after_exact_and_formal_state": 336,
+      "eligible_supply": 336,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 450,
+      "as_of": "2026-08-30T10:22:03.221000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 15,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "8": 6,
+        "17": 4,
+        "15": 5,
+        "6": 1,
+        "7": 4,
+        "2": 3,
+        "13": 2,
+        "18": 2,
+        "9": 1,
+        "11": 1,
+        "1": 1
+      },
+      "actual_modal_fields": [
+        8
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9828178694158075,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 338,
+      "after_exact_and_formal_state": 334,
+      "eligible_supply": 334,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 480,
+      "as_of": "2026-08-30T10:53:23.926000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 16,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "1": 3,
+        "15": 5,
+        "8": 2,
+        "6": 2,
+        "17": 4,
+        "7": 3,
+        "13": 2,
+        "3": 1,
+        "10": 6,
+        "16": 1,
+        "18": 1
+      },
+      "actual_modal_fields": [
+        10
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9759450171821306,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 336,
+      "after_exact_and_formal_state": 332,
+      "eligible_supply": 332,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 510,
+      "as_of": "2026-08-31T10:10:42.272000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 17,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "10": 7,
+        "1": 2,
+        "2": 3,
+        "13": 2,
+        "15": 5,
+        "7": 2,
+        "8": 2,
+        "6": 1,
+        "17": 5,
+        "11": 1
+      },
+      "actual_modal_fields": [
+        10
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9725085910652921,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 335,
+      "after_exact_and_formal_state": 331,
+      "eligible_supply": 331,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 540,
+      "as_of": "2026-08-31T10:38:25.382000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 18,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "16": 3,
+        "17": 5,
+        "18": 3,
+        "1": 2,
+        "13": 4,
+        "8": 3,
+        "7": 1,
+        "6": 1,
+        "15": 5,
+        "4": 1,
+        "10": 1,
+        "2": 1
+      },
+      "actual_modal_fields": [
+        15,
+        17
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9725085910652921,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 335,
+      "after_exact_and_formal_state": 331,
+      "eligible_supply": 331,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 570,
+      "as_of": "2026-08-31T11:08:10.444000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 19,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "1": 3,
+        "2": 3,
+        "18": 4,
+        "4": 10,
+        "13": 1,
+        "8": 3,
+        "15": 3,
+        "17": 2,
+        "6": 1
+      },
+      "actual_modal_fields": [
+        4
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 15,
+        "repair": 15
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9656357388316151,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 333,
+      "after_exact_and_formal_state": 329,
+      "eligible_supply": 329,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 600,
+      "as_of": "2026-09-01T10:30:08.686000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 20,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "17": 7,
+        "7": 4,
+        "10": 1,
+        "3": 1,
+        "1": 3,
+        "11": 1,
+        "2": 2,
+        "16": 2,
+        "8": 3,
+        "6": 1,
+        "15": 4,
+        "13": 1
+      },
+      "actual_modal_fields": [
+        17
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 10,
+        "exploration": 5,
+        "repair": 15
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9587628865979382,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 329,
+      "after_exact_and_formal_state": 325,
+      "eligible_supply": 325,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 630,
+      "as_of": "2026-09-01T10:59:54.228000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 21,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "17": 7,
+        "4": 1,
+        "10": 2,
+        "7": 2,
+        "2": 3,
+        "3": 1,
+        "9": 1,
+        "15": 7,
+        "16": 1,
+        "8": 2,
+        "6": 1,
+        "1": 1,
+        "13": 1
+      },
+      "actual_modal_fields": [
+        15,
+        17
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 10,
+        "exploration": 5,
+        "repair": 15
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9587628865979382,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 329,
+      "after_exact_and_formal_state": 325,
+      "eligible_supply": 325,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 660,
+      "as_of": "2026-09-01T23:30:25.066000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 22,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "1": 3,
+        "2": 1,
+        "17": 3,
+        "18": 1,
+        "8": 2,
+        "11": 10,
+        "15": 4,
+        "7": 2,
+        "16": 1,
+        "13": 2,
+        "3": 1
+      },
+      "actual_modal_fields": [
+        11
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "repair": 20,
+        "unavailable": 10
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9587628865979382,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 331,
+      "after_exact_and_formal_state": 325,
+      "eligible_supply": 325,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 690,
+      "as_of": "2026-09-02T09:01:22.174000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 23,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "13": 3,
+        "7": 2,
+        "15": 3,
+        "17": 3,
+        "8": 5,
+        "6": 1,
+        "1": 4,
+        "2": 4,
+        "18": 1,
+        "9": 1,
+        "3": 3
+      },
+      "actual_modal_fields": [
+        8
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 10,
+        "exploration": 5,
+        "repair": 15
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9587628865979382,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 331,
+      "after_exact_and_formal_state": 325,
+      "eligible_supply": 325,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 720,
+      "as_of": "2026-09-02T09:33:41.180000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 24,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "17": 6,
+        "3": 3,
+        "2": 3,
+        "4": 2,
+        "7": 1,
+        "8": 2,
+        "13": 2,
+        "9": 10,
+        "18": 1
+      },
+      "actual_modal_fields": [
+        9
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 10,
+        "exploration": 5,
+        "unavailable": 10,
+        "repair": 5
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9553264604810997,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 330,
+      "after_exact_and_formal_state": 324,
+      "eligible_supply": 324,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 750,
+      "as_of": "2026-09-02T23:23:39.214000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 25,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "1": 2,
+        "13": 13,
+        "2": 1,
+        "18": 1,
+        "3": 1,
+        "17": 1,
+        "7": 1,
+        "16": 10
+      },
+      "actual_modal_fields": [
+        13
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "repair": 14,
+        "unavailable": 10,
+        "checking": 4,
+        "exploration": 2
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9553264604810997,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 331,
+      "after_exact_and_formal_state": 323,
+      "eligible_supply": 323,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 780,
+      "as_of": "2026-09-03T08:24:46.207000+00:00",
+      "recommended_field_id": 18,
+      "learning_intent": "coverage",
+      "recommendation_streak": 26,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "4": 2,
+        "1": 5,
+        "2": 4,
+        "13": 5,
+        "8": 1,
+        "3": 5,
+        "17": 4,
+        "10": 1,
+        "16": 2,
+        "9": 1
+      },
+      "actual_modal_fields": [
+        1,
+        3,
+        13
+      ],
+      "top1_match": false,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "repair": 15,
+        "checking": 10,
+        "exploration": 5
+      },
+      "critical_safety_nodes": 0,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.9553264604810997,
+        "exam_weight_score": 0.7694886839899414,
+        "retention_score": 0.0,
+        "safety_score": 0.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 3.3381818181818184,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 340,
+      "after_raw_72h": 330,
+      "after_exact_and_formal_state": 322,
+      "eligible_supply": 322,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 810,
+      "as_of": "2026-09-03T08:53:15.971000+00:00",
+      "recommended_field_id": 9,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 1,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "17": 2,
+        "1": 2,
+        "15": 3,
+        "7": 4,
+        "18": 5,
+        "8": 5,
+        "4": 2,
+        "10": 1,
+        "6": 1,
+        "2": 3,
+        "16": 1,
+        "9": 1
+      },
+      "actual_modal_fields": [
+        8,
+        18
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "repair": 14,
+        "unavailable": 1,
+        "checking": 10,
+        "exploration": 5
+      },
+      "critical_safety_nodes": 1,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.8508771929824561,
+        "exam_weight_score": 0.5154185022026433,
+        "retention_score": 0.0,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.0636363636363637,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 146,
+      "after_raw_72h": 133,
+      "after_exact_and_formal_state": 129,
+      "eligible_supply": 129,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 840,
+      "as_of": "2026-09-03T09:29:34.823000+00:00",
+      "recommended_field_id": 9,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 2,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "13": 10,
+        "3": 2,
+        "1": 5,
+        "4": 3,
+        "7": 4,
+        "15": 2,
+        "17": 3,
+        "11": 1
+      },
+      "actual_modal_fields": [
+        13
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "repair": 20,
+        "checking": 8,
+        "exploration": 2
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.8508771929824561,
+        "exam_weight_score": 0.5154185022026433,
+        "retention_score": 0.0,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.0636363636363637,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 146,
+      "after_raw_72h": 133,
+      "after_exact_and_formal_state": 129,
+      "eligible_supply": 129,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 870,
+      "as_of": "2026-09-03T23:41:45.890000+00:00",
+      "recommended_field_id": 9,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 3,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "17": 4,
+        "1": 5,
+        "10": 1,
+        "16": 1,
+        "18": 3,
+        "13": 10,
+        "3": 2,
+        "4": 1,
+        "15": 1,
+        "8": 2
+      },
+      "actual_modal_fields": [
+        13
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 8,
+        "exploration": 7,
+        "repair": 15
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.8508771929824561,
+        "exam_weight_score": 0.5154185022026433,
+        "retention_score": 0.0,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.0636363636363637,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 146,
+      "after_raw_72h": 133,
+      "after_exact_and_formal_state": 129,
+      "eligible_supply": 129,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 900,
+      "as_of": "2026-09-04T08:50:20.667000+00:00",
+      "recommended_field_id": 9,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 4,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "15": 3,
+        "7": 2,
+        "10": 1,
+        "2": 15,
+        "13": 1,
+        "17": 2,
+        "9": 1,
+        "8": 2,
+        "6": 2,
+        "18": 1
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "repair": 5,
+        "checking": 10,
+        "exploration": 5,
+        "unavailable": 10
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.8508771929824561,
+        "exam_weight_score": 0.5154185022026433,
+        "retention_score": 0.0,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.0636363636363637,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 146,
+      "after_raw_72h": 133,
+      "after_exact_and_formal_state": 129,
+      "eligible_supply": 129,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 930,
+      "as_of": "2026-09-04T09:24:17.257000+00:00",
+      "recommended_field_id": 9,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 5,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 24,
+        "6": 1,
+        "1": 2,
+        "17": 1,
+        "7": 1,
+        "3": 1
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 20,
+        "repair": 10
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.8508771929824561,
+        "exam_weight_score": 0.5154185022026433,
+        "retention_score": 0.0,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.0636363636363637,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 146,
+      "after_raw_72h": 133,
+      "after_exact_and_formal_state": 129,
+      "eligible_supply": 129,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 960,
+      "as_of": "2026-09-04T23:33:47.061000+00:00",
+      "recommended_field_id": 9,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 6,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 14,
+        "3": 1,
+        "7": 3,
+        "1": 2,
+        "8": 4,
+        "10": 2,
+        "15": 2,
+        "17": 2
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "repair": 20,
+        "checking": 8,
+        "exploration": 2
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.8508771929824561,
+        "exam_weight_score": 0.5154185022026433,
+        "retention_score": 0.0,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.0636363636363637,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 146,
+      "after_raw_72h": 134,
+      "after_exact_and_formal_state": 129,
+      "eligible_supply": 129,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 990,
+      "as_of": "2026-09-05T07:14:02.412000+00:00",
+      "recommended_field_id": 9,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 7,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 3,
+        "17": 5,
+        "1": 3,
+        "18": 4,
+        "7": 2,
+        "10": 3,
+        "8": 2,
+        "3": 1,
+        "11": 1,
+        "15": 2,
+        "13": 2,
+        "6": 2
+      },
+      "actual_modal_fields": [
+        17
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "repair": 15,
+        "checking": 10,
+        "exploration": 5
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.8508771929824561,
+        "exam_weight_score": 0.5154185022026433,
+        "retention_score": 0.0,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.0636363636363637,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 146,
+      "after_raw_72h": 134,
+      "after_exact_and_formal_state": 129,
+      "eligible_supply": 129,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1020,
+      "as_of": "2026-09-05T07:45:05.534000+00:00",
+      "recommended_field_id": 9,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 8,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 3,
+        "1": 6,
+        "7": 6,
+        "8": 2,
+        "15": 3,
+        "3": 3,
+        "18": 2,
+        "6": 1,
+        "4": 1,
+        "10": 1,
+        "16": 1,
+        "5": 1
+      },
+      "actual_modal_fields": [
+        1,
+        7
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "repair": 15,
+        "checking": 10,
+        "exploration": 5
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.8508771929824561,
+        "exam_weight_score": 0.5154185022026433,
+        "retention_score": 0.0,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.0636363636363637,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 146,
+      "after_raw_72h": 134,
+      "after_exact_and_formal_state": 129,
+      "eligible_supply": 129,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1050,
+      "as_of": "2026-09-05T08:09:17.520000+00:00",
+      "recommended_field_id": 9,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 9,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "1": 30
+      },
+      "actual_modal_fields": [
+        1
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.8508771929824561,
+        "exam_weight_score": 0.5154185022026433,
+        "retention_score": 0.0,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.0636363636363637,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 146,
+      "after_raw_72h": 134,
+      "after_exact_and_formal_state": 129,
+      "eligible_supply": 129,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1080,
+      "as_of": "2026-09-05T08:23:42.825000+00:00",
+      "recommended_field_id": 9,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 10,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "5": 30
+      },
+      "actual_modal_fields": [
+        5
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.0,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.8508771929824561,
+        "exam_weight_score": 0.5154185022026433,
+        "retention_score": 0.0,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.0636363636363637,
+      "selected_field_state": "assessing",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 146,
+      "after_raw_72h": 134,
+      "after_exact_and_formal_state": 129,
+      "eligible_supply": 129,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1110,
+      "as_of": "2026-09-05T23:16:24.658000+00:00",
+      "recommended_field_id": 7,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 1,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 5,
+        "17": 2,
+        "8": 4,
+        "13": 2,
+        "7": 2,
+        "1": 4,
+        "3": 3,
+        "6": 1,
+        "15": 3,
+        "11": 1,
+        "10": 1,
+        "12": 1,
+        "18": 1
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "repair": 15,
+        "checking": 10,
+        "exploration": 5
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.49230769230769234,
+        "exam_weight_score": 0.5076096687555953,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.030909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 92,
+      "after_raw_72h": 71,
+      "after_exact_and_formal_state": 46,
+      "eligible_supply": 46,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1140,
+      "as_of": "2026-09-06T04:59:24.595000+00:00",
+      "recommended_field_id": 7,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 2,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 11,
+        "3": 1,
+        "16": 1,
+        "7": 4,
+        "17": 2,
+        "13": 1,
+        "6": 1,
+        "18": 2,
+        "8": 2,
+        "1": 4,
+        "15": 1
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "repair": 20,
+        "checking": 8,
+        "exploration": 2
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.49230769230769234,
+        "exam_weight_score": 0.5076096687555953,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.030909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 92,
+      "after_raw_72h": 72,
+      "after_exact_and_formal_state": 48,
+      "eligible_supply": 48,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1170,
+      "as_of": "2026-09-06T05:26:34.340000+00:00",
+      "recommended_field_id": 7,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 3,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "17": 4,
+        "7": 3,
+        "15": 4,
+        "1": 4,
+        "18": 2,
+        "6": 2,
+        "16": 1,
+        "2": 3,
+        "11": 1,
+        "8": 2,
+        "9": 2,
+        "5": 1,
+        "3": 1
+      },
+      "actual_modal_fields": [
+        1,
+        15,
+        17
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 10,
+        "exploration": 5,
+        "repair": 15
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.49230769230769234,
+        "exam_weight_score": 0.5076096687555953,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.030909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 92,
+      "after_raw_72h": 72,
+      "after_exact_and_formal_state": 48,
+      "eligible_supply": 48,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1200,
+      "as_of": "2026-09-06T05:51:13.036000+00:00",
+      "recommended_field_id": 7,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 4,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 1,
+        "17": 3,
+        "7": 2,
+        "9": 1,
+        "18": 1,
+        "8": 2,
+        "1": 20
+      },
+      "actual_modal_fields": [
+        1
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 5,
+        "exploration": 5,
+        "unavailable": 20
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.49230769230769234,
+        "exam_weight_score": 0.5076096687555953,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.030909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 92,
+      "after_raw_72h": 72,
+      "after_exact_and_formal_state": 48,
+      "eligible_supply": 48,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1230,
+      "as_of": "2026-09-06T06:29:35.087000+00:00",
+      "recommended_field_id": 7,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 5,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "1": 30
+      },
+      "actual_modal_fields": [
+        1
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.49230769230769234,
+        "exam_weight_score": 0.5076096687555953,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.030909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 92,
+      "after_raw_72h": 72,
+      "after_exact_and_formal_state": 48,
+      "eligible_supply": 48,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1260,
+      "as_of": "2026-09-06T06:53:25.493000+00:00",
+      "recommended_field_id": 7,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 6,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "1": 16,
+        "18": 1,
+        "4": 1,
+        "16": 1,
+        "17": 1,
+        "12": 10
+      },
+      "actual_modal_fields": [
+        1
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.49230769230769234,
+        "exam_weight_score": 0.5076096687555953,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.030909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 92,
+      "after_raw_72h": 72,
+      "after_exact_and_formal_state": 48,
+      "eligible_supply": 48,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1290,
+      "as_of": "2026-09-06T23:28:31.774000+00:00",
+      "recommended_field_id": 7,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 7,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "12": 10,
+        "2": 11,
+        "15": 2,
+        "7": 3,
+        "8": 1,
+        "1": 2,
+        "17": 1
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 10,
+        "repair": 15,
+        "checking": 3,
+        "exploration": 2
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.49230769230769234,
+        "exam_weight_score": 0.5076096687555953,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.030909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 92,
+      "after_raw_72h": 74,
+      "after_exact_and_formal_state": 48,
+      "eligible_supply": 48,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1320,
+      "as_of": "2026-09-07T11:25:37.410000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 1,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 30
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 3,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.6298701298701299,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 154,
+      "after_exact_and_formal_state": 120,
+      "eligible_supply": 120,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1350,
+      "as_of": "2026-09-07T11:52:51.651000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 2,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 30
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "unavailable": 20,
+        "repair": 5,
+        "checking": 3,
+        "exploration": 2
+      },
+      "critical_safety_nodes": 4,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.5454545454545454,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 132,
+      "after_exact_and_formal_state": 105,
+      "eligible_supply": 105,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1380,
+      "as_of": "2026-09-07T23:10:40.579000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 3,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 2,
+        "7": 2,
+        "15": 1,
+        "13": 25
+      },
+      "actual_modal_fields": [
+        13
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "repair": 5,
+        "unavailable": 25
+      },
+      "critical_safety_nodes": 4,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.474025974025974,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 115,
+      "after_exact_and_formal_state": 93,
+      "eligible_supply": 93,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1410,
+      "as_of": "2026-09-08T08:24:34.967000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 4,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "13": 5,
+        "2": 11,
+        "1": 4,
+        "8": 1,
+        "15": 2,
+        "17": 1,
+        "5": 1,
+        "18": 3,
+        "9": 2
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "unavailable": 5,
+        "repair": 20,
+        "checking": 3,
+        "exploration": 2
+      },
+      "critical_safety_nodes": 4,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.474025974025974,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 122,
+      "after_exact_and_formal_state": 93,
+      "eligible_supply": 93,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1440,
+      "as_of": "2026-09-08T09:43:31.872000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 5,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "16": 1,
+        "15": 2,
+        "17": 1,
+        "13": 1,
+        "2": 2,
+        "1": 1,
+        "7": 1,
+        "3": 1,
+        "18": 4,
+        "8": 1,
+        "11": 15
+      },
+      "actual_modal_fields": [
+        11
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 10,
+        "exploration": 5,
+        "unavailable": 15
+      },
+      "critical_safety_nodes": 4,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.461038961038961,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 119,
+      "after_exact_and_formal_state": 91,
+      "eligible_supply": 91,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1470,
+      "as_of": "2026-09-08T10:19:28.805000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 6,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "11": 15,
+        "8": 10,
+        "2": 2,
+        "15": 1,
+        "1": 1,
+        "17": 1
+      },
+      "actual_modal_fields": [
+        11
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 15,
+        "repair": 10,
+        "checking": 3,
+        "exploration": 2
+      },
+      "critical_safety_nodes": 6,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.461038961038961,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 119,
+      "after_exact_and_formal_state": 91,
+      "eligible_supply": 91,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1500,
+      "as_of": "2026-09-08T23:14:18.830000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 7,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 6,
+        "1": 3,
+        "9": 2,
+        "5": 1,
+        "18": 5,
+        "17": 1,
+        "15": 3,
+        "13": 3,
+        "16": 1,
+        "7": 3,
+        "8": 1,
+        "11": 1
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "repair": 15,
+        "checking": 10,
+        "exploration": 5
+      },
+      "critical_safety_nodes": 6,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.461038961038961,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 119,
+      "after_exact_and_formal_state": 91,
+      "eligible_supply": 91,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1530,
+      "as_of": "2026-09-09T09:22:03.991000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 8,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "11": 2,
+        "2": 3,
+        "8": 3,
+        "9": 4,
+        "17": 3,
+        "5": 1,
+        "15": 4,
+        "3": 2,
+        "4": 1,
+        "7": 2,
+        "16": 1,
+        "18": 1,
+        "1": 2,
+        "13": 1
+      },
+      "actual_modal_fields": [
+        9,
+        15
+      ],
+      "top1_match": false,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "repair": 15,
+        "checking": 10,
+        "exploration": 5
+      },
+      "critical_safety_nodes": 6,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.4545454545454546,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 124,
+      "after_exact_and_formal_state": 96,
+      "eligible_supply": 96,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1560,
+      "as_of": "2026-09-09T10:06:15.353000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 9,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "5": 1,
+        "8": 4,
+        "17": 5,
+        "13": 2,
+        "10": 1,
+        "9": 4,
+        "2": 2,
+        "1": 1,
+        "15": 4,
+        "3": 2,
+        "6": 1,
+        "16": 1,
+        "18": 1,
+        "7": 1
+      },
+      "actual_modal_fields": [
+        17
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "repair": 15,
+        "checking": 10,
+        "exploration": 5
+      },
+      "critical_safety_nodes": 3,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.4545454545454546,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 121,
+      "after_exact_and_formal_state": 93,
+      "eligible_supply": 93,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1590,
+      "as_of": "2026-09-09T10:32:44.355000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 10,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 4,
+        "16": 2,
+        "12": 3,
+        "13": 2,
+        "11": 1,
+        "9": 2,
+        "17": 3,
+        "15": 5,
+        "6": 1,
+        "7": 2,
+        "8": 3,
+        "10": 1,
+        "18": 1
+      },
+      "actual_modal_fields": [
+        15
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "repair": 10,
+        "checking": 10,
+        "exploration": 5,
+        "unavailable": 5
+      },
+      "critical_safety_nodes": 3,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.4545454545454546,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 121,
+      "after_exact_and_formal_state": 93,
+      "eligible_supply": 93,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1620,
+      "as_of": "2026-09-09T10:59:00.631000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 11,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "3": 1,
+        "11": 1,
+        "16": 2,
+        "2": 5,
+        "18": 7,
+        "4": 1,
+        "15": 2,
+        "6": 3,
+        "8": 3,
+        "10": 1,
+        "7": 1,
+        "1": 1,
+        "13": 1,
+        "17": 1
+      },
+      "actual_modal_fields": [
+        18
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 3,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.4415584415584416,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 118,
+      "after_exact_and_formal_state": 90,
+      "eligible_supply": 90,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1650,
+      "as_of": "2026-09-09T23:34:11.364000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 12,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "9": 10,
+        "2": 20
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "repair": 10,
+        "checking": 11,
+        "exploration": 9
+      },
+      "critical_safety_nodes": 3,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 1.0,
+        "coverage_gap_score": 0.42207792207792205,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 114,
+      "after_exact_and_formal_state": 86,
+      "eligible_supply": 86,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1680,
+      "as_of": "2026-09-10T08:43:43.310000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 13,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 30
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "repair": 1,
+        "checking": 2,
+        "exploration": 7,
+        "unavailable": 20
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.9623915669265399,
+        "coverage_gap_score": 0.36363636363636365,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 97,
+      "after_exact_and_formal_state": 68,
+      "eligible_supply": 68,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1710,
+      "as_of": "2026-09-10T09:04:07.605000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 14,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 30
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.9676699434982536,
+        "coverage_gap_score": 0.2597402597402597,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 78,
+      "after_exact_and_formal_state": 51,
+      "eligible_supply": 51,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1740,
+      "as_of": "2026-09-10T09:21:37.210000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 15,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 12,
+        "8": 2,
+        "1": 3,
+        "13": 2,
+        "5": 2,
+        "12": 1,
+        "7": 2,
+        "15": 3,
+        "16": 1,
+        "6": 1,
+        "9": 1
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "unavailable": 10,
+        "repair": 9,
+        "checking": 10,
+        "exploration": 1
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.9697899472032863,
+        "coverage_gap_score": 0.20779220779220775,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 68,
+      "after_exact_and_formal_state": 43,
+      "eligible_supply": 43,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1770,
+      "as_of": "2026-09-10T10:10:49.688000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 16,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "18": 4,
+        "16": 5,
+        "8": 3,
+        "15": 7,
+        "17": 3,
+        "1": 1,
+        "7": 4,
+        "13": 1,
+        "6": 1,
+        "9": 1
+      },
+      "actual_modal_fields": [
+        15
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "exploration": 9,
+        "checking": 20,
+        "repair": 1
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.9707489964984202,
+        "coverage_gap_score": 0.18181818181818177,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 60,
+      "after_exact_and_formal_state": 36,
+      "eligible_supply": 36,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1800,
+      "as_of": "2026-09-10T10:27:10.692000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 17,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "8": 1,
+        "3": 2,
+        "1": 2,
+        "13": 2,
+        "17": 1,
+        "18": 2,
+        "15": 1,
+        "14": 15,
+        "11": 1,
+        "6": 1,
+        "7": 1,
+        "9": 1
+      },
+      "actual_modal_fields": [
+        14
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 10,
+        "unavailable": 20
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.9707489964984202,
+        "coverage_gap_score": 0.18181818181818177,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 60,
+      "after_exact_and_formal_state": 36,
+      "eligible_supply": 36,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1830,
+      "as_of": "2026-09-10T23:50:32.550000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 18,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "9": 2,
+        "18": 4,
+        "15": 4,
+        "6": 3,
+        "17": 1,
+        "7": 10,
+        "13": 1,
+        "8": 2,
+        "1": 2,
+        "10": 1
+      },
+      "actual_modal_fields": [
+        7
+      ],
+      "top1_match": false,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "unavailable": 10,
+        "checking": 17,
+        "exploration": 1,
+        "repair": 2
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.9707489964984202,
+        "coverage_gap_score": 0.18181818181818177,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 91,
+      "after_exact_and_formal_state": 41,
+      "eligible_supply": 41,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1860,
+      "as_of": "2026-09-11T08:19:19.202000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 19,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "1": 8,
+        "3": 4,
+        "8": 8,
+        "11": 1,
+        "15": 3,
+        "13": 3,
+        "6": 1,
+        "4": 1,
+        "10": 1
+      },
+      "actual_modal_fields": [
+        1,
+        8
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 23,
+        "exploration": 5,
+        "repair": 2
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.9707489964984202,
+        "coverage_gap_score": 0.18181818181818177,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 91,
+      "after_exact_and_formal_state": 41,
+      "eligible_supply": 41,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1890,
+      "as_of": "2026-09-11T08:31:14.127000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 20,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "3": 2,
+        "2": 4,
+        "6": 2,
+        "16": 1,
+        "17": 7,
+        "9": 2,
+        "4": 2,
+        "18": 4,
+        "12": 3,
+        "11": 1,
+        "13": 1,
+        "8": 1
+      },
+      "actual_modal_fields": [
+        17
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 25,
+        "exploration": 5
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.95612349474763,
+        "coverage_gap_score": 0.18181818181818177,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 91,
+      "after_exact_and_formal_state": 41,
+      "eligible_supply": 41,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1920,
+      "as_of": "2026-09-11T09:00:54.137000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 21,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "17": 2,
+        "6": 2,
+        "18": 4,
+        "7": 1,
+        "2": 2,
+        "9": 1,
+        "11": 1,
+        "15": 6,
+        "3": 3,
+        "8": 2,
+        "13": 3,
+        "16": 2,
+        "1": 1
+      },
+      "actual_modal_fields": [
+        15
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "exploration": 5,
+        "checking": 24,
+        "repair": 1
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.95612349474763,
+        "coverage_gap_score": 0.18181818181818177,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 87,
+      "after_exact_and_formal_state": 37,
+      "eligible_supply": 37,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1950,
+      "as_of": "2026-09-11T09:48:04.867000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 22,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "17": 3,
+        "9": 1,
+        "1": 4,
+        "16": 1,
+        "8": 6,
+        "10": 3,
+        "13": 3,
+        "7": 2,
+        "15": 3,
+        "3": 1,
+        "18": 2,
+        "6": 1
+      },
+      "actual_modal_fields": [
+        8
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 15,
+        "exploration": 5,
+        "unavailable": 10
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.9564689790409558,
+        "coverage_gap_score": 0.17532467532467533,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 89,
+      "after_exact_and_formal_state": 35,
+      "eligible_supply": 35,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 1980,
+      "as_of": "2026-09-11T23:34:06.840000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 23,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "7": 30
+      },
+      "actual_modal_fields": [
+        7
+      ],
+      "top1_match": false,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "unavailable": 30
+      },
+      "critical_safety_nodes": 2,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.9564689790409558,
+        "coverage_gap_score": 0.17532467532467533,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 95,
+      "after_exact_and_formal_state": 35,
+      "eligible_supply": 35,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2010,
+      "as_of": "2026-09-11T23:48:05.414000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 24,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "7": 4,
+        "6": 3,
+        "8": 7,
+        "1": 6,
+        "3": 3,
+        "13": 1,
+        "2": 1,
+        "18": 1,
+        "16": 1,
+        "9": 1,
+        "17": 1,
+        "15": 1
+      },
+      "actual_modal_fields": [
+        8
+      ],
+      "top1_match": false,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "exploration": 9,
+        "repair": 2,
+        "checking": 19
+      },
+      "critical_safety_nodes": 3,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.9564689790409558,
+        "coverage_gap_score": 0.17532467532467533,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 95,
+      "after_exact_and_formal_state": 35,
+      "eligible_supply": 35,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2040,
+      "as_of": "2026-09-12T09:15:31.691000+00:00",
+      "recommended_field_id": 2,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 25,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "2": 6,
+        "13": 3,
+        "16": 2,
+        "17": 5,
+        "6": 1,
+        "12": 1,
+        "11": 1,
+        "7": 1,
+        "8": 4,
+        "1": 1,
+        "18": 2,
+        "9": 3
+      },
+      "actual_modal_fields": [
+        2
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "checking": 25,
+        "exploration": 5
+      },
+      "critical_safety_nodes": 3,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.9564689790409558,
+        "coverage_gap_score": 0.17532467532467533,
+        "exam_weight_score": 0.7132429614181439,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 2.4872727272727273,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 187,
+      "after_raw_72h": 94,
+      "after_exact_and_formal_state": 34,
+      "eligible_supply": 34,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2070,
+      "as_of": "2026-09-12T09:38:03.676000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 1,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "9": 3,
+        "1": 2,
+        "11": 4,
+        "18": 3,
+        "8": 3,
+        "6": 1,
+        "16": 4,
+        "10": 3,
+        "17": 3,
+        "5": 1,
+        "2": 1,
+        "7": 1,
+        "13": 1
+      },
+      "actual_modal_fields": [
+        11,
+        16
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 21,
+        "repair": 4,
+        "exploration": 5
+      },
+      "critical_safety_nodes": 5,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.8398132490753404,
+        "coverage_gap_score": 0.6225165562913908,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 154,
+      "after_exact_and_formal_state": 111,
+      "eligible_supply": 111,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2100,
+      "as_of": "2026-09-12T09:53:46.487000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 2,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "11": 6,
+        "8": 6,
+        "9": 6,
+        "18": 3,
+        "15": 1,
+        "10": 1,
+        "5": 1,
+        "7": 1,
+        "17": 2,
+        "16": 3
+      },
+      "actual_modal_fields": [
+        8,
+        9,
+        11
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "checking": 23,
+        "repair": 2,
+        "exploration": 5
+      },
+      "critical_safety_nodes": 5,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.8370982193986511,
+        "coverage_gap_score": 0.6158940397350994,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 151,
+      "after_exact_and_formal_state": 108,
+      "eligible_supply": 108,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2130,
+      "as_of": "2026-09-12T10:23:49.694000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 3,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "16": 4,
+        "13": 2,
+        "18": 1,
+        "12": 2,
+        "6": 2,
+        "15": 1,
+        "17": 2,
+        "1": 1,
+        "8": 12,
+        "5": 1,
+        "3": 1,
+        "9": 1
+      },
+      "actual_modal_fields": [
+        8
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "checking": 15,
+        "exploration": 13,
+        "repair": 2
+      },
+      "critical_safety_nodes": 7,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.8361932095064216,
+        "coverage_gap_score": 0.609271523178808,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 146,
+      "after_exact_and_formal_state": 102,
+      "eligible_supply": 102,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2160,
+      "as_of": "2026-09-12T23:33:02.167000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 4,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "5": 1,
+        "13": 1,
+        "18": 4,
+        "16": 3,
+        "9": 5,
+        "6": 1,
+        "17": 7,
+        "15": 1,
+        "4": 2,
+        "8": 1,
+        "1": 2,
+        "3": 1,
+        "12": 1
+      },
+      "actual_modal_fields": [
+        17
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 9,
+        "exploration": 18,
+        "repair": 3
+      },
+      "critical_safety_nodes": 7,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.8593241976342928,
+        "coverage_gap_score": 0.5496688741721854,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 140,
+      "after_exact_and_formal_state": 90,
+      "eligible_supply": 90,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2190,
+      "as_of": "2026-09-12T23:55:24.086000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 5,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "3": 1,
+        "4": 2,
+        "18": 7,
+        "16": 3,
+        "9": 6,
+        "17": 2,
+        "6": 1,
+        "8": 5,
+        "15": 1,
+        "13": 1,
+        "11": 1
+      },
+      "actual_modal_fields": [
+        18
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "checking": 8,
+        "exploration": 22
+      },
+      "critical_safety_nodes": 7,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.8613629773787234,
+        "coverage_gap_score": 0.543046357615894,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 139,
+      "after_exact_and_formal_state": 89,
+      "eligible_supply": 89,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2220,
+      "as_of": "2026-09-13T00:45:28.687000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 6,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "10": 1,
+        "8": 3,
+        "17": 6,
+        "9": 6,
+        "18": 7,
+        "6": 2,
+        "2": 2,
+        "16": 2,
+        "15": 1
+      },
+      "actual_modal_fields": [
+        18
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "exploration": 25,
+        "repair": 2,
+        "checking": 3
+      },
+      "critical_safety_nodes": 8,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.8689595265634508,
+        "coverage_gap_score": 0.5165562913907285,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 134,
+      "after_exact_and_formal_state": 84,
+      "eligible_supply": 84,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2250,
+      "as_of": "2026-09-13T01:33:03.176000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 7,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "8": 6,
+        "18": 7,
+        "2": 1,
+        "9": 5,
+        "6": 2,
+        "1": 2,
+        "16": 4,
+        "17": 2,
+        "15": 1
+      },
+      "actual_modal_fields": [
+        18
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "exploration": 27,
+        "checking": 3
+      },
+      "critical_safety_nodes": 8,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.8741321768306831,
+        "coverage_gap_score": 0.4966887417218543,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 131,
+      "after_exact_and_formal_state": 81,
+      "eligible_supply": 81,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2280,
+      "as_of": "2026-09-13T01:47:09.713000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 8,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "8": 4,
+        "18": 10,
+        "2": 2,
+        "10": 1,
+        "1": 1,
+        "17": 3,
+        "6": 2,
+        "16": 3,
+        "11": 3,
+        "9": 1
+      },
+      "actual_modal_fields": [
+        18
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "exploration": 22,
+        "repair": 3,
+        "checking": 5
+      },
+      "critical_safety_nodes": 8,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.8833420175503892,
+        "coverage_gap_score": 0.45695364238410596,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 125,
+      "after_exact_and_formal_state": 75,
+      "eligible_supply": 75,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2310,
+      "as_of": "2026-09-13T04:18:43.136000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 9,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "9": 1,
+        "17": 5,
+        "15": 2,
+        "8": 4,
+        "18": 8,
+        "2": 1,
+        "16": 4,
+        "6": 4,
+        "1": 1
+      },
+      "actual_modal_fields": [
+        18
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "exploration": 22,
+        "repair": 1,
+        "checking": 7
+      },
+      "critical_safety_nodes": 8,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.888767970222464,
+        "coverage_gap_score": 0.4304635761589404,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 121,
+      "after_exact_and_formal_state": 71,
+      "eligible_supply": 71,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2340,
+      "as_of": "2026-09-13T04:43:27.707000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 10,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "9": 8,
+        "17": 5,
+        "15": 2,
+        "18": 8,
+        "2": 2,
+        "1": 2,
+        "13": 1,
+        "16": 1,
+        "4": 1
+      },
+      "actual_modal_fields": [
+        9,
+        18
+      ],
+      "top1_match": false,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "exploration": 28,
+        "checking": 2
+      },
+      "critical_safety_nodes": 8,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.8912959708992262,
+        "coverage_gap_score": 0.41721854304635764,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 117,
+      "after_exact_and_formal_state": 67,
+      "eligible_supply": 67,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2370,
+      "as_of": "2026-09-13T05:39:04.255000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 11,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "8": 2,
+        "9": 6,
+        "15": 5,
+        "18": 6,
+        "6": 2,
+        "12": 1,
+        "10": 3,
+        "17": 1,
+        "1": 2,
+        "4": 1,
+        "16": 1
+      },
+      "actual_modal_fields": [
+        9,
+        18
+      ],
+      "top1_match": false,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "exploration": 22,
+        "repair": 2,
+        "checking": 6
+      },
+      "critical_safety_nodes": 9,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.8912959708992262,
+        "coverage_gap_score": 0.41721854304635764,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 117,
+      "after_exact_and_formal_state": 67,
+      "eligible_supply": 67,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2400,
+      "as_of": "2026-09-13T06:14:22.148000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 12,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "17": 5,
+        "9": 3,
+        "4": 1,
+        "2": 3,
+        "13": 3,
+        "15": 3,
+        "18": 5,
+        "6": 1,
+        "11": 2,
+        "8": 1,
+        "16": 2,
+        "10": 1
+      },
+      "actual_modal_fields": [
+        17,
+        18
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "exploration": 25,
+        "repair": 3,
+        "checking": 2
+      },
+      "critical_safety_nodes": 9,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.8937116159903544,
+        "coverage_gap_score": 0.4039735099337748,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 115,
+      "after_exact_and_formal_state": 65,
+      "eligible_supply": 65,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2430,
+      "as_of": "2026-09-13T06:45:18.412000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 13,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "18": 13,
+        "2": 1,
+        "8": 5,
+        "9": 4,
+        "15": 1,
+        "17": 4,
+        "16": 1,
+        "4": 1
+      },
+      "actual_modal_fields": [
+        18
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "exploration": 25,
+        "checking": 5
+      },
+      "critical_safety_nodes": 9,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.8948796202102407,
+        "coverage_gap_score": 0.3973509933774835,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 114,
+      "after_exact_and_formal_state": 64,
+      "eligible_supply": 64,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2460,
+      "as_of": "2026-09-13T07:18:12.581000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 14,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "8": 2,
+        "6": 2,
+        "18": 8,
+        "17": 3,
+        "2": 1,
+        "15": 5,
+        "1": 1,
+        "9": 4,
+        "10": 1,
+        "4": 2,
+        "16": 1
+      },
+      "actual_modal_fields": [
+        18
+      ],
+      "top1_match": false,
+      "top3_match": false,
+      "actual_next_selection_groups": {
+        "exploration": 25,
+        "repair": 1,
+        "checking": 4
+      },
+      "critical_safety_nodes": 10,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.8993057414645464,
+        "coverage_gap_score": 0.3708609271523179,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 109,
+      "after_exact_and_formal_state": 59,
+      "eligible_supply": 59,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2490,
+      "as_of": "2026-09-13T07:46:56.511000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 15,
+      "next_answer_count": 30,
+      "actual_next_fields": {
+        "18": 10,
+        "10": 1,
+        "15": 1,
+        "1": 1,
+        "9": 3,
+        "8": 10,
+        "13": 1,
+        "2": 2,
+        "12": 1
+      },
+      "actual_modal_fields": [
+        8,
+        18
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "actual_next_selection_groups": {
+        "exploration": 25,
+        "repair": 1,
+        "checking": 4
+      },
+      "critical_safety_nodes": 10,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.901381911743628,
+        "coverage_gap_score": 0.35761589403973515,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 107,
+      "after_exact_and_formal_state": 57,
+      "eligible_supply": 57,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2520,
+      "as_of": "2026-09-13T23:30:19.298000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 16,
+      "next_answer_count": 25,
+      "actual_next_fields": {
+        "5": 1,
+        "1": 1,
+        "9": 1,
+        "8": 2,
+        "12": 1,
+        "2": 4,
+        "16": 3,
+        "18": 4,
+        "17": 3,
+        "4": 1,
+        "15": 2,
+        "10": 2
+      },
+      "actual_modal_fields": [
+        2,
+        18
+      ],
+      "top1_match": null,
+      "top3_match": null,
+      "actual_next_selection_groups": {
+        "checking": 6,
+        "exploration": 19
+      },
+      "critical_safety_nodes": 10,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.9105985555059057,
+        "coverage_gap_score": 0.29139072847682124,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 101,
+      "after_exact_and_formal_state": 47,
+      "eligible_supply": 47,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    },
+    {
+      "answers": 2545,
+      "as_of": "2026-09-13T23:50:23.960000+00:00",
+      "recommended_field_id": 8,
+      "learning_intent": "safety_review",
+      "recommendation_streak": 17,
+      "next_answer_count": 0,
+      "actual_next_fields": {},
+      "actual_modal_fields": [],
+      "top1_match": null,
+      "top3_match": null,
+      "actual_next_selection_groups": {},
+      "critical_safety_nodes": 11,
+      "safety_priority_contradiction": false,
+      "selected_components": {
+        "weakness_score": 0.5,
+        "attainment_gap_score": 0.9114263466586289,
+        "coverage_gap_score": 0.2847682119205298,
+        "exam_weight_score": 0.6588089330024814,
+        "retention_score": 0.5,
+        "safety_score": 1.0,
+        "concentration_penalty": 0.0,
+        "time_urgency_score": 0.0
+      },
+      "selected_exam_weight": 1.930909090909091,
+      "selected_field_state": "weak",
+      "missing_context": [
+        "additional_blocks_completed",
+        "consecutive_field_blocks",
+        "days_to_exam"
+      ],
+      "shadow_only": true,
+      "selection_authority": false,
+      "static_raw_supply": 195,
+      "after_raw_72h": 99,
+      "after_exact_and_formal_state": 45,
+      "eligible_supply": 45,
+      "eligible_supply_insufficient": false,
+      "cooldown_relaxed": false
+    }
+  ],
+  "final_fields": [
+    {
+      "field_id": 1,
+      "field_name": "解剖学",
+      "evaluable_answer_count": 304,
+      "accuracy": 0.6710526315789473,
+      "total_questions": 178,
+      "total_nodes": 140,
+      "touched_nodes": 114,
+      "required_node_spread": 49,
+      "coverage": 0.8140000000000001,
+      "progress_score": 0.20214285714285715,
+      "field_state": "weak",
+      "raw_shadow_field_state": "weak",
+      "recovery_level": "not_recovered",
+      "exam_weight": 2.2418181818181817,
+      "target_progress": 0.7383062254627033,
+      "target_stable": 0.5383062254627033,
+      "target_resolved": 0.7383062254627033,
+      "maintenance_needed": true,
+      "priority_score": 0.4490881254450718,
+      "learning_intent": "retention",
+      "rank": 9,
+      "reason_codes": [
+        "repeated_weakness",
+        "high_exam_weight",
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "retention_due",
+        "maintenance_needed"
+      ],
+      "evaluation_status": [
+        "evaluation_sufficient"
+      ],
+      "critical_safety_unresolved_count": 0,
+      "historical_proxy_only_milestones": {
+        "60": "2026-08-21T11:39:12.957000+00:00",
+        "90": "2026-08-31T10:48:02.797000+00:00",
+        "120": "2026-09-03T23:42:58.641000+00:00",
+        "150": "2026-09-05T08:18:02.715000+00:00"
+      }
+    },
+    {
+      "field_id": 2,
+      "field_name": "生理学",
+      "evaluable_answer_count": 369,
+      "accuracy": 0.7479674796747967,
+      "total_questions": 187,
+      "total_nodes": 154,
+      "touched_nodes": 143,
+      "required_node_spread": 54,
+      "coverage": 0.929,
+      "progress_score": 0.22857142857142854,
+      "field_state": "weak",
+      "raw_shadow_field_state": "weak",
+      "recovery_level": "not_recovered",
+      "exam_weight": 2.4872727272727273,
+      "target_progress": 0.7426485922836288,
+      "target_stable": 0.5426485922836288,
+      "target_resolved": 0.7426485922836288,
+      "maintenance_needed": true,
+      "priority_score": 1.4315382494872342,
+      "learning_intent": "safety_review",
+      "rank": 2,
+      "reason_codes": [
+        "repeated_weakness",
+        "high_exam_weight",
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "retention_due",
+        "stable_ratio_declined",
+        "maintenance_needed",
+        "critical_safety"
+      ],
+      "evaluation_status": [
+        "evaluation_sufficient"
+      ],
+      "critical_safety_unresolved_count": 1,
+      "historical_proxy_only_milestones": {
+        "60": "2026-09-04T09:03:33.264000+00:00",
+        "90": "2026-09-04T09:37:14.203000+00:00",
+        "120": "2026-09-06T04:56:48.429000+00:00",
+        "150": "2026-09-07T11:35:16.315000+00:00"
+      }
+    },
+    {
+      "field_id": 3,
+      "field_name": "心理学",
+      "evaluable_answer_count": 119,
+      "accuracy": 0.7899159663865546,
+      "total_questions": 29,
+      "total_nodes": 15,
+      "touched_nodes": 15,
+      "required_node_spread": 6,
+      "coverage": 1.0,
+      "progress_score": 0.3333333333333333,
+      "field_state": "assessing",
+      "raw_shadow_field_state": "weak",
+      "recovery_level": "not_recovered",
+      "exam_weight": 0.24545454545454545,
+      "target_progress": 0.6394160583941606,
+      "target_stable": 0.4394160583941606,
+      "target_resolved": 0.6394160583941606,
+      "maintenance_needed": true,
+      "priority_score": 0.19675777788437582,
+      "learning_intent": "retention",
+      "rank": 18,
+      "reason_codes": [
+        "initial_supply_limited",
+        "repeated_weakness",
+        "large_attainment_gap",
+        "retention_due",
+        "maintenance_needed"
+      ],
+      "evaluation_status": [
+        "small_supply_limitation"
+      ],
+      "critical_safety_unresolved_count": 0,
+      "historical_proxy_only_milestones": {
+        "60": "2026-08-23T12:44:53.883000+00:00",
+        "90": "2026-09-05T08:06:01.103000+00:00"
+      }
+    },
+    {
+      "field_id": 4,
+      "field_name": "人間発達学",
+      "evaluable_answer_count": 42,
+      "accuracy": 0.7857142857142857,
+      "total_questions": 41,
+      "total_nodes": 28,
+      "touched_nodes": 18,
+      "required_node_spread": 10,
+      "coverage": 0.643,
+      "progress_score": 0.21428571428571427,
+      "field_state": "assessing",
+      "raw_shadow_field_state": "assessing",
+      "recovery_level": "not_recovered",
+      "exam_weight": 0.36000000000000004,
+      "target_progress": 0.6529411764705882,
+      "target_stable": 0.4529411764705883,
+      "target_resolved": 0.6529411764705882,
+      "maintenance_needed": true,
+      "priority_score": 0.25360514679286306,
+      "learning_intent": "coverage",
+      "rank": 14,
+      "reason_codes": [
+        "initial_supply_limited",
+        "initial_evidence_insufficient",
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "stable_ratio_declined",
+        "maintenance_needed"
+      ],
+      "evaluation_status": [
+        "question_floor_insufficient",
+        "small_supply_limitation"
+      ],
+      "critical_safety_unresolved_count": 0,
+      "historical_proxy_only_milestones": {}
+    },
+    {
+      "field_id": 5,
+      "field_name": "教育学",
+      "evaluable_answer_count": 43,
+      "accuracy": 0.7906976744186046,
+      "total_questions": 10,
+      "total_nodes": 5,
+      "touched_nodes": 5,
+      "required_node_spread": 5,
+      "coverage": 1.0,
+      "progress_score": 0.36,
+      "field_state": "assessing",
+      "raw_shadow_field_state": "assessing",
+      "recovery_level": "provisional_recovery",
+      "exam_weight": 0.09818181818181819,
+      "target_progress": 0.6178807947019868,
+      "target_stable": 0.4178807947019868,
+      "target_resolved": 0.6178807947019868,
+      "maintenance_needed": true,
+      "priority_score": 0.20583241963071802,
+      "learning_intent": "coverage",
+      "rank": 17,
+      "reason_codes": [
+        "initial_supply_limited",
+        "initial_evidence_insufficient",
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "retention_due",
+        "maintenance_needed"
+      ],
+      "evaluation_status": [
+        "question_floor_insufficient",
+        "small_supply_limitation"
+      ],
+      "critical_safety_unresolved_count": 0,
+      "historical_proxy_only_milestones": {}
+    },
+    {
+      "field_id": 6,
+      "field_name": "医学概論",
+      "evaluable_answer_count": 71,
+      "accuracy": 0.7746478873239436,
+      "total_questions": 77,
+      "total_nodes": 61,
+      "touched_nodes": 39,
+      "required_node_spread": 22,
+      "coverage": 0.639,
+      "progress_score": 0.17868852459016393,
+      "field_state": "weak",
+      "raw_shadow_field_state": "weak",
+      "recovery_level": "not_recovered",
+      "exam_weight": 0.5563636363636364,
+      "target_progress": 0.6714953271028037,
+      "target_stable": 0.4714953271028038,
+      "target_resolved": 0.6714953271028037,
+      "maintenance_needed": true,
+      "priority_score": 0.3299504904916476,
+      "learning_intent": "retention",
+      "rank": 10,
+      "reason_codes": [
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "retention_due",
+        "maintenance_needed"
+      ],
+      "evaluation_status": [
+        "evaluation_sufficient"
+      ],
+      "critical_safety_unresolved_count": 0,
+      "historical_proxy_only_milestones": {
+        "60": "2026-09-13T01:47:09.713000+00:00"
+      }
+    },
+    {
+      "field_id": 7,
+      "field_name": "病理学",
+      "evaluable_answer_count": 172,
+      "accuracy": 0.7034883720930233,
+      "total_questions": 92,
+      "total_nodes": 65,
+      "touched_nodes": 65,
+      "required_node_spread": 23,
+      "coverage": 1.0,
+      "progress_score": 0.2646153846153846,
+      "field_state": "weak",
+      "raw_shadow_field_state": "weak",
+      "recovery_level": "not_recovered",
+      "exam_weight": 1.030909090909091,
+      "target_progress": 0.701521933751119,
+      "target_stable": 0.5015219337511191,
+      "target_resolved": 0.701521933751119,
+      "maintenance_needed": true,
+      "priority_score": 1.3311099726092723,
+      "learning_intent": "safety_review",
+      "rank": 5,
+      "reason_codes": [
+        "repeated_weakness",
+        "high_exam_weight",
+        "large_attainment_gap",
+        "retention_due",
+        "maintenance_needed",
+        "critical_safety"
+      ],
+      "evaluation_status": [
+        "evaluation_sufficient"
+      ],
+      "critical_safety_unresolved_count": 2,
+      "historical_proxy_only_milestones": {
+        "60": "2026-09-01T11:08:32.960000+00:00",
+        "90": "2026-09-06T04:41:20.654000+00:00",
+        "120": "2026-09-10T10:25:18.774000+00:00",
+        "150": "2026-09-11T23:41:29.047000+00:00"
+      }
+    },
+    {
+      "field_id": 8,
+      "field_name": "内科学",
+      "evaluable_answer_count": 233,
+      "accuracy": 0.703862660944206,
+      "total_questions": 195,
+      "total_nodes": 151,
+      "touched_nodes": 108,
+      "required_node_spread": 53,
+      "coverage": 0.715,
+      "progress_score": 0.19536423841059603,
+      "field_state": "weak",
+      "raw_shadow_field_state": "weak",
+      "recovery_level": "not_recovered",
+      "exam_weight": 1.930909090909091,
+      "target_progress": 0.7317617866004963,
+      "target_stable": 0.5317617866004963,
+      "target_resolved": 0.7317617866004963,
+      "maintenance_needed": true,
+      "priority_score": 1.4557391089222738,
+      "learning_intent": "safety_review",
+      "rank": 1,
+      "reason_codes": [
+        "repeated_weakness",
+        "high_exam_weight",
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "retention_due",
+        "stable_ratio_declined",
+        "maintenance_needed",
+        "critical_safety"
+      ],
+      "evaluation_status": [
+        "evaluation_sufficient"
+      ],
+      "critical_safety_unresolved_count": 4,
+      "historical_proxy_only_milestones": {
+        "60": "2026-09-01T10:18:10.043000+00:00",
+        "90": "2026-09-04T23:56:46.370000+00:00",
+        "120": "2026-09-09T09:31:20.023000+00:00",
+        "150": "2026-09-11T09:45:07.666000+00:00"
+      }
+    },
+    {
+      "field_id": 9,
+      "field_name": "神経医学",
+      "evaluable_answer_count": 123,
+      "accuracy": 0.6585365853658537,
+      "total_questions": 146,
+      "total_nodes": 114,
+      "touched_nodes": 73,
+      "required_node_spread": 40,
+      "coverage": 0.64,
+      "progress_score": 0.15000000000000002,
+      "field_state": "weak",
+      "raw_shadow_field_state": "weak",
+      "recovery_level": "not_recovered",
+      "exam_weight": 1.0636363636363637,
+      "target_progress": 0.7030837004405286,
+      "target_stable": 0.5030837004405286,
+      "target_resolved": 0.7030837004405286,
+      "maintenance_needed": false,
+      "priority_score": 1.3682303577648152,
+      "learning_intent": "safety_review",
+      "rank": 4,
+      "reason_codes": [
+        "repeated_weakness",
+        "high_exam_weight",
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "critical_safety"
+      ],
+      "evaluation_status": [
+        "evaluation_sufficient"
+      ],
+      "critical_safety_unresolved_count": 2,
+      "historical_proxy_only_milestones": {
+        "60": "2026-09-12T09:38:03.676000+00:00",
+        "90": "2026-09-13T01:40:18.025000+00:00",
+        "120": "2026-09-13T07:55:48.082000+00:00"
+      }
+    },
+    {
+      "field_id": 10,
+      "field_name": "精神医学",
+      "evaluable_answer_count": 50,
+      "accuracy": 0.66,
+      "total_questions": 47,
+      "total_nodes": 34,
+      "touched_nodes": 24,
+      "required_node_spread": 12,
+      "coverage": 0.706,
+      "progress_score": 0.15294117647058825,
+      "field_state": "assessing",
+      "raw_shadow_field_state": "assessing",
+      "recovery_level": "not_recovered",
+      "exam_weight": 0.5727272727272728,
+      "target_progress": 0.6728323699421965,
+      "target_stable": 0.4728323699421966,
+      "target_resolved": 0.6728323699421965,
+      "maintenance_needed": false,
+      "priority_score": 0.24627736623734997,
+      "learning_intent": "coverage",
+      "rank": 15,
+      "reason_codes": [
+        "initial_supply_limited",
+        "initial_evidence_insufficient",
+        "large_attainment_gap",
+        "coverage_insufficient"
+      ],
+      "evaluation_status": [
+        "question_floor_insufficient",
+        "small_supply_limitation"
+      ],
+      "critical_safety_unresolved_count": 0,
+      "historical_proxy_only_milestones": {}
+    },
+    {
+      "field_id": 11,
+      "field_name": "小児学",
+      "evaluable_answer_count": 72,
+      "accuracy": 0.8333333333333334,
+      "total_questions": 58,
+      "total_nodes": 44,
+      "touched_nodes": 40,
+      "required_node_spread": 16,
+      "coverage": 0.909,
+      "progress_score": 0.23636363636363633,
+      "field_state": "assessing",
+      "raw_shadow_field_state": "weak",
+      "recovery_level": "not_recovered",
+      "exam_weight": 0.26181818181818184,
+      "target_progress": 0.6414985590778097,
+      "target_stable": 0.4414985590778098,
+      "target_resolved": 0.6414985590778097,
+      "maintenance_needed": false,
+      "priority_score": 1.1849101858514048,
+      "learning_intent": "safety_review",
+      "rank": 6,
+      "reason_codes": [
+        "initial_supply_limited",
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "critical_safety"
+      ],
+      "evaluation_status": [
+        "small_supply_limitation"
+      ],
+      "critical_safety_unresolved_count": 1,
+      "historical_proxy_only_milestones": {
+        "60": "2026-09-12T09:50:00.052000+00:00"
+      }
+    },
+    {
+      "field_id": 12,
+      "field_name": "臨床心理学",
+      "evaluable_answer_count": 35,
+      "accuracy": 0.8285714285714286,
+      "total_questions": 23,
+      "total_nodes": 14,
+      "touched_nodes": 14,
+      "required_node_spread": 6,
+      "coverage": 1.0,
+      "progress_score": 0.2714285714285714,
+      "field_state": "assessing",
+      "raw_shadow_field_state": "assessing",
+      "recovery_level": "not_recovered",
+      "exam_weight": 0.21272727272727274,
+      "target_progress": 0.6350824587706146,
+      "target_stable": 0.4350824587706147,
+      "target_resolved": 0.6350824587706146,
+      "maintenance_needed": false,
+      "priority_score": 0.21162267441991153,
+      "learning_intent": "coverage",
+      "rank": 16,
+      "reason_codes": [
+        "initial_supply_limited",
+        "initial_evidence_insufficient",
+        "large_attainment_gap",
+        "coverage_insufficient"
+      ],
+      "evaluation_status": [
+        "question_floor_insufficient",
+        "small_supply_limitation"
+      ],
+      "critical_safety_unresolved_count": 0,
+      "historical_proxy_only_milestones": {}
+    },
+    {
+      "field_id": 13,
+      "field_name": "基礎運動学",
+      "evaluable_answer_count": 194,
+      "accuracy": 0.7525773195876289,
+      "total_questions": 92,
+      "total_nodes": 65,
+      "touched_nodes": 58,
+      "required_node_spread": 23,
+      "coverage": 0.892,
+      "progress_score": 0.25846153846153846,
+      "field_state": "weak",
+      "raw_shadow_field_state": "weak",
+      "recovery_level": "not_recovered",
+      "exam_weight": 0.8181818181818182,
+      "target_progress": 0.69,
+      "target_stable": 0.49000000000000005,
+      "target_resolved": 0.69,
+      "maintenance_needed": true,
+      "priority_score": 0.32711695447409733,
+      "learning_intent": "retention",
+      "rank": 11,
+      "reason_codes": [
+        "repeated_weakness",
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "retention_due",
+        "maintenance_needed"
+      ],
+      "evaluation_status": [
+        "evaluation_sufficient"
+      ],
+      "critical_safety_unresolved_count": 0,
+      "historical_proxy_only_milestones": {
+        "60": "2026-08-29T12:26:28.091000+00:00",
+        "90": "2026-09-02T23:58:51.517000+00:00",
+        "120": "2026-09-05T07:41:24.235000+00:00",
+        "150": "2026-09-08T08:26:30.041000+00:00"
+      }
+    },
+    {
+      "field_id": 14,
+      "field_name": "臨床運動学",
+      "evaluable_answer_count": 15,
+      "accuracy": 0.7333333333333333,
+      "total_questions": 15,
+      "total_nodes": 7,
+      "touched_nodes": 7,
+      "required_node_spread": 6,
+      "coverage": 1.0,
+      "progress_score": 0.41428571428571426,
+      "field_state": "assessing",
+      "raw_shadow_field_state": "assessing",
+      "recovery_level": "provisional_recovery",
+      "exam_weight": 0.08181818181818182,
+      "target_progress": 0.615126050420168,
+      "target_stable": 0.4151260504201681,
+      "target_resolved": 0.615126050420168,
+      "maintenance_needed": true,
+      "priority_score": 0.27704258173857776,
+      "learning_intent": "coverage",
+      "rank": 13,
+      "reason_codes": [
+        "initial_supply_limited",
+        "initial_evidence_insufficient",
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "retention_due",
+        "maintenance_needed"
+      ],
+      "evaluation_status": [
+        "question_floor_insufficient",
+        "small_supply_limitation"
+      ],
+      "critical_safety_unresolved_count": 0,
+      "historical_proxy_only_milestones": {}
+    },
+    {
+      "field_id": 15,
+      "field_name": "動作分析学",
+      "evaluable_answer_count": 200,
+      "accuracy": 0.775,
+      "total_questions": 134,
+      "total_nodes": 98,
+      "touched_nodes": 63,
+      "required_node_spread": 35,
+      "coverage": 0.643,
+      "progress_score": 0.2204081632653061,
+      "field_state": "weak",
+      "raw_shadow_field_state": "weak",
+      "recovery_level": "not_recovered",
+      "exam_weight": 0.4090909090909091,
+      "target_progress": 0.6580645161290323,
+      "target_stable": 0.4580645161290323,
+      "target_resolved": 0.6580645161290323,
+      "maintenance_needed": true,
+      "priority_score": 0.3055642212623643,
+      "learning_intent": "retention",
+      "rank": 12,
+      "reason_codes": [
+        "repeated_weakness",
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "retention_due",
+        "stable_ratio_declined",
+        "maintenance_needed"
+      ],
+      "evaluation_status": [
+        "evaluation_sufficient"
+      ],
+      "critical_safety_unresolved_count": 0,
+      "historical_proxy_only_milestones": {
+        "60": "2026-08-30T10:56:33.813000+00:00",
+        "90": "2026-09-02T08:50:23.338000+00:00",
+        "120": "2026-09-06T23:51:03.065000+00:00",
+        "150": "2026-09-10T10:16:08.003000+00:00"
+      }
+    },
+    {
+      "field_id": 16,
+      "field_name": "運動器",
+      "evaluable_answer_count": 87,
+      "accuracy": 0.7011494252873564,
+      "total_questions": 133,
+      "total_nodes": 104,
+      "touched_nodes": 52,
+      "required_node_spread": 37,
+      "coverage": 0.5,
+      "progress_score": 0.11346153846153847,
+      "field_state": "weak",
+      "raw_shadow_field_state": "weak",
+      "recovery_level": "not_recovered",
+      "exam_weight": 0.8672727272727273,
+      "target_progress": 0.6928919182083739,
+      "target_stable": 0.49289191820837397,
+      "target_resolved": 0.6928919182083739,
+      "maintenance_needed": false,
+      "priority_score": 1.3792158933716623,
+      "learning_intent": "safety_review",
+      "rank": 3,
+      "reason_codes": [
+        "repeated_weakness",
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "critical_safety"
+      ],
+      "evaluation_status": [
+        "evaluation_sufficient"
+      ],
+      "critical_safety_unresolved_count": 1,
+      "historical_proxy_only_milestones": {
+        "60": "2026-09-12T23:35:07.776000+00:00"
+      }
+    },
+    {
+      "field_id": 17,
+      "field_name": "理学療法評価各論",
+      "evaluable_answer_count": 215,
+      "accuracy": 0.7627906976744186,
+      "total_questions": 203,
+      "total_nodes": 158,
+      "touched_nodes": 93,
+      "required_node_spread": 56,
+      "coverage": 0.589,
+      "progress_score": 0.1468354430379747,
+      "field_state": "weak",
+      "raw_shadow_field_state": "weak",
+      "recovery_level": "not_recovered",
+      "exam_weight": 1.4236363636363636,
+      "target_progress": 0.7174793698424606,
+      "target_stable": 0.5174793698424607,
+      "target_resolved": 0.7174793698424606,
+      "maintenance_needed": true,
+      "priority_score": 0.4656956434068855,
+      "learning_intent": "repair",
+      "rank": 8,
+      "reason_codes": [
+        "repeated_weakness",
+        "high_exam_weight",
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "stable_ratio_declined",
+        "maintenance_needed"
+      ],
+      "evaluation_status": [
+        "evaluation_sufficient"
+      ],
+      "critical_safety_unresolved_count": 0,
+      "historical_proxy_only_milestones": {
+        "60": "2026-09-01T10:30:08.686000+00:00",
+        "90": "2026-09-03T08:51:21.753000+00:00",
+        "120": "2026-09-06T05:59:25.036000+00:00",
+        "150": "2026-09-11T08:57:32.138000+00:00"
+      }
+    },
+    {
+      "field_id": 18,
+      "field_name": "理学療法治療各論",
+      "evaluable_answer_count": 188,
+      "accuracy": 0.7606382978723404,
+      "total_questions": 340,
+      "total_nodes": 291,
+      "touched_nodes": 143,
+      "required_node_spread": 60,
+      "coverage": 0.491,
+      "progress_score": 0.12852233676975944,
+      "field_state": "weak",
+      "raw_shadow_field_state": "weak",
+      "recovery_level": "not_recovered",
+      "exam_weight": 3.3381818181818184,
+      "target_progress": 0.7538977367979882,
+      "target_stable": 0.5538977367979883,
+      "target_resolved": 0.7538977367979882,
+      "maintenance_needed": true,
+      "priority_score": 0.5785785969792635,
+      "learning_intent": "repair",
+      "rank": 7,
+      "reason_codes": [
+        "repeated_weakness",
+        "high_exam_weight",
+        "large_attainment_gap",
+        "coverage_insufficient",
+        "stable_ratio_declined",
+        "maintenance_needed"
+      ],
+      "evaluation_status": [
+        "evaluation_sufficient"
+      ],
+      "critical_safety_unresolved_count": 0,
+      "historical_proxy_only_milestones": {
+        "60": "2026-09-09T23:32:39.301000+00:00",
+        "90": "2026-09-12T10:21:25.935000+00:00",
+        "120": "2026-09-13T01:50:24.769000+00:00",
+        "150": "2026-09-13T06:22:17.734000+00:00"
+      }
+    }
+  ]
+}

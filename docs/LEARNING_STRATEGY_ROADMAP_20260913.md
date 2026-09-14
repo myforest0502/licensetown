@@ -1,5 +1,16 @@
 # LicenseTown Learning Strategy Roadmap — 2026-09-13
 
+## Stage F observation update — 2026-09-14
+
+Natural-history replay completed on 2545 PT attempts / 85 checkpoints.
+**HOLD / Production connection NOT YET**. Full report and aggregate JSON:
+`PT_LEARNING_STRATEGY_STAGE_F_AUDIT_20260914.md`.
+Supply85/85 and Safety priority consistency are positive; 26 repeated field
+recommendations, unavailable block context, and two small-supply classification
+conflicts prevent promotion acceptance. Next is a separate context/policy and
+prospective-validation decision. No Stage D/E Production wiring is authorized
+by this observation; #337/#342 and the existing selector remain unchanged.
+
 ## Purpose
 
 This document turns the agreed 「合格への道修正」 plan into an ordered implementation and acceptance sequence. It does not change Production behavior by itself.
