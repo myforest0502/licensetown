@@ -1,5 +1,21 @@
 # LicenseTown Current State
 
+## 2026-09-14 Strategy pilot integration preparation — default OFF
+
+- Separate runtime preparation follows accepted Stage F.2 audit #351.
+  Existing LINE adaptive30 Node selector gets an optional soft field strategy
+  adapter behind ENABLE_LEARNING_STRATEGY_V1 (false) and exact pilot allowlist.
+- OFF/non-pilot makes no extra event read or strategy import. Baseline Safety,
+  due-retention and #342 exploration choices are retained; remaining choices
+  come from the existing selector. Missing context/supply/errors use baseline.
+- Existing confirmed-answer JSONB metadata records strategy disposition; no DB
+  schema/migration, manual deploy, Render-variable change or Phase11 promotion.
+- Code exists and regression tests cover gates/guards/fallback/metadata. CI/live
+  delivery evidence is recorded in the PR and final report. Production activation
+  is NOT authorized by this preparation and needs a separate explicit decision.
+- Contract: `PT_LEARNING_STRATEGY_RUNTIME_PILOT_V1.md`. Web/manual/initial
+  assessment remain on current routes. Prospective efficacy remains unproven.
+
 ## 2026-09-14 Stage F.2 — PASS WITH CONDITIONS
 
 - Latest main #348/#349 assessed with2655 anonymous PT attempts and14 real plans.

@@ -117,6 +117,10 @@ ENABLE_NODE_ADAPTIVE_RECOMMENDATION = os.getenv(
 NODE_ADAPTIVE_RECOMMENDATION_PILOT_USER_IDS = parse_node_adaptive_pilot_user_ids(
     os.getenv("NODE_ADAPTIVE_RECOMMENDATION_PILOT_USER_IDS")
 )
+ENABLE_LEARNING_STRATEGY_V1 = os.getenv("ENABLE_LEARNING_STRATEGY_V1", "false").strip().lower() in {"1", "true", "yes", "on"}
+LEARNING_STRATEGY_PILOT_USER_IDS = parse_node_adaptive_pilot_user_ids(os.getenv("LEARNING_STRATEGY_PILOT_USER_IDS"))
+logging.info("Learning strategy v1 gate: enabled=%s pilot_configured=%s",
+             ENABLE_LEARNING_STRATEGY_V1, bool(LEARNING_STRATEGY_PILOT_USER_IDS))
 
 
 # =========================================================
@@ -954,6 +958,18 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
                 exclude_ids=short_term_blocked,
                 audit_out=adaptive_selection_audit,
             )
+            if total_question_count == 30 and globals().get("ENABLE_LEARNING_STRATEGY_V1", False) and user_id in globals().get("LEARNING_STRATEGY_PILOT_USER_IDS", set()):
+                # OFF/non-pilot performs exactly the existing selection above.
+                # Keep all new imports/reads behind both explicit gates.
+                try:
+                    from database import get_learning_events
+                    from learning_strategy_runtime_pilot import refine_session
+                    all_questions = refine_session(
+                        attempts, all_questions, adaptive_selection_audit,
+                        get_learning_events(user_id), exclude_ids=short_term_blocked,
+                    )
+                except Exception:
+                    logging.warning("Learning strategy v1 fallback: context or strategy unavailable")
         else:
             all_questions = build_daily_session(
                 attempts, total_question_count, exclude_ids=short_term_blocked
@@ -1943,6 +1959,14 @@ def record_confirmed_learning_batch(user_id, session):
                         "repair_evidence_quality",
                         "recent_question_repeat",
                         "recent_cooldown_bypassed",
+                        "strategy_version",
+                        "strategy_recommended_field",
+                        "strategy_learning_intent",
+                        "strategy_priority_score",
+                        "strategy_reason_codes",
+                        "strategy_priority_components",
+                        "strategy_shadow_or_authority",
+                        "strategy_fallback_reason",
                     )
                     if key in audit
                 })
