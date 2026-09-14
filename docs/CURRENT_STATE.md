@@ -1,5 +1,18 @@
 # LicenseTown Current State
 
+## 2026-09-14 Stage F.2 — PASS WITH CONDITIONS
+
+- Latest main #348/#349 assessed with2655 anonymous PT attempts and14 real plans.
+  Raw small-bank states both assessing; Safety contradictions0; eligible30 supply
+  14/14 (minimum35); post-#337 repeats0 across645 attempts.
+- Physiology plan context0,0,0,1,1; actual penalty0,0,0,1/3,1/3 reduces last two
+  scores by0.066667. Safety explains continued recommendation. No observed
+  >3-completed-block persistence; such exposure is not empirically proven safe.
+- Code/test/real observation: YES. Production activation: NO. This permits only
+  separate default-OFF gated pilot preparation; no educational-effect claim.
+- Full report: `PT_LEARNING_STRATEGY_STAGE_F2_20260914.md` and companion JSON.
+  Prior Stage F HOLD section below is historical and superseded for preparation.
+
 ## 2026-09-14 Stage F natural-history audit — HOLD / NOT YET
 
 - Offline replay of 2545 anonymous PT attempts at 85 checkpoints on main #346.

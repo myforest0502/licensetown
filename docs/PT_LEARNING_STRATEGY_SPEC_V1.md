@@ -1,5 +1,13 @@
 # PT learning strategy v0.1 — Stage C/D/E, Shadow only
 
+Stage F.2 update: see `PT_LEARNING_STRATEGY_STAGE_F2_20260914.md`.
+PASS WITH CONDITIONS permits separate default-OFF pilot preparation only.
+PR #348 requires bank supply>=60 as well as answer/spread sufficiency; repeated
+answers from smaller banks cannot establish weak/strong. PR #349 context uses
+completed recommendation questions before the decision, floored at /30; goals
+and generic study counts are not completions. Additional weakness blocks remain
+unavailable. Historical Stage F status below describes the pre-#348 audit.
+
 Status (2026-09-14): deterministic code and synthetic/fixture tests exist.
 Natural-history comparison is now recorded in
 `PT_LEARNING_STRATEGY_STAGE_F_AUDIT_20260914.md`: HOLD / NOT YET, 85 checkpoints,
