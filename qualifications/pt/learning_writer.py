@@ -1,9 +1,9 @@
 """Qualification-explicit PT learning-event writer.
 
-This writer is intentionally not installed into the live runtime yet. Production
-activation requires the Phase-2a qualification-aware unique targets to exist
-first. Keeping it dormant lets the SQL contract be reviewed and tested without
-changing current PT behavior.
+Production installs this writer through ``qualification_learning_writer_scope``
+after the Phase-2a qualification-aware conflict targets are available. The
+writer keeps every PT learning/event/state write explicitly scoped with
+``qualification_id='pt'`` while preserving the legacy local fallback.
 """
 
 from __future__ import annotations
