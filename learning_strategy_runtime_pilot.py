@@ -131,21 +131,26 @@ def refine_session(attempts, baseline, audit, events, *, exclude_ids=(), as_of=N
         return baseline
     if not field:
         return fallback('no_strategy_candidate')
-    blocked=blocked_short_term_evidence_ids(attempts,as_of=as_of)|{eq(q) for q in exclude_ids}
-    recent={eq(a['question_id']) for a in sorted(attempts,key=lambda a:_time(a['answered_at']),reverse=True)[:30]}
-    field_map,_=_field_node_coverage(attempts)
-    eligible={eq(q) for q in question_ids() if field_map.get(eq(q),get_category_small(q))==field}-blocked-recent
-    if len(eligible)<30:
-        return fallback('eligible_supply_insufficient')
-    intent={'coverage':'exploration','repair':'repair','safety_review':'repair',
-            'retention':'recheck','maintenance':'recheck'}.get(strategy['learning_intent'])
-    preferred=select_node_adaptive_questions(attempts,30,exclude_ids=blocked|recent,
-                  category_small=field,learning_intent=intent,as_of=as_of)
-    if len(preferred)<30:
-        return fallback('selector_supply_insufficient')
     protected=[q for q in baseline if audit.get(q['id'],{}).get('selection_group')=='exploration'
                or audit.get(q['id'],{}).get('selection_reason') in {'safety_wrong','safety_unresolved','recheck_due'}
                or get_question_tag(q['id']).get('safety') in {'critical','high','moderate'}]
+    needed=30-len(protected)
+    if not needed:
+        return fallback('no_unprotected_slots')
+    protected_ids={eq(q['id']) for q in protected}
+    blocked=blocked_short_term_evidence_ids(attempts,as_of=as_of)|{eq(q) for q in exclude_ids}
+    recent={eq(a['question_id']) for a in sorted(attempts,key=lambda a:_time(a['answered_at']),reverse=True)[:30]}
+    field_map,_=_field_node_coverage(attempts)
+    eligible={eq(q) for q in question_ids() if field_map.get(eq(q),get_category_small(q))==field}-blocked-recent-protected_ids
+    # The other slots are already filled by protected baseline choices.
+    if len(eligible)<needed:
+        return fallback('eligible_supply_insufficient')
+    intent={'coverage':'exploration','repair':'repair','safety_review':'repair',
+            'retention':'recheck','maintenance':'recheck'}.get(strategy['learning_intent'])
+    preferred=select_node_adaptive_questions(attempts,needed,exclude_ids=blocked|recent|protected_ids,
+                  category_small=field,learning_intent=intent,as_of=as_of)
+    if len(preferred)<needed:
+        return fallback('selector_supply_insufficient')
     chosen=list(protected)
     seen={eq(q['id']) for q in chosen}
     records={r['question_id']:r for r in preferred}
