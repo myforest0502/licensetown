@@ -1,5 +1,15 @@
 # LicenseTown Current State
 
+## 2026-09-15 Japanese brand-name search reinforcement
+
+- The public `/site` title, application name, Open Graph title and structured
+  data now lead with `LicenseTown（ライセンスタウン）` so Google can associate
+  the English and katakana brand forms consistently.
+- Existing PT exam search intent, canonical URL, description, sitemap, robots,
+  visible site UI and runtime behavior remain unchanged.
+- This is an indexing signal improvement, not a ranking guarantee. Acceptance
+  requires deployment followed by recrawl and a fresh `ライセンスタウン` search.
+
 ## 2026-09-15 Qualification three-layer ownership audit
 
 - Baseline main: `30a208a60ca34e23e72e279249713c758e4c0695`.
