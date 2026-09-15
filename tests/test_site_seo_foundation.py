@@ -86,10 +86,14 @@ def test_public_site_is_not_forced_noindex():
 def test_home_template_targets_pt_exam_search_intent():
     html = (ROOT / "templates" / "site" / "home.html").read_text(encoding="utf-8")
 
+    assert "<title>LicenseTown（ライセンスタウン）｜理学療法士国家試験" in html
+    assert 'name="application-name" content="LicenseTown（ライセンスタウン）"' in html
     assert "理学療法士国家試験の勉強・問題演習ならLicenseTown" in html
     assert "PT国試" in html
     assert 'rel="canonical"' in html
     assert 'property="og:url"' in html
     assert 'application/ld+json' in html
+    assert '"name":"LicenseTown（ライセンスタウン）"' in html
+    assert '"alternateName":["LicenseTown","ライセンスタウン"' in html
     assert '"EducationalApplication"' in html
     assert 'name="robots" content="index,follow' in html
