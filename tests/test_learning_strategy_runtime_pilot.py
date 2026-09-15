@@ -82,8 +82,10 @@ def test_field_handoff_preserves_safety_due_and_342_slots(monkeypatch):
 
 def test_small_supply_falls_back_without_selector_relaxation(monkeypatch):
     baseline,audit=setup_refinement(monkeypatch,14)
+    # Small total bank size alone is not a shortage for the remaining slots.
+    excluded={q for q in question_ids() if get_category_small(q)==14}
     monkeypatch.setattr(selector,'select_node_adaptive_questions',lambda *a,**k:pytest.fail('supply fallback missing'))
-    assert pilot.refine_session([],baseline,audit,[],as_of=NOW) is baseline
+    assert pilot.refine_session([],baseline,audit,[],exclude_ids=excluded,as_of=NOW) is baseline
     assert all(a['strategy_fallback_reason']=='eligible_supply_insufficient' for a in audit.values())
 
 
@@ -174,3 +176,94 @@ def test_real_strategy_snapshot_has_no_direct_q_authority():
     assert result['shadow_only'] and not result['selection_authority']
     assert result['recommended_field_id'] in range(1,19)
     assert all('additional_blocks_completed' not in r['target']['context_available'] for r in result['ranked_fields'])
+
+
+def constrained_field_session(monkeypatch, needed, supply):
+    """Real-bank fixture: protected baseline plus a small, safe field-2 pool."""
+    from question_equivalence import canonicalize_question_evidence_id as eq
+    fields, _ = selector._field_node_coverage([])
+    pool = []
+    seen = set()
+    for q in question_ids():
+        if fields[eq(q)] == 2 and eq(q) not in seen:
+            pool.append(q)
+            seen.add(eq(q))
+    outside = [q for q in question_ids() if fields[eq(q)] != 2
+               and get_question_tag(q).get('safety') not in {'critical','high','moderate'}]
+    baseline = [get_quiz_question(q) for q in outside[:30]]
+    audit = {q['id']: {'selection_group': 'exploration' if i < 30-needed else 'checking',
+                       'selection_reason': 'unseen' if i < 30-needed else 'uncertain_correct',
+                       'recent_question_repeat': False, 'recent_cooldown_bypassed': False}
+             for i,q in enumerate(baseline)}
+    monkeypatch.setattr(pilot, 'strategy_snapshot', lambda *a: {
+        'recommended_field_id': 2, 'learning_intent': 'safety_review',
+        'priority_score': 1.4, 'reason_codes': ['critical_safety'],
+        'priority_components': {'safety_score': 1}})
+    excluded = {eq(q) for q in pool[supply:]}
+    return baseline, audit, excluded, pool[:supply]
+
+
+@pytest.mark.parametrize('needed,supply', [(2,12), (2,11), (1,11), (2,2)])
+def test_field_supply_only_needs_to_fill_unprotected_slots(monkeypatch, needed, supply):
+    baseline, audit, excluded, pool = constrained_field_session(monkeypatch, needed, supply)
+    protected = {q['id'] for q in baseline[:30-needed]}
+    result = pilot.refine_session([], baseline, audit, [], exclude_ids=excluded, as_of=NOW)
+    ids = {q['id'] for q in result}
+    assert len(result) == len(ids) == 30
+    assert protected <= ids
+    assert len(ids & set(pool)) == needed
+    assert all(row['strategy_shadow_or_authority'] == 'soft_pilot' for row in audit.values())
+    assert all(not row['recent_question_repeat'] and not row['recent_cooldown_bypassed']
+               for row in audit.values())
+
+
+def test_actual_remaining_slot_shortage_keeps_baseline(monkeypatch):
+    baseline, audit, excluded, _ = constrained_field_session(monkeypatch, 2, 1)
+    monkeypatch.setattr(selector, 'select_node_adaptive_questions',
+                        lambda *a, **k: pytest.fail('must not relax field or guards'))
+    assert pilot.refine_session([], baseline, audit, [], exclude_ids=excluded, as_of=NOW) is baseline
+    assert all(row['strategy_fallback_reason'] == 'eligible_supply_insufficient' for row in audit.values())
+
+
+def test_fully_protected_session_does_not_claim_soft_pilot(monkeypatch):
+    baseline, audit, excluded, _ = constrained_field_session(monkeypatch, 0, 12)
+    monkeypatch.setattr(selector, 'select_node_adaptive_questions',
+                        lambda *a, **k: pytest.fail('no replaceable slots'))
+    assert pilot.refine_session([], baseline, audit, [], exclude_ids=excluded, as_of=NOW) is baseline
+    assert all(row['strategy_fallback_reason'] == 'no_unprotected_slots' for row in audit.values())
+
+
+def test_protected_evidence_is_not_counted_as_new_supply(monkeypatch):
+    baseline, audit, excluded, pool = constrained_field_session(monkeypatch, 2, 2)
+    old = baseline[0]['id']
+    baseline[0] = get_quiz_question(pool[0])
+    audit[pool[0]] = audit.pop(old)
+    assert pilot.refine_session([], baseline, audit, [], exclude_ids=excluded, as_of=NOW) is baseline
+    assert all(row['strategy_fallback_reason'] == 'eligible_supply_insufficient' for row in audit.values())
+
+
+def test_selector_shortage_still_fails_closed(monkeypatch):
+    baseline, audit, excluded, _ = constrained_field_session(monkeypatch, 2, 12)
+    monkeypatch.setattr(selector, 'select_node_adaptive_questions', lambda *a, **k: [])
+    assert pilot.refine_session([], baseline, audit, [], exclude_ids=excluded, as_of=NOW) is baseline
+    assert all(row['strategy_fallback_reason'] == 'selector_supply_insufficient' for row in audit.values())
+
+
+@pytest.mark.parametrize('kind', ['random', 'dashboard', 'nekketsu'])
+def test_other_session_kinds_do_not_enter_strategy_or_add_metadata(monkeypatch, kind):
+    tree = ast.parse(Path('app.py').read_text(encoding='utf-8'))
+    fn = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'start_quiz')
+    qs = [get_quiz_question(q) for q in list(question_ids())[:30]]
+    ns = {'QUIZ_QUESTION_COUNT':30, 'QUESTIONS_PER_SET':5, 'quiz_category_selections':{},
+          'get_question_attempts':lambda u:[], 'ENABLE_NODE_ADAPTIVE_RECOMMENDATION':True,
+          'NODE_ADAPTIVE_RECOMMENDATION_PILOT_USER_IDS':{'a'},
+          'ENABLE_LEARNING_STRATEGY_V1':True, 'LEARNING_STRATEGY_PILOT_USER_IDS':{'a'},
+          'select_random_questions':lambda *a,**k:qs,
+          'study_sessions':{}, 'user_modes':{}, 'format_quiz_messages':lambda qs:qs,
+          'time':__import__('time'), 'logging':__import__('logging')}
+    monkeypatch.setattr(pilot, 'refine_session', lambda *a,**k:pytest.fail('strategy leaked'))
+    exec(compile(ast.Module(body=[fn],type_ignores=[]),'app.py','exec'), ns)
+    ns['start_quiz']('a',session_kind=kind)
+    session = ns['study_sessions']['a']
+    assert session['all_questions'] == qs
+    assert not session.get('adaptive_selection_audit')

@@ -41,10 +41,20 @@ soft field preference: protected slots can make the actual mix differ from30
 questions in the proposed field. Protected choices keep their original metadata.
 
 Both candidate supply and final set respect the existing formal blocked evidence,
-hard72h/exact-equivalence and recent30 cooldown. Eligible field supply below30,
-selector shortage, invalid final set or a strategy exception uses the original
+hard72h/exact-equivalence and recent30 cooldown. Supply is checked against
+`30 - protected_baseline_count`, excluding protected evidence identities from
+the candidate pool. The selector is asked for that remaining count, with the
+same field and intent. Eligible supply below that count, selector shortage,
+invalid final set or a strategy exception uses the original
 baseline. No guard is relaxed to make a strategy fit. Baseline safety behavior
 and its fallback contract are unchanged. No selector code is modified.
+
+The original fixed-30 precondition over-rejected mixed sessions; the September15
+incident had only 2/2/2/1 unprotected slots. Fully protected sessions retain the
+baseline with `no_unprotected_slots`, rather than claiming soft-pilot activity.
+There is no new adjacent-field or intent fallback: the selector's existing
+within-field group fill remains, and an actual shortage returns the baseline.
+Details: `PT_STAGE_E_ELIGIBLE_SUPPLY_FIX_20260915.md`.
 
 ## Persistence and observation
 

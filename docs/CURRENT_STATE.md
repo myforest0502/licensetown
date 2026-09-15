@@ -1,5 +1,28 @@
 # LicenseTown Current State
 
+## 2026-09-15 Stage E pilot mixed-slot supply correction
+
+- Main baseline `70374195f84eee64bd5c6dcd95515b08431a23c0`. SELECT-only
+  aggregates confirmed 120 fallback answers from four sessions, with protected
+  counts28/28/28/29. The old adapter demanded30 field candidates although only
+  2/2/2/1 slots needed filling. Stage E critical Safety scores remained1.
+- Adapter now counts only unprotected slots, excludes protected evidence from
+  supply/selector candidates, and retains real-shortage/guard fallbacks. A fully
+  protected session reports no_unprotected_slots rather than soft_pilot.
+- No selector/ranking/Safety/cooldown/bank/app/schema changes; existing pilot
+  gates and non-adaptive paths unchanged. No production writes, Render operation,
+  migration, main merge or authority promotion.
+- Reproduction: four sufficient-supply cases fail with the original function;
+  focused regressions **135 passed**. Full local Python3.12 suite **1471 passed,
+  6 skipped, 1 deselected, 141 subtests** in52.54s; existing CI external-fixture
+  deselection, empty DATABASE_URL and dummy credentials. Validator **2000 records,
+  0 issues**, 1562 Nodes.
+- Code/tests verified; aggregate production incident observed; exact historical
+  start-state replay and corrected live behavior NOT verified. Detailed export
+  was blocked by automatic approval review; only aggregate reads proceeded.
+  See `PT_STAGE_E_ELIGIBLE_SUPPLY_FIX_20260915.md` for numeric bounds and rollout
+  observation requirements. This does not establish learning effectiveness.
+
 ## 2026-09-15 Japanese brand-name search reinforcement
 
 - The public `/site` title, application name, Open Graph title and structured
