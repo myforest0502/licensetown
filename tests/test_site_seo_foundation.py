@@ -56,8 +56,9 @@ def test_sitemap_contains_only_public_search_pages():
 
     assert response.status_code == 200
     assert response.mimetype == "application/xml"
-    assert "https://example.test/site" in text
-    assert "https://example.test/site/faq" in text
+    assert "<loc>https://example.test/site/</loc>" in text
+    assert "<loc>https://example.test/site/faq</loc>" in text
+    assert "<loc>https://example.test/site</loc>" not in text
     assert "/site/view/pc" not in text
     assert "/site/source/" not in text
 
