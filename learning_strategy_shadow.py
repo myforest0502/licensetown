@@ -1,4 +1,7 @@
-"""Stage E: explainable 18-field strategy candidates, disconnected from runtime."""
+"""Stage E: PT 18-field strategy candidates consumed by the opt-in PT pilot.
+
+This module produces field/intent candidates; the existing adaptive selector
+retains exact-question authority. It is not a qualification-neutral policy."""
 from __future__ import annotations
 
 from field_learning_target_shadow import build_field_targets, count

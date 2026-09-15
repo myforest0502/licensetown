@@ -1,4 +1,7 @@
-"""Thin adapter for the existing PT bank; not connected to the runtime."""
+"""PT bank adapter used by learning_engine and adaptive selector.
+
+The root question_bank module remains the authoritative loader.
+See docs/QUALIFICATION_THREE_LAYER_AUDIT_V01.md for the retained path boundary."""
 
 from __future__ import annotations
 

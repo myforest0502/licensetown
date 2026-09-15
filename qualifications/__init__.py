@@ -1,4 +1,4 @@
-"""Standalone qualification definitions, not wired into existing PT execution.
+"""Qualification metadata and the legacy PT default identity.
 
 The default describes the legacy PT compatibility contract only. It does not
 select a bank or infer the qualification of stored sessions or database rows.

@@ -1,4 +1,8 @@
-"""Explicit lookup for qualification-scoped learner-history stores."""
+"""Explicit lookup for qualification-scoped learner-history stores.
+
+Composition exception: this registry imports PTLearningHistoryStore, which
+imports the legacy database module. Import the learning_store protocol when
+only the shared contract is needed. Takken remains unconfigured."""
 
 from __future__ import annotations
 
