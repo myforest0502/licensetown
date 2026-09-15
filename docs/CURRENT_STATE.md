@@ -1,5 +1,27 @@
 # LicenseTown Current State
 
+## 2026-09-15 Qualification three-layer ownership audit
+
+- Baseline main: `30a208a60ca34e23e72e279249713c758e4c0695`.
+- `QUALIFICATION_THREE_LAYER_AUDIT_V01.md` maps all 102 root Python modules,
+  the complete qualifications package and repository directory families.
+- Shared contracts are separated; common registries still import concrete PT
+  implementations. This composition exception is documented and retained.
+- PT bank provider and Stage E module descriptions now reflect existing pilot
+  integration. Five module edits change docstrings only; executable AST is
+  identical to baseline. No file moves, import edits or runtime logic changes.
+- Takken remains metadata-only and both registries fail closed. A real bank,
+  stable IDs, answer/explanation records, reviewed taxonomy/KN/evidence contracts
+  are required before extending the dormant qualification.
+- No DB/Render/LINE/production operation or Phase11/Stage E promotion. This
+  audit does not newly verify live configuration or real learner acceptance.
+- Validation: focused qualification/PT/pilot/repeat checks **184 passed**
+  (16 subtests); full suite **1460 passed, 6 skipped, 1 deselected**
+  (141 subtests), 52.80s on local Python 3.12. DATABASE_URL empty, dummy API
+  credentials, PYTHONPATH=. and the same external-fixture deselection as CI.
+  CI uses Python 3.13. Bank validator: **2000 records, 0 issues**, 1562 Nodes.
+  Existing deprecation warnings remain; no test expectations were rewritten.
+
 ## 2026-09-14 Strategy pilot integration preparation — default OFF
 
 - Separate runtime preparation follows accepted Stage F.2 audit #351.

@@ -1,4 +1,9 @@
-"""Shared qualification-scoped Question Bank provider lookup.
+"""Qualification-scoped Question Bank lookup with explicit PT registration.
+
+This registry is a composition exception inside common: it imports concrete
+qualification metadata and the PT adapter. The provider protocol itself remains
+independent. Do not treat importing this registry as a side-effect-free contract
+import; PT registration loads the legacy bank.
 
 The registry is intentionally explicit: PT is available today, while a known
 qualification without a provider must fail instead of silently falling back to
