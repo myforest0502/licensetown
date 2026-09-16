@@ -49,6 +49,14 @@ def test_robots_points_to_sitemap_and_blocks_preview_boundaries():
     assert "Sitemap: https://example.test/sitemap.xml" in text
 
 
+def test_trailing_slash_redirects_to_canonical_site_url():
+    client = _app().test_client()
+    response = client.get("/site/", base_url="https://example.test")
+
+    assert response.status_code == 301
+    assert response.headers["Location"] == "/site"
+
+
 def test_sitemap_contains_only_public_search_pages():
     client = _app().test_client()
     response = client.get("/sitemap.xml", base_url="https://example.test")
@@ -56,9 +64,9 @@ def test_sitemap_contains_only_public_search_pages():
 
     assert response.status_code == 200
     assert response.mimetype == "application/xml"
-    assert "<loc>https://example.test/site/</loc>" in text
+    assert "<loc>https://example.test/site</loc>" in text
+    assert "<loc>https://example.test/site/</loc>" not in text
     assert "<loc>https://example.test/site/faq</loc>" in text
-    assert "<loc>https://example.test/site</loc>" not in text
     assert "/site/view/pc" not in text
     assert "/site/source/" not in text
 
