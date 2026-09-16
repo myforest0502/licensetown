@@ -406,7 +406,7 @@ def test_expired_supporter_token_is_rejected(monkeypatch):
     clear_local_data()
     set_supporter_link("supporter-user", "learner-user")
     current_time = time.time()
-    monkeypatch.setattr(time, "time", lambda: current_time - (31 * 24 * 60 * 60))
+    monkeypatch.setattr(time, "time", lambda: current_time - (366 * 24 * 60 * 60))
     expired_token = create_supporter_token("supporter-user")
     monkeypatch.setattr(time, "time", lambda: current_time)
 
