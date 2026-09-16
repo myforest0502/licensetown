@@ -50,7 +50,7 @@ def _enhance_public_faq_html(response):
             "</head>",
             1,
         )
-    if "ライセンスタウン（LicenseTown）のよくある質問" not in html:
+    if "<h1>ライセンスタウン（LicenseTown）のよくある質問</h1>" not in html:
         html = html.replace(
             "<h1>よくある質問</h1>",
             "<h1>ライセンスタウン（LicenseTown）のよくある質問</h1>",
