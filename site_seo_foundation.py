@@ -6,7 +6,6 @@ from flask import Response, redirect, request
 
 
 NOINDEX_PREFIXES = (
-    "/site/view/",
     "/site/source/",
     "/site/preview-pc/",
     "/site/preview-724/",
@@ -50,7 +49,6 @@ def install_site_seo_foundation(app) -> None:
             (
                 "User-agent: *",
                 "Allow: /site",
-                "Disallow: /site/view/",
                 "Disallow: /site/source/",
                 "Disallow: /site/preview-pc/",
                 "Disallow: /site/preview-724/",
@@ -76,6 +74,8 @@ def install_site_seo_foundation(app) -> None:
     @app.after_request
     def apply_site_seo_headers(response):
         path = request.path
-        if any(path.startswith(prefix) for prefix in NOINDEX_PREFIXES):
+        if path.startswith("/site/view/"):
+            response.headers["Link"] = f'<{_origin()}/site>; rel="canonical"'
+        elif any(path.startswith(prefix) for prefix in NOINDEX_PREFIXES):
             response.headers["X-Robots-Tag"] = "noindex, nofollow, noarchive"
         return response
