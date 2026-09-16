@@ -45,7 +45,9 @@ import learner_path_performance as learner_path_perf
 
 goukaku_ui = Blueprint("goukaku_ui", __name__)
 
-SUPPORTER_TOKEN_MAX_AGE_SECONDS = 30 * 24 * 60 * 60
+# Parent/supporter links are long-lived product links. Keep a bounded credential
+# lifetime, while active supporter_links remains the revocation authority.
+SUPPORTER_TOKEN_MAX_AGE_SECONDS = 365 * 24 * 60 * 60
 
 
 def field_progress_ui_enabled():
