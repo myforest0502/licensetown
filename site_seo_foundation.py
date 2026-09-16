@@ -21,6 +21,46 @@ def _origin() -> str:
     return request.url_root.rstrip("/")
 
 
+def _enhance_public_faq_html(response):
+    """Add stable SEO signals to the existing public FAQ without owning its UI."""
+    if request.path != "/site/faq" or response.status_code != 200:
+        return response
+    if not response.mimetype or "html" not in response.mimetype:
+        return response
+
+    html = response.get_data(as_text=True)
+    canonical = f"{_origin()}/site/faq"
+    description = (
+        "ライセンスタウン（LicenseTown）のよくある質問。理学療法士国家試験の学習、"
+        "LINEでの利用、無料モニター、見守り機能などについて案内します。"
+    )
+
+    html = html.replace(
+        "<title>よくある質問 | LicenseTown</title>",
+        "<title>よくある質問｜ライセンスタウン（LicenseTown）</title>",
+        1,
+    )
+    if 'rel="canonical"' not in html:
+        html = html.replace(
+            "</head>",
+            f'<link rel="canonical" href="{escape(canonical, quote=True)}">'
+            f'<meta name="description" content="{escape(description, quote=True)}">'
+            '<meta name="application-name" content="ライセンスタウン">'
+            '<meta property="og:site_name" content="ライセンスタウン">'
+            "</head>",
+            1,
+        )
+    if "<h1>ライセンスタウン（LicenseTown）のよくある質問</h1>" not in html:
+        html = html.replace(
+            "<h1>よくある質問</h1>",
+            "<h1>ライセンスタウン（LicenseTown）のよくある質問</h1>",
+            1,
+        )
+
+    response.set_data(html)
+    return response
+
+
 def install_site_seo_foundation(app) -> None:
     """Install public SEO discovery routes without changing the frozen site UI."""
 
@@ -73,6 +113,7 @@ def install_site_seo_foundation(app) -> None:
 
     @app.after_request
     def apply_site_seo_headers(response):
+        response = _enhance_public_faq_html(response)
         path = request.path
         if path.startswith("/site/view/"):
             response.headers["Link"] = f'<{_origin()}/site>; rel="canonical"'
