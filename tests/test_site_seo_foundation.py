@@ -35,7 +35,7 @@ def _app():
     return app
 
 
-def test_robots_points_to_sitemap_and_blocks_preview_boundaries():
+def test_robots_points_to_sitemap_and_blocks_only_non_public_preview_boundaries():
     client = _app().test_client()
     response = client.get("/robots.txt", base_url="https://example.test")
     text = response.get_data(as_text=True)
@@ -43,7 +43,7 @@ def test_robots_points_to_sitemap_and_blocks_preview_boundaries():
     assert response.status_code == 200
     assert response.mimetype == "text/plain"
     assert "Allow: /site" in text
-    assert "Disallow: /site/view/" in text
+    assert "Disallow: /site/view/" not in text
     assert "Disallow: /site/source/" in text
     assert "Disallow: /site/preview-pc/" in text
     assert "Sitemap: https://example.test/sitemap.xml" in text
@@ -71,17 +71,26 @@ def test_sitemap_contains_only_public_search_pages():
     assert "/site/source/" not in text
 
 
-def test_preview_and_source_responses_are_noindex():
+def test_rendered_site_view_is_crawlable_but_canonicalized_to_public_site():
+    client = _app().test_client()
+    response = client.get("/site/view/pc", base_url="https://example.test")
+
+    assert response.status_code == 200
+    assert "X-Robots-Tag" not in response.headers
+    assert response.headers["Link"] == '<https://example.test/site>; rel="canonical"'
+
+
+def test_source_and_preview_asset_responses_remain_noindex():
     client = _app().test_client()
 
     for path in (
-        "/site/view/pc",
         "/site/source/mobile",
         "/site/preview-pc/index.html",
     ):
         response = client.get(path)
         assert response.status_code == 200
         assert response.headers["X-Robots-Tag"] == "noindex, nofollow, noarchive"
+        assert "Link" not in response.headers
 
 
 def test_public_site_is_not_forced_noindex():
