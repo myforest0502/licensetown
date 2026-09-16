@@ -17,7 +17,11 @@ def _app():
 
     @app.get("/site/faq")
     def site_faq():
-        return "faq"
+        return (
+            "<!doctype html><html lang=\"ja\"><head>"
+            "<title>よくある質問 | LicenseTown</title></head>"
+            "<body><h1>よくある質問</h1></body></html>"
+        )
 
     @app.get("/site/view/pc")
     def preview_pc():
@@ -99,6 +103,19 @@ def test_public_site_is_not_forced_noindex():
 
     assert response.status_code == 200
     assert "X-Robots-Tag" not in response.headers
+
+
+def test_public_faq_gets_canonical_meta_and_bilingual_brand_name():
+    client = _app().test_client()
+    response = client.get("/site/faq", base_url="https://example.test")
+    html = response.get_data(as_text=True)
+
+    assert response.status_code == 200
+    assert '<link rel="canonical" href="https://example.test/site/faq">' in html
+    assert '<meta name="description" content="ライセンスタウン（LicenseTown）のよくある質問。' in html
+    assert "<title>よくある質問｜ライセンスタウン（LicenseTown）</title>" in html
+    assert "<h1>ライセンスタウン（LicenseTown）のよくある質問</h1>" in html
+    assert html.count('rel="canonical"') == 1
 
 
 def test_home_template_targets_pt_exam_search_intent():
