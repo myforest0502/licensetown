@@ -3,6 +3,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 
 VERSION = 'learning_strategy_runtime_pilot_v0.1'
+EXPLORATION_FLOOR = 5
 METADATA_KEYS = ('strategy_version','strategy_recommended_field','strategy_learning_intent',
                  'strategy_priority_score','strategy_reason_codes','strategy_priority_components',
                  'strategy_shadow_or_authority','strategy_fallback_reason')
@@ -105,8 +106,10 @@ def strategy_snapshot(attempts, events, as_of):
 
 
 def refine_session(attempts, baseline, audit, events, *, exclude_ids=(), as_of=None):
-    """Keep baseline Safety/due/exploration slots; soft-target remaining slots.
+    """Protect Safety/due and the five-slot exploration floor; soft-target the rest.
 
+    Stage E may reroute to the next ranked field when the top field cannot fill
+    the currently replaceable slots without weakening repeat/Safety guards.
     Caller must gate before loading events or importing this adapter. This
     function never reads/writes DB, changes flags, or grants the pure engine
     question-selection authority. Exceptions leave caller's baseline intact.
@@ -131,26 +134,76 @@ def refine_session(attempts, baseline, audit, events, *, exclude_ids=(), as_of=N
         return baseline
     if not field:
         return fallback('no_strategy_candidate')
-    protected=[q for q in baseline if audit.get(q['id'],{}).get('selection_group')=='exploration'
-               or audit.get(q['id'],{}).get('selection_reason') in {'safety_wrong','safety_unresolved','recheck_due'}
-               or get_question_tag(q['id']).get('safety') in {'critical','high','moderate'}]
+
+    ranked=list(strategy.get('ranked_fields') or ())
+    protected=[]
+    exploration_kept=0
+    for q in baseline:
+        row=audit.get(q['id'],{})
+        is_exploration=row.get('selection_group')=='exploration'
+        if is_exploration and not ranked:
+            # Legacy/minimal snapshots cannot prove safe alternate field supply.
+            keep_exploration=True
+        else:
+            keep_exploration=is_exploration and exploration_kept<EXPLORATION_FLOOR
+            if keep_exploration:
+                exploration_kept+=1
+        if (keep_exploration
+                or row.get('selection_reason') in {'safety_wrong','safety_unresolved','recheck_due'}
+                or get_question_tag(q['id']).get('safety') in {'critical','high','moderate'}):
+            protected.append(q)
     needed=30-len(protected)
     if not needed:
         return fallback('no_unprotected_slots')
+
     protected_ids={eq(q['id']) for q in protected}
     blocked=blocked_short_term_evidence_ids(attempts,as_of=as_of)|{eq(q) for q in exclude_ids}
     recent={eq(a['question_id']) for a in sorted(attempts,key=lambda a:_time(a['answered_at']),reverse=True)[:30]}
     field_map,_=_field_node_coverage(attempts)
-    eligible={eq(q) for q in question_ids() if field_map.get(eq(q),get_category_small(q))==field}-blocked-recent-protected_ids
-    # The other slots are already filled by protected baseline choices.
-    if len(eligible)<needed:
-        return fallback('eligible_supply_insufficient')
-    intent={'coverage':'exploration','repair':'repair','safety_review':'repair',
-            'retention':'recheck','maintenance':'recheck'}.get(strategy['learning_intent'])
-    preferred=select_node_adaptive_questions(attempts,needed,exclude_ids=blocked|recent|protected_ids,
-                  category_small=field,learning_intent=intent,as_of=as_of)
-    if len(preferred)<needed:
-        return fallback('selector_supply_insufficient')
+
+    if ranked:
+        candidates=[row for row in ranked if row.get('allocation_candidate',True)
+                    and row.get('priority_score',0)>0 and row.get('field_id')]
+    else:
+        candidates=[{'field_id':field,'learning_intent':strategy['learning_intent'],
+                     'priority_score':strategy['priority_score'],'reason_codes':strategy['reason_codes'],
+                     'priority_components':strategy['priority_components']}]
+
+    chosen_candidate=None
+    preferred=None
+    had_coarse_supply=False
+    intent_map={'coverage':'exploration','repair':'repair','safety_review':'repair',
+                'retention':'recheck','maintenance':'recheck','attainment':'repair'}
+    for candidate in candidates:
+        candidate_field=candidate['field_id']
+        eligible={eq(q) for q in question_ids()
+                  if field_map.get(eq(q),get_category_small(q))==candidate_field}-blocked-recent-protected_ids
+        if len(eligible)<needed:
+            continue
+        had_coarse_supply=True
+        intent=intent_map.get(candidate.get('learning_intent'))
+        selected=select_node_adaptive_questions(
+            attempts,needed,exclude_ids=blocked|recent|protected_ids,
+            category_small=candidate_field,learning_intent=intent,as_of=as_of)
+        if len(selected)<needed:
+            continue
+        chosen_candidate=candidate
+        preferred=selected
+        break
+
+    if chosen_candidate is None:
+        return fallback('selector_supply_insufficient' if had_coarse_supply else 'eligible_supply_insufficient')
+
+    field=chosen_candidate['field_id']
+    reasons=list(chosen_candidate.get('reason_codes') or ())
+    if field!=strategy['recommended_field_id']:
+        reasons.append('eligible_supply_reroute')
+    meta={'strategy_version':VERSION,'strategy_recommended_field':field,
+          'strategy_learning_intent':chosen_candidate.get('learning_intent'),
+          'strategy_priority_score':chosen_candidate.get('priority_score',0.0),
+          'strategy_reason_codes':reasons,
+          'strategy_priority_components':chosen_candidate.get('priority_components') or {}}
+
     chosen=list(protected)
     seen={eq(q['id']) for q in chosen}
     records={r['question_id']:r for r in preferred}
@@ -162,11 +215,12 @@ def refine_session(attempts, baseline, audit, events, *, exclude_ids=(), as_of=N
             seen.add(eq(r['question_id']))
     if len(chosen)!=30 or any(eq(q['id']) in blocked|recent for q in chosen):
         return fallback('guard_or_protected_slot_conflict')
+    protected_qids={q['id'] for q in protected}
     updated={}
     for q in chosen:
         qid=q['id']
         row=dict(audit.get(qid,{}))
-        if q not in protected:
+        if qid not in protected_qids:
             r=records[qid]
             row.update(selection_reason=r['priority_reason'],selection_group=r['priority_group'],
                        selection_score=r['priority_score'],repair_evidence_quality=r['repair_evidence_quality'],
