@@ -135,14 +135,19 @@ def refine_session(attempts, baseline, audit, events, *, exclude_ids=(), as_of=N
     if not field:
         return fallback('no_strategy_candidate')
 
+    ranked=list(strategy.get('ranked_fields') or ())
     protected=[]
     exploration_kept=0
     for q in baseline:
         row=audit.get(q['id'],{})
         is_exploration=row.get('selection_group')=='exploration'
-        keep_exploration=is_exploration and exploration_kept<EXPLORATION_FLOOR
-        if keep_exploration:
-            exploration_kept+=1
+        if is_exploration and not ranked:
+            # Legacy/minimal snapshots cannot prove safe alternate field supply.
+            keep_exploration=True
+        else:
+            keep_exploration=is_exploration and exploration_kept<EXPLORATION_FLOOR
+            if keep_exploration:
+                exploration_kept+=1
         if (keep_exploration
                 or row.get('selection_reason') in {'safety_wrong','safety_unresolved','recheck_due'}
                 or get_question_tag(q['id']).get('safety') in {'critical','high','moderate'}):
@@ -156,7 +161,6 @@ def refine_session(attempts, baseline, audit, events, *, exclude_ids=(), as_of=N
     recent={eq(a['question_id']) for a in sorted(attempts,key=lambda a:_time(a['answered_at']),reverse=True)[:30]}
     field_map,_=_field_node_coverage(attempts)
 
-    ranked=list(strategy.get('ranked_fields') or ())
     if ranked:
         candidates=[row for row in ranked if row.get('allocation_candidate',True)
                     and row.get('priority_score',0)>0 and row.get('field_id')]
