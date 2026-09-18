@@ -942,9 +942,14 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
         all_questions = build_initial_assessment(total_question_count)
     else:
         attempts = get_question_attempts(user_id)
-        from short_term_repeat_guard import blocked_short_term_evidence_ids
+        from short_term_repeat_guard import (
+            blocked_short_term_evidence_ids,
+            recent_short_term_evidence_ids,
+        )
         short_term_blocked = blocked_short_term_evidence_ids(attempts)
         short_term_blocked.update(str(value) for value in (exclude_ids or ()))
+        adaptive_short_term_blocked = recent_short_term_evidence_ids(attempts)
+        adaptive_short_term_blocked.update(str(value) for value in (exclude_ids or ()))
     if session_kind == "adaptive_daily":
         if is_node_adaptive_recommendation_enabled(
             ENABLE_NODE_ADAPTIVE_RECOMMENDATION,
@@ -955,7 +960,7 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
             all_questions = build_node_adaptive_session(
                 attempts,
                 total_question_count,
-                exclude_ids=short_term_blocked,
+                exclude_ids=adaptive_short_term_blocked,
                 audit_out=adaptive_selection_audit,
             )
             if total_question_count == 30 and globals().get("ENABLE_LEARNING_STRATEGY_V1", False) and user_id in globals().get("LEARNING_STRATEGY_PILOT_USER_IDS", set()):
@@ -966,7 +971,7 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
                     from learning_strategy_runtime_pilot import refine_session
                     all_questions = refine_session(
                         attempts, all_questions, adaptive_selection_audit,
-                        get_learning_events(user_id), exclude_ids=short_term_blocked,
+                        get_learning_events(user_id), exclude_ids=adaptive_short_term_blocked,
                     )
                 except Exception:
                     logging.warning("Learning strategy v1 fallback: context or strategy unavailable")
