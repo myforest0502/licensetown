@@ -960,7 +960,7 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
             all_questions = build_node_adaptive_session(
                 attempts,
                 total_question_count,
-                exclude_ids=adaptive_short_term_blocked,
+                exclude_ids=(exclude_ids or ()),
                 audit_out=adaptive_selection_audit,
             )
             if total_question_count == 30 and globals().get("ENABLE_LEARNING_STRATEGY_V1", False) and user_id in globals().get("LEARNING_STRATEGY_PILOT_USER_IDS", set()):
