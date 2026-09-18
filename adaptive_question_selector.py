@@ -172,6 +172,7 @@ def select_node_adaptive_questions(
     as_of: datetime | None = None,
     category_small: int | None = None,
     learning_intent: str | None = None,
+    allow_spaced_repeat_fallback: bool = False,
 ) -> list[dict[str, Any]]:
     """Return unique recommendation records with balanced repair/exploration."""
     attempts = [dict(item) for item in attempts]
@@ -194,6 +195,13 @@ def select_node_adaptive_questions(
         for item in recent_attempts
         if item.get("question_id")
     }
+    last_attempt_order: dict[str, int] = {}
+    for attempt_index, item in enumerate(sorted(attempts, key=_attempt_time)):
+        raw_question_id = str(item.get("question_id") or "")
+        if raw_question_id:
+            last_attempt_order[
+                canonicalize_question_evidence_id(raw_question_id)
+            ] = attempt_index
     excluded = {
         canonicalize_question_evidence_id(str(value))
         for value in (exclude_ids or ())
@@ -384,6 +392,33 @@ def select_node_adaptive_questions(
         if len(selected) >= question_count:
             break
 
+    if allow_spaced_repeat_fallback and len(selected) < question_count:
+        spaced_candidates = [
+            item for item in candidates
+            if item["evidence_question_id"] in seen_question_ids
+            and item["state"] != "recheck_due"
+        ]
+        spaced_candidates.sort(
+            key=lambda item: (
+                item["recent_question_repeat"],
+                last_attempt_order.get(item["evidence_question_id"], -1),
+                -item["priority_score"],
+                -item["tie"],
+            )
+        )
+        for cap in (1, 2, 3, question_count):
+            for item in spaced_candidates:
+                if len(selected) >= question_count:
+                    break
+                if not available(item, cap):
+                    continue
+                fallback_item = dict(item)
+                fallback_item["priority_reason"] = "spaced_repeat_fallback"
+                fallback_item["priority_group"] = "checking"
+                append_item(fallback_item)
+            if len(selected) >= question_count:
+                break
+
     return selected[:question_count]
 
 
@@ -427,6 +462,19 @@ def build_node_adaptive_session(
             learning_intent=phase_intent,
         )
         records.extend(phase_records)
+    if len(records) < question_count:
+        selected_evidence = {
+            item["evidence_question_id"] for item in records
+        }
+        fallback_records = select_node_adaptive_questions(
+            attempts,
+            question_count - len(records),
+            exclude_ids=effective_exclude_ids | selected_evidence,
+            rng=rng,
+            allow_spaced_repeat_fallback=True,
+        )
+        records.extend(fallback_records)
+
     if len(records) < question_count:
         raise QuestionAvailabilityError(
             "Not enough non-blocked questions for Node adaptive session"
