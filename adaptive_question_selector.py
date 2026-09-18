@@ -496,7 +496,7 @@ def build_node_adaptive_session(
 
     if len(records) < question_count:
         raise QuestionAvailabilityError(
-            "Not enough unique question evidence for Node adaptive session"
+            "Not enough non-blocked unique question evidence for Node adaptive session"
         )
     if audit_out is not None:
         audit_out.update({
