@@ -432,11 +432,12 @@ def build_node_adaptive_session(
     # can be reopened merely because another item in the same Node is due.
     from short_term_repeat_guard import recent_short_term_evidence_ids
 
-    effective_exclude_ids = {
+    explicit_exclude_ids = {
         canonicalize_question_evidence_id(str(value))
         for value in (exclude_ids or ())
     }
-    effective_exclude_ids.update(recent_short_term_evidence_ids(attempts))
+    hard_floor_exclude_ids = set(explicit_exclude_ids)
+    hard_floor_exclude_ids.update(recent_short_term_evidence_ids(attempts))
     records = []
     phases = [
         (category_small, learning_intent),
@@ -456,7 +457,7 @@ def build_node_adaptive_session(
         phase_records = select_node_adaptive_questions(
             attempts,
             question_count - len(records),
-            exclude_ids=effective_exclude_ids | selected_evidence,
+            exclude_ids=hard_floor_exclude_ids | selected_evidence,
             rng=rng,
             category_small=phase_category,
             learning_intent=phase_intent,
@@ -469,15 +470,33 @@ def build_node_adaptive_session(
         fallback_records = select_node_adaptive_questions(
             attempts,
             question_count - len(records),
-            exclude_ids=effective_exclude_ids | selected_evidence,
+            exclude_ids=hard_floor_exclude_ids | selected_evidence,
             rng=rng,
             allow_spaced_repeat_fallback=True,
         )
         records.extend(fallback_records)
 
     if len(records) < question_count:
+        selected_evidence = {
+            item["evidence_question_id"] for item in records
+        }
+        recent_hard_floor = recent_short_term_evidence_ids(attempts)
+        emergency_records = select_node_adaptive_questions(
+            attempts,
+            question_count - len(records),
+            exclude_ids=explicit_exclude_ids | selected_evidence,
+            rng=rng,
+            allow_spaced_repeat_fallback=True,
+        )
+        for item in emergency_records:
+            if item["evidence_question_id"] in recent_hard_floor:
+                item["priority_reason"] = "emergency_repeat_fallback"
+                item["priority_group"] = "checking"
+        records.extend(emergency_records)
+
+    if len(records) < question_count:
         raise QuestionAvailabilityError(
-            "Not enough non-blocked questions for Node adaptive session"
+            "Not enough unique question evidence for Node adaptive session"
         )
     if audit_out is not None:
         audit_out.update({
