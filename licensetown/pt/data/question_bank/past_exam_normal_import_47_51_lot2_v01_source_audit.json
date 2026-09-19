@@ -1,0 +1,183 @@
+[
+  {
+    "input_row": 1,
+    "source_key": "51午前99",
+    "original_candidate_node": "KN0626",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "既収録Q841と設問本文・全選択肢・正答が同一。",
+    "official_answer": "4",
+    "decision": "EXCLUDED_DUPLICATE",
+    "existing_question_id": "Q841"
+  },
+  {
+    "input_row": 2,
+    "source_key": "51午前30",
+    "original_candidate_node": "KN0695",
+    "final_node": "KN0902",
+    "node_changed": true,
+    "change_reason": "KN0695はミオトニアの識別Node。本問は四肢遠位筋優位という筋強直性ジストロフィーの病型特徴を問うため、正式Node KN0902がより適合。",
+    "official_answer": "3",
+    "decision": "IMPORTED",
+    "new_question_id": "Q1592",
+    "category_large": "B",
+    "category_small": 8
+  },
+  {
+    "input_row": 3,
+    "source_key": "49午後48",
+    "original_candidate_node": "KN0184",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "Cross testとFunctional Balance Scaleという異なる評価尺度の得点方向を同時に問う。単一の既存最小Nodeへ安全に対応付けられない。",
+    "official_answer": "2・5",
+    "decision": "HOLD"
+  },
+  {
+    "input_row": 4,
+    "source_key": "48午後89",
+    "original_candidate_node": "KN0435",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "選択肢4に文字化けがあり全選択肢を原文どおり保証できない。推測修復禁止。",
+    "official_answer": "3",
+    "decision": "EXCLUDED_EXTRACTION_QUALITY"
+  },
+  {
+    "input_row": 5,
+    "source_key": "49午後98",
+    "original_candidate_node": "KN0692",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "正答はアルコール依存症への集団療法。KN0692は離脱せん妄Nodeであり、集団療法に対応する既存最小Nodeがない。",
+    "official_answer": "4",
+    "decision": "HOLD"
+  },
+  {
+    "input_row": 6,
+    "source_key": "47午後22",
+    "original_candidate_node": "KN0235",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "第1ロットで同一原問題をQ1578として正式収録済み。",
+    "official_answer": "2",
+    "decision": "EXCLUDED_DUPLICATE",
+    "existing_question_id": "Q1578"
+  },
+  {
+    "input_row": 7,
+    "source_key": "49午後33",
+    "original_candidate_node": "KN0039",
+    "final_node": "KN0039",
+    "node_changed": false,
+    "change_reason": "正答の下肢関節拘縮はKN0039の最小修復内容と直接一致する。",
+    "official_answer": "3",
+    "decision": "IMPORTED",
+    "new_question_id": "Q1593",
+    "category_large": "B",
+    "category_small": 11
+  },
+  {
+    "input_row": 8,
+    "source_key": "48午後89",
+    "original_candidate_node": "KN0393",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "入力4行目と同じ原問題の候補Node違い重複行。原問題自体も文字化けのため不採用。",
+    "official_answer": "3",
+    "decision": "EXCLUDED_DUPLICATE_INPUT_ROW"
+  },
+  {
+    "input_row": 9,
+    "source_key": "48午前88",
+    "original_candidate_node": "KN0277",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "正答は変形性膝関節症に対する膝周囲筋力強化の有効性。KN0277は疼痛パターンNodeであり、介入効果に一致する既存最小Nodeがない。",
+    "official_answer": "4",
+    "decision": "HOLD"
+  },
+  {
+    "input_row": 10,
+    "source_key": "49午前91",
+    "original_candidate_node": "KN0410",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "KN0410のFinkelsteinは誤選択肢で、正答は手根管症候群―Phalen。既存KN0027は症例からの予後予測まで含むNodeであり、本問の検査対応だけを同一最小Nodeとみなさない。",
+    "official_answer": "5",
+    "decision": "HOLD"
+  },
+  {
+    "input_row": 11,
+    "source_key": "49午後88",
+    "original_candidate_node": "KN0436",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "正答が梨状筋症候群―坐骨神経とGuyon管症候群―尺骨神経の2組にまたがり、単一既存Nodeへ対応付けられない。",
+    "official_answer": "1・3",
+    "decision": "HOLD"
+  },
+  {
+    "input_row": 12,
+    "source_key": "50午前68",
+    "original_candidate_node": "KN0533",
+    "final_node": "KN0533",
+    "node_changed": false,
+    "change_reason": "カルシトニンの分泌臓器というKN0533の中心知識を直接確認する。",
+    "official_answer": "1",
+    "decision": "IMPORTED",
+    "new_question_id": "Q1594",
+    "category_large": "A",
+    "category_small": 2
+  },
+  {
+    "input_row": 13,
+    "source_key": "50午前93",
+    "original_candidate_node": "KN0431",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "正答はGuillain-Barré症候群の髄液蛋白上昇。KN0431は急性期自律神経障害の循環監視であり、髄液所見に一致する既存最小Nodeがない。",
+    "official_answer": "2",
+    "decision": "HOLD"
+  },
+  {
+    "input_row": 14,
+    "source_key": "50午前73",
+    "original_candidate_node": "KN0546",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "長腓骨筋による横アーチ支持と長指屈筋による内側縦アーチ支持の2知識を問う。KN0546はwindlass機構であり、単一既存Nodeへ対応付けられない。",
+    "official_answer": "3・4",
+    "decision": "HOLD"
+  },
+  {
+    "input_row": 15,
+    "source_key": "50午後28",
+    "original_candidate_node": "KN0649",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "正答はアテトーゼ型脳性麻痺の上下肢障害分布。KN0649は残存原始反射であり、障害分布に一致する既存最小Nodeがない。",
+    "official_answer": "4",
+    "decision": "HOLD"
+  },
+  {
+    "input_row": 16,
+    "source_key": "51午後99",
+    "original_candidate_node": "KN0074",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "正答は正常圧水頭症の髄液細胞増加が誤りという髄液所見。KN0074は歩行・認知・排尿の症候Nodeであり、髄液所見に一致する既存最小Nodeがない。",
+    "official_answer": "4",
+    "decision": "HOLD"
+  },
+  {
+    "input_row": 17,
+    "source_key": "48午前38",
+    "original_candidate_node": "KN0007",
+    "final_node": null,
+    "node_changed": false,
+    "change_reason": "本文・選択肢に/c2691等の抽出破損があり、全選択肢を原文どおり保証できない。推測修復禁止。",
+    "official_answer": "3",
+    "decision": "EXCLUDED_EXTRACTION_QUALITY"
+  }
+]

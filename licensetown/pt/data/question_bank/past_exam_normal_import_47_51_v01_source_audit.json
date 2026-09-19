@@ -1,0 +1,204 @@
+[
+  {
+    "source_key": "50午後90",
+    "knowledge_node_id": "KN0686",
+    "paired_existing_question_id": "Q694",
+    "official_answer": "3",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1575",
+    "category_small": 16
+  },
+  {
+    "source_key": "50午前52",
+    "knowledge_node_id": "KN0726",
+    "paired_existing_question_id": "Q734",
+    "official_answer": "1",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1576",
+    "category_small": 1
+  },
+  {
+    "source_key": "50午後65",
+    "knowledge_node_id": "KN0276",
+    "paired_existing_question_id": "Q277",
+    "official_answer": "2",
+    "decision": "HOLD",
+    "reason": "正答は嘔吐による代謝性アルカローシスであり、指定KN0276（低PaCO2を伴う急性呼吸性アルカローシス）と最小知識単位が一致しない。"
+  },
+  {
+    "source_key": "49午後37",
+    "knowledge_node_id": "KN0645",
+    "paired_existing_question_id": "Q653",
+    "official_answer": "5",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1577",
+    "category_small": 18
+  },
+  {
+    "source_key": "47午後22",
+    "knowledge_node_id": "KN0547",
+    "paired_existing_question_id": "Q555",
+    "official_answer": "2",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1578",
+    "category_small": 5
+  },
+  {
+    "source_key": "47午前86",
+    "knowledge_node_id": "KN0779",
+    "paired_existing_question_id": "Q787",
+    "official_answer": "3",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1579",
+    "category_small": 17
+  },
+  {
+    "source_key": "47午後47",
+    "knowledge_node_id": "KN0412",
+    "paired_existing_question_id": "Q419",
+    "official_answer": "4",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1580",
+    "category_small": 18
+  },
+  {
+    "source_key": "49午後89",
+    "knowledge_node_id": "KN0513",
+    "paired_existing_question_id": "Q521",
+    "official_answer": "3",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1581",
+    "category_small": 9
+  },
+  {
+    "source_key": "49午前32",
+    "knowledge_node_id": "KN0373",
+    "paired_existing_question_id": "Q378",
+    "official_answer": "3",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1582",
+    "category_small": 11
+  },
+  {
+    "source_key": "48午前80",
+    "knowledge_node_id": "KN0612",
+    "paired_existing_question_id": "Q620",
+    "official_answer": "5",
+    "decision": "EXCLUDED_DUPLICATE",
+    "reason": "既収録のより新しい過去問Q620と設問主旨・選択肢構成・正答が実質的に同一の再出題。"
+  },
+  {
+    "source_key": "51午前96",
+    "knowledge_node_id": "KN0713",
+    "paired_existing_question_id": "Q721",
+    "official_answer": "1",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1583",
+    "category_small": 18
+  },
+  {
+    "source_key": "49午後34",
+    "knowledge_node_id": "KN0323",
+    "paired_existing_question_id": "Q325",
+    "official_answer": "3",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1584",
+    "category_small": 17
+  },
+  {
+    "source_key": "51午後92",
+    "knowledge_node_id": "KN0559",
+    "paired_existing_question_id": "Q567",
+    "official_answer": "3",
+    "decision": "EXCLUDED_DUPLICATE",
+    "reason": "既収録のより新しい過去問Q567と設問主旨・選択肢構成・正答が実質的に同一の再出題。"
+  },
+  {
+    "source_key": "49午前68",
+    "knowledge_node_id": "KN0659",
+    "paired_existing_question_id": "Q667",
+    "official_answer": "3,4",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1585",
+    "category_small": 2
+  },
+  {
+    "source_key": "50午前38",
+    "knowledge_node_id": "KN0717",
+    "paired_existing_question_id": "Q725",
+    "official_answer": "2",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1586",
+    "category_small": 18
+  },
+  {
+    "source_key": "49午後85",
+    "knowledge_node_id": "KN0598",
+    "paired_existing_question_id": "Q606",
+    "official_answer": "4",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1587",
+    "category_small": 8
+  },
+  {
+    "source_key": "51午後38",
+    "knowledge_node_id": "KN0576",
+    "paired_existing_question_id": "Q584",
+    "official_answer": "1",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1588",
+    "category_small": 18
+  },
+  {
+    "source_key": "49午後61",
+    "knowledge_node_id": "KN0731",
+    "paired_existing_question_id": "Q739",
+    "official_answer": "1|4|5",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1589",
+    "category_small": 2
+  },
+  {
+    "source_key": "51午後99",
+    "knowledge_node_id": "KN0117",
+    "paired_existing_question_id": "Q117",
+    "official_answer": "4",
+    "decision": "HOLD",
+    "reason": "正答根拠は髄液細胞増加の不存在であり、指定KN0117（歩行・認知・排尿の三徴からの疾患識別）と最小知識単位が一致しない。"
+  },
+  {
+    "source_key": "50午後39",
+    "knowledge_node_id": "KN0305",
+    "paired_existing_question_id": "Q307",
+    "official_answer": "1",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1590",
+    "category_small": 18
+  },
+  {
+    "source_key": "47午後59",
+    "knowledge_node_id": "KN0534",
+    "paired_existing_question_id": "Q542",
+    "official_answer": "1",
+    "decision": "IMPORTED",
+    "reason": "公式正答、本文品質、既存Nodeの最小知識単位、カテゴリを再確認済み。",
+    "new_question_id": "Q1591",
+    "category_small": 1
+  }
+]

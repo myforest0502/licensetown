@@ -1,0 +1,16 @@
+{
+  "scope": "Q1995-Q2000",
+  "exam": "第60回理学療法士国家試験",
+  "question_source_url": "https://www.mhlw.go.jp/seisakunitsuite/bunya/kenkou_iryou/iryou/topics/dl/tp250428-08b_01.pdf",
+  "answer_source_url": "https://www.mhlw.go.jp/seisakunitsuite/bunya/kenkou_iryou/iryou/topics/dl/tp250428-08seitou.pdf",
+  "publisher": "厚生労働省",
+  "review_status": "source_verified",
+  "items": [
+    {"id": "Q1995", "session": "午後", "question_no": 4, "official_answer": ["3"], "figure_required": false, "scoring_exclusion": false},
+    {"id": "Q1996", "session": "午後", "question_no": 12, "official_answer": ["3"], "figure_required": false, "scoring_exclusion": false},
+    {"id": "Q1997", "session": "午後", "question_no": 16, "official_answer": ["5"], "figure_required": false, "scoring_exclusion": false},
+    {"id": "Q1998", "session": "午後", "question_no": 18, "official_answer": ["5"], "figure_required": false, "scoring_exclusion": false},
+    {"id": "Q1999", "session": "午後", "question_no": 43, "official_answer": ["1"], "figure_required": false, "scoring_exclusion": false},
+    {"id": "Q2000", "session": "午後", "question_no": 68, "official_answer": ["5"], "figure_required": false, "scoring_exclusion": false}
+  ]
+}
