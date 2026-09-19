@@ -8,7 +8,7 @@ from pathlib import Path
 from reports import question_bank_2000_lot02_validate as base
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 ROSTER = ROOT / "reports" / "question_bank_2000_lot04_targets_v01.json"
 STAGING = ROOT / "staging" / "question_bank_2000_lot04_v01.json"
 PROTECTED = base.PROTECTED

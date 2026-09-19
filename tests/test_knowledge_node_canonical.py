@@ -14,7 +14,7 @@ from knowledge_node_canonical import (
 )
 
 
-BANK_DIR = Path(__file__).resolve().parents[1] / "data" / "question_bank"
+BANK_DIR = Path(__file__).resolve().parents[1] / "licensetown" / "pt" / "data" / "question_bank"
 EXPECTED = {
     "KN0807": "KN0597",
     "KN1509": "KN1337",

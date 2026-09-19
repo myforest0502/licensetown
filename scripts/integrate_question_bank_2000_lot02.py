@@ -24,7 +24,7 @@ from reports.question_bank_2000_lot02_validate import (
 )
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 START_Q = 1810
 END_Q = 1857
 EXPECTED_BASE_END = 1809

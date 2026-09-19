@@ -9,7 +9,7 @@ from difflib import SequenceMatcher
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 CHUNK_DIR = ROOT / "staging" / "question_bank_2000_lot02_chunks_v01"
 OUT_DIR = ROOT / "reports" / "question_bank_2000_lot02_similarity_audits"
 NEAR = 0.65

@@ -17,7 +17,7 @@ from knowledge_node_canonical import canonicalize_knowledge_node_id
 from question_equivalence import get_question_equivalence_groups
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 OUT = ROOT / "reports" / "question_bank_q2000_final_quality_audit.json"
 
 

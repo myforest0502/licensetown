@@ -23,7 +23,7 @@ def test_final_staging_absent_or_fully_valid():
     # creates it, the permanent test switches to requiring the full sealed contract.
     if not STAGING.exists():
         return
-    manifest = read(ROOT / "data/question_bank/bank_manifest.json")
+    manifest = read(ROOT / "licensetown/pt/data/question_bank/bank_manifest.json")
     if manifest["last_question_number"] > 1809:
         return
     payload = read(STAGING)

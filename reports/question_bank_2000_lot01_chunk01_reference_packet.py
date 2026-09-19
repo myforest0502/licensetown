@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 OUT = ROOT / "reports" / "question_bank_2000_lot01_chunk01_reference_packet.json"
 QIDS = ["Q561", "Q566", "Q582", "Q621", "Q646", "Q695", "Q789", "Q839"]
 

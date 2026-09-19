@@ -11,7 +11,7 @@ from functools import lru_cache
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 FORMAL_BASELINE_END = 1953
 RECENT_EXCLUDE_AFTER = 1953
 EXCLUDE_NODE = "KN0779"

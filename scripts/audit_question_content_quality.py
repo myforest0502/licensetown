@@ -13,7 +13,7 @@ from typing import Any, Iterable
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 META_WRONG_PHRASES = (
     "条件を無視", "単一所見から診断", "関連しない機能", "逆方向の判断",
 )

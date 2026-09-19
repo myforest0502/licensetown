@@ -16,7 +16,7 @@ from typing import Any
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_BANK_DIR = REPOSITORY_ROOT / "data" / "question_bank"
+DEFAULT_BANK_DIR = REPOSITORY_ROOT / "licensetown" / "pt" / "data" / "question_bank"
 DEFAULT_SCHEMA_PATH = DEFAULT_BANK_DIR / "schema" / "question_bank_schema_v1.json"
 DEFAULT_REGISTRY_PATH = DEFAULT_BANK_DIR / "knowledge_nodes.json"
 DEFAULT_MANIFEST_PATH = DEFAULT_BANK_DIR / "bank_manifest.json"

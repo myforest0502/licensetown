@@ -17,7 +17,7 @@ if str(ROOT) not in sys.path:
 
 from reports.question_bank_2000_batch02_validate import STAGING, build_report, draft_fingerprint
 
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 START_Q = 1750
 END_Q = 1761
 EXPECTED_BASE_END = 1749

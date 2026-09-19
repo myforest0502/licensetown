@@ -10,7 +10,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 BASE_AUDIT_END = 1737
 EXCLUDE_NODE = "KN0779"
 CATEGORY_SLOT = {

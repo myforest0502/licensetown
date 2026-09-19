@@ -13,7 +13,7 @@ from reports import question_bank_2000_lot02_clone_validation_stack as validatio
 from reports import question_bank_2000_lot02_targets_v01 as targets
 
 ROOT = Path(__file__).parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 PROTECTED = (
     "questions.json",
     "answers.json",
