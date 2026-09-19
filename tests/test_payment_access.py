@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
-import payment_access
-import payment_entitlement
+from licensetown.common import payment_access
+from licensetown.common import payment_entitlement
 
 
 def setup_function():
