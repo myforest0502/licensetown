@@ -5,7 +5,7 @@ import subprocess
 import sys
 import unittest
 
-from qualifications.bank_provider import QuestionBankProvider
+from licensetown.common.bank_provider import QuestionBankProvider
 
 
 class FakeProvider:
@@ -63,7 +63,7 @@ def audit(event, args):
 
 sys.meta_path.insert(0, BlockRuntimeImports())
 sys.addaudithook(audit)
-from qualifications.bank_provider import QuestionBankProvider
+from licensetown.common.bank_provider import QuestionBankProvider
 assert QuestionBankProvider.__name__ == "QuestionBankProvider"
 assert not blocked.intersection(sys.modules)
 '''
