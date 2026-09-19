@@ -95,6 +95,10 @@ def integrate(bank_dir: Path = BANK) -> None:
     integrated = len(present) == len(target_ids)
     if present and not integrated:
         raise ValueError(f"partial final-six allocation: {present}")
+    if integrated and int(data["manifest"].get("question_count", 0)) > END_Q:
+        # Q1995-Q2000 are an immutable historical milestone inside a newer
+        # formal superset.  Never truncate or rewrite later questions.
+        return
     # Replace the initially rejected AIS item if an interrupted local run wrote it
     # before source/medical review completed. This exact migration is idempotent.
     if integrated and indexes[0]["Q1998"].get("exam", {}).get("question_no") == 19:
