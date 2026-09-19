@@ -86,12 +86,30 @@ def accepted_sets(a: dict) -> list[list[str]]:
 
 
 def main() -> int:
-    questions = load("questions.json")
-    answers = load("answers.json")
-    explanations = load("explanations.json")
-    tags = load("question_tags.json")
-    nodes = load("knowledge_nodes.json")
+    all_questions = load("questions.json")
+    all_answers = load("answers.json")
+    all_explanations = load("explanations.json")
+    all_tags = load("question_tags.json")
+    all_nodes = load("knowledge_nodes.json")
     manifest = load("bank_manifest.json")
+
+    # This audit is a frozen historical Q1-Q2000 milestone.  A later formal
+    # superset must not turn valid post-Q2000 records into "extra" blockers.
+    in_scope = {f"Q{i}" for i in range(1, 2001)}
+    questions = [row for row in all_questions if row.get("id") in in_scope]
+    answers = [row for row in all_answers if row.get("id") in in_scope]
+    explanations = [row for row in all_explanations if row.get("id") in in_scope]
+    tags = [row for row in all_tags if row.get("id") in in_scope]
+    nodes = []
+    for source in all_nodes:
+        kept = [qid for qid in source.get("question_ids", []) if qid in in_scope]
+        if not kept:
+            continue
+        row = dict(source)
+        row["question_ids"] = kept
+        if len(kept) == 1:
+            row["status"] = "singleton_initial"
+        nodes.append(row)
     equivalence_groups = get_question_equivalence_groups()
 
     stores = {
@@ -123,8 +141,8 @@ def main() -> int:
 
     if not (
         manifest.get("first_question_number") == 1
-        and manifest.get("last_question_number") == 2000
-        and manifest.get("question_count") == 2000
+        and int(manifest.get("last_question_number", 0)) >= 2000
+        and int(manifest.get("question_count", 0)) >= 2000
     ):
         blockers.append({"type": "manifest", "manifest": manifest})
 
