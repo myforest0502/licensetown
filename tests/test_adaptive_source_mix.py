@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from adaptive_source_mix import build_source_mix_audit
+from licensetown.pt.adaptive_source_mix import build_source_mix_audit
 
 
 TAGS = {

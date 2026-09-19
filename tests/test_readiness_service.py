@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import readiness_service
+from licensetown.pt import readiness_service
 
 
 def test_readiness_service_passes_trial100_records_to_evaluator(monkeypatch):
