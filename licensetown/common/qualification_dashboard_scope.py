@@ -10,7 +10,7 @@ from __future__ import annotations
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
-from qualifications.common.learning_store_registry import get_learning_history_store
+from licensetown.common.learning_store_registry import get_learning_history_store
 
 
 def _ordered_question_ids(values):
