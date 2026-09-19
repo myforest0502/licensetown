@@ -12,7 +12,7 @@ from knowledge_node_state_transition import derive_knowledge_node_state
 from question_bank import get_answer, get_question, get_question_tag
 
 
-BANK = Path(__file__).resolve().parents[1] / "data" / "question_bank"
+BANK = Path(__file__).resolve().parents[1] / "licensetown" / "pt" / "data" / "question_bank"
 EXPECTED_IMPORTS = {
     "Q1565": (51, "午前", 32, "5", "KN0003", "Q3"),
     "Q1566": (51, "午前", 15, "5", "KN0007", "Q7"),

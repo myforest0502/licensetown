@@ -14,7 +14,7 @@ from question_bank import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "data" / "question_bank"
+DATA = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 
 EXPECTED = {
     "Q1575": (50, "午後", 90, "3", "KN0686", "Q694", 16),
