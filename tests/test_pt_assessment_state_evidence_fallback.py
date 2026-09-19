@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 import database
-from qualifications.pt.learning_store import PTLearningHistoryStore
+from licensetown.pt.learning_store import PTLearningHistoryStore
 
 
 def db_context_with_fetches(*rows):
