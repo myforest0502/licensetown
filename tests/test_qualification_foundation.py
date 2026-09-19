@@ -6,7 +6,7 @@ import subprocess
 import sys
 import unittest
 
-from qualifications import (
+from licensetown import (
     DEFAULT_QUALIFICATION_ID,
     QUALIFICATIONS,
     get_default_qualification,
@@ -37,8 +37,6 @@ class QualificationFoundationTest(unittest.TestCase):
             get_default_qualification().display_name = "changed"
 
     def test_fresh_import_has_no_db_network_or_write_side_effects(self):
-        # A fresh interpreter prevents cached imports from hiding side effects.
-        # -B disables Python bytecode writes without changing environment vars.
         script = r'''
 import importlib.abc
 import os
@@ -66,11 +64,11 @@ def audit(event, args):
 
 sys.meta_path.insert(0, BlockRuntimeImports())
 sys.addaudithook(audit)
-import qualifications
-import qualifications.base
-import qualifications.pt.config
-import qualifications.takken.config
-assert qualifications.get_default_qualification().qualification_id == "pt"
+import licensetown
+import licensetown.common.base
+import licensetown.pt.config
+import licensetown.takken.config
+assert licensetown.get_default_qualification().qualification_id == "pt"
 assert not blocked.intersection(sys.modules)
 '''
         result = subprocess.run(

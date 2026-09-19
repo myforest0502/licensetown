@@ -5,11 +5,11 @@ from datetime import datetime, timezone
 import pytest
 
 import database
-from qualifications.common.learning_store_registry import (
+from licensetown.common.learning_store_registry import (
     LearningHistoryStoreNotConfigured,
     get_learning_history_store,
 )
-from qualifications.pt.learning_store import PTLearningHistoryStore
+from licensetown.pt.learning_store import PTLearningHistoryStore
 
 
 NOW = datetime(2026, 9, 11, tzinfo=timezone.utc)

@@ -7,7 +7,7 @@ from qualification_dashboard_scope import (
     build_pt_weekly_question_history,
     install_pt_dashboard_history_scope,
 )
-from qualifications.common.learning_store_registry import get_learning_history_store
+from licensetown.common.learning_store_registry import get_learning_history_store
 
 
 NOW = datetime(2026, 9, 12, 0, 0, tzinfo=timezone.utc)
