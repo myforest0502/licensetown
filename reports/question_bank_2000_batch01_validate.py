@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK_DIR = ROOT / "data" / "question_bank"
+BANK_DIR = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 STAGING_DIR = ROOT / "staging"
 MAIN_DRAFT_PATH = STAGING_DIR / "question_bank_2000_batch01_v01.json"
 REPLACEMENT_PATH = STAGING_DIR / "question_bank_2000_batch01_replacement_v01.json"
