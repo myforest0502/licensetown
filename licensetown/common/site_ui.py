@@ -18,6 +18,18 @@ PREVIEW_RESPONSIVE_DIR = REPO_ROOT / "preview-responsive"
 QUESTION_BANK_PATH = PACKAGE_ROOT / "pt" / "data" / "question_bank" / "questions.json"
 
 
+def _question_source_counts() -> tuple[int | None, int | None]:
+    """Return formal LT-original / past-exam counts without hardcoding marketing copy."""
+    try:
+        payload = json.loads(QUESTION_BANK_PATH.read_text(encoding="utf-8"))
+        return (
+            sum(row.get("source") == "O" for row in payload),
+            sum(row.get("source") == "P" for row in payload),
+        )
+    except (OSError, ValueError, TypeError):
+        return None, None
+
+
 def _question_count_label() -> str:
     """Return one factual public question-count label from the formal bank.
 
@@ -267,14 +279,17 @@ def _sale_safe_html(html: str) -> str:
     dashboard values without an explicit image label.
     """
     count_label = _question_count_label()
+    original_count, past_exam_count = _question_source_counts()
+    original_label = str(original_count) if original_count is not None else "900"
+    past_exam_label = str(past_exam_count) if past_exam_count is not None else "1100"
     html = re.sub(
         r'(新規問題</small>\s*<b>)\d+(<em>問</em>)',
-        r'\g<1>900\g<2>',
+        lambda match: f"{match.group(1)}{original_label}{match.group(2)}",
         html,
     )
     html = re.sub(
         r'(過去問</small>\s*<b>)\d+(<em>問</em>)',
-        r'\g<1>1100\g<2>',
+        lambda match: f"{match.group(1)}{past_exam_label}{match.group(2)}",
         html,
     )
     html = re.sub(
