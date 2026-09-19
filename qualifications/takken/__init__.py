@@ -1,1 +1,1 @@
-"""Takken metadata only; no learning service is enabled."""
+"""Compatibility package for licensetown.takken."""
