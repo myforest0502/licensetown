@@ -4,7 +4,7 @@ import random
 
 import adaptive_question_selector as selector
 import question_bank
-from qualifications.pt.provider import PTQuestionBankProvider
+from licensetown.pt.provider import PTQuestionBankProvider
 
 
 PROVIDER_METHODS = ("question_ids", "get_question_tag", "get_quiz_question")
