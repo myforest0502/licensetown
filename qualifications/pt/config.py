@@ -1,5 +1,5 @@
-"""PT metadata; the existing bank and runtime remain untouched."""
+"""Compatibility alias for licensetown.pt.config."""
 
-from ..common.base import QualificationConfig
-
-PT = QualificationConfig(qualification_id="pt", display_name="理学療法士")
+import sys
+from licensetown.pt import config as _implementation
+sys.modules[__name__] = _implementation
