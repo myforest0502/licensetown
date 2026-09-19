@@ -2,11 +2,11 @@
 
 import pytest
 
-from qualifications.provider_registry import (
+from licensetown.common.provider_registry import (
     QuestionBankProviderNotConfigured,
     get_question_bank_provider,
 )
-from qualifications.pt.provider import PTQuestionBankProvider
+from licensetown.pt.provider import PTQuestionBankProvider
 
 
 def test_pt_provider_is_available_and_stable():
