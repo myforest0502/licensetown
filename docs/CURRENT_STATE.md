@@ -1,5 +1,32 @@
 # LicenseTown Current State
 
+## 2026-09-19 Qualification separation stage 2: PT active-repair rules
+
+- Baseline main `3e3a31842f3bc5e883f8893e450a9e1d26d19cc3`, merged #369.
+  The preceding PR passed full CI; live deployment is reported by Boss and was
+  not independently queried here (no Render operations).
+- Only `phase11_active_repair_rules.py` is relocated to `qualifications/pt/`.
+  It owns PT J2/J3 active weakness candidate thresholds and ordering. It has
+  only pure functions and typing imports, no DB/Bank initialization, file paths
+  or mutable state. The formal judgment caller and all policies stay unchanged.
+- The root path aliases the identical module, retaining public/private globals
+  and both import orders. Canonical module/source introspection now points to PT.
+  Implementation text/AST is identical; J2/J3 outputs match baseline across
+  300 deterministic cases. No production startup or caller import is rewritten.
+- Local Python 3.12 focused tests: **124 passed, 16 subtests** (compatibility,
+  formal judgment/readiness, provider boundaries, strategy/pilot). Validator:
+  **2000 records in every bank component; missing/duplicates/reference/schema
+  issues 0; 1562 Nodes**. Full Linux/Python 3.13 CI result is recorded in the PR.
+  Local full collection is not repeated after the known Windows lxml execution
+  restriction; no policy bypass or new skips are introduced.
+- Field evaluation/progress/strategy context remain on the Stage E path. KN
+  loaders retain fixed paths; mixed settings/presentation and the non-PT-specific
+  ordering helper remain in place. Candidate rationale: qualifications/README.md.
+- Code/focused tests verified; no new real-history observation or production
+  acceptance claimed. Phase11 remains HOLD/Shadow-only, Stage E pilot unchanged,
+  Takken unconfigured. No DB access/migration, Render operation or added charges.
+
+
 ## 2026-09-19 Minimal qualification folder separation
 
 - Baseline main `722afce9ac00e09889822bc09079f2f256b29fad` (#368).

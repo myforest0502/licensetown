@@ -59,3 +59,30 @@ Review this single relocation and its regression evidence before any further
 move. A separate Takken slice needs authoritative bank/answer/explanation data,
 reviewed taxonomy/KN and qualification-specific learning semantics. Until then,
 do not activate Takken or copy PT rules into it. No bulk module/test relocation.
+
+## Stage 2: one PT rule module (2026-09-19)
+
+Baseline main: `3e3a31842f3bc5e883f8893e450a9e1d26d19cc3` (merged #369).
+`phase11_active_repair_rules.py` now lives in `qualifications/pt/` with a legacy
+module alias. Its PT J2/J3 thresholds and ordering are unchanged. This makes the
+existing PT repair policy ownership explicit without importing it from common.
+The implementation has only typing imports and pure functions: no data paths,
+DB/Bank/app initialization, environment lookup, mutable cache or persistent state.
+Both import orders preserve public/private function identity and patched globals.
+Source/module introspection identifies the PT path, as for the prior relocation.
+`phase11_formal_judgment.py` keeps its legacy import; Phase11 stays HOLD/Shadow-only.
+No Stage E authority module, selector, Q/KN data, session or UI file is moved.
+
+Candidates deliberately retained:
+- field_evaluation_shadow / field_progress / field_learning_target_shadow /
+  learning_strategy_context_shadow: Stage E policy/input paths; excluded here.
+- knowledge_node_canonical / knowledge_node_relations: file-relative data paths
+  and import-time data loading; not low-risk relocation candidates.
+- dashboard_settings: mixes PT exam defaults with shared time/reward helpers.
+- question_order_quality: five-question answer-pattern control, not demonstrably
+  PT-exclusive; no speculative common extraction.
+- learner_readiness_presentation: shared-looking copy mixed with readiness and
+  PT repair/Safety contracts; retain the learner-facing boundary.
+
+The next step is review of this single relocation, not automatic further moves
+or Phase11 promotion. Existing Takken fail-closed behavior remains unchanged.
