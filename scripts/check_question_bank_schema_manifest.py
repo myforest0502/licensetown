@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK_DIR = ROOT / "data" / "question_bank"
+BANK_DIR = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 MANIFEST = BANK_DIR / "bank_manifest.json"
 SCHEMA = BANK_DIR / "schema" / "question_bank_schema_v1.json"
 
