@@ -13,10 +13,15 @@ The repository root still contains Git/Render/test/documentation plumbing such a
 `.github`, `Procfile`, `tests`, and `docs`. Those are repository infrastructure,
 not a fourth qualification domain.
 
-`qualifications/` remains temporarily as a compatibility import layer so the
-running PT application is not broken while existing imports are migrated.
+The former `qualifications/` package has been removed. Remaining root Python
+aliases retain compatibility only for their existing callers and tests.
 New qualification-domain code should use `licensetown.common`,
 `licensetown.pt`, or `licensetown.takken` directly.
+
+Batch 1 removes only the unused root aliases `adaptive_source_mix.py` and
+`readiness_service.py`; their tests now import the unchanged PT implementations.
+See `docs/ROOT_ALIAS_CLEANUP_BATCH1_20260919.md` for the complete root inventory,
+reference evidence and reasons for retaining the other compatibility entries.
 
 
 ## Runtime-root exceptions

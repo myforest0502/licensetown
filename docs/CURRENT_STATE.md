@@ -1,5 +1,33 @@
 # LicenseTown Current State
 
+## 2026-09-19 Root compatibility alias cleanup batch 1
+
+- Current baseline: `a275f5bae8716d1719c5c9de4b14940109622525` (merged #388).
+  Canonical domains are licensetown/common, licensetown/pt, licensetown/takken.
+  The old qualifications package and root data/question_bank are absent;
+  older sections below are historical, not the current ownership map.
+- Audited all 102 root Python files plus tracked imports, dynamic import/string
+  references, test monkeypatches, scripts, docs and startup configuration.
+  Complete inventory/retention reasons: ROOT_ALIAS_CLEANUP_BATCH1_20260919.md.
+- Removed only adaptive_source_mix.py and readiness_service.py root aliases.
+  Their only maintained callers were one test import each; both now use
+  licensetown.pt directly. Canonical implementations and assertions unchanged.
+  100 root Python files remain: three protected bridges and 97 compatibility
+  entries, including the special field_evidence offline file-loader bridge.
+- Focused tests: 11 passed. Full baseline and post-change suites each passed:
+  1502 passed, 6 skipped, 1 deselected, 141 subtests (16 warnings).
+  Bank validator: 2000 questions, zero consistency issues.
+  Use Python 3.13, empty DATABASE_URL, dummy credentials,
+  fresh pytest temp paths and Git LF archives (core.autocrlf=false per command).
+  Host Python 3.14 exposed Flask incompatibility; default temp ACL and CRLF
+  checkout caused unrelated baseline failures. No app/test/permission fix or
+  new deselection is used to hide these host differences.
+- Repository-level regression evidence only; no new live learner acceptance.
+  app/database/wsgi, Question Bank/KN contents, selector, Stage E, Phase11,
+  Takken, DB/schema and Render configuration are unchanged. No production
+  access, migration, worktree cleanup, main merge or additional paid operation.
+
+
 ## 2026-09-19 Qualification separation stage 2: PT active-repair rules
 
 - Baseline main `3e3a31842f3bc5e883f8893e450a9e1d26d19cc3`, merged #369.
