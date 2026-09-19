@@ -10,8 +10,6 @@ MODULES = (
     "stripe_webhook_ui",
     "email_delivery",
     "feedback_store",
-    "durable_paused_session",
-    "durable_web_learning_session",
     "qualification_dashboard_scope",
     "qualification_history_scope",
     "qualification_learning_time_scope",
