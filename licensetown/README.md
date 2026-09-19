@@ -17,3 +17,18 @@ not a fourth qualification domain.
 running PT application is not broken while existing imports are migrated.
 New qualification-domain code should use `licensetown.common`,
 `licensetown.pt`, or `licensetown.takken` directly.
+
+
+## Runtime-root exceptions
+
+Only three Python runtime bridge files intentionally remain without a canonical
+same-named module inside `licensetown/common` or `licensetown/pt`:
+
+- `app.py`: production Flask/LINE composition entrypoint.
+- `wsgi.py`: Render/Gunicorn startup entrypoint.
+- `database.py`: legacy runtime DB module whose module identity is still relied
+  on by existing monkeypatch/compatibility tests.
+
+These are runtime entrypoints/bridges, not a fourth qualification domain.
+All other top-level Python application modules must have a canonical home under
+`licensetown/common`, `licensetown/pt`, or `licensetown/takken`.
