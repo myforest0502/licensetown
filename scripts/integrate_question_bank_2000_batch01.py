@@ -16,7 +16,7 @@ if str(ROOT) not in sys.path:
 
 from reports.question_bank_2000_batch01_validate import _accepted_drafts
 
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 START_Q = 1738
 END_Q = 1749
 EXPECTED_BASE_END = 1737
