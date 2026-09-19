@@ -3,7 +3,6 @@
 import importlib
 
 MODULES = (
-    "payment_access",
     "payment_entitlement",
     "stripe_billing_ui",
     "stripe_checkout_service",
