@@ -41,7 +41,7 @@ def load_attempts_read_only(connection) -> list[dict[str, Any]]:
 
 def _registry_node_count() -> int:
     records = json.loads(
-        (ROOT / "data" / "question_bank" / "knowledge_nodes.json").read_text(encoding="utf-8")
+        (ROOT / "licensetown" / "pt" / "data" / "question_bank" / "knowledge_nodes.json").read_text(encoding="utf-8")
     )
     return len(records)
 
