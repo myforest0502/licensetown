@@ -36849,5 +36849,4304 @@
     "tag_version": "1.0",
     "tag_status": "reviewed",
     "source": "past_exam"
+  },
+  {
+    "id": "Q2001",
+    "theme": "脳底動脈から直接分岐する血管はどれか・判断根拠",
+    "knowledge_node": "脳底動脈からは上小脳動脈と前下小脳動脈などが分岐するを評価する",
+    "knowledge_node_id": "KN1006",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "脳底動脈からは上小脳動脈と前下小脳動脈などが分岐する。",
+      "前・中大脳動脈は内頸動脈系で、後交通動脈も内頸動脈から分岐する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2002",
+    "theme": "腱板を構成する筋はどれか・判断根拠",
+    "knowledge_node": "腱板を構成する筋はどれかに対して適切な理学療法・介入を選択する",
+    "knowledge_node_id": "KN1008",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "腱板は棘上筋、棘下筋、小円筋、肩甲下筋で構成されるため、選択肢では肩甲下筋が該当する。",
+      "腱板を構成する筋はどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2003",
+    "theme": "足関節外側面において、外果の前方を走行する筋はどれか・判断根拠",
+    "knowledge_node": "第3腓骨筋腱は足関節前外側を通り外果の前方を走行するに対する機器選択",
+    "knowledge_node_id": "KN1009",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "長・短腓骨筋は外果後方を通る。",
+      "第3腓骨筋腱は足関節前外側を通り外果の前方を走行する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2004",
+    "theme": "体性感覚神経の一次ニューロンの細胞体があるのはどれか・判断根拠",
+    "knowledge_node": "体性感覚の一次ニューロンの細胞体は脊髄後根神経節にある",
+    "knowledge_node_id": "KN1010",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "二次ニューロンは脊髄後角や延髄などに存在する。",
+      "体性感覚の一次ニューロンの細胞体は脊髄後根神経節にある。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2005",
+    "theme": "分娩後の乳汁分泌に作用するホルモンはどれか・判断根拠",
+    "knowledge_node": "分娩後の乳汁産生を促進するのは下垂体前葉から分泌されるプロラクチンである",
+    "knowledge_node_id": "KN0601",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "分娩後の乳汁分泌に作用するホルモンはどれかの基本概念"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2006",
+    "theme": "末梢組織への酸素供給を増やすのはどれか・判断根拠",
+    "knowledge_node": "組織でpHが低下すると酸素解離曲線が右方移動し、ヘモグロビンから酸素が放出されやすくなるBohr効果が起こる",
+    "knowledge_node_id": "KN0666",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "したがって1が正しい。",
+      "組織でpHが低下すると酸素解離曲線が右方移動し、ヘモグロビンから酸素が放出されやすくなるBohr効果が起こる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2007",
+    "theme": "皮膚の侵害受容器はどれか・判断根拠",
+    "knowledge_node": "皮膚の痛覚・温度覚など侵害刺激は自由神経終末で受容される",
+    "knowledge_node_id": "KN0731",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Pacini小体やMeissner小体などは機械受容器であるため4が正しい。",
+      "皮膚の痛覚・温度覚など侵害刺激は自由神経終末で受容される。",
+      "自由神経終末は侵害受容に関与する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2008",
+    "theme": "副腎髄質から分泌されるホルモンはどれか・判断根拠",
+    "knowledge_node": "副腎髄質はカテコールアミン（アドレナリン、ノルアドレナリン）を分泌する",
+    "knowledge_node_id": "KN0805",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "コルチゾール、アルドステロン、アンドロゲンは副腎皮質。",
+      "副腎髄質はカテコールアミン（アドレナリン、ノルアドレナリン）を分泌する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2009",
+    "theme": "肩甲上腕関節の運動とそれに作用する筋の組合せで正しいのはどれか・判断根拠",
+    "knowledge_node": "広背筋は肩関節の伸展・内転・内旋に作用するため、内転との組合せ3が正しい",
+    "knowledge_node_id": "KN0812",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "広背筋は肩関節の伸展・内転・内旋に作用するため、内転との組合せ3が正しい。",
+      "肩甲上腕関節の運動とそれに作用する筋の組合せで正しいのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2010",
+    "theme": "三叉神経が関与するのはどれか・判断根拠",
+    "knowledge_node": "角膜反射の求心路は三叉神経第1枝、遠心路は顔面神経である",
+    "knowledge_node_id": "KN1013",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "角膜反射の求心路は三叉神経第1枝、遠心路は顔面神経である。",
+      "三叉神経が関与するのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2011",
+    "theme": "細胞小器官のうちATPを合成するのはどれか・判断根拠",
+    "knowledge_node": "ATPの主要産生部位はミトコンドリアで、酸化的リン酸化により大量のATPを合成する",
+    "knowledge_node_id": "KN1134",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "ATPの主要産生部位はミトコンドリアで、酸化的リン酸化により大量のATPを合成する。",
+      "ミトコンドリアでATP合成。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2012",
+    "theme": "下垂体後葉から分泌されるホルモンはどれか・判断根拠",
+    "knowledge_node": "下垂体後葉からはオキシトシンとバソプレシンが放出される",
+    "knowledge_node_id": "KN1387",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "下垂体後葉からはオキシトシンとバソプレシンが放出される。",
+      "グレリンは主に胃。",
+      "エストロゲンは卵巣など。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2013",
+    "theme": "制度・就労支援・判断根拠",
+    "knowledge_node": "模擬作業で緊急停止反応と安全確認能力を評価する",
+    "knowledge_node_id": "KN0100",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "job demands",
+      "emergency response",
+      "work safety"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2014",
+    "theme": "感染対策・結核・判断根拠",
+    "knowledge_node": "感染性肺結核に対する空気感染予防策とN95使用",
+    "knowledge_node_id": "KN0237",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "サージカルマスクを用いる飛沫予防策や、手袋・ガウンを中心とする接触予防策だけでは不十分である。",
+      "感染性肺結核は空気感染するため、患者は陰圧管理される空気感染隔離室に収容し、入室する医療従事者は適切に密着確認したN95マスクを着用する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2015",
+    "theme": "呼吸器・ICU・判断根拠",
+    "knowledge_node": "バイタルサインと人工呼吸器条件を監視しながら、端座位から立位へ段階的に離床を進めるへの介入選択",
+    "knowledge_node_id": "KN0017",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "ICU-AW",
+      "呼吸循環安定",
+      "早期離床"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2016",
+    "theme": "内部障害・間質性肺疾患・判断根拠",
+    "knowledge_node": "携帯酸素の安全な生活使用",
+    "knowledge_node_id": "KN0058",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "HOT",
+      "酸素機器",
+      "屋外活動安全"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2017",
+    "theme": "内部障害・左室補助人工心臓・判断根拠",
+    "knowledge_node": "退院後はバッテリー残量の確認・交換、ケーブルの引っ掛かり防止、機器携行などを自ら安全に行う必要があるため、実際の外出場面を想定して自己管理能力を確認する",
+    "knowledge_node_id": "KN0093",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "LVAD",
+      "battery/cable",
+      "discharge safety"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2018",
+    "theme": "糖尿病・フットケア・判断根拠",
+    "knowledge_node": "疼痛を皮膚損傷の警告として利用できないため、毎日の足部観察、靴内の異物や縫い目の確認、足幅や圧迫部位に配慮した靴選びを習慣化し、潰瘍への進行を防ぐことが重要である時の優先対応",
+    "knowledge_node_id": "KN0105",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "末梢神経障害",
+      "足部観察",
+      "靴"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2019",
+    "theme": "内部障害・血液透析・判断根拠",
+    "knowledge_node": "シャント肢を避けた血圧測定",
+    "knowledge_node_id": "KN0163",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "AV fistula",
+      "thrill",
+      "BP"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2020",
+    "theme": "神経・運動器・研究法・判断根拠",
+    "knowledge_node": "呼吸音消失・気管偏位・循環不安定から緊張性気胸を識別する",
+    "knowledge_node_id": "KN0356",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": "INTERPRET",
+    "level": 3,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "突然の低酸素血症と循環不全に、片側呼吸音消失、患側胸郭運動低下、健側への気管偏位が加わっているため、右緊張性気胸を疑う。",
+      "理学療法を中止し、直ちに救急対応と減圧処置へつなげる。",
+      "胸腔内圧上昇が静脈還流を妨げ、急速にショックへ進む緊急病態である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2021",
+    "theme": "静脈動脈体外式膜型人工肺〈VA-ECMO〉管理中の患者に離床を検討す・判断根拠",
+    "knowledge_node": "VA-ECMO離床前のカニューレ固定・血行動態・回路安全確認",
+    "knowledge_node_id": "KN0463",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "VA-ECMO離床ではカニューレ固定・回路・血流量・循環動態の安定確認が必要であること",
+      "ECMO管理中の離床は多職種連携で実施すること"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2022",
+    "theme": "大腿静脈カテーテルから持続的腎代替療法〈CRRT〉を行っている患者の・判断根拠",
+    "knowledge_node": "大腿静脈CRRTカテーテルを保護した端座位離床",
+    "knowledge_node_id": "KN0464",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "大腿静脈CRRTカテーテルは股関節屈曲・牽引で回路トラブルが起こりうること",
+      "端座位前後で固定状態と回路圧・アラームを確認すること"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2023",
+    "theme": "摂食嚥下障害への対応で正しいのはどれか・判断根拠",
+    "knowledge_node": "摂食嚥下障害への対応の基本事項",
+    "knowledge_node_id": "KN0615",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "先行期障害では食物認知や食事行動の開始・ペース調整に問題が生じるため、食事のペースを整える指導が適切である。",
+      "嚥下相に応じた姿勢・訓練を選ぶ必要がある。",
+      "先行期障害では食事ペースの調整が有用である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2024",
+    "theme": "欠神発作で正しいのはどれか・判断根拠",
+    "knowledge_node": "欠神発作は小児に多く、数秒間の意識消失を反復し、過換気で誘発されやすい",
+    "knowledge_node_id": "KN0627",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "欠神発作は小児に多く、数秒間の意識消失を反復し、過換気で誘発されやすい。",
+      "過呼吸で誘発される。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2025",
+    "theme": "人工呼吸器管理中に生じる呼吸器合併症でみられやすいのはどれか・判断根拠",
+    "knowledge_node": "人工呼吸器管理中に起こりやすい呼吸器合併症の識別",
+    "knowledge_node_id": "KN0721",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": "INTERPRET",
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "人工呼吸器管理では人工気道、鎮静、臥床、微小誤嚥などにより人工呼吸器関連肺炎（VAP）が重要な合併症となる。",
+      "したがって2が正しい。",
+      "VAPは代表的な呼吸器合併症である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2026",
+    "theme": "睡眠・覚醒のパターンを記録する睡眠日誌（睡眠表）の記載が最も有用なのはどれか・判断根拠",
+    "knowledge_node": "睡眠日誌は就床・入眠・覚醒時刻を連日記録して概日リズムのずれを把握するため、睡眠相後退症候群で特に有用を評価する",
+    "knowledge_node_id": "KN1099",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "睡眠日誌は就床・入眠・覚醒時刻を連日記録して概日リズムのずれを把握するため、睡眠相後退症候群で特に有用。",
+      "睡眠相後退症候群では睡眠時刻の記録が非常に有用。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2027",
+    "theme": "新型コロナウイルス（COVID-19）による肺炎後の患者に呼吸機能検査を行ったところ、努力性肺活量は・判断根拠",
+    "knowledge_node": "1秒量は5.00L×0.80＝4.00Lを評価する",
+    "knowledge_node_id": "KN1118",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "予測値3.46Lなので%FEV1＝4.00/3.46×100≈116%。",
+      "1秒量は5.00L×0.80＝4.00L。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2028",
+    "theme": "積極的な全身持久力トレーニングを開始してよい状態はどれか・判断根拠",
+    "knowledge_node": "積極的な全身持久力トレーニングを開始してよい状態はどれかに対する適切な介入・練習・指導を選択する",
+    "knowledge_node_id": "KN1208",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "積極的持久力訓練を開始するには循環・体温・酸素化が安定している必要がある。",
+      "SpO2 94%は他の選択肢より安全域。",
+      "SpO2 94%は開始可能な状態。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2029",
+    "theme": "股関節屈曲拘縮を調べるのはどれか・判断根拠",
+    "knowledge_node": "Thomas testで股関節屈曲拘縮を評価する",
+    "knowledge_node_id": "KN1411",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Thomasテストは股関節屈曲拘縮を評価する。",
+      "股関節屈曲拘縮を調べるのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2030",
+    "theme": "58 歳の男性・判断根拠",
+    "knowledge_node": "肥満・高血圧を伴うメタボリックシンドロームに適した有酸素運動形式を選択する",
+    "knowledge_node_id": "KN1430",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "肥満・高血圧があるため、関節負荷が小さく強度調整しやすい自転車エルゴメーターが適切。",
+      "cm、体重 90 kg、腹囲 120 cm、血圧 150/90 mmHg。産業医よりメタボリックシンドロームに対する運動を習慣づけるよう指示された。 最も適切な運動形式はどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2031",
+    "theme": "高カリウム血症の運動中止判断・判断根拠",
+    "knowledge_node": "高カリウム血症で心電図変化がある場合は致死的不整脈リスクがあり運動より緊急医療評価を優先する",
+    "knowledge_node_id": "KN1543",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "高カリウム血症は心筋の興奮性に影響し、心電図変化や致死的不整脈を生じ得る。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2032",
+    "theme": "重症低Na血症の安全対応・判断根拠",
+    "knowledge_node": "SIADHでは低張性低Na血症に対して尿が不適切に濃縮され、重症低Na血症では意識障害やけいれんを生じ得る",
+    "knowledge_node_id": "KN1554",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "血清Na濃度の低下は重症度に応じて神経症状を生じ得るため、意識状態と電解質を合わせて評価する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2033",
+    "theme": "脳卒中片麻痺者の応用歩行練習について麻痺側から行う場合が多いのはどれ・判断根拠",
+    "knowledge_node": "脳卒中片麻痺者の応用歩行練習について麻痺側から行う場合が多いのはどれに対する適切な介入・支援選択",
+    "knowledge_node_id": "KN0518",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "脳卒中片麻痺者が低い障害物をまたぐときは、麻痺側下肢を先に越えさせることで、非麻痺側を支持脚として安定性を確保しやすい。",
+      "非麻痺側で支持しながら麻痺側を先に越えさせることで安全性を確保しやすい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2034",
+    "theme": "失行の検査でないのはどれか・判断根拠",
+    "knowledge_node": "失行は運動麻痺などでは説明できない学習された目的動作の障害であるを評価する",
+    "knowledge_node_id": "KN0682",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "日常物品の名前を答える課題は失語・失認などの評価で、失行検査ではないため3が正しい。",
+      "物品名を答えるのは失行検査ではない。",
+      "失行は運動麻痺などでは説明できない学習された目的動作の障害である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2035",
+    "theme": "左中大脳動脈領域のアテローム血栓性脳梗塞でBroca失語と重度の右片麻痺を認める・判断根拠",
+    "knowledge_node": "Broca失語患者とのコミュニケーション方法を選択する",
+    "knowledge_node_id": "KN0763",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "易しい漢字は意思伝達に役立つため4が正しい。",
+      "Broca失語では理解は比較的保たれ、表出が非流暢で努力性となる。",
+      "短く分かりやすい言葉に加え、文字・絵・ジェスチャーなど複数手段を活用する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2036",
+    "theme": "脳卒中後の左片麻痺患者に対するADL練習として正しいのはどれか・判断根拠",
+    "knowledge_node": "脳卒中左片麻痺患者のADL練習における安全な自立支援",
+    "knowledge_node_id": "KN0791",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "片麻痺では更衣は麻痺側から着て非麻痺側から脱ぐ。",
+      "移乗では非麻痺側を移乗先に近づけるのが基本で、左片麻痺なら右側をベッド側にする。",
+      "正しいのは2である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2037",
+    "theme": "脳血管障害と治療の組合せで正しいのはどれか・判断根拠",
+    "knowledge_node": "脳血管障害と治療の組合せで正しいのはどれかに対して適切な理学療法・介入を選択する",
+    "knowledge_node_id": "KN0826",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "くも膜下出血の原因となる脳動脈瘤に対し、開頭クリッピング術が行われる。",
+      "くも膜下出血にクリッピング。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2038",
+    "theme": "70歳の男性・判断根拠",
+    "knowledge_node": "脳卒中屈曲共同運動を抑え肘伸展を促す筋促通の選択",
+    "knowledge_node_id": "KN0835",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "肩90°屈曲時に屈曲共同運動が出るため、肘伸展を保つには伸展筋である上腕三頭筋を促通する必要がある。",
+      "痺。Brunnstrom 法ステージ上肢Ⅲ、下肢Ⅳ。座位にて、肘関節伸展位で肩関節 90°屈曲運動を指示したところ、屈曲共同運動パターンがみられた。この患者で促通すべき筋はどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2039",
+    "theme": "57歳の男性・判断根拠",
+    "knowledge_node": "内反尖足・膝ロッキングに対するダブルクレンザックAFO設定",
+    "knowledge_node_id": "KN0973",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "金属支柱付き短下肢装具の下腿半月は腓骨頭を圧迫しないよう、その上縁を腓骨頭より下方に設定するため、「腓骨頭」とする1が誤りである。",
+      "下腿半月上縁を腓骨頭そのものに置くのは不適切で、厚生労働省公式正答である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2040",
+    "theme": "てんかん患者が複雑部分発作を起こして部屋を歩き回った際の対応として正しいのはどれか・判断根拠",
+    "knowledge_node": "複雑部分発作で歩き回る患者を刺激せず安全確保しながら付き添う対応",
+    "knowledge_node_id": "KN1039",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "複雑部分発作の行動特徴",
+      "発作中に強い刺激や拘束を避ける理由",
+      "周囲の危険物除去と見守り"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2041",
+    "theme": "64歳の女性・判断根拠",
+    "knowledge_node": "非流暢性失語に対するYes/No質問などのコミュニケーション支援",
+    "knowledge_node_id": "KN1102",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "発話負担を減らし意思確認しやすいYes/No質問が有効。",
+      "非流暢で努力性発話、理解良好からBroca失語が考えられる。",
+      "Yes/Noで答えられる質問は負担を減らす。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2042",
+    "theme": "Parkinson病の評価で適切なのはどれか・判断根拠",
+    "knowledge_node": "Westphal現象はParkinson病でみられる姿勢反射障害・筋強剛に関連する現象として評価される",
+    "knowledge_node_id": "KN1113",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Westphal現象はParkinson病でみられる姿勢反射障害・筋強剛に関連する現象として評価される。",
+      "Parkinson病の評価で適切なのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2043",
+    "theme": "脳卒中片麻痺の理学療法で正しいのはどれか・判断根拠",
+    "knowledge_node": "脳卒中片麻痺に対する早期立位・歩行・トレッドミル練習",
+    "knowledge_node_id": "KN1121",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "脳卒中後のトレッドミル歩行練習は歩行速度・持久力の改善に有効である。",
+      "トレッドミルで歩行速度改善が期待できる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2044",
+    "theme": "脳卒中の評価法とそれに含まれる項目の組合せで正しいのはどれか・判断根拠",
+    "knowledge_node": "SIASには体幹機能評価が含まれる",
+    "knowledge_node_id": "KN1207",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "SIASには体幹機能評価が含まれる。",
+      "その他の組合せは尺度の主項目と一致しない。",
+      "SIASは体幹機能を含む。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2045",
+    "theme": "58歳の男性・判断根拠",
+    "knowledge_node": "脳卒中片麻痺患者の位置覚を適切な手順で検査する",
+    "knowledge_node_id": "KN1221",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "位置覚は、検査側の関節を一定位置へ他動的に動かし、反対側で同じ位置を再現させる方法でも評価できる。",
+      "麻痺側左上肢を動かし、非麻痺側右上肢で模倣させる2が適切。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2046",
+    "theme": "脳卒中回復期の嚥下障害に対する最も適切な栄養管理はどれか・判断根拠",
+    "knowledge_node": "脳卒中回復期の嚥下障害に対する安全な栄養経路選択",
+    "knowledge_node_id": "KN1308",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "経鼻胃管は短〜中期の栄養管理に用いるが、長期では不快感、自己抜去、逆流・誤嚥などの問題から胃瘻などを検討する。",
+      "長期的管理には適しにくい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2047",
+    "theme": "理学療法の臨床実習に参加している学生・判断根拠",
+    "knowledge_node": "左半側空間無視を疑う患者で優先すべき高次脳機能検査を選択する",
+    "knowledge_node_id": "KN1320",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "BITは半側空間無視の標準的評価。",
+      "BITは半側空間無視評価。",
+      "常に右を向き左側刺激への反応が遅いことから左半側空間無視を疑う。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2048",
+    "theme": "筋萎縮性側索硬化症における典型的な筋電図検査所見で正しいのはどれか・判断根拠",
+    "knowledge_node": "ALSの針筋電図では脱神経・再支配所見に加え線維束性収縮電位を認めるを評価する",
+    "knowledge_node_id": "KN1355",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "ALSの針筋電図では脱神経・再支配所見に加え線維束性収縮電位を認める。",
+      "線維束性収縮電位が出現。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2049",
+    "theme": "65 歳の女性・判断根拠",
+    "knowledge_node": "非麻痺側を向く一方、麻痺側刺激への反応はあり、食事・歯磨きで麻痺側の見落としが多いを評価する",
+    "knowledge_node_id": "KN1363",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "線分抹消試験は半側空間無視評価。",
+      "軽度の半側空間無視を疑い、線分抹消試験を優先する。",
+      "非麻痺側を向く一方、麻痺側刺激への反応はあり、食事・歯磨きで麻痺側の見落としが多い。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2050",
+    "theme": "末梢神経伝導検査が診断に有用なのはどれか・判断根拠",
+    "knowledge_node": "末梢神経伝導検査が有用な末梢神経障害を選択する",
+    "knowledge_node_id": "KN1410",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "手根管症候群では正中神経の伝導遅延を神経伝導検査で確認できる。",
+      "手根管症候群に有用。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2051",
+    "theme": "複雑部分発作〈焦点意識減損発作〉を起こして自宅室内を徘徊しているてんかん患者に対して、まず行うのはど・判断根拠",
+    "knowledge_node": "焦点意識減損発作で徘徊する患者の周囲から危険物を除去して安全確保する",
+    "knowledge_node_id": "KN1418",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "焦点意識減損発作の行動特徴",
+      "発作中に強い拘束や口腔内異物を避ける理由",
+      "周囲の危険物除去"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2052",
+    "theme": "58 歳の男性・判断根拠",
+    "knowledge_node": "片麻痺患者のADL情報からBarthel Index総得点を算出する",
+    "knowledge_node_id": "KN1424",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "55点ではない。",
+      "60点ではない。",
+      "70点ではない。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2053",
+    "theme": "小児・二分脊椎・判断根拠",
+    "knowledge_node": "無痛性皮膚障害の自己管理",
+    "knowledge_node_id": "KN0028",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "感覚脱失",
+      "装具",
+      "褥瘡予防"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2054",
+    "theme": "小児・発育性股関節形成不全・判断根拠",
+    "knowledge_node": "Pavlik harness装着中の皮膚圧迫・ずれを確認し自己調整を避ける",
+    "knowledge_node_id": "KN0135",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "皮膚",
+      "装具ずれ",
+      "保護者指導"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2055",
+    "theme": "小児・熱傷・脊髄・判断根拠",
+    "knowledge_node": "Down症候群児の頸部痛・歩容変化から環軸椎不安定性を疑う運動中止",
+    "knowledge_node_id": "KN0333",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "小児の正常発達",
+      "疾患・年齢特有の所見",
+      "発達支援と安全管理"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2056",
+    "theme": "透析・骨転移・運動療法・評価・判断根拠",
+    "knowledge_node": "骨転移患者の新規荷重時痛から病的骨折リスクを疑い運動を中止する",
+    "knowledge_node_id": "KN0388",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "病的骨折の切迫を疑う警告所見であるため、荷重練習を中止して医学的評価を求める。",
+      "疼痛増悪と安静時痛から病的骨折リスクを疑い、荷重中止と医学的評価が必要である。",
+      "抵抗運動、跳躍、歩行距離延長は骨への負荷を増やす。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2057",
+    "theme": "内部障害・間質性肺疾患・判断根拠",
+    "knowledge_node": "運動時低酸素への条件再検討",
+    "knowledge_node_id": "KN0048",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "運動時低酸素",
+      "酸素療法",
+      "ILD"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2058",
+    "theme": "スポーツ・疲労骨折・判断根拠",
+    "knowledge_node": "疼痛消失と機能確認後の段階復帰",
+    "knowledge_node_id": "KN0114",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "疲労骨折",
+      "hop pain",
+      "RTS"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2059",
+    "theme": "呼吸器・間質性肺疾患・判断根拠",
+    "knowledge_node": "SpO2＋呼吸困難モニタリング",
+    "knowledge_node_id": "KN0182",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "exercise desaturation"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2060",
+    "theme": "内部障害・末梢動脈疾患・リスク管理・判断根拠",
+    "knowledge_node": "安静時痛・蒼白・冷感で運動中止",
+    "knowledge_node_id": "KN0187",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "critical limb ischemia signs"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2061",
+    "theme": "内部障害・心筋梗塞・判断根拠",
+    "knowledge_node": "運動中胸部圧迫感への中止・報告",
+    "knowledge_node_id": "KN0192",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "ischemia signs",
+      "exercise stop"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2062",
+    "theme": "術後管理・内部障害・前庭・判断根拠",
+    "knowledge_node": "運動中の著明なSpO₂低下と症状出現時に運動を中止する",
+    "knowledge_node_id": "KN0365",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "中止、安全確保、回復確認、報告と条件再評価を行う。",
+      "著明な酸素飽和度低下に強い呼吸困難とふらつきを伴っており、運動を直ちに中止する。",
+      "転倒を防ぐ姿勢をとらせ、呼吸・循環状態とSpO₂の回復を確認し、処方された酸素の使用や医療者への報告を行う。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2063",
+    "theme": "上腕骨顆上骨折後に肘をギプス固定した小児が、手指の強い痛みと蒼白を訴・判断根拠",
+    "knowledge_node": "上腕骨顆上骨折後の循環障害・コンパートメント症候群徴候の優先確認",
+    "knowledge_node_id": "KN0458",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "上腕骨顆上骨折後は上腕動脈障害や前腕コンパートメント症候群に注意すること",
+      "末梢循環・毛細血管再充満・運動感覚を同時に確認する神経血管評価"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2064",
+    "theme": "Trendelenburg徴候が生じやすいのはどれか・判断根拠",
+    "knowledge_node": "Trendelenburg徴候は股関節外転筋機能不全で生じ、変形性股関節症で中殿筋機能低下を伴うと出現しやすい",
+    "knowledge_node_id": "KN0922",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Trendelenburg徴候は股関節外転筋機能不全で生じ、変形性股関節症で中殿筋機能低下を伴うと出現しやすい。",
+      "Trendelenburg徴候が生じやすいのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2065",
+    "theme": "84 歳の男性・判断根拠",
+    "knowledge_node": "大腿骨近位部骨折術後の下腿腫脹・圧痛からDVTを疑いD-dimerを優先確認する",
+    "knowledge_node_id": "KN1278",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "術後DVTの危険因子",
+      "下腿腫脹・圧痛などのDVT所見",
+      "D-dimerなど血栓評価"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2066",
+    "theme": "地域・脳卒中後の自動車運転・判断根拠",
+    "knowledge_node": "歩行とADLは自立しているが、複数課題を同時に行うと反応が遅れるを評価する",
+    "knowledge_node_id": "KN0115",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "注意",
+      "遂行機能",
+      "運転安全"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2067",
+    "theme": "内部障害・糖尿病・低血糖対応・判断根拠",
+    "knowledge_node": "運動中低血糖への糖質摂取",
+    "knowledge_node_id": "KN0177",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "hypoglycemia",
+      "glucose"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2068",
+    "theme": "内部障害・慢性腎臓病・運動時リスク管理・判断根拠",
+    "knowledge_node": "運動中血圧低下・めまいで中止",
+    "knowledge_node_id": "KN0197",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "hypotension",
+      "dizziness",
+      "stop criteria"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2069",
+    "theme": "慢性心不全・運動中止判断・判断根拠",
+    "knowledge_node": "心リハ中の胸部症状と血圧低下に対する運動中止判断",
+    "knowledge_node_id": "KN0202",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "心筋虚血を疑う症状",
+      "運動時血圧反応",
+      "心臓リハビリテーションの運動中止基準"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2070",
+    "theme": "運動負荷試験・中止基準・判断根拠",
+    "knowledge_node": "胸痛・ST低下・運動時血圧低下に対する運動負荷中止",
+    "knowledge_node_id": "KN0281",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "循環生理・病態",
+      "運動負荷とバイタルの解釈",
+      "運動中止・安全管理基準"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2071",
+    "theme": "腎疾患・リスク管理・判断根拠",
+    "knowledge_node": "重度高カリウム血症時の運動中止と医師報告",
+    "knowledge_node_id": "KN0286",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "高度高カリウム血症は致死性不整脈を生じ得るため、運動を開始せず緊急性をもって医師へ報告する。",
+      "運動中止と迅速な医学的対応が必要である。",
+      "類題では運動処方より先に、生命を脅かす検査異常を抽出する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2072",
+    "theme": "呼吸・循環・内部障害・判断根拠",
+    "knowledge_node": "内シャントのスリル消失時の運動中止と速やかな報告",
+    "knowledge_node_id": "KN0319",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "循環生理・病態",
+      "運動負荷とバイタルの解釈",
+      "運動中止・安全管理基準"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2073",
+    "theme": "小児・熱傷・脊髄・判断根拠",
+    "knowledge_node": "尿閉・会陰部感覚低下を伴う馬尾症候群red flagへの緊急対応",
+    "knowledge_node_id": "KN0331",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "神経障害が進行すると不可逆的な機能障害を残すおそれがあるため、理学療法を開始・継続せず、直ちに緊急の医学的評価へつなげる必要がある。",
+      "腰痛に新たな尿閉と会陰部の感覚低下が加わった所見は、膀胱直腸障害とサドル麻痺を伴う馬尾症候群を疑う重大なレッドフラッグである。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2074",
+    "theme": "臨床評価・安全管理・判断根拠",
+    "knowledge_node": "THA術後の急性呼吸困難・胸痛・低酸素から肺塞栓を疑う緊急対応",
+    "knowledge_node_id": "KN0348",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "歩行やマッサージを継続せず直ちに運動を中止し、安静を保って緊急の医学的評価へつなげる。",
+      "肺血栓塞栓症を疑う複数の急性所見があり、運動中止と緊急評価が必要である。",
+      "症状の一時的軽快を待つ場面ではない。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2075",
+    "theme": "Guillain-Barré症候群の急性期に、安静時から血圧が大きく・判断根拠",
+    "knowledge_node": "GBS急性期の自律神経障害を踏まえた離床時循環監視",
+    "knowledge_node_id": "KN0431",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "GBSの自律神経障害",
+      "血圧・脈拍変動の危険性",
+      "離床時モニタリング"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2076",
+    "theme": "語の流暢性課題を含む検査はどれか・判断根拠",
+    "knowledge_node": "HDS-Rには「知っている野菜の名前をできるだけ多く言う」語想起課題が含まれ、語の流暢性をみるを評価する",
+    "knowledge_node_id": "KN0552",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "MMPIやRorschachは人格検査である。",
+      "HDS-Rには「知っている野菜の名前をできるだけ多く言う」語想起課題が含まれ、語の流暢性をみる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2077",
+    "theme": "観念運動失行の検査はどれか・判断根拠",
+    "knowledge_node": "観念運動失行は運動麻痺がないのに、命令された習慣的動作やパントマイムを正しく行えない状態であるを評価する",
+    "knowledge_node_id": "KN0555",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "「歯を磨くまね」は代表的な検査課題となる。",
+      "道具使用のパントマイムは観念運動失行の検査となる。",
+      "観念運動失行は運動麻痺がないのに、命令された習慣的動作やパントマイムを正しく行えない状態である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2078",
+    "theme": "栄養状態の評価として有用性が低いのはどれか・判断根拠",
+    "knowledge_node": "栄養評価ではBMI、体重減少率、血清アルブミン、下腿周囲径などが用いられる",
+    "knowledge_node_id": "KN0584",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "栄養評価ではBMI、体重減少率、血清アルブミン、下腿周囲径などが用いられる。",
+      "血小板数は一般的な栄養評価指標ではない。",
+      "血小板数は栄養状態を直接反映する指標ではないため有用性が低い。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2079",
+    "theme": "上腕二頭筋腱炎で陽性所見を呈する検査はどれか・判断根拠",
+    "knowledge_node": "上腕二頭筋腱炎を誘発するYergason testの選択",
+    "knowledge_node_id": "KN0637",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Yergasonテストは肘90°屈曲位で前腕回外・肘屈曲に抵抗を加え、結節間溝部痛を誘発して上腕二頭筋長頭腱障害を評価する。",
+      "Yergasonテストは上腕二頭筋長頭腱炎に用いる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2080",
+    "theme": "Danielsらの徒手筋力テストにおいて座位で筋力3を判定できるのはどれか・判断根拠",
+    "knowledge_node": "Daniels法で重力に抗して全可動域を動かせる筋力を段階3と判定する",
+    "knowledge_node_id": "KN0704",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Daniels法で座位のまま重力に抗して全可動域を動かし段階3を判定できる代表は上腕三頭筋の肘伸展である。",
+      "Danielsらの徒手筋力テストにおいて座位で筋力3を判定できるのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2081",
+    "theme": "高次脳機能障害と検査の組合せで正しいのはどれか・判断根拠",
+    "knowledge_node": "高次脳機能障害に応じた検査法の選択",
+    "knowledge_node_id": "KN0716",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "TMTは注意・遂行機能評価に用いる。",
+      "TMTは数字・文字を順に結ぶ課題で、注意の持続・配分・切替や処理速度を評価する。",
+      "したがって「注意障害―TMT」の2が正しい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2082",
+    "theme": "ASIAの評価法における脊髄の髄節とその感覚支配領域検査ポイントの組合せで正しいのは・判断根拠",
+    "knowledge_node": "ASIA感覚検査における髄節とkey sensory pointの対応",
+    "knowledge_node_id": "KN0748",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "ASIAの感覚検査点ではT12は鼠径靱帯中央部、L4は内果、L5は足背第3中足趾節関節付近などを用いる。",
+      "したがって3が正しい。",
+      "T12は鼠径靱帯中央部付近で評価する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2083",
+    "theme": "2週前に上気道炎を発症し、5日前から四肢末端の異常感覚を自覚した・判断根拠",
+    "knowledge_node": "Guillain-Barré症候群急性進行期の呼吸・自律神経リスクを優先する判断",
+    "knowledge_node_id": "KN0767",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "GBSの急性進行",
+      "呼吸筋麻痺",
+      "自律神経障害と急変リスク"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2084",
+    "theme": "Froment徴候が陽性のとき、麻痺を疑うべき神経はどれか・判断根拠",
+    "knowledge_node": "Froment徴候は尺骨神経麻痺で母指内転筋が弱く、紙をつまむ際に長母指屈筋で代償して母指IP関節が屈曲する徴候である",
+    "knowledge_node_id": "KN0779",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 2,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Froment徴候は尺骨神経麻痺で母指内転筋が弱く、紙をつまむ際に長母指屈筋で代償して母指IP関節が屈曲する徴候である。",
+      "したがって2が正しい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2085",
+    "theme": "6分間歩行テストで正しいのはどれか・判断根拠",
+    "knowledge_node": "6分間歩行テストの標準的実施・解釈",
+    "knowledge_node_id": "KN0782",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "休息しても時間計測は継続できるため1・3が正しい。",
+      "6分間歩行テストは6分間に歩いた総距離を測定し、前後でBorg指数など自覚症状を記録する。",
+      "6分間の総歩行距離で評価する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2086",
+    "theme": "遂行機能障害の診断に用いる検査はどれか・判断根拠",
+    "knowledge_node": "WCSTで方略転換を含む遂行機能を評価する",
+    "knowledge_node_id": "KN0845",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "WCSTはカテゴリー分類規則を推測し、フィードバックに応じて方略を切り替える検査で、遂行機能障害の代表的評価。",
+      "WCSTは概念形成・セット転換を評価。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2087",
+    "theme": "第Ⅶ脳神経の検査はどれか・判断根拠",
+    "knowledge_node": "第VII脳神経は顔面神経で、表情筋を支配するを評価する",
+    "knowledge_node_id": "KN0919",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "眼輪筋筋力の評価が顔面神経検査となるため2。",
+      "第VII脳神経は顔面神経で、表情筋を支配する。",
+      "眼輪筋は顔面神経支配。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2088",
+    "theme": "関節可動域測定法（日本整形外科学会、日本リハビリテーション医学会基準による）における胸腰部回旋の・判断根拠",
+    "knowledge_node": "胸腰部回旋ROM測定では基本軸を両上後腸骨棘を結ぶ線、移動軸を両肩峰を結ぶ線として評価する",
+    "knowledge_node_id": "KN0951",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "胸腰部回旋ROM測定では基本軸を両上後腸骨棘を結ぶ線、移動軸を両肩峰を結ぶ線として評価する。",
+      "両側PSISを結ぶ線。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2089",
+    "theme": "32歳の男性・判断根拠",
+    "knowledge_node": "筋強直性ジストロフィーの重度筋力低下に対する過用を避けた理学療法",
+    "knowledge_node_id": "KN0977",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "筋強直性ジストロフィーで咀嚼筋の筋力低下や閉口障害がある場合、咀嚼負担を減らせる食形態を選ぶことが適切である。",
+      "咀嚼回数・負担を減らす食形態が厚生労働省公式正答である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2090",
+    "theme": "四肢の周径測定法として正しいのはどれか・判断根拠",
+    "knowledge_node": "周径測定は再現性のため測定部位・肢位を統一し、メジャーを皮膚に密着させて過度に締め付けず測定する",
+    "knowledge_node_id": "KN0985",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "周径測定は再現性のため測定部位・肢位を統一し、メジャーを皮膚に密着させて過度に締め付けず測定する。",
+      "着衣上ではなく皮膚上で測る。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2091",
+    "theme": "ASIAの評価法における脊髄の髄節とその感覚支配領域検査ポイントの組合せで正しいのはどれか・判断根拠",
+    "knowledge_node": "ASIAの感覚キーポイントではT4は乳頭部に相当するを評価する",
+    "knowledge_node_id": "KN1032",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "ASIAの感覚キーポイントではT4は乳頭部に相当する。",
+      "C5は肘窩外側、T10は臍、L3は膝内側などを用いる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2092",
+    "theme": "75歳の男性・判断根拠",
+    "knowledge_node": "Parkinson病のすくみ足・移動不安定に対応した住環境整備と外的キュー",
+    "knowledge_node_id": "KN1043",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "Parkinson病ではすくみ足対策として視覚的キューや手すり、段差解消が有用。",
+      "開き戸は動作負担や狭い空間でのすくみを助長しやすく、引き戸が望ましい。",
+      "開き戸は狭い場所で方向転換や後退を要しやすく、すくみ足がある患者には引き戸の方が扱いやすい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2093",
+    "theme": "注意障害の検査はどれか・判断根拠",
+    "knowledge_node": "TMTは注意、視覚探索、処理速度、注意転換などを評価する",
+    "knowledge_node_id": "KN1048",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "TMTは注意、視覚探索、処理速度、注意転換などを評価する。",
+      "TMTは持続・選択・転換性注意や処理速度を評価する。",
+      "WCSTは遂行機能、Ravenは非言語性知能、Rey複雑図形は視空間・記憶をみる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2094",
+    "theme": "FIMの評定で修正自立となるのはどれか・判断根拠",
+    "knowledge_node": "補助具使用を含むFIM修正自立の判定",
+    "knowledge_node_id": "KN1049",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "FIMの修正自立は補助具使用や時間超過があっても介助者を必要としない状態。",
+      "手すり使用での更衣や装具使用での歩行自立が該当する。",
+      "手すりという補助具を使用して更衣動作が自立しているため修正自立。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2095",
+    "theme": "認知症のスクリーニング検査はどれか・判断根拠",
+    "knowledge_node": "MMSEは見当識、記銘・再生、注意計算、言語などを短時間で評価する認知症スクリーニング検査",
+    "knowledge_node_id": "KN1054",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "MMSEは見当識、記銘・再生、注意計算、言語などを短時間で評価する認知症スクリーニング検査。",
+      "MMSEは認知機能低下・認知症の代表的スクリーニング検査。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2096",
+    "theme": "ASIAの評価法における脊髄髄節とそのkey muscleとの組合せで正しいのはどれか・判断根拠",
+    "knowledge_node": "ASIA key muscleと髄節の対応",
+    "knowledge_node_id": "KN1087",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "ASIAのkey muscleではC5は肘関節屈筋群、C6は手関節伸筋、C7は肘伸筋、L2は股屈筋、L3は膝伸筋である。",
+      "C5は肘屈筋群。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2097",
+    "theme": "フレイルの指標とサルコペニアの評価で共通する項目はどれか・判断根拠",
+    "knowledge_node": "フレイルとサルコペニアの双方で筋力低下と身体機能低下を評価し、握力と歩行速度が共通項目となる",
+    "knowledge_node_id": "KN1088",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "フレイルとサルコペニアの双方で筋力低下と身体機能低下を評価し、握力と歩行速度が共通項目となる。",
+      "歩行速度は身体機能指標として共通する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2098",
+    "theme": "Danielsらの徒手筋力テストで正しいのはどれか・判断根拠",
+    "knowledge_node": "徒手筋力テストを安全かつ標準的条件で実施する",
+    "knowledge_node_id": "KN1108",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "必要に応じ測定機器を併用する場合もある。",
+      "MMTでは患者の疼痛や不快感を確認し、安全を確保して実施する。",
+      "苦痛の有無を確認しながら行う。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2099",
+    "theme": "SIASに含まれるのはどれか・判断根拠",
+    "knowledge_node": "SIASに含まれる非麻痺側機能などの評価項目",
+    "knowledge_node_id": "KN1112",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "SIASは脳卒中患者の麻痺側運動、感覚、体幹、言語、視空間機能に加え、非麻痺側機能も評価する。",
+      "非麻痺側筋力を評価する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2100",
+    "theme": "疼痛検査に用いるのはどれか・判断根拠",
+    "knowledge_node": "face scaleとNRSはいずれも疼痛強度の評価に用いる",
+    "knowledge_node_id": "KN1115",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "face scaleとNRSはいずれも疼痛強度の評価に用いる。",
+      "疼痛検査に用いるのはどれか。2つ選べ。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2101",
+    "theme": "嚥下反射が惹起された瞬間の食物の流れを観察できる検査法はどれか・判断根拠",
+    "knowledge_node": "嚥下反射時の食塊通過を観察できる嚥下造影検査の選択",
+    "knowledge_node_id": "KN1117",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "嚥下造影検査VFではX線透視下で食塊の口腔・咽頭・食道への流れを連続観察でき、嚥下反射惹起時も確認できる。",
+      "VFは食塊流を連続的に観察可能。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2102",
+    "theme": "胸郭出口症候群で陽性となる検査はどれか・判断根拠",
+    "knowledge_node": "Roos testは上肢を挙上外転外旋位で開閉手運動を反復し、胸郭出口での神経血管圧迫症状を誘発するを評価する",
+    "knowledge_node_id": "KN1181",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Roos testは上肢を挙上外転外旋位で開閉手運動を反復し、胸郭出口での神経血管圧迫症状を誘発する。",
+      "胸郭出口症候群で陽性となる検査はどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2103",
+    "theme": "ASIAの評価対象はどれか・判断根拠",
+    "knowledge_node": "ASIAでS4-5感覚と随意肛門収縮から仙髄機能温存を判定する",
+    "knowledge_node_id": "KN1209",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "ASIAではS4-5を含む感覚検査と随意肛門収縮を評価し、仙髄機能温存の有無を判定する。",
+      "肛門周囲感覚を評価。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2104",
+    "theme": "50 歳の男性・判断根拠",
+    "knowledge_node": "受傷後に人格変化、脱抑制、自己中心性など前頭葉機能障害が疑われるため、前頭葉機能を簡便に評価するFABが優先される",
+    "knowledge_node_id": "KN1279",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "受傷後に人格変化、脱抑制、自己中心性など前頭葉機能障害が疑われるため、前頭葉機能を簡便に評価するFABが優先される。",
+      "FABは前頭葉機能評価。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2105",
+    "theme": "股関節の屈曲拘縮を調べるテストはどれか・判断根拠",
+    "knowledge_node": "Thomasテストは一側股関節を最大屈曲し、反対側大腿が浮き上がるかをみて股関節屈曲拘縮を評価する",
+    "knowledge_node_id": "KN1283",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "Thomasテストは一側股関節を最大屈曲し、反対側大腿が浮き上がるかをみて股関節屈曲拘縮を評価する。",
+      "Thomasテストは股屈曲拘縮評価。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2106",
+    "theme": "SIAS に含まれるのはどれか・判断根拠",
+    "knowledge_node": "SIASには視空間認知、言語、体幹機能、感覚、麻痺側・非麻痺側運動などが含まれるを評価する",
+    "knowledge_node_id": "KN1284",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "視空間認知を評価する。",
+      "SIASには視空間認知、言語、体幹機能、感覚、麻痺側・非麻痺側運動などが含まれる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2107",
+    "theme": "重症筋無力症患者の QMG score〈Quantitative Myasthenia Gravis・判断根拠",
+    "knowledge_node": "QMGには眼球運動・眼瞼下垂、嚥下、発語、四肢筋力、肺活量など重症筋無力症の主要症候が含まれるを評価する",
+    "knowledge_node_id": "KN1289",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "嚥下機能を評価。",
+      "眼球運動を評価。",
+      "QMGには眼球運動・眼瞼下垂、嚥下、発語、四肢筋力、肺活量など重症筋無力症の主要症候が含まれる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2108",
+    "theme": "脳卒中患者の身体機能評価に用いられる評価尺度はどれか・判断根拠",
+    "knowledge_node": "NIHSSは脳卒中急性期の神経学的重症度、SIASは脳卒中の機能障害を評価する",
+    "knowledge_node_id": "KN1311",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "NIHSSは脳卒中急性期の神経学的重症度、SIASは脳卒中の機能障害を評価する。",
+      "NIHSSは脳卒中評価。",
+      "SIASも脳卒中身体機能評価。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2109",
+    "theme": "日常生活場面で必要とされる記憶の障害を検出するのに最も適した検査はどれか・判断根拠",
+    "knowledge_node": "日常生活上の記憶障害を検出するRBMTなどの検査選択",
+    "knowledge_node_id": "KN1349",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "RBMTは日常生活に近い課題で記憶障害を評価するRivermead行動記憶検査で、実生活上の記憶障害検出に適する。",
+      "RBMTは日常記憶評価。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2110",
+    "theme": "Fugl-Meyer Assessment で正しいのはどれか・判断根拠",
+    "knowledge_node": "FMAは総得点226点で、Brunnstromの共同運動・分離運動に関連する運動項目を含むを評価する",
+    "knowledge_node_id": "KN1369",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "FMAは総得点226点で、Brunnstromの共同運動・分離運動に関連する運動項目を含む。",
+      "Brunnstromと共通する運動要素がある。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2111",
+    "theme": "WeeFIM で正しいのはどれか・判断根拠",
+    "knowledge_node": "WeeFIMの社会的認知には社会的交流があり、小児では遊びへの参加などを含めて評価する",
+    "knowledge_node_id": "KN1370",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "WeeFIMの社会的認知には社会的交流があり、小児では遊びへの参加などを含めて評価する。",
+      "WeeFIM で正しいのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2112",
+    "theme": "MRC sum score で評価できるのはどれか・判断根拠",
+    "knowledge_node": "MRC sum scoreをICU獲得性筋力低下の評価に用いる",
+    "knowledge_node_id": "KN1374",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "MRC sum scoreはICU獲得性筋力低下の判定に用いられる。",
+      "ICU-AWの筋力評価。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2113",
+    "theme": "SIASの評価で正しいのはどれか・判断根拠",
+    "knowledge_node": "SIASには非麻痺側機能として握力評価が含まれる",
+    "knowledge_node_id": "KN1439",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "SIASには非麻痺側機能として握力評価が含まれる。",
+      "非麻痺側握力を評価。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2114",
+    "theme": "注意障害を評価する検査法はどれか・判断根拠",
+    "knowledge_node": "CATで持続・選択・分配・転換性注意を評価する",
+    "knowledge_node_id": "KN1442",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "CATは標準注意検査法で持続・選択・分配・転換性注意などを評価する。",
+      "CATは注意障害。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2115",
+    "theme": "Hoehn&Yahr の重症度分類ステージⅡと判断する症状はどれか・判断根拠",
+    "knowledge_node": "Hoehn & Yahr stage IIを両側性症状と姿勢反射障害の有無から判定する",
+    "knowledge_node_id": "KN1445",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "両上肢固縮が該当。",
+      "Hoehn & Yahr IIは両側性症状があるが姿勢反射障害はない。",
+      "両上肢固縮＝両側症状。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2116",
+    "theme": "人格検査はどれか・判断根拠",
+    "knowledge_node": "CMIは心身両面の自覚症状や神経症傾向を質問紙で把握する検査で、STAIは状態不安・特性不安という人格傾向を評価する質問紙",
+    "knowledge_node_id": "KN1478",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "CMIは心身両面の自覚症状や神経症傾向を質問紙で把握する検査で、STAIは状態不安・特性不安という人格傾向を評価する質問紙。",
+      "厚生労働省の第61回国家試験では、複数の選択肢を正解として採点している。",
+      "設問上は1・3が正答として扱われる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2117",
+    "theme": "45 歳の男性・判断根拠",
+    "knowledge_node": "Daniels MMT肩屈曲grade 4の検査肢位・抵抗方法を適切に実施する",
+    "knowledge_node_id": "KN1480",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "最終屈曲位ではなく90°付近で行うため、選択肢では肘屈曲代償の有無を確認する5が適切。",
+      "肩屈曲MMT4では座位で肩を90°屈曲させ、上腕遠位部に下方への抵抗を加え保持させる。",
+      "肘屈曲など代償が出ないことを確認する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2118",
+    "theme": "深部感覚検査で使用する器具はどれか・判断根拠",
+    "knowledge_node": "位置覚・振動覚など深部感覚検査に用いる器具を選択する",
+    "knowledge_node_id": "KN1489",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "深部感覚のうち振動覚検査には音叉を使用する。",
+      "試験管は温度覚。",
+      "つまようじは痛覚。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2119",
+    "theme": "顔面神経の評価で正しいのはどれか・判断根拠",
+    "knowledge_node": "顔面神経機能を適切な運動・反射で評価する",
+    "knowledge_node_id": "KN1500",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "顔面神経は口輪筋を支配するため、口唇を閉じさせ抵抗に耐えられるかをみる。",
+      "口唇閉鎖力を評価。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2120",
+    "theme": "脊髄損傷・自律神経・判断根拠",
+    "knowledge_node": "自律神経過反射への初期対応",
+    "knowledge_node_id": "KN0011",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "T6以上SCI",
+      "AD徴候",
+      "膀胱刺激"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2121",
+    "theme": "物理療法・リスク管理・判断根拠",
+    "knowledge_node": "足部痛の原因と皮膚・循環・運動機能を評価し、安全な運動療法を検討する",
+    "knowledge_node_id": "KN0132",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "温度覚低下",
+      "熱傷リスク"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2122",
+    "theme": "安全管理・転倒予防・判断根拠",
+    "knowledge_node": "援助要請と夜間環境の共同調整",
+    "knowledge_node_id": "KN0172",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "falls",
+      "shared decision",
+      "environment"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2123",
+    "theme": "運動器・骨粗鬆症・生活指導・判断根拠",
+    "knowledge_node": "脊柱過屈曲を避けた生活動作",
+    "knowledge_node_id": "KN0176",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "vertebral fracture",
+      "body mechanics"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2124",
+    "theme": "内科・低ナトリウム血症・判断根拠",
+    "knowledge_node": "症候性重度低ナトリウム血症の緊急対応",
+    "knowledge_node_id": "KN0301",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "運動を中止し、安全確保と迅速な医学的治療を優先する。",
+      "緊急の医療対応が必要である。",
+      "著明な低ナトリウム血症に意識障害やけいれんを伴う場合は低ナトリウム血症性脳症を疑う緊急状態である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2125",
+    "theme": "臨床安全・運動器・判断根拠",
+    "knowledge_node": "リンパ浮腫患者の発熱・発赤・熱感から蜂窩織炎を疑う緊急対応",
+    "knowledge_node_id": "KN0322",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "運動、強い圧迫、マッサージ、温熱を続けると炎症を悪化させる可能性があるため中止し、抗菌薬を含む医学的治療の要否を速やかに評価してもらう。",
+      "リンパ浮腫患者では感染を早期に見分けることが重要である。",
+      "蜂窩織炎を疑い、運動を中止して速やかな受診を勧める。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2126",
+    "theme": "術後管理・内部障害・前庭・判断根拠",
+    "knowledge_node": "関節リウマチの頸椎不安定性red flagと徒手療法回避",
+    "knowledge_node_id": "KN0367",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "危険所見があるため頸椎手技を中止し、評価を優先する。",
+      "関節リウマチでは横靱帯などの障害による環軸関節不安定性が生じ得る。",
+      "後頭部痛や頸部運動に伴う両上肢症状は脊髄・神経組織への影響を疑う警告所見である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2127",
+    "theme": "褥瘡・研究法・神経・判断根拠",
+    "knowledge_node": "自律神経過反射の誘因除去と緊急対応",
+    "knowledge_node_id": "KN0371",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "血圧を頻回測定し、改善しなければ緊急対応につなげる。",
+      "同時に最も多い誘因である膀胱充満を考え、カテーテルの屈曲・閉塞を安全に確認する。",
+      "座位、締め付け解除、膀胱由来の誘因除去を直ちに行う。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2128",
+    "theme": "MMT・術後安全・神経筋・判断根拠",
+    "knowledge_node": "TKA術後の発熱・発赤・排液から感染を疑う緊急対応",
+    "knowledge_node_id": "KN0379",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "感染はインプラント温存や全身状態に関わるため、理学療法を中止し、創部を不用意に操作せず、直ちに担当医療者へ報告して検査・治療につなげる。",
+      "感染を疑い、訓練中止と即時報告を優先する。",
+      "通常の術後炎症として運動を続けてはならない。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2129",
+    "theme": "MMT・術後安全・神経筋・判断根拠",
+    "knowledge_node": "急性下肢動脈閉塞の6P徴候と緊急対応",
+    "knowledge_node_id": "KN0386",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "急性下肢虚血を強く疑う所見であり、運動を直ちに中止して緊急評価につなげる。",
+      "挙上・圧迫・マッサージや歩行継続は虚血を悪化させる危険がある。",
+      "急性動脈閉塞を疑う所見がそろっており、運動中止と緊急評価が最優先である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2130",
+    "theme": "透析・骨転移・運動療法・評価・判断根拠",
+    "knowledge_node": "重度血小板減少と出血徴候がある化学療法患者の運動中止",
+    "knowledge_node_id": "KN0390",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "現在は安全性を優先して出血を誘発し得る活動を見合わせる。",
+      "血小板15,000/μLで歯肉出血もあるため、出血リスクが高い状態である。",
+      "転倒、打撃、強い抵抗運動、息こらえを伴う高負荷運動は避け、運動実施の可否と許容範囲を担当医療者へ確認する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2131",
+    "theme": "呼吸安全・術後・脳卒中・小児・判断根拠",
+    "knowledge_node": "増悪する鮮血喀出時の排痰練習中止と医療対応",
+    "knowledge_node_id": "KN0396",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "活動性出血を疑うため排痰手技を直ちに中止し、呼吸・循環状態を確認して速やかに報告する。",
+      "増量する鮮紅色喀血では手技中止、状態確認、速やかな報告が最優先である。",
+      "頭低位、強い叩打、咳の反復は出血を増悪させる可能性がある。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2132",
+    "theme": "胸腔ドレーン留置中の患者を離床させる前に、ウォーターシール部で呼吸相・判断根拠",
+    "knowledge_node": "胸腔ドレーンの連続気泡からエアリークを疑い離床前に安全確認する判断",
+    "knowledge_node_id": "KN0424",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "胸腔ドレーンのウォーターシール機構",
+      "連続気泡とエアリークの関係",
+      "離床前のドレーン回路安全確認"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2133",
+    "theme": "気管切開患者に一方向性の発声弁を装着する際、装着前に必ず確認する事項・判断根拠",
+    "knowledge_node": "一方向性発声弁装着前の上気道開存・カフ脱気確認",
+    "knowledge_node_id": "KN0425",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "一方向性発声弁の呼気経路",
+      "気管切開カフの脱気",
+      "上気道開存の確認"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2134",
+    "theme": "脳卒中患者の少量飲水試験後に咳はなかったが、声が湿性に変化した・判断根拠",
+    "knowledge_node": "湿性嗄声を不顕性誤嚥徴候として扱う嚥下安全判断",
+    "knowledge_node_id": "KN0428",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "湿性嗄声と咽頭残留・誤嚥",
+      "嚥下スクリーニングの限界",
+      "経口摂取中止と専門評価への連携"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2135",
+    "theme": "1型糖尿病患者の運動前血糖値が280mg/dLで、血中ケトン体が陽性・判断根拠",
+    "knowledge_node": "高血糖かつケトン陽性時の運動中止判断",
+    "knowledge_node_id": "KN0488",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "運動時高血糖の基準",
+      "ケトーシスと運動の危険性",
+      "運動延期と医療連携"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2136",
+    "theme": "副腎皮質機能低下症の患者が感染後に強い脱力、嘔吐、腹痛を訴え、血圧7・判断根拠",
+    "knowledge_node": "副腎クリーゼを疑う低血圧・消化器症状への緊急対応",
+    "knowledge_node_id": "KN0489",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "副腎皮質機能低下症",
+      "副腎クリーゼの低血圧・消化器症状",
+      "緊急対応の優先順位"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2137",
+    "theme": "リウマチ性多発筋痛症で治療中の高齢者が、新たな側頭部痛と一過性の視覚・判断根拠",
+    "knowledge_node": "巨細胞性動脈炎を疑う頭痛・視覚症状への緊急医療連携",
+    "knowledge_node_id": "KN0490",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "リウマチ性多発筋痛症と巨細胞性動脈炎の関連",
+      "視覚障害を伴うGCAの緊急性",
+      "速やかな医療連携"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2138",
+    "theme": "52 歳の女性・判断根拠",
+    "knowledge_node": "52 歳の女性に対する適切な介入・支援選択",
+    "knowledge_node_id": "KN0499",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "高温刺激、締め付け、皮膚損傷は避ける。",
+      "リンパ浮腫では皮膚障害から蜂窩織炎を起こすと浮腫が悪化しやすいため、皮膚を清潔に保ち保湿してバリア機能を維持することが重要である。",
+      "したがって適切なのは2である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2139",
+    "theme": "工場生産労働者の腰痛対策として、産業理学療法の観点から優先度が低いの・判断根拠",
+    "knowledge_node": "工場生産労働者の腰痛対策として、産業理学療法の観点から優先度が低いのに対する適切な介入・支援選択",
+    "knowledge_node_id": "KN0516",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "配置転換は本人の作業能力や環境を改善する直接的介入ではなく、まず行う対策として優先度が低い。",
+      "産業理学療法では作業姿勢・作業方法・職場環境を評価し、腰痛を予防しながら安全性と生産性を保つことを重視する。",
+      "配置転換は最初に選ぶ人間工学的腰痛対策ではなく、優先度は低い。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2140",
+    "theme": "超音波治療が可能なのはどれか・判断根拠",
+    "knowledge_node": "超音波治療が可能なのはどれかに対する適切な介入・支援選択",
+    "knowledge_node_id": "KN0517",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "治療用超音波では金属そのものが禁忌になるわけではなく、骨折固定用金属プレート部位にも条件を確認して使用できる。",
+      "金属プレート固定部位でも、適切な条件設定で超音波治療は可能である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2141",
+    "theme": "部分損傷をきたした靱帯と強化すべき筋の組合せで適切なのはどれか・判断根拠",
+    "knowledge_node": "部分損傷をきたした靱帯と強化すべき筋の組合せで適切なのはどれかに対する適切な介入・支援選択",
+    "knowledge_node_id": "KN0519",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "長腓骨筋は代表的な外反筋であるため、前距腓靱帯損傷との組合せ4が適切である。",
+      "前距腓靱帯は足関節内反捻挫で損傷しやすく、再発予防では外反筋である腓骨筋群を強化して内反を制御する。",
+      "前距腓靱帯損傷後は外反筋である長腓骨筋などを強化する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2142",
+    "theme": "エネルギー蓄積機能によって大きな推進力を得る目的で使われる義足の足部・判断根拠",
+    "knowledge_node": "エネルギー蓄積機能によって大きな推進力を得る目的で使われる義足の足部に対する適切な介入・支援選択",
+    "knowledge_node_id": "KN0520",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "エネルギー蓄積型足部は、立脚期に変形して弾性エネルギーを蓄え、蹴り出し時に放出して推進力を得る。",
+      "フレックス足は弾性変形を利用してエネルギーを蓄積・返還する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2143",
+    "theme": "疾患と自助具の組合せで正しいのはどれか・判断根拠",
+    "knowledge_node": "疾患と自助具の組合せの基本事項",
+    "knowledge_node_id": "KN0523",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "両側上肢切断では、手を使わずに操作できるよう固定式・台付きの自助具が有用である。",
+      "台付き爪切りは一側の手で爪切り本体を把持しなくても操作しやすく、両側上肢切断との組合せが正しい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2144",
+    "theme": "転位のない大腿骨転子部骨折に対する観血的整復固定術後の理学療法として・判断根拠",
+    "knowledge_node": "転位のない大腿骨転子部骨折に対する観血的整復固定術後の理学療法としてに対する適切な介入・支援選択",
+    "knowledge_node_id": "KN0578",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "早期離床、ROM、筋力運動、DVT予防は重要である。",
+      "大腿骨転子部骨折の観血的整復固定術では股関節を置換していないため、人工股関節置換術のような脱臼予防肢位指導は通常不要である。",
+      "骨接合術後に人工股関節特有の脱臼肢位指導は不要である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2145",
+    "theme": "白杖を使用している視覚障害者の介助について正しいのはどれか・判断根拠",
+    "knowledge_node": "白杖を使用している視覚障害者の介助の特徴",
+    "knowledge_node_id": "KN0580",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "階段下降も介助者が一段先に降りるため2・3が正しい。",
+      "視覚障害者を誘導する際は介助者が半歩前を歩き、段差・乗降では介助者が先に入り動きを伝える。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2146",
+    "theme": "内反足に対する最も適切な靴の補正はどれか・判断根拠",
+    "knowledge_node": "内反足に対する靴補正の選択",
+    "knowledge_node_id": "KN0633",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "内反足では足底外側へ荷重が偏るため、外側ソールウェッジで足部を外反方向へ誘導し、内反を補正する。",
+      "したがって5が最も適切である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2147",
+    "theme": "脊髄損傷による対麻痺患者に対して立位・歩行練習を行う目的として誤っているのはどれか・判断根拠",
+    "knowledge_node": "脊髄損傷による対麻痺患者に対して立位・歩行練習を行う目的として誤っているのはどれかに対する適切な介入・装具・支援を選択する",
+    "knowledge_node_id": "KN0648",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "脊髄損傷者の立位・歩行練習には荷重による骨量維持、褥瘡予防、痙縮軽減、消化管運動促進などの目的がある。",
+      "異常痛の抑制は立位・歩行練習の代表的目的ではない。",
+      "一方、異常痛の抑制は一般的な主目的ではないため3が誤りである。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2148",
+    "theme": "身体計測で正しいのはどれか・判断根拠",
+    "knowledge_node": "胸囲は安静呼吸の呼気終末に測定するのが基本である",
+    "knowledge_node_id": "KN0703",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "測定条件を一定にすることで経時比較が可能となるため3が正しい。",
+      "胸囲は安静呼吸の呼気終末に測定するのが基本である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2149",
+    "theme": "下腿義足の静的アライメントにおいて、つま先の浮き上がりが観察され、膝折れを起こしそう・判断根拠",
+    "knowledge_node": "下腿義足のつま先浮き上がり・膝折れ傾向に対するソケットアライメント調整",
+    "knowledge_node_id": "KN0707",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "下腿義足でつま先が浮き、膝折れ方向の不安定感がある場合は、ソケットの初期屈曲角度を減らして膝の安定性を改善する。",
+      "初期屈曲角度を減らすのが厚生労働省公式正答である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2150",
+    "theme": "断端の成熟度を確認するための断端周径計測で正しいのはどれか・判断根拠",
+    "knowledge_node": "断端成熟を追跡する再現性のある周径計測",
+    "knowledge_node_id": "KN0711",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "大腿切断の断端周径は坐骨結節など一定の骨性指標から一定間隔で複数点を測定し、浮腫減少と断端成熟を経時的に確認する。",
+      "大腿切断では坐骨結節を基準に測定点を決める。",
+      "したがって4が正しい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2151",
+    "theme": "運動療法で正しいのはどれか・判断根拠",
+    "knowledge_node": "運動療法の適応・目的・負荷設定の基本原則",
+    "knowledge_node_id": "KN0715",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "等速性運動では角速度が一定に保たれ、一般に低速ではより大きな筋力・トルクを発揮できる。",
+      "したがって4が正しい。",
+      "等速性では低速度ほど大きなトルクを発揮しやすい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2152",
+    "theme": "Parkinson病・判断根拠",
+    "knowledge_node": "Parkinson病の小刻み・突進・すくみ足に対する歩行練習",
+    "knowledge_node_id": "KN0765",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "広い場所で外的キューを用いながら歩くとよい。",
+      "狭い一本線や二重課題はすくみを悪化させやすい。",
+      "Parkinson病のすくみ足には視覚的・聴覚的キューが有効で、広い空間で歩幅を意識して歩くことが適切である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2153",
+    "theme": "8年前に多発性硬化症と診断され、再発や寛解を繰り返し、2回の入院歴がある・判断根拠",
+    "knowledge_node": "多発性硬化症のUhthoff現象を踏まえた運動・環境調整",
+    "knowledge_node_id": "KN0766",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": "INTERPRET",
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "そのため高温時間帯を避け、過熱しない軽〜中等度運動とする。",
+      "多発性硬化症では体温上昇により一時的に神経症状が悪化するUhthoff徴候がある。",
+      "Uhthoff徴候は体温上昇で症状が一時悪化する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2154",
+    "theme": "8歳の女児・判断根拠",
+    "knowledge_node": "Sharrard分類に応じた二分脊椎児の歩行練習・装具選択",
+    "knowledge_node_id": "KN0768",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "独歩可能性があり、足部変形への靴型装具など比較的軽い装具が適応となるため1が正しい。",
+      "SharrardⅣ群では股関節屈筋・内転筋や膝伸筋などが機能し、足関節周囲筋は十分でないことが多い。",
+      "Ⅳ群では靴型装具などで歩行を支援できる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2155",
+    "theme": "自宅仏壇のろうそくの火が右袖に引火し、右前腕から前胸部および顔面にⅢ度5％とⅡ度15・判断根拠",
+    "knowledge_node": "広範囲熱傷・植皮術後早期の拘縮予防と創部保護を両立する理学療法",
+    "knowledge_node_id": "KN0769",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "熱傷深度と植皮術後管理",
+      "拘縮好発肢位",
+      "創部保護と早期運動"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2156",
+    "theme": "義足の遊脚相において下腿部の振り出し速度を制御する膝継手はどれか・判断根拠",
+    "knowledge_node": "大腿義足遊脚期の振り出し速度を制御する膝継手機構",
+    "knowledge_node_id": "KN0776",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "可変摩擦膝は遊脚相の膝屈伸速度に応じて摩擦を調節し、下腿義足部の振り出し速度を制御する。",
+      "したがって2が正しい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2157",
+    "theme": "関節可動域運動で正しいのはどれか・判断根拠",
+    "knowledge_node": "関節可動域運動の適応と実施原則",
+    "knowledge_node_id": "KN0783",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "関節可動域運動は関節拘縮の予防・改善、軟部組織の柔軟性維持などを目的に行う。",
+      "拘縮の予防・改善が主要目的である。",
+      "自動・他動・自動介助などがあり、意識障害や感覚障害があっても適応を判断して実施できる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2158",
+    "theme": "筋力増強運動として求心性収縮を用いた抵抗運動を行う際、対象筋と運動方向の組合せで正し・判断根拠",
+    "knowledge_node": "対象筋の作用方向に沿った求心性抵抗運動の選択",
+    "knowledge_node_id": "KN0784",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "中殿筋は股関節外転の主働筋で、股関節伸展0°付近から外転方向へ抵抗を加えると求心性収縮を用いた筋力増強となる。",
+      "したがって5が正しい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2159",
+    "theme": "外側ストラップ付き金属支柱付き短下肢装具の使用が最も適切なのはどれか・判断根拠",
+    "knowledge_node": "外側ストラップ付き金属支柱AFOの適応選択",
+    "knowledge_node_id": "KN0787",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "金属支柱付き短下肢装具で内反尖足を制御する場面に適するため4が正しい。",
+      "外側ストラップは足部を外反方向へ引き、内反を矯正する。",
+      "外側ストラップで内反を矯正し、尖足も足継手で制御する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2160",
+    "theme": "慢性腰痛に対する認知行動療法で誤っているのはどれか・判断根拠",
+    "knowledge_node": "慢性腰痛に対する認知行動療法の適切な介入原則",
+    "knowledge_node_id": "KN0789",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "痛みの有無を頻回に確認することは痛みへの注意を強めるため誤り。",
+      "慢性腰痛の認知行動療法では、痛みへの過度な注意や恐怖回避を減らし、活動可能性を再学習する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2161",
+    "theme": "多発性筋炎の回復初期における理学療法で正しいのはどれか・判断根拠",
+    "knowledge_node": "多発性筋炎回復初期の過用を避けた段階的運動療法",
+    "knowledge_node_id": "KN0792",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "多発性筋炎の炎症活動性",
+      "過用性筋力低下",
+      "段階的負荷設定"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2162",
+    "theme": "Down症候群の児に対して乳児期に行う理学療法で適切なのはどれか・判断根拠",
+    "knowledge_node": "Down症候群乳児期の低緊張・関節弛緩を踏まえた運動発達支援",
+    "knowledge_node_id": "KN0793",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "Down症候群では筋緊張低下と体幹安定性低下があるため、乳児期から腹筋群など体幹筋活動を促すことが重要である。",
+      "したがって1が適切。",
+      "体幹安定性向上のため腹筋群の活動を促す。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2163",
+    "theme": "46 歳の女性・判断根拠",
+    "knowledge_node": "変形性股関節症の疼痛・肥満・筋力低下を踏まえた低負荷運動選択",
+    "knowledge_node_id": "KN0838",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "変形性股関節症で荷重時痛がある場合、高負荷の階段昇降を筋力増強目的に繰り返すと関節負荷が大きい。",
+      "階段反復は高負荷で疼痛増悪の恐れ。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2164",
+    "theme": "除細動が必要となる可能性が高い不整脈はどれか・判断根拠",
+    "knowledge_node": "除細動適応となりうる心室頻拍の識別",
+    "knowledge_node_id": "KN0841",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "KNOW",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "致死性不整脈",
+      "心室頻拍と心室細動",
+      "除細動適応"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2165",
+    "theme": "他の筋への影響を最小限にして伸張運動を行う場合、伸張筋と運動方向の組合せで適切なのはどれか・判断根拠",
+    "knowledge_node": "他筋への影響を抑えた選択的筋伸張肢位の決定",
+    "knowledge_node_id": "KN0853",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "長橈側手根伸筋を伸張するには、作用と反対方向となる手関節掌屈・尺屈を用い、前腕回内位などで他筋の影響を抑える。",
+      "他の筋への影響を最小限にして伸張運動を行う場合、伸張筋と運動方向の組合せで適切なのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2166",
+    "theme": "PTB式免荷装具の除圧部位はどれか・判断根拠",
+    "knowledge_node": "PTB式装具は膝蓋腱部など耐圧性の高い部位で荷重し、脛骨粗面や腓骨頭など骨突出部は除圧する",
+    "knowledge_node_id": "KN0855",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "PTB式装具は膝蓋腱部など耐圧性の高い部位で荷重し、脛骨粗面や腓骨頭など骨突出部は除圧する。",
+      "2・5が正しい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2167",
+    "theme": "筋力増強運動について正しいのはどれか・判断根拠",
+    "knowledge_node": "筋力増強運動について正しいのはどれかに対して適切な理学療法・介入を選択する",
+    "knowledge_node_id": "KN0856",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "等尺性収縮では血圧が上昇しやすく、特に高血圧・心疾患患者では息こらえを避けて監視する。",
+      "等尺性運動では血圧上昇に注意。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2168",
+    "theme": "急性期脳血管障害に対して、積極的に離床を行ってもよいのはどの場合か・判断根拠",
+    "knowledge_node": "急性期脳血管障害の離床可否を安全基準から判断する",
+    "knowledge_node_id": "KN0859",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "急性期脳卒中の離床基準",
+      "意識レベル・神経症状・血圧の評価",
+      "全身合併症と離床リスク"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2169",
+    "theme": "人工呼吸器装着患者の理学療法で適切でないのはどれか・判断根拠",
+    "knowledge_node": "『ベッドアップ60°まで』と上限を固定する1が不適切時の優先対応",
+    "knowledge_node_id": "KN0862",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "人工呼吸器装着患者の理学療法で適切でないのはどれかの危険徴候",
+      "中止・報告・医療連携の基準"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2170",
+    "theme": "52歳の女性・判断根拠",
+    "knowledge_node": "立位重心移動獲得後に行う段階的バランス練習の選択",
+    "knowledge_node_id": "KN0912",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "次段階として支持を片手に減らし、ステップを加える練習が適切。",
+      "片側支持でステップ練習が段階的。",
+      "現在は支持なしで重心移動できる一方、歩行は両手支持・軽介助。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2171",
+    "theme": "次の文により15、16の問いに答えよ・判断根拠",
+    "knowledge_node": "亜急性腰椎椎間板ヘルニアに対する理学療法選択",
+    "knowledge_node_id": "KN0914",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "慢性期には体幹筋訓練や柔軟性改善が重要で、装具の継続装着は廃用を助長しうるため3が不適切。",
+      "発症2か月で安静時痛は改善し、軽度労作時痛のみ。",
+      "Williams型装具の常用は慢性回復期では優先しない。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2172",
+    "theme": "訪問理学療法で正しいのはどれか・判断根拠",
+    "knowledge_node": "訪問理学療法で正しいのはどれかに対して適切な理学療法・介入を選択する",
+    "knowledge_node_id": "KN0932",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "訪問理学療法では生活場面で歩行・移動への支援要望が多く、本人・家族・環境を総合的に評価する。",
+      "歩行・移動支援の要望は多い。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2173",
+    "theme": "栄養管理について正しいのはどれか・判断根拠",
+    "knowledge_node": "栄養管理について正しいのはどれかに対して適切な理学療法・介入を選択する",
+    "knowledge_node_id": "KN0997",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "発熱では代謝率が上昇しエネルギー必要量が増える。",
+      "低栄養ではリンパ球数が減少し、重度熱傷では異化亢進により尿中窒素排泄が増える。",
+      "発熱では代謝が亢進しエネルギー消費・必要量が増える。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2174",
+    "theme": "全身持久力トレーニングの効果で減少するのはどれか・判断根拠",
+    "knowledge_node": "持久力トレーニングでは同一運動強度での心拍・換気応答が小さくなり、最大酸素摂取量、毛細血管密度、嫌気性代謝閾値などは改善するを評価する",
+    "knowledge_node_id": "KN0998",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "持久力トレーニングでは同一運動強度での心拍・換気応答が小さくなり、最大酸素摂取量、毛細血管密度、嫌気性代謝閾値などは改善する。",
+      "同一絶対運動強度では換気効率が改善し、換気量や心拍応答が減少する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2175",
+    "theme": "脊髄完全損傷者の機能残存レベルと実用可能な能力の組合せで正しいのはどれか・判断根拠",
+    "knowledge_node": "脊髄完全損傷者の機能残存レベルと実用可能な能力の組合せで正しいのはどれかに対して適切な理学療法・介入を選択する",
+    "knowledge_node_id": "KN0999",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "T3残存レベルでは上肢機能が保たれ体幹制御も一定程度可能なため、自動車への移乗を含む高度な車椅子ADLが実用化し得る。",
+      "T3では上肢機能が正常で体幹機能も一定程度あり、自動車への移乗を実用化し得る。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2176",
+    "theme": "膝関節前十字靱帯再建術後3日経過した時点で行う理学療法として適切でないのはどれか・判断根拠",
+    "knowledge_node": "ACL再建術後3日では疼痛・腫脹管理、ROM、自動介助運動、筋賦活が中心で、荷重を伴うハーフスクワットは通常この時期の最優先ではないに対する機器選択",
+    "knowledge_node_id": "KN1000",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "ACL再建術後3日では疼痛・腫脹管理、ROM、自動介助運動、筋賦活が中心で、荷重を伴うハーフスクワットは通常この時期の最優先ではない。",
+      "術後3日でのハーフスクワットは荷重・剪断ストレスが大きく、通常はより後期に導入する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2177",
+    "theme": "呼吸障害に対する理学療法として、口すぼめ呼吸が有効なのはどれか・判断根拠",
+    "knowledge_node": "呼吸障害に対する理学療法として、口すぼめ呼吸が有効なのはどれかに対して適切な理学療法・介入を選択する",
+    "knowledge_node_id": "KN1003",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "COPDでは口すぼめ呼吸により呼気時の気道内圧を保ち、末梢気道の虚脱を抑えて呼気を延長できる。",
+      "呼吸障害に対する理学療法として、口すぼめ呼吸が有効なのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2178",
+    "theme": "廃用症候群について正しいのはどれか・判断根拠",
+    "knowledge_node": "廃用症候群について正しいのはどれかに対して適切な理学療法・介入を選択する",
+    "knowledge_node_id": "KN1004",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "廃用症候群では長期臥床や活動低下により循環調節機能が低下し、起立性低血圧を生じやすい。",
+      "循環血液量や血管反応低下により起立性低血圧を生じやすい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2179",
+    "theme": "理学療法士法及び作業療法士法で正しいのはどれか・判断根拠",
+    "knowledge_node": "理学療法士法及び作業療法士法で正しいのはどれかに対する適切な介入・練習・指導を選択する",
+    "knowledge_node_id": "KN1037",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "複数選択問題では、一方が正しくてもそこで止めず、残る選択肢も同じ基準で確認して2項目をそろえることが重要である。",
+      "」の2つである。",
+      "」、5「理学療法士、作業療法士は名称独占である。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2180",
+    "theme": "75歳の男性・判断根拠",
+    "knowledge_node": "下腿義足歩行時の膝折れを生むソケット位置・膝伸展筋力などの原因推定",
+    "knowledge_node_id": "KN1042",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": "INTERPRET",
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "複数選択問題では、一方が正しくてもそこで止めず、残る選択肢も同じ基準で確認して2項目をそろえることが重要である。",
+      "」の2つである。",
+      "」、4「右膝関節の伸展筋力が低下している。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2181",
+    "theme": "短下肢装具の足継手機能のうち背屈補助が適応となるのはどれか・判断根拠",
+    "knowledge_node": "下垂足に対するAFO背屈補助機能の適応",
+    "knowledge_node_id": "KN1050",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "背屈補助機能は遊脚期の足尖クリアランスを確保するため下垂足に適応する。",
+      "下垂足では遊脚期の足尖クリアランス確保に背屈補助が適応。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2182",
+    "theme": "認知症患者の運動療法を行うときの対応として適切でないのはどれか・判断根拠",
+    "knowledge_node": "認知症患者の運動療法で拒否を尊重し慣れた動作を用いる対応",
+    "knowledge_node_id": "KN1060",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "認知症患者の運動療法では拒否を無理に説得・強制せず、安心できる声かけと本人のペース、馴染みの動作を活用する。",
+      "拒否時に無理に説得・強制すると不安や興奮を高めるため不適切。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2183",
+    "theme": "疾患と支援機器の組合せで適切なのはどれか・判断根拠",
+    "knowledge_node": "疾患・機能障害に応じた支援機器の適応選択",
+    "knowledge_node_id": "KN1061",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "関節リウマチでは手指関節への負担を減らす自助具として台付き爪切りが適する。",
+      "他の組合せは障害レベル・機能に合わない。",
+      "関節リウマチでは手指への負担を減らし弱い力で操作できる台付き爪切りが有用。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2184",
+    "theme": "6歳の女児・判断根拠",
+    "knowledge_node": "L4機能残存二分脊椎児の歩行に適した装具・杖選択",
+    "knowledge_node_id": "KN1101",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "L4機能残存レベルでは膝伸展が保たれ、足関節以下の筋力は不十分なため、短下肢装具で足部を安定させ杖を併用する方法が適切。",
+      "厚生労働省の第57回国家試験では、複数の選択肢を正解として採点している。",
+      "（厚生労働省公式で正答扱い）。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2185",
+    "theme": "バランス練習の難度を高める方法として正しいのはどれか・判断根拠",
+    "knowledge_node": "支持基底面・視覚・二重課題を操作してバランス練習難度を上げる",
+    "knowledge_node_id": "KN1106",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "閉眼は視覚情報を除き、立位でのボール投げは二重課題・重心移動を加えるため、いずれもバランス練習の難度を高める。",
+      "閉眼で感覚条件が難しくなる。",
+      "ボール投げで動的課題が加わる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2186",
+    "theme": "PEDIで正しいのはどれか・判断根拠",
+    "knowledge_node": "PEDIの対象・評価項目・評定方法",
+    "knowledge_node_id": "KN1110",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "PEDIはセルフケア・移動・社会的機能を評価し、補助具や環境調整などの修正方法も把握できるため3が適切。",
+      "補装具・補助具使用など機能遂行の修正を評価できる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2187",
+    "theme": "全身持久力トレーニングの効果で正しいのはどれか・判断根拠",
+    "knowledge_node": "全身持久力トレーニングの効果で正しいのはどれかに対する適切な介入・練習・指導を選択する",
+    "knowledge_node_id": "KN1116",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "持久力トレーニングにより最大酸素摂取量が増え、同じ絶対運動強度では呼吸・循環負担が減るため換気量も低下する。",
+      "VO2maxは増加。",
+      "同一負荷で換気量は減少。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2188",
+    "theme": "腰椎椎間板ヘルニアの保存療法後の理学療法で誤っているのはどれか・判断根拠",
+    "knowledge_node": "腰椎椎間板ヘルニア保存療法後の症状に応じた運動・姿勢指導",
+    "knowledge_node_id": "KN1120",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "腰椎椎間板ヘルニア保存療法では症状に応じて腰椎伸展運動を用いることがあるが、就寝時に腰椎伸展位を強制する指導は不適切。",
+      "腰椎椎間板ヘルニアの保存療法後の理学療法で誤っているのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2189",
+    "theme": "温熱療法を避けるべき疾患はどれか・判断根拠",
+    "knowledge_node": "温熱で症状悪化を招く疾患を識別し禁忌を判断する",
+    "knowledge_node_id": "KN1122",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "視神経脊髄炎では過度な温熱を避ける。",
+      "脱髄疾患では体温上昇により神経伝導が悪化するUhthoff現象が問題となる。",
+      "視神経脊髄炎でも高温環境・過度な温熱に注意する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2190",
+    "theme": "重症筋無力症で正しいのはどれか・判断根拠",
+    "knowledge_node": "重症筋無力症で過用を避けた漸増負荷運動を選択する",
+    "knowledge_node_id": "KN1123",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "重症筋無力症では易疲労性があり、過用を避けて休息を挟みながら低負荷から漸増する運動が適切。",
+      "過用に注意し漸増負荷。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2191",
+    "theme": "心臓リハビリテーションにおいて有酸素運動が勧められる理由として正しいのはどれか・判断根拠",
+    "knowledge_node": "心臓リハビリテーションにおいて有酸素運動が勧められる理由として正しいのはどれかに対する適切な介入・練習・指導を選択する",
+    "knowledge_node_id": "KN1125",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "有酸素運動は脂質代謝を改善しHDLコレステロール増加など動脈硬化リスク改善が期待できる。",
+      "心臓リハビリテーションにおいて有酸素運動が勧められる理由として正しいのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2192",
+    "theme": "地域リハビリテーションについて正しいのはどれか・判断根拠",
+    "knowledge_node": "地域リハビリテーションについて正しいのはどれかに対する適切な介入・練習・指導を選択する",
+    "knowledge_node_id": "KN1126",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "地域リハビリテーションの具体的な取り組みには、対象者や地域住民への教育・啓発活動も含まれる。",
+      "地域リハビリテーションについて正しいのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2193",
+    "theme": "78歳の男性・判断根拠",
+    "knowledge_node": "78歳の男性に対する適切な介入・練習・指導を選択する",
+    "knowledge_node_id": "KN1167",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "COPDの自己管理では症状・体調・活動を日誌に記録し、増悪徴候や生活パターンを把握して指導に生かす。",
+      "日誌をもとに生活指導する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2194",
+    "theme": "理学療法実施時のインフォームドコンセントで適切なのはどれか・判断根拠",
+    "knowledge_node": "理学療法実施時のインフォームドコンセントで適切なのはどれかに対する適切な介入・練習・指導を選択する",
+    "knowledge_node_id": "KN1170",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "インフォームドコンセントでは理解可能な説明を行い、同意内容を適切に記録・保存する。",
+      "理学療法実施時のインフォームドコンセントで適切なのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2195",
+    "theme": "静的立位で下腿義足の足部外側が床から浮き上がった・判断根拠",
+    "knowledge_node": "下腿義足で足部外側が浮くのは、ソケットの初期内転角が大きすぎて義足全体が内反方向に傾く場合に起こる",
+    "knowledge_node_id": "KN1178",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "下腿義足で足部外側が浮くのは、ソケットの初期内転角が大きすぎて義足全体が内反方向に傾く場合に起こる。",
+      "初期内転角過大で外側が浮きやすい。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2196",
+    "theme": "筋力増強運動で正しいのはどれか・判断根拠",
+    "knowledge_node": "筋力増強運動で正しいのはどれかに対する適切な介入・練習・指導を選択する",
+    "knowledge_node_id": "KN1182",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "閉鎖性運動連鎖では末端が固定され複数関節・複数筋が協調して働くため、複数筋群の筋力増強に適する。",
+      "CKCは複数筋の協調的強化に適する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2197",
+    "theme": "装具と疾患の組合せで正しいのはどれか・判断根拠",
+    "knowledge_node": "装具と疾患の組合せで正しいのはどれかに対する適切な装具・義足・機器を選択する",
+    "knowledge_node_id": "KN1233",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "RGOは胸腰髄レベルの対麻痺や二分脊椎で、股関節を連動させ交互歩行を補助する装具。",
+      "Th12レベルが適応となる。",
+      "RGOは高位二分脊椎に用いる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2198",
+    "theme": "脊髄小脳変性症患者の四つ這いでのバランス練習で最も難易度が高いのはどれか・判断根拠",
+    "knowledge_node": "小脳性運動失調に対する四つ這いバランス練習の難易度調整",
+    "knowledge_node_id": "KN1237",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "四つ這いで同側上下肢を同時に挙上すると支持が対角線ではなく同側一側に偏り、支持基底面が著しく狭くなるため最も難しい。",
+      "同側上下肢挙上は最も不安定。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2199",
+    "theme": "関節リウマチの槌指による中足骨頭部の疼痛に対する装具で最も適切なのはどれか・判断根拠",
+    "knowledge_node": "関節リウマチの槌趾・中足骨頭痛に対する足底装具選択",
+    "knowledge_node_id": "KN1282",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "RAで槌趾変形により中足骨頭へ荷重が集中する場合、メタタルザルパッドで中足骨頭近位を支持し除圧する。",
+      "関節リウマチの槌指による中足骨頭部の疼痛に対する装具で最も適切なのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2200",
+    "theme": "間質性肺疾患患者に対する理学療法で最も適切なのはどれか・判断根拠",
+    "knowledge_node": "間質性肺疾患の呼吸困難・低酸素に配慮した理学療法選択",
+    "knowledge_node_id": "KN1291",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "間質性肺疾患では呼吸困難と運動耐容能低下が問題となり、呼吸筋力低下例では吸気筋トレーニングを含む呼吸リハを検討できる。",
+      "間質性肺疾患患者に対する理学療法で最も適切なのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2201",
+    "theme": "65 歳の女性・判断根拠",
+    "knowledge_node": "内側型変形性膝関節症の内側荷重を軽減する装具療法",
+    "knowledge_node_id": "KN1317",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "内側型変形性膝関節症では外側ウェッジソールで足部を外反させ、膝内反モーメントを減らして内側荷重を軽減する。",
+      "外側ウェッジソールが適切。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2202",
+    "theme": "5 歳の女児・判断根拠",
+    "knowledge_node": "痙直型両麻痺児のPCW歩行に対する適切な動作指導",
+    "knowledge_node_id": "KN1319",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "痙直型両麻痺で歩行器練習中の児では、膝立ちで体幹・骨盤の安定性や重心移動を促しながら上肢課題を行うことが適切。",
+      "膝立ち位キャッチボールで体幹・骨盤制御を促す。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2203",
+    "theme": "軽度の片麻痺患者が車椅子から床へ移乗する手順で誤っているのはどれか・判断根拠",
+    "knowledge_node": "片麻痺患者の車椅子から床への移乗手順を安全性から判断する",
+    "knowledge_node_id": "KN1322",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "床へ移乗する際は非麻痺側を支持側として利用する。",
+      "麻痺側膝を床へつく手順は不安定で、通常は非麻痺側膝を接地して降りる。",
+      "麻痺側膝を床につくのは不適切。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2204",
+    "theme": "Lawton の IADL スケールに含まれるのはどれか・判断根拠",
+    "knowledge_node": "Lawton IADLには電話使用、買物、食事準備、家事、洗濯、交通、服薬、金銭管理が含まれるを評価する",
+    "knowledge_node_id": "KN1323",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "選択肢では家屋維持と家計管理。",
+      "Lawton IADLには電話使用、買物、食事準備、家事、洗濯、交通、服薬、金銭管理が含まれる。",
+      "家屋維持・家事を含む。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2205",
+    "theme": "MRC〈Medical Research Council〉 sum score による筋力が集中治療・判断根拠",
+    "knowledge_node": "MRC sum scoreでICU-AWの全身筋力低下を判定する",
+    "knowledge_node_id": "KN1331",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "ICU-AWではMRC sum scoreが48点未満、または平均筋力が4点未満で全身性筋力低下を判定する。",
+      "合計48点未満。",
+      "平均4点未満に相当。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2206",
+    "theme": "歩行練習中に患者が転倒した場合、最も優先して行うのはどれか・判断根拠",
+    "knowledge_node": "歩行練習中の転倒後に患者の状態確認を最優先する",
+    "knowledge_node_id": "KN1333",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "転倒後の一次評価",
+      "意識・疼痛・外傷の確認",
+      "報告と再発防止"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2207",
+    "theme": "装具療法の主たる目的でないのはどれか・判断根拠",
+    "knowledge_node": "装具療法の主たる目的でないのはどれかに対する適切な装具・義足・機器を選択する",
+    "knowledge_node_id": "KN1353",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "筋力そのものの強化は主目的ではない。",
+      "筋力強化は装具療法の主目的ではない。",
+      "装具の目的は機能補助、固定・保護、免荷、疼痛軽減、変形予防・矯正など。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2208",
+    "theme": "60 歳の男性・判断根拠",
+    "knowledge_node": "足関節離断後に適した義足を選択する",
+    "knowledge_node_id": "KN1362",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "足関節離断はSyme切断に相当し、踵部皮膚を断端荷重面として用いるためサイム義足を製作する。",
+      "歳の男性。交通事故による右足部の開放骨折のため入院した。 1 週後に右足部の腫脹、熱感が出現し、右中足骨の骨髄炎と診断され、右足関節離断術が施行された。 製作すべき義足はどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2209",
+    "theme": "70 歳の女性・判断根拠",
+    "knowledge_node": "通所リハビリでの転倒リスクを適切な尺度で評価する",
+    "knowledge_node_id": "KN1364",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "TUGは転倒リスクや移動能力の評価に用いる。",
+      "転倒リスク評価には立ち上がり・歩行・方向転換を含むTUGが適する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2210",
+    "theme": "17 歳の男子・判断根拠",
+    "knowledge_node": "大腿四頭筋広範囲切除後の膝伸展機能低下に対する補装具選択",
+    "knowledge_node_id": "KN1365",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "大腿四頭筋広範切除後で膝伸展筋力が低下しているが、足関節機能は保たれているため、膝折れを直接制御する両側金属支柱付き膝装具が最も適切。",
+      "膝継手で膝折れを制御し、必要な膝支持を得られる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2211",
+    "theme": "フレイルの判定要件はどれか・判断根拠",
+    "knowledge_node": "身体的フレイルの代表要件には歩行速度低下と身体活動量低下が含まれるを評価する",
+    "knowledge_node_id": "KN1371",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "身体的フレイルの代表要件には歩行速度低下と身体活動量低下が含まれる。",
+      "フレイルの判定要件はどれか。 2つ選べ。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2212",
+    "theme": "酸素療法機器で正しいのはどれか・判断根拠",
+    "knowledge_node": "酸素療法機器で正しいのはどれかに対する適切な装具・義足・機器を選択する",
+    "knowledge_node_id": "KN1372",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "在宅酸素療法では酸素濃縮器が広く用いられる。",
+      "酸素濃縮器を使用する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2213",
+    "theme": "理学療法評価における社会的情報に該当しないのはどれか・判断根拠",
+    "knowledge_node": "体重は身体的・医学的情報であり社会的情報ではないを評価する",
+    "knowledge_node_id": "KN1375",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "体重は身体的・医学的情報であり社会的情報ではない。",
+      "体重は身体情報。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2214",
+    "theme": "70 歳の男性・判断根拠",
+    "knowledge_node": "ICU術後患者の意識・疼痛・循環動態から積極的離床の可否を判断する",
+    "knowledge_node_id": "KN1420",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "ICU早期離床の安全基準",
+      "RASS・疼痛・循環動態の評価",
+      "臓器障害悪化の判断"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2215",
+    "theme": "75 歳の男性・判断根拠",
+    "knowledge_node": "間質性肺疾患の呼吸仕事量増大に対し胸郭可動性を改善する理学療法を選択する",
+    "knowledge_node_id": "KN1422",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "間質性肺疾患で補助筋過活動が強い場合、過度な負荷より胸郭可動性を改善し呼吸仕事量を軽減する介入が適切。",
+      "徒手的胸郭可動域拡大が適切。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2216",
+    "theme": "移乗動作時に右上下肢でベッド柵や床面を強く押して麻痺側に傾くため、自立が難しい・判断根拠",
+    "knowledge_node": "Pusher現象を想定し非麻痺側への能動的重心移動を促す",
+    "knowledge_node_id": "KN1423",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "非麻痺側で強く押して麻痺側へ傾くpusher行動には、非麻痺側への能動的重心移動を視覚・課題で促す。",
+      "リーチで非麻痺側へ重心移動。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2217",
+    "theme": "80 歳の男性・判断根拠",
+    "knowledge_node": "高用量昇圧剤投与中の術翌日患者で離床負荷を避け安全なベッド上介入を選択する",
+    "knowledge_node_id": "KN1425",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "昇圧剤使用中の循環不安定性",
+      "早期離床の禁忌・中止基準",
+      "ベッド上で可能な廃用予防"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2218",
+    "theme": "64 歳の男性・判断根拠",
+    "knowledge_node": "C6完全脊髄損傷の頭痛・顔面紅潮・著明高血圧から自律神経過反射を疑い誘因を確認する",
+    "knowledge_node_id": "KN1426",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "DECIDE",
+    "level": 4,
+    "safety": "critical",
+    "prerequisite_nodes": [
+      "自律神経過反射の症状",
+      "T6以上脊髄損傷との関連",
+      "膀胱・直腸など誘因の確認"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2219",
+    "theme": "74 歳の女性・判断根拠",
+    "knowledge_node": "BPPVに対して耳石置換法〈Epley法〉を選択する",
+    "knowledge_node_id": "KN1427",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "頭部運動回避だけでは治療にならない。",
+      "BPPVでは耳石置換法であるEpley法が適応となる。",
+      "歩行安定なら杖不要。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2220",
+    "theme": "45 歳の男性・判断根拠",
+    "knowledge_node": "ALSの下垂足・鶏歩に対して軽量AFOを用いた歩行を選択する",
+    "knowledge_node_id": "KN1429",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "ALSで鶏歩があるがADL自立なら、過用を避けつつAFOで下垂足を補助し安全歩行を維持する。",
+      "プラスチックAFOで歩行練習。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2221",
+    "theme": "両側支柱付き長下肢装具の適合判定で正しいのはどれか・判断根拠",
+    "knowledge_node": "両側支柱付き長下肢装具の継手・半月・支柱位置の適合判定",
+    "knowledge_node_id": "KN1434",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "長下肢装具では大腿・下腿の半月を膝継手から適切な距離に配置し、左右の支持を均衡させる。",
+      "大腿下位半月と膝継手間の距離は、下腿半月と膝継手間の距離と概ね等しく設定する。",
+      "上下の半月と膝継手の距離関係を適切にそろえる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2222",
+    "theme": "加齢による筋萎縮の理学療法で最も適切なのはどれか・判断根拠",
+    "knowledge_node": "加齢性筋萎縮に対する抗重力筋中心のレジスタンストレーニング",
+    "knowledge_node_id": "KN1438",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "加齢性筋萎縮では日常機能維持に重要な抗重力筋を中心にレジスタンストレーニングを行う。",
+      "加齢による筋萎縮の理学療法で最も適切なのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2223",
+    "theme": "装具と疾患の組合せで適切なのはどれか・判断根拠",
+    "knowledge_node": "脳卒中片麻痺で下肢Brunnstrom stage Vでも、立脚初期の急激な底屈や遊脚期の下垂足が残れば、足関節底屈制動式短下肢装具が適応となる",
+    "knowledge_node_id": "KN1440",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "脳卒中片麻痺で下肢Brunnstrom stage Vでも、立脚初期の急激な底屈や遊脚期の下垂足が残れば、足関節底屈制動式短下肢装具が適応となる。",
+      "底屈制動式AFOは脳卒中片麻痺の歩行補助に適する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2224",
+    "theme": "関節リウマチに対する理学療法で最も適切なのはどれか・判断根拠",
+    "knowledge_node": "関節リウマチの病期・炎症活動性を踏まえ安全な理学療法を選択する",
+    "knowledge_node_id": "KN1449",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "RAでは関節負担の少ない等尺性運動で筋力維持を図る。",
+      "等尺性運動が適切。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2225",
+    "theme": "78歳の男性・判断根拠",
+    "knowledge_node": "開腹術後の呼吸器合併症を予防する早期呼吸理学療法を選択する",
+    "knowledge_node_id": "KN1481",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "提示選択肢では口すぼめ呼吸が最も適切で、呼気を安定させる。",
+      "開腹術後の呼吸器合併症予防では創部を支持しながら咳嗽・深呼吸・早期離床を促す。",
+      "口すぼめ呼吸は呼吸を整える方法として実施可能。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2226",
+    "theme": "62 歳の男性・判断根拠",
+    "knowledge_node": "糖尿病性末梢神経障害と足部色調変化を踏まえ前足部を免荷する",
+    "knowledge_node_id": "KN1482",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "糖尿病性末梢神経障害",
+      "足部皮膚・血流異常の観察",
+      "足部の除圧とフットケア"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2227",
+    "theme": "8歳の男児・判断根拠",
+    "knowledge_node": "L5レベル二分脊椎児の歩行安定性向上に必要な筋力強化対象を選択する",
+    "knowledge_node_id": "KN1486",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "L5レベル二分脊椎では股関節外転筋が弱くTrendelenburg傾向が出やすいため、中殿筋強化が歩行安定に重要。",
+      "大殿筋も重要だがL5では中殿筋安定性が優先。",
+      "腸腰筋はより上位で保たれる。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2228",
+    "theme": "松葉杖の一般的な設定で正しいのはどれか・判断根拠",
+    "knowledge_node": "松葉杖の腋窩・握り位置などの適切な設定",
+    "knowledge_node_id": "KN1488",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "松葉杖の握りは、肘を軽度屈曲できる高さに調整し、大転子付近を目安とする。",
+      "松葉杖の一般的な設定で正しいのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2229",
+    "theme": "転倒予防を目的とした理学療法で適切なのはどれか・判断根拠",
+    "knowledge_node": "転倒リスクを踏まえ静的から動的へ段階づけたバランス練習を選択する",
+    "knowledge_node_id": "KN1491",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "転倒リスクには認知機能低下が関与し、バランス練習は静的から動的へ段階的に進める。",
+      "認知低下は転倒リスク。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2230",
+    "theme": "GMFM で正しいのはどれか・判断根拠",
+    "knowledge_node": "GMFMの対象・領域・採点・Item Mapを理解する",
+    "knowledge_node_id": "KN1498",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "GMFMではItem Mapを作成して能力分布や次に獲得しうる課題を可視化できる。",
+      "GMFM で正しいのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2231",
+    "theme": "BBS で正しいのはどれか・判断根拠",
+    "knowledge_node": "Berg Balance Scaleの項目・採点・解釈を理解する",
+    "knowledge_node_id": "KN1499",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "MEASURE",
+    "level": 3,
+    "safety": "none",
+    "prerequisite_nodes": [
+      "BBSは14項目・各0〜4点で、タンデム立位保持を含む。",
+      "BBS で正しいのはどれか。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2232",
+    "theme": "Karvonen法（k＝0.5）を用いて計算した全身持久力運動の目標心拍数で正しいのはどれか。・判断根拠",
+    "knowledge_node": "Karvonen法では目標心拍数を（予測最大心拍数－安静時心拍数）×運動強度＋安静時心拍数で求める",
+    "knowledge_node_id": "KN1559",
+    "task": "fact_recall",
+    "primary_ability": "KNOW",
+    "secondary_ability": "INTERPRET",
+    "level": 2,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "目標心拍数の計算では年齢から予測最大心拍数を求め、安静時心拍数との差を心拍予備能とする。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
+  },
+  {
+    "id": "Q2233",
+    "theme": "右足関節背屈筋力低下に対する物理療法で適切なのはどれか。・判断根拠",
+    "knowledge_node": "末梢神経障害による随意収縮困難な筋には、筋収縮の誘発と廃用予防を目的に神経筋電気刺激療法を用いる",
+    "knowledge_node_id": "KN1562",
+    "task": "finding_interpretation",
+    "primary_ability": "INTERPRET",
+    "secondary_ability": "PRESCRIBE",
+    "level": 3,
+    "safety": "moderate",
+    "prerequisite_nodes": [
+      "末梢神経障害で随意収縮が困難な筋では、廃用性筋萎縮の予防と筋収縮誘発を検討する。"
+    ],
+    "tag_version": "1.0",
+    "tag_status": "reviewed",
+    "source": "original"
   }
 ]

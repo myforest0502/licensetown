@@ -34,8 +34,8 @@ def test_frequency_constants_match_formal_repository_records():
     bank = Path(__file__).resolve().parents[1] / "licensetown" / "pt" / "data" / "question_bank"
     tags = json.loads((bank / "question_tags.json").read_text(encoding="utf-8-sig"))
     questions = json.loads((bank / "questions.json").read_text(encoding="utf-8-sig"))
-    assert len(tags) == len(questions) == 2000
-    assert {row["id"] for row in tags} == {f"Q{i}" for i in range(1, 2001)}
-    assert Counter(row["source"] for row in tags) == {"original": 900, "past_exam": 1100}
+    assert len(tags) == len(questions) == 2233
+    assert {row["id"] for row in tags} == {f"Q{i}" for i in range(1, 2234)}
+    assert Counter(row["source"] for row in tags) == {"original": 1133, "past_exam": 1100}
     field_by_id = {row["id"]: int(row["category_small"]) for row in questions}
     assert Counter(field_by_id[row["id"]] for row in tags if row["source"] == "past_exam") == FIELD_PAST_EXAM_COUNTS

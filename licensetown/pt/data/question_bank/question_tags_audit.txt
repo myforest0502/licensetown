@@ -1,8 +1,8 @@
 LicenseTown question_tags.json audit
-bank_version: 2026-09-b18
-source: current formal Question Bank through Q1953
-records: 1953
-Q range: Q1-Q1953
+bank_version: 2026-09-b21
+source: current formal Question Bank through Q2233
+records: 2233
+Q range: Q1-Q2233
 duplicates: 0
 missing: 0
 schema errors: 0
@@ -12,73 +12,83 @@ errors: 0
 
 tag_version:
   0.3: 200
-  1.0: 1753
+  1.0: 2033
 
 tag_status:
-  reviewed: 1753
+  reviewed: 2033
   reviewed_sample: 200
 
 task:
-  assessment_selection: 237
-  device_selection: 52
-  fact_recall: 886
-  finding_interpretation: 354
-  functional_goal_decision: 33
-  intervention_selection: 258
-  prognosis_prediction: 18
-  safety_priority: 115
+  assessment_selection: 245
+  device_selection: 53
+  fact_recall: 892
+  finding_interpretation: 598
+  functional_goal_decision: 37
+  intervention_selection: 267
+  prognosis_prediction: 21
+  safety_priority: 120
 
 primary ability:
-  DECIDE: 148
-  INTERPRET: 354
-  KNOW: 886
-  MEASURE: 237
-  PREDICT: 18
-  PRESCRIBE: 310
+  DECIDE: 157
+  INTERPRET: 598
+  KNOW: 892
+  MEASURE: 245
+  PREDICT: 21
+  PRESCRIBE: 320
 
 secondary ability:
-  DECIDE: 80
-  INTERPRET: 338
-  KNOW: 107
-  MEASURE: 44
+  DECIDE: 137
+  INTERPRET: 343
+  KNOW: 120
+  MEASURE: 109
   PREDICT: 1
-  PRESCRIBE: 28
-  null: 1355
+  PRESCRIBE: 121
+  null: 1402
 
 level:
-  1: 864
-  2: 255
-  3: 691
-  4: 143
+  1: 866
+  2: 287
+  3: 873
+  4: 207
 
 safety:
-  critical: 98 (5.0%)
-  moderate: 267 (13.7%)
-  none: 1588 (81.3%)
+  critical: 160 (7.2%)
+  moderate: 341 (15.3%)
+  none: 1732 (77.6%)
 
 source:
-  original: 859 (44.0%)
-  past_exam: 1094 (56.0%)
-
-candidate metric highlights:
-  fact_recall: 886 (45.4%)
+  original: 1133 (50.7%)
+  past_exam: 1100 (49.3%)
 
 canonical Knowledge Node coverage:
-  registry nodes: 1555
-  canonical nodes represented by questions: 1525
-  singleton canonical nodes: 1178
-  multi-question canonical nodes: 347
-  confirmed-shared registry groups: 340
-  confirmed-shared registry questions: 738
+  registry nodes: 1562
+  canonical nodes represented by questions: 1532
+  singleton canonical nodes: 945
+  multi-question canonical nodes: 587
+  confirmed-shared registry groups: 585
+  confirmed-shared registry questions: 1256
 
-B12 final range Q1661-Q1953:
-  records: 293
-  content-quality gate: tracked by scripts/audit_question_content_quality.py
-  repair-evidence gate: tracked by formal STRONG pair tests
-  known exception: KN0779 remains intentional WEAK; no Q1738
+Q2001-Q2233 expansion:
+  records: 233
+  source: LT original
+  purpose: depth / repair supply
+  allocation:
+    anatomy 4
+    physiology 8
+    medical overview 2
+    internal medicine 18
+    neurology 20
+    pediatrics 3
+    basic kinesiology 1
+    movement analysis 6
+    orthopedics 3
+    PT assessment 54
+    PT treatment 114
+  content-quality gate: tests/test_q2233_expansion.py
+  repair-evidence gate: every added Q has a pre-Q2001 STRONG same-Node reference
 
 validation summary:
-  four-store counts: {'questions': 1953, 'answers': 1953, 'explanations': 1953, 'question_tags': 1953}
+  four-store counts: {'questions': 2233, 'answers': 2233, 'explanations': 2233, 'question_tags': 2233}
   four-store missing: {'questions': 0, 'answers': 0, 'explanations': 0, 'question_tags': 0}
   four-store duplicates: {'questions': 0, 'answers': 0, 'explanations': 0, 'question_tags': 0}
   invalid accepted answers: 0
