@@ -109,9 +109,10 @@
   {
     "knowledge_node_id": "KN0011",
     "label": "自律神経過反射への初期対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q11"
+      "Q11",
+      "Q2120"
     ],
     "aliases": [],
     "successor_ids": []
@@ -170,9 +171,10 @@
   {
     "knowledge_node_id": "KN0017",
     "label": "バイタルサインと人工呼吸器条件を監視しながら、端座位から立位へ段階的に離床を進めるへの介入選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q17"
+      "Q17",
+      "Q2015"
     ],
     "aliases": [],
     "successor_ids": []
@@ -285,9 +287,10 @@
   {
     "knowledge_node_id": "KN0028",
     "label": "無痛性皮膚障害の自己管理",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q28"
+      "Q28",
+      "Q2053"
     ],
     "aliases": [],
     "successor_ids": []
@@ -491,9 +494,10 @@
   {
     "knowledge_node_id": "KN0048",
     "label": "運動時低酸素への条件再検討",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q48"
+      "Q48",
+      "Q2057"
     ],
     "aliases": [],
     "successor_ids": []
@@ -591,9 +595,10 @@
   {
     "knowledge_node_id": "KN0058",
     "label": "携帯酸素の安全な生活使用",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q58"
+      "Q58",
+      "Q2016"
     ],
     "aliases": [],
     "successor_ids": []
@@ -947,9 +952,10 @@
   {
     "knowledge_node_id": "KN0093",
     "label": "退院後はバッテリー残量の確認・交換、ケーブルの引っ掛かり防止、機器携行などを自ら安全に行う必要があるため、実際の外出場面を想定して自己管理能力を確認する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q93"
+      "Q93",
+      "Q2017"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1017,9 +1023,10 @@
   {
     "knowledge_node_id": "KN0100",
     "label": "模擬作業で緊急停止反応と安全確認能力を評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q100"
+      "Q100",
+      "Q2013"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1069,9 +1076,10 @@
   {
     "knowledge_node_id": "KN0105",
     "label": "疼痛を皮膚損傷の警告として利用できないため、毎日の足部観察、靴内の異物や縫い目の確認、足幅や圧迫部位に配慮した靴選びを習慣化し、潰瘍への進行を防ぐことが重要である時の優先対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q105"
+      "Q105",
+      "Q2018"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1161,9 +1169,10 @@
   {
     "knowledge_node_id": "KN0114",
     "label": "疼痛消失と機能確認後の段階復帰",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q114"
+      "Q114",
+      "Q2058"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1171,9 +1180,10 @@
   {
     "knowledge_node_id": "KN0115",
     "label": "歩行とADLは自立しているが、複数課題を同時に行うと反応が遅れるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q115"
+      "Q115",
+      "Q2066"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1344,9 +1354,10 @@
   {
     "knowledge_node_id": "KN0132",
     "label": "足部痛の原因と皮膚・循環・運動機能を評価し、安全な運動療法を検討する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q132"
+      "Q132",
+      "Q2121"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1374,9 +1385,10 @@
   {
     "knowledge_node_id": "KN0135",
     "label": "Pavlik harness装着中の皮膚圧迫・ずれを確認し自己調整を避ける",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q135"
+      "Q135",
+      "Q2054"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1654,9 +1666,10 @@
   {
     "knowledge_node_id": "KN0163",
     "label": "シャント肢を避けた血圧測定",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q164"
+      "Q164",
+      "Q2019"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1744,9 +1757,10 @@
   {
     "knowledge_node_id": "KN0172",
     "label": "援助要請と夜間環境の共同調整",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q173"
+      "Q173",
+      "Q2122"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1784,9 +1798,10 @@
   {
     "knowledge_node_id": "KN0176",
     "label": "脊柱過屈曲を避けた生活動作",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q177"
+      "Q177",
+      "Q2123"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1794,9 +1809,10 @@
   {
     "knowledge_node_id": "KN0177",
     "label": "運動中低血糖への糖質摂取",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q178"
+      "Q178",
+      "Q2067"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1846,9 +1862,10 @@
   {
     "knowledge_node_id": "KN0182",
     "label": "SpO2＋呼吸困難モニタリング",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q183"
+      "Q183",
+      "Q2059"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1896,9 +1913,10 @@
   {
     "knowledge_node_id": "KN0187",
     "label": "安静時痛・蒼白・冷感で運動中止",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q188"
+      "Q188",
+      "Q2060"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1946,9 +1964,10 @@
   {
     "knowledge_node_id": "KN0192",
     "label": "運動中胸部圧迫感への中止・報告",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q193"
+      "Q193",
+      "Q2061"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1998,9 +2017,10 @@
   {
     "knowledge_node_id": "KN0197",
     "label": "運動中血圧低下・めまいで中止",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q198"
+      "Q198",
+      "Q2068"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2049,9 +2069,10 @@
   {
     "knowledge_node_id": "KN0202",
     "label": "心リハ中の胸部症状と血圧低下に対する運動中止判断",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q203"
+      "Q203",
+      "Q2069"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2404,9 +2425,10 @@
   {
     "knowledge_node_id": "KN0237",
     "label": "感染性肺結核に対する空気感染予防策とN95使用",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q238"
+      "Q238",
+      "Q2014"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2855,9 +2877,10 @@
   {
     "knowledge_node_id": "KN0281",
     "label": "胸痛・ST低下・運動時血圧低下に対する運動負荷中止",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q283"
+      "Q283",
+      "Q2070"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2907,9 +2930,10 @@
   {
     "knowledge_node_id": "KN0286",
     "label": "重度高カリウム血症時の運動中止と医師報告",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q288"
+      "Q288",
+      "Q2071"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3059,9 +3083,10 @@
   {
     "knowledge_node_id": "KN0301",
     "label": "症候性重度低ナトリウム血症の緊急対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q303"
+      "Q303",
+      "Q2124"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3244,9 +3269,10 @@
   {
     "knowledge_node_id": "KN0319",
     "label": "内シャントのスリル消失時の運動中止と速やかな報告",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q321"
+      "Q321",
+      "Q2072"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3274,9 +3300,10 @@
   {
     "knowledge_node_id": "KN0322",
     "label": "リンパ浮腫患者の発熱・発赤・熱感から蜂窩織炎を疑う緊急対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q324"
+      "Q324",
+      "Q2125"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3369,9 +3396,10 @@
   {
     "knowledge_node_id": "KN0331",
     "label": "尿閉・会陰部感覚低下を伴う馬尾症候群red flagへの緊急対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q334"
+      "Q334",
+      "Q2073"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3389,9 +3417,10 @@
   {
     "knowledge_node_id": "KN0333",
     "label": "Down症候群児の頸部痛・歩容変化から環軸椎不安定性を疑う運動中止",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q336"
+      "Q336",
+      "Q2055"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3539,9 +3568,10 @@
   {
     "knowledge_node_id": "KN0348",
     "label": "THA術後の急性呼吸困難・胸痛・低酸素から肺塞栓を疑う緊急対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q351"
+      "Q351",
+      "Q2074"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3619,9 +3649,10 @@
   {
     "knowledge_node_id": "KN0356",
     "label": "呼吸音消失・気管偏位・循環不安定から緊張性気胸を識別する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q359"
+      "Q359",
+      "Q2020"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3711,9 +3742,10 @@
   {
     "knowledge_node_id": "KN0365",
     "label": "運動中の著明なSpO₂低下と症状出現時に運動を中止する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q370"
+      "Q370",
+      "Q2062"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3731,9 +3763,10 @@
   {
     "knowledge_node_id": "KN0367",
     "label": "関節リウマチの頸椎不安定性red flagと徒手療法回避",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q372"
+      "Q372",
+      "Q2126"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3772,9 +3805,10 @@
   {
     "knowledge_node_id": "KN0371",
     "label": "自律神経過反射の誘因除去と緊急対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q376"
+      "Q376",
+      "Q2127"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3857,9 +3891,10 @@
   {
     "knowledge_node_id": "KN0379",
     "label": "TKA術後の発熱・発赤・排液から感染を疑う緊急対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q384"
+      "Q384",
+      "Q2128"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3928,9 +3963,10 @@
   {
     "knowledge_node_id": "KN0386",
     "label": "急性下肢動脈閉塞の6P徴候と緊急対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q391"
+      "Q391",
+      "Q2129"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3948,9 +3984,10 @@
   {
     "knowledge_node_id": "KN0388",
     "label": "骨転移患者の新規荷重時痛から病的骨折リスクを疑い運動を中止する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q393"
+      "Q393",
+      "Q2056"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3968,9 +4005,10 @@
   {
     "knowledge_node_id": "KN0390",
     "label": "重度血小板減少と出血徴候がある化学療法患者の運動中止",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q395"
+      "Q395",
+      "Q2130"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4030,9 +4068,10 @@
   {
     "knowledge_node_id": "KN0396",
     "label": "増悪する鮮血喀出時の排痰練習中止と医療対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q401"
+      "Q401",
+      "Q2131"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4317,9 +4356,10 @@
   {
     "knowledge_node_id": "KN0424",
     "label": "胸腔ドレーンの連続気泡からエアリークを疑い離床前に安全確認する判断",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q432"
+      "Q432",
+      "Q2132"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4327,9 +4367,10 @@
   {
     "knowledge_node_id": "KN0425",
     "label": "一方向性発声弁装着前の上気道開存・カフ脱気確認",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q433"
+      "Q433",
+      "Q2133"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4357,9 +4398,10 @@
   {
     "knowledge_node_id": "KN0428",
     "label": "湿性嗄声を不顕性誤嚥徴候として扱う嚥下安全判断",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q436"
+      "Q436",
+      "Q2134"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4387,9 +4429,10 @@
   {
     "knowledge_node_id": "KN0431",
     "label": "GBS急性期の自律神経障害を踏まえた離床時循環監視",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q439"
+      "Q439",
+      "Q2075"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4660,9 +4703,10 @@
   {
     "knowledge_node_id": "KN0458",
     "label": "上腕骨顆上骨折後の循環障害・コンパートメント症候群徴候の優先確認",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q466"
+      "Q466",
+      "Q2063"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4710,9 +4754,10 @@
   {
     "knowledge_node_id": "KN0463",
     "label": "VA-ECMO離床前のカニューレ固定・血行動態・回路安全確認",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q471"
+      "Q471",
+      "Q2021"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4720,9 +4765,10 @@
   {
     "knowledge_node_id": "KN0464",
     "label": "大腿静脈CRRTカテーテルを保護した端座位離床",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q472"
+      "Q472",
+      "Q2022"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4961,9 +5007,10 @@
   {
     "knowledge_node_id": "KN0488",
     "label": "高血糖かつケトン陽性時の運動中止判断",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q496"
+      "Q496",
+      "Q2135"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4971,9 +5018,10 @@
   {
     "knowledge_node_id": "KN0489",
     "label": "副腎クリーゼを疑う低血圧・消化器症状への緊急対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q497"
+      "Q497",
+      "Q2136"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4981,9 +5029,10 @@
   {
     "knowledge_node_id": "KN0490",
     "label": "巨細胞性動脈炎を疑う頭痛・視覚症状への緊急医療連携",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q498"
+      "Q498",
+      "Q2137"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5075,9 +5124,10 @@
   {
     "knowledge_node_id": "KN0499",
     "label": "52 歳の女性に対する適切な介入・支援選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q507"
+      "Q507",
+      "Q2138"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5265,9 +5315,10 @@
   {
     "knowledge_node_id": "KN0516",
     "label": "工場生産労働者の腰痛対策として、産業理学療法の観点から優先度が低いのに対する適切な介入・支援選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q524"
+      "Q524",
+      "Q2139"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5275,9 +5326,10 @@
   {
     "knowledge_node_id": "KN0517",
     "label": "超音波治療が可能なのはどれかに対する適切な介入・支援選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q525"
+      "Q525",
+      "Q2140"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5285,9 +5337,10 @@
   {
     "knowledge_node_id": "KN0518",
     "label": "脳卒中片麻痺者の応用歩行練習について麻痺側から行う場合が多いのはどれに対する適切な介入・支援選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q526"
+      "Q526",
+      "Q2033"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5295,9 +5348,10 @@
   {
     "knowledge_node_id": "KN0519",
     "label": "部分損傷をきたした靱帯と強化すべき筋の組合せで適切なのはどれかに対する適切な介入・支援選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q527"
+      "Q527",
+      "Q2141"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5305,9 +5359,10 @@
   {
     "knowledge_node_id": "KN0520",
     "label": "エネルギー蓄積機能によって大きな推進力を得る目的で使われる義足の足部に対する適切な介入・支援選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q528"
+      "Q528",
+      "Q2142"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5336,9 +5391,10 @@
   {
     "knowledge_node_id": "KN0523",
     "label": "疾患と自助具の組合せの基本事項",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q531"
+      "Q531",
+      "Q2143"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5662,9 +5718,10 @@
   {
     "knowledge_node_id": "KN0552",
     "label": "HDS-Rには「知っている野菜の名前をできるだけ多く言う」語想起課題が含まれ、語の流暢性をみるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q560"
+      "Q560",
+      "Q2076"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5696,9 +5753,10 @@
   {
     "knowledge_node_id": "KN0555",
     "label": "観念運動失行は運動麻痺がないのに、命令された習慣的動作やパントマイムを正しく行えない状態であるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q563"
+      "Q563",
+      "Q2077"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5949,9 +6007,10 @@
   {
     "knowledge_node_id": "KN0578",
     "label": "転位のない大腿骨転子部骨折に対する観血的整復固定術後の理学療法としてに対する適切な介入・支援選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q586"
+      "Q586",
+      "Q2144"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5970,9 +6029,10 @@
   {
     "knowledge_node_id": "KN0580",
     "label": "白杖を使用している視覚障害者の介助の特徴",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q588"
+      "Q588",
+      "Q2145"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6011,9 +6071,10 @@
   {
     "knowledge_node_id": "KN0584",
     "label": "栄養評価ではBMI、体重減少率、血清アルブミン、下腿周囲径などが用いられる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q592"
+      "Q592",
+      "Q2078"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6195,7 +6256,8 @@
     "question_ids": [
       "Q609",
       "Q1153",
-      "Q1263"
+      "Q1263",
+      "Q2005"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6348,9 +6410,10 @@
   {
     "knowledge_node_id": "KN0615",
     "label": "摂食嚥下障害への対応の基本事項",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q623"
+      "Q623",
+      "Q2023"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6478,9 +6541,10 @@
   {
     "knowledge_node_id": "KN0627",
     "label": "欠神発作は過換気で誘発されやすい",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q635"
+      "Q635",
+      "Q2024"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6542,9 +6606,10 @@
   {
     "knowledge_node_id": "KN0633",
     "label": "内反足に対する靴補正の選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q641"
+      "Q641",
+      "Q2146"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6585,9 +6650,10 @@
   {
     "knowledge_node_id": "KN0637",
     "label": "上腕二頭筋腱炎を誘発するYergason testの選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q645"
+      "Q645",
+      "Q2079"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6707,9 +6773,10 @@
   {
     "knowledge_node_id": "KN0648",
     "label": "脊髄損傷による対麻痺患者に対して立位・歩行練習を行う目的として誤っているのはどれかに対する適切な介入・装具・支援を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q656"
+      "Q656",
+      "Q2147"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6897,7 +6964,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q674",
-      "Q816"
+      "Q816",
+      "Q2006"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7062,9 +7130,10 @@
   {
     "knowledge_node_id": "KN0682",
     "label": "失行は運動麻痺などでは説明できない学習された目的動作の障害であるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q690"
+      "Q690",
+      "Q2034"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7282,9 +7351,10 @@
   {
     "knowledge_node_id": "KN0703",
     "label": "胸囲は安静呼吸の呼気終末に測定するのが基本である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q711"
+      "Q711",
+      "Q2148"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7292,9 +7362,10 @@
   {
     "knowledge_node_id": "KN0704",
     "label": "Daniels法で重力に抗して全可動域を動かせる筋力を段階3と判定する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q712"
+      "Q712",
+      "Q2080"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7324,9 +7395,10 @@
   {
     "knowledge_node_id": "KN0707",
     "label": "下腿義足のつま先浮き上がり・膝折れ傾向に対するソケットアライメント調整",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q715"
+      "Q715",
+      "Q2149"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7365,9 +7437,10 @@
   {
     "knowledge_node_id": "KN0711",
     "label": "断端成熟を追跡する再現性のある周径計測",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q719"
+      "Q719",
+      "Q2150"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7408,9 +7481,10 @@
   {
     "knowledge_node_id": "KN0715",
     "label": "運動療法の適応・目的・負荷設定の基本原則",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q723"
+      "Q723",
+      "Q2151"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7418,9 +7492,10 @@
   {
     "knowledge_node_id": "KN0716",
     "label": "高次脳機能障害に応じた検査法の選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q724"
+      "Q724",
+      "Q2081"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7471,9 +7546,10 @@
   {
     "knowledge_node_id": "KN0721",
     "label": "人工呼吸器管理中に起こりやすい呼吸器合併症の識別",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q729"
+      "Q729",
+      "Q2025"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7577,7 +7653,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q739",
-      "Q1589"
+      "Q1589",
+      "Q2007"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7750,9 +7827,10 @@
   {
     "knowledge_node_id": "KN0748",
     "label": "ASIA感覚検査における髄節とkey sensory pointの対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q756"
+      "Q756",
+      "Q2082"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7902,9 +7980,10 @@
   {
     "knowledge_node_id": "KN0763",
     "label": "Broca失語患者とのコミュニケーション方法を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q771"
+      "Q771",
+      "Q2035"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7922,9 +8001,10 @@
   {
     "knowledge_node_id": "KN0765",
     "label": "Parkinson病の小刻み・突進・すくみ足に対する歩行練習",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q773"
+      "Q773",
+      "Q2152"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7932,9 +8012,10 @@
   {
     "knowledge_node_id": "KN0766",
     "label": "多発性硬化症のUhthoff現象を踏まえた運動・環境調整",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q774"
+      "Q774",
+      "Q2153"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7942,9 +8023,10 @@
   {
     "knowledge_node_id": "KN0767",
     "label": "Guillain-Barré症候群急性進行期の呼吸・自律神経リスクを優先する判断",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q775"
+      "Q775",
+      "Q2083"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7952,9 +8034,10 @@
   {
     "knowledge_node_id": "KN0768",
     "label": "Sharrard分類に応じた二分脊椎児の歩行練習・装具選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q776"
+      "Q776",
+      "Q2154"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7962,9 +8045,10 @@
   {
     "knowledge_node_id": "KN0769",
     "label": "広範囲熱傷・植皮術後早期の拘縮予防と創部保護を両立する理学療法",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q777"
+      "Q777",
+      "Q2155"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8033,9 +8117,10 @@
   {
     "knowledge_node_id": "KN0776",
     "label": "大腿義足遊脚期の振り出し速度を制御する膝継手機構",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q784"
+      "Q784",
+      "Q2156"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8067,7 +8152,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q787",
-      "Q1579"
+      "Q1579",
+      "Q2084"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8096,9 +8182,10 @@
   {
     "knowledge_node_id": "KN0782",
     "label": "6分間歩行テストの標準的実施・解釈",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q790"
+      "Q790",
+      "Q2085"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8106,9 +8193,10 @@
   {
     "knowledge_node_id": "KN0783",
     "label": "関節可動域運動の適応と実施原則",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q791"
+      "Q791",
+      "Q2157"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8116,9 +8204,10 @@
   {
     "knowledge_node_id": "KN0784",
     "label": "対象筋の作用方向に沿った求心性抵抗運動の選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q792"
+      "Q792",
+      "Q2158"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8146,9 +8235,10 @@
   {
     "knowledge_node_id": "KN0787",
     "label": "外側ストラップ付き金属支柱AFOの適応選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q795"
+      "Q795",
+      "Q2159"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8166,9 +8256,10 @@
   {
     "knowledge_node_id": "KN0789",
     "label": "慢性腰痛に対する認知行動療法の適切な介入原則",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q797"
+      "Q797",
+      "Q2160"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8186,9 +8277,10 @@
   {
     "knowledge_node_id": "KN0791",
     "label": "脳卒中左片麻痺患者のADL練習における安全な自立支援",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q799"
+      "Q799",
+      "Q2036"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8196,9 +8288,10 @@
   {
     "knowledge_node_id": "KN0792",
     "label": "多発性筋炎回復初期の過用を避けた段階的運動療法",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q800"
+      "Q800",
+      "Q2161"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8206,9 +8299,10 @@
   {
     "knowledge_node_id": "KN0793",
     "label": "Down症候群乳児期の低緊張・関節弛緩を踏まえた運動発達支援",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q801"
+      "Q801",
+      "Q2162"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8332,7 +8426,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q813",
-      "Q1079"
+      "Q1079",
+      "Q2008"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8404,7 +8499,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q821",
-      "Q1365"
+      "Q1365",
+      "Q2009"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8546,9 +8642,10 @@
   {
     "knowledge_node_id": "KN0826",
     "label": "脳血管障害と治療の組合せで正しいのはどれかに対して適切な理学療法・介入を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q835"
+      "Q835",
+      "Q2037"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8638,9 +8735,10 @@
   {
     "knowledge_node_id": "KN0835",
     "label": "脳卒中屈曲共同運動を抑え肘伸展を促す筋促通の選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q844"
+      "Q844",
+      "Q2038"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8668,9 +8766,10 @@
   {
     "knowledge_node_id": "KN0838",
     "label": "変形性股関節症の疼痛・肥満・筋力低下を踏まえた低負荷運動選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q847"
+      "Q847",
+      "Q2163"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8700,9 +8799,10 @@
   {
     "knowledge_node_id": "KN0841",
     "label": "除細動適応となりうる心室頻拍の識別",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q850"
+      "Q850",
+      "Q2164"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8742,9 +8842,10 @@
   {
     "knowledge_node_id": "KN0845",
     "label": "WCSTで方略転換を含む遂行機能を評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q854"
+      "Q854",
+      "Q2086"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8826,9 +8927,10 @@
   {
     "knowledge_node_id": "KN0853",
     "label": "他筋への影響を抑えた選択的筋伸張肢位の決定",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q862"
+      "Q862",
+      "Q2165"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8846,9 +8948,10 @@
   {
     "knowledge_node_id": "KN0855",
     "label": "PTB式装具は膝蓋腱部など耐圧性の高い部位で荷重し、脛骨粗面や腓骨頭など骨突出部は除圧する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q864"
+      "Q864",
+      "Q2166"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8856,9 +8959,10 @@
   {
     "knowledge_node_id": "KN0856",
     "label": "筋力増強運動について正しいのはどれかに対して適切な理学療法・介入を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q865"
+      "Q865",
+      "Q2167"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8886,9 +8990,10 @@
   {
     "knowledge_node_id": "KN0859",
     "label": "急性期脳血管障害の離床可否を安全基準から判断する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q868"
+      "Q868",
+      "Q2168"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8917,9 +9022,10 @@
   {
     "knowledge_node_id": "KN0862",
     "label": "『ベッドアップ60°まで』と上限を固定する1が不適切時の優先対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q871"
+      "Q871",
+      "Q2169"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9428,9 +9534,10 @@
   {
     "knowledge_node_id": "KN0912",
     "label": "立位重心移動獲得後に行う段階的バランス練習の選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q921"
+      "Q921",
+      "Q2170"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9448,9 +9555,10 @@
   {
     "knowledge_node_id": "KN0914",
     "label": "亜急性腰椎椎間板ヘルニアに対する理学療法選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q923"
+      "Q923",
+      "Q2171"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9498,9 +9606,10 @@
   {
     "knowledge_node_id": "KN0919",
     "label": "第VII脳神経は顔面神経で、表情筋を支配するを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q928"
+      "Q928",
+      "Q2087"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9531,7 +9640,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q931",
-      "Q1299"
+      "Q1299",
+      "Q2064"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9631,9 +9741,10 @@
   {
     "knowledge_node_id": "KN0932",
     "label": "訪問理学療法で正しいのはどれかに対して適切な理学療法・介入を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q941"
+      "Q941",
+      "Q2172"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9821,9 +9932,10 @@
   {
     "knowledge_node_id": "KN0951",
     "label": "胸腰部回旋ROM測定では基本軸を両上後腸骨棘を結ぶ線、移動軸を両肩峰を結ぶ線として評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q960"
+      "Q960",
+      "Q2088"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10047,9 +10159,10 @@
   {
     "knowledge_node_id": "KN0973",
     "label": "内反尖足・膝ロッキングに対するダブルクレンザックAFO設定",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q983"
+      "Q983",
+      "Q2039"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10087,9 +10200,10 @@
   {
     "knowledge_node_id": "KN0977",
     "label": "筋強直性ジストロフィーの重度筋力低下に対する過用を避けた理学療法",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q987"
+      "Q987",
+      "Q2089"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10171,9 +10285,10 @@
   {
     "knowledge_node_id": "KN0985",
     "label": "周径測定は再現性のため測定部位・肢位を統一し、メジャーを皮膚に密着させて過度に締め付けず測定する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q995"
+      "Q995",
+      "Q2090"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10296,9 +10411,10 @@
   {
     "knowledge_node_id": "KN0997",
     "label": "栄養管理について正しいのはどれかに対して適切な理学療法・介入を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1007"
+      "Q1007",
+      "Q2173"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10306,9 +10422,10 @@
   {
     "knowledge_node_id": "KN0998",
     "label": "持久力トレーニングでは同一運動強度での心拍・換気応答が小さくなり、最大酸素摂取量、毛細血管密度、嫌気性代謝閾値などは改善するを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1008"
+      "Q1008",
+      "Q2174"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10316,9 +10433,10 @@
   {
     "knowledge_node_id": "KN0999",
     "label": "脊髄完全損傷者の機能残存レベルと実用可能な能力の組合せで正しいのはどれかに対して適切な理学療法・介入を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1009"
+      "Q1009",
+      "Q2175"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10326,9 +10444,10 @@
   {
     "knowledge_node_id": "KN1000",
     "label": "ACL再建術後3日では疼痛・腫脹管理、ROM、自動介助運動、筋賦活が中心で、荷重を伴うハーフスクワットは通常この時期の最優先ではないに対する機器選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1010"
+      "Q1010",
+      "Q2176"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10356,9 +10475,10 @@
   {
     "knowledge_node_id": "KN1003",
     "label": "呼吸障害に対する理学療法として、口すぼめ呼吸が有効なのはどれかに対して適切な理学療法・介入を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1013"
+      "Q1013",
+      "Q2177"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10366,9 +10486,10 @@
   {
     "knowledge_node_id": "KN1004",
     "label": "廃用症候群について正しいのはどれかに対して適切な理学療法・介入を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1014"
+      "Q1014",
+      "Q2178"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10386,9 +10507,10 @@
   {
     "knowledge_node_id": "KN1006",
     "label": "脳底動脈からは上小脳動脈と前下小脳動脈などが分岐するを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1016"
+      "Q1016",
+      "Q2001"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10406,9 +10528,10 @@
   {
     "knowledge_node_id": "KN1008",
     "label": "腱板を構成する筋はどれかに対して適切な理学療法・介入を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1018"
+      "Q1018",
+      "Q2002"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10416,9 +10539,10 @@
   {
     "knowledge_node_id": "KN1009",
     "label": "第3腓骨筋腱は足関節前外側を通り外果の前方を走行するに対する機器選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1019"
+      "Q1019",
+      "Q2003"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10429,7 +10553,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1020",
-      "Q1142"
+      "Q1142",
+      "Q2004"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10457,9 +10582,10 @@
   {
     "knowledge_node_id": "KN1013",
     "label": "角膜反射の求心路は三叉神経第1枝、遠心路は顔面神経である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1023"
+      "Q1023",
+      "Q2010"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10651,9 +10777,10 @@
   {
     "knowledge_node_id": "KN1032",
     "label": "ASIAの感覚キーポイントではT4は乳頭部に相当するを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1042"
+      "Q1042",
+      "Q2091"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10701,9 +10828,10 @@
   {
     "knowledge_node_id": "KN1037",
     "label": "理学療法士法及び作業療法士法で正しいのはどれかに対する適切な介入・練習・指導を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1047"
+      "Q1047",
+      "Q2179"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10721,9 +10849,10 @@
   {
     "knowledge_node_id": "KN1039",
     "label": "複雑部分発作で歩き回る患者を刺激せず安全確保しながら付き添う対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1049"
+      "Q1049",
+      "Q2040"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10751,9 +10880,10 @@
   {
     "knowledge_node_id": "KN1042",
     "label": "下腿義足歩行時の膝折れを生むソケット位置・膝伸展筋力などの原因推定",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1052"
+      "Q1052",
+      "Q2180"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10761,9 +10891,10 @@
   {
     "knowledge_node_id": "KN1043",
     "label": "Parkinson病のすくみ足・移動不安定に対応した住環境整備と外的キュー",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1053"
+      "Q1053",
+      "Q2092"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10813,9 +10944,10 @@
   {
     "knowledge_node_id": "KN1048",
     "label": "TMTは注意、視覚探索、処理速度、注意転換などを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1058"
+      "Q1058",
+      "Q2093"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10823,9 +10955,10 @@
   {
     "knowledge_node_id": "KN1049",
     "label": "補助具使用を含むFIM修正自立の判定",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1059"
+      "Q1059",
+      "Q2094"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10833,9 +10966,10 @@
   {
     "knowledge_node_id": "KN1050",
     "label": "下垂足に対するAFO背屈補助機能の適応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1060"
+      "Q1060",
+      "Q2181"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10875,9 +11009,10 @@
   {
     "knowledge_node_id": "KN1054",
     "label": "MMSEは見当識、記銘・再生、注意計算、言語などを短時間で評価する認知症スクリーニング検査",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1064"
+      "Q1064",
+      "Q2095"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10939,9 +11074,10 @@
   {
     "knowledge_node_id": "KN1060",
     "label": "認知症患者の運動療法で拒否を尊重し慣れた動作を用いる対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1070"
+      "Q1070",
+      "Q2182"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10949,9 +11085,10 @@
   {
     "knowledge_node_id": "KN1061",
     "label": "疾患・機能障害に応じた支援機器の適応選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1071"
+      "Q1071",
+      "Q2183"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11217,9 +11354,10 @@
   {
     "knowledge_node_id": "KN1087",
     "label": "ASIA key muscleと髄節の対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1098"
+      "Q1098",
+      "Q2096"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11227,9 +11365,10 @@
   {
     "knowledge_node_id": "KN1088",
     "label": "フレイルとサルコペニアの双方で筋力低下と身体機能低下を評価し、握力と歩行速度が共通項目となる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1099"
+      "Q1099",
+      "Q2097"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11340,9 +11479,10 @@
   {
     "knowledge_node_id": "KN1099",
     "label": "睡眠日誌は就床・入眠・覚醒時刻を連日記録して概日リズムのずれを把握するため、睡眠相後退症候群で特に有用を評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1110"
+      "Q1110",
+      "Q2026"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11361,9 +11501,10 @@
   {
     "knowledge_node_id": "KN1101",
     "label": "L4機能残存二分脊椎児の歩行に適した装具・杖選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1112"
+      "Q1112",
+      "Q2184"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11371,9 +11512,10 @@
   {
     "knowledge_node_id": "KN1102",
     "label": "非流暢性失語に対するYes/No質問などのコミュニケーション支援",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1113"
+      "Q1113",
+      "Q2041"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11411,9 +11553,10 @@
   {
     "knowledge_node_id": "KN1106",
     "label": "支持基底面・視覚・二重課題を操作してバランス練習難度を上げる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1117"
+      "Q1117",
+      "Q2185"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11431,9 +11574,10 @@
   {
     "knowledge_node_id": "KN1108",
     "label": "徒手筋力テストを安全かつ標準的条件で実施する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1119"
+      "Q1119",
+      "Q2098"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11451,9 +11595,10 @@
   {
     "knowledge_node_id": "KN1110",
     "label": "PEDIの対象・評価項目・評定方法",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1121"
+      "Q1121",
+      "Q2186"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11472,9 +11617,10 @@
   {
     "knowledge_node_id": "KN1112",
     "label": "SIASに含まれる非麻痺側機能などの評価項目",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1123"
+      "Q1123",
+      "Q2099"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11482,9 +11628,10 @@
   {
     "knowledge_node_id": "KN1113",
     "label": "Westphal現象はParkinson病でみられる姿勢反射障害・筋強剛に関連する現象として評価される",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1124"
+      "Q1124",
+      "Q2042"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11502,9 +11649,10 @@
   {
     "knowledge_node_id": "KN1115",
     "label": "face scaleとNRSはいずれも疼痛強度の評価に用いる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1126"
+      "Q1126",
+      "Q2100"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11512,9 +11660,10 @@
   {
     "knowledge_node_id": "KN1116",
     "label": "全身持久力トレーニングの効果で正しいのはどれかに対する適切な介入・練習・指導を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1127"
+      "Q1127",
+      "Q2187"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11522,9 +11671,10 @@
   {
     "knowledge_node_id": "KN1117",
     "label": "嚥下反射時の食塊通過を観察できる嚥下造影検査の選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1128"
+      "Q1128",
+      "Q2101"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11532,9 +11682,10 @@
   {
     "knowledge_node_id": "KN1118",
     "label": "1秒量は5.00L×0.80＝4.00Lを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1129"
+      "Q1129",
+      "Q2027"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11552,9 +11703,10 @@
   {
     "knowledge_node_id": "KN1120",
     "label": "腰椎椎間板ヘルニア保存療法後の症状に応じた運動・姿勢指導",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1131"
+      "Q1131",
+      "Q2188"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11562,9 +11714,10 @@
   {
     "knowledge_node_id": "KN1121",
     "label": "脳卒中片麻痺に対する早期立位・歩行・トレッドミル練習",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1132"
+      "Q1132",
+      "Q2043"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11572,9 +11725,10 @@
   {
     "knowledge_node_id": "KN1122",
     "label": "温熱で症状悪化を招く疾患を識別し禁忌を判断する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1133"
+      "Q1133",
+      "Q2189"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11582,9 +11736,10 @@
   {
     "knowledge_node_id": "KN1123",
     "label": "重症筋無力症で過用を避けた漸増負荷運動を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1134"
+      "Q1134",
+      "Q2190"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11602,9 +11757,10 @@
   {
     "knowledge_node_id": "KN1125",
     "label": "心臓リハビリテーションにおいて有酸素運動が勧められる理由として正しいのはどれかに対する適切な介入・練習・指導を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1136"
+      "Q1136",
+      "Q2191"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11612,9 +11768,10 @@
   {
     "knowledge_node_id": "KN1126",
     "label": "地域リハビリテーションについて正しいのはどれかに対する適切な介入・練習・指導を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1137"
+      "Q1137",
+      "Q2192"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11697,7 +11854,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1146",
-      "Q1414"
+      "Q1414",
+      "Q2011"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12034,9 +12192,10 @@
   {
     "knowledge_node_id": "KN1167",
     "label": "78歳の男性に対する適切な介入・練習・指導を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1180"
+      "Q1180",
+      "Q2193"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12064,9 +12223,10 @@
   {
     "knowledge_node_id": "KN1170",
     "label": "理学療法実施時のインフォームドコンセントで適切なのはどれかに対する適切な介入・練習・指導を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1183"
+      "Q1183",
+      "Q2194"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12146,9 +12306,10 @@
   {
     "knowledge_node_id": "KN1178",
     "label": "下腿義足で足部外側が浮くのは、ソケットの初期内転角が大きすぎて義足全体が内反方向に傾く場合に起こる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1192"
+      "Q1192",
+      "Q2195"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12176,9 +12337,10 @@
   {
     "knowledge_node_id": "KN1181",
     "label": "Roos testは上肢を挙上外転外旋位で開閉手運動を反復し、胸郭出口での神経血管圧迫症状を誘発するを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1195"
+      "Q1195",
+      "Q2102"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12186,9 +12348,10 @@
   {
     "knowledge_node_id": "KN1182",
     "label": "筋力増強運動で正しいのはどれかに対する適切な介入・練習・指導を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1196"
+      "Q1196",
+      "Q2196"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12439,9 +12602,10 @@
   {
     "knowledge_node_id": "KN1207",
     "label": "SIASには体幹機能評価が含まれる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1222"
+      "Q1222",
+      "Q2044"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12449,9 +12613,10 @@
   {
     "knowledge_node_id": "KN1208",
     "label": "積極的な全身持久力トレーニングを開始してよい状態はどれかに対する適切な介入・練習・指導を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1223"
+      "Q1223",
+      "Q2028"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12459,9 +12624,10 @@
   {
     "knowledge_node_id": "KN1209",
     "label": "ASIAでS4-5感覚と随意肛門収縮から仙髄機能温存を判定する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1224"
+      "Q1224",
+      "Q2103"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12582,9 +12748,10 @@
   {
     "knowledge_node_id": "KN1221",
     "label": "脳卒中片麻痺患者の位置覚を適切な手順で検査する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1236"
+      "Q1236",
+      "Q2045"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12706,9 +12873,10 @@
   {
     "knowledge_node_id": "KN1233",
     "label": "装具と疾患の組合せで正しいのはどれかに対する適切な装具・義足・機器を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1248"
+      "Q1248",
+      "Q2197"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12746,9 +12914,10 @@
   {
     "knowledge_node_id": "KN1237",
     "label": "小脳性運動失調に対する四つ這いバランス練習の難易度調整",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1252"
+      "Q1252",
+      "Q2198"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13166,9 +13335,10 @@
   {
     "knowledge_node_id": "KN1278",
     "label": "大腿骨近位部骨折術後の下腿腫脹・圧痛からDVTを疑いD-dimerを優先確認する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1294"
+      "Q1294",
+      "Q2065"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13176,9 +13346,10 @@
   {
     "knowledge_node_id": "KN1279",
     "label": "受傷後に人格変化、脱抑制、自己中心性など前頭葉機能障害が疑われるため、前頭葉機能を簡便に評価するFABが優先される",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1295"
+      "Q1295",
+      "Q2104"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13207,9 +13378,10 @@
   {
     "knowledge_node_id": "KN1282",
     "label": "関節リウマチの槌趾・中足骨頭痛に対する足底装具選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1298"
+      "Q1298",
+      "Q2199"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13217,9 +13389,10 @@
   {
     "knowledge_node_id": "KN1283",
     "label": "Thomasテストは一側股関節を最大屈曲し、反対側大腿が浮き上がるかをみて股関節屈曲拘縮を評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1300"
+      "Q1300",
+      "Q2105"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13227,9 +13400,10 @@
   {
     "knowledge_node_id": "KN1284",
     "label": "SIASには視空間認知、言語、体幹機能、感覚、麻痺側・非麻痺側運動などが含まれるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1301"
+      "Q1301",
+      "Q2106"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13278,9 +13452,10 @@
   {
     "knowledge_node_id": "KN1289",
     "label": "QMGには眼球運動・眼瞼下垂、嚥下、発語、四肢筋力、肺活量など重症筋無力症の主要症候が含まれるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1307"
+      "Q1307",
+      "Q2107"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13298,9 +13473,10 @@
   {
     "knowledge_node_id": "KN1291",
     "label": "間質性肺疾患の呼吸困難・低酸素に配慮した理学療法選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1311"
+      "Q1311",
+      "Q2200"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13470,9 +13646,10 @@
   {
     "knowledge_node_id": "KN1308",
     "label": "脳卒中回復期の嚥下障害に対する安全な栄養経路選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1328"
+      "Q1328",
+      "Q2046"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13500,9 +13677,10 @@
   {
     "knowledge_node_id": "KN1311",
     "label": "NIHSSは脳卒中急性期の神経学的重症度、SIASは脳卒中の機能障害を評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1331"
+      "Q1331",
+      "Q2108"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13561,9 +13739,10 @@
   {
     "knowledge_node_id": "KN1317",
     "label": "内側型変形性膝関節症の内側荷重を軽減する装具療法",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1337"
+      "Q1337",
+      "Q2201"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13581,9 +13760,10 @@
   {
     "knowledge_node_id": "KN1319",
     "label": "痙直型両麻痺児のPCW歩行に対する適切な動作指導",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1339"
+      "Q1339",
+      "Q2202"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13591,9 +13771,10 @@
   {
     "knowledge_node_id": "KN1320",
     "label": "左半側空間無視を疑う患者で優先すべき高次脳機能検査を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1340"
+      "Q1340",
+      "Q2047"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13612,9 +13793,10 @@
   {
     "knowledge_node_id": "KN1322",
     "label": "片麻痺患者の車椅子から床への移乗手順を安全性から判断する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1342"
+      "Q1342",
+      "Q2203"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13622,9 +13804,10 @@
   {
     "knowledge_node_id": "KN1323",
     "label": "Lawton IADLには電話使用、買物、食事準備、家事、洗濯、交通、服薬、金銭管理が含まれるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1343"
+      "Q1343",
+      "Q2204"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13704,9 +13887,10 @@
   {
     "knowledge_node_id": "KN1331",
     "label": "MRC sum scoreでICU-AWの全身筋力低下を判定する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1351"
+      "Q1351",
+      "Q2205"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13726,9 +13910,10 @@
   {
     "knowledge_node_id": "KN1333",
     "label": "歩行練習中の転倒後に患者の状態確認を最優先する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1353"
+      "Q1353",
+      "Q2206"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13889,9 +14074,10 @@
   {
     "knowledge_node_id": "KN1349",
     "label": "日常生活上の記憶障害を検出するRBMTなどの検査選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1372"
+      "Q1372",
+      "Q2109"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13929,9 +14115,10 @@
   {
     "knowledge_node_id": "KN1353",
     "label": "装具療法の主たる目的でないのはどれかに対する適切な装具・義足・機器を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1376"
+      "Q1376",
+      "Q2207"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13949,9 +14136,10 @@
   {
     "knowledge_node_id": "KN1355",
     "label": "ALSの針筋電図では脱神経・再支配所見に加え線維束性収縮電位を認めるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1378"
+      "Q1378",
+      "Q2048"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14021,9 +14209,10 @@
   {
     "knowledge_node_id": "KN1362",
     "label": "足関節離断後に適した義足を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1385"
+      "Q1385",
+      "Q2208"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14031,9 +14220,10 @@
   {
     "knowledge_node_id": "KN1363",
     "label": "非麻痺側を向く一方、麻痺側刺激への反応はあり、食事・歯磨きで麻痺側の見落としが多いを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1386"
+      "Q1386",
+      "Q2049"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14041,9 +14231,10 @@
   {
     "knowledge_node_id": "KN1364",
     "label": "通所リハビリでの転倒リスクを適切な尺度で評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1387"
+      "Q1387",
+      "Q2209"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14051,9 +14242,10 @@
   {
     "knowledge_node_id": "KN1365",
     "label": "大腿四頭筋広範囲切除後の膝伸展機能低下に対する補装具選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1388"
+      "Q1388",
+      "Q2210"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14091,9 +14283,10 @@
   {
     "knowledge_node_id": "KN1369",
     "label": "FMAは総得点226点で、Brunnstromの共同運動・分離運動に関連する運動項目を含むを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1393"
+      "Q1393",
+      "Q2110"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14101,9 +14294,10 @@
   {
     "knowledge_node_id": "KN1370",
     "label": "WeeFIMの社会的認知には社会的交流があり、小児では遊びへの参加などを含めて評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1394"
+      "Q1394",
+      "Q2111"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14111,9 +14305,10 @@
   {
     "knowledge_node_id": "KN1371",
     "label": "身体的フレイルの代表要件には歩行速度低下と身体活動量低下が含まれるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1395"
+      "Q1395",
+      "Q2211"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14121,9 +14316,10 @@
   {
     "knowledge_node_id": "KN1372",
     "label": "酸素療法機器で正しいのはどれかに対する適切な装具・義足・機器を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1396"
+      "Q1396",
+      "Q2212"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14141,9 +14337,10 @@
   {
     "knowledge_node_id": "KN1374",
     "label": "MRC sum scoreをICU獲得性筋力低下の評価に用いる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1398"
+      "Q1398",
+      "Q2112"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14151,9 +14348,10 @@
   {
     "knowledge_node_id": "KN1375",
     "label": "体重は身体的・医学的情報であり社会的情報ではないを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1399"
+      "Q1399",
+      "Q2213"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14274,9 +14472,10 @@
   {
     "knowledge_node_id": "KN1387",
     "label": "下垂体後葉からはオキシトシンとバソプレシンが放出される",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1411"
+      "Q1411",
+      "Q2012"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14509,9 +14708,10 @@
   {
     "knowledge_node_id": "KN1410",
     "label": "末梢神経伝導検査が有用な末梢神経障害を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1435"
+      "Q1435",
+      "Q2050"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14519,9 +14719,10 @@
   {
     "knowledge_node_id": "KN1411",
     "label": "Thomas testで股関節屈曲拘縮を評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1436"
+      "Q1436",
+      "Q2029"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14589,9 +14790,10 @@
   {
     "knowledge_node_id": "KN1418",
     "label": "焦点意識減損発作で徘徊する患者の周囲から危険物を除去して安全確保する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1443"
+      "Q1443",
+      "Q2051"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14609,9 +14811,10 @@
   {
     "knowledge_node_id": "KN1420",
     "label": "ICU術後患者の意識・疼痛・循環動態から積極的離床の可否を判断する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1445"
+      "Q1445",
+      "Q2214"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14629,9 +14832,10 @@
   {
     "knowledge_node_id": "KN1422",
     "label": "間質性肺疾患の呼吸仕事量増大に対し胸郭可動性を改善する理学療法を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1447"
+      "Q1447",
+      "Q2215"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14639,9 +14843,10 @@
   {
     "knowledge_node_id": "KN1423",
     "label": "Pusher現象を想定し非麻痺側への能動的重心移動を促す",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1448"
+      "Q1448",
+      "Q2216"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14649,9 +14854,10 @@
   {
     "knowledge_node_id": "KN1424",
     "label": "片麻痺患者のADL情報からBarthel Index総得点を算出する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1449"
+      "Q1449",
+      "Q2052"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14659,9 +14865,10 @@
   {
     "knowledge_node_id": "KN1425",
     "label": "高用量昇圧剤投与中の術翌日患者で離床負荷を避け安全なベッド上介入を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1450"
+      "Q1450",
+      "Q2217"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14669,9 +14876,10 @@
   {
     "knowledge_node_id": "KN1426",
     "label": "C6完全脊髄損傷の頭痛・顔面紅潮・著明高血圧から自律神経過反射を疑い誘因を確認する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1451"
+      "Q1451",
+      "Q2218"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14679,9 +14887,10 @@
   {
     "knowledge_node_id": "KN1427",
     "label": "BPPVに対して耳石置換法〈Epley法〉を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1452"
+      "Q1452",
+      "Q2219"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14699,9 +14908,10 @@
   {
     "knowledge_node_id": "KN1429",
     "label": "ALSの下垂足・鶏歩に対して軽量AFOを用いた歩行を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1454"
+      "Q1454",
+      "Q2220"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14709,9 +14919,10 @@
   {
     "knowledge_node_id": "KN1430",
     "label": "肥満・高血圧を伴うメタボリックシンドロームに適した有酸素運動形式を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1455"
+      "Q1455",
+      "Q2030"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14750,9 +14961,10 @@
   {
     "knowledge_node_id": "KN1434",
     "label": "両側支柱付き長下肢装具の継手・半月・支柱位置の適合判定",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1459"
+      "Q1459",
+      "Q2221"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14790,9 +15002,10 @@
   {
     "knowledge_node_id": "KN1438",
     "label": "加齢性筋萎縮に対する抗重力筋中心のレジスタンストレーニング",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1463"
+      "Q1463",
+      "Q2222"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14800,9 +15013,10 @@
   {
     "knowledge_node_id": "KN1439",
     "label": "SIASには非麻痺側機能として握力評価が含まれる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1464"
+      "Q1464",
+      "Q2113"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14810,9 +15024,10 @@
   {
     "knowledge_node_id": "KN1440",
     "label": "脳卒中片麻痺で下肢Brunnstrom stage Vでも、立脚初期の急激な底屈や遊脚期の下垂足が残れば、足関節底屈制動式短下肢装具が適応となる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1465"
+      "Q1465",
+      "Q2223"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14830,9 +15045,10 @@
   {
     "knowledge_node_id": "KN1442",
     "label": "CATで持続・選択・分配・転換性注意を評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1467"
+      "Q1467",
+      "Q2114"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14861,9 +15077,10 @@
   {
     "knowledge_node_id": "KN1445",
     "label": "Hoehn & Yahr stage IIを両側性症状と姿勢反射障害の有無から判定する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1470"
+      "Q1470",
+      "Q2115"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14901,9 +15118,10 @@
   {
     "knowledge_node_id": "KN1449",
     "label": "関節リウマチの病期・炎症活動性を踏まえ安全な理学療法を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1474"
+      "Q1474",
+      "Q2224"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15196,9 +15414,10 @@
   {
     "knowledge_node_id": "KN1478",
     "label": "CMIは心身両面の自覚症状や神経症傾向を質問紙で把握する検査で、STAIは状態不安・特性不安という人格傾向を評価する質問紙",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1503"
+      "Q1503",
+      "Q2116"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15217,9 +15436,10 @@
   {
     "knowledge_node_id": "KN1480",
     "label": "Daniels MMT肩屈曲grade 4の検査肢位・抵抗方法を適切に実施する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1505"
+      "Q1505",
+      "Q2117"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15227,9 +15447,10 @@
   {
     "knowledge_node_id": "KN1481",
     "label": "開腹術後の呼吸器合併症を予防する早期呼吸理学療法を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1506"
+      "Q1506",
+      "Q2225"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15237,9 +15458,10 @@
   {
     "knowledge_node_id": "KN1482",
     "label": "糖尿病性末梢神経障害と足部色調変化を踏まえ前足部を免荷する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1507"
+      "Q1507",
+      "Q2226"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15277,9 +15499,10 @@
   {
     "knowledge_node_id": "KN1486",
     "label": "L5レベル二分脊椎児の歩行安定性向上に必要な筋力強化対象を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1511"
+      "Q1511",
+      "Q2227"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15297,9 +15520,10 @@
   {
     "knowledge_node_id": "KN1488",
     "label": "松葉杖の腋窩・握り位置などの適切な設定",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1513"
+      "Q1513",
+      "Q2228"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15307,9 +15531,10 @@
   {
     "knowledge_node_id": "KN1489",
     "label": "位置覚・振動覚など深部感覚検査に用いる器具を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1514"
+      "Q1514",
+      "Q2118"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15327,9 +15552,10 @@
   {
     "knowledge_node_id": "KN1491",
     "label": "転倒リスクを踏まえ静的から動的へ段階づけたバランス練習を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1516"
+      "Q1516",
+      "Q2229"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15399,9 +15625,10 @@
   {
     "knowledge_node_id": "KN1498",
     "label": "GMFMの対象・領域・採点・Item Mapを理解する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1523"
+      "Q1523",
+      "Q2230"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15409,9 +15636,10 @@
   {
     "knowledge_node_id": "KN1499",
     "label": "Berg Balance Scaleの項目・採点・解釈を理解する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1524"
+      "Q1524",
+      "Q2231"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15419,9 +15647,10 @@
   {
     "knowledge_node_id": "KN1500",
     "label": "顔面神経機能を適切な運動・反射で評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1525"
+      "Q1525",
+      "Q2119"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15858,9 +16087,10 @@
   {
     "knowledge_node_id": "KN1543",
     "label": "高カリウム血症で心電図変化がある場合は致死的不整脈リスクがあり運動より緊急医療評価を優先する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1854"
+      "Q1854",
+      "Q2031"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15970,9 +16200,10 @@
   {
     "knowledge_node_id": "KN1554",
     "label": "SIADHでは低張性低Na血症に対して尿が不適切に濃縮され、重症低Na血症では意識障害やけいれんを生じ得る",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1952"
+      "Q1952",
+      "Q2032"
     ],
     "aliases": [],
     "successor_ids": []
@@ -16020,9 +16251,10 @@
   {
     "knowledge_node_id": "KN1559",
     "label": "Karvonen法では目標心拍数を（予測最大心拍数－安静時心拍数）×運動強度＋安静時心拍数で求める",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1995"
+      "Q1995",
+      "Q2232"
     ],
     "aliases": [],
     "successor_ids": []
@@ -16050,9 +16282,10 @@
   {
     "knowledge_node_id": "KN1562",
     "label": "末梢神経障害による随意収縮困難な筋には、筋収縮の誘発と廃用予防を目的に神経筋電気刺激療法を用いる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1998"
+      "Q1998",
+      "Q2233"
     ],
     "aliases": [],
     "successor_ids": []
