@@ -20,7 +20,7 @@ def test_all_1532_canonical_nodes_are_classified_and_counts_balance():
     summary = summarize_repairability(records)
     assert summary["canonical_node_count"] == 1532
     tags = json.loads(
-        (Path(__file__).parents[1] / "data/question_bank/question_tags.json").read_text(
+        (Path(__file__).parents[1] / "licensetown/pt/data/question_bank/question_tags.json").read_text(
             encoding="utf-8-sig"
         )
     )
