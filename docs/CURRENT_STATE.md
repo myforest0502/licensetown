@@ -1,5 +1,43 @@
 # LicenseTown Current State
 
+## 2026-09-19 PT Question Bank depth expansion Q2233
+
+- Boss explicitly approved expanding the PT formal Question Bank after the primary
+  learner effectively completed one full Q2000 pass. The purpose is not uniform
+  volume growth; it is reusable Level-2 depth/repair supply for all PT learners.
+- Formal PT Question Bank on this branch: **Q1-Q2233 / 2233 questions**,
+  bank version **2026-09-b21**.
+- Composition: **LT original 1133 / past_exam 1100**. The past-exam inventory and
+  repository-frequency Exam Weight remain based on the same 1100 formal past items;
+  no missing year provenance is invented.
+- Added Q2001-Q2233: **233 LT-original depth questions** attached to 233 audited
+  existing derived Knowledge Nodes. Distribution: anatomy4, physiology8,
+  medical overview2, internal medicine18, neurology20, pediatrics3,
+  basic kinesiology1, movement analysis6, orthopedics3, PT assessment54,
+  PT treatment114. Other fields receive no forced equal-fill questions.
+- Selection rule for expansion targets: unresolved critical Safety repair supply,
+  repeated-past Nodes lacking STRONG alternate evidence, and high-Exam-Weight
+  official non-fact singleton Nodes with meaningful depth/Safety demand.
+  One-off low-weight fact recall was deliberately not expanded merely for symmetry.
+- Every added question has a pre-Q2001 same-derived-Node reference that classifies
+  as **DIFFERENT_QUESTION_STRONG** under the existing formal classifier.
+  Q2001-Q2233 also have an explicit content-quality FAIL gate and exact-stem
+  regression test in `tests/test_q2233_expansion.py`.
+- Registry remains 1562 raw Nodes / 1532 canonical represented Nodes.
+  Canonical singleton Nodes decrease to 945; multi-question canonical Nodes rise
+  to 587. No new Node IDs were fabricated for this expansion.
+- Schema/manifest/runtime range and public count handling are updated to Q2233.
+  Public source counts are derived from the formal bank instead of hardcoded
+  900/1100 figures.
+- Historical Q2000 audits/integrators remain valid milestones and are now explicitly
+  safe inside a newer formal superset; they must never truncate Q2001+.
+- Full Linux/Python 3.13 PR CI after schema/runtime compatibility repair passed.
+  A second CI run adds the dedicated Q2233 content/repair tests; exact final run
+  and merge/deploy acceptance are recorded in the PR before Production use.
+- No Production DB write/migration, Phase11 promotion, Stage E policy change, or
+  Render configuration change is part of the expansion. Runtime rollout remains
+  normal main merge -> Render auto-deploy -> live verification.
+
 ## 2026-09-19 Root compatibility alias cleanup batch 1
 
 - Current baseline: `a275f5bae8716d1719c5c9de4b14940109622525` (merged #388).
