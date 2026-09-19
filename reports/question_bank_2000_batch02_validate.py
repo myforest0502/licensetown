@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from knowledge_node_canonical import canonicalize_knowledge_node_id as canonical
 
-BANK = ROOT / "licensetown/pt/licensetown/pt/data/question_bank"
+BANK = ROOT / "licensetown/pt/data/question_bank"
 STAGING = ROOT / "staging/question_bank_2000_batch02_v01.json"
 STORES = ("questions", "answers", "explanations", "question_tags")
 PROTECTED = tuple(f"{name}.json" for name in STORES) + (
