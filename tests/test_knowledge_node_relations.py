@@ -16,7 +16,7 @@ from knowledge_node_relations import (
 from question_bank import EXPECTED_QUESTION_COUNT, get_question_tag, question_count
 
 
-BANK_DIR = Path(__file__).parents[1] / "data" / "question_bank"
+BANK_DIR = Path(__file__).parents[1] / "licensetown" / "pt" / "data" / "question_bank"
 
 
 def _formal_ids():
