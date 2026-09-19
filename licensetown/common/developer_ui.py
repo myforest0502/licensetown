@@ -1,0 +1,325 @@
+"""Internal developer-only diagnostics and operator routes.
+
+The public app already registers ``site_ui``. To avoid touching the large Flask
+entrypoint, these routes are attached to that existing blueprint before it is
+registered. Legacy supporter diagnostics/preview URLs never accept supporter
+authorization; an already-authorized developer URL is redirected into /internal.
+"""
+
+from __future__ import annotations
+
+import hmac
+import os
+
+from flask import abort, redirect, render_template, request, url_for
+
+from database import get_learning_events, get_question_attempts
+from developer_status import build_developer_system_status
+from email_delivery import EmailDeliveryError, send_feedback_reply
+from feedback_store import (
+    FeedbackStoreUnavailable,
+    FeedbackValidationError,
+    VALID_CATEGORIES,
+    get_feedback_for_operator,
+    list_feedback_for_operator,
+    mark_email_delivery,
+    set_operator_reply,
+)
+from goukaku_ui import build_dashboard
+from knowledge_node_state_transition import derive_all_user_node_states
+from phase11_intent_selection_alignment import (
+    build_intent_selection_alignment_evidence_line,
+    build_phase11_intent_selection_alignment,
+)
+from phase11_promotion_gate_status import (
+    build_phase11_promotion_gate_evidence_line,
+    build_phase11_promotion_gate_status,
+)
+from phase11_repair_effectiveness_facts import (
+    build_repair_effectiveness_evidence_line,
+    build_same_day_repair_effectiveness_facts,
+)
+from phase11_retention_horizon_facts import (
+    build_retention_horizon_evidence_line,
+    build_retention_horizon_facts,
+)
+from phase11_retention_outcome_audit import (
+    build_retention_outcome_audit,
+    build_retention_outcome_evidence_line,
+)
+from phase11_retention_supply_audit import (
+    build_retention_supply_audit,
+    build_retention_supply_evidence_line,
+)
+from phase11_session_load_facts import (
+    build_same_day_session_load_evidence_line,
+    build_same_day_session_load_facts,
+)
+from pilot_diagnostics import build_pilot_diagnostics
+from supporter_performance import begin_request, finish_request
+
+
+LEGACY_DIAGNOSTICS_PATH = "/supporter/pilot-diagnostics"
+LEGACY_PREVIEW_PATH = "/supporter/goukaku-no-michi/learner-preview"
+LEGACY_DEVELOPER_PATHS = {LEGACY_DIAGNOSTICS_PATH, LEGACY_PREVIEW_PATH}
+
+
+def _configured_token() -> str:
+    return os.getenv("LT_INTERNAL_ADMIN_TOKEN", "").strip()
+
+
+def developer_authorized(token: str | None) -> bool:
+    expected = _configured_token()
+    supplied = str(token or "").strip()
+    return bool(expected and supplied and hmac.compare_digest(expected, supplied))
+
+
+def require_developer_authorization() -> str:
+    token = request.headers.get("X-LT-Developer-Token") or request.args.get("token")
+    if not _configured_token():
+        abort(404)
+    if not developer_authorized(token):
+        abort(403)
+    return str(token)
+
+
+def _decorate_feedback(item):
+    if not item:
+        return item
+    item["category_label"] = VALID_CATEGORIES.get(str(item.get("category") or ""), "その他")
+    return item
+
+
+def register_developer_routes(blueprint) -> None:
+    """Attach developer-only routes and legacy-route guard to ``blueprint``."""
+
+    @blueprint.before_app_request
+    def _begin_supporter_perf_probe():
+        if request.path == "/supporter":
+            begin_request()
+        return None
+
+    @blueprint.after_app_request
+    def _finish_supporter_perf_probe(response):
+        if request.path == "/supporter":
+            finish_request(response.status_code)
+        return response
+
+    @blueprint.before_app_request
+    def _guard_legacy_developer_routes():
+        if request.path not in LEGACY_DEVELOPER_PATHS:
+            return None
+        token = request.headers.get("X-LT-Developer-Token") or request.args.get("token")
+        if not developer_authorized(token):
+            abort(404)
+        learner_id = request.args.get("learner_user_id", "").strip()
+        if request.path == LEGACY_DIAGNOSTICS_PATH:
+            return redirect(
+                url_for(
+                    "site_ui.internal_pilot_diagnostics",
+                    token=token,
+                    learner_user_id=learner_id,
+                    period=request.args.get("period", "7"),
+                )
+            )
+        return redirect(
+            url_for(
+                "site_ui.internal_learner_preview",
+                token=token,
+                learner_user_id=learner_id,
+            )
+        )
+
+    @blueprint.route("/internal", endpoint="internal_index")
+    @blueprint.route("/internal/", endpoint="internal_index_slash")
+    def _internal_index():
+        token = require_developer_authorization()
+        learner_id = request.args.get("learner_user_id", "").strip()
+        return render_template(
+            "internal/index.html",
+            internal_token=token,
+            learner_id=learner_id,
+            system_status=build_developer_system_status(),
+            feedback_url=url_for("site_ui.internal_feedback", token=token),
+            pilot_url=(
+                url_for(
+                    "site_ui.internal_pilot_diagnostics",
+                    token=token,
+                    learner_user_id=learner_id,
+                )
+                if learner_id
+                else None
+            ),
+            preview_url=(
+                url_for(
+                    "site_ui.internal_learner_preview",
+                    token=token,
+                    learner_user_id=learner_id,
+                )
+                if learner_id
+                else None
+            ),
+        )
+
+    @blueprint.route("/internal/feedback", methods=["GET", "POST"], endpoint="internal_feedback")
+    def _internal_feedback():
+        token = require_developer_authorization()
+        public_id = str(request.values.get("public_id") or "").strip()
+        notice = ""
+        error = ""
+
+        if request.method == "POST":
+            action = str(request.form.get("action") or "").strip()
+            selected = get_feedback_for_operator(public_id)
+            if not selected:
+                abort(404)
+
+            try:
+                if action == "reply":
+                    stored = set_operator_reply(
+                        public_id=public_id,
+                        reply=str(request.form.get("reply") or ""),
+                        status="responded",
+                    )
+                    if not stored:
+                        abort(404)
+                    selected = get_feedback_for_operator(public_id)
+                elif action == "retry":
+                    if not str(selected.get("operator_reply") or "").strip():
+                        raise FeedbackValidationError("再送できる保存済み返信がありません。")
+                else:
+                    abort(400)
+
+                if selected and selected.get("email"):
+                    try:
+                        delivery = send_feedback_reply(
+                            public_id=public_id,
+                            to_email=str(selected["email"]),
+                            reply=str(selected.get("operator_reply") or ""),
+                        )
+                    except EmailDeliveryError as exc:
+                        mark_email_delivery(public_id=public_id, delivery_status="failed")
+                        error = f"返信はNeonに保存しましたが、メール送信に失敗しました: {exc}"
+                    else:
+                        mark_email_delivery(
+                            public_id=public_id,
+                            delivery_status=delivery.delivery_state,
+                        )
+                        notice = (
+                            "返信を保存し、メール配送を確認しました。"
+                            if delivery.delivery_state == "sent"
+                            else "返信を保存し、メール送信を受け付けました。配送確認待ちです。"
+                        )
+                else:
+                    notice = "返信をNeonに保存しました。メールアドレス未入力のためメール送信はありません。"
+            except FeedbackValidationError as exc:
+                error = str(exc)
+
+        try:
+            items = [_decorate_feedback(item) for item in list_feedback_for_operator(limit=100)]
+            selected = _decorate_feedback(get_feedback_for_operator(public_id)) if public_id else None
+        except FeedbackStoreUnavailable:
+            items = []
+            selected = None
+            error = "お問い合わせの保存先に接続できません。"
+
+        return render_template(
+            "internal/feedback.html",
+            internal_token=token,
+            items=items,
+            selected=selected,
+            notice=notice,
+            error=error,
+        )
+
+    @blueprint.route(
+        "/internal/pilot-diagnostics", endpoint="internal_pilot_diagnostics"
+    )
+    def _internal_pilot_diagnostics():
+        token = require_developer_authorization()
+        learner_id = request.args.get("learner_user_id", "").strip()
+        if not learner_id:
+            abort(400)
+        period = request.args.get("period", "7")
+        if period not in {"7", "30", "all"}:
+            period = "7"
+        diagnostics = build_pilot_diagnostics(learner_id, period)
+        attempts = get_question_attempts(learner_id)
+        learning_events = get_learning_events(learner_id)
+        node_states = derive_all_user_node_states(attempts)
+        same_day_session_load = build_same_day_session_load_facts(attempts)
+        repair_effectiveness = build_same_day_repair_effectiveness_facts(learning_events)
+        retention_horizon = build_retention_horizon_facts(node_states)
+        retention_outcomes = build_retention_outcome_audit(attempts)
+        retention_supply = build_retention_supply_audit(node_states, attempts=attempts)
+        intent_selection_alignment = build_phase11_intent_selection_alignment(
+            attempts, learning_events
+        )
+        promotion_gate_status = build_phase11_promotion_gate_status(
+            retrospective_shadow_audit=diagnostics.get("retrospective_shadow_audit"),
+            repeat_structure_audit=diagnostics.get("repeat_structure_audit"),
+            retention_horizon=retention_horizon,
+            retention_outcome_audit=retention_outcomes,
+            intent_selection_alignment=intent_selection_alignment,
+            state_counts=diagnostics.get("state_counts"),
+            transitions={
+                "recheck_due_to_stable": diagnostics.get("due_to_stable", 0),
+                "recheck_due_to_repairing": diagnostics.get("due_to_repairing", 0),
+            },
+            shadow_judgment=diagnostics.get("shadow_judgment"),
+        )
+        diagnostics["same_day_session_load"] = same_day_session_load
+        diagnostics["repair_effectiveness"] = repair_effectiveness
+        diagnostics["retention_horizon"] = retention_horizon
+        diagnostics["retention_outcomes"] = retention_outcomes
+        diagnostics["retention_supply"] = retention_supply
+        diagnostics["intent_selection_alignment"] = intent_selection_alignment
+        diagnostics["promotion_gate_status"] = promotion_gate_status
+        diagnostics["promotion_evidence_text"] = (
+            str(diagnostics.get("promotion_evidence_text") or "").rstrip()
+            + "\n"
+            + build_same_day_session_load_evidence_line(same_day_session_load)
+            + "\n"
+            + build_repair_effectiveness_evidence_line(repair_effectiveness)
+            + "\n"
+            + build_retention_horizon_evidence_line(retention_horizon)
+            + "\n"
+            + build_retention_outcome_evidence_line(retention_outcomes)
+            + "\n"
+            + build_retention_supply_evidence_line(retention_supply)
+            + "\n"
+            + build_intent_selection_alignment_evidence_line(intent_selection_alignment)
+            + "\n"
+            + build_phase11_promotion_gate_evidence_line(promotion_gate_status)
+        ).lstrip("\n")
+        return render_template(
+            "goukaku/supporter_pilot_diagnostics.html",
+            diagnostics=diagnostics,
+            learner_id=learner_id,
+            supporter_token=token,
+            internal_token=token,
+            internal_mode=True,
+        )
+
+    @blueprint.route("/internal/learner-preview", endpoint="internal_learner_preview")
+    def _internal_learner_preview():
+        token = require_developer_authorization()
+        learner_id = request.args.get("learner_user_id", "").strip()
+        if not learner_id:
+            abort(400)
+        return render_template(
+            "goukaku/home.html",
+            dashboard=build_dashboard(learner_id),
+            dashboard_token=None,
+            dashboard_title="合格への道",
+            read_only=False,
+            learner_preview=True,
+            subjects_url=None,
+            supporter_return_url=url_for(
+                "site_ui.internal_index",
+                token=token,
+                learner_user_id=learner_id,
+            ),
+            line_official_account_id="",
+            liff_id="",
+        )

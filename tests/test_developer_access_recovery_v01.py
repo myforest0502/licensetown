@@ -4,7 +4,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_recovery_hub_is_internal_token_protected_and_separate():
-    source = (ROOT / "developer_access_recovery.py").read_text(encoding="utf-8")
+    source = (ROOT / "licensetown" / "common" / "developer_access_recovery.py").read_text(encoding="utf-8")
     assert 'ROUTE = "/internal/recovery"' in source
     assert "require_developer_authorization()" in source
     assert "authorized_supporter_learner" in source
