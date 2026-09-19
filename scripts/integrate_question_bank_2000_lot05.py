@@ -7,7 +7,7 @@ from reports import question_bank_2000_lot05_validate as validator
 from scripts import integrate_question_bank_2000_lot04 as base
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 STAGING = ROOT / "staging" / "question_bank_2000_lot05_v01.json"
 
 def integrate(bank_dir: Path = BANK, staging_path: Path = STAGING) -> None:
