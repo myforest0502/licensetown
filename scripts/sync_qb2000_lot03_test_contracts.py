@@ -54,7 +54,7 @@ def main() -> int:
     replace_exact(
         "tests/test_question_bank_2000_lot01_validator.py",
         '    if not STAGING.exists():\n        return\n    payload = read(STAGING)',
-        '    if not STAGING.exists():\n        return\n    manifest = read(ROOT / "data/question_bank/bank_manifest.json")\n    if manifest["last_question_number"] > 1809:\n        return\n    payload = read(STAGING)',
+        '    if not STAGING.exists():\n        return\n    manifest = read(ROOT / "licensetown/pt/data/question_bank/bank_manifest.json")\n    if manifest["last_question_number"] > 1809:\n        return\n    payload = read(STAGING)',
     )
 
     # The Lot02 integrator test copies the current bank; after Lot03 that current bank is
