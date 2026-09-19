@@ -9,7 +9,7 @@ from knowledge_node_state_transition import derive_knowledge_node_state
 from question_bank import get_answer, get_explanation, get_question, get_question_tag, question_count
 
 
-BANK = Path(__file__).resolve().parents[1] / "data" / "question_bank"
+BANK = Path(__file__).resolve().parents[1] / "licensetown" / "pt" / "data" / "question_bank"
 PAIRS = {
     "Q1595": ("Q8", "KN0008", "safety_priority", "DECIDE"),
     "Q1596": ("Q25", "KN0025", "finding_interpretation", "INTERPRET"),
