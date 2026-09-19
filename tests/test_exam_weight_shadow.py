@@ -31,7 +31,7 @@ def test_frequency_constants_match_formal_repository_records():
     from collections import Counter
     from pathlib import Path
 
-    bank = Path(__file__).resolve().parents[1] / "licensetown" / "pt" / "licensetown" / "pt" / "data" / "question_bank"
+    bank = Path(__file__).resolve().parents[1] / "licensetown" / "pt" / "data" / "question_bank"
     tags = json.loads((bank / "question_tags.json").read_text(encoding="utf-8-sig"))
     questions = json.loads((bank / "questions.json").read_text(encoding="utf-8-sig"))
     assert len(tags) == len(questions) == 2000
