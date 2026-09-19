@@ -22,7 +22,7 @@ ITEMS = {
     "Q1624": ("KN1468", "Q1493", "intervention_selection", "PRESCRIBE", "B", "B", 7),
     "Q1625": ("KN0065", "Q65", "intervention_selection", "PRESCRIBE", "B", "C", 15),
 }
-BANK = Path(__file__).resolve().parents[1] / "data" / "question_bank"
+BANK = Path(__file__).resolve().parents[1] / "licensetown" / "pt" / "data" / "question_bank"
 HISTORICAL_DIGESTS = {
     "questions.json": "728c042e9bf4c1b71b5c3e07ed84a3e9858783dc9125fca1a81a5c6731f82eff",
     "answers.json": "f38a3e1884cd1056e6572e7059fe6417aad7a91be1e7217c0e6bc1c018556089",
