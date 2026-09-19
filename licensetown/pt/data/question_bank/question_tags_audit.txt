@@ -65,6 +65,8 @@ canonical Knowledge Node coverage:
   canonical nodes represented by questions: 1532
   singleton canonical nodes: 945
   multi-question canonical nodes: 587
+  confirmed-shared registry groups: 585
+  confirmed-shared registry questions: 1256
 
 Q2001-Q2233 expansion:
   records: 233
