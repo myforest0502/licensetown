@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 TAGS = BANK / "question_tags.json"
 MANIFEST = BANK / "bank_manifest.json"
 
