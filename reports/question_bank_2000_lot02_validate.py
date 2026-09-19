@@ -11,7 +11,7 @@ from itertools import combinations
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 ROSTER = ROOT / "reports" / "question_bank_2000_lot02_targets_v01.json"
 STAGING = ROOT / "staging" / "question_bank_2000_lot02_v01.json"
 PROTECTED = (
