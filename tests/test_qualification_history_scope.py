@@ -3,7 +3,7 @@
 from types import SimpleNamespace
 
 from qualification_history_scope import install_pt_learning_history_scope
-from qualifications.pt.learning_store import PTLearningHistoryStore
+from licensetown.pt.learning_store import PTLearningHistoryStore
 
 
 NAMES = (

@@ -3,7 +3,7 @@
 from types import SimpleNamespace
 
 from qualification_learning_writer_scope import install_pt_learning_writer_scope
-from qualifications.pt.learning_writer import PTLearningWriter
+from licensetown.pt.learning_writer import PTLearningWriter
 
 
 def make_legacy():

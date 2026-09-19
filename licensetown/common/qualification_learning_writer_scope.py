@@ -7,7 +7,7 @@ PT-qualified writer after the qualified database conflict keys are available.
 
 from __future__ import annotations
 
-from qualifications.pt.learning_writer import PTLearningWriter
+from licensetown.pt.learning_writer import PTLearningWriter
 
 
 _LEGACY_WRITE_NAMES = (

@@ -7,7 +7,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 
 from question_bank import QuestionAvailabilityError
-from qualifications.pt.provider import PTQuestionBankProvider
+from licensetown.pt.provider import PTQuestionBankProvider
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import derive_all_user_node_states
 from question_equivalence import (

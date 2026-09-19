@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import database
-from qualifications.pt.learning_store import PTLearningHistoryStore
+from licensetown.pt.learning_store import PTLearningHistoryStore
 
 
 class FakeCursor:

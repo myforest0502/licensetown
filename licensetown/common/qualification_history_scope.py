@@ -7,7 +7,7 @@ explicit PT learning-history store, keeping the existing call sites unchanged.
 
 from __future__ import annotations
 
-from qualifications.common.learning_store_registry import get_learning_history_store
+from licensetown.common.learning_store_registry import get_learning_history_store
 
 
 _HISTORY_NAMES = (

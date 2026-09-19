@@ -8,7 +8,7 @@ import pytest
 
 @pytest.mark.parametrize("first", [
     "phase11_active_repair_rules",
-    "qualifications.pt.phase11_active_repair_rules",
+    "licensetown.pt.phase11_active_repair_rules",
 ])
 def test_import_order_outputs_globals_and_offline_boundary(first):
     script = f"""
@@ -22,7 +22,7 @@ class BlockRuntime(importlib.abc.MetaPathFinder):
 sys.meta_path.insert(0, BlockRuntime())
 importlib.import_module({first!r})
 legacy = importlib.import_module('phase11_active_repair_rules')
-pt = importlib.import_module('qualifications.pt.phase11_active_repair_rules')
+pt = importlib.import_module('licensetown.pt.phase11_active_repair_rules')
 assert legacy is pt
 assert legacy.build_j2_candidates is pt.build_j2_candidates
 assert legacy.build_j3_candidates is pt.build_j3_candidates
