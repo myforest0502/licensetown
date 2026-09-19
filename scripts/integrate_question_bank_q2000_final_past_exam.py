@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 START_Q, END_Q = 1995, 2000
 BASE_END = 1994
 TARGET_VERSION = "2026-09-b20"
