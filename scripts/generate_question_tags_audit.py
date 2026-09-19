@@ -7,7 +7,7 @@ from pathlib import Path
 from scripts.validate_question_bank import validate_question_bank
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK_DIR = ROOT / "data" / "question_bank"
+BANK_DIR = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 TAGS_PATH = BANK_DIR / "question_tags.json"
 CANONICAL_MAP_PATH = BANK_DIR / "knowledge_node_canonical_map.json"
 MANIFEST_PATH = BANK_DIR / "bank_manifest.json"
