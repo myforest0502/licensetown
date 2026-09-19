@@ -54,7 +54,7 @@ def test_all_formal_question_tags_load_and_match_ids():
 
 def test_formal_tag_schema_keeps_v03_and_accepts_v10_reviewed():
     schema = json.loads(
-        (Path(__file__).parents[1] / "data" / "question_bank" /
+        (Path(__file__).parents[1] / "licensetown" / "pt" / "data" / "question_bank" /
          "question_tags.schema.json").read_text(encoding="utf-8")
     )
     properties = schema["items"]["properties"]
