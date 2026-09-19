@@ -12,7 +12,7 @@ from reports.question_bank_2000_batch01_validate import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 
 
 def _read(name):
