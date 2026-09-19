@@ -22,7 +22,7 @@ from knowledge_node_repair_evidence import classify_repair_confirmation, DIFFERE
 from scripts.validate_question_bank import validate_question_bank
 from scripts.check_question_bank_schema_manifest import check_schema_manifest
 
-BANK = ROOT / 'data/question_bank'
+BANK = ROOT / 'licensetown/pt/licensetown/pt/data/question_bank'
 def read(name):
     return json.loads((BANK / name).read_text(encoding='utf-8-sig'))
 def git(*args):
@@ -235,7 +235,7 @@ original +257は既存singletonの2問目179、既存multi補強57、新規Node2
 ''')
 section(2,'Current State Q1-Q1737',f'''
 {table(['検査','結果'],[['範囲/件数','Q1〜Q1737 / 1737'],['questions / answers / explanations / question_tags','各1737・ID集合一致・重複/欠番0'],['source整合','questions: O/P と tags: original/past_exam が全件一致'],['分類整合','category_small 1〜18とcategory_large A/B/Cが全件一致'],['task/primary整合','現行の8 task / 6 ability対応と全件一致'],['DB接続','0（app/databaseをimportしない）']])}
-入力は data/question_bank 配下と既存の読み取り専用モジュール。保存済みquestion_tags_audit.txtを数値の代用にせず、実データを集計した。全体task/ability/level/safety、registry 1538・canonical 1508・singleton 1305・multi 203・confirmed-shared 186/385は依頼時の参考値と一致。
+入力は licensetown/pt/data/question_bank 配下と既存の読み取り専用モジュール。保存済みquestion_tags_audit.txtを数値の代用にせず、実データを集計した。全体task/ability/level/safety、registry 1538・canonical 1508・singleton 1305・multi 203・confirmed-shared 186/385は依頼時の参考値と一致。
 
 再現: リポジトリルートで `python -B reports/question_bank_2000_audit_v01.py`。標準ライブラリと既存の読み取り専用bank/Node関数のみ使用。入力ハッシュ、全Nodeのpair根拠、分野別全件数は補助JSONに保存する。本稿はタグによる構造監査であり、1737問の医学的妥当性・正答率・識別力を全件審査した結果ではない。
 ''')
