@@ -30,3 +30,13 @@ def test_top_level_python_modules_have_domain_home_or_are_runtime_bridges():
     }
     unowned = root_python - canonical_names - RUNTIME_ROOT_EXCEPTIONS
     assert unowned == set()
+
+
+def test_pt_question_bank_data_has_one_canonical_home():
+    legacy_root = ROOT / "data"
+    canonical_bank = DOMAIN_ROOT / "pt" / "data" / "question_bank"
+    assert not legacy_root.exists()
+    assert (canonical_bank / "questions.json").exists()
+    assert (canonical_bank / "answers.json").exists()
+    assert (canonical_bank / "explanations.json").exists()
+    assert (canonical_bank / "question_tags.json").exists()
