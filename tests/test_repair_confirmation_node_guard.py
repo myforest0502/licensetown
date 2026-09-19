@@ -50,6 +50,8 @@ def test_safety_strong_repair_pilot_pairs_remain_strong():
 def test_every_reviewed_strong_pair_stays_within_one_canonical_node():
     pair_path = (
         Path(__file__).resolve().parents[1]
+        / "licensetown"
+        / "pt"
         / "data"
         / "question_bank"
         / "strong_different_question_pairs.json"
