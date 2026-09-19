@@ -7,7 +7,7 @@ import pytest
 from scripts import integrate_question_bank_2000_lot04 as integrator
 
 ROOT = Path(__file__).parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 STAGING = ROOT / "staging" / "question_bank_2000_lot04_v01.json"
 
 
