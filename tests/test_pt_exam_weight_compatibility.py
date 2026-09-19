@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 
-@pytest.mark.parametrize("first", ["exam_weight_shadow", "qualifications.pt.exam_weight_shadow"])
+@pytest.mark.parametrize("first", ["exam_weight_shadow", "licensetown.pt.exam_weight_shadow"])
 def test_both_import_orders_share_globals_and_remain_offline(first):
     script = f"""
 import importlib
@@ -19,7 +19,7 @@ class BlockRuntime(importlib.abc.MetaPathFinder):
 sys.meta_path.insert(0, BlockRuntime())
 importlib.import_module({first!r})
 legacy = importlib.import_module('exam_weight_shadow')
-pt = importlib.import_module('qualifications.pt.exam_weight_shadow')
+pt = importlib.import_module('licensetown.pt.exam_weight_shadow')
 assert legacy is pt
 from exam_weight_shadow import field_exam_weight
 assert field_exam_weight is pt.field_exam_weight
