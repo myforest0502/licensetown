@@ -2,8 +2,8 @@
 
 import pytest
 
-from durable_paused_session import PausedSessionStore
-from durable_web_learning_session import WebLearningSessionStore
+from licensetown.common.durable_paused_session import PausedSessionStore
+from licensetown.common.durable_web_learning_session import WebLearningSessionStore
 
 
 class Cursor:

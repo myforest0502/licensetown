@@ -1,7 +1,7 @@
 from types import SimpleNamespace
 
-import durable_web_learning_session as module
-from durable_web_learning_session import (
+from licensetown.common import durable_web_learning_session as module
+from licensetown.common.durable_web_learning_session import (
     DurableWebLearningSessions,
     WebLearningSessionStore,
     install_durable_web_learning_sessions,

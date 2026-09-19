@@ -1,7 +1,7 @@
 from types import SimpleNamespace
 
-import durable_paused_session as durable
-from durable_paused_session import (
+from licensetown.common import durable_paused_session as durable
+from licensetown.common.durable_paused_session import (
     DurableStudySessions,
     PausedSessionStore,
     install_durable_paused_sessions,
