@@ -22,7 +22,7 @@ from knowledge_node_repair_evidence import classify_repair_confirmation, DIFFERE
 from scripts.validate_question_bank import validate_question_bank
 from scripts.check_question_bank_schema_manifest import check_schema_manifest
 
-BANK = ROOT / 'licensetown/pt/licensetown/pt/data/question_bank'
+BANK = ROOT / 'licensetown/pt/data/question_bank'
 def read(name):
     return json.loads((BANK / name).read_text(encoding='utf-8-sig'))
 def git(*args):
