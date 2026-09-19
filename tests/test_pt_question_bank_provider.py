@@ -7,8 +7,8 @@ import unittest
 from unittest.mock import patch
 
 import question_bank
-from qualifications.bank_provider import QuestionBankProvider
-from qualifications.pt.provider import PTQuestionBankProvider
+from licensetown.common.bank_provider import QuestionBankProvider
+from licensetown.pt.provider import PTQuestionBankProvider
 
 
 class PTQuestionBankProviderTest(unittest.TestCase):
@@ -93,7 +93,7 @@ def audit(event, args):
 
 sys.meta_path.insert(0, BlockRuntimeImports())
 sys.addaudithook(audit)
-from qualifications.pt.provider import PTQuestionBankProvider
+from licensetown.pt.provider import PTQuestionBankProvider
 assert PTQuestionBankProvider().qualification_id == "pt"
 assert PTQuestionBankProvider().question_ids()
 assert not blocked.intersection(sys.modules)
