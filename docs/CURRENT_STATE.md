@@ -1,5 +1,30 @@
 # LicenseTown Current State
 
+## 2026-09-19 Minimal qualification folder separation
+
+- Baseline main `722afce9ac00e09889822bc09079f2f256b29fad` (#368).
+  Existing common/PT/Takken packages and contracts are reused, not recreated.
+- PT-only exam weights now live in `qualifications/pt/exam_weight_shadow.py`.
+  The legacy root import aliases the same module object. Executable AST and
+  all 18 field outputs match baseline; both import orders and patched globals
+  are covered. No data, taxonomy, selector or strategy policy was changed.
+- `qualifications/README.md` records common contracts, PT ownership, dormant
+  Takken and retained runtime composition; Takken README records fail-closed
+  provider/store behavior. No fabricated Takken implementation or activation.
+- Existing root entry points, data paths, common registries, SQL/session hooks,
+  UI and test paths stay in place. Stage E PT pilot and Phase11 HOLD unchanged.
+- Local Python 3.12 focused tests: **101 passed, 16 subtests**. Validator:
+  **2000 questions/answers/explanations/tags, missing/duplicates/reference
+  inconsistencies 0, schema issues 0, 1562 Nodes**.
+- Local broad collection is blocked by Windows application-control rejection
+  of the existing lxml DLL (42 collection errors), not a test assertion failure.
+  Full Linux/Python 3.13 CI evidence is attached to the delivery PR; no execution
+  policy changes or test skips were introduced to bypass this host restriction.
+- Code/focused tests verified; no new live observation or production acceptance
+  is claimed. No production DB access/write, migration, Render operation,
+  paid operation, main merge or learning authority promotion.
+
+
 ## 2026-09-15 Stage E pilot mixed-slot supply correction
 
 - Main baseline `70374195f84eee64bd5c6dcd95515b08431a23c0`. SELECT-only
