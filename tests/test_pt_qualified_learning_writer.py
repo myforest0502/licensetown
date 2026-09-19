@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 import database
-from qualifications.pt.learning_writer import PTLearningWriter
+from licensetown.pt.learning_writer import PTLearningWriter
 
 
 NOW = datetime(2026, 9, 12, tzinfo=timezone.utc)
