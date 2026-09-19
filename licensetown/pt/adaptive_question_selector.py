@@ -15,7 +15,7 @@ from knowledge_node_repair_evidence import (
     classify_repair_confirmation,
 )
 from question_bank import QuestionAvailabilityError, get_category_small
-from qualifications.pt.provider import PTQuestionBankProvider
+from licensetown.pt.provider import PTQuestionBankProvider
 from question_equivalence import (
     canonicalize_question_evidence_id,
     canonicalize_question_evidence_node,
