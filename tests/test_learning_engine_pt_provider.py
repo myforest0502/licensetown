@@ -10,7 +10,7 @@ import pytest
 
 import learning_engine as engine
 import question_bank
-from qualifications.pt.provider import PTQuestionBankProvider
+from licensetown.pt.provider import PTQuestionBankProvider
 
 
 BANK_METHODS = ("question_ids", "get_question", "get_question_tag", "get_quiz_question")
