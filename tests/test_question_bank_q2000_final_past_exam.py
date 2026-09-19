@@ -5,7 +5,7 @@ from pathlib import Path
 from scripts.integrate_question_bank_q2000_final_past_exam import ITEMS, integrate
 
 ROOT = Path(__file__).resolve().parents[1]
-BANK = ROOT / "data" / "question_bank"
+BANK = ROOT / "licensetown" / "pt" / "data" / "question_bank"
 
 
 def read(name):
