@@ -1,5 +1,27 @@
 # LicenseTown Current State
 
+## 2026-09-20 PT Lifecycle — shadow metadata wiring
+
+- Lifecycle v0.1 remains non-authoritative for question selection. The existing
+  Stage E pilot snapshot now derives the pure lifecycle result from the same
+  aligned field evidence/targets/formal Node states and observed Critical Safety
+  context, then records only diagnostic lifecycle metadata in the existing
+  confirmed-answer JSONB payload.
+- Added metadata: lifecycle version/phase, initial-coverage checkpoint,
+  repair/retention priority flags, reason codes and missing-evidence codes.
+  No DB schema/migration is required; no new write path exists.
+- Exact-Q selection, Stage E field ranking/reroute, Safety protection, 72-hour
+  guard, Recent Cooldown, equivalence, fallback behavior and pilot allowlist are
+  unchanged. Phase11 remains HOLD/Shadow-only. No learner-facing UI change.
+- Production natural-use inspection found the persisted user_node_state table is
+  only a basic cumulative cache and is not the formal lifecycle truth; formal
+  lifecycle input remains question_attempts -> derive_all_user_node_states.
+  September20 latest wrong answers prove active formal repair demand, so the
+  expected current lifecycle phase for the primary learner is depth_repair.
+- Acceptance for this wiring requires focused tests/full CI before merge and then
+  ordinary pilot natural-use observation; no educational-effect claim is made.
+
+
 ## 2026-09-20 PT Learning Lifecycle — pure model, runtime disconnected
 
 - Baseline main: 289f09edd1392252b60c7b68211431f83396b91a (#393, Q2233).

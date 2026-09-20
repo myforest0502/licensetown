@@ -1972,6 +1972,13 @@ def record_confirmed_learning_batch(user_id, session):
                         "strategy_priority_components",
                         "strategy_shadow_or_authority",
                         "strategy_fallback_reason",
+                        "learning_lifecycle_version",
+                        "learning_lifecycle_phase",
+                        "learning_lifecycle_coverage_checkpoint",
+                        "learning_lifecycle_repair_priority",
+                        "learning_lifecycle_retention_priority",
+                        "learning_lifecycle_reason_codes",
+                        "learning_lifecycle_missing_evidence",
                     )
                     if key in audit
                 })
