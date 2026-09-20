@@ -58,7 +58,12 @@ def setup_refinement(monkeypatch,field=18):
     audit[baseline[3]['id']]['selection_reason']='safety_wrong'
     audit[baseline[4]['id']]['selection_reason']='recheck_due'
     strategy={'recommended_field_id':field,'learning_intent':'coverage','priority_score':0.7,
-              'reason_codes':['high_exam_weight'],'priority_components':{'coverage_gap_score':1}}
+              'reason_codes':['high_exam_weight'],'priority_components':{'coverage_gap_score':1},
+              'learning_lifecycle':{
+                  'version':'pt_learning_lifecycle_v0.1','phase':'depth_repair',
+                  'coverage_checkpoint_reached':True,'repair_priority':True,
+                  'retention_priority':False,'reason_codes':['current_repairing'],
+                  'missing_evidence':[]}}
     monkeypatch.setattr(pilot,'strategy_snapshot',lambda *a:strategy)
     return baseline,audit
 
@@ -77,6 +82,8 @@ def test_field_handoff_preserves_safety_due_and_342_slots(monkeypatch):
     assert {q['id'] for q in baseline[:5]} <= {q['id'] for q in result}
     assert all(a['strategy_recommended_field']==18 for a in audit.values())
     assert all(a['strategy_shadow_or_authority']=='soft_pilot' for a in audit.values())
+    assert all(a['learning_lifecycle_phase']=='depth_repair' for a in audit.values())
+    assert all(a['learning_lifecycle_repair_priority'] is True for a in audit.values())
     assert sum(get_category_small(q['id'])==18 for q in result)>0
 
 
@@ -175,6 +182,9 @@ def test_real_strategy_snapshot_has_no_direct_q_authority():
     result=pilot.strategy_snapshot(attempts,events,NOW)
     assert result['shadow_only'] and not result['selection_authority']
     assert result['recommended_field_id'] in range(1,19)
+    lifecycle=result['learning_lifecycle']
+    assert lifecycle['phase'] in {'coverage','depth_repair','retention_readiness'}
+    assert lifecycle['provisional'] and not lifecycle['selection_authority']
     assert all('additional_blocks_completed' not in r['target']['context_available'] for r in result['ranked_fields'])
 
 
