@@ -101,7 +101,7 @@ def strategy_snapshot(attempts, events, as_of):
     from field_evidence import build_field_evidence
     from field_progress import build_field_progress
     from field_learning_target_shadow import build_field_targets
-    from learning_lifecycle import build_learning_lifecycle
+    from licensetown.pt.learning_lifecycle import build_learning_lifecycle
     from learning_strategy_shadow import build_learning_strategy
     contexts=completion_context(events,as_of)
     state_rows=derive_all_user_node_states(attempts,as_of=as_of)
