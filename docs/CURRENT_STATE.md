@@ -1,5 +1,25 @@
 # LicenseTown Current State
 
+## 2026-09-20 PT Learning Lifecycle — pure model, runtime disconnected
+
+- Baseline main: 289f09edd1392252b60c7b68211431f83396b91a (#393, Q2233).
+- Natural-use data observed: Boss supplied anonymous September20 aggregates
+  (250 attempts, 156 correct; 76 repair selections; 233 added questions consumed;
+  72h same-Q repeats zero). No new Production DB access or acceptance claim.
+- Pure lifecycle model code exists in licensetown/pt/learning_lifecycle.py:
+  initial per-field coverage checkpoint, current formal repair/Critical Safety
+  priority and existing retention signals. No Q-range/accuracy phase gate.
+  Missing Safety remains unavailable. Old wrong history does not reopen repair.
+- Runtime integration NOT done; production behavior unchanged. No Bank, selector,
+  DB/schema, Stage E, Phase11, UI/LINE, environment or Render changes.
+  Production acceptance of the model NOT claimed; output remains provisional.
+- Focused tests passed: 133 (including 10 lifecycle cases and unchanged field,
+  Node, repair/retention, strategy/pilot and Q2233 regressions), Python 3.13.7.
+  DATABASE_URL empty and dummy API credentials; no new skips. Q2233 validator:
+  all four components 2233 records; missing/duplicates/schema/reference issues 0.
+  Local full suite not required for this step; existing PR CI runs it unchanged.
+- Contract and Phase 2 boundaries: PT_LEARNING_LIFECYCLE_LEVEL2_V01.md.
+
 ## 2026-09-19 PT Question Bank depth expansion Q2233
 
 - Boss explicitly approved expanding the PT formal Question Bank after the primary
