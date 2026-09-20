@@ -6,11 +6,30 @@ VERSION = 'learning_strategy_runtime_pilot_v0.1'
 EXPLORATION_FLOOR = 5
 METADATA_KEYS = ('strategy_version','strategy_recommended_field','strategy_learning_intent',
                  'strategy_priority_score','strategy_reason_codes','strategy_priority_components',
-                 'strategy_shadow_or_authority','strategy_fallback_reason')
+                 'strategy_shadow_or_authority','strategy_fallback_reason',
+                 'learning_lifecycle_version','learning_lifecycle_phase',
+                 'learning_lifecycle_coverage_checkpoint','learning_lifecycle_repair_priority',
+                 'learning_lifecycle_retention_priority','learning_lifecycle_reason_codes',
+                 'learning_lifecycle_missing_evidence')
 
 
 def pilot_enabled(enabled, user_id, pilot_ids):
     return bool(enabled and user_id and user_id in pilot_ids)
+
+
+def _lifecycle_metadata(strategy):
+    lifecycle = strategy.get('learning_lifecycle')
+    if not isinstance(lifecycle, dict):
+        return {}
+    return {
+        'learning_lifecycle_version': lifecycle.get('version'),
+        'learning_lifecycle_phase': lifecycle.get('phase'),
+        'learning_lifecycle_coverage_checkpoint': lifecycle.get('coverage_checkpoint_reached'),
+        'learning_lifecycle_repair_priority': lifecycle.get('repair_priority'),
+        'learning_lifecycle_retention_priority': lifecycle.get('retention_priority'),
+        'learning_lifecycle_reason_codes': lifecycle.get('reason_codes', []),
+        'learning_lifecycle_missing_evidence': lifecycle.get('missing_evidence', []),
+    }
 
 
 def _time(value):
@@ -81,9 +100,12 @@ def strategy_snapshot(attempts, events, as_of):
     from question_equivalence import canonicalize_question_evidence_node
     from field_evidence import build_field_evidence
     from field_progress import build_field_progress
+    from field_learning_target_shadow import build_field_targets
+    from learning_lifecycle import build_learning_lifecycle
     from learning_strategy_shadow import build_learning_strategy
     contexts=completion_context(events,as_of)
-    states={r['canonical_node_id']:r['state'] for r in derive_all_user_node_states(attempts,as_of=as_of)}
+    state_rows=derive_all_user_node_states(attempts,as_of=as_of)
+    states={r['canonical_node_id']:r['state'] for r in state_rows}
     summaries=_node_attempt_summary(attempts)
     critical=defaultdict(set)
     for q in question_ids():
@@ -102,7 +124,16 @@ def strategy_snapshot(attempts, events, as_of):
         if f in last:
             c['days_since_last_field_study']=max(0,(as_of-last[f]).total_seconds()/86400)
     evidence=build_field_evidence(attempts,as_of=as_of)
-    return build_learning_strategy(evidence,build_field_progress(evidence),context_by_field=contexts)
+    progress=build_field_progress(evidence)
+    targets=build_field_targets(evidence,progress,context_by_field=contexts)
+    critical_nodes=set().union(*critical.values()) if critical else set()
+    lifecycle=build_learning_lifecycle(
+        evidence, targets, state_rows,
+        critical_safety_unresolved_count=len(critical_nodes),
+    )
+    strategy=build_learning_strategy(evidence,progress,context_by_field=contexts)
+    strategy['learning_lifecycle']=lifecycle
+    return strategy
 
 
 def refine_session(attempts, baseline, audit, events, *, exclude_ids=(), as_of=None):
@@ -128,6 +159,7 @@ def refine_session(attempts, baseline, audit, events, *, exclude_ids=(), as_of=N
           'strategy_priority_score':strategy['priority_score'],
           'strategy_reason_codes':strategy['reason_codes'],
           'strategy_priority_components':strategy['priority_components']}
+    meta.update(_lifecycle_metadata(strategy))
     def fallback(reason):
         for q in baseline:
             audit.setdefault(q['id'],{}).update(meta,strategy_shadow_or_authority='fallback',strategy_fallback_reason=reason)
@@ -203,6 +235,7 @@ def refine_session(attempts, baseline, audit, events, *, exclude_ids=(), as_of=N
           'strategy_priority_score':chosen_candidate.get('priority_score',0.0),
           'strategy_reason_codes':reasons,
           'strategy_priority_components':chosen_candidate.get('priority_components') or {}}
+    meta.update(_lifecycle_metadata(strategy))
 
     chosen=list(protected)
     seen={eq(q['id']) for q in chosen}
