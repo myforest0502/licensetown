@@ -132,17 +132,22 @@ def build_learning_strategy(evidence_bundle, progress_bundle, *, context_by_fiel
     urgency = 0.0 if days is None else _clamp((90 - days) / 90)
     targets = build_field_targets(evidence_bundle, progress_bundle, context_by_field=context_by_field)
     ranked = [_rank_field(target, urgency) for target in targets["fields"]]
-    # One decision contract: Critical Safety remains first. Otherwise, finish
-    # the formal 60-answer first pass before ranking already-assessable fields.
-    # This prevents low-sample fields from being stranded indefinitely.
-    def priority_tier(row):
-        if row["priority_components"]["safety_score"] > 0:
-            return 0
+    # Product rule: finish every field's formal 60-answer first pass before
+    # any ordinary repair/retention/safety ranking. Otherwise a low-sample field
+    # can remain forever unjudgeable. Among incomplete fields, finish the one
+    # closest to 60 first, then move to the next.
+    def priority_key(row):
         if row.get("initial_question_floor_incomplete"):
-            return 1
-        return 2
+            evaluation = (row.get("target") or {}).get("evaluation") or {}
+            answered = int(evaluation.get("evaluable_answer_count") or 0)
+            floor = int((row.get("target") or {}).get("classification_question_floor") or 60)
+            remaining = max(0, floor - answered)
+            return (0, remaining, row["field_id"])
+        if row["priority_components"]["safety_score"] > 0:
+            return (1, 0, row["field_id"])
+        return (2, -row["priority_score"], row["field_id"])
 
-    ranked.sort(key=lambda row: (priority_tier(row), -row["priority_score"], row["field_id"]))
+    ranked.sort(key=priority_key)
     recommended = next((row for row in ranked if row["allocation_candidate"] and row["priority_score"] > 0), None)
     return {
         "version": VERSION, "shadow_only": True, "selection_authority": False,
