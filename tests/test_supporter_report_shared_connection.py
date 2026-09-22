@@ -70,3 +70,51 @@ def test_production_supporter_report_reuses_existing_connection_without_attempt_
     assert seen["connection"] is connection
     assert result["parent_summary"]["current_position"]["answered_count"] == 0
     assert not hasattr(report_module, "_attempts_with_connection")
+
+
+def test_shared_supporter_fields_filter_superseded_q2743_results(monkeypatch):
+    from datetime import timedelta
+    from licensetown.pt.formal_attempt_evidence import PROVISIONAL_REWRITE_LIVE_AT
+
+    old_rows = [
+        (
+            [
+                {"question_id": "Q2234", "is_correct": False},
+                {"question_id": "Q100", "is_correct": True},
+            ],
+            PROVISIONAL_REWRITE_LIVE_AT - timedelta(seconds=1),
+        )
+    ]
+    captured = {}
+
+    monkeypatch.setattr(
+        report_module,
+        "_get_question_result_rows",
+        lambda learner_user_id, conn: old_rows,
+    )
+    monkeypatch.setattr(
+        report_module,
+        "get_learning_summary",
+        lambda learner_user_id, _connection=None: {},
+    )
+    monkeypatch.setattr(
+        report_module,
+        "get_learning_activity",
+        lambda learner_user_id, _connection=None: {},
+    )
+
+    def fake_fields(learner_user_id, _connection=None, _question_result_rows=None):
+        captured["rows"] = _question_result_rows
+        return []
+
+    monkeypatch.setattr(report_module, "get_field_learning_summary", fake_fields)
+    monkeypatch.setattr(
+        report_module,
+        "get_unique_answered_question_count",
+        lambda learner_user_id, _connection=None, _question_result_rows=None: 1,
+    )
+
+    result = report_module._shared_dashboard_learning_data("learner", object())
+
+    assert result["fields"] == []
+    assert captured["rows"][0][0] == [{"question_id": "Q100", "is_correct": True}]
