@@ -195,7 +195,7 @@ def test_navigation_cta_rejects_stale_or_tampered_intent(monkeypatch):
     monkeypatch.setattr(
         app_module,
         "build_learner_navigation_from_formal_inputs",
-        lambda rows, trial100: _navigation(),
+        lambda rows, trial100, **kwargs: _navigation(),
     )
     client = app_module.app.test_client()
     response = client.post(
@@ -227,7 +227,7 @@ def test_navigation_cta_rejects_action_that_became_stale(monkeypatch):
     monkeypatch.setattr(
         app_module,
         "build_learner_navigation_from_formal_inputs",
-        lambda rows, trial100: current_navigation,
+        lambda rows, trial100, **kwargs: current_navigation,
     )
 
     response = app_module.app.test_client().post(
