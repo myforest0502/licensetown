@@ -5,10 +5,11 @@ from __future__ import annotations
 from typing import Any
 
 from question_bank import BASIC_CATEGORY_SMALLS
+from field_evaluation_shadow import INITIAL_QUESTION_FLOOR
 
 
 FOUNDATION_ANSWER_THRESHOLD = 100
-MIN_RELIABLE_ANSWERS = 10
+MIN_RELIABLE_ANSWERS = INITIAL_QUESTION_FLOOR
 TARGET_FIELD_ACCURACY = 70
 
 # 十分な回答数がある分野だけを「得意・頑張った分野」として扱う。
