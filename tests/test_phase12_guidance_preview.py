@@ -103,3 +103,47 @@ def test_preview_css_is_scoped_and_responsive():
     assert ".phase12-guidance-preview{" in css
     assert ".phase12-state-summary{" in css
     assert "@media(max-width:700px){.phase12-state-summary" in css
+
+
+def test_phase12_current_position_uses_same_field_as_learner_navigation(monkeypatch):
+    _disable_other_previews(monkeypatch)
+    monkeypatch.setenv("ENABLE_PHASE12_GUIDANCE_PREVIEW", "true")
+    monkeypatch.setattr(goukaku_ui, "learning_strategy_v1_enabled_for_user", lambda user: True)
+    monkeypatch.setattr(
+        goukaku_ui,
+        "_dashboard_read_bundle",
+        lambda *args, **kwargs: {
+            "learning_data": {
+                "summary": {
+                    "total_answers": 0, "correct_answers": 0, "study_minutes": 0,
+                    "last_7_days_accuracy": 0, "average_accuracy": 0,
+                },
+                "activity": {"streak_days": 0, "today_progress": 0},
+                "fields": [],
+                "unique_question_count": 0,
+            },
+            "attempts": [],
+            "trial100_records": [],
+            "learning_events": [],
+        },
+    )
+    monkeypatch.setattr(
+        goukaku_ui,
+        "build_learner_navigation_from_formal_inputs",
+        lambda *args, **kwargs: {
+            "today_action": {
+                "field": "教育学",
+                "count": 10,
+                "learning_intent": "exploration",
+                "reason_code": "coverage_expand",
+                "reason": "まだ確認が足りない分野を広げよう。",
+                "button_label": "今日の学習を始める",
+            }
+        },
+    )
+    dashboard = goukaku_ui.build_dashboard(
+        "phase12-alignment-user", include_learner_navigation=True
+    )
+    assert dashboard["learner_navigation"]["today_action"]["field"] == "教育学"
+    assert dashboard["phase12_guidance_preview"]["target_field"] == "教育学"
+    assert dashboard["phase12_guidance_preview"]["headline"] == "今日は教育学を10問"
