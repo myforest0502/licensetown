@@ -11,6 +11,7 @@ from database import (
     get_db_connection,
     get_field_learning_summary,
     get_learning_activity,
+    get_learning_events,
     get_question_attempts,
     record_activity_event,
     get_weekly_question_history,
@@ -27,6 +28,7 @@ from pilot_diagnostics import build_pilot_diagnostics
 from field_evidence import build_field_evidence
 from field_progress import build_field_progress
 from dashboard_real_data_shadow import build_dashboard_real_data_shadow
+from adaptive_question_selector import parse_node_adaptive_pilot_user_ids
 from pass_readiness import build_pass_readiness
 from learner_readiness_presentation import build_learner_readiness_presentation
 from field_progress_presentation import build_field_progress_presentation_from_calculation
@@ -72,6 +74,17 @@ def phase12_guidance_preview_enabled():
     return os.getenv("ENABLE_PHASE12_GUIDANCE_PREVIEW", "").strip().lower() in {
         "1", "true", "yes", "on",
     }
+
+
+def learning_strategy_v1_enabled_for_user(user_id):
+    """Use the same Stage E pilot gate as adaptive_daily runtime selection."""
+    enabled = os.getenv("ENABLE_LEARNING_STRATEGY_V1", "false").strip().lower() in {
+        "1", "true", "yes", "on",
+    }
+    pilot_ids = parse_node_adaptive_pilot_user_ids(
+        os.getenv("LEARNING_STRATEGY_PILOT_USER_IDS")
+    )
+    return bool(enabled and user_id and user_id in pilot_ids)
 
 
 def create_dashboard_token(user_id):
@@ -202,18 +215,22 @@ def _user_name_with_connection(user_id, connection, default="学習者"):
     return row[0]
 
 
-def _dashboard_read_bundle(user_id, *, include_attempts=False, include_trial100=False):
+def _dashboard_read_bundle(
+    user_id, *, include_attempts=False, include_trial100=False, include_learning_events=False
+):
     """Use the shared Production read path while preserving local/test hooks."""
     if database_is_available():
         return _get_production_dashboard_read_bundle(
             user_id,
             include_attempts=include_attempts,
             include_trial100=include_trial100,
+            include_learning_events=include_learning_events,
         )
     return {
         "learning_data": get_dashboard_learning_data(user_id),
         "attempts": get_question_attempts(user_id) if include_attempts else [],
         "trial100_records": get_trial100_records(user_id) if include_trial100 else [],
+        "learning_events": get_learning_events(user_id) if include_learning_events else [],
     }
 
 
@@ -224,13 +241,93 @@ def get_learner_navigation_formal_inputs(user_id):
     return {
         "attempts": get_question_attempts(user_id),
         "trial100_records": get_trial100_records(user_id),
+        "learning_events": get_learning_events(user_id),
     }
+
+
+def _stage_e_shadow_authority(shadow_result, strategy):
+    """Project Stage E's ranked field decision into the learner-navigation contract."""
+    ranked = [
+        row for row in (strategy.get("ranked_fields") or [])
+        if row.get("allocation_candidate") and float(row.get("priority_score") or 0) > 0
+    ][:3]
+    if not ranked:
+        return shadow_result
+
+    field_facts = {
+        int(row["field_id"]): row for row in shadow_result.get("fields", [])
+    }
+
+    def adapt(row):
+        intent = str(row.get("learning_intent") or "coverage")
+        safety = float((row.get("priority_components") or {}).get("safety_score") or 0) > 0
+        if safety or intent == "safety_review":
+            reason_code = "safety_repair"
+            selector_intent = "repair"
+        elif intent == "coverage":
+            reason_code = "coverage_expand"
+            selector_intent = "exploration"
+        elif intent in {"retention", "maintenance"}:
+            reason_code = "retention_recheck"
+            selector_intent = "recheck"
+        else:
+            reason_code = "low_progress_repair"
+            selector_intent = "repair"
+        field_id = int(row["field_id"])
+        facts = field_facts.get(field_id, {})
+        evaluation = (row.get("target") or {}).get("evaluation") or {}
+        proven = bool(
+            safety
+            or (
+                evaluation.get("evidence_sufficient")
+                and row.get("field_state") == "weak"
+            )
+        )
+        return {
+            "field_id": field_id,
+            "field_name": row.get("field_name"),
+            "reason_code": reason_code,
+            "learning_intent": selector_intent,
+            "is_proven_weakness": proven,
+            "is_coverage_priority": reason_code == "coverage_expand",
+            "field_progress_score": facts.get("field_progress_score"),
+            "field_progress_percent": facts.get("field_progress_percent"),
+            "node_coverage": facts.get("node_coverage"),
+            "evaluable_answer_count": facts.get("evaluable_answer_count"),
+        }
+
+    priority = [adapt(row) for row in ranked]
+    primary = priority[0]
+    result = dict(shadow_result)
+    result["priority_top3"] = priority
+    result["recommendation_intent"] = {
+        "target_field_id": primary["field_id"],
+        "target_field": primary["field_name"],
+        "target_canonical_node_ids": [],
+        "learning_intent": primary["learning_intent"],
+        "priority_reason": primary["reason_code"],
+        "safety_priority": primary["reason_code"] == "safety_repair",
+        "new_vs_review_preference": (
+            "new" if primary["reason_code"] == "coverage_expand" else "review"
+        ),
+        "requested_question_count": 10,
+        "exact_question_ids": None,
+        "selector_owns_exact_q": True,
+    }
+    result["strategy_authority"] = {
+        "version": strategy.get("version"),
+        "recommended_field_id": strategy.get("recommended_field_id"),
+        "recommended_field_name": strategy.get("recommended_field_name"),
+    }
+    return result
 
 
 def build_learner_navigation_from_formal_inputs(
     attempts,
     trial100_records,
     *,
+    learning_events=None,
+    use_stage_e_strategy=False,
     evidence=None,
     progress=None,
     shadow_result=None,
@@ -244,6 +341,20 @@ def build_learner_navigation_from_formal_inputs(
         evidence=evidence,
         progress=progress,
     )
+    if use_stage_e_strategy:
+        try:
+            from datetime import datetime, timezone
+            from learning_strategy_runtime_pilot import strategy_snapshot
+            stage_e = strategy_snapshot(
+                attempts,
+                list(learning_events or []),
+                datetime.now(timezone.utc),
+            )
+            shadow_result = _stage_e_shadow_authority(shadow_result, stage_e)
+        except (KeyError, TypeError, ValueError):
+            # Fail closed to the existing formal dashboard evidence when the
+            # Stage E completion context is not yet reproducible.
+            pass
     readiness = build_pass_readiness(
         attempts,
         field_evidence=evidence,
@@ -296,6 +407,9 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
         overall_preview = overall_progress_ui_enabled()
         shadow_preview = dashboard_real_data_shadow_enabled()
         phase12_preview = phase12_guidance_preview_enabled()
+        strategy_navigation = bool(
+            include_learner_navigation and learning_strategy_v1_enabled_for_user(user_id)
+        )
         needs_attempts = bool(
             field_preview
             or overall_preview
@@ -307,6 +421,7 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
             user_id,
             include_attempts=needs_attempts,
             include_trial100=include_learner_navigation,
+            include_learning_events=strategy_navigation,
         )
         learning_data = bundle["learning_data"]
         dashboard.update(learning_data["summary"])
@@ -360,6 +475,8 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
             dashboard["learner_navigation"] = build_learner_navigation_from_formal_inputs(
                 attempts,
                 bundle["trial100_records"],
+                learning_events=bundle.get("learning_events"),
+                use_stage_e_strategy=strategy_navigation,
                 evidence=evidence,
                 progress=progress,
                 shadow_result=shadow_result,
