@@ -58,6 +58,7 @@ from goukaku_ui import (
     create_dashboard_token,
     dashboard_user_id,
     get_learner_navigation_formal_inputs,
+    learning_strategy_v1_enabled_for_user,
     goukaku_ui,
 )
 from learner_navigation_performance import RequestTiming
@@ -2371,6 +2372,8 @@ def start_dashboard_recommendation():
                     navigation = build_learner_navigation_from_formal_inputs(
                         attempts,
                         formal_inputs["trial100_records"],
+                        learning_events=formal_inputs.get("learning_events"),
+                        use_stage_e_strategy=learning_strategy_v1_enabled_for_user(user_id),
                     )
                 action = navigation.get("today_action") or {}
                 expected = (

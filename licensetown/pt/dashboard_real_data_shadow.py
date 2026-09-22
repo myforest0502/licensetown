@@ -12,11 +12,12 @@ from typing import Any, Iterable, Mapping
 
 from field_evidence import build_field_evidence
 from field_progress import build_field_progress
+from field_evaluation_shadow import INITIAL_QUESTION_FLOOR
 from judgment_shadow import build_field_judgment_evidence_profiles
 
 
 STATUS = "dashboard_real_data_shadow_v0.1"
-MIN_RELIABLE_FIELD_EVALUABLE_ANSWERS = 10
+MIN_RELIABLE_FIELD_EVALUABLE_ANSWERS = INITIAL_QUESTION_FLOOR
 MATERIALLY_LOW_PROGRESS_SCORE = 0.35
 DEFAULT_REQUESTED_QUESTION_COUNT = 10
 

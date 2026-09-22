@@ -449,3 +449,50 @@ def test_mode_intro_copy_is_kept_verbatim():
 
     assert "なんだ、今日は何があった？話してみな。" in CONSULTATION_INTRO
     assert "さぁ、今日はどれで暴れる？ｗ" in NEKKETSU_INTRO
+
+
+def test_stage_e_authority_keeps_today_action_and_priority_top1_aligned():
+    shadow = {
+        "status": "dashboard_real_data_shadow_v0.1",
+        "fields": [
+            {"field_id": 11, "field_name": "小児学", "node_coverage": 0.2},
+            {"field_id": 18, "field_name": "理学療法治療各論", "node_coverage": 0.4},
+        ],
+        "weakness_top3": [
+            {"field_id": 11, "field_name": "小児学", "reason_code": "coverage_expand",
+             "is_proven_weakness": False}
+        ],
+        "recommendation_intent": {
+            "target_field_id": 11, "target_field": "小児学",
+            "learning_intent": "exploration", "priority_reason": "coverage_expand",
+            "requested_question_count": 10,
+        },
+    }
+    strategy = {
+        "version": "learning_strategy_shadow_v0.1",
+        "recommended_field_id": 18,
+        "recommended_field_name": "理学療法治療各論",
+        "ranked_fields": [
+            {
+                "field_id": 18, "field_name": "理学療法治療各論",
+                "allocation_candidate": True, "priority_score": 1.2,
+                "learning_intent": "safety_review", "field_state": "weak",
+                "priority_components": {"safety_score": 1.0},
+                "target": {"evaluation": {"evidence_sufficient": True}},
+            },
+            {
+                "field_id": 11, "field_name": "小児学",
+                "allocation_candidate": True, "priority_score": 0.7,
+                "learning_intent": "coverage", "field_state": "assessing",
+                "priority_components": {"safety_score": 0.0},
+                "target": {"evaluation": {"evidence_sufficient": False}},
+            },
+        ],
+    }
+    authoritative = goukaku_ui_module._stage_e_shadow_authority(shadow, strategy)
+    nav = goukaku_ui_module.build_learner_readiness_presentation(
+        {"status": "repair_required", "components": {}}, authoritative
+    )
+    assert nav["today_action"]["field"] == "理学療法治療各論"
+    assert nav["attention_items"][0]["field"] == "理学療法治療各論"
+    assert nav["today_action"]["reason_code"] == "safety_repair"

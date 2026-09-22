@@ -132,15 +132,23 @@ def test_high_accuracy_low_coverage_remains_coverage_when_sample_is_small(monkey
     assert first["is_proven_weakness"] is False
 
 
-def test_material_low_progress_requires_reliable_evaluable_sample(monkeypatch):
+def test_material_low_progress_requires_formal_sixty_answer_sample(monkeypatch):
     evidence, progress, profiles = fake_inputs()
-    evidence["fields"][6]["evaluable_answer_count"] = 10
     progress["fields"][6]["field_progress_score"] = 0.20
     progress["fields"][6]["field_progress_percent"] = 20.0
-    result = build(monkeypatch, evidence, progress, profiles)
-    assert result["weakness_top3"][0]["field_id"] == 7
-    assert result["weakness_top3"][0]["reason_code"] == "low_progress_repair"
-    assert result["weakness_top3"][0]["is_proven_weakness"] is True
+
+    evidence["fields"][6]["evaluable_answer_count"] = 59
+    under_floor = build(monkeypatch, evidence, progress, profiles)
+    assert not any(
+        item["field_id"] == 7 and item["reason_code"] == "low_progress_repair"
+        for item in under_floor["weakness_top3"]
+    )
+
+    evidence["fields"][6]["evaluable_answer_count"] = 60
+    at_floor = build(monkeypatch, evidence, progress, profiles)
+    assert at_floor["weakness_top3"][0]["field_id"] == 7
+    assert at_floor["weakness_top3"][0]["reason_code"] == "low_progress_repair"
+    assert at_floor["weakness_top3"][0]["is_proven_weakness"] is True
 
 
 def test_comparison_never_averages_legacy_and_shadow_values(monkeypatch):

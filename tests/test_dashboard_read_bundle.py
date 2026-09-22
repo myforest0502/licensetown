@@ -20,6 +20,11 @@ def test_local_bundle_preserves_existing_read_contract(monkeypatch):
     )
     monkeypatch.setattr(
         dashboard_read_bundle.database,
+        "get_learning_events",
+        lambda user_id: [],
+    )
+    monkeypatch.setattr(
+        dashboard_read_bundle.database,
         "get_dashboard_learning_data",
         lambda user_id: learning,
     )
@@ -249,6 +254,12 @@ def test_learner_navigation_bundle_shares_one_production_connection(monkeypatch)
         "get_trial100_records",
         lambda user_id, connection=None: trial100 if connection is connection_obj else None,
     )
+    learning_events = [{"event_key": "plan-1"}]
+    monkeypatch.setattr(
+        dashboard_read_bundle,
+        "_learning_events_with_connection",
+        lambda user_id, conn: learning_events if conn is connection_obj else None,
+    )
     monkeypatch.setattr(
         dashboard_read_bundle.database,
         "_get_question_result_rows",
@@ -259,7 +270,11 @@ def test_learner_navigation_bundle_shares_one_production_connection(monkeypatch)
 
     result = dashboard_read_bundle.get_learner_navigation_read_bundle("learner")
 
-    assert result == {"attempts": attempts, "trial100_records": trial100}
+    assert result == {
+        "attempts": attempts,
+        "trial100_records": trial100,
+        "learning_events": learning_events,
+    }
     assert connection_entries == ["enter", "exit"]
 
 
@@ -289,4 +304,8 @@ def test_learner_navigation_bundle_preserves_local_fallback(monkeypatch):
 
     result = dashboard_read_bundle.get_learner_navigation_read_bundle("learner")
 
-    assert result == {"attempts": attempts, "trial100_records": trial100}
+    assert result == {
+        "attempts": attempts,
+        "trial100_records": trial100,
+        "learning_events": [],
+    }

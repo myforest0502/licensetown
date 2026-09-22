@@ -16,9 +16,15 @@ def _clamp(value):
 def _rank_field(target, urgency):
     evaluation = target["evaluation"]
     sufficient = evaluation["evidence_sufficient"]
+    initial_floor_incomplete = bool(
+        target["total_question_count"] >= target["classification_question_floor"]
+        and evaluation["evaluable_answer_count"] < target["classification_question_floor"]
+    )
     weight = target["exam_weight"]["relative_weight"]
     weight_score = weight / (1 + weight)
     reasons = list(target["reason_codes"])
+    if initial_floor_incomplete:
+        reasons.append("initial_question_floor_incomplete")
     if sufficient:
         accuracy = evaluation["evaluable_accuracy"]
         weakness = max(
@@ -98,6 +104,10 @@ def _rank_field(target, urgency):
         intent = "maintenance"
         reasons.append("stable_maintenance_only")
         score = 0.0
+    if initial_floor_incomplete:
+        # An unfinished formal first pass must remain selectable even after
+        # concentration penalties; rotation may lower its score, not strand it.
+        score = max(score, 0.01)
     eligible = bool(total and target["total_question_count"] and (safety or not target["additional_block_cap_reached"]))
     if not total or not target["total_question_count"]:
         reasons.append("no_field_supply")
@@ -105,6 +115,7 @@ def _rank_field(target, urgency):
         "field_id": target["field_id"], "field_name": target["field_name"],
         "shadow_only": True, "selection_authority": False,
         "field_state": target["field_state"], "recovery_level": target["recovery_level"],
+        "initial_question_floor_incomplete": initial_floor_incomplete,
         "learning_intent": intent, "priority_score": score,
         "priority_components": components, "reason_codes": reasons,
         "allocation_candidate": eligible, "target": target,
@@ -121,7 +132,17 @@ def build_learning_strategy(evidence_bundle, progress_bundle, *, context_by_fiel
     urgency = 0.0 if days is None else _clamp((90 - days) / 90)
     targets = build_field_targets(evidence_bundle, progress_bundle, context_by_field=context_by_field)
     ranked = [_rank_field(target, urgency) for target in targets["fields"]]
-    ranked.sort(key=lambda row: (-row["priority_score"], row["field_id"]))
+    # One decision contract: Critical Safety remains first. Otherwise, finish
+    # the formal 60-answer first pass before ranking already-assessable fields.
+    # This prevents low-sample fields from being stranded indefinitely.
+    def priority_tier(row):
+        if row["priority_components"]["safety_score"] > 0:
+            return 0
+        if row.get("initial_question_floor_incomplete"):
+            return 1
+        return 2
+
+    ranked.sort(key=lambda row: (priority_tier(row), -row["priority_score"], row["field_id"]))
     recommended = next((row for row in ranked if row["allocation_candidate"] and row["priority_score"] > 0), None)
     return {
         "version": VERSION, "shadow_only": True, "selection_authority": False,
