@@ -104,6 +104,10 @@ def _rank_field(target, urgency):
         intent = "maintenance"
         reasons.append("stable_maintenance_only")
         score = 0.0
+    if initial_floor_incomplete:
+        # An unfinished formal first pass must remain selectable even after
+        # concentration penalties; rotation may lower its score, not strand it.
+        score = max(score, 0.01)
     eligible = bool(total and target["total_question_count"] and (safety or not target["additional_block_cap_reached"]))
     if not total or not target["total_question_count"]:
         reasons.append("no_field_supply")
