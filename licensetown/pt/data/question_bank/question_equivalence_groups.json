@@ -3,7 +3,10 @@
     "equivalence_id": "QEQ0001",
     "canonical_question_id": "Q972",
     "canonical_knowledge_node_id": "KN0962",
-    "question_ids": ["Q972", "Q1354"],
+    "question_ids": [
+      "Q972",
+      "Q1354"
+    ],
     "equivalence_type": "official_exact_repeat",
     "review_status": "reviewed",
     "reason": "MHLW official items from different exam years have the same normalized stem, ordered choices, and keyed answer. Preserve both provenance records but treat them as one learning-evidence identity."
@@ -12,7 +15,10 @@
     "equivalence_id": "QEQ0002",
     "canonical_question_id": "Q1067",
     "canonical_knowledge_node_id": "KN1057",
-    "question_ids": ["Q1067", "Q1391"],
+    "question_ids": [
+      "Q1067",
+      "Q1391"
+    ],
     "equivalence_type": "official_exact_repeat",
     "review_status": "reviewed",
     "reason": "MHLW official items from different exam years have the same normalized stem, ordered choices, and keyed answer. Preserve both provenance records but treat them as one learning-evidence identity."
@@ -21,7 +27,10 @@
     "equivalence_id": "QEQ0003",
     "canonical_question_id": "Q1230",
     "canonical_knowledge_node_id": "KN1215",
-    "question_ids": ["Q1230", "Q1526"],
+    "question_ids": [
+      "Q1230",
+      "Q1526"
+    ],
     "equivalence_type": "official_exact_repeat",
     "review_status": "reviewed",
     "reason": "MHLW official items from different exam years have the same normalized stem, ordered choices, and keyed answer. Preserve both provenance records but treat them as one learning-evidence identity."
@@ -30,9 +39,672 @@
     "equivalence_id": "QEQ0004",
     "canonical_question_id": "Q1411",
     "canonical_knowledge_node_id": "KN1387",
-    "question_ids": ["Q1411", "Q1585"],
+    "question_ids": [
+      "Q1411",
+      "Q1585"
+    ],
     "equivalence_type": "official_exact_repeat_cross_node",
     "review_status": "reviewed",
     "reason": "The two MHLW official items are identical. Q1585 was historically stored under the narrower ADH Node KN0659; for derived learning evidence this exact item belongs with Q1411 under the posterior-pituitary-hormone Node KN1387. Raw attempts remain unchanged."
+  },
+  {
+    "equivalence_id": "QEQ0005",
+    "canonical_question_id": "Q2364",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2364",
+      "Q2409"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q555:1) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0006",
+    "canonical_question_id": "Q2365",
+    "canonical_knowledge_node_id": "KN0785",
+    "question_ids": [
+      "Q2365",
+      "Q2410"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q793:1) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0007",
+    "canonical_question_id": "Q2366",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2366",
+      "Q2411"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1352:1) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0008",
+    "canonical_question_id": "Q2367",
+    "canonical_knowledge_node_id": "KN1373",
+    "question_ids": [
+      "Q2367",
+      "Q2412"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1397:1) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0009",
+    "canonical_question_id": "Q2368",
+    "canonical_knowledge_node_id": "KN1376",
+    "question_ids": [
+      "Q2368",
+      "Q2413"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1400:1) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0010",
+    "canonical_question_id": "Q2369",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2369",
+      "Q2414"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1578:1) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0011",
+    "canonical_question_id": "Q2370",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2370",
+      "Q2415"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1870:A) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0012",
+    "canonical_question_id": "Q2371",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2371",
+      "Q2416"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1918:A) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0013",
+    "canonical_question_id": "Q2372",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2372",
+      "Q2417"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1964:A) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0014",
+    "canonical_question_id": "Q2373",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2373",
+      "Q2418"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q555:2) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0015",
+    "canonical_question_id": "Q2374",
+    "canonical_knowledge_node_id": "KN0785",
+    "question_ids": [
+      "Q2374",
+      "Q2419"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q793:2) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0016",
+    "canonical_question_id": "Q2375",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2375",
+      "Q2420"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1352:2) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0017",
+    "canonical_question_id": "Q2376",
+    "canonical_knowledge_node_id": "KN1373",
+    "question_ids": [
+      "Q2376",
+      "Q2421"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1397:2) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0018",
+    "canonical_question_id": "Q2377",
+    "canonical_knowledge_node_id": "KN1376",
+    "question_ids": [
+      "Q2377",
+      "Q2422"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1400:2) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0019",
+    "canonical_question_id": "Q2378",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2378",
+      "Q2423"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1578:2) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0020",
+    "canonical_question_id": "Q2379",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2379",
+      "Q2424"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1870:B) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0021",
+    "canonical_question_id": "Q2380",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2380",
+      "Q2425"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1918:B) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0022",
+    "canonical_question_id": "Q2381",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2381",
+      "Q2426"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1964:B) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0023",
+    "canonical_question_id": "Q2382",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2382",
+      "Q2427"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q555:3) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0024",
+    "canonical_question_id": "Q2383",
+    "canonical_knowledge_node_id": "KN0785",
+    "question_ids": [
+      "Q2383",
+      "Q2428"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q793:3) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0025",
+    "canonical_question_id": "Q2384",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2384",
+      "Q2429"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1352:3) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0026",
+    "canonical_question_id": "Q2385",
+    "canonical_knowledge_node_id": "KN1373",
+    "question_ids": [
+      "Q2385",
+      "Q2430"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1397:3) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0027",
+    "canonical_question_id": "Q2386",
+    "canonical_knowledge_node_id": "KN1376",
+    "question_ids": [
+      "Q2386",
+      "Q2431"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1400:3) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0028",
+    "canonical_question_id": "Q2387",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2387",
+      "Q2432"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1578:3) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0029",
+    "canonical_question_id": "Q2388",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2388",
+      "Q2433"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1870:C) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0030",
+    "canonical_question_id": "Q2389",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2389",
+      "Q2434"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1918:C) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0031",
+    "canonical_question_id": "Q2390",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2390",
+      "Q2435"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1964:C) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0032",
+    "canonical_question_id": "Q2391",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2391",
+      "Q2436"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q555:4) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0033",
+    "canonical_question_id": "Q2392",
+    "canonical_knowledge_node_id": "KN0785",
+    "question_ids": [
+      "Q2392",
+      "Q2437"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q793:4) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0034",
+    "canonical_question_id": "Q2393",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2393",
+      "Q2438"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1352:4) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0035",
+    "canonical_question_id": "Q2394",
+    "canonical_knowledge_node_id": "KN1373",
+    "question_ids": [
+      "Q2394",
+      "Q2439"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1397:4) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0036",
+    "canonical_question_id": "Q2395",
+    "canonical_knowledge_node_id": "KN1376",
+    "question_ids": [
+      "Q2395",
+      "Q2440"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1400:4) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0037",
+    "canonical_question_id": "Q2396",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2396",
+      "Q2441"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1578:4) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0038",
+    "canonical_question_id": "Q2397",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2397",
+      "Q2442"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1870:D) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0039",
+    "canonical_question_id": "Q2398",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2398",
+      "Q2443"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1918:D) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0040",
+    "canonical_question_id": "Q2399",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2399",
+      "Q2444"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1964:D) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0041",
+    "canonical_question_id": "Q2400",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2400",
+      "Q2445"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q555:5) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0042",
+    "canonical_question_id": "Q2401",
+    "canonical_knowledge_node_id": "KN0785",
+    "question_ids": [
+      "Q2401",
+      "Q2446"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q793:5) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0043",
+    "canonical_question_id": "Q2402",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2402",
+      "Q2447"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1352:5) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0044",
+    "canonical_question_id": "Q2403",
+    "canonical_knowledge_node_id": "KN1373",
+    "question_ids": [
+      "Q2403",
+      "Q2448"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1397:5) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0045",
+    "canonical_question_id": "Q2404",
+    "canonical_knowledge_node_id": "KN1376",
+    "question_ids": [
+      "Q2404",
+      "Q2449"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1400:5) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0046",
+    "canonical_question_id": "Q2405",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2405",
+      "Q2450"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1578:5) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0047",
+    "canonical_question_id": "Q2406",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2406",
+      "Q2451"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1870:E) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0048",
+    "canonical_question_id": "Q2407",
+    "canonical_knowledge_node_id": "KN0547",
+    "question_ids": [
+      "Q2407",
+      "Q2452"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1918:E) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0049",
+    "canonical_question_id": "Q2408",
+    "canonical_knowledge_node_id": "KN1332",
+    "question_ids": [
+      "Q2408",
+      "Q2453"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1964:E) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0050",
+    "canonical_question_id": "Q2659",
+    "canonical_knowledge_node_id": "KN0554",
+    "question_ids": [
+      "Q2659",
+      "Q2734"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q562:1) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0051",
+    "canonical_question_id": "Q2660",
+    "canonical_knowledge_node_id": "KN0987",
+    "question_ids": [
+      "Q2660",
+      "Q2735"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q997:1) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0052",
+    "canonical_question_id": "Q2661",
+    "canonical_knowledge_node_id": "KN1027",
+    "question_ids": [
+      "Q2661",
+      "Q2736"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1037:1) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0053",
+    "canonical_question_id": "Q2662",
+    "canonical_knowledge_node_id": "KN1264",
+    "question_ids": [
+      "Q2662",
+      "Q2737"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1280:1) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0054",
+    "canonical_question_id": "Q2663",
+    "canonical_knowledge_node_id": "KN1027",
+    "question_ids": [
+      "Q2663",
+      "Q2738"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1831:A) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0055",
+    "canonical_question_id": "Q2664",
+    "canonical_knowledge_node_id": "KN1264",
+    "question_ids": [
+      "Q2664",
+      "Q2739"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1832:A) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0056",
+    "canonical_question_id": "Q2665",
+    "canonical_knowledge_node_id": "KN0554",
+    "question_ids": [
+      "Q2665",
+      "Q2740"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1833:A) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0057",
+    "canonical_question_id": "Q2666",
+    "canonical_knowledge_node_id": "KN1546",
+    "question_ids": [
+      "Q2666",
+      "Q2741"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1857:A) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0058",
+    "canonical_question_id": "Q2667",
+    "canonical_knowledge_node_id": "KN0987",
+    "question_ids": [
+      "Q2667",
+      "Q2742"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1893:A) and therefore represent one learning-evidence identity despite different surface wording."
+  },
+  {
+    "equivalence_id": "QEQ0059",
+    "canonical_question_id": "Q2668",
+    "canonical_knowledge_node_id": "KN1551",
+    "question_ids": [
+      "Q2668",
+      "Q2743"
+    ],
+    "equivalence_type": "provisional_same_source_choice_repeat",
+    "review_status": "reviewed",
+    "reason": "Q2234-Q2743 audit confirmed both provisional items derive from the same reviewed source question/choice (Q1905:A) and therefore represent one learning-evidence identity despite different surface wording."
   }
 ]
