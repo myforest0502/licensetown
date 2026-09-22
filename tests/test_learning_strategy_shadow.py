@@ -89,7 +89,8 @@ def test_strong_recovery_and_high_weight_maintenance():
     low = build_field_target(*rows(14), context={"days_since_last_field_study": 8})
     assert not low["maintenance_needed"]
     result = build_learning_strategy(*bundles(), context_by_field={18: {"days_since_last_field_study": 8}})
-    assert result["recommended_field_id"] == 18
+    assert result["recommended_field_id"] == 1
+    assert result["ranked_fields"][0]["initial_question_floor_incomplete"] is True
     assert result["learning_intent"] == "maintenance"
 
 
