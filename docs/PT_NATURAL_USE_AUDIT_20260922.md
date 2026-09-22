@@ -107,6 +107,26 @@ Some early events used `strategy_fallback_reason=eligible_supply_insufficient` w
 `safety_review`; later records also contain soft-pilot coverage authority. This should be
 interpreted as audit evidence, not as proof of educational efficacy.
 
+## Source-aware reconstruction finding
+
+A stronger audit is possible because every Q2234-Q2743 item maps deterministically to exactly
+one Q1-Q2000 source item: its five rationale choices are the five reviewed choice explanations
+from that source.
+
+Using the source question's polarity (for example, whether the source asks for the correct
+choice or the incorrect choice) reveals **21 true direction inversions** in the live
+provisional batch. These are stronger defects than short wording or templating because the
+derived question asks the learner to justify the opposite truth status from the source item.
+
+On 2026-09-22, **6 of those 21 inverted items were actually presented**:
+Q2411, Q2265, Q2242, Q2482, Q2271 and Q2300. Q2242 produced a confidence-1 wrong answer.
+
+A dedicated correction branch/PR reconstructs all 510 stems from their unique Q1-Q2000 source
+context and source truth polarity instead of patching only the visibly obvious cases. It keeps
+Q IDs, rationale choices, accepted answer keys, explanations, tags, Nodes and field supply
+unchanged. This prevents contextless/inverted wording from manufacturing false weakness while
+still leaving broader editorial-depth review as a separate task.
+
 ## Historical cross-check of today's suspect Nodes
 
 Several confidence-1 wrong provisional items occurred on Nodes that had previously been
