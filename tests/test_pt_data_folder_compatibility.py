@@ -23,4 +23,4 @@ def test_canonical_question_bank_uses_pt_data_copy():
     expected = Path(qb.__file__).resolve().parent / "data" / "question_bank"
     assert qb.QUESTION_BANK_DIR == expected
     assert (expected / "bank_manifest.json").is_file()
-    assert qb.question_count() == 2233
+    assert qb.question_count() == 2743
