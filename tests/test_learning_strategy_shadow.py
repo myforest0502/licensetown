@@ -89,8 +89,7 @@ def test_strong_recovery_and_high_weight_maintenance():
     low = build_field_target(*rows(14), context={"days_since_last_field_study": 8})
     assert not low["maintenance_needed"]
     result = build_learning_strategy(*bundles(), context_by_field={18: {"days_since_last_field_study": 8}})
-    assert result["recommended_field_id"] == 1
-    assert result["ranked_fields"][0]["initial_question_floor_incomplete"] is True
+    assert result["recommended_field_id"] == 18
     assert result["learning_intent"] == "maintenance"
 
 
@@ -222,7 +221,8 @@ def test_formal_evidence_and_progress_bundles_are_accepted():
     result = build_learning_strategy(evidence, build_field_progress(evidence))
     assert len(result["ranked_fields"]) == 18
     assert all(row["field_state"] == "unassessed" for row in result["ranked_fields"])
-    assert result["recommended_field_id"] == 18
+    assert result["recommended_field_id"] == 1
+    assert result["ranked_fields"][0]["initial_question_floor_incomplete"] is True
 
 
 def test_fresh_import_cannot_reach_runtime_db_network_or_write():
