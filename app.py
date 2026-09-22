@@ -62,7 +62,6 @@ from goukaku_ui import (
     goukaku_ui,
 )
 from learner_navigation_performance import RequestTiming
-from licensetown.pt.formal_attempt_evidence import filter_current_formal_evidence
 import learner_path_performance as learner_path_perf
 from site_ui import site_ui
 from question_bank import (
@@ -943,6 +942,7 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
     if session_kind == "initial_assessment":
         all_questions = build_initial_assessment(total_question_count)
     else:
+        from licensetown.pt.formal_attempt_evidence import filter_current_formal_evidence
         raw_attempts = get_question_attempts(user_id)
         attempts = filter_current_formal_evidence(raw_attempts)
         from short_term_repeat_guard import (
@@ -2013,6 +2013,7 @@ def queue_prerequisite_backtrack_for_next_set(user_id, session):
         return None
 
     event_key = f'{session["session_id"]}:{session["current_set"]}'
+    from licensetown.pt.formal_attempt_evidence import filter_current_formal_evidence
     raw_attempts = get_question_attempts(user_id)
     attempts = filter_current_formal_evidence(raw_attempts)
     current_attempts = [
@@ -2308,6 +2309,7 @@ def create_web_recommendation_session(
                 and not session.get("completed")
             ):
                 return session_id, False
+        from licensetown.pt.formal_attempt_evidence import filter_current_formal_evidence
         if attempts is None:
             raw_attempts = get_question_attempts(user_id)
         else:
