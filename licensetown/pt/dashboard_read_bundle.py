@@ -13,10 +13,42 @@ from zoneinfo import ZoneInfo
 
 import database
 from recommendation_daily_summary import build_today_recommendation_summary
+from .formal_attempt_evidence import (
+    filter_current_formal_evidence,
+    is_current_formal_evidence,
+)
 from trial100_store import get_trial100_records
 
 
 _QUALIFICATION_ID = "pt"
+def _current_formal_attempts_preserving_identity(attempts):
+    """Filter versioned evidence without breaking the legacy local-list identity contract."""
+    filtered = filter_current_formal_evidence(attempts)
+    if len(filtered) == len(attempts):
+        return attempts
+    return filtered
+
+
+def _current_formal_question_result_rows(rows):
+    """Filter versioned Q evidence while preserving raw learning-event totals elsewhere."""
+    filtered_rows = []
+    for question_results, answered_at in rows:
+        if not isinstance(question_results, list):
+            filtered_rows.append((question_results, answered_at))
+            continue
+        current_results = [
+            result
+            for result in question_results
+            if not isinstance(result, dict)
+            or is_current_formal_evidence({
+                "question_id": result.get("question_id"),
+                "answered_at": answered_at,
+            })
+        ]
+        filtered_rows.append((current_results, answered_at))
+    return filtered_rows
+
+
 _ATTEMPT_COLUMNS = (
     "event_key",
     "user_id",
@@ -220,12 +252,16 @@ def get_learner_navigation_read_bundle(user_id: str) -> dict[str, Any]:
         return {"attempts": [], "trial100_records": [], "learning_events": []}
     if not database.database_is_available():
         return {
-            "attempts": database.get_question_attempts(user_id),
+            "attempts": _current_formal_attempts_preserving_identity(
+                database.get_question_attempts(user_id)
+            ),
             "trial100_records": get_trial100_records(user_id),
             "learning_events": database.get_learning_events(user_id),
         }
     with database.get_db_connection() as conn:
-        attempts = _attempts_with_connection(user_id, conn)
+        attempts = _current_formal_attempts_preserving_identity(
+            _attempts_with_connection(user_id, conn)
+        )
         trial100_records = get_trial100_records(user_id, connection=conn)
         learning_events = _learning_events_with_connection(user_id, conn)
     return {
@@ -264,13 +300,17 @@ def get_dashboard_read_bundle(
         )
         return {
             "learning_data": learning_data,
-            "attempts": database.get_question_attempts(user_id) if include_attempts else [],
+            "attempts": (
+                _current_formal_attempts_preserving_identity(database.get_question_attempts(user_id))
+                if include_attempts else []
+            ),
             "trial100_records": get_trial100_records(user_id) if include_trial100 else [],
             "learning_events": database.get_learning_events(user_id) if include_learning_events else [],
         }
 
     with database.get_db_connection() as conn:
-        question_rows = _question_result_rows_with_connection(user_id, conn)
+        raw_question_rows = _question_result_rows_with_connection(user_id, conn)
+        question_rows = _current_formal_question_result_rows(raw_question_rows)
         activity = _activity_with_connection(user_id, conn)
         activity.update(
             build_today_recommendation_summary(
@@ -293,7 +333,10 @@ def get_dashboard_read_bundle(
                 _question_result_rows=question_rows,
             ),
         }
-        attempts = _attempts_with_connection(user_id, conn) if include_attempts else []
+        attempts = (
+            _current_formal_attempts_preserving_identity(_attempts_with_connection(user_id, conn))
+            if include_attempts else []
+        )
         trial100_records = (
             get_trial100_records(user_id, connection=conn) if include_trial100 else []
         )
