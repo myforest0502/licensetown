@@ -13,6 +13,7 @@ from zoneinfo import ZoneInfo
 
 import database
 from recommendation_daily_summary import build_today_recommendation_summary
+from .formal_attempt_evidence import filter_current_formal_evidence
 from trial100_store import get_trial100_records
 
 
@@ -220,12 +221,16 @@ def get_learner_navigation_read_bundle(user_id: str) -> dict[str, Any]:
         return {"attempts": [], "trial100_records": [], "learning_events": []}
     if not database.database_is_available():
         return {
-            "attempts": database.get_question_attempts(user_id),
+            "attempts": filter_current_formal_evidence(
+                database.get_question_attempts(user_id)
+            ),
             "trial100_records": get_trial100_records(user_id),
             "learning_events": database.get_learning_events(user_id),
         }
     with database.get_db_connection() as conn:
-        attempts = _attempts_with_connection(user_id, conn)
+        attempts = filter_current_formal_evidence(
+            _attempts_with_connection(user_id, conn)
+        )
         trial100_records = get_trial100_records(user_id, connection=conn)
         learning_events = _learning_events_with_connection(user_id, conn)
     return {
@@ -264,7 +269,10 @@ def get_dashboard_read_bundle(
         )
         return {
             "learning_data": learning_data,
-            "attempts": database.get_question_attempts(user_id) if include_attempts else [],
+            "attempts": (
+                filter_current_formal_evidence(database.get_question_attempts(user_id))
+                if include_attempts else []
+            ),
             "trial100_records": get_trial100_records(user_id) if include_trial100 else [],
             "learning_events": database.get_learning_events(user_id) if include_learning_events else [],
         }
@@ -293,7 +301,10 @@ def get_dashboard_read_bundle(
                 _question_result_rows=question_rows,
             ),
         }
-        attempts = _attempts_with_connection(user_id, conn) if include_attempts else []
+        attempts = (
+            filter_current_formal_evidence(_attempts_with_connection(user_id, conn))
+            if include_attempts else []
+        )
         trial100_records = (
             get_trial100_records(user_id, connection=conn) if include_trial100 else []
         )
