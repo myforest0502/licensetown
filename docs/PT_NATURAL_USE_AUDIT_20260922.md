@@ -308,6 +308,21 @@ This is the intended separation:
 **current formal evidence = what may influence current weakness, readiness, strategy and field
 performance after the item wording changed**
 
+## Post-remediation selection quality preference
+
+The 510 reconstructed items remain `tag_status=provisional_bulk`. They are valid supply but are
+not treated as editorially equivalent to reviewed items.
+
+The adaptive selector now prefers reviewed items when both can serve the same learning need:
+
+- exploration/checking/maintenance provisional candidates: **-250** priority;
+- repair provisional candidates: **-80** priority;
+- provisional items remain available when reviewed supply is insufficient;
+- Safety, repair-evidence quality, repeat/cooldown, coverage and retention rules are unchanged.
+
+This specifically addresses the natural-use finding that provisional items accounted for
+135/170 daytime attempts without destroying the supply floor that motivated the Q2743 expansion.
+
 ## Decision
 
 1. **Do not expand question count again simply for volume.**
