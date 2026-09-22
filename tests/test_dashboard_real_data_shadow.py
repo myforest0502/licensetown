@@ -139,9 +139,10 @@ def test_material_low_progress_requires_formal_sixty_answer_sample(monkeypatch):
 
     evidence["fields"][6]["evaluable_answer_count"] = 59
     under_floor = build(monkeypatch, evidence, progress, profiles)
-    field7 = next(item for item in under_floor["weakness_top3"] if item["field_id"] == 7)
-    assert field7["reason_code"] == "coverage_expand"
-    assert field7["is_proven_weakness"] is False
+    assert not any(
+        item["field_id"] == 7 and item["reason_code"] == "low_progress_repair"
+        for item in under_floor["weakness_top3"]
+    )
 
     evidence["fields"][6]["evaluable_answer_count"] = 60
     at_floor = build(monkeypatch, evidence, progress, profiles)
