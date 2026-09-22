@@ -942,14 +942,16 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
     if session_kind == "initial_assessment":
         all_questions = build_initial_assessment(total_question_count)
     else:
-        attempts = get_question_attempts(user_id)
+        from licensetown.pt.formal_attempt_evidence import filter_current_formal_evidence
+        raw_attempts = get_question_attempts(user_id)
+        attempts = filter_current_formal_evidence(raw_attempts)
         from short_term_repeat_guard import (
             blocked_short_term_evidence_ids,
             recent_short_term_evidence_ids,
         )
-        short_term_blocked = blocked_short_term_evidence_ids(attempts)
+        short_term_blocked = blocked_short_term_evidence_ids(raw_attempts)
         short_term_blocked.update(str(value) for value in (exclude_ids or ()))
-        adaptive_short_term_blocked = recent_short_term_evidence_ids(attempts)
+        adaptive_short_term_blocked = recent_short_term_evidence_ids(raw_attempts)
         adaptive_short_term_blocked.update(str(value) for value in (exclude_ids or ()))
     if session_kind == "adaptive_daily":
         if is_node_adaptive_recommendation_enabled(
@@ -961,7 +963,7 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
             all_questions = build_node_adaptive_session(
                 attempts,
                 total_question_count,
-                exclude_ids=(exclude_ids or ()),
+                exclude_ids=adaptive_short_term_blocked,
                 audit_out=adaptive_selection_audit,
             )
             if total_question_count == 30 and globals().get("ENABLE_LEARNING_STRATEGY_V1", False) and user_id in globals().get("LEARNING_STRATEGY_PILOT_USER_IDS", set()):
@@ -2011,8 +2013,14 @@ def queue_prerequisite_backtrack_for_next_set(user_id, session):
         return None
 
     event_key = f'{session["session_id"]}:{session["current_set"]}'
-    attempts = get_question_attempts(user_id)
-    current_attempts = [item for item in attempts if item.get("event_key") == event_key]
+    from licensetown.pt.formal_attempt_evidence import filter_current_formal_evidence
+    raw_attempts = get_question_attempts(user_id)
+    attempts = filter_current_formal_evidence(raw_attempts)
+    current_attempts = [
+        item for item in raw_attempts
+        if item.get("event_key") == event_key
+        and filter_current_formal_evidence([item])
+    ]
     if not current_attempts:
         return None
     current_end = session["current_set"] * session["questions_per_set"]
@@ -2032,7 +2040,7 @@ def queue_prerequisite_backtrack_for_next_set(user_id, session):
             blocked_short_term_evidence_ids,
             is_short_term_repeat_blocked,
         )
-        blocked = blocked_short_term_evidence_ids(attempts)
+        blocked = blocked_short_term_evidence_ids(raw_attempts)
         if is_short_term_repeat_blocked(candidate["question_id"], blocked):
             candidate = None
     if candidate:
@@ -2301,13 +2309,19 @@ def create_web_recommendation_session(
                 and not session.get("completed")
             ):
                 return session_id, False
+        from licensetown.pt.formal_attempt_evidence import filter_current_formal_evidence
         if attempts is None:
-            attempts = get_question_attempts(user_id)
+            raw_attempts = get_question_attempts(user_id)
+        else:
+            raw_attempts = list(attempts)
+        attempts = filter_current_formal_evidence(raw_attempts)
+        from short_term_repeat_guard import recent_short_term_evidence_ids
         selection_audit = {}
         questions = build_node_adaptive_session(
             attempts,
             question_count=question_count,
             category_small=category_small,
+            exclude_ids=recent_short_term_evidence_ids(raw_attempts),
             audit_out=selection_audit,
             learning_intent=learning_intent,
         )
