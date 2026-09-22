@@ -18,6 +18,14 @@ from trial100_store import get_trial100_records
 
 
 _QUALIFICATION_ID = "pt"
+def _current_formal_attempts_preserving_identity(attempts):
+    """Filter versioned evidence without breaking the legacy local-list identity contract."""
+    filtered = filter_current_formal_evidence(attempts)
+    if len(filtered) == len(attempts):
+        return attempts
+    return filtered
+
+
 _ATTEMPT_COLUMNS = (
     "event_key",
     "user_id",
@@ -221,14 +229,14 @@ def get_learner_navigation_read_bundle(user_id: str) -> dict[str, Any]:
         return {"attempts": [], "trial100_records": [], "learning_events": []}
     if not database.database_is_available():
         return {
-            "attempts": filter_current_formal_evidence(
+            "attempts": _current_formal_attempts_preserving_identity(
                 database.get_question_attempts(user_id)
             ),
             "trial100_records": get_trial100_records(user_id),
             "learning_events": database.get_learning_events(user_id),
         }
     with database.get_db_connection() as conn:
-        attempts = filter_current_formal_evidence(
+        attempts = _current_formal_attempts_preserving_identity(
             _attempts_with_connection(user_id, conn)
         )
         trial100_records = get_trial100_records(user_id, connection=conn)
@@ -270,7 +278,7 @@ def get_dashboard_read_bundle(
         return {
             "learning_data": learning_data,
             "attempts": (
-                filter_current_formal_evidence(database.get_question_attempts(user_id))
+                _current_formal_attempts_preserving_identity(database.get_question_attempts(user_id))
                 if include_attempts else []
             ),
             "trial100_records": get_trial100_records(user_id) if include_trial100 else [],
@@ -302,7 +310,7 @@ def get_dashboard_read_bundle(
             ),
         }
         attempts = (
-            filter_current_formal_evidence(_attempts_with_connection(user_id, conn))
+            _current_formal_attempts_preserving_identity(_attempts_with_connection(user_id, conn))
             if include_attempts else []
         )
         trial100_records = (
