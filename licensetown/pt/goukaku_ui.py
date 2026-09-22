@@ -258,6 +258,14 @@ def get_learner_navigation_formal_inputs(user_id):
     return bundle
 
 
+def _subjects_learning_data(user_id):
+    """Return raw activity plus current-formal field performance for subject pages."""
+    if database_is_available():
+        learning_data = _get_production_dashboard_read_bundle(user_id)["learning_data"]
+        return learning_data["fields"], learning_data["activity"]
+    return get_field_learning_summary(user_id), get_learning_activity(user_id)
+
+
 def _stage_e_shadow_authority(shadow_result, strategy):
     """Project Stage E's ranked field decision into the learner-navigation contract."""
     ranked = [
@@ -611,8 +619,7 @@ def home():
 def subjects():
     token = request.args.get("token")
     user_id = authorized_dashboard_learner(token)
-    subjects = get_field_learning_summary(user_id)
-    activity = get_learning_activity(user_id)
+    subjects, activity = _subjects_learning_data(user_id)
     recent_fields = [item for item in subjects if item["recent_7d_answered_count"]]
     top_recent_field = max(
         recent_fields, key=lambda item: item["recent_7d_answered_count"], default=None
@@ -763,8 +770,7 @@ def supporter_goukaku_subjects():
         token,
         request.args.get("learner_user_id"),
     )
-    subjects = get_field_learning_summary(learner_id)
-    activity = get_learning_activity(learner_id)
+    subjects, activity = _subjects_learning_data(learner_id)
     recent_fields = [item for item in subjects if item["recent_7d_answered_count"]]
     top_recent_field = max(
         recent_fields, key=lambda item: item["recent_7d_answered_count"], default=None
