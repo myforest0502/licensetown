@@ -309,3 +309,61 @@ def test_learner_navigation_bundle_preserves_local_fallback(monkeypatch):
         "trial100_records": trial100,
         "learning_events": [],
     }
+
+
+def test_dashboard_attempt_bundle_filters_pre_rewrite_q2743_evidence(monkeypatch):
+    from datetime import timedelta
+    from licensetown.pt.formal_attempt_evidence import PROVISIONAL_REWRITE_LIVE_AT
+    import licensetown.pt.dashboard_read_bundle as bundle
+
+    raw = [
+        {
+            "question_id": "Q2234",
+            "answered_at": PROVISIONAL_REWRITE_LIVE_AT - timedelta(seconds=1),
+        },
+        {
+            "question_id": "Q100",
+            "answered_at": PROVISIONAL_REWRITE_LIVE_AT - timedelta(days=1),
+        },
+    ]
+
+    monkeypatch.setattr(bundle.database, "database_is_available", lambda: False)
+    monkeypatch.setattr(bundle.database, "get_dashboard_learning_data", lambda _uid: {
+        "summary": {}, "activity": {}, "fields": [], "unique_question_count": 0
+    })
+    monkeypatch.setattr(bundle.database, "get_question_attempts", lambda _uid: raw)
+    monkeypatch.setattr(bundle.database, "get_learning_events", lambda _uid: [])
+    monkeypatch.setattr(bundle, "get_trial100_records", lambda _uid: [])
+    monkeypatch.setattr(
+        bundle,
+        "build_today_recommendation_summary",
+        lambda *_args, **_kwargs: {},
+    )
+
+    result = bundle.get_dashboard_read_bundle("u", include_attempts=True)
+    assert [row["question_id"] for row in result["attempts"]] == ["Q100"]
+
+
+def test_navigation_bundle_filters_pre_rewrite_q2743_evidence(monkeypatch):
+    from datetime import timedelta
+    from licensetown.pt.formal_attempt_evidence import PROVISIONAL_REWRITE_LIVE_AT
+    import licensetown.pt.dashboard_read_bundle as bundle
+
+    raw = [
+        {
+            "question_id": "Q2500",
+            "answered_at": PROVISIONAL_REWRITE_LIVE_AT - timedelta(seconds=1),
+        },
+        {
+            "question_id": "Q2500",
+            "answered_at": PROVISIONAL_REWRITE_LIVE_AT + timedelta(seconds=1),
+        },
+    ]
+    monkeypatch.setattr(bundle.database, "database_is_available", lambda: False)
+    monkeypatch.setattr(bundle.database, "get_question_attempts", lambda _uid: raw)
+    monkeypatch.setattr(bundle.database, "get_learning_events", lambda _uid: [])
+    monkeypatch.setattr(bundle, "get_trial100_records", lambda _uid: [])
+
+    result = bundle.get_learner_navigation_read_bundle("u")
+    assert len(result["attempts"]) == 1
+    assert result["attempts"][0]["answered_at"] > PROVISIONAL_REWRITE_LIVE_AT
