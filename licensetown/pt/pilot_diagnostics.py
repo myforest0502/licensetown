@@ -229,6 +229,16 @@ def _canonical_total():
     return len({canonicalize_knowledge_node_id(get_question_tag(q)["knowledge_node_id"]) for q in question_ids()})
 
 
+def _current_formal_attempts_for_diagnostics(user_id: str, start_at=None):
+    """Load durable attempts then discard evidence from superseded question wording."""
+    raw = (
+        get_question_attempts(user_id, start_at=start_at)
+        if start_at is not None
+        else get_question_attempts(user_id)
+    )
+    return filter_current_formal_evidence(raw)
+
+
 def _current_dashboard_guidance(user_id: str):
     """Read the same current-formal guidance inputs used by the dashboard."""
     learning_data = get_dashboard_read_bundle(user_id)["learning_data"]
@@ -716,9 +726,9 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         start_at = datetime.combine(start_date, datetime.min.time(), jst).astimezone(timezone.utc)
     else:
         start_at = None
-    all_attempts = filter_current_formal_evidence(get_question_attempts(user_id))
+    all_attempts = _current_formal_attempts_for_diagnostics(user_id)
     attempts = (
-        filter_current_formal_evidence(get_question_attempts(user_id, start_at=start_at))
+        _current_formal_attempts_for_diagnostics(user_id, start_at=start_at)
         if start_at
         else all_attempts
     )
