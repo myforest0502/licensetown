@@ -1,0 +1,717 @@
+[
+  {
+    "evidence_alias_id": "LEA0001",
+    "canonical_question_id": "Q2364",
+    "question_ids": [
+      "Q2364",
+      "Q2409"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q555:1",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0002",
+    "canonical_question_id": "Q2365",
+    "question_ids": [
+      "Q2365",
+      "Q2410"
+    ],
+    "canonical_knowledge_node_id": "KN0785",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q793:1",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0003",
+    "canonical_question_id": "Q2366",
+    "question_ids": [
+      "Q2366",
+      "Q2411"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1352:1",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0004",
+    "canonical_question_id": "Q2367",
+    "question_ids": [
+      "Q2367",
+      "Q2412"
+    ],
+    "canonical_knowledge_node_id": "KN1373",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1397:1",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0005",
+    "canonical_question_id": "Q2368",
+    "question_ids": [
+      "Q2368",
+      "Q2413"
+    ],
+    "canonical_knowledge_node_id": "KN1376",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1400:1",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0006",
+    "canonical_question_id": "Q2369",
+    "question_ids": [
+      "Q2369",
+      "Q2414"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1578:1",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0007",
+    "canonical_question_id": "Q2370",
+    "question_ids": [
+      "Q2370",
+      "Q2415"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1870:A",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0008",
+    "canonical_question_id": "Q2371",
+    "question_ids": [
+      "Q2371",
+      "Q2416"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1918:A",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0009",
+    "canonical_question_id": "Q2372",
+    "question_ids": [
+      "Q2372",
+      "Q2417"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1964:A",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0010",
+    "canonical_question_id": "Q2373",
+    "question_ids": [
+      "Q2373",
+      "Q2418"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q555:2",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0011",
+    "canonical_question_id": "Q2374",
+    "question_ids": [
+      "Q2374",
+      "Q2419"
+    ],
+    "canonical_knowledge_node_id": "KN0785",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q793:2",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0012",
+    "canonical_question_id": "Q2375",
+    "question_ids": [
+      "Q2375",
+      "Q2420"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1352:2",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0013",
+    "canonical_question_id": "Q2376",
+    "question_ids": [
+      "Q2376",
+      "Q2421"
+    ],
+    "canonical_knowledge_node_id": "KN1373",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1397:2",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0014",
+    "canonical_question_id": "Q2377",
+    "question_ids": [
+      "Q2377",
+      "Q2422"
+    ],
+    "canonical_knowledge_node_id": "KN1376",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1400:2",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0015",
+    "canonical_question_id": "Q2378",
+    "question_ids": [
+      "Q2378",
+      "Q2423"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1578:2",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0016",
+    "canonical_question_id": "Q2379",
+    "question_ids": [
+      "Q2379",
+      "Q2424"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1870:B",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0017",
+    "canonical_question_id": "Q2380",
+    "question_ids": [
+      "Q2380",
+      "Q2425"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1918:B",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0018",
+    "canonical_question_id": "Q2381",
+    "question_ids": [
+      "Q2381",
+      "Q2426"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1964:B",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0019",
+    "canonical_question_id": "Q2382",
+    "question_ids": [
+      "Q2382",
+      "Q2427"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q555:3",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0020",
+    "canonical_question_id": "Q2383",
+    "question_ids": [
+      "Q2383",
+      "Q2428"
+    ],
+    "canonical_knowledge_node_id": "KN0785",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q793:3",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0021",
+    "canonical_question_id": "Q2384",
+    "question_ids": [
+      "Q2384",
+      "Q2429"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1352:3",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0022",
+    "canonical_question_id": "Q2385",
+    "question_ids": [
+      "Q2385",
+      "Q2430"
+    ],
+    "canonical_knowledge_node_id": "KN1373",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1397:3",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0023",
+    "canonical_question_id": "Q2386",
+    "question_ids": [
+      "Q2386",
+      "Q2431"
+    ],
+    "canonical_knowledge_node_id": "KN1376",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1400:3",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0024",
+    "canonical_question_id": "Q2387",
+    "question_ids": [
+      "Q2387",
+      "Q2432"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1578:3",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0025",
+    "canonical_question_id": "Q2388",
+    "question_ids": [
+      "Q2388",
+      "Q2433"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1870:C",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0026",
+    "canonical_question_id": "Q2389",
+    "question_ids": [
+      "Q2389",
+      "Q2434"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1918:C",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0027",
+    "canonical_question_id": "Q2390",
+    "question_ids": [
+      "Q2390",
+      "Q2435"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1964:C",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0028",
+    "canonical_question_id": "Q2391",
+    "question_ids": [
+      "Q2391",
+      "Q2436"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q555:4",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0029",
+    "canonical_question_id": "Q2392",
+    "question_ids": [
+      "Q2392",
+      "Q2437"
+    ],
+    "canonical_knowledge_node_id": "KN0785",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q793:4",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0030",
+    "canonical_question_id": "Q2393",
+    "question_ids": [
+      "Q2393",
+      "Q2438"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1352:4",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0031",
+    "canonical_question_id": "Q2394",
+    "question_ids": [
+      "Q2394",
+      "Q2439"
+    ],
+    "canonical_knowledge_node_id": "KN1373",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1397:4",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0032",
+    "canonical_question_id": "Q2395",
+    "question_ids": [
+      "Q2395",
+      "Q2440"
+    ],
+    "canonical_knowledge_node_id": "KN1376",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1400:4",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0033",
+    "canonical_question_id": "Q2396",
+    "question_ids": [
+      "Q2396",
+      "Q2441"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1578:4",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0034",
+    "canonical_question_id": "Q2397",
+    "question_ids": [
+      "Q2397",
+      "Q2442"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1870:D",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0035",
+    "canonical_question_id": "Q2398",
+    "question_ids": [
+      "Q2398",
+      "Q2443"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1918:D",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0036",
+    "canonical_question_id": "Q2399",
+    "question_ids": [
+      "Q2399",
+      "Q2444"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1964:D",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0037",
+    "canonical_question_id": "Q2400",
+    "question_ids": [
+      "Q2400",
+      "Q2445"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q555:5",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0038",
+    "canonical_question_id": "Q2401",
+    "question_ids": [
+      "Q2401",
+      "Q2446"
+    ],
+    "canonical_knowledge_node_id": "KN0785",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q793:5",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0039",
+    "canonical_question_id": "Q2402",
+    "question_ids": [
+      "Q2402",
+      "Q2447"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1352:5",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0040",
+    "canonical_question_id": "Q2403",
+    "question_ids": [
+      "Q2403",
+      "Q2448"
+    ],
+    "canonical_knowledge_node_id": "KN1373",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1397:5",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0041",
+    "canonical_question_id": "Q2404",
+    "question_ids": [
+      "Q2404",
+      "Q2449"
+    ],
+    "canonical_knowledge_node_id": "KN1376",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1400:5",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0042",
+    "canonical_question_id": "Q2405",
+    "question_ids": [
+      "Q2405",
+      "Q2450"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1578:5",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0043",
+    "canonical_question_id": "Q2406",
+    "question_ids": [
+      "Q2406",
+      "Q2451"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1870:E",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0044",
+    "canonical_question_id": "Q2407",
+    "question_ids": [
+      "Q2407",
+      "Q2452"
+    ],
+    "canonical_knowledge_node_id": "KN0547",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1918:E",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0045",
+    "canonical_question_id": "Q2408",
+    "question_ids": [
+      "Q2408",
+      "Q2453"
+    ],
+    "canonical_knowledge_node_id": "KN1332",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1964:E",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0046",
+    "canonical_question_id": "Q2659",
+    "question_ids": [
+      "Q2659",
+      "Q2734"
+    ],
+    "canonical_knowledge_node_id": "KN0554",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q562:1",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0047",
+    "canonical_question_id": "Q2660",
+    "question_ids": [
+      "Q2660",
+      "Q2735"
+    ],
+    "canonical_knowledge_node_id": "KN0987",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q997:1",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0048",
+    "canonical_question_id": "Q2661",
+    "question_ids": [
+      "Q2661",
+      "Q2736"
+    ],
+    "canonical_knowledge_node_id": "KN1027",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1037:1",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0049",
+    "canonical_question_id": "Q2662",
+    "question_ids": [
+      "Q2662",
+      "Q2737"
+    ],
+    "canonical_knowledge_node_id": "KN1264",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1280:1",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0050",
+    "canonical_question_id": "Q2663",
+    "question_ids": [
+      "Q2663",
+      "Q2738"
+    ],
+    "canonical_knowledge_node_id": "KN1027",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1831:A",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0051",
+    "canonical_question_id": "Q2664",
+    "question_ids": [
+      "Q2664",
+      "Q2739"
+    ],
+    "canonical_knowledge_node_id": "KN1264",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1832:A",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0052",
+    "canonical_question_id": "Q2665",
+    "question_ids": [
+      "Q2665",
+      "Q2740"
+    ],
+    "canonical_knowledge_node_id": "KN0554",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1833:A",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0053",
+    "canonical_question_id": "Q2666",
+    "question_ids": [
+      "Q2666",
+      "Q2741"
+    ],
+    "canonical_knowledge_node_id": "KN1546",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1857:A",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0054",
+    "canonical_question_id": "Q2667",
+    "question_ids": [
+      "Q2667",
+      "Q2742"
+    ],
+    "canonical_knowledge_node_id": "KN0987",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1893:A",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  },
+  {
+    "evidence_alias_id": "LEA0055",
+    "canonical_question_id": "Q2668",
+    "question_ids": [
+      "Q2668",
+      "Q2743"
+    ],
+    "canonical_knowledge_node_id": "KN1551",
+    "alias_type": "same_reviewed_source_choice",
+    "review_status": "reviewed",
+    "source_question_choice": "Q1905:A",
+    "reason": "Both provisional questions derive from the same reviewed source question and the same source choice. They are distinct surface items but not independent weakness/repair evidence."
+  }
+]
