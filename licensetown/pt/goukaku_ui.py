@@ -220,29 +220,42 @@ def _dashboard_read_bundle(
 ):
     """Use the shared Production read path while preserving local/test hooks."""
     if database_is_available():
-        return _get_production_dashboard_read_bundle(
+        bundle = _get_production_dashboard_read_bundle(
             user_id,
             include_attempts=include_attempts,
             include_trial100=include_trial100,
             include_learning_events=include_learning_events,
         )
-    return {
-        "learning_data": get_dashboard_learning_data(user_id),
-        "attempts": get_question_attempts(user_id) if include_attempts else [],
-        "trial100_records": get_trial100_records(user_id) if include_trial100 else [],
-        "learning_events": get_learning_events(user_id) if include_learning_events else [],
-    }
+    else:
+        bundle = {
+            "learning_data": get_dashboard_learning_data(user_id),
+            "attempts": get_question_attempts(user_id) if include_attempts else [],
+            "trial100_records": get_trial100_records(user_id) if include_trial100 else [],
+            "learning_events": get_learning_events(user_id) if include_learning_events else [],
+        }
+
+    if include_attempts:
+        from licensetown.pt.formal_attempt_evidence import filter_current_formal_evidence
+        bundle = dict(bundle)
+        bundle["attempts"] = filter_current_formal_evidence(bundle.get("attempts") or [])
+    return bundle
 
 
 def get_learner_navigation_formal_inputs(user_id):
-    """Read only the formal evidence needed to reproduce today's CTA."""
+    """Read only the current formal evidence needed to reproduce today's CTA."""
     if database_is_available():
-        return _get_production_learner_navigation_read_bundle(user_id)
-    return {
-        "attempts": get_question_attempts(user_id),
-        "trial100_records": get_trial100_records(user_id),
-        "learning_events": get_learning_events(user_id),
-    }
+        bundle = _get_production_learner_navigation_read_bundle(user_id)
+    else:
+        bundle = {
+            "attempts": get_question_attempts(user_id),
+            "trial100_records": get_trial100_records(user_id),
+            "learning_events": get_learning_events(user_id),
+        }
+
+    from licensetown.pt.formal_attempt_evidence import filter_current_formal_evidence
+    bundle = dict(bundle)
+    bundle["attempts"] = filter_current_formal_evidence(bundle.get("attempts") or [])
+    return bundle
 
 
 def _stage_e_shadow_authority(shadow_result, strategy):
