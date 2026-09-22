@@ -98,6 +98,17 @@ def test_provisional_recovery_stays_distinct():
     assert target["recovery_level"] == "provisional_recovery"
 
 
+def test_incomplete_sixty_answer_first_pass_outranks_ordinary_assessed_field():
+    result = build_learning_strategy(*bundles({
+        5: rows(5, answers=59, accuracy=0.99, counts={"checking": 59, "unseen": 41}),
+        18: rows(18, answers=60, accuracy=0.70, counts={"checking": 60, "unseen": 40}),
+    }))
+    assert result["recommended_field_id"] == 5
+    assert result["learning_intent"] == "coverage"
+    assert result["ranked_fields"][0]["initial_question_floor_incomplete"] is True
+    assert "initial_question_floor_incomplete" in result["reason_codes"]
+
+
 def test_high_weight_coverage_can_outrank_low_weight_mild_weakness():
     result = build_learning_strategy(*bundles({
         14: rows(14, accuracy=0.64, counts={"stable": 80, "checking": 20}),
