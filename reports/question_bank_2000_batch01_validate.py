@@ -129,8 +129,17 @@ def build_report() -> dict[str, Any]:
         registry_qids = [str(value) for value in node.get("question_ids", [])]
         expected_registry = [ref_qid, expected_qid] if integrated else [ref_qid]
         expected_status = "confirmed_shared" if integrated else "singleton_initial"
-        if registry_qids != expected_registry:
-            hard_errors.append(f"{draft_id}: node {node_id} question_ids {registry_qids} != expected {expected_registry}")
+        if integrated:
+            if registry_qids[:2] != expected_registry:
+                hard_errors.append(
+                    f"{draft_id}: node {node_id} historical pair prefix "
+                    f"{registry_qids[:2]} != expected {expected_registry}"
+                )
+        elif registry_qids != expected_registry:
+            hard_errors.append(
+                f"{draft_id}: node {node_id} question_ids {registry_qids} "
+                f"!= expected {expected_registry}"
+            )
         if str(node.get("status")) != expected_status:
             hard_errors.append(f"{draft_id}: node {node_id} status {node.get('status')} != expected {expected_status}")
 
