@@ -1,5 +1,21 @@
 # LicenseTown Current State
 
+## 2026-09-22 provisional_bulk reviewed-first selection preference — LIVE
+
+- The Q2234-Q2743 source-context rewrite and formal-evidence boundary remain the primary remediation.
+- Natural use showed provisional supply could dominate an ordinary day (135/170 attempts before
+  the wording correction), so reviewed items now receive selection preference when they can satisfy
+  the same learning need.
+- `tag_status=provisional_bulk` stays eligible as shortage/depth supply; it is not deleted or
+  hard-blocked.
+- Adaptive selection applies a **250-point editorial penalty** for
+  exploration/checking/maintenance and an **80-point penalty** for repair. The smaller repair
+  penalty preserves different-Q repair supply when reviewed alternatives are insufficient.
+- Safety, repair-evidence quality, Recent Cooldown/repeat protection, coverage and retention
+  rules remain unchanged and authoritative.
+- PR #410 full CI: **1547 passed / 6 skipped / 1 deselected / 141 subtests passed**.
+- This is a runtime quality preference, not a claim that the 510 items are editorially complete.
+
 ## 2026-09-22 Q2234-Q2743 formal-evidence version boundary
 
 - Q2234-Q2743 question stems were source-context corrected and became live after the
