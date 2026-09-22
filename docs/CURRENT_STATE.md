@@ -1,5 +1,19 @@
 # LicenseTown Current State
 
+## 2026-09-22 Q2743 provisional-supply quality preference — LIVE
+
+- Source-context reconstruction and formal-evidence cutoff remain in force for Q2234-Q2743.
+- Natural use showed the provisional layer could dominate an ordinary day (135/170 attempts before
+  the rewrite), so selector quality now prefers reviewed items when they can satisfy the same
+  learning need.
+- `tag_status=provisional_bulk` stays available as supply; it is **not** deleted or hard-blocked.
+  Adaptive selection applies a 250-point editorial penalty for exploration/checking/maintenance
+  and an 80-point penalty for repair, preserving shortage fallback and different-Q repair supply.
+- Safety, repair-evidence quality, repeat/cooldown, coverage and retention protections are unchanged.
+- Full PR CI for this selector change: **1547 passed / 6 skipped / 1 deselected / 141 subtests**.
+- This is a quality preference, not an editorial-completion claim. The 510 items remain
+  `provisional_bulk` until item-level review/replacement justifies promotion.
+
 ## 2026-09-22 Q2234-Q2743 formal-evidence version boundary
 
 - Q2234-Q2743 question stems were source-context corrected and became live after the
