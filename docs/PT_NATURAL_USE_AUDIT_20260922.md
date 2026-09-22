@@ -228,6 +228,31 @@ weakness caused by the old wording. Current formal learner evidence must be reco
 The dashboard / learner-navigation formal attempt paths are also filtered at the same boundary,
 while raw history is preserved for historical reporting and short-term repeat protection.
 
+## Current formal repair signals after removing superseded wording
+
+After applying the Q2234-Q2743 wording boundary, the daytime 135 provisional answers are retained
+as raw history but do not create current formal weakness. A read-only recomputation of the remaining
+formal attempt history identifies the following higher-confidence repair signals:
+
+- **KN0594 / 細胞分裂の開始**: 0/3, confidence-1 wrong 3.
+- **KN0483 / 早産児の修正月齢・発達評価**: 1/4, confidence-1 wrong 3.
+- **KN0530 / 二重神経支配の筋**: 1/7, recent 0/5, confidence-1 wrong 2.
+- **KN0534 / 視覚器**: 2/8, recent 1/5.
+- **KN0652 / 身体的フレイル**: 1/6.
+- **KN0994 / 僧帽弁閉鎖不全による心不全所見**: 1/5.
+- **KN1055 / 装具と疾患**: 1/5.
+- **KN1275 / パーソナリティ障害の解釈**: 0/4.
+- **KN1151 / 障害受容の段階**: 3/11 with 8 wrong and 3 confidence-1 wrong.
+- **KN1361 / 振戦せん妄**: 0/4 before the superseded provisional wording is considered.
+
+These are stronger learner-repair candidates because the signal survives removal of the defective
+pre-rewrite Q2234-Q2743 evidence. They should still be handled by the normal Node-state/retention
+logic rather than by manually forcing exact Q IDs.
+
+The same recomputation also confirms that several apparent 2026-09-22 daytime weaknesses
+(KN1469, KN1085 and similar prior-strong Nodes) should **not** be promoted merely because of
+the superseded provisional stems.
+
 ## Decision
 
 1. **Do not expand question count again simply for volume.**
