@@ -81,11 +81,12 @@ def test_repeat_equivalence_supply_never_relaxes():
     assert supply['after_exact_and_formal_state'] < supply['static_raw_supply']
     assert supply['eligible_supply'] <= supply['after_exact_and_formal_state']
     assert not supply['cooldown_relaxed']
-    small = audit.eligible_supply(rows,14,rows[0]['answered_at'])
-    assert small['eligible_supply_insufficient']
+    expanded = audit.eligible_supply(rows,14,rows[0]['answered_at'])
+    assert expanded['static_raw_supply'] >= 100
+    assert not expanded['eligible_supply_insufficient']
 
 
-def test_small_supply_labels_remain_cautious():
+def test_expanded_supply_removes_small_supply_label_but_evidence_stays_cautious():
     from question_bank import question_ids, get_category_small, get_question_tag
     q = next(q for q in question_ids() if get_category_small(q)==14)
     source = sample(65)
@@ -94,7 +95,8 @@ def test_small_supply_labels_remain_cautious():
     result = audit.replay(source)
     field = result['final_fields'][13]
     assert field['field_state'] == 'assessing'
-    assert 'small_supply_limitation' in field['evaluation_status']
+    assert 'small_supply_limitation' not in field['evaluation_status']
+    assert 'node_spread_insufficient' in field['evaluation_status']
 
 
 def test_reject_empty_duplicate_and_unknown_questions():

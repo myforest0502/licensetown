@@ -74,12 +74,21 @@ def test_sessions_match_direct_bank_output(monkeypatch, kind, category):
             assert int(question["category_small"]) == category
 
 
-@pytest.mark.parametrize("kwargs", [{"category_small": 14}, {"exclude_ids": question_bank.question_ids()}])
-def test_daily_availability_error_type_and_condition_are_preserved(kwargs):
+def test_daily_availability_error_type_and_condition_are_preserved():
     assert engine.QuestionAvailabilityError is question_bank.QuestionAvailabilityError
     with pytest.raises(question_bank.QuestionAvailabilityError,
                        match="Not enough non-blocked questions for daily session"):
-        engine.build_daily_session([], as_of=NOW, **kwargs)
+        engine.build_daily_session(
+            [], as_of=NOW, exclude_ids=question_bank.question_ids()
+        )
+
+
+def test_previously_small_field_now_supplies_daily_session():
+    selected = engine.build_daily_session(
+        [], category_small=14, rng=random.Random(314), as_of=NOW,
+    )
+    assert len(selected) == 30
+    assert all(int(question["category_small"]) == 14 for question in selected)
 
 
 def test_daily_session_still_prioritizes_safety(monkeypatch):

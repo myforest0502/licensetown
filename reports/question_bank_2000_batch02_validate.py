@@ -183,12 +183,22 @@ def build_report(payload=None, bank_dir=BANK):
         expected_state = "confirmed_shared" if integrated else "singleton_initial"
         expected_group = set(expected_node_qids)
         check(d.get("expected_target_state") == "singleton", prefix + "target staging state contract changed")
-        check(groups.get(cn) == expected_group,
-              prefix + ("target not canonical integrated pair" if integrated else "target not canonical singleton"))
+        if integrated:
+            check(expected_group.issubset(groups.get(cn, set())),
+                  prefix + "target historical integrated pair missing")
+        else:
+            check(groups.get(cn) == expected_group,
+                  prefix + "target not canonical singleton")
         if node in registry:
             check(registry[node]["status"] == expected_state,
                   prefix + ("registry state not confirmed_shared" if integrated else "registry state not singleton"))
-            check(registry[node].get("question_ids") == expected_node_qids, prefix + "Node/reference registry mismatch")
+            registry_qids = list(registry[node].get("question_ids") or [])
+            if integrated:
+                check(registry_qids[:2] == expected_node_qids,
+                      prefix + "Node/reference historical pair mismatch")
+            else:
+                check(registry_qids == expected_node_qids,
+                      prefix + "Node/reference registry mismatch")
 
         tag, question = maps["question_tags"][ref], maps["questions"][ref]
         check(tag["knowledge_node_id"] == node, prefix + "Node/reference registry mismatch")

@@ -30,11 +30,11 @@ def test_final_six_are_source_verified_and_aligned():
 def test_final_bank_contract_and_new_node_membership():
     manifest = read("bank_manifest.json")
     nodes = {row["knowledge_node_id"]: row for row in read("knowledge_nodes.json")}
-    assert manifest == {"bank_version": "2026-09-b21", "first_question_number": 1, "last_question_number": 2233, "question_count": 2233}
+    assert manifest == {"bank_version": "2026-09-b22", "first_question_number": 1, "last_question_number": 2743, "question_count": 2743}
     for node_id, qid in (("KN1559", "Q1995"), ("KN1560", "Q1996"), ("KN1561", "Q1997"), ("KN1562", "Q1998")):
         assert qid in nodes[node_id]["question_ids"]
-    assert nodes["KN0307"]["question_ids"][-1] == "Q1999"
-    assert nodes["KN0600"]["question_ids"][-1] == "Q2000"
+    assert "Q1999" in nodes["KN0307"]["question_ids"]
+    assert "Q2000" in nodes["KN0600"]["question_ids"]
 
 
 def test_integration_is_idempotent(tmp_path):

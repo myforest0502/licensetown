@@ -56,9 +56,10 @@
   {
     "knowledge_node_id": "KN0006",
     "label": "立脚中期の足関節背屈角度は正常範囲内である一方、遊脚期に背屈不足とつま先接触を認めているを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q6"
+      "Q6",
+      "Q2536"
     ],
     "aliases": [],
     "successor_ids": []
@@ -88,9 +89,10 @@
   {
     "knowledge_node_id": "KN0009",
     "label": "後上方インピンジメント",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q9"
+      "Q9",
+      "Q2652"
     ],
     "aliases": [],
     "successor_ids": []
@@ -140,9 +142,10 @@
   {
     "knowledge_node_id": "KN0014",
     "label": "視覚的に物品の変形や動きを確認しながら、物体の硬さや重さに応じた把持力調節を反復するへの介入選択",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q14"
+      "Q14",
+      "Q2653"
     ],
     "aliases": [],
     "successor_ids": []
@@ -290,7 +293,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q28",
-      "Q2053"
+      "Q2053",
+      "Q2537"
     ],
     "aliases": [],
     "successor_ids": []
@@ -308,9 +312,10 @@
   {
     "knowledge_node_id": "KN0030",
     "label": "深頸屈筋の運動制御",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q30"
+      "Q30",
+      "Q2654"
     ],
     "aliases": [],
     "successor_ids": []
@@ -331,7 +336,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q32",
-      "Q1745"
+      "Q1745",
+      "Q2655"
     ],
     "aliases": [],
     "successor_ids": []
@@ -405,7 +411,8 @@
     "question_ids": [
       "Q39",
       "Q1593",
-      "Q1887"
+      "Q1887",
+      "Q2538"
     ],
     "aliases": [],
     "successor_ids": []
@@ -505,9 +512,10 @@
   {
     "knowledge_node_id": "KN0049",
     "label": "右手を頭の後ろへ回す動作や更衣で困難があり、肩関節外旋は10°と著しく制限されているを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q49"
+      "Q49",
+      "Q2539"
     ],
     "aliases": [],
     "successor_ids": []
@@ -811,9 +819,10 @@
   {
     "knowledge_node_id": "KN0079",
     "label": "歩行時下肢アライメント",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q79"
+      "Q79",
+      "Q2540"
     ],
     "aliases": [],
     "successor_ids": []
@@ -872,9 +881,10 @@
   {
     "knowledge_node_id": "KN0085",
     "label": "筋力、ROM、感覚に異常はない一方、縄跳びやボール運動、着替え、箸操作など粗大運動と微細運動の両方に時間を要しているを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q85"
+      "Q85",
+      "Q2541"
     ],
     "aliases": [],
     "successor_ids": []
@@ -912,9 +922,10 @@
   {
     "knowledge_node_id": "KN0089",
     "label": "股外転筋と骨盤制御",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q89"
+      "Q89",
+      "Q2542"
     ],
     "aliases": [],
     "successor_ids": []
@@ -963,9 +974,10 @@
   {
     "knowledge_node_id": "KN0094",
     "label": "頭上動作で右肩甲骨内側縁が浮き上がり、肩挙上終末域に代償を認めるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q94"
+      "Q94",
+      "Q2543"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1026,7 +1038,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q100",
-      "Q2013"
+      "Q2013",
+      "Q2454"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1222,9 +1235,10 @@
   {
     "knowledge_node_id": "KN0119",
     "label": "理学療法では実際に困っている運動課題を段階的に反復し、学校や家庭と方法を共有して、体育・学習・日常生活への参加を支援することが適切である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q119"
+      "Q119",
+      "Q2544"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1346,7 +1360,8 @@
     "question_ids": [
       "Q131",
       "Q1574",
-      "Q1966"
+      "Q1966",
+      "Q2455"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1388,7 +1403,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q135",
-      "Q2054"
+      "Q2054",
+      "Q2545"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1426,9 +1442,10 @@
   {
     "knowledge_node_id": "KN0139",
     "label": "課題を構成要素に分け、成功可能な難易度から段階的に練習することで運動学習を促し、失敗経験を減らして体育参加への自信を高める",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q139"
+      "Q139",
+      "Q2546"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1526,9 +1543,10 @@
   {
     "knowledge_node_id": "KN0149",
     "label": "成功しやすい遊び環境調整",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q149"
+      "Q149",
+      "Q2547"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1566,9 +1584,10 @@
   {
     "knowledge_node_id": "KN0153",
     "label": "遊びを使った片脚支持・重心移動",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q154"
+      "Q154",
+      "Q2548"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1586,9 +1605,10 @@
   {
     "knowledge_node_id": "KN0155",
     "label": "視覚FBを使った協調・バランス練習",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q156"
+      "Q156",
+      "Q2656"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1616,9 +1636,10 @@
   {
     "knowledge_node_id": "KN0158",
     "label": "意思選択を活用した安全な遊び",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q159"
+      "Q159",
+      "Q2549"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1636,9 +1657,10 @@
   {
     "knowledge_node_id": "KN0160",
     "label": "相対危険度は、曝露群の疾患発生割合を非曝露群の疾患発生割合で除して求める",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q161"
+      "Q161",
+      "Q2456"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1727,9 +1749,10 @@
   {
     "knowledge_node_id": "KN0169",
     "label": "通所リハビリテーションは、要介護認定者などが施設へ通い、医師の指示に基づいてリハビリテーションを受ける介護保険サービスである",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q170"
+      "Q170",
+      "Q2457"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1737,9 +1760,10 @@
   {
     "knowledge_node_id": "KN0170",
     "label": "友人とのボール遊び参加",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q171"
+      "Q171",
+      "Q2550"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1778,9 +1802,10 @@
   {
     "knowledge_node_id": "KN0174",
     "label": "介入群と対照群を設け、対象者を無作為に各群へ割り付けて新しい運動療法の効果を比較する研究は無作為化比較試験である",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q175"
+      "Q175",
+      "Q2458"
     ],
     "aliases": [],
     "successor_ids": []
@@ -1830,9 +1855,10 @@
   {
     "knowledge_node_id": "KN0179",
     "label": "側臥位経由の起き上がり",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q180"
+      "Q180",
+      "Q2657"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2152,9 +2178,10 @@
   {
     "knowledge_node_id": "KN0210",
     "label": "自動挙上と他動挙上の差から肩甲上腕リズムを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q211"
+      "Q211",
+      "Q2658"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2354,9 +2381,10 @@
   {
     "knowledge_node_id": "KN0230",
     "label": "NNTの計算と絶対リスク減少の関係",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q231"
+      "Q231",
+      "Q2459"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2415,9 +2443,11 @@
   {
     "knowledge_node_id": "KN0236",
     "label": "ATNRの姿勢反応の識別",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q237"
+      "Q237",
+      "Q2305",
+      "Q2342"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2428,7 +2458,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q238",
-      "Q2014"
+      "Q2014",
+      "Q2460"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2534,7 +2565,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q248",
-      "Q1570"
+      "Q1570",
+      "Q2461"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2542,9 +2574,10 @@
   {
     "knowledge_node_id": "KN0248",
     "label": "MDCとMCIDを用いた測定変化の解釈",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q249"
+      "Q249",
+      "Q2462"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2632,9 +2665,10 @@
   {
     "knowledge_node_id": "KN0257",
     "label": "標本数増加による第2種過誤の低減と検出力向上",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q258"
+      "Q258",
+      "Q2463"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2673,9 +2707,10 @@
   {
     "knowledge_node_id": "KN0261",
     "label": "crouch gaitに対する床反力制御型AFOの適応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q262"
+      "Q262",
+      "Q2551"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2754,9 +2789,10 @@
   {
     "knowledge_node_id": "KN0269",
     "label": "Bland–Altman分析は2方法の測定値の差を縦軸、平均を横軸に示し、平均差による系統誤差と一致限界を評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q270"
+      "Q270",
+      "Q2464"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2845,9 +2881,10 @@
   {
     "knowledge_node_id": "KN0278",
     "label": "便宜抽出による外的妥当性低下",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q280"
+      "Q280",
+      "Q2465"
     ],
     "aliases": [],
     "successor_ids": []
@@ -2955,7 +2992,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q290",
-      "Q420"
+      "Q420",
+      "Q2466"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3003,9 +3041,10 @@
   {
     "knowledge_node_id": "KN0293",
     "label": "曝露群と非曝露群の発症割合からリスク比を算出する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q295"
+      "Q295",
+      "Q2467"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3013,9 +3052,11 @@
   {
     "knowledge_node_id": "KN0294",
     "label": "Moro反射の消失時期",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q296"
+      "Q296",
+      "Q2306",
+      "Q2343"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3053,9 +3094,10 @@
   {
     "knowledge_node_id": "KN0298",
     "label": "クロスオーバー試験で個体差を抑える設計特性",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q300"
+      "Q300",
+      "Q2468"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3104,9 +3146,10 @@
   {
     "knowledge_node_id": "KN0303",
     "label": "intention-to-treat解析の原則",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q305"
+      "Q305",
+      "Q2469"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3157,9 +3200,10 @@
   {
     "knowledge_node_id": "KN0308",
     "label": "I²統計量は、観察された効果量のばらつきのうち標本誤差ではなく研究間異質性による割合を示す",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q310"
+      "Q310",
+      "Q2470"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3407,9 +3451,11 @@
   {
     "knowledge_node_id": "KN0332",
     "label": "9か月時点の粗大運動発達遅延を示す精査対象所見",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q335"
+      "Q335",
+      "Q2307",
+      "Q2344"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3420,7 +3466,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q336",
-      "Q2055"
+      "Q2055",
+      "Q2552"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3428,9 +3475,10 @@
   {
     "knowledge_node_id": "KN0334",
     "label": "二分脊椎で注意するラテックスアレルギー",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q337"
+      "Q337",
+      "Q2553"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3528,9 +3576,10 @@
   {
     "knowledge_node_id": "KN0344",
     "label": "MCIDが示す患者にとって意味のある最小変化",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q347"
+      "Q347",
+      "Q2471"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3589,9 +3638,10 @@
   {
     "knowledge_node_id": "KN0350",
     "label": "Duchenne型筋ジストロフィーで歩行維持のための拘縮予防",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q353"
+      "Q353",
+      "Q2554"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3609,9 +3659,10 @@
   {
     "knowledge_node_id": "KN0352",
     "label": "打ち切りを扱い共変量調整するCox比例ハザード解析",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q355"
+      "Q355",
+      "Q2472"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3660,9 +3711,10 @@
   {
     "knowledge_node_id": "KN0357",
     "label": "曝露とアウトカム双方に関連する交絡因子の識別",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q360"
+      "Q360",
+      "Q2473"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3795,9 +3847,10 @@
   {
     "knowledge_node_id": "KN0370",
     "label": "症例対照研究で用いるオッズ比",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q375"
+      "Q375",
+      "Q2474"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3830,7 +3883,8 @@
     "question_ids": [
       "Q378",
       "Q1582",
-      "Q1826"
+      "Q1826",
+      "Q2555"
     ],
     "aliases": [],
     "successor_ids": []
@@ -3933,9 +3987,10 @@
   {
     "knowledge_node_id": "KN0383",
     "label": "乳幼児期発症の近位筋力低下・腱反射消失からSMAを識別する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q388"
+      "Q388",
+      "Q2556"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4140,9 +4195,10 @@
   {
     "knowledge_node_id": "KN0403",
     "label": "乳児筋性斜頸で胸鎖乳突筋短縮により制限される頸部運動",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q409"
+      "Q409",
+      "Q2557"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4153,7 +4209,10 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q410",
-      "Q1626"
+      "Q1626",
+      "Q2308",
+      "Q2330",
+      "Q2345"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4223,9 +4282,10 @@
   {
     "knowledge_node_id": "KN0411",
     "label": "歩行器歩行・屋外車椅子使用からGMFCS level IIIを判定する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q418"
+      "Q418",
+      "Q2558"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4501,9 +4561,10 @@
   {
     "knowledge_node_id": "KN0438",
     "label": "成長期腰椎分離症疑いで伸展負荷を避ける初期対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q446"
+      "Q446",
+      "Q2559"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4551,9 +4612,10 @@
   {
     "knowledge_node_id": "KN0443",
     "label": "Ponseti法の連続矯正ギプスと必要時アキレス腱切腱",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q451"
+      "Q451",
+      "Q2560"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4571,9 +4633,11 @@
   {
     "knowledge_node_id": "KN0445",
     "label": "前方パラシュート反応の識別",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q453"
+      "Q453",
+      "Q2309",
+      "Q2346"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4622,9 +4686,10 @@
   {
     "knowledge_node_id": "KN0450",
     "label": "創傷治癒増殖期の肉芽形成・血管新生・上皮化",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q458"
+      "Q458",
+      "Q2475"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4856,9 +4921,10 @@
   {
     "knowledge_node_id": "KN0473",
     "label": "離断性骨軟骨炎疑いで競技負荷を中止し専門評価へつなぐ判断",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q481"
+      "Q481",
+      "Q2561"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4959,7 +5025,10 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q491",
-      "Q1628"
+      "Q1628",
+      "Q2310",
+      "Q2331",
+      "Q2347"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4967,9 +5036,11 @@
   {
     "knowledge_node_id": "KN0484",
     "label": "乳児の側方保護伸展反応の誘発方法",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q492"
+      "Q492",
+      "Q2311",
+      "Q2348"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4977,9 +5048,10 @@
   {
     "knowledge_node_id": "KN0485",
     "label": "着替え、書字、球技など複数の日常・学校活動で不器用さを示す一方、筋力や知的発達に明らかな異常がないを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q493"
+      "Q493",
+      "Q2562"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4987,9 +5059,10 @@
   {
     "knowledge_node_id": "KN0486",
     "label": "炎症安定期JIAで関節負担を抑えた運動療法",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q494"
+      "Q494",
+      "Q2563"
     ],
     "aliases": [],
     "successor_ids": []
@@ -4997,9 +5070,10 @@
   {
     "knowledge_node_id": "KN0487",
     "label": "Osgood-Schlatter病で疼痛誘発負荷を調整する初期指導",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q495"
+      "Q495",
+      "Q2564"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5040,9 +5114,10 @@
   {
     "knowledge_node_id": "KN0491",
     "label": "侵害受容系過敏化を伴うnociplastic painの識別",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q499"
+      "Q499",
+      "Q2476"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5190,9 +5265,13 @@
   {
     "knowledge_node_id": "KN0505",
     "label": "医療面接における自由質問法はどれかから病態・機能障害を解釈",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q513"
+      "Q513",
+      "Q2575",
+      "Q2595",
+      "Q2615",
+      "Q2635"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5224,9 +5303,13 @@
   {
     "knowledge_node_id": "KN0508",
     "label": "注意機能の評価法",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q516"
+      "Q516",
+      "Q2576",
+      "Q2596",
+      "Q2616",
+      "Q2636"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5295,7 +5378,8 @@
     "question_ids": [
       "Q522",
       "Q1823",
-      "Q1936"
+      "Q1936",
+      "Q2565"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5370,9 +5454,10 @@
   {
     "knowledge_node_id": "KN0521",
     "label": "3歳6か月の脳性麻痺児で、ロフストランド杖などの手に持つ移動器具を使から病態・機能障害を解釈",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q529"
+      "Q529",
+      "Q2566"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5663,7 +5748,37 @@
     "question_ids": [
       "Q555",
       "Q1578",
-      "Q1918"
+      "Q1918",
+      "Q2364",
+      "Q2369",
+      "Q2371",
+      "Q2373",
+      "Q2378",
+      "Q2380",
+      "Q2382",
+      "Q2387",
+      "Q2389",
+      "Q2391",
+      "Q2396",
+      "Q2398",
+      "Q2400",
+      "Q2405",
+      "Q2407",
+      "Q2409",
+      "Q2414",
+      "Q2416",
+      "Q2418",
+      "Q2423",
+      "Q2425",
+      "Q2427",
+      "Q2432",
+      "Q2434",
+      "Q2436",
+      "Q2441",
+      "Q2443",
+      "Q2445",
+      "Q2450",
+      "Q2452"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5675,7 +5790,8 @@
     "question_ids": [
       "Q556",
       "Q1679",
-      "Q1924"
+      "Q1924",
+      "Q2477"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5686,7 +5802,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q557",
-      "Q1680"
+      "Q1680",
+      "Q2478"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5698,7 +5815,18 @@
     "question_ids": [
       "Q558",
       "Q1827",
-      "Q1938"
+      "Q1938",
+      "Q2577",
+      "Q2585",
+      "Q2593",
+      "Q2597",
+      "Q2605",
+      "Q2613",
+      "Q2617",
+      "Q2625",
+      "Q2633",
+      "Q2637",
+      "Q2645"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5710,7 +5838,12 @@
     "question_ids": [
       "Q559",
       "Q967",
-      "Q1869"
+      "Q1869",
+      "Q2312",
+      "Q2322",
+      "Q2337",
+      "Q2349",
+      "Q2359"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5745,7 +5878,24 @@
     "question_ids": [
       "Q562",
       "Q1833",
-      "Q1943"
+      "Q1943",
+      "Q2659",
+      "Q2665",
+      "Q2670",
+      "Q2674",
+      "Q2680",
+      "Q2685",
+      "Q2689",
+      "Q2695",
+      "Q2700",
+      "Q2704",
+      "Q2710",
+      "Q2715",
+      "Q2719",
+      "Q2725",
+      "Q2730",
+      "Q2734",
+      "Q2740"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5803,7 +5953,8 @@
     "question_ids": [
       "Q567",
       "Q1824",
-      "Q1978"
+      "Q1978",
+      "Q2567"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5837,7 +5988,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q570",
-      "Q1825"
+      "Q1825",
+      "Q2568"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5849,7 +6001,9 @@
     "question_ids": [
       "Q571",
       "Q1883",
-      "Q1976"
+      "Q1976",
+      "Q2520",
+      "Q2526"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5860,7 +6014,10 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q572",
-      "Q1884"
+      "Q1884",
+      "Q2483",
+      "Q2521",
+      "Q2527"
     ],
     "aliases": [],
     "successor_ids": []
@@ -5878,9 +6035,10 @@
   {
     "knowledge_node_id": "KN0566",
     "label": "Duchenne型筋ジストロフィーで独歩不能となる時期は呼吸筋力低下や拘束性換気障害が進行しやすく、呼吸不全予防のため呼吸機能評価の優先度が高い",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q574"
+      "Q574",
+      "Q2569"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6333,7 +6491,8 @@
     "question_ids": [
       "Q616",
       "Q1874",
-      "Q1968"
+      "Q1968",
+      "Q2479"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6345,7 +6504,8 @@
     "question_ids": [
       "Q617",
       "Q1363",
-      "Q1629"
+      "Q1629",
+      "Q2480"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6356,7 +6516,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q618",
-      "Q1875"
+      "Q1875",
+      "Q2481"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6368,7 +6529,14 @@
     "question_ids": [
       "Q619",
       "Q1617",
-      "Q1914"
+      "Q1914",
+      "Q2234",
+      "Q2250",
+      "Q2261",
+      "Q2263",
+      "Q2279",
+      "Q2290",
+      "Q2292"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6380,7 +6548,11 @@
     "question_ids": [
       "Q620",
       "Q1867",
-      "Q1963"
+      "Q1963",
+      "Q2313",
+      "Q2335",
+      "Q2341",
+      "Q2350"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6533,7 +6705,10 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q634",
-      "Q1932"
+      "Q1932",
+      "Q2484",
+      "Q2523",
+      "Q2528"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6598,7 +6773,10 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q640",
-      "Q1975"
+      "Q1975",
+      "Q2485",
+      "Q2525",
+      "Q2529"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6754,7 +6932,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q654",
-      "Q1886"
+      "Q1886",
+      "Q2570"
     ],
     "aliases": [],
     "successor_ids": []
@@ -6787,7 +6966,10 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q657",
-      "Q1868"
+      "Q1868",
+      "Q2314",
+      "Q2336",
+      "Q2351"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7056,7 +7238,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q683",
-      "Q1922"
+      "Q1922",
+      "Q2482"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7091,7 +7274,14 @@
     "question_ids": [
       "Q686",
       "Q1622",
-      "Q1961"
+      "Q1961",
+      "Q2235",
+      "Q2252",
+      "Q2262",
+      "Q2264",
+      "Q2281",
+      "Q2291",
+      "Q2293"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7099,9 +7289,13 @@
   {
     "knowledge_node_id": "KN0679",
     "label": "自分の感情を他者のものとして捉える投影の識別",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q687"
+      "Q687",
+      "Q2578",
+      "Q2598",
+      "Q2618",
+      "Q2638"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7155,7 +7349,10 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q692",
-      "Q1915"
+      "Q1915",
+      "Q2315",
+      "Q2338",
+      "Q2352"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7227,9 +7424,11 @@
   {
     "knowledge_node_id": "KN0691",
     "label": "思考の進行が遅くなり、考えが浮かびにくい「思考制止」がみられる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q699"
+      "Q699",
+      "Q2486",
+      "Q2530"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7237,9 +7436,11 @@
   {
     "knowledge_node_id": "KN0692",
     "label": "アルコール離脱せん妄は断酒後48〜96時間頃に出現しやすく、意識障害、幻視、振戦、自律神経亢進を伴い重症では生命に関わる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q700"
+      "Q700",
+      "Q2487",
+      "Q2531"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7462,7 +7663,11 @@
     "question_ids": [
       "Q721",
       "Q1583",
-      "Q1885"
+      "Q1885",
+      "Q2488",
+      "Q2514",
+      "Q2522",
+      "Q2532"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7538,7 +7743,10 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q728",
-      "Q1962"
+      "Q1962",
+      "Q2316",
+      "Q2340",
+      "Q2353"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7796,7 +8004,12 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q753",
-      "Q1866"
+      "Q1866",
+      "Q2236",
+      "Q2259",
+      "Q2265",
+      "Q2288",
+      "Q2294"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7808,7 +8021,11 @@
     "question_ids": [
       "Q754",
       "Q1686",
-      "Q1933"
+      "Q1933",
+      "Q2489",
+      "Q2516",
+      "Q2524",
+      "Q2533"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7819,7 +8036,12 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q755",
-      "Q1913"
+      "Q1913",
+      "Q2237",
+      "Q2260",
+      "Q2266",
+      "Q2289",
+      "Q2295"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7848,9 +8070,11 @@
   {
     "knowledge_node_id": "KN0750",
     "label": "足底把握反射は乳児期後半まで残存し、通常9〜12か月頃に消失する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q758"
+      "Q758",
+      "Q2317",
+      "Q2354"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7858,9 +8082,11 @@
   {
     "knowledge_node_id": "KN0751",
     "label": "頭囲拡大、頭皮静脈怒張、大泉門膨隆とともに、眼球が下方へ偏位して上方に強膜が見える落陽現象がみられる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q759"
+      "Q759",
+      "Q2318",
+      "Q2355"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7930,9 +8156,11 @@
   {
     "knowledge_node_id": "KN0758",
     "label": "「何か不吉なことが起こりそうだ」という、周囲全体に特別な意味が感じられる不気味な気分は妄想気分であるを識別する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q766"
+      "Q766",
+      "Q2490",
+      "Q2534"
     ],
     "aliases": [],
     "successor_ids": []
@@ -7940,9 +8168,11 @@
   {
     "knowledge_node_id": "KN0759",
     "label": "器質性精神障害の急性期では意識・注意が変動し、見当識障害や幻覚を伴うせん妄が最もみられやすい",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q767"
+      "Q767",
+      "Q2491",
+      "Q2535"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8215,9 +8445,19 @@
   {
     "knowledge_node_id": "KN0785",
     "label": "神経筋再教育の目的と適切な実施方法",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q793"
+      "Q793",
+      "Q2365",
+      "Q2374",
+      "Q2383",
+      "Q2392",
+      "Q2401",
+      "Q2410",
+      "Q2419",
+      "Q2428",
+      "Q2437",
+      "Q2446"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8592,9 +8832,11 @@
   {
     "knowledge_node_id": "KN0821",
     "label": "処理速度、記銘、注意などは低下しやすいが、語彙や言語理解など結晶性知能は比較的保たれる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q830"
+      "Q830",
+      "Q2319",
+      "Q2356"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8622,9 +8864,11 @@
   {
     "knowledge_node_id": "KN0824",
     "label": "原始反射の中では足底把握反射が9〜12か月頃まで残り、Moro反射やATNRなどより消失が遅い",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q833"
+      "Q833",
+      "Q2320",
+      "Q2357"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8673,9 +8917,10 @@
   {
     "knowledge_node_id": "KN0829",
     "label": "早期の前頭側頭型認知症",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q838"
+      "Q838",
+      "Q2492"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8694,9 +8939,10 @@
   {
     "knowledge_node_id": "KN0831",
     "label": "思考途絶が特徴的で、思考の流れが突然遮断され会話が止まる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q840"
+      "Q840",
+      "Q2493"
     ],
     "aliases": [],
     "successor_ids": []
@@ -8756,9 +9002,10 @@
   {
     "knowledge_node_id": "KN0837",
     "label": "GMFCS III脳性麻痺児の自立駆動に合う車椅子設定",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q846"
+      "Q846",
+      "Q2571"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9014,7 +9261,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q870",
-      "Q1737"
+      "Q1737",
+      "Q2572"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9338,7 +9586,12 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q902",
-      "Q1691"
+      "Q1691",
+      "Q2238",
+      "Q2257",
+      "Q2267",
+      "Q2286",
+      "Q2296"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9349,7 +9602,12 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q903",
-      "Q1632"
+      "Q1632",
+      "Q2239",
+      "Q2253",
+      "Q2268",
+      "Q2282",
+      "Q2297"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9361,7 +9619,18 @@
     "question_ids": [
       "Q904",
       "Q1828",
-      "Q1979"
+      "Q1979",
+      "Q2579",
+      "Q2586",
+      "Q2594",
+      "Q2599",
+      "Q2606",
+      "Q2614",
+      "Q2619",
+      "Q2626",
+      "Q2634",
+      "Q2639",
+      "Q2646"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9483,9 +9752,10 @@
   {
     "knowledge_node_id": "KN0907",
     "label": "統合失調症において予後が良いのはどれかから今後の経過・予後を予測する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q916"
+      "Q916",
+      "Q2494"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9493,9 +9763,10 @@
   {
     "knowledge_node_id": "KN0908",
     "label": "うつ病の復職支援プログラムの内容として最も適切なのはどれかに対して適切な理学療法・介入を選択する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q917"
+      "Q917",
+      "Q2495"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9586,9 +9857,11 @@
   {
     "knowledge_node_id": "KN0917",
     "label": "加齢では肺弾性収縮力低下や胸郭硬化により残気量が増加する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q926"
+      "Q926",
+      "Q2321",
+      "Q2358"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9983,9 +10256,13 @@
   {
     "knowledge_node_id": "KN0956",
     "label": "P-Fスタディは欲求不満場面の漫画風イラストを示し、登場人物の吹き出しへ台詞を書き込ませて反応傾向をみるを評価する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q965"
+      "Q965",
+      "Q2580",
+      "Q2600",
+      "Q2620",
+      "Q2640"
     ],
     "aliases": [],
     "successor_ids": []
@@ -9993,9 +10270,12 @@
   {
     "knowledge_node_id": "KN0957",
     "label": "認知療法はAaron T. Beckがうつ病などの治療法として体系化した",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q966"
+      "Q966",
+      "Q2240",
+      "Q2269",
+      "Q2298"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10101,7 +10381,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q977",
-      "Q1934"
+      "Q1934",
+      "Q2573"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10310,7 +10591,24 @@
     "question_ids": [
       "Q997",
       "Q1893",
-      "Q1984"
+      "Q1984",
+      "Q2660",
+      "Q2667",
+      "Q2672",
+      "Q2675",
+      "Q2682",
+      "Q2687",
+      "Q2690",
+      "Q2697",
+      "Q2702",
+      "Q2705",
+      "Q2712",
+      "Q2717",
+      "Q2720",
+      "Q2727",
+      "Q2732",
+      "Q2735",
+      "Q2742"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10727,7 +11025,19 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1037",
-      "Q1831"
+      "Q1831",
+      "Q2661",
+      "Q2663",
+      "Q2676",
+      "Q2678",
+      "Q2691",
+      "Q2693",
+      "Q2706",
+      "Q2708",
+      "Q2721",
+      "Q2723",
+      "Q2736",
+      "Q2738"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10748,7 +11058,12 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1039",
-      "Q1653"
+      "Q1653",
+      "Q2241",
+      "Q2255",
+      "Q2270",
+      "Q2284",
+      "Q2299"
     ],
     "aliases": [],
     "successor_ids": []
@@ -10759,7 +11074,15 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1040",
-      "Q1829"
+      "Q1829",
+      "Q2581",
+      "Q2587",
+      "Q2601",
+      "Q2607",
+      "Q2621",
+      "Q2627",
+      "Q2641",
+      "Q2647"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11323,9 +11646,10 @@
   {
     "knowledge_node_id": "KN1084",
     "label": "成人期中期に発症しやすいのはどれかから経過・予後・合併症を予測する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1095"
+      "Q1095",
+      "Q2496"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11333,9 +11657,12 @@
   {
     "knowledge_node_id": "KN1085",
     "label": "リエゾン精神医学で具体的・支持的に関わるベッドサイド対応",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1096"
+      "Q1096",
+      "Q2242",
+      "Q2271",
+      "Q2300"
     ],
     "aliases": [],
     "successor_ids": []
@@ -11346,7 +11673,11 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1097",
-      "Q1830"
+      "Q1830",
+      "Q2588",
+      "Q2608",
+      "Q2628",
+      "Q2648"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12019,7 +12350,15 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1163",
-      "Q1888"
+      "Q1888",
+      "Q2582",
+      "Q2590",
+      "Q2602",
+      "Q2610",
+      "Q2622",
+      "Q2630",
+      "Q2642",
+      "Q2650"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12032,7 +12371,14 @@
       "Q1164",
       "Q1221",
       "Q1612",
-      "Q1646"
+      "Q1646",
+      "Q2243",
+      "Q2249",
+      "Q2254",
+      "Q2272",
+      "Q2278",
+      "Q2283",
+      "Q2301"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12050,9 +12396,11 @@
   {
     "knowledge_node_id": "KN1153",
     "label": "DDSTⅡで乳幼児の4領域の発達をスクリーニングする",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1166"
+      "Q1166",
+      "Q2323",
+      "Q2360"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12083,7 +12431,8 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1169",
-      "Q1935"
+      "Q1935",
+      "Q2574"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12152,9 +12501,10 @@
   {
     "knowledge_node_id": "KN1163",
     "label": "家族が問題行動を肩代わりし依存を維持させるenablerとなり、共依存が問題になる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1176"
+      "Q1176",
+      "Q2497"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12162,9 +12512,10 @@
   {
     "knowledge_node_id": "KN1164",
     "label": "統合失調症では家族の批判・敵意・情緒的過干渉が強い高EE環境で再発率が高くなる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1177"
+      "Q1177",
+      "Q2498"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12584,7 +12935,15 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1219",
-      "Q1889"
+      "Q1889",
+      "Q2583",
+      "Q2591",
+      "Q2603",
+      "Q2611",
+      "Q2623",
+      "Q2631",
+      "Q2643",
+      "Q2651"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12592,9 +12951,11 @@
   {
     "knowledge_node_id": "KN1206",
     "label": "1〜3歳頃は肛門期で、排泄のコントロールが中心課題となる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1220"
+      "Q1220",
+      "Q2324",
+      "Q2361"
     ],
     "aliases": [],
     "successor_ids": []
@@ -12728,9 +13089,10 @@
   {
     "knowledge_node_id": "KN1219",
     "label": "精神運動興奮、昏迷、拒絶、常同など意志・運動面の異常が前景に立つ",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1234"
+      "Q1234",
+      "Q2499"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13151,7 +13513,12 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1276",
-      "Q1713"
+      "Q1713",
+      "Q2244",
+      "Q2258",
+      "Q2273",
+      "Q2287",
+      "Q2302"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13159,9 +13526,11 @@
   {
     "knowledge_node_id": "KN1261",
     "label": "成人前期の課題は親密性対孤立で、他者との深い関係を築くことが中心",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1277"
+      "Q1277",
+      "Q2325",
+      "Q2362"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13193,7 +13562,19 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1280",
-      "Q1832"
+      "Q1832",
+      "Q2662",
+      "Q2664",
+      "Q2677",
+      "Q2679",
+      "Q2692",
+      "Q2694",
+      "Q2707",
+      "Q2709",
+      "Q2722",
+      "Q2724",
+      "Q2737",
+      "Q2739"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13205,7 +13586,9 @@
     "question_ids": [
       "Q1281",
       "Q1639",
-      "Q1916"
+      "Q1916",
+      "Q2332",
+      "Q2339"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13306,7 +13689,9 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1291",
-      "Q1714"
+      "Q1714",
+      "Q2500",
+      "Q2517"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13325,9 +13710,10 @@
   {
     "knowledge_node_id": "KN1277",
     "label": "神経性無食欲症では徐脈・低血圧・低血糖などが多い一方、飢餓に伴う脂質代謝異常から高コレステロール血症を示すことがある",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1293"
+      "Q1293",
+      "Q2501"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13370,7 +13756,12 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1297",
-      "Q1620"
+      "Q1620",
+      "Q2245",
+      "Q2251",
+      "Q2274",
+      "Q2280",
+      "Q2303"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13638,7 +14029,10 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1327",
-      "Q1717"
+      "Q1717",
+      "Q2326",
+      "Q2333",
+      "Q2363"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13701,7 +14095,9 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1333",
-      "Q1718"
+      "Q1718",
+      "Q2502",
+      "Q2518"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13709,9 +14105,10 @@
   {
     "knowledge_node_id": "KN1314",
     "label": "全般性不安障害は女性に多く、過剰な不安・心配が慢性的に続き、自律神経症状や他の精神疾患の併存も多い",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1334"
+      "Q1334",
+      "Q2503"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13729,9 +14126,10 @@
   {
     "knowledge_node_id": "KN1316",
     "label": "うつ病の入眠困難に対する睡眠衛生指導",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1336"
+      "Q1336",
+      "Q2504"
     ],
     "aliases": [],
     "successor_ids": []
@@ -13902,7 +14300,37 @@
     "question_ids": [
       "Q1352",
       "Q1870",
-      "Q1964"
+      "Q1964",
+      "Q2366",
+      "Q2370",
+      "Q2372",
+      "Q2375",
+      "Q2379",
+      "Q2381",
+      "Q2384",
+      "Q2388",
+      "Q2390",
+      "Q2393",
+      "Q2397",
+      "Q2399",
+      "Q2402",
+      "Q2406",
+      "Q2408",
+      "Q2411",
+      "Q2415",
+      "Q2417",
+      "Q2420",
+      "Q2424",
+      "Q2426",
+      "Q2429",
+      "Q2433",
+      "Q2435",
+      "Q2438",
+      "Q2442",
+      "Q2444",
+      "Q2447",
+      "Q2451",
+      "Q2453"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14056,7 +14484,10 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1370",
-      "Q1937"
+      "Q1937",
+      "Q2592",
+      "Q2612",
+      "Q2632"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14064,9 +14495,10 @@
   {
     "knowledge_node_id": "KN1348",
     "label": "Freudの心理性的発達で6〜12歳頃は潜在期",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1371"
+      "Q1371",
+      "Q2327"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14168,9 +14600,10 @@
   {
     "knowledge_node_id": "KN1358",
     "label": "せん妄は急性・変動性の注意・認知障害で、高齢は重要な危険因子",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1381"
+      "Q1381",
+      "Q2505"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14188,9 +14621,10 @@
   {
     "knowledge_node_id": "KN1360",
     "label": "自閉スペクトラム症で、他者の手を道具のように使って目的物へ導く行動はクレーン現象",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1383"
+      "Q1383",
+      "Q2506"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14201,7 +14635,9 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1384",
-      "Q1722"
+      "Q1722",
+      "Q2507",
+      "Q2519"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14327,9 +14763,19 @@
   {
     "knowledge_node_id": "KN1373",
     "label": "COPDなどに用いる口すぼめ呼吸を適切に指導する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1397"
+      "Q1397",
+      "Q2367",
+      "Q2376",
+      "Q2385",
+      "Q2394",
+      "Q2403",
+      "Q2412",
+      "Q2421",
+      "Q2430",
+      "Q2439",
+      "Q2448"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14362,7 +14808,17 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1400",
-      "Q1917"
+      "Q1917",
+      "Q2368",
+      "Q2377",
+      "Q2386",
+      "Q2395",
+      "Q2404",
+      "Q2413",
+      "Q2422",
+      "Q2431",
+      "Q2440",
+      "Q2449"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14647,9 +15103,12 @@
   {
     "knowledge_node_id": "KN1404",
     "label": "将来行うべき予定を適切な時点で思い出す記憶は展望記憶",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1429"
+      "Q1429",
+      "Q2246",
+      "Q2275",
+      "Q2304"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14660,7 +15119,9 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1430",
-      "Q1725"
+      "Q1725",
+      "Q2328",
+      "Q2334"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14698,9 +15159,10 @@
   {
     "knowledge_node_id": "KN1409",
     "label": "加齢で骨塩量は低下する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1434"
+      "Q1434",
+      "Q2329"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14770,9 +15232,10 @@
   {
     "knowledge_node_id": "KN1416",
     "label": "ビタミンB1欠乏などからKorsakoff症候群を残すことがある",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1441"
+      "Q1441",
+      "Q2508"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14780,9 +15243,10 @@
   {
     "knowledge_node_id": "KN1417",
     "label": "統合失調症の前駆期には、自生思考などの基礎症状・主観的体験がみられることがある",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1442"
+      "Q1442",
+      "Q2509"
     ],
     "aliases": [],
     "successor_ids": []
@@ -14801,9 +15265,10 @@
   {
     "knowledge_node_id": "KN1419",
     "label": "社会的相互作用や非言語的情動表現に困難があり、表情変化が乏しいことがある",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1444"
+      "Q1444",
+      "Q2510"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15322,9 +15787,11 @@
   {
     "knowledge_node_id": "KN1469",
     "label": "自販機の手順では『つり銭を確認する』際に金額や購入結果を言語的に意識できる陳述記憶が関わる",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1494"
+      "Q1494",
+      "Q2247",
+      "Q2276"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15335,7 +15802,11 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1495",
-      "Q1654"
+      "Q1654",
+      "Q2248",
+      "Q2256",
+      "Q2277",
+      "Q2285"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15893,9 +16364,13 @@
   {
     "knowledge_node_id": "KN1524",
     "label": "社会的に受容されにくい欲動をスポーツなど価値ある活動へ転換する防衛機制が昇華",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1550"
+      "Q1550",
+      "Q2584",
+      "Q2604",
+      "Q2624",
+      "Q2644"
     ],
     "aliases": [],
     "successor_ids": []
@@ -15906,7 +16381,9 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1551",
-      "Q1657"
+      "Q1657",
+      "Q2511",
+      "Q2515"
     ],
     "aliases": [],
     "successor_ids": []
@@ -16027,9 +16504,10 @@
   {
     "knowledge_node_id": "KN1537",
     "label": "抑うつ症状を併存することがあり、国家試験対策では1を正答とする",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1563"
+      "Q1563",
+      "Q2512"
     ],
     "aliases": [],
     "successor_ids": []
@@ -16037,9 +16515,10 @@
   {
     "knowledge_node_id": "KN1538",
     "label": "予定変更への強いこだわりと柔軟な対応困難は、自閉スペクトラム症の限定・反復的行動や変化への抵抗を強く示唆する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1564"
+      "Q1564",
+      "Q2513"
     ],
     "aliases": [],
     "successor_ids": []
@@ -16108,9 +16587,13 @@
   {
     "knowledge_node_id": "KN1545",
     "label": "うつ病の行動活性化では回避を減らし価値ある活動への再参加を具体的・段階的に計画する",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1856"
+      "Q1856",
+      "Q2589",
+      "Q2609",
+      "Q2629",
+      "Q2649"
     ],
     "aliases": [],
     "successor_ids": []
@@ -16121,7 +16604,18 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1857",
-      "Q1942"
+      "Q1942",
+      "Q2666",
+      "Q2669",
+      "Q2681",
+      "Q2684",
+      "Q2696",
+      "Q2699",
+      "Q2711",
+      "Q2714",
+      "Q2726",
+      "Q2729",
+      "Q2741"
     ],
     "aliases": [],
     "successor_ids": []
@@ -16172,7 +16666,18 @@
     "status": "confirmed_shared",
     "question_ids": [
       "Q1905",
-      "Q1983"
+      "Q1983",
+      "Q2668",
+      "Q2671",
+      "Q2683",
+      "Q2686",
+      "Q2698",
+      "Q2701",
+      "Q2713",
+      "Q2716",
+      "Q2728",
+      "Q2731",
+      "Q2743"
     ],
     "aliases": [],
     "successor_ids": []
@@ -16262,9 +16767,14 @@
   {
     "knowledge_node_id": "KN1560",
     "label": "Frenkel体操は視覚代償を用いて四肢運動を反復し、深部感覚障害による脊髄性運動失調の協調性改善を図る",
-    "status": "singleton_initial",
+    "status": "confirmed_shared",
     "question_ids": [
-      "Q1996"
+      "Q1996",
+      "Q2673",
+      "Q2688",
+      "Q2703",
+      "Q2718",
+      "Q2733"
     ],
     "aliases": [],
     "successor_ids": []
