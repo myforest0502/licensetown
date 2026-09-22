@@ -120,18 +120,27 @@ def test_high_weight_coverage_can_outrank_low_weight_mild_weakness():
     assert "coverage_insufficient" in result["reason_codes"]
 
 
-def test_safety_overrides_low_weight_insufficient_evidence_and_concentration():
+def test_unfinished_first_pass_overrides_safety_until_field_is_judgeable():
     result = build_learning_strategy(*bundles({
-        14: rows(14, answers=10), 18: rows(18, answers=0, counts={"unseen": 100}),
+        5: rows(5, answers=59, counts={"checking": 59, "unseen": 41}),
+        14: rows(14, answers=60),
     }), context_by_field={14: {
-        "critical_safety_unresolved_count": 1, "consecutive_field_blocks": 10,
-        "additional_blocks_completed": 3,
+        "critical_safety_unresolved_count": 1,
     }})
-    assert result["recommended_field_id"] == 14
-    assert result["learning_intent"] == "safety_review"
-    assert result["priority_score"] >= 1
-    assert result["ranked_fields"][0]["field_state"] == "assessing"
-    assert "critical_safety" in result["reason_codes"]
+    assert result["recommended_field_id"] == 5
+    assert result["learning_intent"] == "coverage"
+    assert result["ranked_fields"][0]["initial_question_floor_incomplete"] is True
+
+
+def test_closest_field_to_sixty_is_finished_first():
+    result = build_learning_strategy(*bundles({
+        5: rows(5, answers=41, counts={"checking": 41, "unseen": 59}),
+        12: rows(12, answers=55, counts={"checking": 55, "unseen": 45}),
+        14: rows(14, answers=50, counts={"checking": 50, "unseen": 50}),
+    }))
+    assert result["recommended_field_id"] == 12
+    incomplete = [row for row in result["ranked_fields"] if row["initial_question_floor_incomplete"]]
+    assert [row["field_id"] for row in incomplete[:3]] == [12, 14, 5]
 
 
 def test_concentration_penalty_and_hard_additional_cap():
