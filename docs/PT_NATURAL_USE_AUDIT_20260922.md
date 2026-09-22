@@ -204,6 +204,30 @@ Daily results from 2026-09-16 through 2026-09-22:
 Today's 71.2% is not an isolated collapse. The notable feature is the high count of
 confidence-1 wrong answers and the dominance of newly added provisional questions.
 
+## Remediation outcome and formal interpretation
+
+The source-context rewrite is now live for all Q2234-Q2743 items. The formal evidence boundary
+for this wording version is `2026-09-22T13:48:28Z`.
+
+For the primary learner:
+
+- raw PT attempts in durable history: **4086**
+- Q2234-Q2743 attempts made before the corrected wording became live: **135**
+- post-rewrite attempts in Q2234-Q2743 at the time of this closeout: **0**
+- unaffected formal attempts outside that rewritten range: **3951**
+
+Therefore the 135 provisional attempts from the 2026-09-22 daytime session remain valid as
+historical product-quality audit evidence, but they are **not current formal learning evidence**
+for Knowledge Node state, field evidence, readiness or adaptive strategy.
+
+This changes the interpretation of the same-day field/Node breakdown above: it is useful for
+identifying product defects and review priorities, but should not be used to declare new learner
+weakness caused by the old wording. Current formal learner evidence must be recomputed from the
+3951 unaffected attempts plus any new post-rewrite attempts collected after the boundary.
+
+The dashboard / learner-navigation formal attempt paths are also filtered at the same boundary,
+while raw history is preserved for historical reporting and short-term repeat protection.
+
 ## Decision
 
 1. **Do not expand question count again simply for volume.**
