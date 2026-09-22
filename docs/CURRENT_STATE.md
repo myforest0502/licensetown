@@ -1,5 +1,21 @@
 # LicenseTown Current State
 
+## 2026-09-22 provisional_bulk reviewed-first selection preference — LIVE
+
+- The Q2234-Q2743 source-context rewrite and formal-evidence boundary remain the primary remediation.
+- Natural use showed provisional supply could dominate an ordinary day (135/170 attempts before
+  the wording correction), so reviewed items now receive selection preference when they can satisfy
+  the same learning need.
+- `tag_status=provisional_bulk` stays eligible as shortage/depth supply; it is not deleted or
+  hard-blocked.
+- Adaptive selection applies a **250-point editorial penalty** for
+  exploration/checking/maintenance and an **80-point penalty** for repair. The smaller repair
+  penalty preserves different-Q repair supply when reviewed alternatives are insufficient.
+- Safety, repair-evidence quality, Recent Cooldown/repeat protection, coverage and retention
+  rules remain unchanged and authoritative.
+- PR #410 full CI: **1547 passed / 6 skipped / 1 deselected / 141 subtests passed**.
+- This is a runtime quality preference, not a claim that the 510 items are editorially complete.
+
 ## 2026-09-22 Q2234-Q2743 formal-evidence version boundary
 
 - Q2234-Q2743 question stems were source-context corrected and became live after the
@@ -13,6 +29,24 @@
 - This boundary prevents pre-rewrite wording defects from manufacturing false weakness
   in current Knowledge Node / selector evidence.
 - It does not delete history and does not alter attempts outside Q2234-Q2743.
+
+## 2026-09-22 Q2743 provisional rewrite and formal-evidence boundary — LIVE
+
+- Q2234-Q2743 were source-context reconstructed from their uniquely mapped Q1-Q2000 source
+  questions after natural-use audit found context/direction defects.
+- Corrected wording became live at **2026-09-22T13:48:28Z**.
+- Attempts on Q2234-Q2743 before that boundary remain durable raw history but are excluded from
+  current formal learning evidence.
+- The primary learner had **135** such superseded attempts; clean formal history at closeout is
+  **3951 attempts / 2812 correct / 2229 unique Q / 1562 touched Nodes**.
+- Current formal evidence filtering is applied across adaptive selection, dashboard/navigation,
+  field evidence, readiness, pilot diagnostics, subject-detail field views and supporter
+  field/weakness views.
+- Raw answer-count/time/streak/milestone history remains preserved.
+- Phase11 remains **HOLD / Shadow-only**; none of this work promotes it.
+- Source-context rewrite CI: **1530 passed / 6 skipped / 1 deselected / 141 subtests passed**.
+- Subsequent evidence-consumer PRs also require GREEN CI before merge.
+- See `docs/PT_NATURAL_USE_AUDIT_20260922.md` for the audit and clean learner baseline.
 
 ## 2026-09-22 PT Question Bank minimum-100 field expansion — CURRENT FORMAL BANK Q2743
 

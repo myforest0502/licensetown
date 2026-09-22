@@ -45,44 +45,23 @@ The dedicated regression test confirms every formal field has at least 100 total
 
 These are strong data-integrity properties. They do not by themselves prove editorial depth.
 
-## Editorial-shape findings
+## Editorial-shape findings after source-context rewrite
 
-### 1. Formulaic stem concentration
+The original bulk-generation audit found substantial generic-stem concentration and, more
+importantly, source-truth direction inversions. Those stem findings are now historical: all 510
+question stems were reconstructed from their uniquely matched Q1-Q2000 source question and
+source-choice truth status.
 
-Observed stem-shape counts:
+Current post-rewrite properties:
 
-- inappropriate-reason format: **327**
-- correct-reason format: **107**
-- explicit support-reason format: **16**
-- other formats: **60**
+- all **510 / 510** stems retain explicit source-question context;
+- all **510 / 510** source-choice truth directions are covered by a regression test;
+- all **510 / 510** stems remain exact-text unique;
+- the batch still maps to **172 observed Knowledge Nodes**, so question-count breadth is not the
+  same thing as concept breadth;
+- repeated source/Node derivations remain intentionally tagged `provisional_bulk`.
 
-Also, **236 / 510** use the generic pattern equivalent to
-「○○の判断について…」.
-
-This is consistent with the documented rationale-discrimination authoring method.
-It means the batch should be treated as a supply/repair layer rather than 510 fully
-independent clinical scenarios.
-
-### 2. Title repetition
-
-There are **119 unique titles across 510 questions**.
-
-Examples of repeated generic titles include:
-- 心理学の判断・理由判断1: 43
-- 人間発達学の判断・理由判断1: 43
-- 精神医学の判断・理由判断1: 41
-- 臨床心理学の判断・理由判断1: 40
-- 教育学の判断・理由判断1: 30
-- 教育学の判断・理由判断2: 30
-
-Repeated titles are not a data-integrity defect, but they are evidence that the batch is
-templated and should not be mistaken for full breadth expansion.
-
-### 3. Knowledge Node concentration
-
-The 510 questions map to **172 observed Knowledge Nodes**.
-
-Some Nodes are reused heavily; observed high concentrations include:
+High-concentration Nodes still include:
 - KN0547: 30
 - KN1332: 30
 - KN0554: 17
@@ -90,26 +69,26 @@ Some Nodes are reused heavily; observed high concentrations include:
 - KN1027: 12
 - KN1264: 12
 
-This is expected from the authoring contract, but it means the new minimum-100 field count
-does not imply equivalent Knowledge Node breadth.
+### Residual short-rationale review signal
 
-### 4. Short accepted rationales
+After the source-context rewrite, accepted-rationale length remains an editorial-depth flag:
 
-**98 / 510** accepted rationale choices contain 12 or fewer non-space characters.
-Accepted-rationale text length distribution:
-- min: 3
-- p10: 10
-- median: 21
-- p90: 33
-- max: 69
+- **79 / 510** accepted rationale choices have 12 or fewer non-space characters;
+- **22 / 510** have 8 or fewer non-space characters.
 
-Shortness alone is not a medical error. It is a useful editorial-review signal because very
-short answer rationales can collapse a "reason discrimination" item back into simple fact
-recognition.
+Shortness alone is not a correctness failure because the source question is now carried into
+the stem. It remains a review-priority signal for items where the accepted option merely names
+the concept rather than explaining it.
 
-Example for manual review:
-- Q2600 asks why P-Fスタディ is correct and includes the choice
-  「P-Fスタディ。」. This is structurally valid but weak as an explanatory rationale.
+Examples still worth later editorial enrichment include:
+- Q2600: 「P-Fスタディ。」
+- Q2622: 「反動形成。」
+- Q2623: 「知性化。」
+- Q2624: 「昇華。」
+
+These items should not be auto-rewritten from generic heuristics. Their tags already contain
+richer Knowledge Node descriptions, but changing the rationale set is a separate medical/editorial
+change and should be reviewed deliberately rather than inferred mechanically.
 
 ## Interpretation
 

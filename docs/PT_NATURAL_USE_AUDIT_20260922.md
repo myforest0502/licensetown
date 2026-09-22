@@ -228,6 +228,101 @@ weakness caused by the old wording. Current formal learner evidence must be reco
 The dashboard / learner-navigation formal attempt paths are also filtered at the same boundary,
 while raw history is preserved for historical reporting and short-term repeat protection.
 
+## Current-formal learner baseline after remediation
+
+After applying the Q2234-Q2743 wording-version boundary, the primary learner's current formal
+history contains **3951 attempts**, **2812 correct (71.2%)**, **2229 unique questions**, and
+**1562 touched Knowledge Nodes**. The 135 superseded daytime Q2234-Q2743 attempts are excluded
+from this baseline.
+
+Current-formal field performance:
+
+| Field | Attempts | Accuracy | Last-7d attempts | Last-7d accuracy | Conf-1 wrong |
+|---|---:|---:|---:|---:|---:|
+| 解剖 | 450 | 65.3% | 130 | 61.5% | 28 |
+| 生理 | 450 | 75.1% | 77 | 75.3% | 29 |
+| 心理 | 132 | 78.8% | 11 | 72.7% | 12 |
+| 人間発達 | 69 | 73.9% | 22 | 63.6% | 6 |
+| 教育 | 52 | 82.7% | 7 | 100.0% | 4 |
+| 医学概論 | 122 | 73.0% | 37 | 64.9% | 5 |
+| 病理 | 218 | 68.8% | 39 | 59.0% | 7 |
+| 内科 | 343 | 67.1% | 73 | 61.6% | 17 |
+| 神経 | 207 | 64.7% | 68 | 64.7% | 9 |
+| 精神 | 75 | 62.7% | 22 | 50.0% | 3 |
+| 小児 | 114 | 78.9% | 39 | 74.4% | 7 |
+| 臨床心理 | 48 | 83.3% | 13 | 84.6% | 1 |
+| 基礎運動学 | 259 | 74.5% | 56 | 75.0% | 19 |
+| 臨床運動学 | 28 | 78.6% | 7 | 85.7% | 0 |
+| 動作分析 | 296 | 75.7% | 81 | 71.6% | 11 |
+| 運動器 | 175 | 69.7% | 62 | 72.6% | 14 |
+| 理学療法評価各論 | 395 | 73.4% | 157 | 73.2% | 18 |
+| 理学療法治療各論 | 518 | 67.8% | 265 | 62.6% | 30 |
+
+These are descriptive measurements, not fixed weakness labels. The strongest current repair
+signals are Node-level repeated errors on unaffected wording, especially:
+
+- **KN1399** — 9 attempts / 4 correct / 5 confident-wrong:
+  quiet-standing gravity-line position around the knee.
+- **KN1151** — 11 / 3 correct / 3 confident-wrong:
+  the five-stage disability-acceptance sequence.
+- **KN0194** — 18 / 11 correct / 3 confident-wrong:
+  handrail/support planning at an entrance step.
+- **KN1186** — 10 / 4 correct / 3 confident-wrong:
+  extrinsic muscles of the hand.
+- **KN1263** — 9 / 3 correct / 3 confident-wrong:
+  functional implications of preserved C6 spinal-cord level.
+- **KN1281** — 10 / 7 correct / 3 confident-wrong:
+  working-memory task interpretation.
+- **KN0483** — 4 / 1 correct / 3 confident-wrong:
+  corrected age for preterm infants.
+- **KN0594** — 3 / 0 correct / 3 confident-wrong:
+  centriole/centrosome involvement in cell division.
+- **KN0530** — 7 / 1 correct / 2 confident-wrong:
+  dual innervation of adductor magnus.
+- **KN1256** — 9 / 3 correct / 2 confident-wrong:
+  sagittal-plane gravity-line landmarks.
+
+The current system should prioritize these through the normal formal selector/strategy path.
+No manual hard-coded learner route is introduced from this audit.
+
+## Formal-consumer closeout
+
+The wording-version boundary is now applied to all known formal decision consumers:
+
+- adaptive LINE selection and web recommendation inputs;
+- Knowledge Node state / field evidence inputs;
+- learner dashboard and learner-navigation attempts;
+- dashboard field/unique-question question-result rows;
+- pass-readiness service;
+- pilot diagnostics and shadow-audit attempt histories;
+- learner and supporter subject-detail field displays;
+- supporter field accuracy / weak-field guidance.
+
+Raw effort/history remains durable: answer counts, learning time, streaks, latest-learning history,
+milestones and short-term repeat protection are not deleted or rewritten.
+
+This is the intended separation:
+
+**raw history = what the learner actually did**
+
+**current formal evidence = what may influence current weakness, readiness, strategy and field
+performance after the item wording changed**
+
+## Post-remediation selection quality preference
+
+The 510 reconstructed items remain `tag_status=provisional_bulk`. They are valid supply but are
+not treated as editorially equivalent to reviewed items.
+
+The adaptive selector now prefers reviewed items when both can serve the same learning need:
+
+- exploration/checking/maintenance provisional candidates: **-250** priority;
+- repair provisional candidates: **-80** priority;
+- provisional items remain available when reviewed supply is insufficient;
+- Safety, repair-evidence quality, repeat/cooldown, coverage and retention rules are unchanged.
+
+This specifically addresses the natural-use finding that provisional items accounted for
+135/170 daytime attempts without destroying the supply floor that motivated the Q2743 expansion.
+
 ## Decision
 
 1. **Do not expand question count again simply for volume.**
