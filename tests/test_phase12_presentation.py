@@ -60,3 +60,12 @@ def test_maintenance_uses_broad_headline_without_inventing_a_field():
 def test_unknown_reason_fails_closed():
     with pytest.raises(ValueError):
         build_phase12_presentation(_shadow("unknown_rule"), _evidence())
+
+
+def test_shared_navigation_reason_is_supported():
+    result = build_phase12_presentation(
+        _shadow("coverage_expand", field="教育学", count=10),
+        _evidence(),
+    )
+    assert result["headline"] == "今日は教育学を10問"
+    assert "取り組めていない分野" in result["reason"]

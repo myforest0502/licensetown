@@ -364,6 +364,22 @@ def build_learner_navigation_from_formal_inputs(
     return build_learner_readiness_presentation(readiness, shadow_result)
 
 
+def _phase12_shadow_from_navigation(navigation):
+    """Mirror the single learner-navigation decision into the current-position card."""
+    action = dict((navigation or {}).get("today_action") or {})
+    field = action.get("field")
+    count = int(action.get("count") or 0)
+    if not field or count <= 0:
+        return None
+    return {
+        "learning_intent": str(action.get("learning_intent") or "exploration"),
+        "target_field": field,
+        "question_count": count,
+        "recommended_route": "dashboard_recommendation",
+        "reason_code": str(action.get("reason_code") or "coverage_expand"),
+    }
+
+
 def build_dashboard(user_id=None, include_learner_navigation=False):
     today = tokyo_today()
     exam_date = get_effective_exam_date(user_id)
@@ -482,11 +498,17 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
                 shadow_result=shadow_result,
             )
         if phase12_preview:
-            shadow_judgment = build_shadow_judgment(
-                attempts,
-                evidence,
-                current_guidance,
-            )
+            shadow_judgment = None
+            if dashboard["learner_navigation_enabled"]:
+                shadow_judgment = _phase12_shadow_from_navigation(
+                    dashboard["learner_navigation"]
+                )
+            if shadow_judgment is None:
+                shadow_judgment = build_shadow_judgment(
+                    attempts,
+                    evidence,
+                    current_guidance,
+                )
             dashboard["phase12_guidance_preview_enabled"] = True
             dashboard["phase12_guidance_preview"] = build_phase12_presentation(
                 shadow_judgment,
