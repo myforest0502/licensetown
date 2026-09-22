@@ -50,3 +50,45 @@ def test_readiness_service_rejects_blank_user_id():
         assert str(exc) == "user_id is required"
     else:
         raise AssertionError("blank user_id must be rejected")
+
+
+def test_readiness_service_excludes_superseded_q2743_attempts(monkeypatch):
+    from datetime import timedelta
+    from licensetown.pt.formal_attempt_evidence import PROVISIONAL_REWRITE_LIVE_AT
+
+    old = {
+        "question_id": "Q2500",
+        "answered_at": PROVISIONAL_REWRITE_LIVE_AT - timedelta(seconds=1),
+    }
+    current = {
+        "question_id": "Q2500",
+        "answered_at": PROVISIONAL_REWRITE_LIVE_AT + timedelta(seconds=1),
+    }
+    stable = {
+        "question_id": "Q100",
+        "answered_at": PROVISIONAL_REWRITE_LIVE_AT - timedelta(days=1),
+    }
+    captured = {}
+
+    monkeypatch.setattr(
+        readiness_service,
+        "get_question_attempts",
+        lambda _user_id: [old, current, stable],
+    )
+    monkeypatch.setattr(
+        readiness_service,
+        "build_field_evidence",
+        lambda rows: captured.setdefault("rows", rows) or {},
+    )
+    monkeypatch.setattr(readiness_service, "build_field_progress", lambda _rows: {})
+    monkeypatch.setattr(readiness_service, "get_trial100_records", lambda _user_id: [])
+    monkeypatch.setattr(
+        readiness_service,
+        "build_pass_readiness",
+        lambda rows, **_kwargs: {"ids": [row["question_id"] for row in rows]},
+    )
+
+    result = readiness_service.build_pass_readiness_for_user("learner")
+
+    assert result["ids"] == ["Q2500", "Q100"]
+    assert captured["rows"][0]["answered_at"] == current["answered_at"]

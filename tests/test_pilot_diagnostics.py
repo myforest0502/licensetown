@@ -122,3 +122,38 @@ def test_adaptive_audit_preserves_selector_order_and_uses_formal_node_label():
     assert "自信あり誤答" in details[0]["reason_label"]
     assert "strong別問題の修復確認候補" in details[0]["reason_label"]
     assert "1. Q1 / KN0001" in audit_text and "2. Q2 / KN0002" in audit_text
+
+
+def test_diagnostics_attempt_loader_excludes_superseded_q2743_wording(monkeypatch):
+    from licensetown.pt.formal_attempt_evidence import PROVISIONAL_REWRITE_LIVE_AT
+
+    old = {
+        "question_id": "Q2234",
+        "answered_at": PROVISIONAL_REWRITE_LIVE_AT - timedelta(seconds=1),
+    }
+    current = {
+        "question_id": "Q2234",
+        "answered_at": PROVISIONAL_REWRITE_LIVE_AT + timedelta(seconds=1),
+    }
+    stable = {
+        "question_id": "Q100",
+        "answered_at": PROVISIONAL_REWRITE_LIVE_AT - timedelta(days=1),
+    }
+    calls = []
+
+    def fake_get(user_id, start_at=None):
+        calls.append((user_id, start_at))
+        return [old, current, stable]
+
+    monkeypatch.setattr(pilot_diagnostics, "get_question_attempts", fake_get)
+
+    rows = pilot_diagnostics._current_formal_attempts_for_diagnostics(
+        "learner", start_at=PROVISIONAL_REWRITE_LIVE_AT - timedelta(days=7)
+    )
+
+    assert [row["question_id"] for row in rows] == ["Q2234", "Q100"]
+    assert rows[0]["answered_at"] == current["answered_at"]
+    assert calls == [(
+        "learner",
+        PROVISIONAL_REWRITE_LIVE_AT - timedelta(days=7),
+    )]
