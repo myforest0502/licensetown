@@ -367,3 +367,26 @@ def test_navigation_bundle_filters_pre_rewrite_q2743_evidence(monkeypatch):
     result = bundle.get_learner_navigation_read_bundle("u")
     assert len(result["attempts"]) == 1
     assert result["attempts"][0]["answered_at"] > PROVISIONAL_REWRITE_LIVE_AT
+
+
+def test_formal_question_result_rows_drop_pre_rewrite_versions():
+    from licensetown.pt.formal_attempt_evidence import PROVISIONAL_REWRITE_LIVE_AT
+
+    rows = [
+        (
+            [
+                {"question_id": "Q2234", "is_correct": False},
+                {"question_id": "Q100", "is_correct": True},
+            ],
+            PROVISIONAL_REWRITE_LIVE_AT - timedelta(seconds=1),
+        ),
+        (
+            [{"question_id": "Q2234", "is_correct": True}],
+            PROVISIONAL_REWRITE_LIVE_AT + timedelta(seconds=1),
+        ),
+    ]
+
+    filtered = dashboard_read_bundle._current_formal_question_result_rows(rows)
+
+    assert filtered[0][0] == [{"question_id": "Q100", "is_correct": True}]
+    assert filtered[1][0] == [{"question_id": "Q2234", "is_correct": True}]
