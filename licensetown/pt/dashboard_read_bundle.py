@@ -13,7 +13,10 @@ from zoneinfo import ZoneInfo
 
 import database
 from recommendation_daily_summary import build_today_recommendation_summary
-from .formal_attempt_evidence import filter_current_formal_evidence
+from .formal_attempt_evidence import (
+    filter_current_formal_evidence,
+    is_current_formal_evidence,
+)
 from trial100_store import get_trial100_records
 
 
@@ -24,6 +27,26 @@ def _current_formal_attempts_preserving_identity(attempts):
     if len(filtered) == len(attempts):
         return attempts
     return filtered
+
+
+def _current_formal_question_result_rows(rows):
+    """Filter versioned Q evidence while preserving raw learning-event totals elsewhere."""
+    filtered_rows = []
+    for question_results, answered_at in rows:
+        if not isinstance(question_results, list):
+            filtered_rows.append((question_results, answered_at))
+            continue
+        current_results = [
+            result
+            for result in question_results
+            if not isinstance(result, dict)
+            or is_current_formal_evidence({
+                "question_id": result.get("question_id"),
+                "answered_at": answered_at,
+            })
+        ]
+        filtered_rows.append((current_results, answered_at))
+    return filtered_rows
 
 
 _ATTEMPT_COLUMNS = (
@@ -286,7 +309,8 @@ def get_dashboard_read_bundle(
         }
 
     with database.get_db_connection() as conn:
-        question_rows = _question_result_rows_with_connection(user_id, conn)
+        raw_question_rows = _question_result_rows_with_connection(user_id, conn)
+        question_rows = _current_formal_question_result_rows(raw_question_rows)
         activity = _activity_with_connection(user_id, conn)
         activity.update(
             build_today_recommendation_summary(
