@@ -38,6 +38,13 @@ REPAIR_REASONS = {
     "cross_question_wrong", "repairing", "previous_wrong_unconfirmed",
 }
 
+# provisional_bulk remains usable as supply, but reviewed items should win when
+# both can satisfy the same learning need. Repair gets only a small penalty so
+# a provisional different-Q confirmation can still be used when it is the best
+# available evidence; exploration/checking/maintenance are more conservative.
+PROVISIONAL_BULK_REPAIR_PENALTY = 80
+PROVISIONAL_BULK_GENERAL_PENALTY = 250
+
 
 def parse_node_adaptive_pilot_user_ids(value: str | None) -> set[str]:
     """Reuse the established comma-separated, trimmed, deduplicated parser."""
@@ -230,6 +237,15 @@ def select_node_adaptive_questions(
             "uncertain_correct": False, "unknown": False,
         })
         score, reason, group = _priority(state, summary, str(tag.get("safety", "none")))
+        editorial_status = str(tag.get("tag_status") or "")
+        editorial_penalty = 0
+        if editorial_status == "provisional_bulk":
+            editorial_penalty = (
+                PROVISIONAL_BULK_REPAIR_PENALTY
+                if group == "repair"
+                else PROVISIONAL_BULK_GENERAL_PENALTY
+            )
+            score -= editorial_penalty
         if state == "recheck_due":
             score += min(int(state_records.get(str(node), {}).get("due_overdue_days", 0)), 30)
         evidence_strengths = {
@@ -278,6 +294,8 @@ def select_node_adaptive_questions(
             "safety": str(tag.get("safety", "none")),
             "confident_wrong": summary["confident_wrong"],
             "unknown_evidence": summary["unknown"],
+            "editorial_status": editorial_status,
+            "editorial_penalty": editorial_penalty,
             "tie": randomizer.random(),
         })
     candidates.sort(key=lambda item: (item["priority_score"], item["tie"]), reverse=True)

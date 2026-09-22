@@ -672,3 +672,45 @@ def test_explicit_exploration_intent_fills_with_exploration_before_higher_score_
     )
     assert len(selected) == 10
     assert all(item["priority_group"] == "exploration" for item in selected)
+
+
+def test_reviewed_unseen_item_beats_provisional_bulk_for_exploration(monkeypatch):
+    node_by_q = {"Q1": "KN0001", "Q2": "KN0002"}
+    monkeypatch.setattr(selector, "question_ids", lambda: tuple(node_by_q))
+    monkeypatch.setattr(selector, "get_category_small", lambda _q: 3)
+    monkeypatch.setattr(selector, "get_question_tag", lambda q: {
+        "knowledge_node_id": node_by_q[q],
+        "safety": "none",
+        "tag_status": "reviewed" if q == "Q1" else "provisional_bulk",
+    })
+
+    selected = selector.select_node_adaptive_questions(
+        [], 1, rng=random.Random(101), learning_intent="exploration"
+    )
+
+    assert [item["question_id"] for item in selected] == ["Q1"]
+    assert selected[0]["editorial_penalty"] == 0
+
+
+def test_provisional_bulk_remains_available_for_real_repair_shortage(monkeypatch):
+    node_by_q = {"Q1": "KN0001", "Q2": "KN0001", "Q3": "KN0002"}
+    monkeypatch.setattr(selector, "question_ids", lambda: tuple(node_by_q))
+    monkeypatch.setattr(selector, "get_category_small", lambda _q: 3)
+    monkeypatch.setattr(selector, "get_question_tag", lambda q: {
+        "knowledge_node_id": node_by_q[q],
+        "safety": "none",
+        "tag_status": "provisional_bulk" if q == "Q2" else "reviewed",
+    })
+    monkeypatch.setattr(selector, "classify_repair_confirmation", lambda old, new: (
+        "same_question" if old == new else "different_question_strong"
+    ))
+
+    selected = selector.select_node_adaptive_questions(
+        [attempt("Q1", "KN0001", False, 1)],
+        1,
+        rng=random.Random(102),
+        learning_intent="repair",
+    )
+
+    assert [item["question_id"] for item in selected] == ["Q2"]
+    assert selected[0]["editorial_penalty"] == selector.PROVISIONAL_BULK_REPAIR_PENALTY
