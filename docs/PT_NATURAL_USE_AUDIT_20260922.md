@@ -107,6 +107,38 @@ Some early events used `strategy_fallback_reason=eligible_supply_insufficient` w
 `safety_review`; later records also contain soft-pilot coverage authority. This should be
 interpreted as audit evidence, not as proof of educational efficacy.
 
+## Historical cross-check of today's suspect Nodes
+
+Several confidence-1 wrong provisional items occurred on Nodes that had previously been
+strong for this learner. This is important because it prevents us from automatically treating
+every new wrong answer as a true knowledge regression.
+
+Examples:
+
+- **KN1469**: prior **9/9 correct**, today **0/2** on Q2247/Q2276.
+- **KN1085**: prior **8/8 correct**, today 2/3; Q2242 is one of the mechanically confirmed
+  stem-direction contradictions.
+- **KN0747**: prior **11/11 correct**, today 0/1.
+- **KN0505**: prior 2/2 correct, today 1/3.
+- **KN0563**: prior 3/3 correct, today 1/2.
+- **KN0612**: prior 3/3 correct, today 2/3.
+- **KN1205**: prior 4/4 correct, today 1/2.
+- **KN1546**: prior 2/2 correct, today 2/3.
+- **KN1551**: prior 2/2 correct, today 1/3.
+
+By contrast, some Nodes were already weak before today and remain credible repair targets:
+
+- **KN1151**: prior 3/11 correct, today 0/4.
+- **KN1361**: prior 0/4 correct, today 1/2.
+- **KN0987**: prior 3/5 correct, today 1/4.
+- **KN1376**: prior 5/8 correct, today 1/2.
+
+Interpretation:
+- prior-strong -> sudden provisional failure = **audit the item first**;
+- prior-weak -> repeated failure across old and new items = stronger evidence of a **real learner repair need**;
+- both can coexist, so the system must not let defective provisional items manufacture
+  false weakness.
+
 ## Provisional-bulk editorial priority
 
 The 510-item batch should not be blanket-deleted. Priority should be driven by actual exposure
