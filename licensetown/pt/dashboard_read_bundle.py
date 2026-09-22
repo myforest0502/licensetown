@@ -69,6 +69,26 @@ def _question_result_rows_with_connection(user_id: str, connection):
         return cur.fetchall()
 
 
+def _learning_events_with_connection(user_id: str, connection) -> list[dict[str, Any]]:
+    """Return PT learning events used by the Stage E strategy authority."""
+    with connection.cursor() as cur:
+        cur.execute(
+            """
+            SELECT event_key, user_id, mode, answered_count, correct_count,
+                   answered_at, question_results
+            FROM learning_events
+            WHERE user_id = %s AND qualification_id = %s
+            ORDER BY answered_at, event_key
+            """,
+            (user_id, _QUALIFICATION_ID),
+        )
+        columns = (
+            "event_key", "user_id", "mode", "answered_count", "correct_count",
+            "answered_at", "question_results",
+        )
+        return [dict(zip(columns, row)) for row in cur.fetchall()]
+
+
 def _summary_with_connection(
     user_id: str,
     connection,
@@ -197,18 +217,21 @@ def get_learner_navigation_read_bundle(user_id: str) -> dict[str, Any]:
     """
     user_id = str(user_id or "").strip()
     if not user_id:
-        return {"attempts": [], "trial100_records": []}
+        return {"attempts": [], "trial100_records": [], "learning_events": []}
     if not database.database_is_available():
         return {
             "attempts": database.get_question_attempts(user_id),
             "trial100_records": get_trial100_records(user_id),
+            "learning_events": database.get_learning_events(user_id),
         }
     with database.get_db_connection() as conn:
         attempts = _attempts_with_connection(user_id, conn)
         trial100_records = get_trial100_records(user_id, connection=conn)
+        learning_events = _learning_events_with_connection(user_id, conn)
     return {
         "attempts": attempts,
         "trial100_records": trial100_records,
+        "learning_events": learning_events,
     }
 
 
@@ -217,6 +240,7 @@ def get_dashboard_read_bundle(
     *,
     include_attempts: bool = False,
     include_trial100: bool = False,
+    include_learning_events: bool = False,
 ) -> dict[str, Any]:
     """Return dashboard facts and optional formal evidence with shared DB I/O."""
     user_id = str(user_id or "").strip()
@@ -230,6 +254,7 @@ def get_dashboard_read_bundle(
             },
             "attempts": [],
             "trial100_records": [],
+            "learning_events": [],
         }
 
     if not database.database_is_available():
@@ -241,6 +266,7 @@ def get_dashboard_read_bundle(
             "learning_data": learning_data,
             "attempts": database.get_question_attempts(user_id) if include_attempts else [],
             "trial100_records": get_trial100_records(user_id) if include_trial100 else [],
+            "learning_events": database.get_learning_events(user_id) if include_learning_events else [],
         }
 
     with database.get_db_connection() as conn:
@@ -271,9 +297,13 @@ def get_dashboard_read_bundle(
         trial100_records = (
             get_trial100_records(user_id, connection=conn) if include_trial100 else []
         )
+        learning_events = (
+            _learning_events_with_connection(user_id, conn) if include_learning_events else []
+        )
 
     return {
         "learning_data": learning_data,
         "attempts": attempts,
         "trial100_records": trial100_records,
+        "learning_events": learning_events,
     }
