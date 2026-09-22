@@ -264,7 +264,7 @@ def test_navigation_cta_accepts_validated_intent_then_uses_central_session_creat
     monkeypatch.setattr(
         app_module,
         "build_learner_navigation_from_formal_inputs",
-        lambda rows, trial100: _navigation(),
+        lambda rows, trial100, **kwargs: _navigation(),
     )
     monkeypatch.setattr(
         app_module,
