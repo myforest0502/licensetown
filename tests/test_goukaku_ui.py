@@ -496,3 +496,31 @@ def test_stage_e_authority_keeps_today_action_and_priority_top1_aligned():
     assert nav["today_action"]["field"] == "理学療法治療各論"
     assert nav["attention_items"][0]["field"] == "理学療法治療各論"
     assert nav["today_action"]["reason_code"] == "safety_repair"
+
+
+def test_subjects_learning_data_uses_current_formal_production_bundle(monkeypatch):
+    fields = [{"name": "心理学", "learned": True, "answered_count": 9, "accuracy": 78}]
+    activity = {"weekly_answers": 170}
+    monkeypatch.setattr(goukaku_ui_module, "database_is_available", lambda: True)
+    monkeypatch.setattr(
+        goukaku_ui_module,
+        "_get_production_dashboard_read_bundle",
+        lambda user_id: {
+            "learning_data": {
+                "fields": fields,
+                "activity": activity,
+            }
+        },
+    )
+    monkeypatch.setattr(
+        goukaku_ui_module,
+        "get_field_learning_summary",
+        lambda _user_id: (_ for _ in ()).throw(
+            AssertionError("raw field summary must not be used in Production")
+        ),
+    )
+
+    result_fields, result_activity = goukaku_ui_module._subjects_learning_data("learner")
+
+    assert result_fields is fields
+    assert result_activity is activity
