@@ -15,6 +15,11 @@ REASON_WORDING = {
     "insufficient_coverage": "まだ十分に取り組めていない分野を広げます。",
     "uncertain_correct_cluster": "迷いながら正解した内容を、もう一度確認して定着させます。",
     "maintenance_only": "大きな弱点は見つかっていません。広く確認して定着を維持します。",
+    "coverage_expand": "まだ十分に取り組めていない分野を広げます。",
+    "retention_recheck": "一度直した内容を、時間を空けて確認する時期です。",
+    "low_progress_repair": "確認できた範囲の中で、まだ仕上げが必要な内容を進めます。",
+    "repairing_continue": "今直している内容を、もう一段確かめます。",
+    "stable_maintain": "今の力を保ちながら、広く確認を続けます。",
 }
 ATTENTION_WORDING = {
     "safety_repair": ("重要確認", "安全に関わる内容を確認する必要があります。"),
@@ -22,6 +27,9 @@ ATTENTION_WORDING = {
     "repeated_wrong_cluster": ("修復中", "繰り返し確認が必要な内容があります。"),
     "recheck_due": ("再確認待ち", "一度直した内容を確認する時期です。"),
     "uncertain_correct_cluster": ("確認中", "迷いながら正解した内容を確認します。"),
+    "low_progress_repair": ("仕上げ中", "確認できた範囲の中で仕上げが必要な内容があります。"),
+    "repairing_continue": ("修復中", "今直している内容を、もう一段確認します。"),
+    "retention_recheck": ("再確認待ち", "一度直した内容を確認する時期です。"),
 }
 
 
