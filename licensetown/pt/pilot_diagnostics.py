@@ -6,6 +6,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from adaptive_question_selector import select_node_adaptive_questions
+from dashboard_read_bundle import get_dashboard_read_bundle
 from database import (
     get_dashboard_learning_data,
     get_learning_events,
@@ -14,6 +15,7 @@ from database import (
     get_question_attempts,
 )
 from field_evidence import build_field_evidence
+from .formal_attempt_evidence import filter_current_formal_evidence
 from judgment_shadow import (
     build_field_judgment_evidence_profiles,
     build_shadow_comparison,
@@ -228,8 +230,8 @@ def _canonical_total():
 
 
 def _current_dashboard_guidance(user_id: str):
-    """Read the same deterministic guidance inputs used by the current dashboard."""
-    learning_data = get_dashboard_learning_data(user_id)
+    """Read the same current-formal guidance inputs used by the dashboard."""
+    learning_data = get_dashboard_read_bundle(user_id)["learning_data"]
     return build_learning_guidance(
         int(learning_data["summary"].get("total_answers") or 0),
         learning_data["fields"],
@@ -714,8 +716,12 @@ def build_pilot_diagnostics(user_id: str, period: str = "7", now=None):
         start_at = datetime.combine(start_date, datetime.min.time(), jst).astimezone(timezone.utc)
     else:
         start_at = None
-    all_attempts = get_question_attempts(user_id)
-    attempts = get_question_attempts(user_id, start_at=start_at) if start_at else all_attempts
+    all_attempts = filter_current_formal_evidence(get_question_attempts(user_id))
+    attempts = (
+        filter_current_formal_evidence(get_question_attempts(user_id, start_at=start_at))
+        if start_at
+        else all_attempts
+    )
     total_nodes = _canonical_total()
     touched = {canonicalize_knowledge_node_id(str(a.get("knowledge_node_id") or "")) for a in all_attempts if a.get("knowledge_node_id")}
     states = derive_all_user_node_states(all_attempts, as_of=now)
