@@ -1,5 +1,32 @@
 # LicenseTown Current State
 
+## 2026-09-22 PT Question Bank minimum-100 field expansion — CURRENT FORMAL BANK Q2743
+
+- Current formal PT Question Bank on `main`: **Q1-Q2743 / 2743 questions**,
+  bank version **`2026-09-b22`**.
+- Q2234-Q2743 add **510 LT-original questions** to the 10 fields that were below
+  100 questions, so all 18 formal PT fields now have at least 100 questions of
+  supply.
+- The September 22 expansion is already merged to `main` at
+  `253086dbba57d845dc4652a74c1199288d6949c1`; full CI recorded
+  **1529 passed / 6 skipped / 141 subtests passed**.
+- Render `line-bot-project` auto-deployed that exact commit and the deploy is
+  recorded as **live**. No manual deploy is required for this documentation sync.
+- The added 510 questions are marked `tag_status=provisional_bulk`. They satisfy
+  the formal minimum-supply contract but should not be interpreted as a finished
+  editorial-quality claim. Future work may replace or deepen them with independent
+  clinical scenarios when learner evidence shows that doing so improves outcomes.
+- The prior Q2233 expansion remains a valid historical milestone, but it is no
+  longer the current bank boundary. Historical Q2000/Q2233 audit sections below
+  must not be read as the current formal range.
+- The Notion task "Question Bank分野別供給数の棚卸し・不足分作成" is complete.
+  The next default direction is not further uniform volume growth; use real
+  learner evidence to prioritize coverage quality, repair/depth supply,
+  retention, and exam-readiness work.
+- Formal learning-data authority remains:
+  `question_attempts -> derived Knowledge Node state -> field/strategy/readiness -> selector/presentation`.
+  Phase11 remains HOLD/Shadow-only and must not self-promote.
+
 ## 2026-09-20 PT Lifecycle — shadow metadata wiring
 
 - Lifecycle v0.1 remains non-authoritative for question selection. The existing
