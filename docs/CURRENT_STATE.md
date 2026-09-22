@@ -1,5 +1,19 @@
 # LicenseTown Current State
 
+## 2026-09-22 Q2234-Q2743 formal-evidence version boundary
+
+- Q2234-Q2743 question stems were source-context corrected and became live after the
+  Q2743 rewrite deploy completed on 2026-09-22.
+- Raw historical attempts are preserved, but attempts on Q2234-Q2743 from before
+  `2026-09-22T13:48:28Z` are excluded from **formal derived learning evidence**
+  for the current wording.
+- Short-term repeat protection may still use the raw attempt history so the learner
+  is not immediately re-served recently seen Q IDs solely because the wording version
+  changed.
+- This boundary prevents pre-rewrite wording defects from manufacturing false weakness
+  in current Knowledge Node / selector evidence.
+- It does not delete history and does not alter attempts outside Q2234-Q2743.
+
 ## 2026-09-22 PT Question Bank minimum-100 field expansion — CURRENT FORMAL BANK Q2743
 
 - Current formal PT Question Bank on `main`: **Q1-Q2743 / 2743 questions**,
