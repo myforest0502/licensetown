@@ -21,15 +21,15 @@ def _read(name):
 def test_q2233_expansion_contract_and_distribution():
     manifest = _read("bank_manifest.json")
     assert manifest == {
-        "bank_version": "2026-09-b21",
+        "bank_version": "2026-09-b22",
         "first_question_number": 1,
-        "last_question_number": 2233,
-        "question_count": 2233,
+        "last_question_number": 2743,
+        "question_count": 2743,
     }
     questions = _read("questions.json")
     tags = _read("question_tags.json")
-    added_questions = [row for row in questions if int(row["id"][1:]) >= 2001]
-    added_tags = [row for row in tags if int(row["id"][1:]) >= 2001]
+    added_questions = [row for row in questions if 2001 <= int(row["id"][1:]) <= 2233]
+    added_tags = [row for row in tags if 2001 <= int(row["id"][1:]) <= 2233]
     assert len(added_questions) == len(added_tags) == 233
     assert all(row["source"] == "O" for row in added_questions)
     assert all(row["source"] == "original" for row in added_tags)
@@ -63,7 +63,7 @@ def test_every_added_question_has_preexisting_strong_same_node_reference():
     missing = []
     for row in tags:
         qid = row["id"]
-        if int(qid[1:]) < 2001:
+        if not (2001 <= int(qid[1:]) <= 2233):
             continue
         older = [candidate for candidate in by_node[row["knowledge_node_id"]] if int(candidate[1:]) <= 2000]
         if not any(
@@ -80,6 +80,6 @@ def test_added_stems_are_not_exact_duplicates_of_q1_q2000():
     duplicates = [
         row["id"]
         for row in questions
-        if int(row["id"][1:]) >= 2001 and norm_text(row["question_text"]) in old
+        if 2001 <= int(row["id"][1:]) <= 2233 and norm_text(row["question_text"]) in old
     ]
     assert duplicates == []
