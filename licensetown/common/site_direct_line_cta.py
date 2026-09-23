@@ -13,11 +13,9 @@ DIRECT_CTA_STYLE = """<style id="site-direct-line-cta-v01">
 @media(max-width:760px){
   .marketing-mobile-free .marketing-line-start{display:flex!important;flex-direction:column!important;gap:8px!important}
   .marketing-mobile-free .marketing-line-start>div{order:1!important;width:100%!important}
-  .marketing-mobile-free .marketing-line-qr{order:2!important;margin-top:7px!important}
+  .marketing-mobile-free .marketing-line-qr{display:none!important}
   .marketing-mobile-free .marketing-line-button{display:block!important;width:min(360px,100%)!important;margin:0 auto!important;padding:14px 18px!important;font-size:16px!important}
-  .marketing-mobile-free .marketing-qr-help{display:block!important;margin:7px 0 0!important;font-size:9px!important}
-  .marketing-mobile-free .marketing-qr-help:before{content:'スマホで見ている方は、上のボタンからそのままLINEを開けます。';display:block;margin-bottom:5px;color:#087d2d;font-weight:700}
-  .marketing-mobile-free .marketing-line-qr{width:104px!important;height:104px!important;opacity:.92}
+  .marketing-mobile-free .marketing-qr-help{display:none!important}
 }
 </style>"""
 
