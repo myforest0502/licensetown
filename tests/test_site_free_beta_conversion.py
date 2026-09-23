@@ -99,3 +99,73 @@ def test_public_home_has_no_stale_2000_question_copy():
 
     assert "2000問" not in html
     assert "2743問の問題演習" in html
+
+
+
+def test_mobile_public_view_uses_real_responsive_layout(monkeypatch):
+    monkeypatch.setenv("SITE_ONBOARDING_URL", "https://example.com/licensetown-line")
+    html = app.test_client().get("/site/view/mobile").get_data(as_text=True)
+
+    assert '<meta name="viewport" content="width=device-width, initial-scale=1">' in html
+    assert 'id="mobile-responsive-overhaul-v01"' in html
+    assert ".section-no{display:none!important}" in html
+    assert ".main-nav{display:none!important}" in html
+    assert ".hero-copy{position:static!important;width:100%!important;display:flex!important;flex-direction:column!important}" in html
+    assert ".mobile-hero-actions{order:4!important" in html
+    assert ".hero .chips{order:5!important" in html
+    assert ".problem-grid,.feature-grid" in html
+    assert "grid-template-columns:repeat(2,minmax(0,1fr))!important" in html
+    assert ".steps{position:static!important;width:100%!important;height:auto!important;display:flex!important;flex-direction:column!important" in html
+    assert ".story-faq{display:block!important}" in html
+    assert ".footer nav{position:static!important;height:auto!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important" in html
+
+
+def test_mobile_first_view_keeps_full_beta_copy_and_formal_counts(monkeypatch):
+    monkeypatch.setenv("SITE_ONBOARDING_URL", "https://example.com/licensetown-line")
+    html = app.test_client().get("/site/view/mobile").get_data(as_text=True)
+
+    assert "第62回 理学療法士国家試験を受験する方へ" in html
+    assert "無料βモニター 先着30名募集中" in html
+    assert 'class="mobile-hero-primary"' in html
+    assert "LINEで無料βを始める" in html
+    assert 'class="mobile-hero-secondary"' in html
+    assert "合格への道を見る" in html
+    assert 'class="mobile-question-stats"' in html
+    assert "1643" in html
+    assert "1100" in html
+    assert "2743" in html
+    assert ".hero .free-beta-hero-notice strong,.hero .free-beta-hero-notice span" in html
+    assert "white-space:normal!important;overflow:visible!important" in html
+
+
+def test_mobile_conversion_stays_qr_free_and_footer_is_complete(monkeypatch):
+    monkeypatch.setenv("SITE_ONBOARDING_URL", "https://example.com/licensetown-line")
+    html = app.test_client().get("/site/view/mobile").get_data(as_text=True)
+
+    assert ".marketing-mobile-free .marketing-line-qr{display:none!important}" in html
+    assert ".marketing-mobile-free .marketing-qr-help{display:none!important}" in html
+    assert "特定商取引法に基づく表記" in html
+    assert "プライバシーポリシー" in html
+    assert "利用規約" in html
+    assert "運営情報" in html
+    assert "お問い合わせ" in html
+    assert "LicenseTownを応援する" in html
+
+
+def test_pc_view_does_not_receive_mobile_overhaul(monkeypatch):
+    monkeypatch.setenv("SITE_ONBOARDING_URL", "https://example.com/licensetown-line")
+    html = app.test_client().get("/site/view/pc").get_data(as_text=True)
+
+    assert 'id="mobile-responsive-overhaul-v01"' not in html
+    assert 'class="mobile-question-stats"' not in html
+    assert '<meta name="viewport" content="width=1499">' in html
+
+
+def test_public_shell_no_longer_scales_724_mobile_canvas():
+    css = (REPO_ROOT / "static" / "site" / "site.css").read_text(encoding="utf-8")
+    js = (REPO_ROOT / "static" / "site" / "site.js").read_text(encoding="utf-8")
+
+    assert ".mobile-view{width:100%;transform:none" in css
+    assert "document.documentElement.clientWidth/724" not in js
+    assert "frame.style.width='100%'" in js
+    assert "frame.style.transform='none'" in js

@@ -6,11 +6,10 @@ const fitFrame=frame=>{
   const contentHeight=doc.documentElement.scrollHeight;
   if(frame.id==='mobile-view'){
     const stage=document.getElementById('mobile-stage');
-    const scale=Math.min(1,document.documentElement.clientWidth/724);
-    frame.style.width='724px';
+    frame.style.width='100%';
     frame.style.height=`${contentHeight}px`;
-    frame.style.transform=`scale(${scale})`;
-    stage.style.height=`${contentHeight*scale}px`;
+    frame.style.transform='none';
+    stage.style.height=`${contentHeight}px`;
   }else{
     frame.style.height=`${contentHeight}px`;
   }

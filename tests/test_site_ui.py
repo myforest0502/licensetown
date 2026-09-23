@@ -141,7 +141,7 @@ def test_mobile_public_trust_support_is_stacked_after_final_cta_and_has_canvas_r
     assert ".mobile-support-card>small{position:static" in mobile_css
 
 
-def test_site_keeps_724_canvas_scaling_and_pc_mobile_switch():
+def test_site_uses_responsive_mobile_frame_and_pc_mobile_switch():
     client = app.test_client()
     css = client.get("/static/site/site.css").get_data(as_text=True)
     js = client.get("/static/site/site.js").get_data(as_text=True)
@@ -149,8 +149,11 @@ def test_site_keeps_724_canvas_scaling_and_pc_mobile_switch():
 
     assert "@media(max-width:767px)" in css
     assert ".pc-view{display:none}" in css
-    assert "document.documentElement.clientWidth/724" in js
-    assert "scale(${scale})" in js
+    assert ".mobile-view{width:100%;transform:none" in css
+    assert "document.documentElement.clientWidth/724" not in js
+    assert "scale(${scale})" not in js
+    assert "frame.style.width='100%'" in js
+    assert "frame.style.transform='none'" in js
     assert "frame.addEventListener('load',syncFrame)" in js
     assert "frame.srcdoc" not in js
     assert "fetch(" not in js
