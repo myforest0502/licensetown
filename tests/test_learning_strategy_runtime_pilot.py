@@ -124,8 +124,38 @@ def test_partial_pilot_session_does_not_fake_completed_block():
     events=[{'answered_at':NOW-timedelta(hours=1),'event_key':'session:1','mode':'study',
              'question_results':[{'strategy_version':pilot.VERSION,
                  'strategy_shadow_or_authority':'soft_pilot','strategy_recommended_field':2,'question_id':'Q1'}]}]
-    with pytest.raises(ValueError,match='Incomplete'):
+    with pytest.raises(ValueError,match='unavailable'):
         pilot.completion_context(events,NOW)
+
+
+def test_old_partial_pilot_does_not_invalidate_later_completed_pilot():
+    target=[q for q in question_ids() if get_category_small(q)==18][:30]
+    events=[{'answered_at':NOW-timedelta(days=2),'event_key':'partial:1','mode':'study',
+             'question_results':[{'strategy_version':pilot.VERSION,
+                 'strategy_shadow_or_authority':'soft_pilot',
+                 'strategy_recommended_field':18,'question_id':target[0]}]}]
+    events.append({'answered_at':NOW-timedelta(days=1),'event_key':'complete:6','mode':'study',
+                   'question_results':[{'strategy_version':pilot.VERSION,
+                       'strategy_shadow_or_authority':'soft_pilot',
+                       'strategy_recommended_field':18,'question_id':q} for q in target]})
+
+    context=pilot.completion_context(events,NOW)
+    assert set(context)==set(range(1,19))
+    assert context[18]['consecutive_field_blocks']==1
+
+
+def test_partial_pilot_does_not_invalidate_recommendation_plan_context():
+    events=[
+        {'answered_at':NOW-timedelta(days=2),'mode':'recommendation_plan',
+         'question_results':{'field':'生理学','goal':10}},
+        {'answered_at':NOW-timedelta(days=1),'event_key':'partial:1','mode':'study',
+         'question_results':[{'strategy_version':pilot.VERSION,
+             'strategy_shadow_or_authority':'soft_pilot',
+             'strategy_recommended_field':18,'question_id':'Q1'}]},
+    ]
+
+    context=pilot.completion_context(events,NOW)
+    assert context[2]['consecutive_field_blocks']==0
 
 
 def test_completed_web_sessions_restore_observed_blocks():

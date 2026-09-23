@@ -976,8 +976,20 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
                         attempts, all_questions, adaptive_selection_audit,
                         get_learning_events(user_id), exclude_ids=adaptive_short_term_blocked,
                     )
-                except Exception:
-                    logging.warning("Learning strategy v1 fallback: context or strategy unavailable")
+                except Exception as exc:
+                    safe_reason = (
+                        str(exc)
+                        if isinstance(exc, ValueError) and str(exc) in {
+                            "Recommendation completion context unavailable",
+                            "Observed timestamp required",
+                        }
+                        else "context or strategy unavailable"
+                    )
+                    logging.warning(
+                        "Learning strategy v1 fallback: %s: %s",
+                        type(exc).__name__,
+                        safe_reason,
+                    )
         else:
             all_questions = build_daily_session(
                 attempts, total_question_count, exclude_ids=short_term_blocked

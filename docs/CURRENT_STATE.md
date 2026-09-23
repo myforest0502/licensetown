@@ -1,5 +1,13 @@
 # LicenseTown Current State
 
+## 2026-09-23 Production natural-use runtime audit repair
+
+- Production dashboard reads exposed auxiliary `written_check` payloads to the formal question-result aggregators, causing repeated `unknown question_id: None/''` warnings. Formal aggregators now silently ignore auxiliary result dictionaries that do not declare a `question_id`; a declared empty or unknown formal Q ID still emits the existing warning.
+- A stale incomplete Strategy soft-pilot session previously raised during `completion_context()` and could invalidate later trustworthy completion context. Incomplete/duplicate/inconsistent pilot groups now receive no completion credit but do not invalidate later completed pilot, web recommendation, or recommendation-plan evidence. If no trustworthy context remains, the existing fail-closed fallback is preserved.
+- Strategy fallback logging now records only the exception class and a controlled non-personal reason. Phase11 remains HOLD/Shadow-only; Strategy remains soft pilot and never gains exact-Q authority.
+- Validation: relevant tests **134 passed**; full suite **1550 passed / 6 skipped / 1 deselected / 141 subtests**; formal Question Bank validator **Q1-Q2743, all four files 2743, 0 schema/reference/duplicate issues**.
+- Production data, DB schema/migrations, Render configuration, selector/Safety/repeat/cooldown behavior, and Q1-Q2743 content are unchanged. Production deployment and real-use acceptance are still pending.
+
 ## 2026-09-22 provisional_bulk reviewed-first selection preference — LIVE
 
 - The Q2234-Q2743 source-context rewrite and formal-evidence boundary remain the primary remediation.

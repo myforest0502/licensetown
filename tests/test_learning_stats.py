@@ -14,6 +14,7 @@ from database import (
     get_learning_activity,
     get_learning_summary,
     get_question_attempts,
+    get_unique_answered_question_count,
     record_learning_batch,
     reset_user_profile,
 )
@@ -369,6 +370,49 @@ def test_field_summary_is_empty_after_complete_reset():
     assert any(item["learned"] for item in get_field_learning_summary(user_id))
     reset_user_profile(user_id)
     assert all(not item["learned"] for item in get_field_learning_summary(user_id))
+
+
+def test_written_check_is_silently_excluded_but_invalid_formal_q_still_warns(caplog):
+    clear_local_stats()
+    user_id = "written-summary-boundary"
+    now = datetime.now(timezone.utc)
+    record_learning_batch(
+        user_id,
+        "written-only",
+        "written_check",
+        0,
+        0,
+        now,
+        question_results=[{
+            "source_question_id": "Q1",
+            "canonical_node_id": "KN0001",
+            "evaluation": "PASS",
+        }],
+    )
+
+    with caplog.at_level("WARNING", logger="database"):
+        assert get_unique_answered_question_count(user_id) == 0
+        fields = get_field_learning_summary(user_id, now=now)
+
+    assert all(field["answered_count"] == 0 for field in fields)
+    assert "unknown question_id" not in caplog.text
+    assert get_question_attempts(user_id) == []
+    assert database._local_user_node_states == {}
+
+    record_learning_batch(
+        user_id,
+        "invalid-formal-result",
+        "study",
+        1,
+        0,
+        now,
+        question_results=[{"question_id": "Q99999", "is_correct": False}],
+    )
+    caplog.clear()
+    with caplog.at_level("WARNING", logger="database"):
+        assert get_unique_answered_question_count(user_id) == 0
+        get_field_learning_summary(user_id, now=now)
+    assert "unknown question_id" in caplog.text
 
 
 def test_learning_activity_uses_real_daily_answers_time_and_streak():
