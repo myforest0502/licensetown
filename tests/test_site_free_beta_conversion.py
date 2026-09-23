@@ -169,3 +169,28 @@ def test_public_shell_no_longer_scales_724_mobile_canvas():
     assert "document.documentElement.clientWidth/724" not in js
     assert "frame.style.width='100%'" in js
     assert "frame.style.transform='none'" in js
+
+
+
+def test_mobile_final_polish_removes_dashboard_gap_and_compacts_steps(monkeypatch):
+    monkeypatch.setenv("SITE_ONBOARDING_URL", "https://example.com/licensetown-line")
+    html = app.test_client().get("/site/view/mobile").get_data(as_text=True)
+
+    assert ".dashboard-main .time,.dashboard-main .progress-card,.dashboard-main .mentor-card{grid-column:1/-1!important}" in html
+    assert ".steps article{width:100%!important;height:auto!important;min-height:132px!important" in html
+    assert ".steps img{left:52px!important;top:42px!important;width:60px!important;height:60px!important" in html
+
+
+def test_mobile_beta_copy_uses_natural_japanese_wrapping(monkeypatch):
+    monkeypatch.setenv("SITE_ONBOARDING_URL", "https://example.com/licensetown-line")
+    html = app.test_client().get("/site/view/mobile").get_data(as_text=True)
+
+    assert ".marketing-mobile-free .marketing-free-copy{font-size:14px!important;line-height:1.8!important;text-align:left!important;word-break:normal!important;overflow-wrap:normal!important;line-break:strict!important}" in html
+
+
+def test_pc_view_has_no_mobile_final_polish_rules(monkeypatch):
+    monkeypatch.setenv("SITE_ONBOARDING_URL", "https://example.com/licensetown-line")
+    html = app.test_client().get("/site/view/pc").get_data(as_text=True)
+
+    assert ".dashboard-main .time,.dashboard-main .progress-card,.dashboard-main .mentor-card{grid-column:1/-1!important}" not in html
+    assert "min-height:132px!important" not in html
