@@ -1,5 +1,11 @@
 # LicenseTown Current State
 
+## 2026-09-24 公開HPの無料βモニター導線を明確化
+
+- 凍結済みのPC/724pxデザイン原本は変更せず、公開レンダー境界でのみ「第62回 理学療法士国家試験を受験する方へ」と「無料βモニター 先着30名募集中」をヒーロー付近に追加した。
+- 主CTAは「LINEで無料βを始める」に統一。PCはQRコードとボタンを併記し、モバイルはボタンを優先してQRを非表示にする。
+- 支援案内は削除せず、無料βCTAの後に配置した。Question Bank件数表示とLINE導線URLは従来の正式値・動作を維持する。
+
 ## 2026-09-23 Production natural-use runtime audit repair
 
 - Production dashboard reads exposed auxiliary `written_check` payloads to the formal question-result aggregators, causing repeated `unknown question_id: None/''` warnings. Formal aggregators now silently ignore auxiliary result dictionaries that do not declare a `question_id`; a declared empty or unknown formal Q ID still emits the existing warning.

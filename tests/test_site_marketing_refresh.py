@@ -22,7 +22,7 @@ def test_pc_refresh_balances_bottom_cards_and_keeps_three_faq_items(monkeypatch)
     assert "ログイン" not in html
     assert "サービス提供準備中" not in html
     assert "無料モニター 先着30名限定" in html
-    assert "LINEで無料ではじめる" in html
+    assert "LINEで無料βを始める" in html
     assert "/site/line-qr.svg" in html
     assert 'href="/site/faq">その他の質問はこちら' in html
     assert html.count("<details>") == len(FAQ_PREVIEW_ITEMS) == 3

@@ -119,8 +119,8 @@ def _apply_public_hotfix(html: str, page_path: str) -> str:
         flags=re.DOTALL,
     )
     html = re.sub(
-        r'<a class="marketing-line-button" href="[^"]*">LINEで無料ではじめる　›</a>',
-        f'<a class="marketing-line-button" href="{line_href}">LINEで無料ではじめる　›</a>',
+        r'<a class="marketing-line-button" href="[^"]*">LINEで無料βを始める　›</a>',
+        f'<a class="marketing-line-button" href="{line_href}">LINEで無料βを始める　›</a>',
         html,
         count=1,
     )

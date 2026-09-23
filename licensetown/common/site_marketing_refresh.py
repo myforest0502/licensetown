@@ -26,7 +26,7 @@ FAQ_ITEMS = (
     ),
     (
         "どうやって始めますか？",
-        "HPのQRコード、または「LINEで無料ではじめる」ボタンからLicenseTownのLINEを開き、そのまま始められます。",
+        "HPのQRコード、または「LINEで無料βを始める」ボタンからLicenseTownのLINEを開き、そのまま始められます。",
     ),
     (
         "会員登録やパスワードは必要ですか？",
@@ -147,7 +147,7 @@ def _cta_contents() -> str:
     if target:
         escaped_target = escape(target, quote=True)
         qr = '<img class="marketing-line-qr" src="/site/line-qr.svg" alt="LicenseTownをLINEで始めるQRコード">'
-        button = f'<a class="marketing-line-button" href="{escaped_target}">LINEで無料ではじめる　›</a>'
+        button = f'<a class="marketing-line-button" href="{escaped_target}">LINEで無料βを始める　›</a>'
         desktop_help = '<p class="marketing-qr-help">PCの方は、QRコードをスマホで読み取ってください。</p>'
     else:
         qr = ""
@@ -194,6 +194,7 @@ def _replace_mobile_cta(html: str) -> str:
 def _marketing_styles() -> str:
     return """<style id="marketing-refresh-v02">
 .header-actions .btn.primary{margin-left:auto}
+.header-actions .btn.primary{width:170px!important;white-space:nowrap!important;font-size:12px!important}
 .bottom{height:370px!important;padding-top:18px!important;overflow:visible!important}
 .bottom-grid{align-items:stretch!important;grid-template-columns:1.35fr .9fr 1.05fr!important;gap:16px!important}
 .bottom-grid>.marketing-brand-panel,.marketing-faq-panel,.marketing-free-panel{height:330px!important;min-height:330px!important}
@@ -225,6 +226,10 @@ def _marketing_styles() -> str:
 .marketing-line-button{display:inline-block!important;background:#078329!important;color:#fff!important;border-radius:8px!important;padding:11px 16px!important;text-decoration:none!important;font-weight:700!important}
 .marketing-qr-help{font-size:10px!important;line-height:1.45!important;margin:7px 0 0!important;color:#57645b!important}
 .marketing-free-note{display:block!important;line-height:1.5!important;margin-top:8px!important;color:#59645d!important;font-size:10px!important}
+.free-beta-hero-notice{display:flex;flex-wrap:wrap;align-items:center;gap:7px 10px;margin:16px 0 2px!important}
+.free-beta-hero-notice strong,.free-beta-hero-notice span{display:inline-flex;align-items:center;min-height:28px;padding:5px 10px;border-radius:999px;font-size:11px;line-height:1.35}
+.free-beta-hero-notice strong{background:#f5f8f5;border:1px solid #d9e5db;color:#294032}
+.free-beta-hero-notice span{background:#fff3c9;border:1px solid #e7c96b;color:#785b00;font-weight:700}
 .page{height:2850px!important}
 .story-faq{height:350px!important;overflow:visible!important}
 .marketing-faq-card{height:334px!important;overflow:visible!important}
@@ -242,7 +247,7 @@ def _marketing_styles() -> str:
 .marketing-mobile-free .marketing-free-copy{font-size:10px!important;line-height:16px!important}
 .marketing-mobile-free .marketing-line-copy{font-size:11px!important}
 .marketing-mobile-free .marketing-free-note{font-size:8px!important;line-height:12px!important}
-@media(max-width:760px){.marketing-line-start{flex-direction:column}.marketing-qr-help{display:none}.marketing-free-copy br{display:none}}
+@media(max-width:760px){.page{height:2884px!important}.hero{height:430px!important}.hero-visual{height:430px!important}.hero .free-beta-hero-notice{position:absolute;z-index:3;left:62px;top:205px;width:365px;margin:0!important}.hero .free-beta-hero-notice strong,.hero .free-beta-hero-notice span{display:inline-flex;width:auto;max-width:100%;min-height:18px;margin:0 3px 3px 0;padding:2px 7px;font-size:7px}.hero .chips{top:250px!important}.hero .video-card{top:284px!important}.marketing-line-start{flex-direction:column}.marketing-qr-help{display:none}.marketing-free-copy br{display:none}.marketing-mobile-free .marketing-line-qr{display:none!important}.marketing-mobile-free-inner{min-height:250px!important}}
 </style>"""
 
 

@@ -76,7 +76,9 @@ def _wire_primary_ctas(html: str) -> str:
 
     def replace_anchor(match):
         attrs = match.group("attrs") or ""
-        label = match.group("label")
+        label = "LINEで無料βを始める"
+        if match.group("label").endswith("　›"):
+            label += "　›"
         if re.search(r'\shref="[^"]*"', attrs):
             attrs = re.sub(r'\shref="[^"]*"', f' href="{target}"', attrs, count=1)
         else:
@@ -84,10 +86,25 @@ def _wire_primary_ctas(html: str) -> str:
         return f"<a{attrs}>{label}</a>"
 
     return re.sub(
-        r'<a(?P<attrs>[^>]*)>(?P<label>まずは使ってみる(?:　›)?)</a>',
+        r'<a(?P<attrs>[^>]*)>(?P<label>(?:まずは使ってみる|LINEで無料βを始める)(?:　›)?)</a>',
         replace_anchor,
         html,
     )
+
+
+def _inject_free_beta_hero_notice(html: str) -> str:
+    """Add the limited free-beta notice without changing frozen source HTML."""
+    if 'class="free-beta-hero-notice"' in html:
+        return html
+    notice = (
+        '<div class="free-beta-hero-notice" role="note">'
+        '<strong>第62回 理学療法士国家試験を受験する方へ</strong>'
+        '<span>無料βモニター 先着30名募集中</span>'
+        '</div>'
+    )
+    if 'class="hero-actions"' in html:
+        return html.replace('<div class="hero-actions">', notice + '<div class="hero-actions">', 1)
+    return html.replace('<ul class="chips"', notice + '<ul class="chips"', 1)
 
 
 def _wire_same_document_fragments(html: str) -> str:
@@ -172,7 +189,21 @@ def _inject_mobile_trust_support(html: str) -> str:
         '</article>'
         '</section>'
     )
-    return html.replace('<section class="final-cta"', section + '<section class="final-cta"', 1)
+    return html.replace('</main>', section + '</main>', 1)
+
+
+def _move_pc_support_after_conversion_cta(html: str) -> str:
+    """Keep the approved support section, but place it after the free-beta CTA."""
+    match = re.search(
+        r'\s*<section class="trust-support" id="principles">.*?</section>',
+        html,
+        flags=re.DOTALL,
+    )
+    if not match or '<section class="bottom"' not in html:
+        return html
+    support = match.group(0)
+    html = html[: match.start()] + html[match.end() :]
+    return html.replace('</main>', support + '</main>', 1)
 
 
 def _add_static_control_class(attrs: str) -> str:
@@ -245,7 +276,7 @@ def _apply_free_monitor_copy(html: str) -> str:
         '<article class="try-panel" id="try">'
         f'<h2>{title}</h2><p>{description}</p>'
         f'<small class="free-monitor-note">{note}</small>'
-        '<a>まずは使ってみる　›</a></article>',
+        '<a>LINEで無料βを始める　›</a></article>',
         html,
         count=1,
         flags=re.DOTALL,
@@ -338,8 +369,10 @@ def _sale_safe_html(html: str) -> str:
     )
     html = _inject_mobile_faq_answers(html)
     html = _inject_mobile_trust_support(html)
-    html = _wire_primary_ctas(html)
     html = _apply_free_monitor_copy(html)
+    html = _wire_primary_ctas(html)
+    html = _inject_free_beta_hero_notice(html)
+    html = _move_pc_support_after_conversion_cta(html)
     return _make_public_dead_interactions_static(html)
 
 

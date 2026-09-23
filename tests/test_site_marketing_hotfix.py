@@ -16,7 +16,7 @@ def _app(monkeypatch):
           <div class="marketing-faq-list"><details><summary>old</summary><p class="faq-answer">old</p></details></div>
           <a class="marketing-contact-link" href="/site/faq">その他の質問はこちら　›</a>
         </article>
-        <a class="marketing-line-button" href="https://example.com/line-start">LINEで無料ではじめる　›</a>
+        <a class="marketing-line-button" href="https://example.com/line-start">LINEで無料βを始める　›</a>
         </body></html>''',
     )
     # Production order: after_request executes in reverse registration order,
@@ -36,7 +36,7 @@ def test_hp_preview_shows_three_readable_answers_and_in_page_actions(monkeypatch
     assert "正式公開前の無料モニターとして" in html
     assert "ありません。将来、有料化する場合" in html
     assert 'href="/site/view/pc#faq-all-panel">その他の質問はこちら' in html
-    assert 'href="/site/view/pc#line-start-panel">LINEで無料ではじめる' in html
+    assert 'href="/site/view/pc#line-start-panel">LINEで無料βを始める' in html
     assert "marketing-hotfix-v04" in html
     assert "height:auto!important" in html
     assert "white-space:normal!important" in html
