@@ -77,8 +77,10 @@ def test_pc_hero_separates_audience_action_and_question_volume(monkeypatch):
     assert ".hero .hero-actions .secondary" in html
     assert "LINEで無料βを始める" in html
     assert "合格への道を見る" in html
-    assert html.index("無料βモニター 先着30名募集中") < html.index("LINEで無料βを始める")
-    assert html.index("LINEで無料βを始める") < html.index("新規問題")
+    notice_pos = html.index('<div class="free-beta-hero-notice"')
+    primary_pos = html.index('<a class="btn primary"', notice_pos)
+    stats_pos = html.index('<section class="stats"', primary_pos)
+    assert notice_pos < primary_pos < stats_pos
 
 
 def test_public_home_has_no_stale_2000_question_copy():
