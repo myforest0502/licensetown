@@ -234,6 +234,8 @@ def _marketing_styles() -> str:
   .hero{height:370px!important}
   .hero-inner{height:370px!important}
   .hero .free-beta-hero-notice{margin:20px 0 0!important}
+  .hero .free-beta-hero-notice strong,.hero .free-beta-hero-notice span{min-height:32px!important;padding:7px 13px!important;font-size:14px!important}
+  .hero .free-beta-hero-notice span{font-size:15px!important;font-weight:800!important;border-color:#d9b94e!important;box-shadow:0 2px 7px rgba(120,91,0,.08)!important}
   .hero .hero-actions{margin-top:22px!important}
   .hero .hero-actions .secondary{border-color:#d8ded9!important;background:#fff!important;color:#59645d!important;font-weight:600!important;box-shadow:none!important}
 }
