@@ -44,11 +44,10 @@ def test_final_cta_goes_straight_to_verified_line_url(monkeypatch):
     assert '/site/line-qr.svg' in html
 
 
-def test_mobile_direct_button_is_primary_and_qr_remains_secondary(monkeypatch):
+def test_mobile_direct_button_is_primary_and_qr_is_hidden(monkeypatch):
     html = _app(monkeypatch).test_client().get("/site/view/mobile").get_data(as_text=True)
     assert 'class="marketing-line-button" href="https://example.com/line-start"' in html
     assert 'site-direct-line-cta-v01' in html
     assert '.marketing-mobile-free .marketing-line-start>div{order:1!important' in html
-    assert '.marketing-mobile-free .marketing-line-qr{order:2!important' in html
-    assert 'スマホで見ている方は、上のボタンからそのままLINEを開けます。' in html
-    assert '/site/line-qr.svg' in html
+    assert '.marketing-mobile-free .marketing-line-qr{display:none!important}' in html
+    assert '.marketing-mobile-free .marketing-qr-help{display:none!important}' in html
