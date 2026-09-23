@@ -219,6 +219,12 @@ def _prepare_mobile_layout(html: str) -> str:
         '<section class="section road" id="road">',
         1,
     )
+    html = html.replace(
+        '<footer class="footer" id="contact"><nav>',
+        '<footer class="footer" id="contact"><nav>'
+        '<a href="/site/legal/commercial-transactions">特定商取引法に基づく表記</a><i></i>',
+        1,
+    )
     html = re.sub(
         r'<p>問題演習・弱点分析・学習提案を通して、<br>'
         r'「じゃあ、今何をやるべきか」を一緒に考え、<br>'
@@ -273,18 +279,18 @@ body{font-size:16px!important}
 
 /* hero: read top-to-bottom, then act */
 .hero{display:flex!important;flex-direction:column!important;padding-top:28px!important;background:#fff!important}
-.hero-copy{position:static!important;width:100%!important}
-.hero-copy h1{position:static!important;width:auto!important;margin:0!important;font-size:clamp(29px,8vw,38px)!important;line-height:1.35!important;letter-spacing:0!important;white-space:normal!important;transform:none!important}
-.hero-copy>p{position:static!important;width:auto!important;margin:16px 0 0!important;font-size:15px!important;line-height:1.8!important;font-weight:500!important}
+.hero-copy{position:static!important;width:100%!important;display:flex!important;flex-direction:column!important}
+.hero-copy h1{order:1!important;position:static!important;width:auto!important;margin:0!important;font-size:clamp(29px,8vw,38px)!important;line-height:1.35!important;letter-spacing:0!important;white-space:normal!important;transform:none!important}
+.hero-copy>p{order:2!important;position:static!important;width:auto!important;margin:16px 0 0!important;font-size:15px!important;line-height:1.8!important;font-weight:500!important}
 .hero-copy>p br{display:none!important}
-.hero .free-beta-hero-notice{position:static!important;width:100%!important;margin:22px 0 0!important;display:grid!important;grid-template-columns:1fr!important;gap:9px!important}
+.hero .free-beta-hero-notice{order:3!important;position:static!important;width:100%!important;margin:22px 0 0!important;display:grid!important;grid-template-columns:1fr!important;gap:9px!important}
 .hero .free-beta-hero-notice strong,.hero .free-beta-hero-notice span{display:block!important;width:100%!important;max-width:none!important;min-height:0!important;margin:0!important;padding:10px 12px!important;border-radius:12px!important;font-size:14px!important;line-height:1.55!important;text-align:center!important;white-space:normal!important;overflow:visible!important}
 .hero .free-beta-hero-notice span{font-size:15px!important;font-weight:800!important}
-.mobile-hero-actions{display:grid!important;grid-template-columns:1fr!important;gap:10px!important;margin-top:18px!important}
+.mobile-hero-actions{order:4!important;display:grid!important;grid-template-columns:1fr!important;gap:10px!important;margin-top:18px!important}
 .mobile-hero-primary,.mobile-hero-secondary{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;min-height:50px!important;border-radius:10px!important;font-size:16px!important;font-weight:800!important;text-align:center!important}
 .mobile-hero-primary{background:#078329!important;color:#fff!important;box-shadow:0 5px 14px rgba(7,131,41,.18)!important}
 .mobile-hero-secondary{border:1px solid #d3ddd5!important;background:#fff!important;color:#425249!important;font-weight:700!important}
-.hero .chips{position:static!important;width:100%!important;height:auto!important;margin:18px 0 0!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;white-space:normal!important}
+.hero .chips{order:5!important;position:static!important;width:100%!important;height:auto!important;margin:18px 0 0!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;white-space:normal!important}
 .hero .chips li{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;height:auto!important;min-height:38px!important;padding:7px 8px!important;font-size:13px!important;line-height:1.4!important;text-align:center!important;white-space:normal!important}
 .hero .chips li:nth-child(1),.hero .chips li:nth-child(4){display:none!important}
 .hero .video-card{display:none!important}
