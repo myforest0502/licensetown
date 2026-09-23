@@ -125,12 +125,12 @@ def test_mobile_public_view_gets_trust_support_copy_without_mutating_frozen_724_
     assert 'class="mobile-trust-support"' not in raw_724_html
 
 
-def test_mobile_public_trust_support_is_stacked_before_final_cta_and_has_canvas_room():
+def test_mobile_public_trust_support_is_stacked_after_final_cta_and_has_canvas_room():
     client = app.test_client()
     mobile_html = client.get("/site/view/mobile").get_data(as_text=True)
     mobile_css = client.get("/site/preview-responsive/mobile.css").get_data(as_text=True)
 
-    assert mobile_html.index('class="mobile-trust-support"') < mobile_html.index('class="final-cta"')
+    assert mobile_html.index('class="final-cta"') < mobile_html.index('class="mobile-trust-support"')
     assert ".page{height:2674px!important}" in mobile_css
     assert ".mobile-trust-support{position:relative;width:724px;height:452px" in mobile_css
     assert ".mobile-principles-card{top:12px;height:166px" in mobile_css

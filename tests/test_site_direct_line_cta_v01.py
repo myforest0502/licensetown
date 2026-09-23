@@ -16,7 +16,7 @@ def _app(monkeypatch):
           <div class="marketing-faq-list"><details><summary>old</summary><p class="faq-answer">old</p></details></div>
           <a class="marketing-contact-link" href="/site/faq">その他の質問はこちら　›</a>
         </article>
-        <a class="marketing-line-button" href="https://example.com/line-start">LINEで無料ではじめる　›</a>
+        <a class="marketing-line-button" href="https://example.com/line-start">LINEで無料βを始める　›</a>
         <img class="marketing-line-qr" src="/site/line-qr.svg">
         </body></html>''',
     )
@@ -24,7 +24,7 @@ def _app(monkeypatch):
         "/site/view/mobile",
         "mobile",
         lambda: '''<html><head></head><body>
-        <a class="marketing-line-button" href="https://example.com/line-start">LINEで無料ではじめる　›</a>
+        <a class="marketing-line-button" href="https://example.com/line-start">LINEで無料βを始める　›</a>
         <img class="marketing-line-qr" src="/site/line-qr.svg">
         </body></html>''',
     )
@@ -40,7 +40,7 @@ def test_final_cta_goes_straight_to_verified_line_url(monkeypatch):
     html = _app(monkeypatch).test_client().get("/site/view/pc").get_data(as_text=True)
     assert 'class="marketing-line-button" href="https://example.com/line-start"' in html
     assert 'target="_blank" rel="noopener noreferrer"' in html
-    assert '/site/view/pc#line-start-panel">LINEで無料ではじめる' not in html
+    assert '/site/view/pc#line-start-panel">LINEで無料βを始める' not in html
     assert '/site/line-qr.svg' in html
 
 

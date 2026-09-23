@@ -30,8 +30,8 @@ def _apply_direct_line_cta(html: str, page_path: str) -> str:
     escaped_target = escape(target, quote=True)
     modal_href = re.escape(f'{page_path}#line-start-panel')
     html = re.sub(
-        rf'<a class="marketing-line-button" href="{modal_href}">LINEで無料ではじめる　›</a>',
-        f'<a class="marketing-line-button" href="{escaped_target}" target="_blank" rel="noopener noreferrer">LINEで無料ではじめる　›</a>',
+        rf'<a class="marketing-line-button" href="{modal_href}">LINEで無料βを始める　›</a>',
+        f'<a class="marketing-line-button" href="{escaped_target}" target="_blank" rel="noopener noreferrer">LINEで無料βを始める　›</a>',
         html,
         count=1,
     )
