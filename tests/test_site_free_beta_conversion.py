@@ -83,6 +83,17 @@ def test_pc_hero_separates_audience_action_and_question_volume(monkeypatch):
     assert notice_pos < primary_pos < stats_pos
 
 
+
+
+def test_pc_hero_tags_are_readable_but_remain_below_primary_cta(monkeypatch):
+    monkeypatch.setenv("SITE_ONBOARDING_URL", "https://example.com/licensetown-line")
+    html = app.test_client().get("/site/view/pc").get_data(as_text=True)
+
+    assert ".hero .free-beta-hero-notice strong,.hero .free-beta-hero-notice span{min-height:32px!important;padding:7px 13px!important;font-size:14px!important}" in html
+    assert ".hero .free-beta-hero-notice span{font-size:15px!important;font-weight:800!important" in html
+    assert ".marketing-line-button{display:inline-block!important" in html
+    assert "font-weight:700!important" in html
+
 def test_public_home_has_no_stale_2000_question_copy():
     html = app.test_client().get("/site").get_data(as_text=True)
 
