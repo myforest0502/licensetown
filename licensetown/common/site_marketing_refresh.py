@@ -325,7 +325,7 @@ body{font-size:16px!important}
 .dashboard-main .metric b{position:static!important;display:block!important;margin-top:14px!important;font-size:28px!important;line-height:1.2!important}
 .dashboard-main .metric p{position:static!important;width:auto!important;margin-top:10px!important;font-size:11px!important}
 .dashboard-main .pass .ring{display:none!important}
-.dashboard-main .progress-card,.dashboard-main .mentor-card{grid-column:1/-1!important}
+.dashboard-main .time,.dashboard-main .progress-card,.dashboard-main .mentor-card{grid-column:1/-1!important}
 .dashboard-main .progress-card{min-height:190px!important}
 .dashboard-main .bars label{height:24px!important;font-size:11px!important}
 .dashboard-main .bars i{flex:1!important;width:auto!important;height:7px!important}
@@ -340,12 +340,12 @@ body{font-size:16px!important}
 
 /* vertical learning flow */
 .steps{position:static!important;width:100%!important;height:auto!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:8px!important}
-.steps article{width:100%!important;height:auto!important;min-height:150px!important;padding:16px 18px 14px 112px!important;text-align:left!important}
+.steps article{width:100%!important;height:auto!important;min-height:132px!important;padding:13px 16px 12px 100px!important;text-align:left!important}
 .steps>i{width:100%!important;height:28px!important;line-height:28px!important;transform:rotate(90deg)!important;font-size:24px!important}
 .steps article>span{left:12px!important;top:12px!important;width:28px!important;height:28px!important;font-size:13px!important}
-.steps img{left:58px!important;top:46px!important;width:70px!important;height:70px!important;transform:translateX(-50%)!important}
-.steps h3{position:static!important;width:auto!important;margin:18px 0 0!important;font-size:18px!important;line-height:1.4!important}
-.steps p{position:static!important;width:auto!important;margin:8px 0 0!important;font-size:14px!important;line-height:1.6!important}
+.steps img{left:52px!important;top:42px!important;width:60px!important;height:60px!important;transform:translateX(-50%)!important}
+.steps h3{position:static!important;width:auto!important;margin:14px 0 0!important;font-size:18px!important;line-height:1.4!important}
+.steps p{position:static!important;width:auto!important;margin:6px 0 0!important;font-size:14px!important;line-height:1.55!important}
 .steps p br{display:none!important}
 
 /* terakoya: text then illustration */
@@ -392,7 +392,7 @@ body{font-size:16px!important}
 .marketing-mobile-free{width:100%!important;height:auto!important;padding:32px 18px!important}
 .marketing-mobile-free-inner{width:100%!important;min-height:0!important;padding:24px 18px!important}
 .marketing-mobile-free h2{font-size:24px!important;line-height:1.4!important}
-.marketing-mobile-free .marketing-free-copy{font-size:14px!important;line-height:1.8!important}
+.marketing-mobile-free .marketing-free-copy{font-size:14px!important;line-height:1.8!important;text-align:left!important;word-break:normal!important;overflow-wrap:normal!important;line-break:strict!important}
 .marketing-mobile-free .marketing-line-copy{font-size:14px!important}
 .marketing-mobile-free .marketing-line-start{display:block!important}
 .marketing-mobile-free .marketing-line-qr,.marketing-mobile-free .marketing-qr-help{display:none!important}
