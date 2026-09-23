@@ -63,3 +63,26 @@ def test_public_question_counts_remain_formal_bank_values(monkeypatch):
     assert "1643" in html
     assert "1100" in html
     assert "2743" in html
+
+
+
+def test_pc_hero_separates_audience_action_and_question_volume(monkeypatch):
+    monkeypatch.setenv("SITE_ONBOARDING_URL", "https://example.com/licensetown-line")
+    html = app.test_client().get("/site/view/pc").get_data(as_text=True)
+
+    assert "@media(min-width:761px)" in html
+    assert ".hero{height:370px!important}" in html
+    assert ".hero .free-beta-hero-notice{margin:20px 0 0!important}" in html
+    assert ".hero .hero-actions{margin-top:22px!important}" in html
+    assert ".hero .hero-actions .secondary" in html
+    assert "LINEで無料βを始める" in html
+    assert "合格への道を見る" in html
+    assert html.index("無料βモニター 先着30名募集中") < html.index("LINEで無料βを始める")
+    assert html.index("LINEで無料βを始める") < html.index("新規問題")
+
+
+def test_public_home_has_no_stale_2000_question_copy():
+    html = app.test_client().get("/site").get_data(as_text=True)
+
+    assert "2000問" not in html
+    assert "2743問の問題演習" in html
