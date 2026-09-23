@@ -230,6 +230,13 @@ def _marketing_styles() -> str:
 .free-beta-hero-notice strong,.free-beta-hero-notice span{display:inline-flex;align-items:center;min-height:28px;padding:5px 10px;border-radius:999px;font-size:11px;line-height:1.35}
 .free-beta-hero-notice strong{background:#f5f8f5;border:1px solid #d9e5db;color:#294032}
 .free-beta-hero-notice span{background:#fff3c9;border:1px solid #e7c96b;color:#785b00;font-weight:700}
+@media(min-width:761px){
+  .hero{height:370px!important}
+  .hero-inner{height:370px!important}
+  .hero .free-beta-hero-notice{margin:20px 0 0!important}
+  .hero .hero-actions{margin-top:22px!important}
+  .hero .hero-actions .secondary{border-color:#d8ded9!important;background:#fff!important;color:#59645d!important;font-weight:600!important;box-shadow:none!important}
+}
 .page{height:2850px!important}
 .story-faq{height:350px!important;overflow:visible!important}
 .marketing-faq-card{height:334px!important;overflow:visible!important}
