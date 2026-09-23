@@ -1352,6 +1352,18 @@ def _get_question_result_rows(user_id: str, _connection=None):
             return cur.fetchall()
 
 
+def _formal_question_id_from_result(result: dict[str, Any]) -> str | None:
+    """Return the declared formal Q ID, or None for auxiliary evidence.
+
+    Auxiliary payloads such as written_check intentionally have only a
+    source_question_id. A present-but-empty question_id remains an invalid
+    formal result so the existing warning is preserved.
+    """
+    if "question_id" not in result:
+        return None
+    return str(result.get("question_id", "")).upper().strip()
+
+
 def get_unique_answered_question_count(
     user_id: str,
     _connection=None,
@@ -1377,7 +1389,9 @@ def get_unique_answered_question_count(
         for result in question_results:
             if not isinstance(result, dict):
                 continue
-            question_id = str(result.get("question_id", "")).upper().strip()
+            question_id = _formal_question_id_from_result(result)
+            if question_id is None:
+                continue
             try:
                 get_category_small(question_id)
             except QuestionBankError:
@@ -1511,12 +1525,15 @@ def get_field_learning_summary(
         for result in question_results:
             if not isinstance(result, dict):
                 continue
+            question_id = _formal_question_id_from_result(result)
+            if question_id is None:
+                continue
             try:
-                category_small = get_category_small(result.get("question_id"))
+                category_small = get_category_small(question_id)
             except QuestionBankError:
                 logger.warning(
                     "Question result has an unknown question_id: %r",
-                    result.get("question_id"),
+                    question_id,
                 )
                 continue
             summary = summaries[category_small]

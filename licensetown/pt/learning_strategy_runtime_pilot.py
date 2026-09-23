@@ -47,7 +47,7 @@ def completion_context(events, as_of):
     are explicit thirty-answer groups with consistent strategy metadata. Partial
     pilot sessions fail closed until finished (no zero-completion assumption).
     """
-    from question_bank import CATEGORY_NAMES,get_category_small
+    from question_bank import CATEGORY_NAMES,QuestionBankError,get_category_small
     from learning_strategy_context_shadow import derive_recommendation_plan_context
     names={v:k for k,v in CATEGORY_NAMES.items()}
     plans,web,pilot=[],defaultdict(list),defaultdict(list)
@@ -79,12 +79,20 @@ def completion_context(events, as_of):
                 p['completed_recommendation_questions']+=10
     for rows in pilot.values():
         fields={r.get('strategy_recommended_field') for _,r in rows}
-        if len(rows)!=30 or len(fields)!=1 or len({r.get('question_id') for _,r in rows})!=30:
-            raise ValueError('Incomplete pilot completion context')
+        question_ids={r.get('question_id') for _,r in rows}
+        if (len(rows)!=30 or len(fields)!=1 or len(question_ids)!=30
+                or None in question_ids):
+            continue
         field=fields.pop()
+        if field not in range(1,19):
+            continue
+        try:
+            completed_questions=sum(
+                get_category_small(r['question_id'])==field for _,r in rows)
+        except (KeyError, TypeError, ValueError, QuestionBankError):
+            continue
         plans.append({'at':max(at for at,_ in rows),'field_id':field,
-                      'completed_recommendation_questions':sum(
-                          get_category_small(r['question_id'])==field for _,r in rows)})
+                      'completed_recommendation_questions':completed_questions})
     if not plans:
         raise ValueError('Recommendation completion context unavailable')
     plans.sort(key=lambda p:p['at'])
