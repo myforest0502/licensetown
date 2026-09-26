@@ -138,8 +138,9 @@ All components are bounded to [0,1]:
   when maintenance is needed.
 - Safety: 1 if unresolved critical Safety is explicitly observed, otherwise 0.
 - Concentration penalty: min(consecutive field blocks / 3, 1); 1 at additional cap.
-- Time urgency: max(0, (90-days_to_exam)/90), capped at 1. Missing time is neutral
-  and marked unavailable. Time-to-exam is not historical exam-year weighting.
+- Time urgency: max(0, (180-days_to_exam)/180), capped at 1. Missing time is neutral
+  and marked unavailable. This makes deadline pressure gradual during the final six months
+  instead of waiting until the final 90 days. Time-to-exam is not historical exam-year weighting.
 
 For weakness A, gap G, coverage C, weight W, retention R, penalty P, urgency U:
 

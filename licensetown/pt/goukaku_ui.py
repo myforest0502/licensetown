@@ -349,6 +349,7 @@ def build_learner_navigation_from_formal_inputs(
     *,
     learning_events=None,
     use_stage_e_strategy=False,
+    days_to_exam=None,
     evidence=None,
     progress=None,
     shadow_result=None,
@@ -370,6 +371,7 @@ def build_learner_navigation_from_formal_inputs(
                 attempts,
                 list(learning_events or []),
                 datetime.now(timezone.utc),
+                days_to_exam=days_to_exam,
             )
             shadow_result = _stage_e_shadow_authority(shadow_result, stage_e)
         except (KeyError, TypeError, ValueError):
@@ -514,6 +516,7 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
                 bundle["trial100_records"],
                 learning_events=bundle.get("learning_events"),
                 use_stage_e_strategy=strategy_navigation,
+                days_to_exam=dashboard["days_until_exam"],
                 evidence=evidence,
                 progress=progress,
                 shadow_result=shadow_result,

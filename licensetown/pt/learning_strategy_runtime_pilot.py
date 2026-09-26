@@ -101,7 +101,7 @@ def completion_context(events, as_of):
             for f in range(1,19)}
 
 
-def strategy_snapshot(attempts, events, as_of):
+def strategy_snapshot(attempts, events, as_of, *, days_to_exam=None):
     from adaptive_question_selector import _node_attempt_summary,_priority
     from knowledge_node_state_transition import derive_all_user_node_states
     from question_bank import question_ids,get_question_tag,get_category_small
@@ -139,12 +139,16 @@ def strategy_snapshot(attempts, events, as_of):
         evidence, targets, state_rows,
         critical_safety_unresolved_count=len(critical_nodes),
     )
-    strategy=build_learning_strategy(evidence,progress,context_by_field=contexts)
+    strategy=build_learning_strategy(
+        evidence, progress, context_by_field=contexts, days_to_exam=days_to_exam
+    )
     strategy['learning_lifecycle']=lifecycle
     return strategy
 
 
-def refine_session(attempts, baseline, audit, events, *, exclude_ids=(), as_of=None):
+def refine_session(
+    attempts, baseline, audit, events, *, exclude_ids=(), as_of=None, days_to_exam=None
+):
     """Protect Safety/due and the five-slot exploration floor; soft-target the rest.
 
     Stage E may reroute to the next ranked field when the top field cannot fill
@@ -160,7 +164,7 @@ def refine_session(attempts, baseline, audit, events, *, exclude_ids=(), as_of=N
     if len(baseline)!=30:
         return baseline
     as_of=as_of or datetime.now(timezone.utc)
-    strategy=strategy_snapshot(attempts,events,as_of)
+    strategy=strategy_snapshot(attempts, events, as_of, days_to_exam=days_to_exam)
     field=strategy['recommended_field_id']
     meta={'strategy_version':VERSION,'strategy_recommended_field':field,
           'strategy_learning_intent':strategy['learning_intent'],

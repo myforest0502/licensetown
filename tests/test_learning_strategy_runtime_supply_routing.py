@@ -66,7 +66,7 @@ def test_ranked_strategy_protects_only_five_exploration_floor_slots(monkeypatch)
         }
         for q in baseline
     }
-    monkeypatch.setattr(pilot, 'strategy_snapshot', lambda *a: _strategy(_row(2, 1.4)))
+    monkeypatch.setattr(pilot, 'strategy_snapshot', lambda *a, **k: _strategy(_row(2, 1.4)))
     excluded = {eq(qid) for qid in pool[25:]}
 
     result = pilot.refine_session([], baseline, audit, [], exclude_ids=excluded, as_of=NOW)
@@ -100,7 +100,7 @@ def test_ranked_strategy_reroutes_when_top_field_lacks_current_supply(monkeypatc
     monkeypatch.setattr(
         pilot,
         'strategy_snapshot',
-        lambda *a: _strategy(_row(2, 1.5, 'safety_review'), _row(3, 1.2, 'coverage')),
+        lambda *a, **k: _strategy(_row(2, 1.5, 'safety_review'), _row(3, 1.2, 'coverage')),
     )
     excluded = {eq(qid) for qid in field2[1:]} | {eq(qid) for qid in field3[6:]}
 
