@@ -498,6 +498,48 @@ def test_stage_e_authority_keeps_today_action_and_priority_top1_aligned():
     assert nav["today_action"]["reason_code"] == "safety_repair"
 
 
+def test_stage_e_strategy_change_survives_web_navigation_mapping():
+    shadow = {
+        "status": "dashboard_real_data_shadow_v0.1",
+        "fields": [
+            {"field_id": 18, "field_name": "理学療法治療各論", "node_coverage": 0.4},
+        ],
+        "recommendation_intent": {
+            "target_field_id": 18,
+            "target_field": "理学療法治療各論",
+            "learning_intent": "repair",
+            "priority_reason": "low_progress_repair",
+            "requested_question_count": 10,
+        },
+    }
+    strategy = {
+        "version": "learning_strategy_shadow_v0.1",
+        "recommended_field_id": 18,
+        "recommended_field_name": "理学療法治療各論",
+        "ranked_fields": [
+            {
+                "field_id": 18,
+                "field_name": "理学療法治療各論",
+                "allocation_candidate": True,
+                "priority_score": 0.8,
+                "learning_intent": "strategy_change",
+                "field_state": "weak",
+                "priority_components": {"safety_score": 0.0},
+                "target": {"evaluation": {"evidence_sufficient": True}},
+            },
+        ],
+    }
+
+    authoritative = goukaku_ui_module._stage_e_shadow_authority(shadow, strategy)
+    nav = goukaku_ui_module.build_learner_readiness_presentation(
+        {"status": "repair_required", "components": {}}, authoritative
+    )
+
+    assert nav["today_action"]["learning_intent"] == "strategy_change"
+    assert nav["today_action"]["reason_code"] == "strategy_change"
+    assert "同じやり方を続けず" in nav["today_action"]["reason"]
+
+
 def test_subjects_learning_data_uses_current_formal_production_bundle(monkeypatch):
     fields = [{"name": "心理学", "learned": True, "answered_count": 9, "accuracy": 78}]
     activity = {"weekly_answers": 170}
