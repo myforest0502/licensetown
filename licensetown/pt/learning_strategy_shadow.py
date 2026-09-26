@@ -7,6 +7,7 @@ from __future__ import annotations
 from field_learning_target_shadow import build_field_targets, count
 
 VERSION = "learning_strategy_shadow_v0.1"
+URGENCY_WINDOW_DAYS = 180
 
 
 def _clamp(value):
@@ -162,7 +163,7 @@ def build_learning_strategy(evidence_bundle, progress_bundle, *, context_by_fiel
     explicit observed history; this module neither reads nor writes that history.
     """
     days = None if days_to_exam is None else count(days_to_exam, "days_to_exam")
-    urgency = 0.0 if days is None else _clamp((90 - days) / 90)
+    urgency = 0.0 if days is None else _clamp((URGENCY_WINDOW_DAYS - days) / URGENCY_WINDOW_DAYS)
     targets = build_field_targets(evidence_bundle, progress_bundle, context_by_field=context_by_field)
     ranked = [_rank_field(target, urgency) for target in targets["fields"]]
     # Product rule: pass-first ordering.
