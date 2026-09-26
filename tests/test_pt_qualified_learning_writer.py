@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
+import psycopg
+
 import database
 from licensetown.pt.learning_writer import PTLearningWriter
 
@@ -96,6 +98,35 @@ def test_duplicate_event_returns_false_before_attempt_or_node_writes(monkeypatch
         "learner", "session:1", "study", 1, 0, question_results=_result()
     ) is False
     assert len(cursor.calls) == 1
+
+
+def test_transient_db_disconnect_retries_once_with_fresh_connection(monkeypatch):
+    first_cursor = Cursor()
+    second_cursor = Cursor()
+    connection_calls = []
+
+    def fail_execute(sql, params=()):
+        first_cursor.calls.append((" ".join(sql.split()), params))
+        raise psycopg.OperationalError(
+            "consuming input failed: SSL connection has been closed unexpectedly"
+        )
+
+    first_cursor.execute = fail_execute
+
+    def get_connection():
+        connection_calls.append(True)
+        cursor = first_cursor if len(connection_calls) == 1 else second_cursor
+        return Connection(cursor)
+
+    monkeypatch.setattr(database, "database_is_available", lambda: True)
+    monkeypatch.setattr(database, "get_db_connection", get_connection)
+
+    assert PTLearningWriter().record_learning_batch(
+        "learner", "session:retry", "study", 1, 0, question_results=_result()
+    ) is True
+    assert len(connection_calls) == 2
+    assert len(first_cursor.calls) == 1
+    assert len(second_cursor.calls) == 3
 
 
 def test_local_fallback_delegates_to_legacy_writer_exactly(monkeypatch):
