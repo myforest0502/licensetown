@@ -142,7 +142,7 @@ def test_closest_field_to_sixty_is_finished_first():
     assert [row["field_id"] for row in incomplete[:3]] == [12, 14, 5]
 
 
-def test_concentration_penalty_and_hard_additional_cap():
+def test_concentration_penalty_and_additional_cap_keep_unresolved_field_visible():
     inputs = bundles({18: rows(18, accuracy=0.5)})
     plain = build_learning_strategy(*inputs)
     penalized = build_learning_strategy(*inputs, context_by_field={18: {"consecutive_field_blocks": 3}})
@@ -151,8 +151,8 @@ def test_concentration_penalty_and_hard_additional_cap():
     capped = build_learning_strategy(*inputs, context_by_field={18: {"additional_blocks_completed": 3}})
     row = next(r for r in capped["ranked_fields"] if r["field_id"] == 18)
     assert row["learning_intent"] == "strategy_change"
-    assert not row["allocation_candidate"]
-    assert capped["recommended_field_id"] != 18
+    assert row["allocation_candidate"]
+    assert "additional_block_cap_reached" in row["reason_codes"]
 
 
 def test_retention_drop_and_explicit_time_are_explainable():
