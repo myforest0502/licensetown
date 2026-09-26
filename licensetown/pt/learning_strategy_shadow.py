@@ -32,8 +32,9 @@ def _rank_field(target, urgency):
             _clamp((0.80 - accuracy) / 0.80) if accuracy is not None else 0.0,
             0.5 if "repeated_weakness" in evaluation["reasons"] else 0.0,
         )
-        if "repeated_weakness" in evaluation["reasons"]:
-            reasons.append("repeated_weakness")
+        for reason in evaluation.get("reasons") or ():
+            if reason not in reasons:
+                reasons.append(reason)
     else:
         weakness = 0.0
         reasons.append("initial_evidence_insufficient")
