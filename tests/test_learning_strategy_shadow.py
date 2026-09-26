@@ -143,6 +143,38 @@ def test_closest_field_to_sixty_is_finished_first():
     assert [row["field_id"] for row in incomplete[:3]] == [12, 14, 5]
 
 
+def test_repeated_weakness_before_sixty_routes_to_repair_before_plain_coverage():
+    result = build_learning_strategy(*bundles({
+        5: rows(
+            5,
+            answers=30,
+            accuracy=0.70,
+            counts={"repairing": 10, "checking": 20, "unseen": 70},
+            repeated=1,
+        ),
+        12: rows(12, answers=59, counts={"checking": 59, "unseen": 41}),
+    }))
+    assert result["recommended_field_id"] == 5
+    assert result["learning_intent"] == "repair"
+    assert result["ranked_fields"][0]["early_repair_signal"] is True
+    assert "early_repair_signal" in result["reason_codes"]
+    assert "repeated_weakness" in result["reason_codes"]
+
+
+def test_single_small_repair_signal_does_not_derail_first_pass_coverage():
+    result = build_learning_strategy(*bundles({
+        5: rows(
+            5,
+            answers=30,
+            accuracy=0.70,
+            counts={"repairing": 1, "checking": 29, "unseen": 70},
+        ),
+        12: rows(12, answers=59, counts={"checking": 59, "unseen": 41}),
+    }))
+    assert result["recommended_field_id"] == 12
+    assert result["learning_intent"] == "coverage"
+
+
 def test_concentration_penalty_and_additional_cap_keep_unresolved_field_visible():
     inputs = bundles({18: rows(18, accuracy=0.5)})
     plain = build_learning_strategy(*inputs)
