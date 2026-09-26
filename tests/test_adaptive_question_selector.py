@@ -765,3 +765,44 @@ def test_provisional_safety_is_exempt_from_general_editorial_floor(monkeypatch):
     })
 
     assert selector._provisional_general_evidence_ids() == {"Q1"}
+
+
+def test_trusted_learning_evidence_excludes_general_provisional_but_keeps_safety(monkeypatch):
+    tags = {
+        "Q1": {"knowledge_node_id": "KN0001", "safety": "none", "tag_status": "reviewed"},
+        "Q2": {"knowledge_node_id": "KN0002", "safety": "none", "tag_status": "provisional_bulk"},
+        "Q3": {"knowledge_node_id": "KN0003", "safety": "critical", "tag_status": "provisional_bulk"},
+    }
+    monkeypatch.setattr(selector, "get_question_tag", lambda q: tags[q])
+    attempts = [
+        attempt("Q1", "KN0001", False),
+        attempt("Q2", "KN0002", False),
+        attempt("Q3", "KN0003", False),
+    ]
+
+    kept = selector._trusted_learning_evidence_attempts(attempts)
+
+    assert [row["question_id"] for row in kept] == ["Q1", "Q3"]
+
+
+def test_general_provisional_wrong_does_not_create_repair_priority_but_still_blocks_exact_repeat(monkeypatch):
+    node_by_q = {"Q1": "KN0001", "Q2": "KN0001", "Q3": "KN0002"}
+    monkeypatch.setattr(selector, "question_ids", lambda: tuple(node_by_q))
+    monkeypatch.setattr(selector, "get_category_small", lambda _q: 3)
+    monkeypatch.setattr(selector, "get_question_tag", lambda q: {
+        "knowledge_node_id": node_by_q[q],
+        "safety": "none",
+        "tag_status": "provisional_bulk" if q == "Q1" else "reviewed",
+    })
+
+    selected = selector.select_node_adaptive_questions(
+        [attempt("Q1", "KN0001", False, 1)],
+        2,
+        rng=random.Random(105),
+    )
+    by_id = {row["question_id"]: row for row in selected}
+
+    assert "Q1" not in by_id
+    assert "Q2" in by_id
+    assert by_id["Q2"]["priority_group"] == "exploration"
+    assert by_id["Q2"]["previous_wrong_count"] == 0

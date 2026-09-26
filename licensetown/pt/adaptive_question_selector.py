@@ -14,7 +14,7 @@ from knowledge_node_repair_evidence import (
     SAME_QUESTION,
     classify_repair_confirmation,
 )
-from question_bank import QuestionAvailabilityError, get_category_small
+from question_bank import QuestionAvailabilityError, QuestionBankError, get_category_small
 from licensetown.pt.provider import PTQuestionBankProvider
 from question_equivalence import (
     canonicalize_question_evidence_id,
@@ -63,6 +63,29 @@ def is_node_adaptive_recommendation_enabled(
 
 def _attempt_time(item: dict[str, Any]):
     return item.get("answered_at") or item.get("attempted_at") or ""
+
+
+def _trusted_learning_evidence_attempts(attempts: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Exclude ordinary provisional_bulk outcomes from mastery/repair evidence.
+
+    The full attempt stream still owns exact-repeat and cooldown protection.
+    Critical/high/moderate Safety provisional evidence remains trusted.
+    """
+    kept = []
+    for source in attempts:
+        item = dict(source)
+        question_id = str(item.get("question_id") or "")
+        try:
+            tag = get_question_tag(question_id)
+        except (QuestionBankError, KeyError, TypeError, ValueError):
+            kept.append(item)
+            continue
+        provisional = str(tag.get("tag_status") or "") == "provisional_bulk"
+        safety = str(tag.get("safety") or "none")
+        if provisional and safety not in {"critical", "high", "moderate"}:
+            continue
+        kept.append(item)
+    return kept
 
 
 def _node_attempt_summary(attempts: Iterable[dict[str, Any]]) -> dict[str, dict[str, Any]]:
@@ -189,9 +212,13 @@ def select_node_adaptive_questions(
         raise ValueError("attempts must belong to one user")
     randomizer = rng or random.Random()
     as_of = as_of or datetime.now(timezone.utc)
-    state_records = {item["canonical_node_id"]: item for item in derive_all_user_node_states(attempts, as_of=as_of)}
+    learning_attempts = _trusted_learning_evidence_attempts(attempts)
+    state_records = {
+        item["canonical_node_id"]: item
+        for item in derive_all_user_node_states(learning_attempts, as_of=as_of)
+    }
     states = {node: item["state"] for node, item in state_records.items()}
-    summaries = _node_attempt_summary(attempts)
+    summaries = _node_attempt_summary(learning_attempts)
     seen_question_ids = {
         canonicalize_question_evidence_id(str(item.get("question_id") or ""))
         for item in attempts
@@ -214,7 +241,7 @@ def select_node_adaptive_questions(
         canonicalize_question_evidence_id(str(value))
         for value in (exclude_ids or ())
     }
-    field_by_evidence, field_coverage = _field_node_coverage(attempts)
+    field_by_evidence, field_coverage = _field_node_coverage(learning_attempts)
     candidates = []
     for question_id in question_ids():
         evidence_question_id = canonicalize_question_evidence_id(question_id)
