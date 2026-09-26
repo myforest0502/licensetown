@@ -17,6 +17,33 @@ def pilot_enabled(enabled, user_id, pilot_ids):
     return bool(enabled and user_id and user_id in pilot_ids)
 
 
+def _strategy_evidence_attempts(attempts):
+    """Keep editorially trusted evidence for field strategy decisions.
+
+    provisional_bulk remains usable for practice/repeat guards and Safety, but
+    ordinary provisional answers must not dominate weakness/readiness routing.
+    """
+    from question_bank import QuestionBankError, get_question_tag
+
+    kept = []
+    excluded = 0
+    for source in attempts:
+        item = dict(source)
+        question_id = str(item.get("question_id") or "")
+        try:
+            tag = get_question_tag(question_id)
+        except (QuestionBankError, KeyError, TypeError, ValueError):
+            kept.append(item)
+            continue
+        provisional = str(tag.get("tag_status") or "") == "provisional_bulk"
+        safety = str(tag.get("safety") or "none")
+        if provisional and safety not in {"critical", "high", "moderate"}:
+            excluded += 1
+            continue
+        kept.append(item)
+    return kept, excluded
+
+
 def _lifecycle_metadata(strategy):
     lifecycle = strategy.get('learning_lifecycle')
     if not isinstance(lifecycle, dict):
@@ -112,9 +139,10 @@ def strategy_snapshot(attempts, events, as_of, *, days_to_exam=None):
     from licensetown.pt.learning_lifecycle import build_learning_lifecycle
     from learning_strategy_shadow import build_learning_strategy
     contexts=completion_context(events,as_of)
-    state_rows=derive_all_user_node_states(attempts,as_of=as_of)
+    strategy_attempts, excluded_provisional = _strategy_evidence_attempts(attempts)
+    state_rows=derive_all_user_node_states(strategy_attempts,as_of=as_of)
     states={r['canonical_node_id']:r['state'] for r in state_rows}
-    summaries=_node_attempt_summary(attempts)
+    summaries=_node_attempt_summary(strategy_attempts)
     critical=defaultdict(set)
     for q in question_ids():
         tag=get_question_tag(q)
@@ -123,7 +151,7 @@ def strategy_snapshot(attempts, events, as_of, *, days_to_exam=None):
             if _priority(states[node],summaries[node],'critical')[1] in {'safety_wrong','safety_unresolved'}:
                 critical[get_category_small(q)].add(node)
     last={}
-    for a in attempts:
+    for a in strategy_attempts:
         f=get_category_small(a['question_id'])
         at=_time(a['answered_at'])
         last[f]=max(at,last.get(f,at))
@@ -131,7 +159,7 @@ def strategy_snapshot(attempts, events, as_of, *, days_to_exam=None):
         c['critical_safety_unresolved_count']=len(critical[f])
         if f in last:
             c['days_since_last_field_study']=max(0,(as_of-last[f]).total_seconds()/86400)
-    evidence=build_field_evidence(attempts,as_of=as_of)
+    evidence=build_field_evidence(strategy_attempts,as_of=as_of)
     progress=build_field_progress(evidence)
     targets=build_field_targets(evidence,progress,context_by_field=contexts)
     critical_nodes=set().union(*critical.values()) if critical else set()
@@ -142,6 +170,8 @@ def strategy_snapshot(attempts, events, as_of, *, days_to_exam=None):
     strategy=build_learning_strategy(
         evidence, progress, context_by_field=contexts, days_to_exam=days_to_exam
     )
+    strategy['editorial_evidence_policy']='exclude_general_provisional_bulk_keep_safety'
+    strategy['excluded_provisional_general_attempt_count']=excluded_provisional
     strategy['learning_lifecycle']=lifecycle
     return strategy
 
