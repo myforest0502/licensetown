@@ -132,20 +132,31 @@ def build_learning_strategy(evidence_bundle, progress_bundle, *, context_by_fiel
     urgency = 0.0 if days is None else _clamp((90 - days) / 90)
     targets = build_field_targets(evidence_bundle, progress_bundle, context_by_field=context_by_field)
     ranked = [_rank_field(target, urgency) for target in targets["fields"]]
-    # Product rule: finish every field's formal 60-answer first pass before
-    # any ordinary repair/retention/safety ranking. Otherwise a low-sample field
-    # can remain forever unjudgeable. Among incomplete fields, finish the one
-    # closest to 60 first, then move to the next.
+    # Product rule: pass-first ordering.
+    # Safety and confirmed repair/retention needs must not be postponed merely
+    # because another field has not yet reached the 60-answer classification
+    # floor. Coverage still matters, but it follows current harm/repair signals.
+    # Repeated concentration lowers the repair score and can rotate work away
+    # from one field without hiding the weakness.
     def priority_key(row):
+        components = row.get("priority_components") or {}
+        target = row.get("target") or {}
+        evaluation = target.get("evaluation") or {}
+        if float(components.get("safety_score") or 0) > 0:
+            return (0, -row["priority_score"], row["field_id"])
+        repair_or_retention = bool(
+            row.get("field_state") == "weak"
+            or int(target.get("recheck_due_count") or 0) > 0
+            or "repeated_weakness" in (row.get("reason_codes") or ())
+        )
+        if repair_or_retention:
+            return (1, -row["priority_score"], row["field_id"])
         if row.get("initial_question_floor_incomplete"):
-            evaluation = (row.get("target") or {}).get("evaluation") or {}
             answered = int(evaluation.get("evaluable_answer_count") or 0)
-            floor = int((row.get("target") or {}).get("classification_question_floor") or 60)
+            floor = int(target.get("classification_question_floor") or 60)
             remaining = max(0, floor - answered)
-            return (0, remaining, row["field_id"])
-        if row["priority_components"]["safety_score"] > 0:
-            return (1, 0, row["field_id"])
-        return (2, -row["priority_score"], row["field_id"])
+            return (2, remaining, row["field_id"])
+        return (3, -row["priority_score"], row["field_id"])
 
     ranked.sort(key=priority_key)
     recommended = next((row for row in ranked if row["allocation_candidate"] and row["priority_score"] > 0), None)
