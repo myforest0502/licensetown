@@ -203,14 +203,54 @@ def test_strategy_metadata_reaches_existing_batch_payload():
     assert all(captured[0]['question_results'][0][k]==v for k,v in meta.items())
 
 
+def test_strategy_evidence_excludes_general_provisional_but_keeps_safety(monkeypatch):
+    import question_bank
+
+    tags = {
+        "Q1": {"tag_status": "reviewed", "safety": "none"},
+        "Q2": {"tag_status": "provisional_bulk", "safety": "none"},
+        "Q3": {"tag_status": "provisional_bulk", "safety": "critical"},
+    }
+    monkeypatch.setattr(question_bank, "get_question_tag", lambda q: tags[q])
+    attempts = [
+        {"question_id": "Q1"},
+        {"question_id": "Q2"},
+        {"question_id": "Q3"},
+    ]
+
+    kept, excluded = pilot._strategy_evidence_attempts(attempts)
+
+    assert [row["question_id"] for row in kept] == ["Q1", "Q3"]
+    assert excluded == 1
+
+
 def test_real_strategy_snapshot_has_no_direct_q_authority():
     from tests.test_learning_strategy_natural_history_audit import sample
     from scripts.audit_learning_strategy_shadow import normalize
     attempts=normalize(sample())
     events=[{'answered_at':NOW-timedelta(days=1),'mode':'recommendation_plan',
              'question_results':{'field':'生理学','goal':10}}]
+    provisional_q = next(
+        q for q in question_ids()
+        if get_question_tag(q).get('tag_status') == 'provisional_bulk'
+        and get_question_tag(q).get('safety') not in {'critical','high','moderate'}
+    )
+    provisional_tag = get_question_tag(provisional_q)
+    attempts.append({
+        'user_id': attempts[0]['user_id'],
+        'question_id': provisional_q,
+        'knowledge_node_id': provisional_tag['knowledge_node_id'],
+        'is_correct': False,
+        'confidence': 1,
+        'answer_status': 'answered',
+        'answered_at': NOW-timedelta(hours=2),
+        'event_key': 'provisional-editorial-test',
+        'attempt_position': 1,
+    })
     result=pilot.strategy_snapshot(attempts,events,NOW,days_to_exam=144)
     assert result['shadow_only'] and not result['selection_authority']
+    assert result['editorial_evidence_policy'] == 'exclude_general_provisional_bulk_keep_safety'
+    assert result['excluded_provisional_general_attempt_count'] >= 1
     assert result['days_to_exam']==144
     assert result['time_evidence_available'] is True
     assert result['priority_components']['time_urgency_score'] > 0
