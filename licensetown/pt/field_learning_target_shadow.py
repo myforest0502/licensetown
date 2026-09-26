@@ -115,6 +115,18 @@ def build_field_target(
         "target_stable_ratio": 0.40 + 0.20 * weight_strength,
         "target_resolved_ratio": 0.60 + 0.20 * weight_strength,
         "current_progress_score": current["progress_score"],
+        "repeated_weakness_evidence_count": count(
+            evidence.get("repeated_weakness_evidence_count", 0),
+            "repeated_weakness_evidence_count",
+        ),
+        "repairing_node_count": count(
+            evidence.get("repairing_node_count", counts.get("repairing", 0)),
+            "repairing_node_count",
+        ),
+        "confident_wrong_count": count(
+            evidence.get("confident_wrong_count", 0),
+            "confident_wrong_count",
+        ),
         "max_additional_blocks": MAX_ADDITIONAL_BLOCKS,
         "additional_block_size": REEVALUATION_BLOCK,
         "additional_blocks_completed": blocks,

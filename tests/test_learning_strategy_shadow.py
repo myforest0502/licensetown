@@ -12,7 +12,7 @@ from field_learning_target_shadow import build_field_target, build_field_targets
 from learning_strategy_shadow import build_learning_strategy
 
 
-def rows(field_id=1, *, answers=60, accuracy=0.9, counts=None, supply=200, repeated=0, repairs=0):
+def rows(field_id=1, *, answers=60, accuracy=0.9, counts=None, supply=200, repeated=0, repairs=0, confident_wrong=0):
     counts = counts or {"stable": 100}
     total = sum(counts.values())
     current = calculate_progress_from_state_counts(counts, total)
@@ -22,6 +22,7 @@ def rows(field_id=1, *, answers=60, accuracy=0.9, counts=None, supply=200, repea
         "evaluable_answer_count": answers, "evaluable_accuracy": accuracy,
         "repeated_weakness_evidence_count": repeated,
         "different_question_repair_confirmation_count": repairs,
+        "confident_wrong_count": confident_wrong,
     }
     progress = {
         "field_id": field_id, "total_canonical_nodes": total, **current,
@@ -141,6 +142,55 @@ def test_closest_field_to_sixty_is_finished_first():
     assert result["recommended_field_id"] == 12
     incomplete = [row for row in result["ranked_fields"] if row["initial_question_floor_incomplete"]]
     assert [row["field_id"] for row in incomplete[:3]] == [12, 14, 5]
+
+
+def test_repeated_weakness_before_sixty_routes_to_repair_before_plain_coverage():
+    result = build_learning_strategy(*bundles({
+        5: rows(
+            5,
+            answers=30,
+            accuracy=0.70,
+            counts={"repairing": 10, "checking": 20, "unseen": 70},
+            repeated=1,
+        ),
+        12: rows(12, answers=59, counts={"checking": 59, "unseen": 41}),
+    }))
+    assert result["recommended_field_id"] == 5
+    assert result["learning_intent"] == "repair"
+    assert result["ranked_fields"][0]["early_repair_signal"] is True
+    assert "early_repair_signal" in result["reason_codes"]
+    assert "repeated_weakness" in result["reason_codes"]
+
+
+def test_single_small_repair_signal_does_not_derail_first_pass_coverage():
+    result = build_learning_strategy(*bundles({
+        5: rows(
+            5,
+            answers=30,
+            accuracy=0.70,
+            counts={"repairing": 1, "checking": 29, "unseen": 70},
+        ),
+        12: rows(12, answers=59, counts={"checking": 59, "unseen": 41}),
+    }))
+    assert result["recommended_field_id"] == 12
+    assert result["learning_intent"] == "coverage"
+
+
+def test_confident_wrong_before_sixty_routes_to_repair():
+    result = build_learning_strategy(*bundles({
+        5: rows(
+            5,
+            answers=20,
+            accuracy=0.80,
+            counts={"repairing": 1, "checking": 19, "unseen": 80},
+            confident_wrong=1,
+        ),
+        12: rows(12, answers=59, counts={"checking": 59, "unseen": 41}),
+    }))
+    assert result["recommended_field_id"] == 5
+    assert result["learning_intent"] == "repair"
+    assert result["ranked_fields"][0]["early_repair_signal"] is True
+    assert "confident_wrong" in result["reason_codes"]
 
 
 def test_concentration_penalty_and_additional_cap_keep_unresolved_field_visible():

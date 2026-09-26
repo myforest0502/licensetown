@@ -153,6 +153,12 @@ def build_field_evidence(
             item.get("is_correct") is True
             for item in evaluable_field_attempts
         )
+        confident_wrong_count = sum(
+            item.get("is_correct") is False
+            and item.get("answer_status") != "unknown"
+            and item.get("confidence") == 1
+            for item in field_attempts
+        )
         weakness_counts = Counter(
             weakness[node_id]["evidence_level"]
             for node_id in attempted_nodes
@@ -222,6 +228,7 @@ def build_field_evidence(
             ),
             "evaluable_answer_count": evaluable_answer_count,
             "evaluable_correct_count": evaluable_correct_count,
+            "confident_wrong_count": confident_wrong_count,
             "evaluable_accuracy": (
                 evaluable_correct_count / evaluable_answer_count
                 if evaluable_answer_count else None

@@ -25,6 +25,20 @@ def _rank_field(target, urgency):
     reasons = list(target["reason_codes"])
     if initial_floor_incomplete:
         reasons.append("initial_question_floor_incomplete")
+    repeated_weakness = int(target.get("repeated_weakness_evidence_count") or 0)
+    repairing_nodes = int(target.get("repairing_node_count") or 0)
+    confident_wrong = int(target.get("confident_wrong_count") or 0)
+    early_repair_signal = bool(
+        not sufficient
+        and (
+            confident_wrong > 0
+            or repeated_weakness > 0
+            or (
+                repairing_nodes >= 2
+                and float(evaluation.get("repairing_ratio") or 0) >= 0.25
+            )
+        )
+    )
     if sufficient:
         accuracy = evaluation["evaluable_accuracy"]
         weakness = max(
@@ -35,8 +49,21 @@ def _rank_field(target, urgency):
         if "repeated_weakness" in evaluation["reasons"]:
             reasons.append("repeated_weakness")
     else:
-        weakness = 0.0
+        weakness = (
+            max(
+                _clamp(float(evaluation.get("repairing_ratio") or 0)),
+                0.5 if repeated_weakness else 0.0,
+            )
+            if early_repair_signal
+            else 0.0
+        )
         reasons.append("initial_evidence_insufficient")
+        if early_repair_signal:
+            reasons.append("early_repair_signal")
+            if confident_wrong:
+                reasons.append("confident_wrong")
+            if repeated_weakness:
+                reasons.append("repeated_weakness")
     gap = max(
         _clamp((target["target_progress_score"] - target["current_progress_score"]) / target["target_progress_score"]),
         _clamp((target["target_stable_ratio"] - evaluation["stable_ratio"]) / target["target_stable_ratio"]),
@@ -90,6 +117,8 @@ def _rank_field(target, urgency):
         reasons.append("critical_safety")
     elif target["additional_block_cap_reached"]:
         intent = "strategy_change"
+    elif early_repair_signal:
+        intent = "repair"
     elif not sufficient:
         intent = "coverage"
     elif target["recheck_due_count"]:
@@ -119,6 +148,7 @@ def _rank_field(target, urgency):
         "shadow_only": True, "selection_authority": False,
         "field_state": target["field_state"], "recovery_level": target["recovery_level"],
         "initial_question_floor_incomplete": initial_floor_incomplete,
+        "early_repair_signal": early_repair_signal,
         "learning_intent": intent, "priority_score": score,
         "priority_components": components, "reason_codes": reasons,
         "allocation_candidate": eligible, "target": target,
@@ -149,6 +179,7 @@ def build_learning_strategy(evidence_bundle, progress_bundle, *, context_by_fiel
             return (0, -row["priority_score"], row["field_id"])
         repair_or_retention = bool(
             row.get("field_state") == "weak"
+            or row.get("early_repair_signal")
             or int(target.get("recheck_due_count") or 0) > 0
             or "repeated_weakness" in (row.get("reason_codes") or ())
         )
