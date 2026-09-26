@@ -216,6 +216,24 @@ def test_retention_drop_and_explicit_time_are_explainable():
     assert near["temporal_adjustment"] is False
 
 
+def test_exam_urgency_is_already_active_inside_180_days():
+    pair = rows(18, counts={"recheck_due": 20, "stable": 80})
+    far = build_learning_strategy(
+        *bundles({18: pair}),
+        context_by_field={18: {"previous_stable_ratio": 0.9}},
+        days_to_exam=180,
+    )
+    current_window = build_learning_strategy(
+        *bundles({18: pair}),
+        context_by_field={18: {"previous_stable_ratio": 0.9}},
+        days_to_exam=144,
+    )
+    assert current_window["priority_score"] > far["priority_score"]
+    assert current_window["time_evidence_available"] is True
+    assert current_window["priority_components"]["time_urgency_score"] > 0
+    assert "exam_time_urgency" in current_window["reason_codes"]
+
+
 def test_inputs_unchanged_deterministic_and_all_components_bounded():
     inputs = bundles({1: rows(1, accuracy=0.4, repeated=3), 18: rows(18, answers=0, counts={"unseen": 100})})
     before = deepcopy(inputs)
