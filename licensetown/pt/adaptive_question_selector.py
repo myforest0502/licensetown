@@ -44,6 +44,7 @@ REPAIR_REASONS = {
 # available evidence; exploration/checking/maintenance are more conservative.
 PROVISIONAL_BULK_REPAIR_PENALTY = 80
 PROVISIONAL_BULK_GENERAL_PENALTY = 250
+PROVISIONAL_BULK_GENERAL_SESSION_RATIO = 0.20
 
 
 def parse_node_adaptive_pilot_user_ids(value: str | None) -> set[str]:
@@ -440,6 +441,19 @@ def select_node_adaptive_questions(
     return selected[:question_count]
 
 
+def _provisional_general_evidence_ids() -> set[str]:
+    """Return provisional non-Safety evidence IDs that should stay supplemental."""
+    result = set()
+    for question_id in question_ids():
+        tag = get_question_tag(question_id)
+        if (
+            str(tag.get("tag_status") or "") == "provisional_bulk"
+            and str(tag.get("safety") or "none") not in {"critical", "high", "moderate"}
+        ):
+            result.add(canonicalize_question_evidence_id(question_id))
+    return result
+
+
 def build_node_adaptive_session(
     attempts, question_count=30, exclude_ids=(), rng=None, *, audit_out=None,
     category_small: int | None = None, learning_intent: str | None = None,
@@ -463,24 +477,40 @@ def build_node_adaptive_session(
         (None, learning_intent),
         (None, None),
     ]
-    visited = set()
-    for phase_category, phase_intent in phases:
-        phase = (phase_category, phase_intent)
-        if phase in visited or len(records) >= question_count:
-            continue
-        visited.add(phase)
-        selected_evidence = {
-            item["evidence_question_id"] for item in records
-        }
-        phase_records = select_node_adaptive_questions(
-            attempts,
-            question_count - len(records),
-            exclude_ids=hard_floor_exclude_ids | selected_evidence,
-            rng=rng,
-            category_small=phase_category,
-            learning_intent=phase_intent,
-        )
-        records.extend(phase_records)
+
+    # provisional_bulk is supplemental supply, not the default learning diet.
+    # Fill at least 80% from reviewed/non-provisional evidence when that supply
+    # exists. Critical/high/moderate Safety questions are exempt. The second
+    # pass relaxes the editorial preference so a small field or saturated bank
+    # still completes instead of stopping.
+    provisional_allowance = (
+        max(1, int(question_count * PROVISIONAL_BULK_GENERAL_SESSION_RATIO + 0.999999))
+        if question_count > 0 else 0
+    )
+    preferred_non_provisional_count = max(0, question_count - provisional_allowance)
+    provisional_general_ids = _provisional_general_evidence_ids()
+    for target_count, editorial_excludes in (
+        (preferred_non_provisional_count, provisional_general_ids),
+        (question_count, set()),
+    ):
+        visited = set()
+        for phase_category, phase_intent in phases:
+            phase = (phase_category, phase_intent)
+            if phase in visited or len(records) >= target_count:
+                continue
+            visited.add(phase)
+            selected_evidence = {
+                item["evidence_question_id"] for item in records
+            }
+            phase_records = select_node_adaptive_questions(
+                attempts,
+                target_count - len(records),
+                exclude_ids=hard_floor_exclude_ids | selected_evidence | editorial_excludes,
+                rng=rng,
+                category_small=phase_category,
+                learning_intent=phase_intent,
+            )
+            records.extend(phase_records)
     if len(records) < question_count:
         selected_evidence = {
             item["evidence_question_id"] for item in records
