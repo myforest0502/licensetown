@@ -109,27 +109,26 @@ def test_incomplete_sixty_answer_first_pass_outranks_ordinary_assessed_field():
     assert "initial_question_floor_incomplete" in result["reason_codes"]
 
 
-def test_high_weight_coverage_can_outrank_low_weight_mild_weakness():
+def test_confirmed_weakness_outranks_unfinished_coverage():
     result = build_learning_strategy(*bundles({
         14: rows(14, accuracy=0.64, counts={"stable": 80, "checking": 20}),
         18: rows(18, answers=0, accuracy=None, counts={"unseen": 100}),
     }))
-    assert result["recommended_field_id"] == 18
-    assert result["learning_intent"] == "coverage"
-    assert "high_exam_weight" in result["reason_codes"]
-    assert "coverage_insufficient" in result["reason_codes"]
+    assert result["recommended_field_id"] == 14
+    assert result["learning_intent"] == "repair"
+    assert "low_accuracy" in result["reason_codes"]
 
 
-def test_unfinished_first_pass_overrides_safety_until_field_is_judgeable():
+def test_safety_outranks_unfinished_first_pass():
     result = build_learning_strategy(*bundles({
         5: rows(5, answers=59, counts={"checking": 59, "unseen": 41}),
         14: rows(14, answers=60),
     }), context_by_field={14: {
         "critical_safety_unresolved_count": 1,
     }})
-    assert result["recommended_field_id"] == 5
-    assert result["learning_intent"] == "coverage"
-    assert result["ranked_fields"][0]["initial_question_floor_incomplete"] is True
+    assert result["recommended_field_id"] == 14
+    assert result["learning_intent"] == "safety_review"
+    assert "critical_safety" in result["reason_codes"]
 
 
 def test_closest_field_to_sixty_is_finished_first():
