@@ -86,7 +86,6 @@ def _rank_field(target, urgency):
         target["field_state"] == "weak"
         or early_repair_signal
         or repeated_weakness > 0
-        or repairing_nodes >= 2
     )
     stalled_repair = bool(concentration >= 1.0 and unresolved_repair and not target["recheck_due_count"])
     safety = float(target["critical_safety_unresolved_count"] > 0)
