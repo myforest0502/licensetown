@@ -566,3 +566,50 @@ def test_subjects_learning_data_uses_current_formal_production_bundle(monkeypatc
 
     assert result_fields is fields
     assert result_activity is activity
+
+
+def test_learner_navigation_readiness_uses_trusted_editorial_attempts(monkeypatch):
+    import learning_strategy_runtime_pilot as pilot
+
+    raw = [{"question_id": "Q1"}, {"question_id": "Q2234"}]
+    trusted = [raw[0]]
+    seen = {}
+
+    monkeypatch.setattr(
+        pilot,
+        "trusted_strategy_evidence_attempts",
+        lambda attempts: (trusted, 1),
+    )
+
+    def fake_evidence(attempts):
+        seen["evidence_attempts"] = list(attempts)
+        return {"fields": []}
+
+    def fake_progress(evidence):
+        seen["progress_evidence"] = evidence
+        return {"overall": {}}
+
+    def fake_shadow(attempts, **kwargs):
+        seen["shadow_attempts"] = list(attempts)
+        return {"recommendation_intent": {}}
+
+    def fake_readiness(attempts, **kwargs):
+        seen["readiness_attempts"] = list(attempts)
+        return {"status": "insufficient_evidence", "components": {}}
+
+    monkeypatch.setattr(goukaku_ui_module, "build_field_evidence", fake_evidence)
+    monkeypatch.setattr(goukaku_ui_module, "build_field_progress", fake_progress)
+    monkeypatch.setattr(goukaku_ui_module, "build_dashboard_real_data_shadow", fake_shadow)
+    monkeypatch.setattr(goukaku_ui_module, "build_pass_readiness", fake_readiness)
+    monkeypatch.setattr(
+        goukaku_ui_module,
+        "build_learner_readiness_presentation",
+        lambda readiness, shadow: {"ok": True},
+    )
+
+    result = goukaku_ui_module.build_learner_navigation_from_formal_inputs(raw, [])
+
+    assert result == {"ok": True}
+    assert seen["evidence_attempts"] == trusted
+    assert seen["shadow_attempts"] == trusted
+    assert seen["readiness_attempts"] == trusted
