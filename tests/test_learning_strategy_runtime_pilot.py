@@ -64,7 +64,7 @@ def setup_refinement(monkeypatch,field=18):
                   'coverage_checkpoint_reached':True,'repair_priority':True,
                   'retention_priority':False,'reason_codes':['current_repairing'],
                   'missing_evidence':[]}}
-    monkeypatch.setattr(pilot,'strategy_snapshot',lambda *a:strategy)
+    monkeypatch.setattr(pilot,'strategy_snapshot',lambda *a, **k:strategy)
     return baseline,audit
 
 
@@ -238,7 +238,7 @@ def constrained_field_session(monkeypatch, needed, supply):
                        'selection_reason': 'unseen' if i < 30-needed else 'uncertain_correct',
                        'recent_question_repeat': False, 'recent_cooldown_bypassed': False}
              for i,q in enumerate(baseline)}
-    monkeypatch.setattr(pilot, 'strategy_snapshot', lambda *a: {
+    monkeypatch.setattr(pilot, 'strategy_snapshot', lambda *a, **k: {
         'recommended_field_id': 2, 'learning_intent': 'safety_review',
         'priority_score': 1.4, 'reason_codes': ['critical_safety'],
         'priority_components': {'safety_score': 1}})
