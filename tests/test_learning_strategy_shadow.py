@@ -116,7 +116,8 @@ def test_confirmed_weakness_outranks_unfinished_coverage():
     }))
     assert result["recommended_field_id"] == 14
     assert result["learning_intent"] == "repair"
-    assert "low_accuracy" in result["reason_codes"]
+    chosen = next(row for row in result["ranked_fields"] if row["field_id"] == 14)
+    assert "low_accuracy" in chosen["target"]["evaluation"]["reasons"]
 
 
 def test_safety_outranks_unfinished_first_pass():
