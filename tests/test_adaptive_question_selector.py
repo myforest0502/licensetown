@@ -714,3 +714,54 @@ def test_provisional_bulk_remains_available_for_real_repair_shortage(monkeypatch
 
     assert [item["question_id"] for item in selected] == ["Q2"]
     assert selected[0]["editorial_penalty"] == selector.PROVISIONAL_BULK_REPAIR_PENALTY
+
+
+def test_session_uses_at_most_twenty_percent_general_provisional_when_reviewed_supply_exists(monkeypatch):
+    node_by_q = {f"Q{i}": f"KN{i:04d}" for i in range(1, 21)}
+    monkeypatch.setattr(selector, "question_ids", lambda: tuple(node_by_q))
+    monkeypatch.setattr(selector, "get_category_small", lambda _q: 3)
+    monkeypatch.setattr(selector, "get_question_tag", lambda q: {
+        "knowledge_node_id": node_by_q[q],
+        "safety": "none",
+        "tag_status": "reviewed" if int(q[1:]) <= 8 else "provisional_bulk",
+    })
+    monkeypatch.setattr(selector, "get_quiz_question", lambda q: {"id": q})
+
+    selected = selector.build_node_adaptive_session(
+        [], 10, rng=random.Random(103), category_small=3
+    )
+    ids = [item["id"] for item in selected]
+    provisional = [qid for qid in ids if int(qid[1:]) > 8]
+
+    assert len(ids) == 10
+    assert len(provisional) == 2
+
+
+def test_session_can_relax_provisional_preference_when_no_reviewed_supply_exists(monkeypatch):
+    node_by_q = {f"Q{i}": f"KN{i:04d}" for i in range(1, 13)}
+    monkeypatch.setattr(selector, "question_ids", lambda: tuple(node_by_q))
+    monkeypatch.setattr(selector, "get_category_small", lambda _q: 3)
+    monkeypatch.setattr(selector, "get_question_tag", lambda q: {
+        "knowledge_node_id": node_by_q[q],
+        "safety": "none",
+        "tag_status": "provisional_bulk",
+    })
+    monkeypatch.setattr(selector, "get_quiz_question", lambda q: {"id": q})
+
+    selected = selector.build_node_adaptive_session(
+        [], 10, rng=random.Random(104), category_small=3
+    )
+
+    assert len(selected) == 10
+
+
+def test_provisional_safety_is_exempt_from_general_editorial_floor(monkeypatch):
+    node_by_q = {"Q1": "KN0001", "Q2": "KN0002"}
+    monkeypatch.setattr(selector, "question_ids", lambda: tuple(node_by_q))
+    monkeypatch.setattr(selector, "get_question_tag", lambda q: {
+        "knowledge_node_id": node_by_q[q],
+        "safety": "critical" if q == "Q2" else "none",
+        "tag_status": "provisional_bulk",
+    })
+
+    assert selector._provisional_general_evidence_ids() == {"Q1"}
