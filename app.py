@@ -971,10 +971,18 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
                 # Keep all new imports/reads behind both explicit gates.
                 try:
                     from database import get_learning_events
+                    from dashboard_settings import get_effective_exam_date, tokyo_today
                     from learning_strategy_runtime_pilot import refine_session
+                    exam_date = get_effective_exam_date(user_id)
+                    days_to_exam = (
+                        max((exam_date - tokyo_today()).days, 0)
+                        if exam_date else None
+                    )
                     all_questions = refine_session(
                         attempts, all_questions, adaptive_selection_audit,
-                        get_learning_events(user_id), exclude_ids=adaptive_short_term_blocked,
+                        get_learning_events(user_id),
+                        exclude_ids=adaptive_short_term_blocked,
+                        days_to_exam=days_to_exam,
                     )
                 except Exception as exc:
                     safe_reason = (
@@ -2395,11 +2403,18 @@ def start_dashboard_recommendation():
                     formal_inputs = get_learner_navigation_formal_inputs(user_id)
                 attempts = formal_inputs["attempts"]
                 with timing.measure("evidence_progress_readiness_presentation_build"):
+                    from dashboard_settings import get_effective_exam_date, tokyo_today
+                    exam_date = get_effective_exam_date(user_id)
+                    days_to_exam = (
+                        max((exam_date - tokyo_today()).days, 0)
+                        if exam_date else None
+                    )
                     navigation = build_learner_navigation_from_formal_inputs(
                         attempts,
                         formal_inputs["trial100_records"],
                         learning_events=formal_inputs.get("learning_events"),
                         use_stage_e_strategy=learning_strategy_v1_enabled_for_user(user_id),
+                        days_to_exam=days_to_exam,
                     )
                 action = navigation.get("today_action") or {}
                 expected = (
