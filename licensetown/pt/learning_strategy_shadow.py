@@ -82,6 +82,12 @@ def _rank_field(target, urgency):
     concentration = _clamp(target["consecutive_field_blocks"] / 3)
     if target["additional_block_cap_reached"]:
         concentration = 1.0
+    unresolved_repair = bool(
+        target["field_state"] == "weak"
+        or early_repair_signal
+        or repeated_weakness > 0
+    )
+    stalled_repair = bool(concentration >= 1.0 and unresolved_repair and not target["recheck_due_count"])
     safety = float(target["critical_safety_unresolved_count"] > 0)
     components = {
         "weakness_score": weakness, "attainment_gap_score": gap,
@@ -109,6 +115,8 @@ def _rank_field(target, urgency):
         reasons.append("maintenance_needed")
     if concentration:
         reasons.append("concentration_penalty")
+    if stalled_repair:
+        reasons.append("repair_stalled_after_concentration")
     if urgency:
         reasons.append("exam_time_urgency")
     if safety:
@@ -116,7 +124,7 @@ def _rank_field(target, urgency):
         score += 1.0
         intent = "safety_review"
         reasons.append("critical_safety")
-    elif target["additional_block_cap_reached"]:
+    elif target["additional_block_cap_reached"] or stalled_repair:
         intent = "strategy_change"
     elif early_repair_signal:
         intent = "repair"
@@ -150,6 +158,7 @@ def _rank_field(target, urgency):
         "field_state": target["field_state"], "recovery_level": target["recovery_level"],
         "initial_question_floor_incomplete": initial_floor_incomplete,
         "early_repair_signal": early_repair_signal,
+        "stalled_repair": stalled_repair,
         "learning_intent": intent, "priority_score": score,
         "priority_components": components, "reason_codes": reasons,
         "allocation_candidate": eligible, "target": target,
