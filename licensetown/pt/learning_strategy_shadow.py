@@ -108,7 +108,10 @@ def _rank_field(target, urgency):
         # An unfinished formal first pass must remain selectable even after
         # concentration penalties; rotation may lower its score, not strand it.
         score = max(score, 0.01)
-    eligible = bool(total and target["total_question_count"] and (safety or not target["additional_block_cap_reached"]))
+    # A field that still needs repair must never disappear merely because its
+    # provisional review budget was exhausted. The cap changes intent and adds
+    # concentration pressure; it does not erase the unresolved learning need.
+    eligible = bool(total and target["total_question_count"])
     if not total or not target["total_question_count"]:
         reasons.append("no_field_supply")
     return {
@@ -149,7 +152,8 @@ def build_learning_strategy(evidence_bundle, progress_bundle, *, context_by_fiel
             or int(target.get("recheck_due_count") or 0) > 0
             or "repeated_weakness" in (row.get("reason_codes") or ())
         )
-        if repair_or_retention:
+        concentration = float(components.get("concentration_penalty") or 0)
+        if repair_or_retention and concentration < 1.0:
             return (1, -row["priority_score"], row["field_id"])
         if row.get("initial_question_floor_incomplete"):
             answered = int(evaluation.get("evaluable_answer_count") or 0)
