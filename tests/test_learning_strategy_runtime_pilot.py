@@ -209,8 +209,11 @@ def test_real_strategy_snapshot_has_no_direct_q_authority():
     attempts=normalize(sample())
     events=[{'answered_at':NOW-timedelta(days=1),'mode':'recommendation_plan',
              'question_results':{'field':'生理学','goal':10}}]
-    result=pilot.strategy_snapshot(attempts,events,NOW)
+    result=pilot.strategy_snapshot(attempts,events,NOW,days_to_exam=144)
     assert result['shadow_only'] and not result['selection_authority']
+    assert result['days_to_exam']==144
+    assert result['time_evidence_available'] is True
+    assert result['priority_components']['time_urgency_score'] > 0
     assert result['recommended_field_id'] in range(1,19)
     lifecycle=result['learning_lifecycle']
     assert lifecycle['phase'] in {'coverage','depth_repair','retention_readiness'}
