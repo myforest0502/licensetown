@@ -123,6 +123,10 @@ def build_field_target(
             evidence.get("repairing_node_count", counts.get("repairing", 0)),
             "repairing_node_count",
         ),
+        "confident_wrong_count": count(
+            evidence.get("confident_wrong_count", 0),
+            "confident_wrong_count",
+        ),
         "max_additional_blocks": MAX_ADDITIONAL_BLOCKS,
         "additional_block_size": REEVALUATION_BLOCK,
         "additional_blocks_completed": blocks,
