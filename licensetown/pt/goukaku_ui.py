@@ -359,10 +359,12 @@ def build_learner_navigation_from_formal_inputs(
 ):
     """Build the same structured learner CTA without legacy dashboard work."""
     attempts = list(attempts or [])
-    evidence = evidence or build_field_evidence(attempts)
+    from learning_strategy_runtime_pilot import trusted_strategy_evidence_attempts
+    trusted_attempts, _excluded_provisional = trusted_strategy_evidence_attempts(attempts)
+    evidence = evidence or build_field_evidence(trusted_attempts)
     progress = progress or build_field_progress(evidence)
     shadow_result = shadow_result or build_dashboard_real_data_shadow(
-        attempts,
+        trusted_attempts,
         evidence=evidence,
         progress=progress,
     )
@@ -371,7 +373,7 @@ def build_learner_navigation_from_formal_inputs(
             from datetime import datetime, timezone
             from learning_strategy_runtime_pilot import strategy_snapshot
             stage_e = strategy_snapshot(
-                attempts,
+                trusted_attempts,
                 list(learning_events or []),
                 datetime.now(timezone.utc),
                 days_to_exam=days_to_exam,
@@ -382,7 +384,7 @@ def build_learner_navigation_from_formal_inputs(
             # Stage E completion context is not yet reproducible.
             pass
     readiness = build_pass_readiness(
-        attempts,
+        trusted_attempts,
         field_evidence=evidence,
         progress=progress,
         trial100_records=trial100_records,

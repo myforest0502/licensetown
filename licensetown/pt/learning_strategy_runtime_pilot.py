@@ -17,8 +17,8 @@ def pilot_enabled(enabled, user_id, pilot_ids):
     return bool(enabled and user_id and user_id in pilot_ids)
 
 
-def _strategy_evidence_attempts(attempts):
-    """Keep editorially trusted evidence for field strategy decisions.
+def trusted_strategy_evidence_attempts(attempts):
+    """Keep editorially trusted evidence for strategy/readiness decisions.
 
     provisional_bulk remains usable for practice/repeat guards and Safety, but
     ordinary provisional answers must not dominate weakness/readiness routing.
@@ -42,6 +42,10 @@ def _strategy_evidence_attempts(attempts):
             continue
         kept.append(item)
     return kept, excluded
+
+
+# Backward-compatible internal alias for existing tests/callers.
+_strategy_evidence_attempts = trusted_strategy_evidence_attempts
 
 
 def _lifecycle_metadata(strategy):
@@ -139,7 +143,7 @@ def strategy_snapshot(attempts, events, as_of, *, days_to_exam=None):
     from licensetown.pt.learning_lifecycle import build_learning_lifecycle
     from learning_strategy_shadow import build_learning_strategy
     contexts=completion_context(events,as_of)
-    strategy_attempts, excluded_provisional = _strategy_evidence_attempts(attempts)
+    strategy_attempts, excluded_provisional = trusted_strategy_evidence_attempts(attempts)
     state_rows=derive_all_user_node_states(strategy_attempts,as_of=as_of)
     states={r['canonical_node_id']:r['state'] for r in state_rows}
     summaries=_node_attempt_summary(strategy_attempts)
