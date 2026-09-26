@@ -199,6 +199,10 @@ def test_concentration_penalty_and_additional_cap_keep_unresolved_field_visible(
     penalized = build_learning_strategy(*inputs, context_by_field={18: {"consecutive_field_blocks": 3}})
     score = lambda bundle: next(r["priority_score"] for r in bundle["ranked_fields"] if r["field_id"] == 18)
     assert score(penalized) < score(plain)
+    stalled = next(r for r in penalized["ranked_fields"] if r["field_id"] == 18)
+    assert stalled["learning_intent"] == "strategy_change"
+    assert stalled["stalled_repair"] is True
+    assert "repair_stalled_after_concentration" in stalled["reason_codes"]
     capped = build_learning_strategy(*inputs, context_by_field={18: {"additional_blocks_completed": 3}})
     row = next(r for r in capped["ranked_fields"] if r["field_id"] == 18)
     assert row["learning_intent"] == "strategy_change"
