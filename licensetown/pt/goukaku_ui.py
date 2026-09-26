@@ -291,6 +291,9 @@ def _stage_e_shadow_authority(shadow_result, strategy):
         elif intent in {"retention", "maintenance"}:
             reason_code = "retention_recheck"
             selector_intent = "recheck"
+        elif intent == "strategy_change":
+            reason_code = "strategy_change"
+            selector_intent = "strategy_change"
         else:
             reason_code = "low_progress_repair"
             selector_intent = "repair"
