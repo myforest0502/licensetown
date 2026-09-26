@@ -45,6 +45,7 @@ REASON_COPY = {
     "low_progress_repair": "確認できた範囲の中で、まだ仕上げが必要な内容を進めよう。",
     "coverage_expand": "まだ確認が足りない分野を広げよう。",
     "stable_maintain": "今の力を保ちながら、広く確認を続けよう。",
+    "strategy_change": "同じやり方を続けず、問題の種類を変えて理解を確かめよう。",
 }
 
 ATTENTION_LABELS = {
@@ -55,6 +56,7 @@ ATTENTION_LABELS = {
     "retention_recheck": "再確認の時期",
     "low_progress_repair": "仕上げ中",
     "coverage_expand": "まだ確認が足りない",
+    "strategy_change": "やり方を変える",
 }
 
 
