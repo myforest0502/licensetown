@@ -27,10 +27,12 @@ def _rank_field(target, urgency):
         reasons.append("initial_question_floor_incomplete")
     repeated_weakness = int(target.get("repeated_weakness_evidence_count") or 0)
     repairing_nodes = int(target.get("repairing_node_count") or 0)
+    confident_wrong = int(target.get("confident_wrong_count") or 0)
     early_repair_signal = bool(
         not sufficient
         and (
-            repeated_weakness > 0
+            confident_wrong > 0
+            or repeated_weakness > 0
             or (
                 repairing_nodes >= 2
                 and float(evaluation.get("repairing_ratio") or 0) >= 0.25
@@ -58,6 +60,8 @@ def _rank_field(target, urgency):
         reasons.append("initial_evidence_insufficient")
         if early_repair_signal:
             reasons.append("early_repair_signal")
+            if confident_wrong:
+                reasons.append("confident_wrong")
             if repeated_weakness:
                 reasons.append("repeated_weakness")
     gap = max(
