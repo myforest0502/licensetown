@@ -12,7 +12,7 @@ from field_learning_target_shadow import build_field_target, build_field_targets
 from learning_strategy_shadow import build_learning_strategy
 
 
-def rows(field_id=1, *, answers=60, accuracy=0.9, counts=None, supply=200, repeated=0, repairs=0, confident_wrong=0):
+def rows(field_id=1, *, answers=60, accuracy=0.9, counts=None, supply=200, repeated=0, repairs=0, confident_wrong=0, uncertain=0):
     counts = counts or {"stable": 100}
     total = sum(counts.values())
     current = calculate_progress_from_state_counts(counts, total)
@@ -23,6 +23,8 @@ def rows(field_id=1, *, answers=60, accuracy=0.9, counts=None, supply=200, repea
         "repeated_weakness_evidence_count": repeated,
         "different_question_repair_confirmation_count": repairs,
         "confident_wrong_count": confident_wrong,
+        "unresolved_confident_wrong_node_count": confident_wrong,
+        "uncertain_correct_node_count": uncertain,
     }
     progress = {
         "field_id": field_id, "total_canonical_nodes": total, **current,
@@ -191,6 +193,24 @@ def test_confident_wrong_before_sixty_routes_to_repair():
     assert result["learning_intent"] == "repair"
     assert result["ranked_fields"][0]["early_repair_signal"] is True
     assert "confident_wrong" in result["reason_codes"]
+
+
+def test_current_uncertain_correct_depth_check_outranks_plain_coverage():
+    result = build_learning_strategy(*bundles({
+        5: rows(
+            5,
+            answers=30,
+            accuracy=1.0,
+            counts={"checking": 30, "unseen": 70},
+            uncertain=3,
+        ),
+        12: rows(12, answers=59, counts={"checking": 59, "unseen": 41}),
+    }))
+    assert result["recommended_field_id"] == 5
+    assert result["learning_intent"] == "retention"
+    assert result["ranked_fields"][0]["depth_check_signal"] is True
+    assert "uncertain_correct_depth_check" in result["reason_codes"]
+    assert result["priority_components"]["uncertainty_score"] > 0
 
 
 def test_concentration_penalty_and_additional_cap_keep_unresolved_field_visible():
