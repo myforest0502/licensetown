@@ -261,6 +261,43 @@ def test_real_strategy_snapshot_has_no_direct_q_authority():
     assert all('additional_blocks_completed' not in r['target']['context_available'] for r in result['ranked_fields'])
 
 
+def test_strategy_snapshot_tolerates_historical_persisted_node_mismatch():
+    attempts = [
+        {
+            "user_id": "u",
+            "question_id": "Q269",
+            "knowledge_node_id": "KN0268",
+            "is_correct": False,
+            "confidence": 1,
+            "answer_status": "answered",
+            "answered_at": NOW - timedelta(hours=2),
+            "event_key": "historical-node-1",
+            "attempt_position": 1,
+        },
+        {
+            "user_id": "u",
+            "question_id": "Q361",
+            "knowledge_node_id": "KN0001",
+            "is_correct": False,
+            "confidence": 2,
+            "answer_status": "answered",
+            "answered_at": NOW - timedelta(hours=1),
+            "event_key": "historical-node-2",
+            "attempt_position": 1,
+        },
+    ]
+    events = [{
+        "answered_at": NOW - timedelta(days=1),
+        "mode": "recommendation_plan",
+        "question_results": {"field": "運動学", "goal": 10},
+    }]
+
+    result = pilot.strategy_snapshot(attempts, events, NOW, days_to_exam=144)
+
+    assert result["recommended_field_id"] in range(1, 19)
+    assert result["question_selection_required"] is True
+
+
 def constrained_field_session(monkeypatch, needed, supply):
     """Real-bank fixture: protected baseline plus a small, safe field-2 pool."""
     from question_equivalence import canonicalize_question_evidence_id as eq
