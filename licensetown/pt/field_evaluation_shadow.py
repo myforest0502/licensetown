@@ -62,9 +62,17 @@ def evaluate_field(
     repairing_ratio = _ratio(repairing, touched)
     resolved_ratio = _ratio(repaired + recheck_due + stable, touched)
     stable_ratio = _ratio(stable, touched)
-    accuracy = evidence.get("evaluable_accuracy")
-    accuracy = float(accuracy) if accuracy is not None else None
-    repeated = int(evidence.get("repeated_weakness_evidence_count") or 0)
+    lifetime_accuracy = evidence.get("evaluable_accuracy")
+    lifetime_accuracy = float(lifetime_accuracy) if lifetime_accuracy is not None else None
+    current_accuracy = evidence.get("current_evaluable_accuracy")
+    current_accuracy = float(current_accuracy) if current_accuracy is not None else None
+    accuracy = current_accuracy if current_accuracy is not None else lifetime_accuracy
+    repeated = int(
+        evidence.get(
+            "unresolved_repeated_weakness_node_count",
+            evidence.get("repeated_weakness_evidence_count", 0),
+        ) or 0
+    )
     repairs = int(evidence.get("different_question_repair_confirmation_count") or 0)
     safety = max(0, int(critical_safety_unresolved_count or 0))
     score = float(progress.get("field_progress_score") or progress.get("progress_score") or 0.0)
@@ -142,6 +150,9 @@ def evaluate_field(
         "touched_canonical_nodes": touched,
         "node_spread_met": touched >= required_nodes,
         "evaluable_accuracy": accuracy,
+        "current_evaluable_accuracy": current_accuracy,
+        "lifetime_evaluable_accuracy": lifetime_accuracy,
+        "active_repeated_weakness_node_count": repeated,
         "repairing_ratio": repairing_ratio,
         "resolved_ratio": resolved_ratio,
         "stable_ratio": stable_ratio,
