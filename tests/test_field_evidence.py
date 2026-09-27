@@ -140,6 +140,19 @@ def test_field_depth_risk_counts_only_current_unresolved_evidence():
     assert item["unresolved_confident_wrong_node_count"] == 0
 
 
+def test_field_repair_cycle_uses_persisted_evidence_node_not_current_catalog_node():
+    field_id = get_category_small("Q269")
+    report = build_field_evidence([
+        attempt("Q269", "KN0268", False, 1, 1),
+        attempt("Q361", "KN0001", False, 2, 2),
+    ])
+
+    item = by_field(report, field_id)
+
+    assert item["repairing_node_count"] >= 1
+    assert item["unresolved_confident_wrong_node_count"] == 1
+
+
 def test_current_accuracy_uses_latest_sixty_evaluable_attempts():
     node = get_question_tag("Q1")["knowledge_node_id"]
     field_id = get_category_small("Q1")
