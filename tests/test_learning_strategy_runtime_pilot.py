@@ -289,7 +289,7 @@ def test_strategy_snapshot_tolerates_historical_persisted_node_mismatch():
     events = [{
         "answered_at": NOW - timedelta(days=1),
         "mode": "recommendation_plan",
-        "question_results": {"field": "運動学", "goal": 10},
+        "question_results": {"field": "生理学", "goal": 10},
     }]
 
     result = pilot.strategy_snapshot(attempts, events, NOW, days_to_exam=144)
