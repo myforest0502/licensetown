@@ -21,6 +21,9 @@ def test_product_copy_explains_paid_dashboard_meaning_and_next_actions():
     assert "今日終えたら" in js
     assert "この7日間をLTはこう見ています" in js
     assert "学習範囲・修復・定着" in js
+    assert "単純な後退とは限りません" in js
+    assert "苦手を一つずつ「できる」に変えていきます" in js
+    assert "どの分野にも対応できるPT" in js
 
 
 def test_paid_route_compares_current_progress_with_recommended_pace():
