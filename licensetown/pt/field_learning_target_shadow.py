@@ -127,6 +127,14 @@ def build_field_target(
             evidence.get("confident_wrong_count", 0),
             "confident_wrong_count",
         ),
+        "unresolved_confident_wrong_node_count": count(
+            evidence.get("unresolved_confident_wrong_node_count", 0),
+            "unresolved_confident_wrong_node_count",
+        ),
+        "uncertain_correct_node_count": count(
+            evidence.get("uncertain_correct_node_count", 0),
+            "uncertain_correct_node_count",
+        ),
         "max_additional_blocks": MAX_ADDITIONAL_BLOCKS,
         "additional_block_size": REEVALUATION_BLOCK,
         "additional_blocks_completed": blocks,

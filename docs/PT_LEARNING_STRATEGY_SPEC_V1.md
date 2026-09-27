@@ -130,22 +130,31 @@ must be filled by audited history adapters before promotion; none are wired here
 All components are bounded to [0,1]:
 
 - Weakness: max(repairing ratio, normalized deficit below .80 accuracy,
-  .5 when repeated weakness is present); forced to zero before evidence suffices.
+  .5 when repeated weakness is present); before formal sufficiency, only active
+  repair evidence can create an early repair signal.
+- Current depth evidence: historical confident-wrong attempts remain auditable,
+  but only unresolved confident-wrong Nodes can trigger current early repair.
+  A Node whose latest evaluable answer is correct with confidence 2/3 is an
+  active uncertain-correct depth signal; a later confidence-1 correct clears it.
 - Attainment gap: maximum relative deficit against the three Stage D targets.
 - Coverage gap: maximum of untouched-Node ratio and deficit against 60 answers.
 - Exam weight: W above.
 - Retention: maximum of due/touched ratio, observed stable-ratio drop and .5
   when maintenance is needed.
+- Uncertainty: current uncertain-correct Nodes divided by touched Nodes.
+  Two or more active uncertain-correct Nodes can create a depth-check intent,
+  below Safety/repair but ahead of ordinary unfinished coverage.
 - Safety: 1 if unresolved critical Safety is explicitly observed, otherwise 0.
 - Concentration penalty: min(consecutive field blocks / 3, 1); 1 at additional cap.
 - Time urgency: max(0, (180-days_to_exam)/180), capped at 1. Missing time is neutral
   and marked unavailable. This makes deadline pressure gradual during the final six months
   instead of waiting until the final 90 days. Time-to-exam is not historical exam-year weighting.
 
-For weakness A, gap G, coverage C, weight W, retention R, penalty P, urgency U:
+For weakness A, gap G, coverage C, weight W, retention R, uncertainty Q,
+penalty P, urgency U:
 
 ```
-B = .15A + .20G + .30C + .20W + .15R
+B = .15A + .20G + .25C + .20W + .12R + .08Q
 normal_priority = clamp(B * (.5 + .5W) + .10U * max(G*W, R) - .20P, 0, 1)
 critical_priority = 1 + normal_priority
 ```

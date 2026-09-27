@@ -175,6 +175,19 @@ def test_repaired_node_is_not_kept_in_high_priority_repair(monkeypatch):
     assert any(item["state"] == "unseen" for item in selected)
 
 
+def test_uncertain_correct_is_current_not_lifetime_signal():
+    first = selector._node_attempt_summary([
+        attempt("Q1", "KN0001", True, 2, minute=1),
+    ])
+    assert first["KN0001"]["uncertain_correct"] is True
+
+    resolved = selector._node_attempt_summary([
+        attempt("Q1", "KN0001", True, 2, minute=1),
+        attempt("Q2", "KN0001", True, 1, minute=2),
+    ])
+    assert resolved["KN0001"]["uncertain_correct"] is False
+
+
 def test_recheck_due_is_above_maintenance_but_below_repairing():
     empty = {"wrong_questions": set(), "correct_questions": set(), "confident_wrong": False,
              "uncertain_correct": False, "unknown": False}

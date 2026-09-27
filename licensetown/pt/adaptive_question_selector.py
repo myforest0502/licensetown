@@ -108,12 +108,14 @@ def _node_attempt_summary(attempts: Iterable[dict[str, Any]]) -> dict[str, dict[
         is_correct = False if is_unknown else item.get("is_correct") is True
         if is_correct:
             summary["correct_questions"].add(question_id)
-            if item.get("confidence") in {2, 3}:
-                summary["uncertain_correct"] = True
+            # "Uncertain correct" is a current depth signal, not a lifetime flag.
+            # A later confident correct answer should clear an older shaky correct.
+            summary["uncertain_correct"] = item.get("confidence") in {2, 3}
         else:
             summary["wrong_questions"].add(question_id)
             if not is_unknown:
                 summary["evaluable_wrong_questions"].add(question_id)
+                summary["uncertain_correct"] = False
             summary["unknown"] = summary["unknown"] or is_unknown
             summary["confident_wrong"] = (
                 summary["confident_wrong"] or (not is_unknown and item.get("confidence") == 1)

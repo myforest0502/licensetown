@@ -159,6 +159,30 @@ def build_field_evidence(
             and item.get("confidence") == 1
             for item in field_attempts
         )
+        latest_evaluable_by_node = {}
+        for item in sorted(
+            evaluable_field_attempts,
+            key=lambda value: (
+                str(value.get("attempted_at") or value.get("answered_at") or ""),
+                str(value.get("event_key") or ""),
+                int(value.get("attempt_position") or 0),
+                int(value.get("id") or 0),
+            ),
+        ):
+            question_id = str(item.get("question_id") or "").upper().strip()
+            node_id = _CATALOG["node_by_question"].get(question_id)
+            if node_id:
+                latest_evaluable_by_node[node_id] = item
+        uncertain_correct_node_count = sum(
+            item.get("is_correct") is True and item.get("confidence") in {2, 3}
+            for item in latest_evaluable_by_node.values()
+        )
+        unresolved_confident_wrong_node_count = sum(
+            states[node_id]["state"] == "repairing"
+            and node_id in weakness
+            and int(weakness[node_id].get("confident_wrong_count") or 0) > 0
+            for node_id in attempted_nodes
+        )
         weakness_counts = Counter(
             weakness[node_id]["evidence_level"]
             for node_id in attempted_nodes
@@ -229,6 +253,8 @@ def build_field_evidence(
             "evaluable_answer_count": evaluable_answer_count,
             "evaluable_correct_count": evaluable_correct_count,
             "confident_wrong_count": confident_wrong_count,
+            "unresolved_confident_wrong_node_count": unresolved_confident_wrong_node_count,
+            "uncertain_correct_node_count": uncertain_correct_node_count,
             "evaluable_accuracy": (
                 evaluable_correct_count / evaluable_answer_count
                 if evaluable_answer_count else None
