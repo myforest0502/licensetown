@@ -15,6 +15,7 @@ from database import get_question_attempts
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import STATES, derive_all_user_node_states
 from knowledge_node_repair_cycle import current_evaluable_repair_cycle
+from question_equivalence import canonicalize_question_evidence_node
 from knowledge_node_weakness_evidence import (
     CROSS_QUESTION_CONFIDENT_WRONG,
     CROSS_QUESTION_WRONG,
@@ -179,7 +180,8 @@ def build_field_evidence(
         evaluable_attempts_by_node: dict[str, list[dict[str, Any]]] = defaultdict(list)
         for item in ordered_evaluable_field_attempts:
             question_id = str(item.get("question_id") or "").upper().strip()
-            node_id = _CATALOG["node_by_question"].get(question_id)
+            raw_node_id = str(item.get("knowledge_node_id") or "")
+            node_id = canonicalize_question_evidence_node(question_id, raw_node_id)
             if node_id:
                 latest_evaluable_by_node[node_id] = item
                 evaluable_attempts_by_node[node_id].append(item)
