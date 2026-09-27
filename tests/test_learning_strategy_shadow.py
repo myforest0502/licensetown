@@ -213,6 +213,23 @@ def test_current_uncertain_correct_depth_check_outranks_plain_coverage():
     assert result["priority_components"]["uncertainty_score"] > 0
 
 
+def test_uncertain_depth_signal_never_overrides_confirmed_weak_repair():
+    result = build_learning_strategy(*bundles({
+        5: rows(
+            5,
+            answers=60,
+            accuracy=0.5,
+            counts={"repairing": 30, "checking": 70},
+            uncertain=5,
+        ),
+        12: rows(12, answers=59, counts={"checking": 59, "unseen": 41}),
+    }))
+    chosen = next(row for row in result["ranked_fields"] if row["field_id"] == 5)
+    assert chosen["field_state"] == "weak"
+    assert chosen["depth_check_signal"] is False
+    assert chosen["learning_intent"] == "repair"
+
+
 def test_concentration_penalty_and_additional_cap_keep_unresolved_field_visible():
     inputs = bundles({18: rows(18, accuracy=0.5)})
     plain = build_learning_strategy(*inputs)
