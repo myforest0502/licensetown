@@ -119,6 +119,10 @@ def build_field_target(
             evidence.get("repeated_weakness_evidence_count", 0),
             "repeated_weakness_evidence_count",
         ),
+        "unresolved_repeated_weakness_node_count": count(
+            evidence.get("unresolved_repeated_weakness_node_count", 0),
+            "unresolved_repeated_weakness_node_count",
+        ),
         "repairing_node_count": count(
             evidence.get("repairing_node_count", counts.get("repairing", 0)),
             "repairing_node_count",
