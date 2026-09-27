@@ -109,8 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
     weeklyLabel = '今週は足場固め';
     weeklyCopy = '到達度は大きく動いていません。問題数だけを増やさず、修復と再確認を進める時期です。';
   } else if (progressDelta !== null) {
-    weeklyLabel = '再確認フェーズ';
-    weeklyCopy = '到達度が一時的に下がっています。覚えたままかを厳しく見直している可能性があります。';
+    weeklyLabel = '弱点攻略・再確認中';
+    weeklyCopy = `到達度は一時的に下がっていますが、単純な後退とは限りません。LTが弱点や再確認が必要な知識を見つけ、${priorityField}を中心に「できる問題を増やす」段階から「苦手を直して定着させる」段階へ進んでいる可能性があります。`;
   }
 
   if (dateCard && overallCard && currentCard && todayCard && !document.querySelector('.lt-top-left-stack')) {
@@ -214,10 +214,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let judgement = '学習量だけでなく、修復・再確認・定着がどう進んだかを一緒に見ます。';
     if (progressDelta !== null && progressDelta > 0.2) judgement = `7日間で到達度が ${progressDelta.toFixed(1)}pt 上がりました。取り組んだ量が、学習範囲・修復・定着の前進につながっています。`;
     else if (progressDelta !== null && progressDelta >= -0.2) judgement = '到達度は大きく動いていません。問題数を増やすだけでなく、修復や再確認を進めることが次の伸びにつながります。';
-    else if (progressDelta !== null) judgement = '到達度が一時的に下がっています。再確認の時期に入り、覚えたままかを厳しく見直している可能性があります。';
+    else if (progressDelta !== null) judgement = `到達度は一時的に下がっていますが、単純な後退とは限りません。今は${priorityField}を中心に、LTが弱点や再確認が必要な知識を見つけて修復・定着へ進めている可能性があります。苦手に挑む時期は数字が下がることもあります。ここを乗り越えて、どの分野にも対応できるPTを目指しましょう。`;
     const box = document.createElement('div');
     box.className = 'lt-product-meaning lt-weekly-meaning';
-    box.innerHTML = `<h3>この7日間をLTはこう見ています</h3><p>${judgement}</p><p><b>次の焦点：</b>${priorityField}を優先し、「やった量」から「定着した知識」へ変えていきます。</p>`;
+    box.innerHTML = `<h3>この7日間をLTはこう見ています</h3><p>${judgement}</p><p><b>次の焦点：</b>${priorityField}を優先し、苦手を一つずつ「できる」に変えていきます。目指すのは、どの分野にも対応できるPTです。</p>`;
     weeklyCard.appendChild(box);
   }
 });
