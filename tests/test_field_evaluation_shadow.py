@@ -124,6 +124,44 @@ def test_strong_requires_accuracy_and_resolved_node_evidence():
     assert result["field_state"] == "strong"
 
 
+def test_current_accuracy_overrides_stale_lifetime_accuracy():
+    progress = _progress(
+        touched_canonical_nodes=50,
+        state_counts={
+            "unseen": 50,
+            "repairing": 2,
+            "checking": 8,
+            "recheck_due": 5,
+            "repaired": 10,
+            "stable": 25,
+        },
+    )
+    improved = evaluate_field(
+        _evidence(
+            evaluable_accuracy=0.55,
+            current_evaluable_accuracy=0.90,
+            repeated_weakness_evidence_count=4,
+            unresolved_repeated_weakness_node_count=0,
+        ),
+        progress,
+    )
+    assert improved["field_state"] == "strong"
+    assert improved["evaluable_accuracy"] == 0.90
+    assert improved["lifetime_evaluable_accuracy"] == 0.55
+    assert improved["active_repeated_weakness_node_count"] == 0
+
+    relapsed = evaluate_field(
+        _evidence(
+            evaluable_accuracy=0.90,
+            current_evaluable_accuracy=0.60,
+            unresolved_repeated_weakness_node_count=0,
+        ),
+        progress,
+    )
+    assert relapsed["field_state"] == "weak"
+    assert "low_accuracy" in relapsed["reasons"]
+
+
 def test_safety_keeps_field_weak_even_with_high_accuracy():
     result = evaluate_field(
         _evidence(evaluable_accuracy=0.95),
