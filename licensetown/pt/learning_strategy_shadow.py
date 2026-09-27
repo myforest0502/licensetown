@@ -28,7 +28,8 @@ def _rank_field(target, urgency):
         reasons.append("initial_question_floor_incomplete")
     repeated_weakness = int(target.get("repeated_weakness_evidence_count") or 0)
     repairing_nodes = int(target.get("repairing_node_count") or 0)
-    confident_wrong = int(target.get("confident_wrong_count") or 0)
+    confident_wrong = int(target.get("unresolved_confident_wrong_node_count") or 0)
+    uncertain_correct_nodes = int(target.get("uncertain_correct_node_count") or 0)
     early_repair_signal = bool(
         not sufficient
         and (
@@ -39,6 +40,9 @@ def _rank_field(target, urgency):
                 and float(evaluation.get("repairing_ratio") or 0) >= 0.25
             )
         )
+    )
+    depth_check_signal = bool(
+        uncertain_correct_nodes >= 2 and not early_repair_signal
     )
     if sufficient:
         accuracy = evaluation["evaluable_accuracy"]
@@ -79,6 +83,9 @@ def _rank_field(target, urgency):
         _clamp(target["recheck_due_count"] / max(1, evaluation["touched_canonical_nodes"])),
         _clamp(target["stable_ratio_drop"]), 0.5 if target["maintenance_needed"] else 0.0,
     )
+    uncertainty = _clamp(
+        uncertain_correct_nodes / max(1, evaluation["touched_canonical_nodes"])
+    )
     concentration = _clamp(target["consecutive_field_blocks"] / 3)
     if target["additional_block_cap_reached"]:
         concentration = 1.0
@@ -92,13 +99,14 @@ def _rank_field(target, urgency):
     components = {
         "weakness_score": weakness, "attainment_gap_score": gap,
         "coverage_gap_score": _clamp(coverage), "exam_weight_score": weight_score,
-        "retention_score": retention, "safety_score": safety,
-        "concentration_penalty": concentration, "time_urgency_score": urgency,
+        "retention_score": retention, "uncertainty_score": uncertainty,
+        "safety_score": safety, "concentration_penalty": concentration,
+        "time_urgency_score": urgency,
     }
     # Additive components avoid multiplication by zero. Urgency increases the
     # exam-weight/attainment/retention contribution, never fabricates year trends.
-    base = (0.15 * weakness + 0.20 * gap + 0.30 * coverage +
-            0.20 * weight_score + 0.15 * retention)
+    base = (0.15 * weakness + 0.20 * gap + 0.25 * coverage +
+            0.20 * weight_score + 0.12 * retention + 0.08 * uncertainty)
     score = _clamp(base * (0.5 + 0.5 * weight_score) +
                    0.10 * urgency * max(gap * weight_score, retention) - 0.20 * concentration)
     if weight >= 1:
@@ -113,6 +121,8 @@ def _rank_field(target, urgency):
         reasons.append("stable_ratio_declined")
     if target["maintenance_needed"]:
         reasons.append("maintenance_needed")
+    if depth_check_signal:
+        reasons.append("uncertain_correct_depth_check")
     if concentration:
         reasons.append("concentration_penalty")
     if stalled_repair:
@@ -128,6 +138,8 @@ def _rank_field(target, urgency):
         intent = "strategy_change"
     elif early_repair_signal:
         intent = "repair"
+    elif depth_check_signal:
+        intent = "retention"
     elif not sufficient:
         intent = "coverage"
     elif target["recheck_due_count"]:
@@ -158,6 +170,7 @@ def _rank_field(target, urgency):
         "field_state": target["field_state"], "recovery_level": target["recovery_level"],
         "initial_question_floor_incomplete": initial_floor_incomplete,
         "early_repair_signal": early_repair_signal,
+        "depth_check_signal": depth_check_signal,
         "stalled_repair": stalled_repair,
         "learning_intent": intent, "priority_score": score,
         "priority_components": components, "reason_codes": reasons,
@@ -196,12 +209,14 @@ def build_learning_strategy(evidence_bundle, progress_bundle, *, context_by_fiel
         concentration = float(components.get("concentration_penalty") or 0)
         if repair_or_retention and concentration < 1.0:
             return (1, -row["priority_score"], row["field_id"])
+        if row.get("depth_check_signal") and concentration < 1.0:
+            return (2, -row["priority_score"], row["field_id"])
         if row.get("initial_question_floor_incomplete"):
             answered = int(evaluation.get("evaluable_answer_count") or 0)
             floor = int(target.get("classification_question_floor") or 60)
             remaining = max(0, floor - answered)
-            return (2, remaining, row["field_id"])
-        return (3, -row["priority_score"], row["field_id"])
+            return (3, remaining, row["field_id"])
+        return (4, -row["priority_score"], row["field_id"])
 
     ranked.sort(key=priority_key)
     recommended = next((row for row in ranked if row["allocation_candidate"] and row["priority_score"] > 0), None)
