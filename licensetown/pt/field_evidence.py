@@ -14,6 +14,7 @@ from typing import Any, Iterable
 from database import get_question_attempts
 from knowledge_node_canonical import canonicalize_knowledge_node_id
 from knowledge_node_state_transition import STATES, derive_all_user_node_states
+from knowledge_node_repair_cycle import current_evaluable_repair_cycle
 from knowledge_node_weakness_evidence import (
     CROSS_QUESTION_CONFIDENT_WRONG,
     CROSS_QUESTION_WRONG,
@@ -35,6 +36,7 @@ REPEATED_WEAKNESS_LEVELS = {
     CROSS_QUESTION_CONFIDENT_WRONG,
 }
 RETENTION_STATES = {"repaired", "recheck_due", "stable"}
+CURRENT_ACCURACY_WINDOW = 60
 
 
 def _catalog() -> dict[str, Any]:
@@ -132,6 +134,16 @@ def build_field_evidence(
             item for item in field_attempts
             if item.get("answer_status") != "unknown"
         ]
+        ordered_evaluable_field_attempts = sorted(
+            evaluable_field_attempts,
+            key=lambda value: (
+                str(value.get("attempted_at") or value.get("answered_at") or ""),
+                str(value.get("event_key") or ""),
+                int(value.get("attempt_position") or 0),
+                int(value.get("id") or 0),
+            ),
+        )
+        current_evaluable_attempts = ordered_evaluable_field_attempts[-CURRENT_ACCURACY_WINDOW:]
         attempted_nodes = field_nodes & set(states)
         state_counts = Counter(states[node_id]["state"] for node_id in attempted_nodes)
         state_counts["unseen"] = len(field_nodes - attempted_nodes)
@@ -153,6 +165,10 @@ def build_field_evidence(
             item.get("is_correct") is True
             for item in evaluable_field_attempts
         )
+        current_evaluable_correct_count = sum(
+            item.get("is_correct") is True
+            for item in current_evaluable_attempts
+        )
         confident_wrong_count = sum(
             item.get("is_correct") is False
             and item.get("answer_status") != "unknown"
@@ -160,29 +176,40 @@ def build_field_evidence(
             for item in field_attempts
         )
         latest_evaluable_by_node = {}
-        for item in sorted(
-            evaluable_field_attempts,
-            key=lambda value: (
-                str(value.get("attempted_at") or value.get("answered_at") or ""),
-                str(value.get("event_key") or ""),
-                int(value.get("attempt_position") or 0),
-                int(value.get("id") or 0),
-            ),
-        ):
+        evaluable_attempts_by_node: dict[str, list[dict[str, Any]]] = defaultdict(list)
+        for item in ordered_evaluable_field_attempts:
             question_id = str(item.get("question_id") or "").upper().strip()
             node_id = _CATALOG["node_by_question"].get(question_id)
             if node_id:
                 latest_evaluable_by_node[node_id] = item
+                evaluable_attempts_by_node[node_id].append(item)
         uncertain_correct_node_count = sum(
             item.get("is_correct") is True and item.get("confidence") in {2, 3}
             for item in latest_evaluable_by_node.values()
         )
-        unresolved_confident_wrong_node_count = sum(
-            states[node_id]["state"] == "repairing"
-            and node_id in weakness
-            and int(weakness[node_id].get("confident_wrong_count") or 0) > 0
-            for node_id in attempted_nodes
-        )
+        unresolved_confident_wrong_node_count = 0
+        unresolved_repeated_weakness_node_count = 0
+        for node_id in attempted_nodes:
+            if states[node_id]["state"] != "repairing":
+                continue
+            cycle = current_evaluable_repair_cycle(
+                evaluable_attempts_by_node.get(node_id, ()),
+                as_of=as_of,
+            )
+            wrong_ids = {
+                str(item.get("question_id") or "").upper().strip()
+                for item in cycle
+                if item.get("is_correct") is False
+            }
+            if any(
+                item.get("is_correct") is False and item.get("confidence") == 1
+                for item in cycle
+            ):
+                unresolved_confident_wrong_node_count += 1
+            if len(wrong_ids) >= 2 or sum(
+                item.get("is_correct") is False for item in cycle
+            ) >= 2:
+                unresolved_repeated_weakness_node_count += 1
         weakness_counts = Counter(
             weakness[node_id]["evidence_level"]
             for node_id in attempted_nodes
@@ -252,8 +279,15 @@ def build_field_evidence(
             ),
             "evaluable_answer_count": evaluable_answer_count,
             "evaluable_correct_count": evaluable_correct_count,
+            "current_evaluable_window_size": len(current_evaluable_attempts),
+            "current_evaluable_correct_count": current_evaluable_correct_count,
+            "current_evaluable_accuracy": (
+                current_evaluable_correct_count / len(current_evaluable_attempts)
+                if current_evaluable_attempts else None
+            ),
             "confident_wrong_count": confident_wrong_count,
             "unresolved_confident_wrong_node_count": unresolved_confident_wrong_node_count,
+            "unresolved_repeated_weakness_node_count": unresolved_repeated_weakness_node_count,
             "uncertain_correct_node_count": uncertain_correct_node_count,
             "evaluable_accuracy": (
                 evaluable_correct_count / evaluable_answer_count

@@ -67,7 +67,16 @@ def build_field_target(
     accuracy = evidence.get("evaluable_accuracy")
     if accuracy is not None:
         unit(accuracy, "evaluable_accuracy")
-    for key in ("repeated_weakness_evidence_count", "different_question_repair_confirmation_count"):
+    current_accuracy = evidence.get("current_evaluable_accuracy")
+    if current_accuracy is not None:
+        unit(current_accuracy, "current_evaluable_accuracy")
+    for key in (
+        "repeated_weakness_evidence_count",
+        "unresolved_repeated_weakness_node_count",
+        "unresolved_confident_wrong_node_count",
+        "uncertain_correct_node_count",
+        "different_question_repair_confirmation_count",
+    ):
         count(evidence.get(key, 0), key)
     critical = count(context.get("critical_safety_unresolved_count", 0), "critical_safety_unresolved_count")
     blocks = count(context.get("additional_blocks_completed", 0), "additional_blocks_completed")
@@ -118,6 +127,10 @@ def build_field_target(
         "repeated_weakness_evidence_count": count(
             evidence.get("repeated_weakness_evidence_count", 0),
             "repeated_weakness_evidence_count",
+        ),
+        "unresolved_repeated_weakness_node_count": count(
+            evidence.get("unresolved_repeated_weakness_node_count", 0),
+            "unresolved_repeated_weakness_node_count",
         ),
         "repairing_node_count": count(
             evidence.get("repairing_node_count", counts.get("repairing", 0)),

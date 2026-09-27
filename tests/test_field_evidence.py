@@ -140,6 +140,52 @@ def test_field_depth_risk_counts_only_current_unresolved_evidence():
     assert item["unresolved_confident_wrong_node_count"] == 0
 
 
+def test_current_accuracy_uses_latest_sixty_evaluable_attempts():
+    node = get_question_tag("Q1")["knowledge_node_id"]
+    field_id = get_category_small("Q1")
+    history = [
+        attempt("Q1", node, False, 2, minute)
+        for minute in range(1, 11)
+    ] + [
+        attempt("Q1", node, True, 1, minute)
+        for minute in range(11, 71)
+    ]
+
+    item = by_field(build_field_evidence(history), field_id)
+
+    assert item["evaluable_answer_count"] == 70
+    assert item["evaluable_accuracy"] == 60 / 70
+    assert item["current_evaluable_window_size"] == 60
+    assert item["current_evaluable_accuracy"] == 1.0
+
+
+def test_old_confident_wrong_does_not_reappear_in_new_nonconfident_repair_cycle():
+    field_id = get_category_small("Q269")
+    history = [
+        attempt("Q269", "KN0268", False, 1, 1),
+        attempt("Q361", "KN0268", True, 1, 2),
+        attempt("Q269", "KN0268", False, 2, 3),
+    ]
+
+    item = by_field(build_field_evidence(history), field_id)
+
+    assert item["repairing_node_count"] == 1
+    assert item["confident_wrong_count"] == 1
+    assert item["unresolved_confident_wrong_node_count"] == 0
+    assert item["unresolved_repeated_weakness_node_count"] == 0
+
+
+def test_active_repeated_wrong_is_current_repair_evidence():
+    node = get_question_tag("Q1")["knowledge_node_id"]
+    field_id = get_category_small("Q1")
+    item = by_field(build_field_evidence([
+        attempt("Q1", node, False, 2, 1),
+        attempt("Q1", node, False, 2, 2),
+    ]), field_id)
+
+    assert item["unresolved_repeated_weakness_node_count"] == 1
+
+
 def test_retention_replay_reports_due_and_stable(monkeypatch):
     history = [
         attempt("Q269", "KN0268", False, 2, 1),

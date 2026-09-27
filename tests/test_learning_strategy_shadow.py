@@ -21,6 +21,7 @@ def rows(field_id=1, *, answers=60, accuracy=0.9, counts=None, supply=200, repea
         "total_canonical_node_count": total, "state_counts": dict(counts),
         "evaluable_answer_count": answers, "evaluable_accuracy": accuracy,
         "repeated_weakness_evidence_count": repeated,
+        "unresolved_repeated_weakness_node_count": repeated,
         "different_question_repair_confirmation_count": repairs,
         "confident_wrong_count": confident_wrong,
         "unresolved_confident_wrong_node_count": confident_wrong,
@@ -162,6 +163,26 @@ def test_repeated_weakness_before_sixty_routes_to_repair_before_plain_coverage()
     assert result["ranked_fields"][0]["early_repair_signal"] is True
     assert "early_repair_signal" in result["reason_codes"]
     assert "repeated_weakness" in result["reason_codes"]
+
+
+def test_resolved_historical_repeated_weakness_does_not_reactivate_repair():
+    pair = rows(
+        5,
+        answers=30,
+        accuracy=0.90,
+        counts={"repaired": 10, "checking": 20, "unseen": 70},
+        repeated=0,
+    )
+    pair[0]["repeated_weakness_evidence_count"] = 4
+    pair[0]["unresolved_repeated_weakness_node_count"] = 0
+    result = build_learning_strategy(*bundles({
+        5: pair,
+        12: rows(12, answers=59, counts={"checking": 59, "unseen": 41}),
+    }))
+
+    chosen = next(row for row in result["ranked_fields"] if row["field_id"] == 5)
+    assert chosen["early_repair_signal"] is False
+    assert result["recommended_field_id"] == 12
 
 
 def test_single_small_repair_signal_does_not_derail_first_pass_coverage():
