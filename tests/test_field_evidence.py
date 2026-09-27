@@ -117,6 +117,29 @@ def test_same_question_does_not_repair_but_strong_different_question_does():
     assert item["different_question_repair_confirmation_count"] == 1
 
 
+def test_field_depth_risk_counts_only_current_unresolved_evidence():
+    field_id = get_category_small("Q269")
+
+    shaky = build_field_evidence([
+        attempt("Q269", "KN0268", True, 2, 1),
+    ])
+    assert by_field(shaky, field_id)["uncertain_correct_node_count"] == 1
+
+    confident = build_field_evidence([
+        attempt("Q269", "KN0268", True, 2, 1),
+        attempt("Q361", "KN0268", True, 1, 2),
+    ])
+    assert by_field(confident, field_id)["uncertain_correct_node_count"] == 0
+
+    repaired = build_field_evidence([
+        attempt("Q269", "KN0268", False, 1, 1),
+        attempt("Q361", "KN0268", True, 1, 2),
+    ])
+    item = by_field(repaired, field_id)
+    assert item["confident_wrong_count"] == 1
+    assert item["unresolved_confident_wrong_node_count"] == 0
+
+
 def test_retention_replay_reports_due_and_stable(monkeypatch):
     history = [
         attempt("Q269", "KN0268", False, 2, 1),
