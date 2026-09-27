@@ -26,7 +26,12 @@ def _rank_field(target, urgency):
     reasons = list(target["reason_codes"])
     if initial_floor_incomplete:
         reasons.append("initial_question_floor_incomplete")
-    repeated_weakness = int(target.get("repeated_weakness_evidence_count") or 0)
+    repeated_weakness = int(
+        target.get(
+            "unresolved_repeated_weakness_node_count",
+            target.get("repeated_weakness_evidence_count", 0),
+        ) or 0
+    )
     repairing_nodes = int(target.get("repairing_node_count") or 0)
     confident_wrong = int(target.get("unresolved_confident_wrong_node_count") or 0)
     uncertain_correct_nodes = int(target.get("uncertain_correct_node_count") or 0)
