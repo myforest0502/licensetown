@@ -42,7 +42,10 @@ def _rank_field(target, urgency):
         )
     )
     depth_check_signal = bool(
-        uncertain_correct_nodes >= 2 and not early_repair_signal
+        uncertain_correct_nodes >= 2
+        and not early_repair_signal
+        and target["field_state"] != "weak"
+        and repairing_nodes == 0
     )
     if sufficient:
         accuracy = evaluation["evaluable_accuracy"]
