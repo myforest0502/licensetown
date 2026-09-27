@@ -125,6 +125,25 @@ Missing Safety context is explicitly `safety_evidence_available=False`, not
 proof that the field is safe. Missing timing remains unavailable. These gaps
 must be filled by audited history adapters before promotion; none are wired here.
 
+## Current-state evidence policy
+
+Historical attempts remain stored and auditable, but current learner routing must
+not let resolved old mistakes permanently depress the learner's present state.
+
+- Current field accuracy uses the latest 60 evaluable trusted attempts in that
+  field when available; lifetime evaluable accuracy remains available for audit.
+- Repeated weakness used for current field weakness/routing is counted only from
+  Nodes that are still in an active repairing cycle. Resolved historical repeated
+  weakness remains in historical evidence but cannot reactivate repair by itself.
+- Unresolved confident-wrong means a confidence=1 wrong exists inside the current
+  active repair cycle. A confident wrong from an older repaired cycle does not
+  become current again merely because a later non-confident mistake occurs.
+- Current uncertainty continues to use the latest evaluable Node result: correct
+  with confidence 2/3 is a depth-check signal; a later confidence-1 correct clears it.
+
+This policy is learner-generic and applies from recorded evidence only. It does not
+encode any learner-specific topic, score, or diagnostic-test answer.
+
 ## Stage E: components and priority
 
 All components are bounded to [0,1]:
