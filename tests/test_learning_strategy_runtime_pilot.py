@@ -337,6 +337,56 @@ def test_field_supply_only_needs_to_fill_unprotected_slots(monkeypatch, needed, 
                for row in audit.values())
 
 
+
+def test_older_than_3d_seen_field_supply_can_soft_target_via_spaced_fallback(monkeypatch):
+    baseline, audit, excluded, pool = constrained_field_session(monkeypatch, 2, 2)
+    attempts = []
+    for index, q in enumerate(pool):
+        tag = get_question_tag(q)
+        attempts.append({
+            'user_id': 'a',
+            'question_id': q,
+            'knowledge_node_id': tag['knowledge_node_id'],
+            'is_correct': True,
+            'confidence': 1,
+            'answered_at': NOW - timedelta(days=4, minutes=index),
+            'event_key': f'old-{index}',
+            'attempt_position': 1,
+        })
+
+    result = pilot.refine_session(
+        attempts, baseline, audit, [], exclude_ids=excluded, as_of=NOW
+    )
+
+    ids = {q['id'] for q in result}
+    assert set(pool) <= ids
+    assert all(row['strategy_shadow_or_authority'] == 'soft_pilot' for row in audit.values())
+    assert all(row['strategy_fallback_reason'] is None for row in audit.values())
+
+
+def test_under_3d_seen_field_supply_stays_blocked(monkeypatch):
+    baseline, audit, excluded, pool = constrained_field_session(monkeypatch, 2, 2)
+    attempts = []
+    for index, q in enumerate(pool):
+        tag = get_question_tag(q)
+        attempts.append({
+            'user_id': 'a',
+            'question_id': q,
+            'knowledge_node_id': tag['knowledge_node_id'],
+            'is_correct': True,
+            'confidence': 1,
+            'answered_at': NOW - timedelta(days=2, minutes=index),
+            'event_key': f'recent-{index}',
+            'attempt_position': 1,
+        })
+
+    assert pilot.refine_session(
+        attempts, baseline, audit, [], exclude_ids=excluded, as_of=NOW
+    ) is baseline
+    assert all(row['strategy_fallback_reason'] == 'eligible_supply_insufficient'
+               for row in audit.values())
+
+
 def test_actual_remaining_slot_shortage_keeps_baseline(monkeypatch):
     baseline, audit, excluded, _ = constrained_field_session(monkeypatch, 2, 1)
     monkeypatch.setattr(selector, 'select_node_adaptive_questions',
