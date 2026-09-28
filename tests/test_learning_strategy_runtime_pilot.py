@@ -357,9 +357,13 @@ def test_older_than_3d_seen_field_supply_can_soft_target_via_spaced_fallback(mon
     # Stage E also excludes the learner's latest 30 evidence identities.
     # Put the old target-field evidence outside that recency window so this test
     # isolates the hard 3-day replay rule instead of the recent-30 guard.
+    from question_equivalence import canonicalize_question_evidence_id as eq
+    target_evidence = {eq(q) for q in pool}
     other_field = [
         q for q in question_ids()
-        if get_category_small(q) != 2 and q not in {row['question_id'] for row in attempts}
+        if get_category_small(q) != 2
+        and eq(q) not in target_evidence
+        and q not in {row['question_id'] for row in attempts}
     ][:30]
     for index, q in enumerate(other_field):
         tag = get_question_tag(q)
@@ -378,7 +382,6 @@ def test_older_than_3d_seen_field_supply_can_soft_target_via_spaced_fallback(mon
         attempts, baseline, audit, [], exclude_ids=excluded, as_of=NOW
     )
 
-    from question_equivalence import canonicalize_question_evidence_id as eq
     evidence_ids = {eq(q['id']) for q in result}
     assert {eq(q) for q in pool} <= evidence_ids
     assert all(row['strategy_shadow_or_authority'] == 'soft_pilot' for row in audit.values())
