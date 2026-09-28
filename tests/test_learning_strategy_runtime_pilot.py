@@ -382,10 +382,12 @@ def test_older_than_3d_seen_field_supply_can_soft_target_via_spaced_fallback(mon
         attempts, baseline, audit, [], exclude_ids=excluded, as_of=NOW
     )
 
+    fallback_reasons = {row.get('strategy_fallback_reason') for row in audit.values()}
+    authorities = {row.get('strategy_shadow_or_authority') for row in audit.values()}
+    assert fallback_reasons == {None}, (fallback_reasons, authorities)
     evidence_ids = {eq(q['id']) for q in result}
     assert {eq(q) for q in pool} <= evidence_ids
-    assert all(row['strategy_shadow_or_authority'] == 'soft_pilot' for row in audit.values())
-    assert all(row['strategy_fallback_reason'] is None for row in audit.values())
+    assert authorities == {'soft_pilot'}
 
 
 def test_under_3d_seen_field_supply_stays_blocked(monkeypatch):
