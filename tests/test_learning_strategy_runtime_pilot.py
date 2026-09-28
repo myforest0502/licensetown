@@ -359,10 +359,12 @@ def test_older_than_3d_seen_field_supply_can_soft_target_via_spaced_fallback(mon
     # isolates the hard 3-day replay rule instead of the recent-30 guard.
     from question_equivalence import canonicalize_question_evidence_id as eq
     target_evidence = {eq(q) for q in pool}
+    baseline_evidence = {eq(q['id']) for q in baseline}
     other_field = [
         q for q in question_ids()
         if get_category_small(q) != 2
         and eq(q) not in target_evidence
+        and eq(q) not in baseline_evidence
         and q not in {row['question_id'] for row in attempts}
     ][:30]
     for index, q in enumerate(other_field):
