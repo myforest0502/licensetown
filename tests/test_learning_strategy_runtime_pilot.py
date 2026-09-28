@@ -378,8 +378,9 @@ def test_older_than_3d_seen_field_supply_can_soft_target_via_spaced_fallback(mon
         attempts, baseline, audit, [], exclude_ids=excluded, as_of=NOW
     )
 
-    ids = {q['id'] for q in result}
-    assert set(pool) <= ids
+    from question_equivalence import canonicalize_question_evidence_id as eq
+    evidence_ids = {eq(q['id']) for q in result}
+    assert {eq(q) for q in pool} <= evidence_ids
     assert all(row['strategy_shadow_or_authority'] == 'soft_pilot' for row in audit.values())
     assert all(row['strategy_fallback_reason'] is None for row in audit.values())
 
