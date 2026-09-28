@@ -354,6 +354,26 @@ def test_older_than_3d_seen_field_supply_can_soft_target_via_spaced_fallback(mon
             'attempt_position': 1,
         })
 
+    # Stage E also excludes the learner's latest 30 evidence identities.
+    # Put the old target-field evidence outside that recency window so this test
+    # isolates the hard 3-day replay rule instead of the recent-30 guard.
+    other_field = [
+        q for q in question_ids()
+        if get_category_small(q) != 2 and q not in {row['question_id'] for row in attempts}
+    ][:30]
+    for index, q in enumerate(other_field):
+        tag = get_question_tag(q)
+        attempts.append({
+            'user_id': 'a',
+            'question_id': q,
+            'knowledge_node_id': tag['knowledge_node_id'],
+            'is_correct': True,
+            'confidence': 1,
+            'answered_at': NOW - timedelta(hours=1, minutes=index),
+            'event_key': f'newer-{index}',
+            'attempt_position': 1,
+        })
+
     result = pilot.refine_session(
         attempts, baseline, audit, [], exclude_ids=excluded, as_of=NOW
     )
