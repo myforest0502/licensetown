@@ -337,6 +337,84 @@ def test_field_supply_only_needs_to_fill_unprotected_slots(monkeypatch, needed, 
                for row in audit.values())
 
 
+
+def test_older_than_3d_seen_field_supply_can_soft_target_via_spaced_fallback(monkeypatch):
+    baseline, audit, excluded, pool = constrained_field_session(monkeypatch, 2, 2)
+    attempts = []
+    for index, q in enumerate(pool):
+        tag = get_question_tag(q)
+        attempts.append({
+            'user_id': 'a',
+            'question_id': q,
+            'knowledge_node_id': tag['knowledge_node_id'],
+            'is_correct': True,
+            'confidence': 1,
+            'answered_at': NOW - timedelta(days=4, minutes=index),
+            'event_key': f'old-{index}',
+            'attempt_position': 1,
+        })
+
+    # Stage E also excludes the learner's latest 30 evidence identities.
+    # Put the old target-field evidence outside that recency window so this test
+    # isolates the hard 3-day replay rule instead of the recent-30 guard.
+    from question_equivalence import canonicalize_question_evidence_id as eq
+    target_evidence = {eq(q) for q in pool}
+    baseline_evidence = {eq(q['id']) for q in baseline}
+    other_field = [
+        q for q in question_ids()
+        if get_category_small(q) != 2
+        and eq(q) not in target_evidence
+        and eq(q) not in baseline_evidence
+        and q not in {row['question_id'] for row in attempts}
+    ][:30]
+    for index, q in enumerate(other_field):
+        tag = get_question_tag(q)
+        attempts.append({
+            'user_id': 'a',
+            'question_id': q,
+            'knowledge_node_id': tag['knowledge_node_id'],
+            'is_correct': True,
+            'confidence': 1,
+            'answered_at': NOW - timedelta(hours=1, minutes=index),
+            'event_key': f'newer-{index}',
+            'attempt_position': 1,
+        })
+
+    result = pilot.refine_session(
+        attempts, baseline, audit, [], exclude_ids=excluded, as_of=NOW
+    )
+
+    fallback_reasons = {row.get('strategy_fallback_reason') for row in audit.values()}
+    authorities = {row.get('strategy_shadow_or_authority') for row in audit.values()}
+    assert fallback_reasons == {None}, (fallback_reasons, authorities)
+    evidence_ids = {eq(q['id']) for q in result}
+    assert {eq(q) for q in pool} <= evidence_ids
+    assert authorities == {'soft_pilot'}
+
+
+def test_under_3d_seen_field_supply_stays_blocked(monkeypatch):
+    baseline, audit, excluded, pool = constrained_field_session(monkeypatch, 2, 2)
+    attempts = []
+    for index, q in enumerate(pool):
+        tag = get_question_tag(q)
+        attempts.append({
+            'user_id': 'a',
+            'question_id': q,
+            'knowledge_node_id': tag['knowledge_node_id'],
+            'is_correct': True,
+            'confidence': 1,
+            'answered_at': NOW - timedelta(days=2, minutes=index),
+            'event_key': f'recent-{index}',
+            'attempt_position': 1,
+        })
+
+    assert pilot.refine_session(
+        attempts, baseline, audit, [], exclude_ids=excluded, as_of=NOW
+    ) is baseline
+    assert all(row['strategy_fallback_reason'] == 'eligible_supply_insufficient'
+               for row in audit.values())
+
+
 def test_actual_remaining_slot_shortage_keeps_baseline(monkeypatch):
     baseline, audit, excluded, _ = constrained_field_session(monkeypatch, 2, 1)
     monkeypatch.setattr(selector, 'select_node_adaptive_questions',
