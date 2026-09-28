@@ -192,7 +192,7 @@ def refine_session(
     question-selection authority. Exceptions leave caller's baseline intact.
     """
     from adaptive_question_selector import select_node_adaptive_questions,_field_node_coverage
-    from short_term_repeat_guard import blocked_short_term_evidence_ids
+    from short_term_repeat_guard import recent_short_term_evidence_ids
     from question_bank import question_ids,get_category_small,get_question_tag,get_quiz_question
     from question_equivalence import canonicalize_question_evidence_id as eq
     if len(baseline)!=30:
@@ -235,7 +235,11 @@ def refine_session(
         return fallback('no_unprotected_slots')
 
     protected_ids={eq(q['id']) for q in protected}
-    blocked=blocked_short_term_evidence_ids(attempts,as_of=as_of)|{eq(q) for q in exclude_ids}
+    # Match the baseline selector's safe replay contract: only the hard real-time
+    # three-day floor is an absolute repeat block here.  Older seen evidence may
+    # be used as spaced fallback supply when a strategy-targeted field is saturated.
+    # Formal Safety/recheck items in the baseline remain protected above.
+    blocked=recent_short_term_evidence_ids(attempts,as_of=as_of)|{eq(q) for q in exclude_ids}
     recent={eq(a['question_id']) for a in sorted(attempts,key=lambda a:_time(a['answered_at']),reverse=True)[:30]}
     field_map,_=_field_node_coverage(attempts)
 
@@ -262,7 +266,8 @@ def refine_session(
         intent=intent_map.get(candidate.get('learning_intent'))
         selected=select_node_adaptive_questions(
             attempts,needed,exclude_ids=blocked|recent|protected_ids,
-            category_small=candidate_field,learning_intent=intent,as_of=as_of)
+            category_small=candidate_field,learning_intent=intent,as_of=as_of,
+            allow_spaced_repeat_fallback=True)
         if len(selected)<needed:
             continue
         chosen_candidate=candidate
