@@ -1043,6 +1043,14 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
     }
     if adaptive_selection_audit is not None:
         study_sessions[user_id]["adaptive_selection_audit"] = adaptive_selection_audit
+        floor_up_targets = {
+            row.get("floor_up_target_field")
+            for row in adaptive_selection_audit.values()
+            if row.get("floor_up_mode") == "daily_floor_up_v0.1"
+            and row.get("floor_up_target_field") is not None
+        }
+        if len(floor_up_targets) == 1:
+            study_sessions[user_id]["floor_up_target_field"] = floor_up_targets.pop()
 
     quiz_messages = format_quiz_messages(questions)
 
@@ -1074,10 +1082,14 @@ def start_next_quiz(user_id):
     start_index = current_set * questions_per_set
     end_index = start_index + questions_per_set
     pilot_enabled = globals().get("is_prerequisite_backtrack_pilot_enabled")
-    if pilot_enabled and pilot_enabled(
-        globals().get("ENABLE_PREREQUISITE_BACKTRACK", False),
-        user_id,
-        globals().get("PREREQUISITE_BACKTRACK_PILOT_USER_IDS", ()),
+    if (
+        current_session.get("floor_up_target_field") is None
+        and pilot_enabled
+        and pilot_enabled(
+            globals().get("ENABLE_PREREQUISITE_BACKTRACK", False),
+            user_id,
+            globals().get("PREREQUISITE_BACKTRACK_PILOT_USER_IDS", ()),
+        )
     ):
         candidate = current_session.pop("pending_prerequisite_backtrack", None)
         updated_questions, injected = inject_pending_backtrack_candidate(
@@ -2024,7 +2036,8 @@ def record_confirmed_learning_batch(user_id, session):
 def queue_prerequisite_backtrack_for_next_set(user_id, session):
     """Feature-flagged pilot: queue no more than one depth-1 candidate."""
     if (
-        not is_prerequisite_backtrack_pilot_enabled(
+        session.get("floor_up_target_field") is not None
+        or not is_prerequisite_backtrack_pilot_enabled(
             ENABLE_PREREQUISITE_BACKTRACK,
             user_id,
             PREREQUISITE_BACKTRACK_PILOT_USER_IDS,
