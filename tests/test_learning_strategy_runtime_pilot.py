@@ -17,6 +17,151 @@ def test_gate_requires_both_flag_and_exact_user():
     assert pilot.pilot_enabled(True,'a',{'a'})
 
 
+
+def _adaptive_session_events(root, ended_at, *, floor_up_target=None):
+    events = []
+    questions = list(question_ids())[:30]
+    for batch in range(6):
+        rows = []
+        for q in questions[batch * 5:(batch + 1) * 5]:
+            row = {'question_id': q, 'learning_source': 'adaptive_daily'}
+            if floor_up_target is not None:
+                row.update({
+                    'floor_up_mode': pilot.FLOOR_UP_VERSION,
+                    'floor_up_target_field': floor_up_target,
+                    'strategy_version': pilot.VERSION,
+                    'strategy_shadow_or_authority': 'soft_pilot',
+                    'strategy_recommended_field': floor_up_target,
+                })
+            rows.append(row)
+        events.append({
+            'answered_at': ended_at - timedelta(minutes=5 - batch),
+            'event_key': f'{root}:{batch + 1}',
+            'mode': 'study',
+            'question_results': rows,
+        })
+    return events
+
+
+def test_daily_floor_up_only_uses_blocks_three_and_four():
+    now = datetime(2026, 9, 30, 12, 0, tzinfo=timezone.utc)
+    events = []
+    events += _adaptive_session_events('s1', now - timedelta(hours=3))
+    events += _adaptive_session_events('s2', now - timedelta(hours=2))
+    context = pilot.daily_floor_up_context(events, now)
+    assert context['active'] is True
+    assert context['completed_blocks_today'] == 2
+    assert context['floor_up_day_block'] == 1
+
+    events += _adaptive_session_events(
+        's3', now - timedelta(hours=1), floor_up_target=14
+    )
+    context = pilot.daily_floor_up_context(events, now)
+    assert context['active'] is True
+    assert context['completed_blocks_today'] == 3
+    assert context['floor_up_day_block'] == 2
+    assert context['today_target_field'] == 14
+
+    events += _adaptive_session_events(
+        's4', now - timedelta(minutes=10), floor_up_target=14
+    )
+    context = pilot.daily_floor_up_context(events, now)
+    assert context['active'] is False
+    assert context['completed_blocks_today'] == 4
+
+
+def test_floor_up_ranking_rotates_away_from_yesterday_when_balance_allows():
+    def row(field, accuracy, progress, repeated=0):
+        return {
+            'field_id': field,
+            'priority_score': 0.5,
+            'reason_codes': [],
+            'priority_components': {},
+            'target': {
+                'total_question_count': 100,
+                'current_progress_score': progress,
+                'unresolved_repeated_weakness_node_count': repeated,
+                'evaluation': {
+                    'evaluable_answer_count': 60,
+                    'current_evaluable_accuracy': accuracy,
+                    'evaluable_accuracy': accuracy,
+                },
+            },
+        }
+    strategy = {'ranked_fields': [
+        row(14, 0.58, 0.20, 3),
+        row(5, 0.63, 0.25, 1),
+        row(9, 0.63, 0.30, 2),
+    ]}
+    assert [r['field_id'] for r in pilot._floor_up_ranked_candidates(strategy)][:3] == [14, 5, 9]
+    assert [r['field_id'] for r in pilot._floor_up_ranked_candidates(strategy, 14)][:3] == [5, 9, 14]
+
+
+def test_floor_up_refinement_is_one_exact_field_and_reused_for_second_block(monkeypatch):
+    now = datetime(2026, 9, 30, 12, 0, tzinfo=timezone.utc)
+    baseline = [get_quiz_question(q) for q in list(question_ids())[:30]]
+    audit = {
+        q['id']: {
+            'selection_group': 'checking',
+            'selection_reason': 'uncertain_correct',
+        }
+        for q in baseline
+    }
+    strategy = {
+        'recommended_field_id': 2,
+        'learning_intent': 'safety_review',
+        'priority_score': 1.0,
+        'reason_codes': ['critical_safety'],
+        'priority_components': {'safety_score': 1},
+        'learning_lifecycle': {},
+        'ranked_fields': [{
+            'field_id': 14,
+            'priority_score': 0.8,
+            'reason_codes': ['low_accuracy'],
+            'priority_components': {'weakness_score': 0.7},
+            'allocation_candidate': True,
+            'target': {
+                'total_question_count': 100,
+                'current_progress_score': 0.20,
+                'unresolved_repeated_weakness_node_count': 3,
+                'evaluation': {
+                    'evaluable_answer_count': 60,
+                    'current_evaluable_accuracy': 0.58,
+                    'evaluable_accuracy': 0.58,
+                },
+            },
+        }],
+    }
+    monkeypatch.setattr(pilot, 'strategy_snapshot', lambda *a, **k: strategy)
+    events = []
+    events += _adaptive_session_events('s1', now - timedelta(hours=3))
+    events += _adaptive_session_events('s2', now - timedelta(hours=2))
+
+    first = pilot.refine_session([], baseline, audit, events, as_of=now)
+    assert len(first) == 30
+    assert all(get_category_small(q['id']) == 14 for q in first)
+    assert {row['floor_up_target_field'] for row in audit.values()} == {14}
+    assert {row['floor_up_day_block'] for row in audit.values()} == {1}
+    assert {row['strategy_learning_intent'] for row in audit.values()} == {'floor_up'}
+
+    events += _adaptive_session_events(
+        's3', now - timedelta(hours=1), floor_up_target=14
+    )
+    second_audit = {
+        q['id']: {
+            'selection_group': 'checking',
+            'selection_reason': 'uncertain_correct',
+        }
+        for q in baseline
+    }
+    second = pilot.refine_session([], baseline, second_audit, events, as_of=now)
+    assert len(second) == 30
+    assert all(get_category_small(q['id']) == 14 for q in second)
+    assert {row['floor_up_target_field'] for row in second_audit.values()} == {14}
+    assert {row['floor_up_day_block'] for row in second_audit.values()} == {2}
+
+
+
 def test_app_off_and_nonpilot_preserve_selector_call_without_event_read(monkeypatch):
     # Exercise the real function source with the established isolated harness
     # style: avoid unrelated Flask/LINE effects and enforce lazy imports.

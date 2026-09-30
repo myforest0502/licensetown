@@ -1,8 +1,11 @@
 """Opt-in PT strategy adapter. Existing selector remains Q-selection authority."""
 from collections import defaultdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 VERSION = 'learning_strategy_runtime_pilot_v0.1'
+FLOOR_UP_VERSION = 'daily_floor_up_v0.1'
+TOKYO = ZoneInfo('Asia/Tokyo')
 EXPLORATION_FLOOR = 5
 METADATA_KEYS = ('strategy_version','strategy_recommended_field','strategy_learning_intent',
                  'strategy_priority_score','strategy_reason_codes','strategy_priority_components',
@@ -180,6 +183,232 @@ def strategy_snapshot(attempts, events, as_of, *, days_to_exam=None):
     return strategy
 
 
+
+def daily_floor_up_context(events, as_of):
+    """Return today's completed 30q adaptive blocks and any persisted floor-up target.
+
+    Floor-up is deliberately bounded to blocks 3 and 4 only. Blocks 1-2 and any
+    work after block 4 stay on the ordinary LT strategy so one weak field cannot
+    take over the whole learning day.
+    """
+    now = _time(as_of)
+    today = now.astimezone(TOKYO).date()
+    yesterday = today - timedelta(days=1)
+    sessions = defaultdict(list)
+    for event in events:
+        payload = event.get('question_results')
+        if not isinstance(payload, list):
+            continue
+        key = str(event.get('event_key') or '')
+        if ':' not in key:
+            continue
+        root = key.rsplit(':', 1)[0]
+        at = _time(event['answered_at'])
+        for row in payload:
+            if row.get('learning_source') == 'adaptive_daily':
+                sessions[root].append((at, row))
+
+    completed = []
+    for root, rows in sessions.items():
+        question_ids = {row.get('question_id') for _, row in rows}
+        if len(rows) != 30 or len(question_ids) != 30 or None in question_ids:
+            continue
+        ended_at = max(at for at, _ in rows)
+        day = ended_at.astimezone(TOKYO).date()
+        targets = {
+            int(row['floor_up_target_field'])
+            for _, row in rows
+            if row.get('floor_up_mode') == FLOOR_UP_VERSION
+            and str(row.get('floor_up_target_field') or '').isdigit()
+        }
+        target = next(iter(targets)) if len(targets) == 1 else None
+        completed.append({'root': root, 'day': day, 'ended_at': ended_at, 'floor_up_target': target})
+
+    today_rows = sorted(
+        (row for row in completed if row['day'] == today),
+        key=lambda row: row['ended_at'],
+    )
+    today_target = next(
+        (row['floor_up_target'] for row in today_rows if row['floor_up_target']),
+        None,
+    )
+    yesterday_targets = [
+        row['floor_up_target'] for row in completed
+        if row['day'] == yesterday and row['floor_up_target']
+    ]
+    yesterday_target = yesterday_targets[-1] if yesterday_targets else None
+    completed_blocks = len(today_rows)
+    active = completed_blocks in {2, 3}
+    return {
+        'active': active,
+        'completed_blocks_today': completed_blocks,
+        'floor_up_day_block': completed_blocks - 1 if active else None,
+        'today_target_field': today_target,
+        'yesterday_target_field': yesterday_target,
+    }
+
+
+def _floor_up_ranked_candidates(strategy, yesterday_target=None):
+    """Rank the learner's floor without letting one field dominate consecutive days.
+
+    Current evaluable accuracy is the primary floor signal. Progress and active
+    unresolved weakness only break ties. If another suitable field exists, the
+    prior day's floor-up target is skipped for one day to protect whole-exam balance.
+    """
+    rows = []
+    for row in strategy.get('ranked_fields') or ():
+        target = row.get('target') or {}
+        evaluation = target.get('evaluation') or {}
+        accuracy = evaluation.get('current_evaluable_accuracy')
+        if accuracy is None:
+            accuracy = evaluation.get('evaluable_accuracy')
+        answers = int(evaluation.get('evaluable_answer_count') or 0)
+        if accuracy is None or answers < 60 or not target.get('total_question_count'):
+            continue
+        rows.append((
+            float(accuracy),
+            float(target.get('current_progress_score') or 0.0),
+            -int(target.get('unresolved_repeated_weakness_node_count') or 0),
+            int(row['field_id']),
+            row,
+        ))
+    rows.sort(key=lambda item: item[:4])
+    ordered = [item[-1] for item in rows]
+    if yesterday_target and len(ordered) > 1:
+        rotated = [row for row in ordered if int(row['field_id']) != int(yesterday_target)]
+        rotated += [row for row in ordered if int(row['field_id']) == int(yesterday_target)]
+        ordered = rotated
+    return ordered
+
+
+def _refine_floor_up_session(
+    attempts, baseline, audit, strategy, events, *,
+    exclude_ids=(), as_of=None,
+):
+    """Build one exact 30q field block for daily floor-up, or fail closed.
+
+    A day gets at most two such blocks (61-90 and 91-120). The first block picks
+    one low-floor field; the second reuses the same field for clean 30q analysis.
+    Results remain ordinary formal attempts and therefore feed every existing LT
+    state/progress/repair calculation.
+    """
+    from adaptive_question_selector import select_node_adaptive_questions, _field_node_coverage
+    from short_term_repeat_guard import recent_short_term_evidence_ids
+    from question_bank import question_ids, get_category_small, get_quiz_question
+    from question_equivalence import canonicalize_question_evidence_id as eq
+
+    now = _time(as_of or datetime.now(timezone.utc))
+    context = daily_floor_up_context(events, now)
+    if not context['active']:
+        return None
+
+    blocked = recent_short_term_evidence_ids(attempts, as_of=now) | {eq(q) for q in exclude_ids}
+    recent = {
+        eq(a['question_id'])
+        for a in sorted(attempts, key=lambda a: _time(a['answered_at']), reverse=True)[:30]
+    }
+    field_map, _ = _field_node_coverage(attempts)
+    target_field = context['today_target_field']
+    rotated = False
+
+    if target_field:
+        candidates = [row for row in strategy.get('ranked_fields') or ()
+                      if int(row.get('field_id') or 0) == int(target_field)]
+    else:
+        candidates = _floor_up_ranked_candidates(
+            strategy, context.get('yesterday_target_field')
+        )
+
+    required_supply = 30 if target_field else 60
+    chosen = None
+    for candidate in candidates:
+        field_id = int(candidate['field_id'])
+        eligible = {
+            eq(q) for q in question_ids()
+            if field_map.get(eq(q), get_category_small(q)) == field_id
+        } - blocked - recent
+        if len(eligible) < required_supply:
+            continue
+        chosen = candidate
+        if (
+            not target_field
+            and context.get('yesterday_target_field')
+            and field_id != int(context['yesterday_target_field'])
+        ):
+            rotated = True
+        break
+
+    if chosen is None:
+        return baseline
+
+    field_id = int(chosen['field_id'])
+    selected = select_node_adaptive_questions(
+        attempts,
+        30,
+        exclude_ids=blocked | recent,
+        category_small=field_id,
+        learning_intent='repair',
+        as_of=now,
+        allow_spaced_repeat_fallback=True,
+    )
+    if len(selected) != 30:
+        return baseline
+
+    questions = [get_quiz_question(row['question_id']) for row in selected]
+    if (
+        len({eq(q['id']) for q in questions}) != 30
+        or any(eq(q['id']) in blocked | recent for q in questions)
+        or any(
+            field_map.get(eq(q['id']), get_category_small(q['id'])) != field_id
+            for q in questions
+        )
+    ):
+        return baseline
+
+    target = chosen.get('target') or {}
+    evaluation = target.get('evaluation') or {}
+    accuracy = evaluation.get('current_evaluable_accuracy')
+    if accuracy is None:
+        accuracy = evaluation.get('evaluable_accuracy')
+    rank_basis = {
+        'accuracy': accuracy,
+        'progress': target.get('current_progress_score'),
+        'unresolved_repeated_weakness_nodes': target.get('unresolved_repeated_weakness_node_count', 0),
+    }
+    records = {row['question_id']: row for row in selected}
+    updated = {}
+    meta = {
+        'strategy_version': VERSION,
+        'strategy_recommended_field': field_id,
+        'strategy_learning_intent': 'floor_up',
+        'strategy_priority_score': chosen.get('priority_score', 0.0),
+        'strategy_reason_codes': list(chosen.get('reason_codes') or ()) + ['daily_floor_up'],
+        'strategy_priority_components': chosen.get('priority_components') or {},
+        'strategy_shadow_or_authority': 'soft_pilot',
+        'strategy_fallback_reason': None,
+        'floor_up_mode': FLOOR_UP_VERSION,
+        'floor_up_target_field': field_id,
+        'floor_up_day_block': context['floor_up_day_block'],
+        'floor_up_rank_basis': rank_basis,
+        'floor_up_rotated_from_yesterday': rotated,
+    }
+    meta.update(_lifecycle_metadata(strategy))
+    for q in questions:
+        row = records[q['id']]
+        updated[q['id']] = {
+            'selection_reason': row['priority_reason'],
+            'selection_group': row['priority_group'],
+            'selection_score': row['priority_score'],
+            'repair_evidence_quality': row['repair_evidence_quality'],
+            'recent_question_repeat': False,
+            'recent_cooldown_bypassed': False,
+            **meta,
+        }
+    audit.clear()
+    audit.update(updated)
+    return questions
+
+
 def refine_session(
     attempts, baseline, audit, events, *, exclude_ids=(), as_of=None, days_to_exam=None
 ):
@@ -199,6 +428,12 @@ def refine_session(
         return baseline
     as_of=as_of or datetime.now(timezone.utc)
     strategy=strategy_snapshot(attempts, events, as_of, days_to_exam=days_to_exam)
+    floor_up = _refine_floor_up_session(
+        attempts, baseline, audit, strategy, events,
+        exclude_ids=exclude_ids, as_of=as_of,
+    )
+    if floor_up is not None:
+        return floor_up
     field=strategy['recommended_field_id']
     meta={'strategy_version':VERSION,'strategy_recommended_field':field,
           'strategy_learning_intent':strategy['learning_intent'],
