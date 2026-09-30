@@ -2002,6 +2002,11 @@ def record_confirmed_learning_batch(user_id, session):
                         "learning_lifecycle_retention_priority",
                         "learning_lifecycle_reason_codes",
                         "learning_lifecycle_missing_evidence",
+                        "floor_up_mode",
+                        "floor_up_target_field",
+                        "floor_up_day_block",
+                        "floor_up_rank_basis",
+                        "floor_up_rotated_from_yesterday",
                     )
                     if key in audit
                 })
