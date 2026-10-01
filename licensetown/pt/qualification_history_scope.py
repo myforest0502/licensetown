@@ -1,13 +1,9 @@
-"""Production composition hook for qualification-scoped learner history.
-
-The legacy app imports history functions directly from ``database``. During the
-multi-qualification transition we rebind only those module-local names to the
-explicit PT learning-history store, keeping the existing call sites unchanged.
-"""
+"""Production composition hook for PT-scoped learner history."""
 
 from __future__ import annotations
 
 from licensetown.common.learning_store_registry import get_learning_history_store
+from . import learning_store as _learning_store_registration  # noqa: F401
 
 
 _HISTORY_NAMES = (

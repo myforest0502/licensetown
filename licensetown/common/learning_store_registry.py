@@ -1,16 +1,20 @@
-"""Explicit lookup for qualification-scoped learner-history stores."""
+"""Qualification-independent learner-history store registry."""
 
 from __future__ import annotations
-from ..pt.config import PT
-from ..pt.learning_store import PTLearningHistoryStore
-from ..takken.config import TAKKEN
 
 class LearningHistoryStoreNotConfigured(LookupError):
     pass
 
-_PT_STORE = PTLearningHistoryStore()
-_STORES = {PT.qualification_id: _PT_STORE}
-_KNOWN_QUALIFICATION_IDS = frozenset({PT.qualification_id, TAKKEN.qualification_id})
+_STORES = {}
+_KNOWN_QUALIFICATION_IDS = set()
+
+
+def register_learning_history_store(qualification_id: str, store=None) -> None:
+    """Register a known qualification and its optional concrete store."""
+    qualification_id = str(qualification_id)
+    _KNOWN_QUALIFICATION_IDS.add(qualification_id)
+    if store is not None:
+        _STORES[qualification_id] = store
 
 def get_learning_history_store(qualification_id: str):
     qualification_id = str(qualification_id)

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 import question_bank
+from licensetown.common.provider_registry import register_question_bank_provider
 
 class PTQuestionBankProvider:
     qualification_id: str = "pt"
@@ -13,3 +14,6 @@ class PTQuestionBankProvider:
         return question_bank.get_question_tag(q_id)
     def get_quiz_question(self, q_id: str) -> dict:
         return question_bank.get_quiz_question(q_id)
+
+
+register_question_bank_provider("pt", PTQuestionBankProvider())

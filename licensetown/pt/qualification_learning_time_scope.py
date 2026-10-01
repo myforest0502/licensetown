@@ -1,11 +1,4 @@
-"""Production composition for PT-scoped learning-time totals.
-
-The legacy recorder remains authoritative for today's PT runtime and already
-writes ``learning_time_events`` rows that default to ``qualification_id='pt'``.
-This hook mirrors only successful, deduplicated PT time additions into the new
-qualification-scoped totals table so later dashboard/reset cutovers have a
-separate PT authority without breaking the legacy total.
-"""
+"""Production composition for PT-scoped learning-time totals."""
 
 from __future__ import annotations
 

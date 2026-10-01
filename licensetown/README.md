@@ -18,6 +18,17 @@ aliases retain compatibility only for their existing callers and tests.
 New qualification-domain code should use `licensetown.common`,
 `licensetown.pt`, or `licensetown.takken` directly.
 
+Dependency direction is enforced by tests:
+
+- `pt` and `takken` may depend on `common`.
+- `common` must not import either qualification domain.
+- `pt` and `takken` must not import one another.
+
+The top-level `licensetown` package is the composition root: it registers the
+configured PT provider/history store in common registries and registers Takken
+as known-but-unconfigured. This keeps Takken fail-closed without making common
+depend on a qualification implementation.
+
 Batch 1 removes only the unused root aliases `adaptive_source_mix.py` and
 `readiness_service.py`; their tests now import the unchanged PT implementations.
 See `docs/ROOT_ALIAS_CLEANUP_BATCH1_20260919.md` for the complete root inventory,
