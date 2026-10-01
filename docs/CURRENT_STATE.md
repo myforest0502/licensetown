@@ -1,5 +1,20 @@
 # LicenseTown Current State
 
+## 2026-10-01 Qualification domain boundary completion
+
+- Canonical application ownership remains `licensetown/common`,
+  `licensetown/pt`, and `licensetown/takken`; repository runtime/infrastructure
+  stays outside those domains.
+- Common provider/history registries are now implementation-independent.
+  Top-level package composition registers PT and keeps Takken known but
+  fail-closed. Four PT-only runtime scope hooks moved from common to PT while
+  root compatibility shims preserve startup/import identity.
+- Static AST tests prohibit common -> PT/Takken and PT <-> Takken imports.
+  Takken contains only metadata and empty documented placeholders, with no fake
+  questions, taxonomy, Nodes, strategy or service implementation.
+- No DB/schema/migration, Question Bank, selector, Node-state, Stage E,
+  Phase11, LINE, UI, Render or Production change.
+
 ## 2026-09-24 公開HPの無料βモニター導線を明確化
 
 - 凍結済みのPC/724pxデザイン原本は変更せず、公開レンダー境界でのみ「第62回 理学療法士国家試験を受験する方へ」と「無料βモニター 先着30名募集中」をヒーロー付近に追加した。

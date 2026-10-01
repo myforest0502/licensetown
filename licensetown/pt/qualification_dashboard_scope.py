@@ -1,9 +1,4 @@
-"""Qualification-scoped composition for dashboard side routes.
-
-The main dashboard bundle is already explicitly PT-scoped in Production. This
-module closes the remaining direct legacy reads used by footprints and the
-supporter weekly-question page without changing their public route contracts.
-"""
+"""PT-scoped dashboard history composition."""
 
 from __future__ import annotations
 
@@ -11,6 +6,7 @@ from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 from licensetown.common.learning_store_registry import get_learning_history_store
+from . import learning_store as _learning_store_registration  # noqa: F401
 
 
 def _ordered_question_ids(values):

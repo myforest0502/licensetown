@@ -10,6 +10,7 @@ import json
 from datetime import datetime
 
 import database
+from licensetown.common.learning_store_registry import register_learning_history_store
 
 from .config import PT
 
@@ -190,3 +191,6 @@ class PTLearningHistoryStore:
                     """,
                     (user_id,),
                 )
+
+
+register_learning_history_store(PT.qualification_id, PTLearningHistoryStore())

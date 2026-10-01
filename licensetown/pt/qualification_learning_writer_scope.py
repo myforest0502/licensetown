@@ -1,13 +1,8 @@
-"""Production composition hook for qualification-explicit PT learning writes.
-
-The legacy learner app and dashboard import write helpers by value from
-``database``. This installer rebinds only those module-local write hooks to the
-PT-qualified writer after the qualified database conflict keys are available.
-"""
+"""Production composition hook for explicit PT learning writes."""
 
 from __future__ import annotations
 
-from licensetown.pt.learning_writer import PTLearningWriter
+from .learning_writer import PTLearningWriter
 
 
 _LEGACY_WRITE_NAMES = (

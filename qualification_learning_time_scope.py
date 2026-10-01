@@ -1,5 +1,5 @@
-"""Compatibility alias for licensetown.common.qualification_learning_time_scope."""
+"""TODO: compatibility shim for licensetown.pt.qualification_learning_time_scope."""
 
 import sys
-from licensetown.common import qualification_learning_time_scope as _implementation
+from licensetown.pt import qualification_learning_time_scope as _implementation
 sys.modules[__name__] = _implementation
