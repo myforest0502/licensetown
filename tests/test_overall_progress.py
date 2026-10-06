@@ -119,9 +119,9 @@ def test_personal_uses_formal_progress_while_readonly_keeps_safe_legacy_copy(mon
         f"&learner_user_id={learner_id}"
     ).get_data(as_text=True)
 
-    assert "合格への到達度" in personal
-    assert "必要な知識をどこまで学習・修復・定着できたか" in personal
-    assert "合格確率ではなく" in personal
+    assert "学習進捗" in personal
+    assert "学習範囲・正答・知識の仕上がりを合わせた" in personal
+    assert "合格確率を表す数値ではありません。" in personal
     assert "総合到達度" not in personal
     assert "LTで記録された学習時間と問題演習量から算出" not in personal
 

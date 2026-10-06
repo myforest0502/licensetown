@@ -50,6 +50,6 @@ def test_progress_trend_assets_are_loaded_and_align_position_card():
     assert "dashboard-progress-trend-v06.js" in base
     assert "margin-top:auto!important" in css
     assert "weekly-progress-line" in css
-    assert "合格への到達度" in js
+    assert "知識の仕上がり" in js
     assert "回答数" in js
     assert "学習範囲・修復・再確認・定着" in js

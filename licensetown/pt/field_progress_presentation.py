@@ -5,6 +5,8 @@ from __future__ import annotations
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Any, Iterable, Mapping
 
+from licensetown.pt.learning_progress_presentation import calculate_learning_progress
+
 from field_evidence import build_field_evidence
 from field_progress import build_field_progress
 
@@ -15,7 +17,7 @@ STATE_LABELS = {
 }
 
 
-def format_progress_percent(score: float) -> str:
+def format_progress_percent(score: float, *, completed_only: bool = False) -> str:
     """Format a raw 0..1 score without feeding rounding back into calculation."""
     value = max(0.0, float(score))
     if value == 0:
@@ -24,6 +26,8 @@ def format_progress_percent(score: float) -> str:
     if percent < 1:
         return "1%未満"
     rounded = Decimal(str(percent)).quantize(Decimal("1"), rounding=ROUND_HALF_UP)
+    if completed_only and value < 1:
+        rounded = min(rounded, 99)
     return f"{int(rounded)}%"
 
 
@@ -62,7 +66,14 @@ def build_field_progress_presentation_from_calculation(
             if legacy is not None and legacy.get("learned")
             else None
         )
+        learning = calculate_learning_progress(
+            item["node_coverage"],
+            accuracy_percent / 100 if accuracy_percent is not None else None,
+            item["field_progress_score"],
+        )
         result.append({
+            "learning_progress_raw": learning,
+            "learning_progress_display": format_progress_percent(learning, completed_only=True),
             "field_id": item["field_id"], "name": item["field_name"],
             "answer_count": (
                 int(legacy["answered_count"])

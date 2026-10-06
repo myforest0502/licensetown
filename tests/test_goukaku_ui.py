@@ -21,7 +21,7 @@ def test_goukaku_home_renders(monkeypatch):
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert "合格への道" in text
-    assert "合格への到達度" in text
+    assert "学習進捗" in text
     assert "すべて見る" in text
     assert "学習時間" in text
     assert "累計学習時間" in text
@@ -38,7 +38,7 @@ def test_goukaku_home_renders(monkeypatch):
     assert ">0<small>問</small>" in text
     assert "data-line-message=\"相談する\"" in text
     assert 'class="app-shell"' in text
-    assert "20260830-fixed-demo-cleanup1" in text
+    assert "20261007-learning-progress" in text
     assert "20260830-weekly-history1" in text
     assert 'data-line-account-id="@licensetown-test"' in text
     assert 'data-liff-id="1234567890-test"' in text
@@ -52,7 +52,7 @@ def test_goukaku_home_renders(monkeypatch):
     assert 'class="motivation-grid dashboard-footer-cards"' in text
     guidance_labels = ["今日やること", "源さんの一言"]
     assert [text.index(label) for label in guidance_labels] == sorted(text.index(label) for label in guidance_labels)
-    assert text.index("分野別 到達度") < text.index("次の報酬まで")
+    assert text.index("分野別 学習進捗") < text.index("次の報酬まで")
     assert text.index("源さんの一言") < text.index("次の報酬まで")
     assert 'class="motivation-card target-progress-card"' not in text
     assert "目標学習量まで" not in text
