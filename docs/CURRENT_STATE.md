@@ -1,5 +1,15 @@
 # LicenseTown Current State
 
+## 2026-10-07 Recommended route visual rollback + balanced score
+
+- Boss rejected the large time-first hero from PR #437 because it wasted horizontal space and looked worse than the previously approved compact route.
+- The compact three-card route, current/priority/today row, and five-step timeline are restored.
+- The demotivating raw strict-finish percentages (e.g. 21.5% recommended / 23.8% current) are NOT restored as learner-facing numbers.
+- Displayed route percentages now use the same balanced learner-facing evaluation as the PR #436 gauge: P = 0.30*C + 0.40*(C*A) + 0.30*F.
+- The day-ahead/behind judgement still uses the strict finish curve and its inverse; only the displayed percentages change.
+- For the supplied 137-day case with coverage 100%, accuracy 69%, strict finish 23.8%, the route displays approximately 64% recommended / 65% current / +0.7pt and about 5 days ahead.
+- Internal Knowledge Node, STATE_SCORES, readiness, selector, strategy, bottom-up LT, DB, migrations and Render settings are unchanged.
+
 ## 2026-10-07 Recommended route gap guidance — feature branch
 
 - Baseline: merged PR #436 (`c3fd2a1c348c4306d7bed06bfedd05daf8d8804e`); branch `feat/recommended-route-gap-guidance`. Its learning-progress formula, overall ring and field bars are preserved.
