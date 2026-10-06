@@ -135,4 +135,4 @@ def test_past_exam_and_small_lag_are_not_mislabeled():
     result = render(days=300, finish=.99)
     assert result['model']['deltaDays'] < 0
     assert result['model']['shortages']
-    assert '不足は0.1pt未満' in result['html']
+    assert '今日の目安まで0.1pt未満' in result['html']
