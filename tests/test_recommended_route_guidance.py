@@ -33,6 +33,7 @@ def test_a_ahead_uses_existing_inverse_finish_curve_and_primary_time_display():
     assert '約5日先行' in hero
     assert '%' not in hero
     assert '約5日先行' in result['glance']
+    assert '今日の目安は満たしています' in result['html']
 
 
 def test_b_late_explains_actual_shortage_and_preserves_strategy_priority():
@@ -42,7 +43,7 @@ def test_b_late_explains_actual_shortage_and_preserves_strategy_priority():
     assert 'あと4pt' in result['html']
     assert '今いちばん足りないもの：知識の仕上がり' in result['html']
     assert '特に優先する分野' in result['html']
-    assert '仕上がり 17%' in result['html']
+    assert '仕上がり 17%' not in result['html']
     assert '優先分野を10問' in result['html']
     assert '＋再確認問題を優先' in result['html']
     assert result['clicked']  # forwards to the same authorized existing CTA
@@ -72,14 +73,17 @@ def test_d_accuracy_gap_only_uses_explicit_source_criterion():
 def test_e_finish_shortage_uses_current_day_curve():
     result = render(days=108, finish=24)
     assert result['model']['recommended'] == 38
-    assert '推奨 38% / 現在 24%' in result['html']
-    assert 'あと14pt' in result['html']
+    assert '推奨 38% / 現在 24%' not in result['html']
+    assert '今日の目安まであと14pt' in result['html']
 
 
-def test_g_percentages_are_in_closed_supplement_and_h_disclaimer_is_visible():
+def test_g_raw_finish_percentages_are_hidden_and_disclaimer_is_visible():
     result = render()
     details = result['html'].split('<details class="lt-route-supplement">')[1]
-    assert 'この時点の推奨：21.5% / 現在：23.8%' in details
+    assert 'この時点の推奨：21.5% / 現在：23.8%' not in result['html']
+    assert '21.5%' not in result['html']
+    assert '23.8%' not in result['html']
+    assert '厳密な仕上がり率の絶対値は、この推奨ルートでは表示しません' in details
     assert '<details open' not in result['html']
     assert '合格確率ではありません' in result['html'].split('<details')[0]
     for forbidden in ['もう安心', '合格確実', '合格圏', 'しか進んでいません']:
