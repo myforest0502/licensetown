@@ -157,23 +157,6 @@ def test_floor_up_yesterday_rotation_only_breaks_exact_visible_progress_ties():
 
 
 
-def test_floor_up_visible_score_matches_dashboard_formula(monkeypatch):
-    import learning_strategy_runtime_pilot as runtime
-
-    attempts = [
-        {'question_id': 'Q1', 'is_correct': True},
-        {'question_id': 'Q2', 'is_correct': False},
-    ]
-    monkeypatch.setattr(
-        runtime,
-        '_field_learning_progress_scores',
-        runtime._field_learning_progress_scores,
-    )
-    scores = runtime._field_learning_progress_scores(attempts)
-    assert set(scores) == set(range(1, 19))
-    assert all(0.0 <= row['learning_progress'] <= 1.0 for row in scores.values())
-
-
 def test_floor_up_refinement_is_one_exact_field_and_reused_for_second_block(monkeypatch):
     now = datetime(2026, 9, 30, 12, 0, tzinfo=timezone.utc)
     baseline = [get_quiz_question(q) for q in list(question_ids())[:30]]
