@@ -145,8 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
     dateCard.parentNode.insertBefore(stack, dateCard);
     stack.appendChild(dateCard);
 
-    const recommendedDisplay = Number.isFinite(recommendedProgress) ? `${recommendedProgress.toFixed(1)}%` : '--';
-    const currentDisplay = Number.isFinite(currentProgress) ? `${currentProgress.toFixed(1)}%` : '--';
+    const recommendedDisplay = Number.isFinite(recommendedProgress) ? `${Math.round(recommendedProgress)}%` : '--';
+    const currentDisplay = Number.isFinite(currentProgress) ? `${Math.round(currentProgress)}%` : '--';
     const gapDisplay = progressGap === null ? '--' : `${progressGap >= 0 ? '+' : ''}${progressGap.toFixed(1)}pt`;
     const activityCopy = totalAnswers > 0
       ? `${totalAnswers.toLocaleString('ja-JP')}回答・${uniqueAnsweredQuestions.toLocaleString('ja-JP')}問に取り組んだ記録を確認。`
