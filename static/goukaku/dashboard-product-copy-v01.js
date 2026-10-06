@@ -161,9 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
     stack.className = 'lt-top-left-stack';
     dateCard.parentNode.insertBefore(stack, dateCard);
     stack.appendChild(dateCard);
-
-    const recommendedDisplay = Number.isFinite(recommendedProgress) ? `${recommendedProgress.toFixed(1)}%` : '--';
-    const currentDisplay = Number.isFinite(currentProgress) ? `${currentProgress.toFixed(1)}%` : '--';
     const countdownCopy = model.expired ? '試験日を過ぎています' : countdownNumber === null ? '試験日は未設定'
       : countdownNumber === 0 ? '今日は試験日' : `試験まであと${countdownNumber}日`;
     const paceCopy = scheduleDeltaDays === null ? '推奨ペースとの位置を確認中'
@@ -171,32 +168,45 @@ document.addEventListener('DOMContentLoaded', () => {
       : `LT推奨ペースより${scheduleDetail}${scheduleDeltaDays < 0 ? 'ています' : 'しています'}`;
     const metricHtml = model.metrics.map(item => {
       let status = '今日の推奨基準は未設定';
-      if (item.current === null) status = '学習記録が増えると確認できます';
-      else if (item.key === 'coverage' && item.current === 100) status = '十分・不足なし';
-      else if (item.shortage > 0) status = item.shortage < 0.1 ? '不足は0.1pt未満' : `あと${item.shortage.toFixed(1).replace(/\.0$/, '')}pt`;
-      else if (item.shortage === 0) status = '今日の目安を満たしています';
-      else if (item.key === 'coverage') status = `全範囲まであと${(100 - item.current).toFixed(1).replace(/\.0$/, '')}pt`;
-      else if (item.key === 'finish') status = '試験日を設定すると目安を確認できます';
-      const recommendation = item.recommended === null ? '' : `推奨 ${displayPercent(item.recommended)} / `;
+      let valueLine = item.current === null ? '記録なし' : `現在 ${displayPercent(item.current)}`;
+
+      if (item.key === 'finish') {
+        valueLine = '試験日から逆算した今日の目安と比較しています';
+        if (item.current === null) status = '学習記録が増えると確認できます';
+        else if (item.shortage > 0) {
+          status = item.shortage < 0.1
+            ? '今日の目安まで0.1pt未満'
+            : `今日の目安まであと${item.shortage.toFixed(1).replace(/\.0$/, '')}pt`;
+        } else if (item.shortage === 0) status = '今日の目安を満たしています';
+        else status = '試験日を設定すると目安を確認できます';
+      } else {
+        if (item.current === null) status = '学習記録が増えると確認できます';
+        else if (item.key === 'coverage' && item.current === 100) status = '十分・不足なし';
+        else if (item.shortage > 0) status = item.shortage < 0.1 ? '不足は0.1pt未満' : `あと${item.shortage.toFixed(1).replace(/\.0$/, '')}pt`;
+        else if (item.shortage === 0) status = '今日の目安を満たしています';
+        else if (item.key === 'coverage') status = `全範囲まであと${(100 - item.current).toFixed(1).replace(/\.0$/, '')}pt`;
+        if (item.recommended !== null) valueLine = `推奨 ${displayPercent(item.recommended)} / 現在 ${displayPercent(item.current)}`;
+      }
+
       return `<div class="lt-route-metric" data-route-metric="${item.key}"><h3>${item.label}</h3>
-        <p>${recommendation}現在 ${displayPercent(item.current)}</p>
+        <p>${valueLine}</p>
         <b class="${item.shortage > 0 ? 'has-shortage' : ''}">${status}</b>
         ${item.key === 'coverage' && item.recommended === null && item.current !== 100 ? '<small>全範囲との比較です。今日の推奨基準は未設定です。</small>' : ''}
-        ${item.key === 'finish' ? '<small>合格確率ではありません</small>' : ''}</div>`;
+        ${item.key === 'finish' ? '<small>厳密な仕上がり率そのものは表示せず、今日必要な水準との差だけを示します。合格確率ではありません。</small>' : ''}</div>`;
     }).join('');
-    const focus = model.shortages[0]?.label;
-    const focusCopy = focus ? `今いちばん足りないもの：${focus}`
-      : `次の焦点：${escapeHtml(priorityLabel)}（${escapeHtml(priorityField)}）`;
+
+    const focusItem = model.shortages[0];
+    const focusCopy = focusItem
+      ? `今いちばん足りないもの：${focusItem.label}（${focusItem.shortage < 0.1 ? '今日の目安まで0.1pt未満' : `今日の目安まであと${focusItem.shortage.toFixed(1).replace(/\.0$/, '')}pt`}）`
+      : `今日の目安は満たしています。次の焦点：${escapeHtml(priorityLabel)}（${escapeHtml(priorityField)}）`;
     const fields = new Map((routeSnapshot.fields || []).map(item => [item.name, item]));
     // Keep the existing navigation priority order, including Safety/repair/recheck.
     // A low finish score alone must not override the learning strategy.
     const priorities = (routeSnapshot.navigation?.attention_items || []).slice(0, 3);
     const priorityHtml = priorities.length
       ? `<section class="lt-route-priorities"><h3>特に優先する分野</h3><ol>${priorities.map(item => {
-        const field = fields.get(item.field);
-        const finish = field?.progress_raw == null ? null : field.progress_raw * 100;
-        return `<li><b>${escapeHtml(item.field)}</b><span>仕上がり ${displayPercent(finish)}</span>
-          <small>${escapeHtml(item.label)}：${escapeHtml(item.message)}</small></li>`;
+        return `<li><b>${escapeHtml(item.field)}</b><span>${escapeHtml(item.label)}</span>
+          <small>${escapeHtml(item.message)}</small></li>`;
       }).join('')}</ol></section>` : '';
     const action = routeSnapshot.navigation?.today_action || {};
     const actionCopy = action.field && action.count > 0
@@ -225,9 +235,9 @@ document.addEventListener('DOMContentLoaded', () => {
       <section class="lt-route-today"><h3>今日やること</h3><strong>${escapeHtml(actionCopy)}</strong>
         ${intentCopy ? `<b>＋${intentCopy}</b>` : ''}<p>${escapeHtml(actionReason)}</p>
         <button type="button" class="lt-route-start">今日の学習へ</button></section>
-      <details class="lt-route-supplement"><summary>知識の仕上がり目安・計算の補足</summary>
-        <p>この時点の推奨：${recommendedDisplay} / 現在：${currentDisplay}</p>
-        <p>推奨ペースと現在地の差を示しています。日数差は知識の仕上がりに基づく目安です。</p>
+      <details class="lt-route-supplement"><summary>判定方法の補足</summary>
+        <p>「先行／遅れ」は、試験日から逆算したLTの推奨カーブと現在の知識の仕上がりを比較して算出しています。</p>
+        <p>厳密な仕上がり率の絶対値は、この推奨ルートでは表示しません。不足がある場合は「今日の目安まであと○pt」で示します。</p>
         <p>${totalAnswers.toLocaleString('ja-JP')}回答・${uniqueAnsweredQuestions.toLocaleString('ja-JP')}問の記録。回答数だけでなく修復・再確認・定着を含みます。</p>
         <p>${weeklyLabel}：${escapeHtml(weeklyCopy)}</p>
         <small>※ 合格確率ではありません。正答率と学習範囲には日付ごとの推奨基準がまだありません。</small>
