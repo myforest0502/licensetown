@@ -10,12 +10,12 @@ from licensetown.pt.field_progress_presentation import (
 
 
 @pytest.mark.parametrize('coverage,accuracy,finish,expected', [
-    (0, 0, 0, 0), (0.10, 0.90, 0.05, 0.082),
-    (1, 0.70, 0.24, 0.682), (1, 1, 1, 1),
-    (1, None, 0.24, 0.472), (-1, 2, -3, 0),
+    (0, 0, 0, 0), (0.10, 0.90, 0.05, 0.081),
+    (1, 0.70, 0.24, 0.652), (1, 1, 1, 1),
+    (1, None, 0.24, 0.372), (-1, 2, -3, 0),
     (2, 2, 2, 1), (float('nan'), float('inf'), None, 0),
-    ('invalid', {}, [], 0), (1, float('-inf'), 1, 0.7),
-    (1, 0.66, 0.23, 0.667),
+    ('invalid', {}, [], 0), (1, float('-inf'), 1, 0.6),
+    (1, 0.66, 0.23, 0.633), (1, 0, 0.10, 0.33),
 ])
 def test_learning_progress_formula_and_invalid_evidence(coverage, accuracy, finish, expected):
     assert calculate_learning_progress(coverage, accuracy, finish) == pytest.approx(expected)
@@ -31,8 +31,8 @@ def test_overall_simulation_preserves_formal_score_and_source():
     }}
     before = deepcopy(progress)
     row = build_overall_progress_presentation(progress, overall_accuracy_percent=70)
-    assert row['learning_progress_raw'] == pytest.approx(0.682)
-    assert row['learning_progress_display'] == '68%'
+    assert row['learning_progress_raw'] == pytest.approx(0.652)
+    assert row['learning_progress_display'] == '65%'
     assert row['progress_raw'] == 0.24
     assert row['progress_display'] == '24%'
     assert row['accuracy_display'] == '70%'
@@ -49,14 +49,14 @@ def test_field_simulation_shares_formula_and_preserves_finish():
     before = deepcopy(progress)
     row, = build_field_progress_presentation_from_calculation(evidence, progress,
         legacy_fields=[{'name': '分野', 'learned': True, 'accuracy': 66, 'answered_count': 100}])
-    assert row['learning_progress_raw'] == pytest.approx(0.667)
-    assert row['learning_progress_display'] == '67%'
+    assert row['learning_progress_raw'] == pytest.approx(0.633)
+    assert row['learning_progress_display'] == '63%'
     assert row['progress_raw'] == 0.23
     assert row['progress_display'] == '23%'
     assert progress == before
     missing, = build_field_progress_presentation_from_calculation(evidence, progress)
     assert missing['accuracy_display'] == '--'
-    assert missing['learning_progress_raw'] == pytest.approx(0.469)
+    assert missing['learning_progress_raw'] == pytest.approx(0.369)
 
 
 def test_learning_progress_does_not_round_incomplete_evidence_to_100():

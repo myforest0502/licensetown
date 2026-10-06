@@ -17,4 +17,4 @@ def calculate_learning_progress(coverage, accuracy, finish):
     coverage = normalize_progress_ratio(coverage)
     accuracy = normalize_progress_ratio(accuracy)
     finish = normalize_progress_ratio(finish)
-    return normalize_progress_ratio(0.40 * coverage + 0.30 * coverage * accuracy + 0.30 * finish)
+    return normalize_progress_ratio(0.30 * coverage + 0.40 * coverage * accuracy + 0.30 * finish)
