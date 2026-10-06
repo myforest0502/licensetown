@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='goukaku/dashboard-layout-v05.css', v='20260907-v06') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='goukaku/dashboard-progress-trend-v06.css', v='20260907-v06') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='goukaku/dashboard-layout-v07.css', v='20260907-v07') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='goukaku/dashboard-product-copy-v01.css', v='20260907-v03') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='goukaku/dashboard-product-copy-v01.css', v='20261007-route-guidance') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='goukaku/dashboard-mobile-paid-v01.css', v='20261007-learning-progress') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='goukaku/supporter-parent-v01.css', v='20260907-v03') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='goukaku/dashboard-approved-layout-v01.css', v='20260909-v04') }}">
@@ -40,9 +40,13 @@
         overallProgress: {{ dashboard.overall_progress_history_7d|default([])|tojson }}
       };
       window.LT_ROUTE_SNAPSHOT = {
-        daysUntilExam: {{ dashboard.days_until_exam|default(0, true)|int }},
+        daysUntilExam: {{ dashboard.days_until_exam|default(none)|tojson }},
         totalAnswers: {{ dashboard.total_answers|default(0)|int }},
-        uniqueAnsweredQuestions: {{ dashboard.unique_answered_questions|default(0)|int }}
+        uniqueAnsweredQuestions: {{ dashboard.unique_answered_questions|default(0)|int }},
+        overall: {{ dashboard.overall_progress_preview|default(none)|tojson }},
+        accuracy: {{ (dashboard.average_accuracy if dashboard.total_answers|default(0) > 0 else none)|tojson }},
+        fields: {{ dashboard.field_progress_fields|default([])|tojson }},
+        navigation: {{ dashboard.learner_navigation|default(none)|tojson }}
       };
     </script>
   {% endif %}
@@ -52,7 +56,7 @@
   <script src="{{ url_for('static', filename='goukaku/dashboard-meaning-cards.js', v='20260907-progress-trend1') }}" defer></script>
   <script src="{{ url_for('static', filename='goukaku/dashboard-layout-v05.js', v='20260909-v08') }}" defer></script>
   <script src="{{ url_for('static', filename='goukaku/dashboard-progress-trend-v06.js', v='20261007-learning-progress') }}" defer></script>
-  <script src="{{ url_for('static', filename='goukaku/dashboard-product-copy-v01.js', v='20261007-learning-progress') }}" defer></script>
+  <script src="{{ url_for('static', filename='goukaku/dashboard-product-copy-v01.js', v='20261007-route-guidance') }}" defer></script>
   <script src="{{ url_for('static', filename='goukaku/dashboard-approved-layout-v01.js', v='20260909-v03') }}" defer></script>
 </body>
 </html>

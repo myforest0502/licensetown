@@ -1,36 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const currentCard = document.querySelector('.learner-current-card');
-  const attentionCard = document.querySelector('.learner-attention-card');
-  const todayCard = document.querySelector('.learner-today-card');
-  const overallCard = document.querySelector('.overall-progress-preview');
-  const weeklyCard = document.querySelector('.weekly-learning-card');
-  const dateCard = document.querySelector('.date-card');
-
-  const text = (el) => (el?.textContent || '').replace(/\s+/g, ' ').trim();
-  const firstPriority = attentionCard?.querySelector('.learner-attention-list > div:first-child');
-  const priorityField = text(firstPriority?.querySelector('b')) || '今の優先分野';
-  const priorityLabel = text(firstPriority?.querySelector('span')) || '優先して確認';
-  const priorityMessage = text(firstPriority?.querySelector('p')) || '学習履歴から、今いちばん効果が高い内容を優先します。';
-  const todayAmount = text(todayCard?.querySelector('h2')) || '今日のおすすめ学習';
-  const todayReason = text(todayCard?.querySelector('p')) || '今日の学習履歴に合わせて内容を選びます。';
-  const currentHeadline = text(currentCard?.querySelector('h2')) || '現在地を確認中';
-
-  const progressPoints = Array.isArray(window.LT_WEEKLY_LEARNING_SNAPSHOT?.overallProgress)
-    ? window.LT_WEEKLY_LEARNING_SNAPSHOT.overallProgress : [];
-  const firstProgress = Number(progressPoints[0]?.progress);
-  const lastProgress = Number(progressPoints[progressPoints.length - 1]?.progress);
-  const progressDelta = Number.isFinite(firstProgress) && Number.isFinite(lastProgress)
-    ? Math.round((lastProgress - firstProgress) * 10) / 10 : null;
-
-  const routeSnapshot = window.LT_ROUTE_SNAPSHOT || {};
-  const countdownFromSnapshot = Number(routeSnapshot.daysUntilExam);
-  const countdownFromCard = Number((text(dateCard?.querySelector('.countdown strong')) || '').replace(/[^0-9]/g, ''));
-  const countdownNumber = Number.isFinite(countdownFromSnapshot) && countdownFromSnapshot >= 0
-    ? countdownFromSnapshot : countdownFromCard;
-  const totalAnswers = Number(routeSnapshot.totalAnswers) || 0;
-  const uniqueAnsweredQuestions = Number(routeSnapshot.uniqueAnsweredQuestions) || 0;
-  const currentProgress = Number.parseFloat(overallCard?.querySelector('[data-finish-ratio]')?.dataset.finishRatio) * 100;
-
+// Read-only presentation: the existing finish curve remains the sole pace calculation.
+window.LTRecommendedRoute = (() => {
   // LT推奨ペース v0.1。合格確率ではなく、試験日から逆算した学習到達指標の目安。
   // 日数が減るほど、新規範囲中心から修復・再確認・定着中心へ移る想定で段階的に加速させる。
   const ROUTE_ANCHORS = [
@@ -78,15 +47,89 @@ document.addEventListener('DOMContentLoaded', () => {
     return null;
   };
 
-  const recommendedProgress = interpolateRecommendedProgress(countdownNumber);
-  const equivalentDays = equivalentDaysRemaining(currentProgress);
-  const scheduleDeltaDays = Number.isFinite(countdownNumber) && Number.isFinite(equivalentDays)
-    ? Math.round(countdownNumber - equivalentDays) : null;
-  const progressGap = Number.isFinite(currentProgress) && Number.isFinite(recommendedProgress)
-    ? Math.round((currentProgress - recommendedProgress) * 10) / 10 : null;
+
+  const percent = (value) => {
+    if (value === null || value === undefined || value === '' || typeof value === 'boolean') return null;
+    const number = Number(value);
+    return Number.isFinite(number) && number >= 0 && number <= 100 ? number : null;
+  };
+  const gap = (current, recommended) => current === null || recommended === null
+    ? null : Math.max(0, recommended - current);
+  const build = (snapshot) => {
+    const days = snapshot.daysUntilExam === null || snapshot.daysUntilExam === undefined
+      || snapshot.daysUntilExam === '' || typeof snapshot.daysUntilExam === 'boolean'
+      ? null : Number(snapshot.daysUntilExam);
+    const remaining = Number.isFinite(days) && days >= 0 ? days : null;
+    const finish = percent(snapshot.finish);
+    const recommended = interpolateRecommendedProgress(remaining);
+    const equivalent = equivalentDaysRemaining(finish);
+    const deltaDays = remaining !== null && equivalent !== null ? Math.round(remaining - equivalent) : null;
+    const coverage = percent(snapshot.coverage);
+    const accuracy = percent(snapshot.accuracy);
+    // No date-specific coverage/accuracy targets exist today. Only compare explicit
+    // source criteria if supplied; never derive them from the finish curve.
+    const coverageTarget = percent(snapshot.recommendedCoverage);
+    const accuracyTarget = percent(snapshot.recommendedAccuracy);
+    const metrics = [
+      { key: 'coverage', label: '学習範囲', current: coverage, recommended: coverageTarget,
+        shortage: coverage === 100 ? 0 : gap(coverage, coverageTarget) },
+      { key: 'accuracy', label: '正答率', current: accuracy, recommended: accuracyTarget,
+        shortage: gap(accuracy, accuracyTarget) },
+      { key: 'finish', label: '知識の仕上がり', current: finish, recommended,
+        shortage: gap(finish, recommended) },
+    ];
+    const shortages = metrics.filter(item => item.shortage > 0).sort((a, b) => b.shortage - a.shortage);
+    return { remaining, expired: Number.isFinite(days) && days < 0, finish, recommended, deltaDays, metrics, shortages };
+  };
+  return { build, interpolateRecommendedProgress, equivalentDaysRemaining };
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const currentCard = document.querySelector('.learner-current-card');
+  const attentionCard = document.querySelector('.learner-attention-card');
+  const todayCard = document.querySelector('.learner-today-card');
+  const overallCard = document.querySelector('.overall-progress-preview');
+  const weeklyCard = document.querySelector('.weekly-learning-card');
+  const dateCard = document.querySelector('.date-card');
+
+  const text = (el) => (el?.textContent || '').replace(/\s+/g, ' ').trim();
+  const firstPriority = attentionCard?.querySelector('.learner-attention-list > div:first-child');
+  const priorityField = text(firstPriority?.querySelector('b')) || '今の優先分野';
+  const priorityLabel = text(firstPriority?.querySelector('span')) || '優先して確認';
+  const priorityMessage = text(firstPriority?.querySelector('p')) || '学習履歴から、今いちばん効果が高い内容を優先します。';
+  const todayAmount = text(todayCard?.querySelector('h2')) || '今日のおすすめ学習';
+  const todayReason = text(todayCard?.querySelector('p')) || '今日の学習履歴に合わせて内容を選びます。';
+
+  const progressPoints = Array.isArray(window.LT_WEEKLY_LEARNING_SNAPSHOT?.overallProgress)
+    ? window.LT_WEEKLY_LEARNING_SNAPSHOT.overallProgress : [];
+  const firstProgress = Number(progressPoints[0]?.progress);
+  const lastProgress = Number(progressPoints[progressPoints.length - 1]?.progress);
+  const progressDelta = Number.isFinite(firstProgress) && Number.isFinite(lastProgress)
+    ? Math.round((lastProgress - firstProgress) * 10) / 10 : null;
+
+  const routeSnapshot = window.LT_ROUTE_SNAPSHOT || {};
+  const overall = routeSnapshot.overall || {};
+  const model = window.LTRecommendedRoute.build({
+    daysUntilExam: routeSnapshot.daysUntilExam,
+    finish: overall.progress_raw == null ? null : overall.progress_raw * 100,
+    coverage: overall.coverage_raw == null ? null : overall.coverage_raw * 100,
+    accuracy: routeSnapshot.accuracy,
+    recommendedCoverage: routeSnapshot.recommendedCoverage,
+    recommendedAccuracy: routeSnapshot.recommendedAccuracy,
+  });
+  const countdownNumber = model.remaining;
+  const currentProgress = model.finish;
+  const recommendedProgress = model.recommended;
+  const scheduleDeltaDays = model.deltaDays;
+  const totalAnswers = Number(routeSnapshot.totalAnswers) || 0;
+  const uniqueAnsweredQuestions = Number(routeSnapshot.uniqueAnsweredQuestions) || 0;
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[char]));
+  const displayPercent = value => value === null ? '記録なし' : `${value.toFixed(1).replace(/\.0$/, '')}%`;
 
   let scheduleLabel = '推奨ペースを計算中';
-  let scheduleDetail = '学習データが増えると、推奨ラインとの差を確認できます。';
+  let scheduleDetail = '位置を確認中';
   if (scheduleDeltaDays !== null) {
     if (Math.abs(scheduleDeltaDays) <= 2) {
       scheduleLabel = 'ほぼ予定どおり';
@@ -95,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
       scheduleLabel = scheduleDeltaDays <= 7 ? '推奨ペース内' : '前倒しで進行';
       scheduleDetail = `約${scheduleDeltaDays}日先行`;
     } else {
-      scheduleLabel = scheduleDeltaDays >= -7 ? '推奨ペース内' : '少し巻き返したい';
+      scheduleLabel = '次の学習で差を縮めよう';
       scheduleDetail = `約${Math.abs(scheduleDeltaDays)}日遅れ`;
     }
   }
@@ -121,42 +164,87 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const recommendedDisplay = Number.isFinite(recommendedProgress) ? `${recommendedProgress.toFixed(1)}%` : '--';
     const currentDisplay = Number.isFinite(currentProgress) ? `${currentProgress.toFixed(1)}%` : '--';
-    const gapDisplay = progressGap === null ? '--' : `${progressGap >= 0 ? '+' : ''}${progressGap.toFixed(1)}pt`;
-    const activityCopy = totalAnswers > 0
-      ? `${totalAnswers.toLocaleString('ja-JP')}回答・${uniqueAnsweredQuestions.toLocaleString('ja-JP')}問に取り組んだ記録を確認。`
-      : 'これからの学習記録を使って、推奨ルートとの差を更新します。';
+    const countdownCopy = model.expired ? '試験日を過ぎています' : countdownNumber === null ? '試験日は未設定'
+      : countdownNumber === 0 ? '今日は試験日' : `試験まであと${countdownNumber}日`;
+    const paceCopy = scheduleDeltaDays === null ? '推奨ペースとの位置を確認中'
+      : scheduleDeltaDays === 0 ? 'LT推奨ペースと同じ位置です'
+      : `LT推奨ペースより${scheduleDetail}${scheduleDeltaDays < 0 ? 'ています' : 'しています'}`;
+    const metricHtml = model.metrics.map(item => {
+      let status = '今日の推奨基準は未設定';
+      if (item.current === null) status = '学習記録が増えると確認できます';
+      else if (item.key === 'coverage' && item.current === 100) status = '十分・不足なし';
+      else if (item.shortage > 0) status = item.shortage < 0.1 ? '不足は0.1pt未満' : `あと${item.shortage.toFixed(1).replace(/\.0$/, '')}pt`;
+      else if (item.shortage === 0) status = '今日の目安を満たしています';
+      else if (item.key === 'coverage') status = `全範囲まであと${(100 - item.current).toFixed(1).replace(/\.0$/, '')}pt`;
+      else if (item.key === 'finish') status = '試験日を設定すると目安を確認できます';
+      const recommendation = item.recommended === null ? '' : `推奨 ${displayPercent(item.recommended)} / `;
+      return `<div class="lt-route-metric" data-route-metric="${item.key}"><h3>${item.label}</h3>
+        <p>${recommendation}現在 ${displayPercent(item.current)}</p>
+        <b class="${item.shortage > 0 ? 'has-shortage' : ''}">${status}</b>
+        ${item.key === 'coverage' && item.recommended === null && item.current !== 100 ? '<small>全範囲との比較です。今日の推奨基準は未設定です。</small>' : ''}
+        ${item.key === 'finish' ? '<small>合格確率ではありません</small>' : ''}</div>`;
+    }).join('');
+    const focus = model.shortages[0]?.label;
+    const focusCopy = focus ? `今いちばん足りないもの：${focus}`
+      : `次の焦点：${escapeHtml(priorityLabel)}（${escapeHtml(priorityField)}）`;
+    const fields = new Map((routeSnapshot.fields || []).map(item => [item.name, item]));
+    // Keep the existing navigation priority order, including Safety/repair/recheck.
+    // A low finish score alone must not override the learning strategy.
+    const priorities = (routeSnapshot.navigation?.attention_items || []).slice(0, 3);
+    const priorityHtml = priorities.length
+      ? `<section class="lt-route-priorities"><h3>特に優先する分野</h3><ol>${priorities.map(item => {
+        const field = fields.get(item.field);
+        const finish = field?.progress_raw == null ? null : field.progress_raw * 100;
+        return `<li><b>${escapeHtml(item.field)}</b><span>仕上がり ${displayPercent(finish)}</span>
+          <small>${escapeHtml(item.label)}：${escapeHtml(item.message)}</small></li>`;
+      }).join('')}</ol></section>` : '';
+    const action = routeSnapshot.navigation?.today_action || {};
+    const actionCopy = action.field && action.count > 0
+      ? `${action.field}を${action.count}問` : todayAmount;
+    const actionReason = action.reason || todayReason;
+    const intentCopy = { repair: '弱点の修復問題を優先', recheck: '再確認問題を優先',
+      exploration: 'まだ確認していない内容を優先' }[action.learning_intent] || '';
+    const stateCopy = model.metrics[0].current === 100
+      ? '学習範囲は100%まで進んでいます。ここからの優先内容は、今日の学習ナビで確認できます。'
+      : '今日の学習ナビに沿って、学習範囲・理解・知識の定着を進めましょう。';
 
     const planCard = document.createElement('article');
     planCard.className = 'card lt-exam-plan-card';
     planCard.innerHTML = `
-      <div class="lt-exam-plan-heading">
-        <div>
-          <span class="lt-paid-badge">完全版</span>
-          <h2>🧭 合格までの推奨ルート</h2>
-        </div>
-        <strong class="lt-route-pace">${scheduleLabel}</strong>
+      <div class="lt-exam-plan-heading"><div><span class="lt-paid-badge">完全版</span><h2>🧭 合格までの推奨ルート</h2></div></div>
+      <div class="lt-route-hero">
+        <p class="lt-route-countdown">${countdownCopy}</p>
+        <small>現在の位置</small><strong class="lt-route-position">${scheduleDetail}</strong>
+        <p>${paceCopy}</p><span>${scheduleLabel}</span>
       </div>
-      <p class="lt-route-lead">残り${Number.isFinite(countdownNumber) ? `${countdownNumber}日` : '日数'}を、今の現在地から逆算して進めます。学習結果に合わせてルートは更新されます。</p>
-      <div class="lt-route-pace-panel">
-        <div><small>この時点の推奨</small><strong>${recommendedDisplay}</strong><span>知識の仕上がり</span><p class="lt-route-pace-note">現在の学習記録から見た到達目安です</p></div>
-        <div><small>現在</small><strong>${currentDisplay}</strong><span>推奨との差 ${gapDisplay}</span><p class="lt-route-pace-note">いまの進み具合を毎日更新しています</p></div>
-        <div class="lt-route-pace-result"><small>推奨ルートとの位置</small><strong>${scheduleDetail}</strong><span>${scheduleLabel}</span><p class="lt-route-pace-note">推奨ペースと現在地の差を示しています</p></div>
-      </div>
-      <p class="lt-route-evidence">${activityCopy} <b>回答数だけではなく、修復・再確認・定着まで含めて現在地を判定します。</b></p>
-      <div class="lt-route-now-grid">
-        <div><small>現在地</small><strong>${currentHeadline}</strong></div>
-        <div><small>いま優先</small><strong>${priorityField}</strong><span>${priorityLabel}</span></div>
-        <div><small>今日やる</small><strong>${todayAmount}</strong></div>
-      </div>
-      <div class="lt-route-timeline" aria-label="合格までの推奨ルート">
-        <div class="is-now"><i></i><span>今週</span><b>${priorityField}を優先</b><small>今日の学習を積み上げ、修復対象を減らす</small></div>
-        <div><i></i><span>1か月後</span><b>修復した知識を再確認へ</b><small>その場で解けただけではなく、時間を空けても答えられるか確認</small></div>
-        <div><i></i><span>3か月後</span><b>主要弱点を絞り込む</b><small>未確認領域を減らし、定着確認の比率を上げる</small></div>
-        <div><i></i><span>試験2か月前</span><b>実戦形式＋残った弱点</b><small>本番を意識した問題と、最後まで残る弱点を再修復</small></div>
-        <div class="is-goal"><i></i><span>試験日</span><b>合格を目指す</b><small>確認済み・定着した知識を本番で使える状態へ</small></div>
-      </div>
-      <div class="lt-route-judgement"><b>${weeklyLabel}：</b><span>${weeklyCopy}</span></div>
-      <small class="lt-route-disclaimer">※ 推奨値はLTの学習到達指標に対する目安で、合格確率ではありません。実データを見ながら今後も調整します。</small>`;
+      <p class="lt-route-lead">LT推奨ペースでは、今日の目安はここです。学習結果に合わせてルートを更新します。</p>
+      <p class="lt-route-state">${stateCopy}</p>
+      <section class="lt-route-status"><h3>今の状態・不足しているポイント</h3><div class="lt-route-metrics">${metricHtml}</div></section>
+      <p class="lt-route-focus">${focusCopy}</p>
+      ${priorityHtml}
+      <section class="lt-route-today"><h3>今日やること</h3><strong>${escapeHtml(actionCopy)}</strong>
+        ${intentCopy ? `<b>＋${intentCopy}</b>` : ''}<p>${escapeHtml(actionReason)}</p>
+        <button type="button" class="lt-route-start">今日の学習へ</button></section>
+      <details class="lt-route-supplement"><summary>知識の仕上がり目安・計算の補足</summary>
+        <p>この時点の推奨：${recommendedDisplay} / 現在：${currentDisplay}</p>
+        <p>推奨ペースと現在地の差を示しています。日数差は知識の仕上がりに基づく目安です。</p>
+        <p>${totalAnswers.toLocaleString('ja-JP')}回答・${uniqueAnsweredQuestions.toLocaleString('ja-JP')}問の記録。回答数だけでなく修復・再確認・定着を含みます。</p>
+        <p>${weeklyLabel}：${escapeHtml(weeklyCopy)}</p>
+        <small>※ 合格確率ではありません。正答率と学習範囲には日付ごとの推奨基準がまだありません。</small>
+      </details>`;
+    const startButton = planCard.querySelector('.lt-route-start');
+    const existingStart = todayCard.querySelector('.learner-nav-action, .recommend-challenge');
+    if (existingStart && !existingStart.hasAttribute('aria-disabled') && !todayCard.closest('[inert]')) {
+      startButton.addEventListener('click', () => existingStart.click());
+    } else {
+      startButton.remove();
+    }
+    // The approved layout moves the full route below the summary. Keep the two
+    // primary facts beside the date at the top, including on small phones.
+    const glance = document.createElement('p');
+    glance.className = 'lt-route-glance';
+    glance.innerHTML = `<span>${countdownCopy}</span><b>${paceCopy}</b>`;
+    dateCard.appendChild(glance);
     stack.appendChild(planCard);
   }
 

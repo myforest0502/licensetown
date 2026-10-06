@@ -1,5 +1,19 @@
 # LicenseTown Current State
 
+## 2026-10-07 Recommended route gap guidance — feature branch
+
+- Baseline: merged PR #436 (`c3fd2a1c348c4306d7bed06bfedd05daf8d8804e`); branch `feat/recommended-route-gap-guidance`. Its learning-progress formula, overall ring and field bars are preserved.
+- The recommended-route card now leads with exam days remaining and approximately how many days ahead/behind the existing LT pace. It then shows scope/accuracy/finish, concrete comparable shortages, the existing navigation's priority fields (maximum three), and the existing today action. The original CTA is reused; preview remains inert.
+- The date card also exposes the countdown and pace difference so both are visible in the first mobile viewport. Missing exam dates remain null; no fabricated zero-day countdown. Past exams and missing evidence are explicitly distinguished.
+- The same original `ROUTE_ANCHORS`, interpolation and inverse finish curve are the sole pace calculation. No second schedule formula and no substitution of the more generous learning-progress gauge for strict finish.
+- Finish shortage is max(0, today's existing curve - current strict finish), shown in pt. Tiny positive gaps stay shortages instead of rounding to sufficient. Completed scope is sufficient; incomplete scope shows its remaining distance to full scope and explicitly distinguishes that from today's pace.
+- Inspection found no date-specific overall scope or accuracy targets. The UI says the daily criterion is not configured; it does not invent 75% or repurpose field-evaluation/readiness/Shadow targets. Presentation comparisons accept explicit source criteria when available; the accuracy-gap regression supplies 75% as a synthetic criterion, not a production policy.
+- Priority fields retain `learner_navigation.attention_items` order (including Safety, repair and recheck), joined to existing field finish data. No sorting purely by lowest finish and no change to selection/strategy authority. Today field/count/intent/reason all come from the same navigation action.
+- Original 21.5% / 23.8% comparison is retained in a closed explanatory detail, with compact three-axis state information and visible `合格確率ではありません`. Static calendar projections were replaced by current-state and next-action guidance.
+- Code exists: YES. Focused tests: **84 passed** including the 14 new route cases, unchanged learning-progress/helper/dashboard tests. Full suite: **1623 passed / 6 existing skips / 1 existing external-fixture deselection / 141 subtests passed** (156.52s). Python 3.12, dummy API credentials, DATABASE_URL empty; existing CI external-fixture deselection only.
+- Chromium synthetic ahead (+5 days) and late (-8 days) checks at **320/375/390/700/1280px**: no document/route horizontal overflow, no JS errors, countdown/gap visible in first 900px viewport; original learning-progress gauges still 65%/63%. Visual phone/desktop inspection performed. This is browser simulation, not physical-device acceptance.
+- Fresh production data observed: NO (no production DB credential/access provided in this environment). The supplied 137-day / 21.5% / 23.8% / +5-day case was reproduced synthetically. Production DB writes/schema/migrations, Render, STATE_SCORES/Node transitions, readiness, field evaluation/targets, selector, learning strategy, bottom-up LT, review/weakness judgments and main are unchanged. Production acceptance remains PENDING. No merge/deploy.
+
 ## 2026-10-07 Learner progress gauge — implementation on feature branch
 
 - Baseline is `77ff086` (PR #434); work is on `feat/learner-progress-gauge`, never directly on main.
@@ -12,7 +26,7 @@
 - Code exists: YES. Reweighted focused dashboard/route/helper tests: 115 passed (Python 3.12, dummy API keys, DATABASE_URL empty); full suite: 1609 passed, 6 existing skips, 1 existing external-fixture deselection, 141 subtests passed (111.25s). Existing dependency deprecation warnings remain. New live data observed: NO. Production deployment/device acceptance: PENDING.
 - No change to STATE_SCORES, Node transitions, readiness, field evaluation/targets, selector, strategy pilot, weakness/retention rules, bottom-up LT, DB schema/data, Render settings or main. No migration/merge/deployment performed.
 - Review adjustment: coverage weight is 30%, scope-weighted accuracy 40%, finish 30%; effort receives credit while understanding carries more weight.
-- Delivery: PR #436 https://github.com/myforest0502/licensetown/pull/436 is open / unmerged on `feat/learner-progress-gauge`. Review adjustments are committed/pushed to this same branch; no main merge.
+- Delivery update verified 2026-10-07: PR #436 https://github.com/myforest0502/licensetown/pull/436 was merged at `c3fd2a1c348c4306d7bed06bfedd05daf8d8804e`. The implementation and validation evidence above remain historical; fresh production/device acceptance is not inferred from the merge.
 
 
 ## 2026-09-24 公開HPの無料βモニター導線を明確化
