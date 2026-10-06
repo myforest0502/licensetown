@@ -95,11 +95,11 @@ def test_floor_up_ranking_uses_lowest_visible_learning_progress_first():
         row(9, 0.50, 0.18, 4),
     ]}
     visible = {
-        14: {'learning_progress': 0.60, 'accuracy': 0.61, 'finish': 0.19},
-        5: {'learning_progress': 0.62, 'accuracy': 0.63, 'finish': 0.22},
+        14: {'learning_progress': 0.60, 'learning_progress_display_percent': 60, 'accuracy': 0.61, 'finish': 0.19},
+        5: {'learning_progress': 0.62, 'learning_progress_display_percent': 62, 'accuracy': 0.63, 'finish': 0.22},
         # Field 9 has a better internal strategy accuracy in this fixture than
         # field 14 is not required; its visible gauge is lowest and must win.
-        9: {'learning_progress': 0.59, 'accuracy': 0.70, 'finish': 0.17},
+        9: {'learning_progress': 0.59, 'learning_progress_display_percent': 59, 'accuracy': 0.70, 'finish': 0.17},
     }
 
     ranked = pilot._floor_up_ranked_candidates(strategy, visible)
@@ -123,15 +123,15 @@ def test_floor_up_yesterday_rotation_never_skips_a_genuinely_lower_visible_field
 
     strategy = {'ranked_fields': [row(14), row(5), row(9)]}
     visible = {
-        14: {'learning_progress': 0.58, 'accuracy': 0.60, 'finish': 0.18},
-        5: {'learning_progress': 0.61, 'accuracy': 0.61, 'finish': 0.20},
-        9: {'learning_progress': 0.62, 'accuracy': 0.62, 'finish': 0.21},
+        14: {'learning_progress': 0.58, 'learning_progress_display_percent': 58, 'accuracy': 0.60, 'finish': 0.18},
+        5: {'learning_progress': 0.61, 'learning_progress_display_percent': 61, 'accuracy': 0.61, 'finish': 0.20},
+        9: {'learning_progress': 0.62, 'learning_progress_display_percent': 62, 'accuracy': 0.62, 'finish': 0.21},
     }
     ranked = pilot._floor_up_ranked_candidates(strategy, visible, yesterday_target=14)
     assert ranked[0]['field_id'] == 14
 
 
-def test_floor_up_yesterday_rotation_only_breaks_exact_visible_progress_ties():
+def test_floor_up_yesterday_rotation_only_breaks_same_displayed_percent_ties():
     def row(field, accuracy):
         return {
             'field_id': field,
@@ -148,9 +148,9 @@ def test_floor_up_yesterday_rotation_only_breaks_exact_visible_progress_ties():
 
     strategy = {'ranked_fields': [row(14, .60), row(5, .61), row(9, .62)]}
     visible = {
-        14: {'learning_progress': 0.60, 'accuracy': 0.60, 'finish': 0.20},
-        5: {'learning_progress': 0.60, 'accuracy': 0.61, 'finish': 0.20},
-        9: {'learning_progress': 0.62, 'accuracy': 0.62, 'finish': 0.20},
+        14: {'learning_progress': 0.596, 'learning_progress_display_percent': 60, 'accuracy': 0.60, 'finish': 0.20},
+        5: {'learning_progress': 0.604, 'learning_progress_display_percent': 60, 'accuracy': 0.61, 'finish': 0.20},
+        9: {'learning_progress': 0.62, 'learning_progress_display_percent': 62, 'accuracy': 0.62, 'finish': 0.20},
     }
     ranked = pilot._floor_up_ranked_candidates(strategy, visible, yesterday_target=14)
     assert [r['field_id'] for r in ranked][:2] == [5, 14]
