@@ -79,7 +79,7 @@ def test_flag_off_preserves_direct_builder_but_learner_route_uses_formal_overall
     monkeypatch.setattr(goukaku_ui, "get_question_attempts", lambda *_: [])
     token = create_dashboard_token("overall-flag-off")
     text = app.test_client().get(f"/goukaku-no-michi?token={token}").get_data(as_text=True)
-    assert "合格への到達度" in text
+    assert "学習進捗" in text
     assert "総合到達度" not in text
 
 
@@ -103,13 +103,13 @@ def test_overall_preview_renders_for_owner_and_supporter_without_cta_change(monk
     monkeypatch.setattr(goukaku_ui, "get_question_attempts", lambda user: [_attempt(user_id=user)])
     token = create_dashboard_token("overall-ui-user")
     owner = app.test_client().get(f"/goukaku-no-michi?token={token}").get_data(as_text=True)
-    assert "合格への到達度" in owner
-    assert "学習範囲" in owner and "修復済み" in owner and "定着" in owner
+    assert "学習進捗" in owner
+    assert "学習範囲" in owner and "正答率" in owner and "知識の仕上がり" in owner
     assert "今日の学習を始める" in owner
     assert "field-progress-row" in owner
     monkeypatch.setattr(goukaku_ui, "authorized_supporter_learner", lambda *_: ("supporter", "learner"))
     supporter = app.test_client().get("/supporter/goukaku-no-michi?token=test").get_data(as_text=True)
-    assert "合格への到達度" in supporter
+    assert "学習進捗" in supporter
     assert "閲覧専用" in supporter
     assert "チャレンジする！" not in supporter
 

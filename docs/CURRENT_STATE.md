@@ -1,5 +1,20 @@
 # LicenseTown Current State
 
+## 2026-10-07 Learner progress gauge — implementation on feature branch
+
+- Baseline is `77ff086` (PR #434); work is on `feat/learner-progress-gauge`, never directly on main.
+- Presentation-only shared helper computes `P = 0.30*C + 0.40*(C*A) + 0.30*F`, clamping each input/result to 0..1 and treating missing/non-finite/invalid evidence as zero. Incomplete P never rounds up to a displayed 100%; existing F formatting is unchanged. C is existing Node coverage, A existing accuracy, F unchanged formal Node progress.
+- Overall ring is now 学習進捗, with 学習範囲 / 正答率 / 知識の仕上がり and an explicit non-pass-probability disclaimer. Complete coverage receives the completed-scope copy; incomplete coverage receives scope-expansion guidance.
+- Field horizontal bars use the same helper and show progress / coverage / accuracy / finish. Original `progress_raw` and `progress_display` still expose F; new `learning_progress_*` keys expose P.
+- Browser explanation cards now describe the new metrics. Existing 7-day history and recommended-route comparison remain on F and are labeled 知識の仕上がり; they do not silently switch to P or change pace thresholds. Modified assets have new cache keys.
+- Synthetic examples verified in rendered UI: C=1/A=.70/F=.24 -> .652 -> 65%; field C=1/A=.66/F=.23 -> .633 -> 63%. This is simulation from the supplied aggregates, not a fresh Production DB observation.
+- Chromium checks at 320/375/390/700/1280px: no document/field-row horizontal overflow, all four field metrics present, no JavaScript errors; overall 65%, field 63%, route comparison still 24.0%.
+- Code exists: YES. Reweighted focused dashboard/route/helper tests: 115 passed (Python 3.12, dummy API keys, DATABASE_URL empty); full suite: 1609 passed, 6 existing skips, 1 existing external-fixture deselection, 141 subtests passed (111.25s). Existing dependency deprecation warnings remain. New live data observed: NO. Production deployment/device acceptance: PENDING.
+- No change to STATE_SCORES, Node transitions, readiness, field evaluation/targets, selector, strategy pilot, weakness/retention rules, bottom-up LT, DB schema/data, Render settings or main. No migration/merge/deployment performed.
+- Review adjustment: coverage weight is 30%, scope-weighted accuracy 40%, finish 30%; effort receives credit while understanding carries more weight.
+- Delivery: PR #436 https://github.com/myforest0502/licensetown/pull/436 is open / unmerged on `feat/learner-progress-gauge`. Review adjustments are committed/pushed to this same branch; no main merge.
+
+
 ## 2026-09-24 公開HPの無料βモニター導線を明確化
 
 - 凍結済みのPC/724pxデザイン原本は変更せず、公開レンダー境界でのみ「第62回 理学療法士国家試験を受験する方へ」と「無料βモニター 先着30名募集中」をヒーロー付近に追加した。

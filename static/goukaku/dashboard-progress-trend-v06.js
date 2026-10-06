@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const overlay = document.createElement('div');
   overlay.className = 'weekly-progress-overlay';
   overlay.innerHTML = `
-    <svg viewBox="0 0 ${width} 112" preserveAspectRatio="none" role="img" aria-label="直近7日間の合格への到達度推移">
+    <svg viewBox="0 0 ${width} 112" preserveAspectRatio="none" role="img" aria-label="直近7日間の知識の仕上がり推移">
       <line class="weekly-progress-gridline" x1="0" x2="${width}" y1="${top}" y2="${top}"></line>
       <line class="weekly-progress-gridline" x1="0" x2="${width}" y1="${bottom}" y2="${bottom}"></line>
       <polyline class="weekly-progress-line" points="${polyline}"></polyline>
@@ -60,12 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
   legend.className = 'weekly-combined-legend';
   legend.innerHTML = `
     <span><i class="bar-mark"></i>回答数</span>
-    <span><i class="line-mark"></i>合格への到達度</span>
+    <span><i class="line-mark"></i>知識の仕上がり</span>
     <strong>7日間：${first.toFixed(1)}% → ${last.toFixed(1)}%（${sign}${delta.toFixed(1)}pt）</strong>`;
   combined.insertAdjacentElement('beforebegin', legend);
 
   const note = document.createElement('p');
   note.className = 'weekly-progress-note';
-  note.textContent = '棒はその日の回答数、折れ線はその時点の「合格への到達度」です。到達度は問題数だけでなく、学習範囲・修復・再確認・定着で動きます。';
+  note.textContent = '棒はその日の回答数、折れ線はその時点の「知識の仕上がり」です。知識の仕上がりは問題数だけでなく、学習範囲・修復・再確認・定着で動きます。';
   combined.insertAdjacentElement('afterend', note);
 });

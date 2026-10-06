@@ -12,7 +12,10 @@ def test_product_copy_assets_are_loaded_after_dashboard_assets():
 def test_product_copy_explains_paid_dashboard_meaning_and_next_actions():
     root = Path(__file__).resolve().parents[1]
     js = (root / "static" / "goukaku" / "dashboard-product-copy-v01.js").read_text(encoding="utf-8")
-    assert "この到達度が示していること" in js
+    assert "この学習進捗が示していること" in js
+    assert "[data-finish-ratio]" in js
+    assert "${accuracy}" in js and "${finish}" in js
+    assert "${repaired}" not in js and "${stable}" not in js
     assert "今の次の一手" in js
     assert "LTの判断" in js
     assert "この段階を抜ける条件" in js

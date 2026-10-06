@@ -26,7 +26,7 @@
 
   .learning-overview,.dashboard-story-layout{display:block!important}.learning-overview>.subject-card,.learning-overview>.guidance-stack,.dashboard-story-left,.dashboard-story-right{width:100%;margin:0 0 12px!important}.guidance-stack>*{margin:0 0 10px!important}
   .subject-card,.weak-card,.motivation-card,.state-progress-card,.strategy-note-card,.learning-position-card{padding:14px!important}
-  .field-progress-row dl{grid-template-columns:repeat(3,minmax(0,1fr))}.field-progress-row dd{font-size:12px}
+  .field-progress-row dl{grid-template-columns:repeat(4,minmax(0,1fr))}.field-progress-row dd{font-size:12px}
   .weak-row{display:grid!important;grid-template-columns:36px minmax(0,1fr) auto!important;grid-template-rows:auto auto;column-gap:10px;row-gap:8px;align-items:start}
   .weak-row>.rank{grid-column:1;grid-row:1}
   .weak-row>p{grid-column:2;grid-row:1;min-width:0;margin:0!important}

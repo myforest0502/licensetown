@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ? countdownFromSnapshot : countdownFromCard;
   const totalAnswers = Number(routeSnapshot.totalAnswers) || 0;
   const uniqueAnsweredQuestions = Number(routeSnapshot.uniqueAnsweredQuestions) || 0;
-  const currentProgress = Number.parseFloat((text(overallCard?.querySelector('.ring span')) || '').replace('%', ''));
+  const currentProgress = Number.parseFloat(overallCard?.querySelector('[data-finish-ratio]')?.dataset.finishRatio) * 100;
 
   // LT推奨ペース v0.1。合格確率ではなく、試験日から逆算した学習到達指標の目安。
   // 日数が減るほど、新規範囲中心から修復・再確認・定着中心へ移る想定で段階的に加速させる。
@@ -104,13 +104,13 @@ document.addEventListener('DOMContentLoaded', () => {
   let weeklyCopy = '学習履歴が増えるほど、推奨ルートとのズレを細かく確認できるようになります。';
   if (progressDelta !== null && progressDelta > 0.2) {
     weeklyLabel = '今週は前進中';
-    weeklyCopy = `直近7日間で到達度が ${progressDelta.toFixed(1)}pt 上がっています。今の優先分野を続けながら、修復した知識を再確認へつなげます。`;
+    weeklyCopy = `直近7日間で知識の仕上がりが ${progressDelta.toFixed(1)}pt 上がっています。今の優先分野を続けながら、修復した知識を再確認へつなげます。`;
   } else if (progressDelta !== null && progressDelta >= -0.2) {
     weeklyLabel = '今週は足場固め';
-    weeklyCopy = '到達度は大きく動いていません。問題数だけを増やさず、修復と再確認を進める時期です。';
+    weeklyCopy = '知識の仕上がりは大きく動いていません。問題数だけを増やさず、修復と再確認を進める時期です。';
   } else if (progressDelta !== null) {
     weeklyLabel = '弱点攻略・再確認中';
-    weeklyCopy = `到達度は一時的に下がっていますが、単純な後退とは限りません。LTが弱点や再確認が必要な知識を見つけ、${priorityField}を中心に「できる問題を増やす」段階から「苦手を直して定着させる」段階へ進んでいる可能性があります。`;
+    weeklyCopy = `知識の仕上がりは一時的に下がっていますが、単純な後退とは限りません。LTが弱点や再確認が必要な知識を見つけ、${priorityField}を中心に「できる問題を増やす」段階から「苦手を直して定着させる」段階へ進んでいる可能性があります。`;
   }
 
   if (dateCard && overallCard && currentCard && todayCard && !document.querySelector('.lt-top-left-stack')) {
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <p class="lt-route-lead">残り${Number.isFinite(countdownNumber) ? `${countdownNumber}日` : '日数'}を、今の現在地から逆算して進めます。学習結果に合わせてルートは更新されます。</p>
       <div class="lt-route-pace-panel">
-        <div><small>この時点の推奨</small><strong>${recommendedDisplay}</strong><span>LT学習到達指標</span><p class="lt-route-pace-note">現在の学習記録から見た到達目安です</p></div>
+        <div><small>この時点の推奨</small><strong>${recommendedDisplay}</strong><span>知識の仕上がり</span><p class="lt-route-pace-note">現在の学習記録から見た到達目安です</p></div>
         <div><small>現在</small><strong>${currentDisplay}</strong><span>推奨との差 ${gapDisplay}</span><p class="lt-route-pace-note">いまの進み具合を毎日更新しています</p></div>
         <div class="lt-route-pace-result"><small>推奨ルートとの位置</small><strong>${scheduleDetail}</strong><span>${scheduleLabel}</span><p class="lt-route-pace-note">推奨ペースと現在地の差を示しています</p></div>
       </div>
@@ -163,17 +163,17 @@ document.addEventListener('DOMContentLoaded', () => {
   if (overallCard && !overallCard.querySelector('.lt-product-meaning')) {
     const progress = text(overallCard.querySelector('.ring span')) || '--';
     const coverage = text(overallCard.querySelector('.overall-progress-metrics div:nth-child(1) dd')) || '--';
-    const repaired = text(overallCard.querySelector('.overall-progress-metrics div:nth-child(2) dd')) || '--';
-    const stable = text(overallCard.querySelector('.overall-progress-metrics div:nth-child(3) dd')) || '--';
+    const accuracy = text(overallCard.querySelector('.overall-progress-metrics div:nth-child(2) dd')) || '--';
+    const finish = text(overallCard.querySelector('.overall-progress-metrics div:nth-child(3) dd')) || '--';
     const box = document.createElement('div');
     box.className = 'lt-product-meaning lt-overall-meaning';
     box.innerHTML = `
-      <h3>この到達度が示していること</h3>
-      <p><b>現在 ${progress}</b>。単純な正答率ではなく、「どこまで触れたか」「間違いを直せたか」「時間を空けても定着しているか」をまとめたLTの学習到達指標です。</p>
+      <h3>この学習進捗が示していること</h3>
+      <p><b>現在 ${progress}</b>。学習範囲・正答率・知識の仕上がりを合わせた学習進捗です。合格確率を表す数値ではありません。</p>
       <div class="lt-meaning-grid">
         <div><span>いま広げている範囲</span><strong>${coverage}</strong><small>まだ触れていない知識を減らす</small></div>
-        <div><span>直せた知識</span><strong>${repaired}</strong><small>誤答を別問題で確認する</small></div>
-        <div><span>定着を確認できた知識</span><strong>${stable}</strong><small>時間を空けても答えられる状態へ</small></div>
+        <div><span>正答率</span><strong>${accuracy}</strong><small>回答した問題での理解を確認する</small></div>
+        <div><span>知識の仕上がり</span><strong>${finish}</strong><small>間違いを直し、時間を空けても答えられる状態へ</small></div>
       </div>
       <p class="lt-next-line"><b>今の次の一手：</b>${priorityField}を優先し、修復と再確認を進めます。</p>`;
     overallCard.appendChild(box);
@@ -212,9 +212,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (weeklyCard && !weeklyCard.querySelector('.lt-weekly-meaning')) {
     let judgement = '学習量だけでなく、修復・再確認・定着がどう進んだかを一緒に見ます。';
-    if (progressDelta !== null && progressDelta > 0.2) judgement = `7日間で到達度が ${progressDelta.toFixed(1)}pt 上がりました。取り組んだ量が、学習範囲・修復・定着の前進につながっています。`;
-    else if (progressDelta !== null && progressDelta >= -0.2) judgement = '到達度は大きく動いていません。問題数を増やすだけでなく、修復や再確認を進めることが次の伸びにつながります。';
-    else if (progressDelta !== null) judgement = `到達度は一時的に下がっていますが、単純な後退とは限りません。今は${priorityField}を中心に、LTが弱点や再確認が必要な知識を見つけて修復・定着へ進めている可能性があります。苦手に挑む時期は数字が下がることもあります。ここを乗り越えて、どの分野にも対応できるPTを目指しましょう。`;
+    if (progressDelta !== null && progressDelta > 0.2) judgement = `7日間で知識の仕上がりが ${progressDelta.toFixed(1)}pt 上がりました。取り組んだ量が、学習範囲・修復・定着の前進につながっています。`;
+    else if (progressDelta !== null && progressDelta >= -0.2) judgement = '知識の仕上がりは大きく動いていません。問題数を増やすだけでなく、修復や再確認を進めることが次の伸びにつながります。';
+    else if (progressDelta !== null) judgement = `知識の仕上がりは一時的に下がっていますが、単純な後退とは限りません。今は${priorityField}を中心に、LTが弱点や再確認が必要な知識を見つけて修復・定着へ進めている可能性があります。苦手に挑む時期は数字が下がることもあります。ここを乗り越えて、どの分野にも対応できるPTを目指しましょう。`;
     const box = document.createElement('div');
     box.className = 'lt-product-meaning lt-weekly-meaning';
     box.innerHTML = `<h3>この7日間をLTはこう見ています</h3><p>${judgement}</p><p><b>次の焦点：</b>${priorityField}を優先し、苦手を一つずつ「できる」に変えていきます。目指すのは、どの分野にも対応できるPTです。</p>`;

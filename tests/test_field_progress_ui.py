@@ -73,7 +73,7 @@ def test_enabled_home_separates_three_metrics_and_keeps_overall_and_cta(monkeypa
     assert "学習範囲" in text
     assert "正答率" in text
     assert "1%未満" in text
-    assert "合格への到達度" in text
+    assert "学習進捗" in text
     assert "今日やること" in text
     assert "今日の学習を始める" in text
 

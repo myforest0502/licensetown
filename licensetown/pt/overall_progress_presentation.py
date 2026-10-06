@@ -4,6 +4,11 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
+from licensetown.pt.learning_progress_presentation import (
+    calculate_learning_progress,
+    normalize_progress_ratio,
+)
+
 from field_progress_presentation import STATE_LABELS, format_progress_percent
 
 
@@ -23,7 +28,19 @@ def build_overall_progress_presentation(
     ) / total if total else 0.0
     stable = counts["stable"] / total if total else 0.0
     raw = float(overall["overall_progress_score"])
+    accuracy = (
+        normalize_progress_ratio(overall_accuracy_percent, scale=100)
+        if overall_accuracy_percent is not None else None
+    )
+    learning = calculate_learning_progress(coverage, accuracy, raw)
     return {
+        "learning_progress_raw": learning,
+        "learning_progress_display": format_progress_percent(learning, completed_only=True),
+        "stage_copy": (
+            "全範囲の学習は完了。今は弱点を直し、知識を定着させる段階です。"
+            if coverage >= 1 else
+            "まだ確認していない範囲を広げながら、理解を深めていきましょう。"
+        ),
         "progress_raw": raw,
         "progress_display": format_progress_percent(raw),
         "coverage_raw": coverage,
@@ -38,6 +55,6 @@ def build_overall_progress_presentation(
         "state_labels": dict(STATE_LABELS),
         "accuracy_display": (
             "--" if overall_accuracy_percent is None
-            else f"{round(float(overall_accuracy_percent))}%"
+            else format_progress_percent(accuracy)
         ),
     }
