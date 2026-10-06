@@ -11,7 +11,7 @@
 - Chromium checks at 320/375/390/700/1280px: no document/field-row horizontal overflow, all four field metrics present, no JavaScript errors; overall 68%, field 67%, route comparison still 24.0%.
 - Code exists: YES. Focused dashboard/route/helper tests: 114 passed (Python 3.12, dummy API keys, DATABASE_URL empty); full suite: 1608 passed, 6 existing skips, 1 existing external-fixture deselection, 141 subtests passed (115.04s). Existing dependency deprecation warnings remain. New live data observed: NO. Production deployment/device acceptance: PENDING.
 - No change to STATE_SCORES, Node transitions, readiness, field evaluation/targets, selector, strategy pilot, weakness/retention rules, bottom-up LT, DB schema/data, Render settings or main. No migration/merge/deployment performed.
-- Delivery: commit/push/PR requested. GitHub git endpoint is reachable; api.github.com is currently Forbidden by the managed environment destination policy. PR creation requires that destination to be enabled; no bypass attempted.
+- Delivery: implementation commit `527d681` is pushed to `origin/feat/learner-progress-gauge`. PR creation was attempted with the prepared body and failed at `https://api.github.com/graphql` with Forbidden under the managed environment destination policy. PR number/URL is not yet available; enabling api.github.com is the remaining delivery dependency. No merge or bypass attempted.
 
 
 ## 2026-09-24 公開HPの無料βモニター導線を明確化
