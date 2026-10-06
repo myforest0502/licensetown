@@ -1,6 +1,7 @@
 """Opt-in PT strategy adapter. Existing selector remains Q-selection authority."""
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
+from decimal import Decimal, ROUND_HALF_UP
 from zoneinfo import ZoneInfo
 
 VERSION = 'learning_strategy_runtime_pilot_v0.1'
@@ -282,13 +283,23 @@ def _field_learning_progress_scores(attempts):
     for row in progress.get('fields') or ():
         field_id = int(row['field_id'])
         answered, correct = accuracy_counts[field_id]
-        accuracy = (correct / answered) if answered else None
+        accuracy_percent = round(correct / answered * 100) if answered else None
+        accuracy = (accuracy_percent / 100) if accuracy_percent is not None else None
+        learning_progress = calculate_learning_progress(
+            row.get('node_coverage'),
+            accuracy,
+            row.get('field_progress_score'),
+        )
+        display_percent = int(
+            Decimal(str(learning_progress * 100)).quantize(
+                Decimal('1'), rounding=ROUND_HALF_UP
+            )
+        )
+        if learning_progress < 1.0:
+            display_percent = min(display_percent, 99)
         scores[field_id] = {
-            'learning_progress': calculate_learning_progress(
-                row.get('node_coverage'),
-                accuracy,
-                row.get('field_progress_score'),
-            ),
+            'learning_progress': learning_progress,
+            'learning_progress_display_percent': display_percent,
             'coverage': row.get('node_coverage'),
             'accuracy': accuracy,
             'finish': row.get('field_progress_score'),
@@ -317,6 +328,7 @@ def _floor_up_ranked_candidates(strategy, learning_progress_scores, yesterday_ta
         if not target.get('total_question_count'):
             continue
         rows.append((
+            int(score.get('learning_progress_display_percent') or 0),
             float(score.get('learning_progress') or 0.0),
             float(score.get('accuracy') or 0.0),
             float(score.get('finish') or 0.0),
@@ -324,18 +336,18 @@ def _floor_up_ranked_candidates(strategy, learning_progress_scores, yesterday_ta
             field_id,
             row,
         ))
-    rows.sort(key=lambda item: item[:5])
+    rows.sort(key=lambda item: item[:6])
 
-    # Rotation is allowed only inside the exact same visible-progress tie.
+    # Rotation is allowed only inside the same percentage the learner actually sees.
     if yesterday_target and len(rows) > 1:
-        minimum = rows[0][0]
-        tied = [item for item in rows if abs(item[0] - minimum) < 1e-12]
+        minimum_display = rows[0][0]
+        tied = [item for item in rows if item[0] == minimum_display]
         if len(tied) > 1:
             tied.sort(key=lambda item: (
-                int(item[4]) == int(yesterday_target),
-                item[1], item[2], item[3], item[4],
+                int(item[5]) == int(yesterday_target),
+                item[1], item[2], item[3], item[4], item[5],
             ))
-            rows = tied + [item for item in rows if abs(item[0] - minimum) >= 1e-12]
+            rows = tied + [item for item in rows if item[0] != minimum_display]
     return [item[-1] for item in rows]
 
 def _refine_floor_up_session(
@@ -397,12 +409,14 @@ def _refine_floor_up_session(
         ):
             yesterday_score = learning_progress_scores.get(
                 int(context['yesterday_target_field']), {}
-            ).get('learning_progress')
-            chosen_score = learning_progress_scores.get(field_id, {}).get('learning_progress')
+            ).get('learning_progress_display_percent')
+            chosen_score = learning_progress_scores.get(
+                field_id, {}
+            ).get('learning_progress_display_percent')
             rotated = (
                 yesterday_score is not None
                 and chosen_score is not None
-                and abs(float(yesterday_score) - float(chosen_score)) < 1e-12
+                and int(yesterday_score) == int(chosen_score)
             )
         break
 
@@ -441,6 +455,7 @@ def _refine_floor_up_session(
     display_score = learning_progress_scores.get(field_id, {})
     rank_basis = {
         'learning_progress': display_score.get('learning_progress'),
+        'learning_progress_display_percent': display_score.get('learning_progress_display_percent'),
         'coverage': display_score.get('coverage'),
         'accuracy': display_score.get('accuracy'),
         'finish': display_score.get('finish'),
