@@ -42,10 +42,10 @@ def test_paid_route_compares_current_progress_with_recommended_pace():
     assert "ROUTE_ANCHORS" in js
     assert "interpolateRecommendedProgress" in js
     assert "equivalentDaysRemaining" in js
-    assert "この時点の推奨" in js
+    assert "試験日から逆算した今日の目安" in js
     assert "現在の位置" in js
     assert "LT推奨ペースでは、今日の目安はここです" in js
     assert "lt-route-supplement" in js
-    assert "推奨ペースと現在地の差を示しています" in js
+    assert "厳密な仕上がり率そのものは表示せず" in js
     assert "合格確率ではありません" in js
     assert "lt-route-pace-panel" in css
