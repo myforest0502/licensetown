@@ -70,7 +70,7 @@ def test_daily_floor_up_only_uses_blocks_three_and_four():
     assert context['completed_blocks_today'] == 4
 
 
-def test_floor_up_ranking_rotates_away_from_yesterday_when_balance_allows():
+def test_floor_up_ranking_uses_lowest_visible_learning_progress_first():
     def row(field, accuracy, progress, repeated=0):
         return {
             'field_id': field,
@@ -88,13 +88,90 @@ def test_floor_up_ranking_rotates_away_from_yesterday_when_balance_allows():
                 },
             },
         }
+
     strategy = {'ranked_fields': [
         row(14, 0.58, 0.20, 3),
         row(5, 0.63, 0.25, 1),
-        row(9, 0.63, 0.30, 2),
+        row(9, 0.50, 0.18, 4),
     ]}
-    assert [r['field_id'] for r in pilot._floor_up_ranked_candidates(strategy)][:3] == [14, 5, 9]
-    assert [r['field_id'] for r in pilot._floor_up_ranked_candidates(strategy, 14)][:3] == [5, 9, 14]
+    visible = {
+        14: {'learning_progress': 0.60, 'accuracy': 0.61, 'finish': 0.19},
+        5: {'learning_progress': 0.62, 'accuracy': 0.63, 'finish': 0.22},
+        # Field 9 has a better internal strategy accuracy in this fixture than
+        # field 14 is not required; its visible gauge is lowest and must win.
+        9: {'learning_progress': 0.59, 'accuracy': 0.70, 'finish': 0.17},
+    }
+
+    ranked = pilot._floor_up_ranked_candidates(strategy, visible)
+    assert [r['field_id'] for r in ranked][:3] == [9, 14, 5]
+
+
+def test_floor_up_yesterday_rotation_never_skips_a_genuinely_lower_visible_field():
+    def row(field):
+        return {
+            'field_id': field,
+            'priority_score': 0.5,
+            'reason_codes': [],
+            'priority_components': {},
+            'target': {
+                'total_question_count': 100,
+                'current_progress_score': 0.20,
+                'unresolved_repeated_weakness_node_count': 0,
+                'evaluation': {},
+            },
+        }
+
+    strategy = {'ranked_fields': [row(14), row(5), row(9)]}
+    visible = {
+        14: {'learning_progress': 0.58, 'accuracy': 0.60, 'finish': 0.18},
+        5: {'learning_progress': 0.61, 'accuracy': 0.61, 'finish': 0.20},
+        9: {'learning_progress': 0.62, 'accuracy': 0.62, 'finish': 0.21},
+    }
+    ranked = pilot._floor_up_ranked_candidates(strategy, visible, yesterday_target=14)
+    assert ranked[0]['field_id'] == 14
+
+
+def test_floor_up_yesterday_rotation_only_breaks_exact_visible_progress_ties():
+    def row(field, accuracy):
+        return {
+            'field_id': field,
+            'priority_score': 0.5,
+            'reason_codes': [],
+            'priority_components': {},
+            'target': {
+                'total_question_count': 100,
+                'current_progress_score': 0.20,
+                'unresolved_repeated_weakness_node_count': 0,
+                'evaluation': {'current_evaluable_accuracy': accuracy},
+            },
+        }
+
+    strategy = {'ranked_fields': [row(14, .60), row(5, .61), row(9, .62)]}
+    visible = {
+        14: {'learning_progress': 0.60, 'accuracy': 0.60, 'finish': 0.20},
+        5: {'learning_progress': 0.60, 'accuracy': 0.61, 'finish': 0.20},
+        9: {'learning_progress': 0.62, 'accuracy': 0.62, 'finish': 0.20},
+    }
+    ranked = pilot._floor_up_ranked_candidates(strategy, visible, yesterday_target=14)
+    assert [r['field_id'] for r in ranked][:2] == [5, 14]
+
+
+
+def test_floor_up_visible_score_matches_dashboard_formula(monkeypatch):
+    import learning_strategy_runtime_pilot as runtime
+
+    attempts = [
+        {'question_id': 'Q1', 'is_correct': True},
+        {'question_id': 'Q2', 'is_correct': False},
+    ]
+    monkeypatch.setattr(
+        runtime,
+        '_field_learning_progress_scores',
+        runtime._field_learning_progress_scores,
+    )
+    scores = runtime._field_learning_progress_scores(attempts)
+    assert set(scores) == set(range(1, 19))
+    assert all(0.0 <= row['learning_progress'] <= 1.0 for row in scores.values())
 
 
 def test_floor_up_refinement_is_one_exact_field_and_reused_for_second_block(monkeypatch):
