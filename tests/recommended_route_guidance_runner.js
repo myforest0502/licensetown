@@ -14,12 +14,12 @@ date.parentNode = { insertBefore: () => {} };
 date.querySelector = selector => selector === '.countdown strong'
   ? { textContent: snapshot.daysUntilExam == null ? '' : String(snapshot.daysUntilExam) }
   : { textContent: '' };
-const today = { querySelector: selector => selector === 'h2' ? { textContent: '理学療法治療各論を10問' }
+const today = { children: [], appendChild(child) { this.children.push(child); }, querySelector: selector => selector === 'h2' ? { textContent: '理学療法治療各論を10問' }
   : selector === 'p' ? { textContent: '既存の理由' } : null };
 const current = { querySelector: () => ({ textContent: 'まず大事なところを確認しよう' }) };
-const attention = { querySelector: () => null };
+const attention = { children: [], appendChild(child) { this.children.push(child); }, querySelector: () => null };
 const overall = { querySelector: () => ({ textContent: '' }) };
-const weekly = { querySelector: () => null };
+const weekly = { children: [], appendChild(child) { this.children.push(child); }, querySelector: () => null };
 const cards = {
   '.date-card': date,
   '.learner-current-card': current,
