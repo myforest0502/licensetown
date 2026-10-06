@@ -248,38 +248,95 @@ def daily_floor_up_context(events, as_of):
     }
 
 
-def _floor_up_ranked_candidates(strategy, yesterday_target=None):
-    """Rank the learner's floor without letting one field dominate consecutive days.
 
-    Current evaluable accuracy is the primary floor signal. Progress and active
-    unresolved weakness only break ties. If another suitable field exists, the
-    prior day's floor-up target is skipped for one day to protect whole-exam balance.
+def _field_learning_progress_scores(attempts):
+    """Reproduce the learner-facing field progress score used on the dashboard.
+
+    The floor-up target must match what the learner can see: the lowest
+    "分野別 学習進捗".  Use all formal attempts (not the stricter strategy-only
+    evidence filter), because the dashboard presentation is built from the full
+    learner history.  Accuracy is the all-time per-field question accuracy, while
+    coverage and finish come from the formal Evidence -> Progress pipeline.
+    """
+    from field_evidence import build_field_evidence
+    from field_progress import build_field_progress
+    from licensetown.pt.learning_progress_presentation import calculate_learning_progress
+    from question_bank import QuestionBankError, get_category_small
+
+    evidence = build_field_evidence(attempts)
+    progress = build_field_progress(evidence)
+    accuracy_counts = defaultdict(lambda: [0, 0])
+    for attempt in attempts:
+        question_id = attempt.get('question_id')
+        if not question_id:
+            continue
+        try:
+            field_id = get_category_small(question_id)
+        except (QuestionBankError, KeyError, TypeError, ValueError):
+            continue
+        accuracy_counts[field_id][0] += 1
+        if attempt.get('is_correct') is True:
+            accuracy_counts[field_id][1] += 1
+
+    scores = {}
+    for row in progress.get('fields') or ():
+        field_id = int(row['field_id'])
+        answered, correct = accuracy_counts[field_id]
+        accuracy = (correct / answered) if answered else None
+        scores[field_id] = {
+            'learning_progress': calculate_learning_progress(
+                row.get('node_coverage'),
+                accuracy,
+                row.get('field_progress_score'),
+            ),
+            'coverage': row.get('node_coverage'),
+            'accuracy': accuracy,
+            'finish': row.get('field_progress_score'),
+            'answered_count': answered,
+        }
+    return scores
+
+
+def _floor_up_ranked_candidates(strategy, learning_progress_scores, yesterday_target=None):
+    """Rank by the same learning-progress percentage shown to the learner.
+
+    The lowest visible field progress is the primary and authoritative floor-up
+    signal.  Accuracy, strict finish and unresolved repeated weakness only break
+    ties.  The prior day's target may be moved back only when another field has
+    the *same* learner-facing progress score; it must never displace a genuinely
+    lower field.
     """
     rows = []
     for row in strategy.get('ranked_fields') or ():
+        field_id = int(row.get('field_id') or 0)
+        score = learning_progress_scores.get(field_id)
+        if not field_id or not score:
+            continue
         target = row.get('target') or {}
         evaluation = target.get('evaluation') or {}
-        accuracy = evaluation.get('current_evaluable_accuracy')
-        if accuracy is None:
-            accuracy = evaluation.get('evaluable_accuracy')
-        answers = int(evaluation.get('evaluable_answer_count') or 0)
-        if accuracy is None or answers < 60 or not target.get('total_question_count'):
+        if not target.get('total_question_count'):
             continue
         rows.append((
-            float(accuracy),
-            float(target.get('current_progress_score') or 0.0),
+            float(score.get('learning_progress') or 0.0),
+            float(score.get('accuracy') or 0.0),
+            float(score.get('finish') or 0.0),
             -int(target.get('unresolved_repeated_weakness_node_count') or 0),
-            int(row['field_id']),
+            field_id,
             row,
         ))
-    rows.sort(key=lambda item: item[:4])
-    ordered = [item[-1] for item in rows]
-    if yesterday_target and len(ordered) > 1:
-        rotated = [row for row in ordered if int(row['field_id']) != int(yesterday_target)]
-        rotated += [row for row in ordered if int(row['field_id']) == int(yesterday_target)]
-        ordered = rotated
-    return ordered
+    rows.sort(key=lambda item: item[:5])
 
+    # Rotation is allowed only inside the exact same visible-progress tie.
+    if yesterday_target and len(rows) > 1:
+        minimum = rows[0][0]
+        tied = [item for item in rows if abs(item[0] - minimum) < 1e-12]
+        if len(tied) > 1:
+            tied.sort(key=lambda item: (
+                int(item[4]) == int(yesterday_target),
+                item[1], item[2], item[3], item[4],
+            ))
+            rows = tied + [item for item in rows if abs(item[0] - minimum) >= 1e-12]
+    return [item[-1] for item in rows]
 
 def _refine_floor_up_session(
     attempts, baseline, audit, strategy, events, *,
@@ -308,6 +365,7 @@ def _refine_floor_up_session(
         for a in sorted(attempts, key=lambda a: _time(a['answered_at']), reverse=True)[:30]
     }
     field_map, _ = _field_node_coverage(attempts)
+    learning_progress_scores = _field_learning_progress_scores(attempts)
     target_field = context['today_target_field']
     rotated = False
 
@@ -316,7 +374,9 @@ def _refine_floor_up_session(
                       if int(row.get('field_id') or 0) == int(target_field)]
     else:
         candidates = _floor_up_ranked_candidates(
-            strategy, context.get('yesterday_target_field')
+            strategy,
+            learning_progress_scores,
+            context.get('yesterday_target_field'),
         )
 
     required_supply = 30 if target_field else 60
@@ -335,7 +395,15 @@ def _refine_floor_up_session(
             and context.get('yesterday_target_field')
             and field_id != int(context['yesterday_target_field'])
         ):
-            rotated = True
+            yesterday_score = learning_progress_scores.get(
+                int(context['yesterday_target_field']), {}
+            ).get('learning_progress')
+            chosen_score = learning_progress_scores.get(field_id, {}).get('learning_progress')
+            rotated = (
+                yesterday_score is not None
+                and chosen_score is not None
+                and abs(float(yesterday_score) - float(chosen_score)) < 1e-12
+            )
         break
 
     if chosen is None:
@@ -370,8 +438,14 @@ def _refine_floor_up_session(
     accuracy = evaluation.get('current_evaluable_accuracy')
     if accuracy is None:
         accuracy = evaluation.get('evaluable_accuracy')
+    display_score = learning_progress_scores.get(field_id, {})
     rank_basis = {
-        'accuracy': accuracy,
+        'learning_progress': display_score.get('learning_progress'),
+        'coverage': display_score.get('coverage'),
+        'accuracy': display_score.get('accuracy'),
+        'finish': display_score.get('finish'),
+        'answered_count': display_score.get('answered_count'),
+        'strategy_accuracy': accuracy,
         'progress': target.get('current_progress_score'),
         'unresolved_repeated_weakness_nodes': target.get('unresolved_repeated_weakness_node_count', 0),
     }
