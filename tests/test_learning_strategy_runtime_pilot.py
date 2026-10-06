@@ -157,6 +157,69 @@ def test_floor_up_yesterday_rotation_only_breaks_same_displayed_percent_ties():
 
 
 
+def test_floor_up_refinement_selects_lowest_displayed_field_even_when_strategy_orders_other_field_first(monkeypatch):
+    now = datetime(2026, 9, 30, 12, 0, tzinfo=timezone.utc)
+    baseline = [get_quiz_question(q) for q in list(question_ids())[:30]]
+    audit = {
+        q['id']: {'selection_group': 'checking', 'selection_reason': 'uncertain_correct'}
+        for q in baseline
+    }
+
+    def row(field, strategy_accuracy):
+        return {
+            'field_id': field,
+            'priority_score': 0.8,
+            'reason_codes': ['test'],
+            'priority_components': {},
+            'allocation_candidate': True,
+            'target': {
+                'total_question_count': 100,
+                'current_progress_score': 0.20,
+                'unresolved_repeated_weakness_node_count': 0,
+                'evaluation': {
+                    'evaluable_answer_count': 100,
+                    'current_evaluable_accuracy': strategy_accuracy,
+                    'evaluable_accuracy': strategy_accuracy,
+                },
+            },
+        }
+
+    # Strategy order/accuracy favors field 9, but the learner-facing gauge says
+    # field 14 is lower. Floor-up must follow the visible gauge.
+    strategy = {
+        'recommended_field_id': 9,
+        'learning_intent': 'repair',
+        'priority_score': 1.0,
+        'reason_codes': [],
+        'priority_components': {},
+        'learning_lifecycle': {},
+        'ranked_fields': [row(9, .50), row(14, .70)],
+    }
+    monkeypatch.setattr(pilot, 'strategy_snapshot', lambda *a, **k: strategy)
+    monkeypatch.setattr(pilot, '_field_learning_progress_scores', lambda attempts: {
+        9: {
+            'learning_progress': .61,
+            'learning_progress_display_percent': 61,
+            'coverage': 1.0, 'accuracy': .61, 'finish': .19, 'answered_count': 359,
+        },
+        14: {
+            'learning_progress': .596,
+            'learning_progress_display_percent': 60,
+            'coverage': 1.0, 'accuracy': .61, 'finish': .19, 'answered_count': 141,
+        },
+    })
+    events = []
+    events += _adaptive_session_events('s1', now - timedelta(hours=3))
+    events += _adaptive_session_events('s2', now - timedelta(hours=2))
+
+    result = pilot.refine_session([], baseline, audit, events, as_of=now)
+
+    assert len(result) == 30
+    assert all(get_category_small(q['id']) == 14 for q in result)
+    assert {row['floor_up_target_field'] for row in audit.values()} == {14}
+    assert {row['floor_up_rank_basis']['learning_progress_display_percent'] for row in audit.values()} == {60}
+
+
 def test_floor_up_refinement_is_one_exact_field_and_reused_for_second_block(monkeypatch):
     now = datetime(2026, 9, 30, 12, 0, tzinfo=timezone.utc)
     baseline = [get_quiz_question(q) for q in list(question_ids())[:30]]
