@@ -13,7 +13,7 @@ def test_product_copy_explains_paid_dashboard_meaning_and_next_actions():
     root = Path(__file__).resolve().parents[1]
     js = (root / "static" / "goukaku" / "dashboard-product-copy-v01.js").read_text(encoding="utf-8")
     assert "この学習進捗が示していること" in js
-    assert "[data-finish-ratio]" in js
+    assert "overall.progress_raw" in js
     assert "${accuracy}" in js and "${finish}" in js
     assert "${repaired}" not in js and "${stable}" not in js
     assert "今の次の一手" in js
@@ -42,10 +42,10 @@ def test_paid_route_compares_current_progress_with_recommended_pace():
     assert "ROUTE_ANCHORS" in js
     assert "interpolateRecommendedProgress" in js
     assert "equivalentDaysRemaining" in js
-    assert "この時点の推奨" in js
-    assert "推奨ルートとの位置" in js
-    assert "現在の学習記録から見た到達目安です" in js
-    assert "いまの進み具合を毎日更新しています" in js
-    assert "推奨ペースと現在地の差を示しています" in js
+    assert "試験日から逆算した今日の目安" in js
+    assert "現在の位置" in js
+    assert "LT推奨ペースでは、今日の目安はここです" in js
+    assert "lt-route-supplement" in js
+    assert "厳密な仕上がり率そのものは表示せず" in js
     assert "合格確率ではありません" in js
     assert "lt-route-pace-panel" in css

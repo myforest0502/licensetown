@@ -29,7 +29,7 @@ def test_top_half_matches_latest_boss_reference_exact_order():
     assert "grid-template-columns:repeat(5,minmax(0,1fr))" in css
     assert ".lt-route-pace-note" in css
     assert "dashboard-approved-layout-v01.css', v='20260909-v04'" in base
-    assert "dashboard-product-copy-v01.js', v='20261007-learning-progress'" in base
+    assert "dashboard-product-copy-v01.js', v='20261007-route-guidance'" in base
 
 
 def test_lower_half_remains_frozen_to_previous_approved_reference():
