@@ -268,6 +268,123 @@ def _activity_with_connection(
         ),
     }
 
+
+def _field_summary_from_attempts(
+    attempts: list[dict[str, Any]],
+    *,
+    now: datetime | None = None,
+) -> tuple[list[dict[str, Any]], int]:
+    """Build field/unique dashboard facts from the attempts already needed by navigation."""
+    from question_bank import CATEGORY_NAMES, QuestionBankError, get_category_small
+
+    current = database._as_utc(now or datetime.now(timezone.utc))
+    seven_days_ago = current - timedelta(days=7)
+    today = current.astimezone(ZoneInfo("Asia/Tokyo")).date()
+    summaries = {
+        number: {
+            "category_small": number,
+            "name": name,
+            "answered_count": 0,
+            "correct_count": 0,
+            "accuracy": None,
+            "recent_7d_answered_count": 0,
+            "recent_7d_correct_count": 0,
+            "recent_7d_accuracy": None,
+            "today_answered_count": 0,
+            "today_correct_count": 0,
+            "today_accuracy": None,
+            "learned": False,
+        }
+        for number, name in CATEGORY_NAMES.items()
+    }
+    unique_question_ids = set()
+
+    for attempt in attempts:
+        question_id = str(attempt.get("question_id") or "")
+        if not question_id:
+            continue
+        try:
+            field_id = get_category_small(question_id)
+        except QuestionBankError:
+            continue
+        answered_at = database._as_utc(attempt.get("answered_at"))
+        row = summaries[field_id]
+        row["answered_count"] += 1
+        if attempt.get("is_correct") is True:
+            row["correct_count"] += 1
+        if answered_at >= seven_days_ago:
+            row["recent_7d_answered_count"] += 1
+            if attempt.get("is_correct") is True:
+                row["recent_7d_correct_count"] += 1
+        if answered_at.astimezone(ZoneInfo("Asia/Tokyo")).date() == today:
+            row["today_answered_count"] += 1
+            if attempt.get("is_correct") is True:
+                row["today_correct_count"] += 1
+        unique_question_ids.add(question_id)
+
+    for row in summaries.values():
+        answered = row["answered_count"]
+        recent = row["recent_7d_answered_count"]
+        today_answered = row["today_answered_count"]
+        row["learned"] = answered > 0
+        row["accuracy"] = round(row["correct_count"] / answered * 100) if answered else None
+        row["recent_7d_accuracy"] = (
+            round(row["recent_7d_correct_count"] / recent * 100) if recent else None
+        )
+        row["today_accuracy"] = (
+            round(row["today_correct_count"] / today_answered * 100)
+            if today_answered else None
+        )
+    return list(summaries.values()), len(unique_question_ids)
+
+
+def _today_recommendation_summary_with_connection(
+    user_id: str,
+    connection,
+    *,
+    now: datetime | None = None,
+) -> dict[str, int]:
+    """Read only today's recommendation JSON instead of the full event history."""
+    current = database._as_utc(now or datetime.now(timezone.utc))
+    jst = ZoneInfo("Asia/Tokyo")
+    today = current.astimezone(jst).date()
+    start_at = datetime.combine(today, datetime.min.time(), jst).astimezone(timezone.utc)
+    end_at = start_at + timedelta(days=1)
+    with connection.cursor() as cur:
+        cur.execute(
+            """
+            SELECT question_results
+            FROM learning_events
+            WHERE user_id = %s
+              AND qualification_id = %s
+              AND answered_at >= %s
+              AND answered_at < %s
+              AND question_results IS NOT NULL
+            """,
+            (user_id, _QUALIFICATION_ID, start_at, end_at),
+        )
+        rows = cur.fetchall()
+
+    answered = correct = 0
+    for (results,) in rows:
+        if not isinstance(results, list):
+            continue
+        for result in results:
+            if not isinstance(result, dict):
+                continue
+            if result.get("learning_source") != "dashboard_recommendation":
+                continue
+            answered += 1
+            if result.get("is_correct") is True:
+                correct += 1
+    return {
+        "recommendation_today_answered": answered,
+        "recommendation_today_correct": correct,
+        "recommendation_today_incorrect": max(answered - correct, 0),
+    }
+
+
+
 def get_learner_navigation_read_bundle(user_id: str) -> dict[str, Any]:
     """Return only the formal inputs needed to validate learner navigation.
 
@@ -337,42 +454,51 @@ def get_dashboard_read_bundle(
         }
 
     with database.get_db_connection() as conn:
-        # Stage-E dashboard requests already need the full PT learning-event
-        # stream. Reuse that single read for every dashboard aggregate instead
-        # of transferring the same JSON payload from Neon multiple times.
-        learning_events = (
-            _learning_events_with_connection(user_id, conn) if include_learning_events else []
-        )
-        raw_question_rows = _question_result_rows_with_connection(user_id, conn)
-        question_rows = _current_formal_question_result_rows(raw_question_rows)
-        activity = _activity_with_connection(user_id, conn)
-        summary = _summary_with_connection(user_id, conn)
-
-        activity.update(
-            build_today_recommendation_summary(
-                user_id,
-                connection=conn,
-                question_result_rows=question_rows,
-            )
-        )
-        learning_data = {
-            "summary": summary,
-            "activity": activity,
-            "fields": database.get_field_learning_summary(
-                user_id,
-                _connection=conn,
-                _question_result_rows=question_rows,
-            ),
-            "unique_question_count": database.get_unique_answered_question_count(
-                user_id,
-                _connection=conn,
-                _question_result_rows=question_rows,
-            ),
-        }
+        # The dashboard already needs formal attempts for Evidence/Progress.
+        # Reuse those rows for field accuracy and unique-question counts instead
+        # of downloading the same question_results JSON history a second time.
         attempts = (
             _current_formal_attempts_preserving_identity(_attempts_with_connection(user_id, conn))
             if include_attempts else []
         )
+        learning_events = (
+            _learning_events_with_connection(user_id, conn) if include_learning_events else []
+        )
+        activity = _activity_with_connection(user_id, conn)
+        summary = _summary_with_connection(user_id, conn)
+
+        if include_attempts:
+            fields, unique_question_count = _field_summary_from_attempts(attempts)
+            activity.update(
+                _today_recommendation_summary_with_connection(user_id, conn)
+            )
+        else:
+            raw_question_rows = _question_result_rows_with_connection(user_id, conn)
+            question_rows = _current_formal_question_result_rows(raw_question_rows)
+            fields = database.get_field_learning_summary(
+                user_id,
+                _connection=conn,
+                _question_result_rows=question_rows,
+            )
+            unique_question_count = database.get_unique_answered_question_count(
+                user_id,
+                _connection=conn,
+                _question_result_rows=question_rows,
+            )
+            activity.update(
+                build_today_recommendation_summary(
+                    user_id,
+                    connection=conn,
+                    question_result_rows=question_rows,
+                )
+            )
+
+        learning_data = {
+            "summary": summary,
+            "activity": activity,
+            "fields": fields,
+            "unique_question_count": unique_question_count,
+        }
         trial100_records = (
             get_trial100_records(user_id, connection=conn) if include_trial100 else []
         )
