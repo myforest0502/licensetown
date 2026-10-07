@@ -360,7 +360,8 @@ def build_learner_navigation_from_formal_inputs(
     """Build the same structured learner CTA without legacy dashboard work."""
     attempts = list(attempts or [])
     from learning_strategy_runtime_pilot import trusted_strategy_evidence_attempts
-    trusted_attempts, _excluded_provisional = trusted_strategy_evidence_attempts(attempts)
+    with learner_path_perf.measure("dashboard.navigation.trusted_filter"):
+        trusted_attempts, _excluded_provisional = trusted_strategy_evidence_attempts(attempts)
     evidence = evidence or build_field_evidence(trusted_attempts)
     progress = progress or build_field_progress(evidence)
     shadow_result = shadow_result or build_dashboard_real_data_shadow(
@@ -372,23 +373,25 @@ def build_learner_navigation_from_formal_inputs(
         try:
             from datetime import datetime, timezone
             from learning_strategy_runtime_pilot import strategy_snapshot
-            stage_e = strategy_snapshot(
-                trusted_attempts,
-                list(learning_events or []),
-                datetime.now(timezone.utc),
-                days_to_exam=days_to_exam,
-            )
-            shadow_result = _stage_e_shadow_authority(shadow_result, stage_e)
+            with learner_path_perf.measure("dashboard.navigation.stage_e"):
+                stage_e = strategy_snapshot(
+                    trusted_attempts,
+                    list(learning_events or []),
+                    datetime.now(timezone.utc),
+                    days_to_exam=days_to_exam,
+                )
+                shadow_result = _stage_e_shadow_authority(shadow_result, stage_e)
         except (KeyError, TypeError, ValueError):
             # Fail closed to the existing formal dashboard evidence when the
             # Stage E completion context is not yet reproducible.
             pass
-    readiness = build_pass_readiness(
-        trusted_attempts,
-        field_evidence=evidence,
-        progress=progress,
-        trial100_records=trial100_records,
-    )
+    with learner_path_perf.measure("dashboard.navigation.readiness"):
+        readiness = build_pass_readiness(
+            trusted_attempts,
+            field_evidence=evidence,
+            progress=progress,
+            trial100_records=trial100_records,
+        )
     return build_learner_readiness_presentation(readiness, shadow_result)
 
 
@@ -461,12 +464,13 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
             or phase12_preview
             or include_learner_navigation
         )
-        bundle = _dashboard_read_bundle(
-            user_id,
-            include_attempts=needs_attempts,
-            include_trial100=include_learner_navigation,
-            include_learning_events=strategy_navigation,
-        )
+        with learner_path_perf.measure("dashboard.read_bundle"):
+            bundle = _dashboard_read_bundle(
+                user_id,
+                include_attempts=needs_attempts,
+                include_trial100=include_learner_navigation,
+                include_learning_events=strategy_navigation,
+            )
         learning_data = bundle["learning_data"]
         dashboard.update(learning_data["summary"])
         dashboard.update(learning_data["activity"])
@@ -482,9 +486,11 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
         evidence = None
         progress = None
         if needs_attempts:
-            evidence = build_field_evidence(attempts)
+            with learner_path_perf.measure("dashboard.field_evidence"):
+                evidence = build_field_evidence(attempts)
         if field_preview or overall_preview or shadow_preview or include_learner_navigation:
-            progress = build_field_progress(evidence)
+            with learner_path_perf.measure("dashboard.field_progress"):
+                progress = build_field_progress(evidence)
         if field_preview or include_learner_navigation:
             dashboard["field_progress_ui_enabled"] = True
             dashboard["field_progress_fields"] = build_field_progress_presentation_from_calculation(
@@ -503,29 +509,31 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
                 dashboard["recommended_study"][0][0]
                 if dashboard["recommended_study"] else None
             )
-            shadow_result = build_dashboard_real_data_shadow(
-                attempts,
-                evidence=evidence,
-                progress=progress,
-                legacy_overall_progress_percent=dashboard["overall_progress"],
-                legacy_weak_fields=dashboard["weak_fields"],
-                legacy_recommended_field=legacy_recommended_field,
-            )
+            with learner_path_perf.measure("dashboard.real_data_shadow"):
+                shadow_result = build_dashboard_real_data_shadow(
+                    attempts,
+                    evidence=evidence,
+                    progress=progress,
+                    legacy_overall_progress_percent=dashboard["overall_progress"],
+                    legacy_weak_fields=dashboard["weak_fields"],
+                    legacy_recommended_field=legacy_recommended_field,
+                )
             if shadow_preview:
                 dashboard["dashboard_real_data_shadow_enabled"] = True
                 dashboard["dashboard_real_data_shadow"] = shadow_result
         if include_learner_navigation:
             dashboard["learner_navigation_enabled"] = True
-            dashboard["learner_navigation"] = build_learner_navigation_from_formal_inputs(
-                attempts,
-                bundle["trial100_records"],
-                learning_events=bundle.get("learning_events"),
-                use_stage_e_strategy=strategy_navigation,
-                days_to_exam=dashboard["days_until_exam"],
-                evidence=evidence,
-                progress=progress,
-                shadow_result=shadow_result,
-            )
+            with learner_path_perf.measure("dashboard.learner_navigation"):
+                dashboard["learner_navigation"] = build_learner_navigation_from_formal_inputs(
+                    attempts,
+                    bundle["trial100_records"],
+                    learning_events=bundle.get("learning_events"),
+                    use_stage_e_strategy=strategy_navigation,
+                    days_to_exam=dashboard["days_until_exam"],
+                    evidence=evidence,
+                    progress=progress,
+                    shadow_result=shadow_result,
+                )
         if phase12_preview:
             shadow_judgment = None
             if dashboard["learner_navigation_enabled"]:
