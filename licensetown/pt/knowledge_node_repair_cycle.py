@@ -5,10 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Iterable
 
-from knowledge_node_state_transition import (
-    derive_knowledge_node_state,
-    derive_state_timeline,
-)
+from knowledge_node_state_transition import _ordered_state_trace
 
 
 def _sort_key(item: dict[str, Any]) -> tuple[str, str, int, int]:
@@ -30,17 +27,14 @@ def current_repair_cycle(
     A completed repaired/stable cycle is not carried forward. If the current
     formal state is not repairing, there is no active repair cycle.
     """
-    ordered = sorted((dict(item) for item in attempts), key=_sort_key)
-    if not ordered:
+    # The active-cycle boundary depends on the state after each observed
+    # attempt, not on the full evidence summary for every historical prefix.
+    # _ordered_state_trace reproduces those exact states in one linear pass.
+    ordered, states = _ordered_state_trace(attempts)
+    if not ordered or not states or states[-1] != "repairing":
         return []
-    current = derive_knowledge_node_state(ordered, as_of=as_of)
-    if current["state"] != "repairing":
-        return []
-    timeline = derive_state_timeline(ordered)
-    if not timeline or timeline[-1]["state"] != "repairing":
-        return []
-    start = len(timeline) - 1
-    while start > 0 and timeline[start - 1]["state"] == "repairing":
+    start = len(states) - 1
+    while start > 0 and states[start - 1] == "repairing":
         start -= 1
     return ordered[start:]
 
