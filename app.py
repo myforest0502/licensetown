@@ -2461,7 +2461,13 @@ def create_web_recommendation_session(
             "correct_count": 0,
             "completed": False,
             "started_at": time.time(),
+            "session_id": session_id,
+            "session_kind": "dashboard_recommendation",
+            "mode": "study",
         }
+        _analytics_capture_session_started(
+            user_id, web_recommendation_sessions[session_id], surface="web"
+        )
         return session_id, True
 
 
@@ -2599,6 +2605,27 @@ def web_recommendation_learning(session_id):
     session = web_recommendation_sessions.get(session_id)
     if not session:
         return "学習セッションが見つかりません。", 404
+    if not session.get("completed"):
+        index = int(session.get("current_index") or 0)
+        shown = session.setdefault("_analytics_shown_indices", set())
+        if index not in shown:
+            shown.add(index)
+            base = _analytics_session_properties(session, surface="web")
+            question = session["questions"][index]
+            if index > 0:
+                continuation = dict(base)
+                continuation["session_question_number"] = index
+                analytics_capture(
+                    session["user_id"], "next_question_requested", continuation
+                )
+            properties = dict(base)
+            properties.update({
+                "question_id": str(question.get("id")),
+                "category_id": get_category_small(str(question.get("id"))),
+                "session_question_number": index + 1,
+            })
+            analytics_capture(session["user_id"], "question_shown", properties)
+            session["_analytics_batch_shown_at"] = time.time()
     return render_template(
         "goukaku/web_learning.html",
         session_id=session_id,
@@ -2658,6 +2685,33 @@ def answer_web_recommendation(session_id):
         correct_count=int(is_correct),
         question_results=[result],
     )
+    base = _analytics_session_properties(session, surface="web")
+    response_started_at = session.get("_analytics_batch_shown_at")
+    answer_properties = dict(base)
+    answer_properties.update({
+        "question_id": question_id,
+        "category_id": get_category_small(question_id),
+        "is_correct": bool(is_correct),
+        "confidence": confidence,
+        "session_question_number": answer_number,
+        "batch_size": 1,
+        "response_time_ms": (
+            max(0, int((time.time() - response_started_at) * 1000))
+            if isinstance(response_started_at, (int, float)) else None
+        ),
+    })
+    analytics_capture(session["user_id"], "answer_submitted", answer_properties)
+    analytics_capture(
+        session["user_id"],
+        "explanation_viewed",
+        {
+            **base,
+            "question_id": question_id,
+            "category_id": get_category_small(question_id),
+            "is_correct": bool(is_correct),
+            "session_question_number": answer_number,
+        },
+    )
     session["correct_count"] += int(is_correct)
     session["current_index"] += 1
     session["completed"] = session["current_index"] >= session["question_count"]
@@ -2667,6 +2721,13 @@ def answer_web_recommendation(session_id):
             max(time.time() - session["started_at"], 0),
             event_key=f"web-recommendation:{session_id}:time",
         )
+        properties = _analytics_session_properties(session, surface="web")
+        properties.update({
+            "answered_count": session["question_count"],
+            "correct_count": session["correct_count"],
+            "completion_reason": "questions_completed",
+        })
+        analytics_capture(session["user_id"], "session_completed", properties)
     return {
         "ok": True,
         "is_correct": is_correct,
