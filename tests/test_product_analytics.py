@@ -1,4 +1,4 @@
-import product_analytics as analytics
+from licensetown.common import product_analytics as analytics
 
 
 class FakeClient:
