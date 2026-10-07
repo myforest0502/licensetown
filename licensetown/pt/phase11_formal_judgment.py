@@ -172,7 +172,7 @@ def build_formal_context(
     as_of: datetime | None = None,
 ) -> dict[str, Any]:
     """Build one shared evidence context for judgment and symmetric profiles."""
-    attempts = [dict(item) for item in attempts]
+    attempts = list(attempts)
     user_ids = {str(item.get("user_id") or "") for item in attempts}
     if len(user_ids) > 1:
         raise ValueError("attempts must belong to one user")
@@ -182,13 +182,17 @@ def build_formal_context(
 
     evidence = field_evidence or build_field_evidence(attempts, as_of=as_of)
     fields = _field_map(evidence)
-    active_by_node = build_active_repair_weakness(attempts, as_of=as_of)
+    node_states = derive_all_user_node_states(attempts, as_of=as_of)
+    active_by_node = build_active_repair_weakness(
+        attempts,
+        as_of=as_of,
+        node_states=node_states,
+    )
     active_fields = build_active_field_facts(
         active_by_node,
         field_by_question=_CATALOG["field_by_question"],
         critical_nodes=_CATALOG["critical_nodes"],
     )
-    node_states = derive_all_user_node_states(attempts, as_of=as_of)
     retention = build_retention_field_facts(
         node_states,
         field_by_question=_CATALOG["field_by_question"],
