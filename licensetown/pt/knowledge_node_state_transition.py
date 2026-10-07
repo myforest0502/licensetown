@@ -55,6 +55,142 @@ def _as_datetime(value) -> datetime | None:
     return value.replace(tzinfo=timezone.utc) if value.tzinfo is None else value.astimezone(timezone.utc)
 
 
+def _ordered_state_trace(
+    attempts: Iterable[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[str]]:
+    """Return ordered attempts and the state after each attempt in one pass.
+
+    This mirrors the transition branch logic in derive_knowledge_node_state but
+    intentionally omits evidence summaries/reasons.  Production repair-cycle
+    callers only need the state boundary; the previous prefix-replay approach
+    recalculated the full history for every prefix and became quadratic as a
+    learner accumulated repeated practice.
+    """
+    ordered = sorted(list(attempts), key=_sort_key)
+    if not ordered:
+        return [], []
+
+    canonical_ids = {_evidence_node(item) for item in ordered}
+    user_ids = {str(item.get("user_id") or "") for item in ordered}
+    if len(canonical_ids) != 1 or len(user_ids) != 1:
+        raise ValueError("attempts must belong to one user and one canonical Node")
+
+    state = "unseen"
+    repair_wrong_questions: set[str] = set()
+    has_prior_wrong = False
+    retention_origin_at: datetime | None = None
+    retention_checkpoint: str | None = None
+    next_review_at: datetime | None = None
+    retention_reference_question: str | None = None
+    states: list[str] = []
+
+    for item in ordered:
+        attempted_at = _as_datetime(item.get("attempted_at") or item.get("answered_at"))
+        if (
+            state in {"repaired", "stable"}
+            and next_review_at
+            and attempted_at
+            and attempted_at >= next_review_at
+        ):
+            state = "recheck_due"
+
+        question_id = str(item.get("question_id") or "")
+        is_correct = (
+            False if item.get("answer_status") == "unknown"
+            else item.get("is_correct")
+        )
+        confidence = item.get("confidence")
+
+        if is_correct is False:
+            previous_state = state
+            state = "repairing"
+            if not has_prior_wrong or previous_state in {"repaired", "stable", "recheck_due"}:
+                repair_wrong_questions = {question_id}
+            else:
+                repair_wrong_questions.add(question_id)
+            has_prior_wrong = True
+            retention_origin_at = None
+            retention_checkpoint = None
+            next_review_at = None
+            retention_reference_question = None
+            states.append(state)
+            continue
+
+        if is_correct is not True:
+            states.append(state)
+            continue
+
+        if state == "unseen":
+            state = "checking"
+            states.append(state)
+            continue
+
+        if not has_prior_wrong:
+            state = "checking"
+            states.append(state)
+            continue
+
+        evidence_strengths = {
+            classify_repair_confirmation(wrong_question, question_id)
+            for wrong_question in repair_wrong_questions
+        }
+        is_strong_confirmation = DIFFERENT_QUESTION_STRONG in evidence_strengths
+
+        if state == "recheck_due":
+            retention_strength = classify_repair_confirmation(
+                retention_reference_question, question_id
+            )
+            if confidence == 1 and retention_strength == DIFFERENT_QUESTION_STRONG:
+                retention_reference_question = question_id
+                if retention_checkpoint == "day3":
+                    elapsed = (
+                        attempted_at - retention_origin_at
+                        if attempted_at and retention_origin_at
+                        else timedelta(0)
+                    )
+                    if elapsed >= DAY7_RECHECK_AFTER:
+                        state = "stable"
+                        retention_checkpoint = "day30"
+                        next_review_at = (
+                            attempted_at + DAY30_RECHECK_AFTER
+                            if attempted_at else None
+                        )
+                    else:
+                        state = "repaired"
+                        retention_checkpoint = "day7"
+                        next_review_at = (
+                            retention_origin_at + DAY7_RECHECK_AFTER
+                            if retention_origin_at else None
+                        )
+                elif retention_checkpoint == "day7":
+                    state = "stable"
+                    retention_checkpoint = "day30"
+                    next_review_at = (
+                        attempted_at + DAY30_RECHECK_AFTER
+                        if attempted_at else None
+                    )
+                elif retention_checkpoint == "day30":
+                    state = "stable"
+                    retention_checkpoint = None
+                    next_review_at = None
+            states.append(state)
+            continue
+
+        if confidence == 1 and is_strong_confirmation:
+            if state == "repairing":
+                state = "repaired"
+                retention_reference_question = question_id
+                retention_origin_at = attempted_at
+                retention_checkpoint = "day3"
+                next_review_at = (
+                    attempted_at + DAY3_RECHECK_AFTER if attempted_at else None
+                )
+
+        states.append(state)
+
+    return ordered, states
+
+
 def _evidence(history: list[dict[str, Any]]) -> dict[str, Any]:
     records = derive_repeated_weakness_evidence(history)
     if len(records) != 1:
