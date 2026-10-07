@@ -267,7 +267,7 @@ def derive_knowledge_node_state(
     on/after day 7, that check is accepted as the day-7 horizon instead of creating
     artificial overdue backlog. Any wrong answer starts a fresh repair cycle.
     """
-    ordered = sorted((dict(item) for item in attempts), key=_sort_key)
+    ordered = sorted(list(attempts), key=_sort_key)
     if not ordered:
         result = _result(str(canonical_node_id or ""), "unseen", "", [], 0)
         result.update({
@@ -433,8 +433,7 @@ def derive_all_user_node_states(
 ) -> list[dict[str, Any]]:
     """Group by user and canonical evidence Node without returning user identifiers."""
     grouped: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
-    for source in attempts:
-        item = dict(source)
+    for item in attempts:
         canonical = _evidence_node(item)
         grouped[(str(item.get("user_id") or ""), canonical)].append(item)
     return [
