@@ -135,6 +135,13 @@ client = OpenAI(
     timeout=60,
 )
 
+if os.getenv("POSTHOG_SMOKE_TEST_ON_BOOT", "").strip().lower() in {"1", "true", "yes", "on"}:
+    globals().get("analytics_capture", lambda *_a, **_k: False)(
+        "posthog-smoke-test",
+        "posthog_smoke_test",
+        {"surface": "server", "source": "startup_verification", "mode": "system"},
+    )
+
 
 # =========================================================
 # 源さん 基本プロンプト
