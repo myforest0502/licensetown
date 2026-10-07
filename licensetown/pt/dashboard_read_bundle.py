@@ -240,6 +240,133 @@ def _activity_with_connection(
     }
 
 
+
+def _summary_from_learning_events(
+    user_id: str,
+    learning_events: list[dict[str, Any]],
+    connection,
+    *,
+    now: datetime | None = None,
+) -> dict[str, int]:
+    """Build summary from already-loaded PT events and only read time total."""
+    current = now or datetime.now(timezone.utc)
+    today = current.astimezone(ZoneInfo("Asia/Tokyo")).date()
+    seven_days_ago = current - timedelta(days=7)
+    total_answers = total_correct = recent_answers = recent_correct = today_answers = 0
+    for event in learning_events:
+        answered = int(event.get("answered_count") or 0)
+        correct = int(event.get("correct_count") or 0)
+        answered_at = database._as_utc(event.get("answered_at"))
+        total_answers += answered
+        total_correct += correct
+        if answered_at >= seven_days_ago:
+            recent_answers += answered
+            recent_correct += correct
+        if answered_at.astimezone(ZoneInfo("Asia/Tokyo")).date() == today:
+            today_answers += answered
+
+    with connection.cursor() as cur:
+        cur.execute(
+            """
+            SELECT COALESCE(total_seconds, 0)
+            FROM qualification_learning_time_totals
+            WHERE user_id = %s AND qualification_id = %s
+            """,
+            (user_id, _QUALIFICATION_ID),
+        )
+        row = cur.fetchone()
+    return database._summary_values(
+        total_answers,
+        total_correct,
+        recent_answers,
+        recent_correct,
+        today_answers,
+        row[0] if row else 0,
+    )
+
+
+def _activity_from_learning_events(
+    user_id: str,
+    learning_events: list[dict[str, Any]],
+    connection,
+    *,
+    now: datetime | None = None,
+) -> dict[str, Any]:
+    """Build activity from the shared event bundle; query only 7d time rows."""
+    current = database._as_utc(now or datetime.now(timezone.utc))
+    jst = ZoneInfo("Asia/Tokyo")
+    today = current.astimezone(jst).date()
+    dates = [today - timedelta(days=offset) for offset in range(6, -1, -1)]
+    answers_by_date = {day: 0 for day in dates}
+    correct_by_date = {day: 0 for day in dates}
+    seconds_by_date = {day: 0.0 for day in dates}
+    active_dates = set()
+
+    for event in learning_events:
+        answered = int(event.get("answered_count") or 0)
+        correct = int(event.get("correct_count") or 0)
+        answered_at = database._as_utc(event.get("answered_at"))
+        day = answered_at.astimezone(jst).date()
+        if answered > 0:
+            active_dates.add(day)
+        if day in answers_by_date:
+            answers_by_date[day] += answered
+            correct_by_date[day] += correct
+
+    window_start = datetime.combine(
+        dates[0], datetime.min.time(), jst
+    ).astimezone(timezone.utc)
+    with connection.cursor() as cur:
+        cur.execute(
+            """
+            SELECT elapsed_seconds, recorded_at
+            FROM learning_time_events
+            WHERE user_id = %s
+              AND qualification_id = %s
+              AND recorded_at >= %s
+            """,
+            (user_id, _QUALIFICATION_ID, window_start),
+        )
+        time_rows = cur.fetchall()
+
+    for elapsed_seconds, recorded_at in time_rows:
+        day = database._as_utc(recorded_at).astimezone(jst).date()
+        if day in seconds_by_date:
+            seconds_by_date[day] += float(elapsed_seconds)
+
+    streak_days = database.calculate_learning_streak(active_dates, today)
+    daily = [
+        {
+            "date": day.isoformat(),
+            "label": f"{day.month}/{day.day}",
+            "answered_count": answers_by_date[day],
+            "correct_count": correct_by_date[day],
+            "accuracy": (
+                round(correct_by_date[day] / answers_by_date[day] * 100)
+                if answers_by_date[day] else 0
+            ),
+            "study_minutes": round(seconds_by_date[day] / 60),
+        }
+        for day in dates
+    ]
+    weekly_minutes = round(sum(seconds_by_date.values()) / 60)
+    weekly_answers = sum(answers_by_date.values())
+    weekly_correct = sum(correct_by_date.values())
+    return {
+        "daily": daily,
+        "streak_days": streak_days,
+        "weekly_study_minutes": weekly_minutes,
+        "average_daily_study_minutes": round(weekly_minutes / 7),
+        "weekly_learning_days": sum(1 for value in answers_by_date.values() if value > 0),
+        "weekly_answers": weekly_answers,
+        "weekly_correct": weekly_correct,
+        "weekly_accuracy": (
+            round(weekly_correct / weekly_answers * 100) if weekly_answers else 0
+        ),
+    }
+
+
+
 def get_learner_navigation_read_bundle(user_id: str) -> dict[str, Any]:
     """Return only the formal inputs needed to validate learner navigation.
 
@@ -309,9 +436,34 @@ def get_dashboard_read_bundle(
         }
 
     with database.get_db_connection() as conn:
-        raw_question_rows = _question_result_rows_with_connection(user_id, conn)
+        # Stage-E dashboard requests already need the full PT learning-event
+        # stream. Reuse that single read for every dashboard aggregate instead
+        # of transferring the same JSON payload from Neon multiple times.
+        learning_events = (
+            _learning_events_with_connection(user_id, conn) if include_learning_events else []
+        )
+        raw_question_rows = (
+            [
+                (event.get("question_results"), event.get("answered_at"))
+                for event in learning_events
+                if event.get("question_results") is not None
+            ]
+            if include_learning_events
+            else _question_result_rows_with_connection(user_id, conn)
+        )
         question_rows = _current_formal_question_result_rows(raw_question_rows)
-        activity = _activity_with_connection(user_id, conn)
+
+        if include_learning_events:
+            activity = _activity_from_learning_events(
+                user_id, learning_events, conn
+            )
+            summary = _summary_from_learning_events(
+                user_id, learning_events, conn
+            )
+        else:
+            activity = _activity_with_connection(user_id, conn)
+            summary = _summary_with_connection(user_id, conn)
+
         activity.update(
             build_today_recommendation_summary(
                 user_id,
@@ -320,7 +472,7 @@ def get_dashboard_read_bundle(
             )
         )
         learning_data = {
-            "summary": _summary_with_connection(user_id, conn),
+            "summary": summary,
             "activity": activity,
             "fields": database.get_field_learning_summary(
                 user_id,
@@ -339,9 +491,6 @@ def get_dashboard_read_bundle(
         )
         trial100_records = (
             get_trial100_records(user_id, connection=conn) if include_trial100 else []
-        )
-        learning_events = (
-            _learning_events_with_connection(user_id, conn) if include_learning_events else []
         )
 
     return {
