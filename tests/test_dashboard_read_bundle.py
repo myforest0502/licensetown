@@ -425,7 +425,7 @@ def test_stage_e_event_read_filters_ordinary_history_at_database():
     assert params == ("learner", "pt")
 
 
-def test_dashboard_with_attempts_does_not_download_full_question_result_history(monkeypatch):
+def test_dashboard_with_attempts_preserves_learning_event_fact_source(monkeypatch):
     import licensetown.pt.dashboard_read_bundle as bundle
 
     connection_obj = object()
@@ -435,6 +435,9 @@ def test_dashboard_with_attempts_does_not_download_full_question_result_history(
         "is_correct": True,
         "selected_answers": ["A"],
     }]
+    question_rows = [
+        ([{"question_id": "Q1", "is_correct": True}], datetime(2026, 9, 12, tzinfo=timezone.utc))
+    ]
 
     class ConnectionContext:
         def __enter__(self):
@@ -451,18 +454,27 @@ def test_dashboard_with_attempts_does_not_download_full_question_result_history(
     monkeypatch.setattr(bundle, "_summary_with_connection", lambda *_: {})
     monkeypatch.setattr(
         bundle,
-        "_today_recommendation_summary_with_connection",
-        lambda *_: {
-            "recommendation_today_answered": 0,
-            "recommendation_today_correct": 0,
-            "recommendation_today_incorrect": 0,
-        },
+        "_question_result_rows_with_connection",
+        lambda *_: question_rows,
     )
     monkeypatch.setattr(
         bundle,
-        "_question_result_rows_with_connection",
-        lambda *_: (_ for _ in ()).throw(
-            AssertionError("full question_results history should not be read")
+        "build_today_recommendation_summary",
+        lambda *_a, **_k: {},
+    )
+    monkeypatch.setattr(
+        bundle.database,
+        "get_field_learning_summary",
+        lambda _uid, _connection=None, _question_result_rows=None: (
+            [{"source": "learning_events"}]
+            if _question_result_rows == question_rows else []
+        ),
+    )
+    monkeypatch.setattr(
+        bundle.database,
+        "get_unique_answered_question_count",
+        lambda _uid, _connection=None, _question_result_rows=None: (
+            17 if _question_result_rows == question_rows else -1
         ),
     )
     monkeypatch.setattr(bundle, "get_trial100_records", lambda *a, **k: [])
@@ -473,5 +485,5 @@ def test_dashboard_with_attempts_does_not_download_full_question_result_history(
         include_learning_events=True,
     )
 
-    assert result["learning_data"]["unique_question_count"] == 1
-    assert result["learning_data"]["fields"]
+    assert result["learning_data"]["fields"] == [{"source": "learning_events"}]
+    assert result["learning_data"]["unique_question_count"] == 17
