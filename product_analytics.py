@@ -46,10 +46,17 @@ _client = None
 _client_lock = threading.Lock()
 
 
+def _pseudonym_secret() -> str:
+    return (
+        os.getenv("POSTHOG_PSEUDONYM_SALT", "").strip()
+        or os.getenv("CHANNEL_SECRET", "").strip()
+    )
+
+
 def _enabled() -> bool:
     return bool(
         os.getenv("POSTHOG_PROJECT_API_KEY", "").strip()
-        and os.getenv("POSTHOG_PSEUDONYM_SALT", "").strip()
+        and _pseudonym_secret()
     )
 
 
@@ -61,7 +68,7 @@ def distinct_id_for_user(user_id: str | None) -> str | None:
     """Return a stable one-way pseudonym; never send the upstream user ID."""
     if not user_id:
         return None
-    salt = os.getenv("POSTHOG_PSEUDONYM_SALT", "").encode("utf-8")
+    salt = _pseudonym_secret().encode("utf-8")
     if not salt:
         return None
     digest = hmac.new(salt, str(user_id).encode("utf-8"), hashlib.sha256).hexdigest()
