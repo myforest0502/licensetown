@@ -31,8 +31,7 @@ def trusted_strategy_evidence_attempts(attempts):
 
     kept = []
     excluded = 0
-    for source in attempts:
-        item = dict(source)
+    for item in attempts:
         question_id = str(item.get("question_id") or "")
         try:
             tag = get_question_tag(question_id)

@@ -14,6 +14,28 @@ from knowledge_node_weakness_evidence import (
 )
 
 
+def _attempt_order_key(item: dict[str, Any]) -> tuple[str, str, int, int]:
+    return (
+        str(item.get("attempted_at") or item.get("answered_at") or ""),
+        str(item.get("event_key") or ""),
+        int(item.get("attempt_position") or 0),
+        int(item.get("id") or 0),
+    )
+
+
+def _ensure_ordered_attempts(
+    attempts: Iterable[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    rows = list(attempts)
+    previous = None
+    for item in rows:
+        key = _attempt_order_key(item)
+        if previous is not None and key < previous:
+            return sorted(rows, key=_attempt_order_key)
+        previous = key
+    return rows
+
+
 def _attempt_time_value(item: dict[str, Any]) -> Any:
     return item.get("attempted_at") or item.get("answered_at")
 
@@ -30,7 +52,7 @@ def build_active_repair_weakness(
     is derived only from evaluable non-unknown attempts in that current run.
     Completed historical repair cycles are excluded.
     """
-    attempts = list(attempts)
+    attempts = _ensure_ordered_attempts(attempts)
     user_ids = {str(item.get("user_id") or "") for item in attempts}
     if len(user_ids) > 1:
         raise ValueError("attempts must belong to one user")
@@ -59,7 +81,11 @@ def build_active_repair_weakness(
     for node, history in sorted(histories.items()):
         if state_by_node is not None and state_by_node.get(node) != "repairing":
             continue
-        active_cycle = current_repair_cycle(history, as_of=as_of)
+        active_cycle = current_repair_cycle(
+            history,
+            as_of=as_of,
+            already_ordered=True,
+        )
         if not active_cycle:
             continue
         # Reuse the exact active cycle already derived above. Calling

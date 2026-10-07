@@ -21,6 +21,7 @@ def current_repair_cycle(
     attempts: Iterable[dict[str, Any]],
     *,
     as_of: datetime | None = None,
+    already_ordered: bool = False,
 ) -> list[dict[str, Any]]:
     """Return attempts in the current consecutive formal repairing run.
 
@@ -30,7 +31,10 @@ def current_repair_cycle(
     # The active-cycle boundary depends on the state after each observed
     # attempt, not on the full evidence summary for every historical prefix.
     # _ordered_state_trace reproduces those exact states in one linear pass.
-    ordered, states = _ordered_state_trace(attempts)
+    ordered, states = _ordered_state_trace(
+        attempts,
+        already_ordered=already_ordered,
+    )
     if not ordered or not states or states[-1] != "repairing":
         return []
     start = len(states) - 1
@@ -43,9 +47,14 @@ def current_evaluable_repair_cycle(
     attempts: Iterable[dict[str, Any]],
     *,
     as_of: datetime | None = None,
+    already_ordered: bool = False,
 ) -> list[dict[str, Any]]:
     """Return only evaluable attempts from the active repair cycle."""
     return [
-        item for item in current_repair_cycle(attempts, as_of=as_of)
+        item for item in current_repair_cycle(
+            attempts,
+            as_of=as_of,
+            already_ordered=already_ordered,
+        )
         if item.get("answer_status") != "unknown"
     ]

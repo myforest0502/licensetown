@@ -57,6 +57,8 @@ def _as_datetime(value) -> datetime | None:
 
 def _ordered_state_trace(
     attempts: Iterable[dict[str, Any]],
+    *,
+    already_ordered: bool = False,
 ) -> tuple[list[dict[str, Any]], list[str]]:
     """Return ordered attempts and the state after each attempt in one pass.
 
@@ -66,7 +68,8 @@ def _ordered_state_trace(
     recalculated the full history for every prefix and became quadratic as a
     learner accumulated repeated practice.
     """
-    ordered = sorted(list(attempts), key=_sort_key)
+    rows = list(attempts)
+    ordered = rows if already_ordered else sorted(rows, key=_sort_key)
     if not ordered:
         return [], []
 
