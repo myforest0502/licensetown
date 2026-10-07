@@ -180,7 +180,11 @@ def strategy_snapshot(attempts, events, as_of, *, days_to_exam=None):
         critical_safety_unresolved_count=len(critical_nodes),
     )
     strategy=build_learning_strategy(
-        evidence, progress, context_by_field=contexts, days_to_exam=days_to_exam
+        evidence,
+        progress,
+        context_by_field=contexts,
+        days_to_exam=days_to_exam,
+        targets_bundle=targets,
     )
     strategy['editorial_evidence_policy']='exclude_general_provisional_bulk_keep_safety'
     strategy['excluded_provisional_general_attempt_count']=excluded_provisional
