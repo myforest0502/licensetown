@@ -6,7 +6,7 @@ from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from typing import Any, Iterable
 
-from knowledge_node_weakness_evidence import derive_repeated_weakness_evidence
+from knowledge_node_weakness_evidence import summarize_single_node_weakness_evidence
 from knowledge_node_repair_evidence import (
     DIFFERENT_QUESTION_STRONG,
     classify_repair_confirmation,
@@ -191,11 +191,18 @@ def _ordered_state_trace(
     return ordered, states
 
 
-def _evidence(history: list[dict[str, Any]]) -> dict[str, Any]:
-    records = derive_repeated_weakness_evidence(history)
-    if len(records) != 1:
+def _evidence(
+    history: list[dict[str, Any]],
+    canonical_node_id: str,
+) -> dict[str, Any]:
+    record = summarize_single_node_weakness_evidence(
+        history,
+        canonical_node_id=canonical_node_id,
+        already_ordered=True,
+    )
+    if record is None:
         raise ValueError("history must contain exactly one user and canonical Node")
-    return records[0]
+    return record
 
 
 def _result(
@@ -220,13 +227,13 @@ def _result(
             "unknown_attempt_count": 0,
             "retention_reference_question_id": None,
         }
-    evidence = _evidence(history)
+    evidence = _evidence(history, canonical_node_id)
     evaluable_history = [
         item for item in history
         if item.get("answer_status") != "unknown"
     ]
     confirmed = (
-        _evidence(evaluable_history)
+        _evidence(evaluable_history, canonical_node_id)
         if evaluable_history
         else {"evidence_level": "NO_WRONG_EVIDENCE", "wrong_question_count": 0}
     )
