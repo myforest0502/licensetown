@@ -108,6 +108,7 @@ def _posthog_client():
                 host=os.getenv("POSTHOG_HOST", "https://us.i.posthog.com"),
                 debug=False,
                 disable_geoip=True,
+                enable_local_evaluation=False,
                 flush_at=10,
                 flush_interval=1.0,
                 on_error=lambda error, items=None: logger.warning(
