@@ -2118,6 +2118,7 @@ def record_confirmed_learning_batch(user_id, session):
             "session_question_number": start_number + offset,
             "current_set": current_set,
             "batch_size": questions_per_set,
+            "response_time_ms": batch_response_time_ms,
             "batch_response_time_ms": batch_response_time_ms,
         })
         analytics_capture(user_id, "answer_submitted", properties)
@@ -2999,6 +3000,18 @@ def return_home(reply_token, user_id, interrupt=True):
     consultation_contexts.pop(user_id, None)
     quiz_category_selections.pop(user_id, None)
     current_session = study_sessions.get(user_id)
+    if (
+        interrupt
+        and current_session
+        and current_session.get("status") != "paused"
+        and current_session.get("status") not in {"quiz_completed", "assessment_completed"}
+    ):
+        properties = _analytics_session_properties(current_session)
+        properties.update({
+            "answered_count": len(current_session.get("all_answers", {})),
+            "completion_reason": "home_exit",
+        })
+        analytics_capture(user_id, "session_ended", properties)
     finish_active_learning_time(user_id)
     if interrupt and not (current_session and current_session.get("status") == "paused"):
         study_sessions.pop(user_id, None)
