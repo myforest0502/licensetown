@@ -420,7 +420,7 @@ def test_stage_e_event_read_filters_ordinary_history_at_database():
     ) == []
     sql, params = calls[0]
     assert "mode = 'recommendation_plan'" in sql
-    assert "event_key LIKE 'web-recommendation:%'" in sql
+    assert "event_key LIKE 'web-recommendation:%%'" in sql
     assert "strategy_shadow_or_authority" in sql
     assert params == ("learner", "pt")
 
@@ -473,5 +473,5 @@ def test_dashboard_with_attempts_does_not_download_full_question_result_history(
         include_learning_events=True,
     )
 
-    assert result["unique_question_count"] == 1
+    assert result["learning_data"]["unique_question_count"] == 1
     assert result["learning_data"]["fields"]
