@@ -59,6 +59,52 @@ def _classify(history: list[dict[str, Any]]) -> tuple[str, str]:
     return SINGLE_WRONG, "Only one wrong question is recorded; weakness is not confirmed."
 
 
+def summarize_single_node_weakness_evidence(
+    history: Iterable[dict[str, Any]],
+    *,
+    canonical_node_id: str | None = None,
+    already_ordered: bool = False,
+) -> dict[str, Any] | None:
+    """Summarize one canonical Node without regrouping the same history.
+
+    The returned shape is identical to one row from
+    derive_repeated_weakness_evidence.  Callers that already validated/grouped
+    and sorted a Node history can set already_ordered=True to avoid redundant
+    work.
+    """
+    rows = list(history)
+    if not rows:
+        return None
+    ordered = rows if already_ordered else sorted(rows, key=_sort_key)
+    canonical = str(
+        canonical_node_id
+        or canonicalize_question_evidence_node(
+            str(ordered[0].get("question_id") or ""),
+            str(ordered[0].get("knowledge_node_id") or ""),
+        )
+        or ""
+    )
+    question_ids = {_evidence_question_id(item) for item in ordered}
+    wrong = [item for item in ordered if item.get("is_correct") is False]
+    correct = [item for item in ordered if item.get("is_correct") is True]
+    level, reason = _classify(ordered)
+    return {
+        "canonical_node_id": canonical,
+        "distinct_question_count": len(question_ids),
+        "wrong_question_count": len({_evidence_question_id(item) for item in wrong}),
+        "correct_question_count": len({_evidence_question_id(item) for item in correct}),
+        "confident_wrong_count": sum(item.get("confidence") == 1 for item in wrong),
+        "first_wrong_question_id": (
+            canonicalize_question_evidence_id(str(wrong[0]["question_id"])) if wrong else None
+        ),
+        "last_wrong_question_id": (
+            canonicalize_question_evidence_id(str(wrong[-1]["question_id"])) if wrong else None
+        ),
+        "evidence_level": level,
+        "evidence_reason": reason,
+    }
+
+
 def derive_repeated_weakness_evidence(
     attempts: Iterable[dict[str, Any]],
 ) -> list[dict[str, Any]]:
@@ -69,8 +115,7 @@ def derive_repeated_weakness_evidence(
     for derived evidence; raw stored Q/Node IDs remain untouched.
     """
     grouped: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
-    for source in attempts:
-        item = dict(source)
+    for item in attempts:
         question_id = str(item.get("question_id") or "")
         raw_node_id = str(item.get("knowledge_node_id") or "")
         if not question_id or not raw_node_id:
@@ -80,24 +125,10 @@ def derive_repeated_weakness_evidence(
 
     result: list[dict[str, Any]] = []
     for (_user_key, canonical), history in sorted(grouped.items()):
-        ordered = sorted(history, key=_sort_key)
-        question_ids = {_evidence_question_id(item) for item in ordered}
-        wrong = [item for item in ordered if item.get("is_correct") is False]
-        correct = [item for item in ordered if item.get("is_correct") is True]
-        level, reason = _classify(ordered)
-        result.append({
-            "canonical_node_id": canonical,
-            "distinct_question_count": len(question_ids),
-            "wrong_question_count": len({_evidence_question_id(item) for item in wrong}),
-            "correct_question_count": len({_evidence_question_id(item) for item in correct}),
-            "confident_wrong_count": sum(item.get("confidence") == 1 for item in wrong),
-            "first_wrong_question_id": (
-                canonicalize_question_evidence_id(str(wrong[0]["question_id"])) if wrong else None
-            ),
-            "last_wrong_question_id": (
-                canonicalize_question_evidence_id(str(wrong[-1]["question_id"])) if wrong else None
-            ),
-            "evidence_level": level,
-            "evidence_reason": reason,
-        })
+        summary = summarize_single_node_weakness_evidence(
+            history,
+            canonical_node_id=canonical,
+        )
+        if summary is not None:
+            result.append(summary)
     return result

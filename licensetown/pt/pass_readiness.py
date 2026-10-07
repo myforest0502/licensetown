@@ -194,7 +194,7 @@ def build_pass_readiness(
     as_of: datetime | None = None,
 ) -> dict[str, Any]:
     """Return deterministic internal readiness status and inspectable evidence."""
-    attempts = [dict(item) for item in attempts]
+    attempts = list(attempts)
     evidence = dict(field_evidence or build_field_evidence(attempts, as_of=as_of))
     progress = dict(progress or build_field_progress(evidence))
     context = build_formal_context(attempts, evidence, as_of=as_of)

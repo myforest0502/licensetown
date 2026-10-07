@@ -20,7 +20,6 @@ from knowledge_node_weakness_evidence import (
     CROSS_QUESTION_CONFIDENT_WRONG,
     CROSS_QUESTION_WRONG,
     REPEATED_SAME_QUESTION_WRONG,
-    derive_repeated_weakness_evidence,
 )
 from question_bank import (
     CATEGORY_NAMES,
@@ -96,24 +95,22 @@ def build_field_evidence(
     attempts: Iterable[dict[str, Any]],
     *,
     as_of: datetime | None = None,
+    node_states: Iterable[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Aggregate anonymous evidence for all 18 fields without a mastery formula."""
-    attempts = [dict(item) for item in attempts]
+    attempts = list(attempts)
     user_ids = {str(item.get("user_id") or "") for item in attempts}
     if len(user_ids) > 1:
         raise ValueError("attempts must belong to one user")
 
+    state_rows = (
+        list(node_states)
+        if node_states is not None
+        else derive_all_user_node_states(attempts, as_of=as_of)
+    )
     states = {
         item["canonical_node_id"]: item
-        for item in derive_all_user_node_states(attempts, as_of=as_of)
-    }
-    evaluable_attempts = [
-        item for item in attempts
-        if item.get("answer_status") != "unknown"
-    ]
-    weakness = {
-        item["canonical_node_id"]: item
-        for item in derive_repeated_weakness_evidence(evaluable_attempts)
+        for item in state_rows
     }
     attempts_by_field: dict[int, list[dict[str, Any]]] = defaultdict(list)
     answered_questions_by_field: dict[int, set[str]] = defaultdict(set)
@@ -212,10 +209,13 @@ def build_field_evidence(
                 item.get("is_correct") is False for item in cycle
             ) >= 2:
                 unresolved_repeated_weakness_node_count += 1
+        # derive_all_user_node_states already computes the weakness level
+        # from the evaluable (non-unknown) history for each canonical Node.
+        # Reuse that exact result instead of grouping/sorting all attempts again.
         weakness_counts = Counter(
-            weakness[node_id]["evidence_level"]
+            states[node_id]["confirmed_weakness_evidence_level"]
             for node_id in attempted_nodes
-            if node_id in weakness
+            if node_id in states
         )
         retention_nodes = [
             {

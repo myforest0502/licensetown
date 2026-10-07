@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
 from knowledge_node_state_transition import (
+    _ordered_state_trace,
     derive_all_user_node_states,
     derive_knowledge_node_state,
     derive_state_timeline,
@@ -213,3 +214,27 @@ def test_simulation_loader_is_select_only():
     assert all(word not in sql.upper() for word in (
         "INSERT", "UPDATE", "DELETE", "TRUNCATE", "ALTER", "CREATE", "DROP",
     ))
+
+
+
+def test_linear_state_trace_is_identical_to_prefix_derivation():
+    history = [
+        attempt("u", "KN0268", "Q269", False, 2, 1),
+        attempt("u", "KN0268", "Q269", True, 1, 2),
+        attempt("u", "KN0268", "Q361", True, 1, 3),
+        attempt("u", "KN0268", "Q269", True, 1, 3 + 3 * 24 * 60 + 1),
+        attempt("u", "KN0268", "Q361", True, 1, 3 + 8 * 24 * 60),
+        attempt("u", "KN0268", "Q269", False, 1, 3 + 9 * 24 * 60),
+        attempt("u", "KN0268", "Q361", True, 1, 3 + 9 * 24 * 60 + 1),
+    ]
+    unknown = attempt("u", "KN0268", "Q269", True, None, 3 + 10 * 24 * 60)
+    unknown["answer_status"] = "unknown"
+    history.append(unknown)
+
+    ordered, linear_states = _ordered_state_trace(history)
+    expected_states = [
+        derive_knowledge_node_state(ordered[:index])["state"]
+        for index in range(1, len(ordered) + 1)
+    ]
+
+    assert linear_states == expected_states

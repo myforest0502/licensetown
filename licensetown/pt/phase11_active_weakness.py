@@ -7,10 +7,7 @@ from datetime import datetime
 from typing import Any, Iterable
 
 from question_equivalence import canonicalize_question_evidence_node
-from knowledge_node_repair_cycle import (
-    current_evaluable_repair_cycle,
-    current_repair_cycle,
-)
+from knowledge_node_repair_cycle import current_repair_cycle
 from knowledge_node_weakness_evidence import (
     NO_WRONG_EVIDENCE,
     derive_repeated_weakness_evidence,
@@ -25,6 +22,7 @@ def build_active_repair_weakness(
     attempts: Iterable[dict[str, Any]],
     *,
     as_of: datetime | None = None,
+    node_states: Iterable[dict[str, Any]] | None = None,
 ) -> dict[str, dict[str, Any]]:
     """Return current-cycle weakness facts keyed by canonical Node.
 
@@ -32,7 +30,7 @@ def build_active_repair_weakness(
     is derived only from evaluable non-unknown attempts in that current run.
     Completed historical repair cycles are excluded.
     """
-    attempts = [dict(item) for item in attempts]
+    attempts = list(attempts)
     user_ids = {str(item.get("user_id") or "") for item in attempts}
     if len(user_ids) > 1:
         raise ValueError("attempts must belong to one user")
@@ -48,12 +46,29 @@ def build_active_repair_weakness(
             continue
         histories[str(node)].append(item)
 
+    state_by_node = (
+        {
+            str(item.get("canonical_node_id") or ""): str(item.get("state") or "")
+            for item in node_states
+        }
+        if node_states is not None
+        else None
+    )
+
     result: dict[str, dict[str, Any]] = {}
     for node, history in sorted(histories.items()):
+        if state_by_node is not None and state_by_node.get(node) != "repairing":
+            continue
         active_cycle = current_repair_cycle(history, as_of=as_of)
         if not active_cycle:
             continue
-        evaluable_cycle = current_evaluable_repair_cycle(history, as_of=as_of)
+        # Reuse the exact active cycle already derived above. Calling
+        # current_evaluable_repair_cycle(history) would rediscover the same
+        # boundary a second time.
+        evaluable_cycle = [
+            item for item in active_cycle
+            if item.get("answer_status") != "unknown"
+        ]
         weakness_records = derive_repeated_weakness_evidence(evaluable_cycle)
         weakness = weakness_records[0] if weakness_records else None
         evaluable_wrong = [

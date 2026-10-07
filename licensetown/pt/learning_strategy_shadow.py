@@ -186,7 +186,14 @@ def _rank_field(target, urgency):
     }
 
 
-def build_learning_strategy(evidence_bundle, progress_bundle, *, context_by_field=None, days_to_exam=None):
+def build_learning_strategy(
+    evidence_bundle,
+    progress_bundle,
+    *,
+    context_by_field=None,
+    days_to_exam=None,
+    targets_bundle=None,
+):
     """Return a candidate budget, not Q IDs or an executable session instruction.
 
     Inputs must be one learner's aligned derived snapshots. Optional context is
@@ -194,7 +201,15 @@ def build_learning_strategy(evidence_bundle, progress_bundle, *, context_by_fiel
     """
     days = None if days_to_exam is None else count(days_to_exam, "days_to_exam")
     urgency = 0.0 if days is None else _clamp((URGENCY_WINDOW_DAYS - days) / URGENCY_WINDOW_DAYS)
-    targets = build_field_targets(evidence_bundle, progress_bundle, context_by_field=context_by_field)
+    targets = (
+        targets_bundle
+        if targets_bundle is not None
+        else build_field_targets(
+            evidence_bundle,
+            progress_bundle,
+            context_by_field=context_by_field,
+        )
+    )
     ranked = [_rank_field(target, urgency) for target in targets["fields"]]
     # Product rule: pass-first ordering.
     # Safety and confirmed repair/retention needs must not be postponed merely
