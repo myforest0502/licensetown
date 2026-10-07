@@ -949,7 +949,7 @@ def _analytics_capture_question_batch_shown(user_id, session, *, surface="line")
         properties = dict(base)
         properties.update({
             "question_id": str(question.get("id")),
-            "category_id": get_category_small(str(question.get("id"))),
+            "category_id": globals().get('get_category_small', lambda *_a: None)(str(question.get("id"))),
             "session_question_number": start_number + offset,
             "current_set": current_set,
         })
@@ -968,7 +968,7 @@ def _analytics_capture_explanations(user_id, session, explanation_set):
         properties = dict(base)
         properties.update({
             "question_id": str(question.get("id")),
-            "category_id": get_category_small(str(question.get("id"))),
+            "category_id": globals().get('get_category_small', lambda *_a: None)(str(question.get("id"))),
             "session_question_number": index,
             "is_correct": is_answer_correct(
                 question,
@@ -2112,7 +2112,7 @@ def record_confirmed_learning_batch(user_id, session):
         properties = dict(base)
         properties.update({
             "question_id": row["question_id"],
-            "category_id": get_category_small(row["question_id"]),
+            "category_id": globals().get('get_category_small', lambda *_a: None)(row["question_id"]),
             "is_correct": bool(row["is_correct"]),
             "confidence": row.get("confidence"),
             "session_question_number": start_number + offset,
@@ -2633,7 +2633,7 @@ def web_recommendation_learning(session_id):
             properties = dict(base)
             properties.update({
                 "question_id": str(question.get("id")),
-                "category_id": get_category_small(str(question.get("id"))),
+                "category_id": globals().get('get_category_small', lambda *_a: None)(str(question.get("id"))),
                 "session_question_number": index + 1,
             })
             globals().get('analytics_capture', lambda *_a, **_k: False)(session["user_id"], "question_shown", properties)
@@ -2711,7 +2711,7 @@ def answer_web_recommendation(session_id):
     answer_properties = dict(base)
     answer_properties.update({
         "question_id": question_id,
-        "category_id": get_category_small(question_id),
+        "category_id": globals().get('get_category_small', lambda *_a: None)(question_id),
         "is_correct": bool(is_correct),
         "confidence": confidence,
         "session_question_number": answer_number,
@@ -2728,7 +2728,7 @@ def answer_web_recommendation(session_id):
         {
             **base,
             "question_id": question_id,
-            "category_id": get_category_small(question_id),
+            "category_id": globals().get('get_category_small', lambda *_a: None)(question_id),
             "is_correct": bool(is_correct),
             "session_question_number": answer_number,
         },
