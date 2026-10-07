@@ -186,13 +186,13 @@ def test_summary_reads_only_pt_events_and_pt_time_total():
     assert calls[1][1] == ("learner", "pt")
 
 
-def test_activity_reads_only_pt_events_and_pt_time_events():
+def test_activity_aggregates_by_day_and_limits_time_window():
     calls = []
     now = datetime(2026, 9, 12, 0, 0, tzinfo=timezone.utc)
-    answered_at = now - timedelta(days=1)
+    learned_day = (now - timedelta(days=1)).date()
     result_sets = iter([
-        [(2, 1, answered_at)],
-        [(300.0, answered_at)],
+        [(learned_day, 2, 1)],
+        [(learned_day, 300.0)],
     ])
 
     class Cursor:
@@ -219,8 +219,11 @@ def test_activity_reads_only_pt_events_and_pt_time_events():
     assert result["weekly_answers"] == 2
     assert result["weekly_correct"] == 1
     assert result["weekly_study_minutes"] == 5
-    assert all("qualification_id = %s" in sql for sql, _ in calls)
-    assert all(params == ("learner", "pt") for _, params in calls)
+    assert "GROUP BY day" in calls[0][0]
+    assert "qualification_id = %s" in calls[0][0]
+    assert calls[0][1] == ("learner", "pt")
+    assert "recorded_at >= %s" in calls[1][0]
+    assert calls[1][1][0:2] == ("learner", "pt")
 
 
 def test_learner_navigation_bundle_shares_one_production_connection(monkeypatch):
@@ -390,3 +393,85 @@ def test_formal_question_result_rows_drop_pre_rewrite_versions():
 
     assert filtered[0][0] == [{"question_id": "Q100", "is_correct": True}]
     assert filtered[1][0] == [{"question_id": "Q2234", "is_correct": True}]
+
+
+def test_stage_e_event_read_filters_ordinary_history_at_database():
+    calls = []
+
+    class Cursor:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def execute(self, sql, params):
+            calls.append((" ".join(sql.split()), params))
+
+        def fetchall(self):
+            return []
+
+    class Connection:
+        def cursor(self):
+            return Cursor()
+
+    assert dashboard_read_bundle._learning_events_with_connection(
+        "learner", Connection()
+    ) == []
+    sql, params = calls[0]
+    assert "mode = 'recommendation_plan'" in sql
+    assert "event_key LIKE 'web-recommendation:%'" in sql
+    assert "strategy_shadow_or_authority" in sql
+    assert params == ("learner", "pt")
+
+
+def test_dashboard_with_attempts_does_not_download_full_question_result_history(monkeypatch):
+    import licensetown.pt.dashboard_read_bundle as bundle
+
+    connection_obj = object()
+    attempts = [{
+        "question_id": "Q1",
+        "answered_at": datetime(2026, 9, 12, tzinfo=timezone.utc),
+        "is_correct": True,
+        "selected_answers": ["A"],
+    }]
+
+    class ConnectionContext:
+        def __enter__(self):
+            return connection_obj
+
+        def __exit__(self, *args):
+            return False
+
+    monkeypatch.setattr(bundle.database, "database_is_available", lambda: True)
+    monkeypatch.setattr(bundle.database, "get_db_connection", ConnectionContext)
+    monkeypatch.setattr(bundle, "_attempts_with_connection", lambda *_: attempts)
+    monkeypatch.setattr(bundle, "_learning_events_with_connection", lambda *_: [])
+    monkeypatch.setattr(bundle, "_activity_with_connection", lambda *_: {})
+    monkeypatch.setattr(bundle, "_summary_with_connection", lambda *_: {})
+    monkeypatch.setattr(
+        bundle,
+        "_today_recommendation_summary_with_connection",
+        lambda *_: {
+            "recommendation_today_answered": 0,
+            "recommendation_today_correct": 0,
+            "recommendation_today_incorrect": 0,
+        },
+    )
+    monkeypatch.setattr(
+        bundle,
+        "_question_result_rows_with_connection",
+        lambda *_: (_ for _ in ()).throw(
+            AssertionError("full question_results history should not be read")
+        ),
+    )
+    monkeypatch.setattr(bundle, "get_trial100_records", lambda *a, **k: [])
+
+    result = bundle.get_dashboard_read_bundle(
+        "learner",
+        include_attempts=True,
+        include_learning_events=True,
+    )
+
+    assert result["unique_question_count"] == 1
+    assert result["learning_data"]["fields"]
