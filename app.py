@@ -1996,6 +1996,12 @@ def pause_quiz_session(user_id):
         return False
     if session.get("status") != "paused":
         session["resume_status"] = session.get("status", "waiting_for_answers")
+        properties = _analytics_session_properties(session)
+        properties.update({
+            "answered_count": len(session.get("all_answers", {})),
+            "completion_reason": "paused",
+        })
+        analytics_capture(user_id, "session_ended", properties)
         finish_active_learning_time(user_id)
     session["status"] = "paused"
     return True
@@ -2385,8 +2391,13 @@ def start_and_reply_quiz(
         logging.exception("Formal question bank initial reply failed: user_id=%s", user_id)
         study_sessions.pop(user_id, None)
         reply_to_line(reply_token, QUESTION_BANK_ERROR_MESSAGE)
-    except Exception:
+    except Exception as exc:
         logging.exception("Initial quiz reply failed: user_id=%s", user_id)
+        analytics_capture(user_id, "product_error", {
+            "surface": "line",
+            "endpoint": "study_start",
+            "error_type": type(exc).__name__,
+        })
         study_sessions.pop(user_id, None)
         reply_to_line(
             reply_token,
@@ -2677,14 +2688,23 @@ def answer_web_recommendation(session_id):
     }
     result.update(session.get("selection_audit", {}).get(question_id, {}))
     answer_number = session["current_index"] + 1
-    record_learning_batch(
-        user_id=session["user_id"],
-        event_key=f"web-recommendation:{session_id}:{answer_number}",
-        mode="study",
-        answered_count=1,
-        correct_count=int(is_correct),
-        question_results=[result],
-    )
+    try:
+        record_learning_batch(
+            user_id=session["user_id"],
+            event_key=f"web-recommendation:{session_id}:{answer_number}",
+            mode="study",
+            answered_count=1,
+            correct_count=int(is_correct),
+            question_results=[result],
+        )
+    except Exception as exc:
+        analytics_capture(session["user_id"], "product_error", {
+            "surface": "web",
+            "endpoint": "recommendation_answer",
+            "error_type": type(exc).__name__,
+            "http_status": 500,
+        })
+        raise
     base = _analytics_session_properties(session, surface="web")
     response_started_at = session.get("_analytics_batch_shown_at")
     answer_properties = dict(base)
@@ -2761,8 +2781,13 @@ def advance_and_reply_quiz(reply_token, user_id, expected_session_id=None):
     except QuestionBankError:
         logging.exception("Formal question bank next reply failed: user_id=%s", user_id)
         reply_to_line(reply_token, QUESTION_BANK_ERROR_MESSAGE)
-    except Exception:
+    except Exception as exc:
         logging.exception("Next quiz reply failed: user_id=%s", user_id)
+        analytics_capture(user_id, "product_error", {
+            "surface": "line",
+            "endpoint": "study_next",
+            "error_type": type(exc).__name__,
+        })
         reply_to_line(
             reply_token,
             "おう、悪い。次の5問を準備できなかった。もう一度『続ける』を押してくれ。",
