@@ -106,7 +106,7 @@ def build_field_judgment_evidence_profiles(
 ) -> dict[str, dict[str, Any]]:
     """Build symmetric J1-J7 profiles from the same formal evidence as Shadow."""
     _sync_catalog()
-    attempts = [dict(item) for item in attempts]
+    attempts = list(attempts)
     profiles = _formal.build_formal_field_profiles(
         attempts,
         field_evidence,
