@@ -63,9 +63,11 @@ from goukaku_ui import (
 )
 from learner_navigation_performance import RequestTiming
 import learner_path_performance as learner_path_perf
+from licensetown.common.product_analytics import capture as analytics_capture, learning_variant as analytics_learning_variant
 from site_ui import site_ui
 from question_bank import (
     get_category_group_names,
+    get_category_small,
     get_category_names_for_group,
     get_question_tag,
     get_quiz_question,
@@ -914,6 +916,68 @@ def format_quiz_messages(questions, start_number=1):
 
     return [all_questions_message]
 
+def _analytics_session_properties(session, *, surface="line"):
+    return {
+        "surface": surface,
+        "mode": session.get("mode", "study"),
+        "learning_variant": analytics_learning_variant(session),
+        "category_id": session.get("category_small"),
+        "session_id": session.get("session_id"),
+        "session_question_count": session.get("question_count"),
+        "floor_up_target_field": session.get("floor_up_target_field"),
+    }
+
+
+def _analytics_capture_session_started(user_id, session, *, surface="line"):
+    globals().get('analytics_capture', lambda *_a, **_k: False)(
+        user_id,
+        "session_started",
+        _analytics_session_properties(session, surface=surface),
+    )
+
+
+def _analytics_capture_question_batch_shown(user_id, session, *, surface="line"):
+    current_set = int(session.get("current_set") or 1)
+    shown_sets = session.setdefault("_analytics_shown_sets", set())
+    if current_set in shown_sets:
+        return
+    shown_sets.add(current_set)
+    session["_analytics_batch_shown_at"] = time.time()
+    start_number = ((current_set - 1) * int(session.get("questions_per_set") or 5)) + 1
+    base = _analytics_session_properties(session, surface=surface)
+    for offset, question in enumerate(session.get("questions") or ()):
+        properties = dict(base)
+        properties.update({
+            "question_id": str(question.get("id")),
+            "category_id": globals().get('get_category_small', lambda *_a: None)(str(question.get("id"))),
+            "session_question_number": start_number + offset,
+            "current_set": current_set,
+        })
+        globals().get('analytics_capture', lambda *_a, **_k: False)(user_id, "question_shown", properties)
+
+
+def _analytics_capture_explanations(user_id, session, explanation_set):
+    per_set = int(session.get("questions_per_set") or 5)
+    start_index = (int(explanation_set) - 1) * per_set
+    end_index = min(start_index + per_set, int(session.get("question_count") or 0))
+    base = globals().get('_analytics_session_properties', lambda *_a, **_k: {})(session)
+    for index, question in enumerate(
+        (session.get("all_questions") or ())[start_index:end_index],
+        start=start_index + 1,
+    ):
+        properties = dict(base)
+        properties.update({
+            "question_id": str(question.get("id")),
+            "category_id": globals().get('get_category_small', lambda *_a: None)(str(question.get("id"))),
+            "session_question_number": index,
+            "is_correct": is_answer_correct(
+                question,
+                (session.get("all_answers") or {}).get(index, {}).get("answer"),
+            ),
+        })
+        globals().get('analytics_capture', lambda *_a, **_k: False)(user_id, "explanation_viewed", properties)
+
+
 # =========================================================
 # 小テスト開始
 # =========================================================
@@ -1052,6 +1116,7 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
         if len(floor_up_targets) == 1:
             study_sessions[user_id]["floor_up_target_field"] = floor_up_targets.pop()
 
+    globals().get('_analytics_capture_session_started', lambda *_a, **_k: None)(user_id, study_sessions[user_id])
     quiz_messages = format_quiz_messages(questions)
 
     return quiz_messages
@@ -1931,6 +1996,12 @@ def pause_quiz_session(user_id):
         return False
     if session.get("status") != "paused":
         session["resume_status"] = session.get("status", "waiting_for_answers")
+        properties = globals().get('_analytics_session_properties', lambda *_a, **_k: {})(session)
+        properties.update({
+            "answered_count": len(session.get("all_answers", {})),
+            "completion_reason": "paused",
+        })
+        globals().get('analytics_capture', lambda *_a, **_k: False)(user_id, "session_ended", properties)
         finish_active_learning_time(user_id)
     session["status"] = "paused"
     return True
@@ -2023,7 +2094,7 @@ def record_confirmed_learning_batch(user_id, session):
                     if key in audit
                 })
         question_results.append(result)
-    return record_learning_batch(
+    persisted = record_learning_batch(
         user_id=user_id,
         event_key=f'{session["session_id"]}:{current_set}',
         mode=session.get("mode", "study"),
@@ -2031,6 +2102,27 @@ def record_confirmed_learning_batch(user_id, session):
         correct_count=correct_count,
         question_results=question_results,
     )
+    batch_started_at = session.get("_analytics_batch_shown_at")
+    batch_response_time_ms = (
+        max(0, int((time.time() - batch_started_at) * 1000))
+        if isinstance(batch_started_at, (int, float)) else None
+    )
+    base = globals().get('_analytics_session_properties', lambda *_a, **_k: {})(session)
+    for offset, row in enumerate(question_results):
+        properties = dict(base)
+        properties.update({
+            "question_id": row["question_id"],
+            "category_id": globals().get('get_category_small', lambda *_a: None)(row["question_id"]),
+            "is_correct": bool(row["is_correct"]),
+            "confidence": row.get("confidence"),
+            "session_question_number": start_number + offset,
+            "current_set": current_set,
+            "batch_size": questions_per_set,
+            "response_time_ms": batch_response_time_ms,
+            "batch_response_time_ms": batch_response_time_ms,
+        })
+        globals().get('analytics_capture', lambda *_a, **_k: False)(user_id, "answer_submitted", properties)
+    return persisted
 
 
 def queue_prerequisite_backtrack_for_next_set(user_id, session):
@@ -2290,6 +2382,7 @@ def start_and_reply_quiz(
                     "入力欄に『中断する』って入れて教えてくれな＾＾"
                 ),
             )
+            globals().get('_analytics_capture_question_batch_shown', lambda *_a, **_k: None)(user_id, study_sessions[user_id])
         return True
     except QuestionAvailabilityError:
         logging.warning("Quiz start paused: insufficient non-recent unique questions")
@@ -2299,8 +2392,13 @@ def start_and_reply_quiz(
         logging.exception("Formal question bank initial reply failed: user_id=%s", user_id)
         study_sessions.pop(user_id, None)
         reply_to_line(reply_token, QUESTION_BANK_ERROR_MESSAGE)
-    except Exception:
+    except Exception as exc:
         logging.exception("Initial quiz reply failed: user_id=%s", user_id)
+        globals().get('analytics_capture', lambda *_a, **_k: False)(user_id, "product_error", {
+            "surface": "line",
+            "endpoint": "study_start",
+            "error_type": type(exc).__name__,
+        })
         study_sessions.pop(user_id, None)
         reply_to_line(
             reply_token,
@@ -2375,7 +2473,13 @@ def create_web_recommendation_session(
             "correct_count": 0,
             "completed": False,
             "started_at": time.time(),
+            "session_id": session_id,
+            "session_kind": "dashboard_recommendation",
+            "mode": "study",
         }
+        globals().get('_analytics_capture_session_started', lambda *_a, **_k: None)(
+            user_id, web_recommendation_sessions[session_id], surface="web"
+        )
         return session_id, True
 
 
@@ -2513,6 +2617,27 @@ def web_recommendation_learning(session_id):
     session = web_recommendation_sessions.get(session_id)
     if not session:
         return "学習セッションが見つかりません。", 404
+    if not session.get("completed"):
+        index = int(session.get("current_index") or 0)
+        shown = session.setdefault("_analytics_shown_indices", set())
+        if index not in shown:
+            shown.add(index)
+            base = globals().get('_analytics_session_properties', lambda *_a, **_k: {})(session, surface="web")
+            question = session["questions"][index]
+            if index > 0:
+                continuation = dict(base)
+                continuation["session_question_number"] = index
+                globals().get('analytics_capture', lambda *_a, **_k: False)(
+                    session["user_id"], "next_question_requested", continuation
+                )
+            properties = dict(base)
+            properties.update({
+                "question_id": str(question.get("id")),
+                "category_id": globals().get('get_category_small', lambda *_a: None)(str(question.get("id"))),
+                "session_question_number": index + 1,
+            })
+            globals().get('analytics_capture', lambda *_a, **_k: False)(session["user_id"], "question_shown", properties)
+            session["_analytics_batch_shown_at"] = time.time()
     return render_template(
         "goukaku/web_learning.html",
         session_id=session_id,
@@ -2564,13 +2689,49 @@ def answer_web_recommendation(session_id):
     }
     result.update(session.get("selection_audit", {}).get(question_id, {}))
     answer_number = session["current_index"] + 1
-    record_learning_batch(
-        user_id=session["user_id"],
-        event_key=f"web-recommendation:{session_id}:{answer_number}",
-        mode="study",
-        answered_count=1,
-        correct_count=int(is_correct),
-        question_results=[result],
+    try:
+        record_learning_batch(
+            user_id=session["user_id"],
+            event_key=f"web-recommendation:{session_id}:{answer_number}",
+            mode="study",
+            answered_count=1,
+            correct_count=int(is_correct),
+            question_results=[result],
+        )
+    except Exception as exc:
+        globals().get('analytics_capture', lambda *_a, **_k: False)(session["user_id"], "product_error", {
+            "surface": "web",
+            "endpoint": "recommendation_answer",
+            "error_type": type(exc).__name__,
+            "http_status": 500,
+        })
+        raise
+    base = globals().get('_analytics_session_properties', lambda *_a, **_k: {})(session, surface="web")
+    response_started_at = session.get("_analytics_batch_shown_at")
+    answer_properties = dict(base)
+    answer_properties.update({
+        "question_id": question_id,
+        "category_id": globals().get('get_category_small', lambda *_a: None)(question_id),
+        "is_correct": bool(is_correct),
+        "confidence": confidence,
+        "session_question_number": answer_number,
+        "batch_size": 1,
+        "response_time_ms": (
+            max(0, int((time.time() - response_started_at) * 1000))
+            if isinstance(response_started_at, (int, float)) else None
+        ),
+    })
+    globals().get('analytics_capture', lambda *_a, **_k: False)(session["user_id"], "answer_submitted", answer_properties)
+    globals().get('analytics_capture', lambda *_a, **_k: False)(
+        session["user_id"],
+        "explanation_viewed",
+        {
+            **base,
+            "question_id": question_id,
+            "category_id": globals().get('get_category_small', lambda *_a: None)(question_id),
+            "is_correct": bool(is_correct),
+            "session_question_number": answer_number,
+        },
     )
     session["correct_count"] += int(is_correct)
     session["current_index"] += 1
@@ -2581,6 +2742,13 @@ def answer_web_recommendation(session_id):
             max(time.time() - session["started_at"], 0),
             event_key=f"web-recommendation:{session_id}:time",
         )
+        properties = globals().get('_analytics_session_properties', lambda *_a, **_k: {})(session, surface="web")
+        properties.update({
+            "answered_count": session["question_count"],
+            "correct_count": session["correct_count"],
+            "completion_reason": "questions_completed",
+        })
+        globals().get('analytics_capture', lambda *_a, **_k: False)(session["user_id"], "session_completed", properties)
     return {
         "ok": True,
         "is_correct": is_correct,
@@ -2609,12 +2777,18 @@ def advance_and_reply_quiz(reply_token, user_id, expected_session_id=None):
             study_sessions[user_id],
             intro_text="おう！次の5問いくぞ＾＾",
         )
+        globals().get('_analytics_capture_question_batch_shown', lambda *_a, **_k: None)(user_id, study_sessions[user_id])
         return True
     except QuestionBankError:
         logging.exception("Formal question bank next reply failed: user_id=%s", user_id)
         reply_to_line(reply_token, QUESTION_BANK_ERROR_MESSAGE)
-    except Exception:
+    except Exception as exc:
         logging.exception("Next quiz reply failed: user_id=%s", user_id)
+        globals().get('analytics_capture', lambda *_a, **_k: False)(user_id, "product_error", {
+            "surface": "line",
+            "endpoint": "study_next",
+            "error_type": type(exc).__name__,
+        })
         reply_to_line(
             reply_token,
             "おう、悪い。次の5問を準備できなかった。もう一度『続ける』を押してくれ。",
@@ -2826,6 +3000,18 @@ def return_home(reply_token, user_id, interrupt=True):
     consultation_contexts.pop(user_id, None)
     quiz_category_selections.pop(user_id, None)
     current_session = study_sessions.get(user_id)
+    if (
+        interrupt
+        and current_session
+        and current_session.get("status") != "paused"
+        and current_session.get("status") not in {"quiz_completed", "assessment_completed"}
+    ):
+        properties = _analytics_session_properties(current_session)
+        properties.update({
+            "answered_count": len(current_session.get("all_answers", {})),
+            "completion_reason": "home_exit",
+        })
+        globals().get('analytics_capture', lambda *_a, **_k: False)(user_id, "session_ended", properties)
     finish_active_learning_time(user_id)
     if interrupt and not (current_session and current_session.get("status") == "paused"):
         study_sessions.pop(user_id, None)
@@ -3048,6 +3234,7 @@ def push_quiz_to_line(user_id, push_message):
                 text="じゃあ、解答を入力してくれ＾＾",
                 quick_reply=QuickReply(items=quick_reply_items),
             ))
+            globals().get('_analytics_capture_question_batch_shown', lambda *_a, **_k: None)(user_id, session)
             return
         else:
             quick_reply_items = [
@@ -3059,6 +3246,7 @@ def push_quiz_to_line(user_id, push_message):
             text="じゃあ、解答を入力してくれ＾＾",
             quick_reply=QuickReply(items=quick_reply_items),
         ))
+        globals().get('_analytics_capture_question_batch_shown', lambda *_a, **_k: None)(user_id, session)
     except Exception:
         logging.exception("LINE quiz push failed.")
 # =========================================================
@@ -3842,6 +4030,12 @@ def process_study_answer_input(reply_token, user_id, user_message):
             mark_initial_assessment_completed(user_id)
             finish_active_learning_time(user_id)
             session["status"] = "assessment_completed"
+            properties = globals().get('_analytics_session_properties', lambda *_a, **_k: {})(session)
+            properties.update({
+                "answered_count": len(session.get("all_answers", {})),
+                "completion_reason": "assessment_completed",
+            })
+            globals().get('analytics_capture', lambda *_a, **_k: False)(user_id, "session_completed", properties)
             with learner_path_perf.measure("study_answer.reply"):
                 line_bot_api.reply_message(
                     reply_token,
@@ -3937,6 +4131,9 @@ def process_study_flow_command(reply_token, user_id, user_message):
 
     if status == "waiting_for_continue":
         if user_message == "続ける":
+            properties = globals().get('_analytics_session_properties', lambda *_a, **_k: {})(session)
+            properties["session_question_number"] = len(session.get("all_answers", {}))
+            globals().get('analytics_capture', lambda *_a, **_k: False)(user_id, "next_question_requested", properties)
             advance_and_reply_quiz(
                 reply_token,
                 user_id,
@@ -3964,7 +4161,17 @@ def process_study_flow_command(reply_token, user_id, user_message):
             return True
 
         explanation_messages = advance_quiz_explanations(session)
+        globals().get('_analytics_capture_explanations', lambda *_a, **_k: None)(
+            user_id, session, session.get("explanation_set", 0)
+        )
         if session["status"] == "quiz_completed":
+            properties = globals().get('_analytics_session_properties', lambda *_a, **_k: {})(session)
+            properties.update({
+                "answered_count": len(session.get("all_answers", {})),
+                "correct_count": (session.get("quiz_result") or {}).get("score"),
+                "completion_reason": "explanations_completed",
+            })
+            globals().get('analytics_capture', lambda *_a, **_k: False)(user_id, "session_completed", properties)
             written_check = globals().get(
                 "build_pending_written_check", lambda *_args: None
             )(user_id, session)
@@ -4004,6 +4211,9 @@ def process_nekketsu_flow_command(reply_token, user_id, user_message):
 
     if status == "waiting_for_continue":
         if user_message == "続ける":
+            properties = globals().get('_analytics_session_properties', lambda *_a, **_k: {})(session)
+            properties["session_question_number"] = len(session.get("all_answers", {}))
+            globals().get('analytics_capture', lambda *_a, **_k: False)(user_id, "next_question_requested", properties)
             advance_and_reply_quiz(
                 reply_token,
                 user_id,
@@ -4013,6 +4223,13 @@ def process_nekketsu_flow_command(reply_token, user_id, user_message):
             pause_quiz_session(user_id)
             return_home(reply_token, user_id, interrupt=True)
         elif user_message == "終了する":
+            properties = globals().get('_analytics_session_properties', lambda *_a, **_k: {})(session)
+            properties.update({
+                "answered_count": len(session.get("all_answers", {})),
+                "correct_count": session.get("nekketsu_correct", 0),
+                "completion_reason": "user_ended",
+            })
+            globals().get('analytics_capture', lambda *_a, **_k: False)(user_id, "session_ended", properties)
             finish_active_learning_time(user_id)
             study_sessions.pop(user_id, None)
             return_home(reply_token, user_id, interrupt=True)
