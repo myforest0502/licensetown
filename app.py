@@ -3931,6 +3931,12 @@ def process_study_answer_input(reply_token, user_id, user_message):
             mark_initial_assessment_completed(user_id)
             finish_active_learning_time(user_id)
             session["status"] = "assessment_completed"
+            properties = _analytics_session_properties(session)
+            properties.update({
+                "answered_count": len(session.get("all_answers", {})),
+                "completion_reason": "assessment_completed",
+            })
+            analytics_capture(user_id, "session_completed", properties)
             with learner_path_perf.measure("study_answer.reply"):
                 line_bot_api.reply_message(
                     reply_token,
@@ -4026,6 +4032,9 @@ def process_study_flow_command(reply_token, user_id, user_message):
 
     if status == "waiting_for_continue":
         if user_message == "続ける":
+            properties = _analytics_session_properties(session)
+            properties["session_question_number"] = len(session.get("all_answers", {}))
+            analytics_capture(user_id, "next_question_requested", properties)
             advance_and_reply_quiz(
                 reply_token,
                 user_id,
@@ -4053,7 +4062,17 @@ def process_study_flow_command(reply_token, user_id, user_message):
             return True
 
         explanation_messages = advance_quiz_explanations(session)
+        _analytics_capture_explanations(
+            user_id, session, session.get("explanation_set", 0)
+        )
         if session["status"] == "quiz_completed":
+            properties = _analytics_session_properties(session)
+            properties.update({
+                "answered_count": len(session.get("all_answers", {})),
+                "correct_count": (session.get("quiz_result") or {}).get("score"),
+                "completion_reason": "explanations_completed",
+            })
+            analytics_capture(user_id, "session_completed", properties)
             written_check = globals().get(
                 "build_pending_written_check", lambda *_args: None
             )(user_id, session)
@@ -4093,6 +4112,9 @@ def process_nekketsu_flow_command(reply_token, user_id, user_message):
 
     if status == "waiting_for_continue":
         if user_message == "続ける":
+            properties = _analytics_session_properties(session)
+            properties["session_question_number"] = len(session.get("all_answers", {}))
+            analytics_capture(user_id, "next_question_requested", properties)
             advance_and_reply_quiz(
                 reply_token,
                 user_id,
@@ -4102,6 +4124,13 @@ def process_nekketsu_flow_command(reply_token, user_id, user_message):
             pause_quiz_session(user_id)
             return_home(reply_token, user_id, interrupt=True)
         elif user_message == "終了する":
+            properties = _analytics_session_properties(session)
+            properties.update({
+                "answered_count": len(session.get("all_answers", {})),
+                "correct_count": session.get("nekketsu_correct", 0),
+                "completion_reason": "user_ended",
+            })
+            analytics_capture(user_id, "session_ended", properties)
             finish_active_learning_time(user_id)
             study_sessions.pop(user_id, None)
             return_home(reply_token, user_id, interrupt=True)
