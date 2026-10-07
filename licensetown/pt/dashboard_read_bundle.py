@@ -177,7 +177,12 @@ def _activity_with_connection(
     *,
     now: datetime | None = None,
 ) -> dict[str, Any]:
-    """Return the legacy seven-day activity shape using PT-only durable rows."""
+    """Return seven-day activity without transferring every historical row.
+
+    Learning history is aggregated to one row per JST day in Neon. Study-time
+    rows are limited to the visible seven-day window. This keeps dashboard cost
+    bounded as a learner accumulates thousands of answers.
+    """
     current = database._as_utc(now or datetime.now(timezone.utc))
     jst = ZoneInfo("Asia/Tokyo")
     today = current.astimezone(jst).date()
@@ -185,39 +190,52 @@ def _activity_with_connection(
     answers_by_date = {day: 0 for day in dates}
     correct_by_date = {day: 0 for day in dates}
     seconds_by_date = {day: 0.0 for day in dates}
+    window_start = datetime.combine(
+        dates[0], datetime.min.time(), jst
+    ).astimezone(timezone.utc)
 
     with connection.cursor() as cur:
         cur.execute(
             """
-            SELECT answered_count, correct_count, answered_at
+            SELECT
+                (answered_at AT TIME ZONE 'Asia/Tokyo')::date AS day,
+                COALESCE(SUM(answered_count), 0),
+                COALESCE(SUM(correct_count), 0)
             FROM learning_events
-            WHERE user_id = %s AND qualification_id = %s
+            WHERE user_id = %s
+              AND qualification_id = %s
+              AND answered_count > 0
+            GROUP BY day
+            ORDER BY day
             """,
             (user_id, _QUALIFICATION_ID),
         )
-        learning_rows = cur.fetchall()
+        daily_learning_rows = cur.fetchall()
         cur.execute(
             """
-            SELECT elapsed_seconds, recorded_at
+            SELECT
+                (recorded_at AT TIME ZONE 'Asia/Tokyo')::date AS day,
+                COALESCE(SUM(elapsed_seconds), 0)
             FROM learning_time_events
-            WHERE user_id = %s AND qualification_id = %s
+            WHERE user_id = %s
+              AND qualification_id = %s
+              AND recorded_at >= %s
+            GROUP BY day
+            ORDER BY day
             """,
-            (user_id, _QUALIFICATION_ID),
+            (user_id, _QUALIFICATION_ID, window_start),
         )
-        time_rows = cur.fetchall()
+        daily_time_rows = cur.fetchall()
 
     active_dates = set()
-    for answered_count, correct_count, answered_at in learning_rows:
-        day = database._as_utc(answered_at).astimezone(jst).date()
-        if int(answered_count) > 0:
-            active_dates.add(day)
+    for day, answered_count, correct_count in daily_learning_rows:
+        active_dates.add(day)
         if day in answers_by_date:
-            answers_by_date[day] += int(answered_count)
-            correct_by_date[day] += int(correct_count)
-    for elapsed_seconds, recorded_at in time_rows:
-        day = database._as_utc(recorded_at).astimezone(jst).date()
+            answers_by_date[day] = int(answered_count)
+            correct_by_date[day] = int(correct_count)
+    for day, elapsed_seconds in daily_time_rows:
         if day in seconds_by_date:
-            seconds_by_date[day] += float(elapsed_seconds)
+            seconds_by_date[day] = float(elapsed_seconds)
 
     streak_days = database.calculate_learning_streak(active_dates, today)
     daily = [
@@ -249,8 +267,6 @@ def _activity_with_connection(
             round(weekly_correct / weekly_answers * 100) if weekly_answers else 0
         ),
     }
-
-
 
 def get_learner_navigation_read_bundle(user_id: str) -> dict[str, Any]:
     """Return only the formal inputs needed to validate learner navigation.
