@@ -108,6 +108,14 @@ from adaptive_question_selector import (
 
 logging.basicConfig(level=logging.INFO)
 
+# One low-volume server lifecycle event confirms that the production runtime can
+# reach PostHog. It contains no learner identity or learning content.
+analytics_capture(
+    "runtime",
+    "analytics_runtime_started",
+    {"surface": "server", "source": "app_startup"},
+)
+
 ENABLE_PREREQUISITE_BACKTRACK = os.getenv(
     "ENABLE_PREREQUISITE_BACKTRACK", "false"
 ).strip().lower() in {"1", "true", "yes", "on"}
