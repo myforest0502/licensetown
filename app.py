@@ -2088,7 +2088,7 @@ def record_confirmed_learning_batch(user_id, session):
                     if key in audit
                 })
         question_results.append(result)
-    return record_learning_batch(
+    persisted = record_learning_batch(
         user_id=user_id,
         event_key=f'{session["session_id"]}:{current_set}',
         mode=session.get("mode", "study"),
@@ -2096,6 +2096,26 @@ def record_confirmed_learning_batch(user_id, session):
         correct_count=correct_count,
         question_results=question_results,
     )
+    batch_started_at = session.get("_analytics_batch_shown_at")
+    batch_response_time_ms = (
+        max(0, int((time.time() - batch_started_at) * 1000))
+        if isinstance(batch_started_at, (int, float)) else None
+    )
+    base = _analytics_session_properties(session)
+    for offset, row in enumerate(question_results):
+        properties = dict(base)
+        properties.update({
+            "question_id": row["question_id"],
+            "category_id": get_category_small(row["question_id"]),
+            "is_correct": bool(row["is_correct"]),
+            "confidence": row.get("confidence"),
+            "session_question_number": start_number + offset,
+            "current_set": current_set,
+            "batch_size": questions_per_set,
+            "batch_response_time_ms": batch_response_time_ms,
+        })
+        analytics_capture(user_id, "answer_submitted", properties)
+    return persisted
 
 
 def queue_prerequisite_backtrack_for_next_set(user_id, session):
