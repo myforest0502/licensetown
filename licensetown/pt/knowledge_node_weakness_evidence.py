@@ -69,8 +69,7 @@ def derive_repeated_weakness_evidence(
     for derived evidence; raw stored Q/Node IDs remain untouched.
     """
     grouped: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
-    for source in attempts:
-        item = dict(source)
+    for item in attempts:
         question_id = str(item.get("question_id") or "")
         raw_node_id = str(item.get("knowledge_node_id") or "")
         if not question_id or not raw_node_id:
