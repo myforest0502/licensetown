@@ -167,7 +167,11 @@ def strategy_snapshot(attempts, events, as_of, *, days_to_exam=None):
         c['critical_safety_unresolved_count']=len(critical[f])
         if f in last:
             c['days_since_last_field_study']=max(0,(as_of-last[f]).total_seconds()/86400)
-    evidence=build_field_evidence(strategy_attempts,as_of=as_of)
+    evidence=build_field_evidence(
+        strategy_attempts,
+        as_of=as_of,
+        node_states=state_rows,
+    )
     progress=build_field_progress(evidence)
     targets=build_field_targets(evidence,progress,context_by_field=contexts)
     critical_nodes=set().union(*critical.values()) if critical else set()
