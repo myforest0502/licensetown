@@ -22,6 +22,7 @@ def build_active_repair_weakness(
     attempts: Iterable[dict[str, Any]],
     *,
     as_of: datetime | None = None,
+    node_states: Iterable[dict[str, Any]] | None = None,
 ) -> dict[str, dict[str, Any]]:
     """Return current-cycle weakness facts keyed by canonical Node.
 
@@ -45,8 +46,19 @@ def build_active_repair_weakness(
             continue
         histories[str(node)].append(item)
 
+    state_by_node = (
+        {
+            str(item.get("canonical_node_id") or ""): str(item.get("state") or "")
+            for item in node_states
+        }
+        if node_states is not None
+        else None
+    )
+
     result: dict[str, dict[str, Any]] = {}
     for node, history in sorted(histories.items()):
+        if state_by_node is not None and state_by_node.get(node) != "repairing":
+            continue
         active_cycle = current_repair_cycle(history, as_of=as_of)
         if not active_cycle:
             continue
