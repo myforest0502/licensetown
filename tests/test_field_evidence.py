@@ -265,3 +265,24 @@ def test_mixed_users_are_rejected():
         assert "one user" in str(exc)
     else:
         raise AssertionError("mixed user histories must not be aggregated")
+
+
+
+def test_precomputed_node_states_preserve_field_evidence_exactly():
+    history = [
+        attempt("Q269", "KN0268", False, 1, 1),
+        attempt("Q361", "KN0268", True, 1, 2),
+        attempt("Q269", "KN0268", False, 2, 3),
+        attempt("Q1", get_question_tag("Q1")["knowledge_node_id"], True, 2, 4),
+    ]
+    as_of = BASE + timedelta(days=8)
+    state_rows = transition.derive_all_user_node_states(history, as_of=as_of)
+
+    baseline = build_field_evidence(history, as_of=as_of)
+    optimized = build_field_evidence(
+        history,
+        as_of=as_of,
+        node_states=state_rows,
+    )
+
+    assert optimized == baseline
