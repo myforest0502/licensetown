@@ -231,7 +231,7 @@ def build_dashboard_real_data_shadow(
     legacy_recommended_field: str | None = None,
 ) -> dict[str, Any]:
     """Build shadow dashboard facts from authoritative derived Node-state evidence."""
-    attempts = [dict(item) for item in attempts]
+    attempts = list(attempts)
     evidence = dict(evidence or build_field_evidence(attempts, as_of=as_of))
     progress = dict(progress or build_field_progress(evidence))
     profiles = build_field_judgment_evidence_profiles(attempts, evidence, as_of=as_of)
