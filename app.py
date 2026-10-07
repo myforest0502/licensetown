@@ -63,9 +63,11 @@ from goukaku_ui import (
 )
 from learner_navigation_performance import RequestTiming
 import learner_path_performance as learner_path_perf
+from product_analytics import capture as analytics_capture, learning_variant as analytics_learning_variant
 from site_ui import site_ui
 from question_bank import (
     get_category_group_names,
+    get_category_small,
     get_category_names_for_group,
     get_question_tag,
     get_quiz_question,
@@ -914,6 +916,68 @@ def format_quiz_messages(questions, start_number=1):
 
     return [all_questions_message]
 
+def _analytics_session_properties(session, *, surface="line"):
+    return {
+        "surface": surface,
+        "mode": session.get("mode", "study"),
+        "learning_variant": analytics_learning_variant(session),
+        "category_id": session.get("category_small"),
+        "session_id": session.get("session_id"),
+        "session_question_count": session.get("question_count"),
+        "floor_up_target_field": session.get("floor_up_target_field"),
+    }
+
+
+def _analytics_capture_session_started(user_id, session, *, surface="line"):
+    analytics_capture(
+        user_id,
+        "session_started",
+        _analytics_session_properties(session, surface=surface),
+    )
+
+
+def _analytics_capture_question_batch_shown(user_id, session, *, surface="line"):
+    current_set = int(session.get("current_set") or 1)
+    shown_sets = session.setdefault("_analytics_shown_sets", set())
+    if current_set in shown_sets:
+        return
+    shown_sets.add(current_set)
+    session["_analytics_batch_shown_at"] = time.time()
+    start_number = ((current_set - 1) * int(session.get("questions_per_set") or 5)) + 1
+    base = _analytics_session_properties(session, surface=surface)
+    for offset, question in enumerate(session.get("questions") or ()):
+        properties = dict(base)
+        properties.update({
+            "question_id": str(question.get("id")),
+            "category_id": get_category_small(str(question.get("id"))),
+            "session_question_number": start_number + offset,
+            "current_set": current_set,
+        })
+        analytics_capture(user_id, "question_shown", properties)
+
+
+def _analytics_capture_explanations(user_id, session, explanation_set):
+    per_set = int(session.get("questions_per_set") or 5)
+    start_index = (int(explanation_set) - 1) * per_set
+    end_index = min(start_index + per_set, int(session.get("question_count") or 0))
+    base = _analytics_session_properties(session)
+    for index, question in enumerate(
+        (session.get("all_questions") or ())[start_index:end_index],
+        start=start_index + 1,
+    ):
+        properties = dict(base)
+        properties.update({
+            "question_id": str(question.get("id")),
+            "category_id": get_category_small(str(question.get("id"))),
+            "session_question_number": index,
+            "is_correct": is_answer_correct(
+                question,
+                (session.get("all_answers") or {}).get(index, {}).get("answer"),
+            ),
+        })
+        analytics_capture(user_id, "explanation_viewed", properties)
+
+
 # =========================================================
 # 小テスト開始
 # =========================================================
@@ -1052,6 +1116,7 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
         if len(floor_up_targets) == 1:
             study_sessions[user_id]["floor_up_target_field"] = floor_up_targets.pop()
 
+    _analytics_capture_session_started(user_id, study_sessions[user_id])
     quiz_messages = format_quiz_messages(questions)
 
     return quiz_messages
@@ -2290,6 +2355,7 @@ def start_and_reply_quiz(
                     "入力欄に『中断する』って入れて教えてくれな＾＾"
                 ),
             )
+            _analytics_capture_question_batch_shown(user_id, study_sessions[user_id])
         return True
     except QuestionAvailabilityError:
         logging.warning("Quiz start paused: insufficient non-recent unique questions")
@@ -2609,6 +2675,7 @@ def advance_and_reply_quiz(reply_token, user_id, expected_session_id=None):
             study_sessions[user_id],
             intro_text="おう！次の5問いくぞ＾＾",
         )
+        _analytics_capture_question_batch_shown(user_id, study_sessions[user_id])
         return True
     except QuestionBankError:
         logging.exception("Formal question bank next reply failed: user_id=%s", user_id)
@@ -3048,6 +3115,7 @@ def push_quiz_to_line(user_id, push_message):
                 text="じゃあ、解答を入力してくれ＾＾",
                 quick_reply=QuickReply(items=quick_reply_items),
             ))
+            _analytics_capture_question_batch_shown(user_id, session)
             return
         else:
             quick_reply_items = [
@@ -3059,6 +3127,7 @@ def push_quiz_to_line(user_id, push_message):
             text="じゃあ、解答を入力してくれ＾＾",
             quick_reply=QuickReply(items=quick_reply_items),
         ))
+        _analytics_capture_question_batch_shown(user_id, session)
     except Exception:
         logging.exception("LINE quiz push failed.")
 # =========================================================
