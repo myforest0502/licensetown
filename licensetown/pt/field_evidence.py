@@ -83,6 +83,25 @@ def _catalog() -> dict[str, Any]:
 _CATALOG = _catalog()
 
 
+def _attempt_sort_key(value: dict[str, Any]) -> tuple[str, str, int, int]:
+    return (
+        str(value.get("attempted_at") or value.get("answered_at") or ""),
+        str(value.get("event_key") or ""),
+        int(value.get("attempt_position") or 0),
+        int(value.get("id") or 0),
+    )
+
+
+def _attempts_are_ordered(rows: list[dict[str, Any]]) -> bool:
+    previous = None
+    for item in rows:
+        key = _attempt_sort_key(item)
+        if previous is not None and key < previous:
+            return False
+        previous = key
+    return True
+
+
 def _percent(numerator: int, denominator: int) -> float:
     return round(numerator * 100 / denominator, 1) if denominator else 0.0
 
@@ -99,6 +118,7 @@ def build_field_evidence(
 ) -> dict[str, Any]:
     """Aggregate anonymous evidence for all 18 fields without a mastery formula."""
     attempts = list(attempts)
+    attempts_are_ordered = _attempts_are_ordered(attempts)
     user_ids = {str(item.get("user_id") or "") for item in attempts}
     if len(user_ids) > 1:
         raise ValueError("attempts must belong to one user")
@@ -132,14 +152,10 @@ def build_field_evidence(
             item for item in field_attempts
             if item.get("answer_status") != "unknown"
         ]
-        ordered_evaluable_field_attempts = sorted(
-            evaluable_field_attempts,
-            key=lambda value: (
-                str(value.get("attempted_at") or value.get("answered_at") or ""),
-                str(value.get("event_key") or ""),
-                int(value.get("attempt_position") or 0),
-                int(value.get("id") or 0),
-            ),
+        ordered_evaluable_field_attempts = (
+            evaluable_field_attempts
+            if attempts_are_ordered
+            else sorted(evaluable_field_attempts, key=_attempt_sort_key)
         )
         current_evaluable_attempts = ordered_evaluable_field_attempts[-CURRENT_ACCURACY_WINDOW:]
         attempted_nodes = field_nodes & set(states)
@@ -194,6 +210,7 @@ def build_field_evidence(
             cycle = current_evaluable_repair_cycle(
                 evaluable_attempts_by_node.get(node_id, ()),
                 as_of=as_of,
+                already_ordered=True,
             )
             wrong_ids = {
                 str(item.get("question_id") or "").upper().strip()
