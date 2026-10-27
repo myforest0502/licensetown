@@ -96,3 +96,25 @@ def test_catchup_ui_disables_all_other_learning_buttons_and_preserves_gensan():
     assert "move(top, repairCard)" in approved
     assert "修復問題を10問始める" in view
     assert "今日の目標は" in view
+
+
+
+def test_line_study_start_is_repair_only_during_catchup(monkeypatch):
+    from question_bank import get_quiz_question
+
+    monkeypatch.setattr(app_module, "get_question_attempts", lambda _user: [])
+    monkeypatch.setattr(app_module, "current_user_catchup", lambda *_args, **_kwargs: {"active": True})
+    selectors = []
+
+    def repair_selector(attempts, question_count, **kwargs):
+        selectors.append((question_count, kwargs))
+        return [get_quiz_question(f"Q{i}") for i in range(1, 11)]
+
+    monkeypatch.setattr(app_module, "build_node_adaptive_session", repair_selector)
+    app_module.start_quiz("line-catchup-test-user", session_kind="adaptive_daily", question_count=30)
+    session = app_module.study_sessions.pop("line-catchup-test-user")
+    assert session["question_count"] == 10
+    assert session["session_kind"] == "catchup_repair_line"
+    assert selectors[0][0] == 10
+    assert selectors[0][1]["learning_intent"] == "repair"
+    assert selectors[0][1]["strict_repair"] is True
