@@ -2477,6 +2477,7 @@ def create_web_recommendation_session(
             exclude_ids=recent_short_term_evidence_ids(raw_attempts),
             audit_out=selection_audit,
             learning_intent=learning_intent,
+            strict_repair=(session_kind == "dashboard_repair"),
         )
         session_id = secrets.token_urlsafe(24)
         web_recommendation_sessions[session_id] = {
