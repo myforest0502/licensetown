@@ -61,8 +61,8 @@ def test_repair_entry_is_visible_only_while_behind_and_uses_normal_web_flow():
     assert 'data-repair-question-card hidden' in template
     assert "scheduleDeltaDays < 0 && pendingRepair > 0" in script
     assert "currentFinish" in script and "overall.progress_raw" in script
-    assert "const repairQuestions = button.dataset.recommendationSource === 'repair_questions'" in client_script
-    assert "!structuredNavigation && !repairQuestions" in client_script
+    assert "button.dataset.recommendationSource === 'repair_questions'" in client_script
+    assert "!structuredNavigation && await liffReady" in client_script
     assert "{% if not read_only and not learner_preview %}" in template
     assert "20261027-repair-questions1" in base
     assert "合格確率" not in template.split("lt-repair-card", 1)[1].split("</section>", 1)[0]
