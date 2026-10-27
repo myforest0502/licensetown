@@ -182,7 +182,13 @@ def test_zero_backlog_ends_repair_even_if_formal_schedule_still_lags(monkeypatch
     )
     assert not ended["active"]
     assert ended["just_recovered"] is True
+    assert ended["recovery_complete"] is True
     assert observed == ["catchup_recovered"]
+    monkeypatch.setattr(mode, "_latest_transition", lambda _id: "catchup_recovered")
+    next_visit = mode.get_catchup_status("learner", 117, FIXTURE, wrong_question_ids=())
+    assert not next_visit["active"]
+    assert next_visit["recovery_complete"] is True
+    assert next_visit["just_recovered"] is False
 
 
 def test_line_partial_last_repair_batch_keeps_exact_question_count(monkeypatch):
