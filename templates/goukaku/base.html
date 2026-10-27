@@ -49,7 +49,7 @@
         navigation: {{ dashboard.learner_navigation|default(none)|tojson }},
         catchup: {{ dashboard.catchup|default({'active':false})|tojson }}
       };
-      if (window.LT_ROUTE_SNAPSHOT.catchup?.active) {
+      if (window.LT_ROUTE_SNAPSHOT.catchup?.active && {{ (not learner_preview|default(false) and not read_only|default(false))|tojson }}) {
         document.documentElement.classList.add('lt-catchup-only');
       }
     </script>
