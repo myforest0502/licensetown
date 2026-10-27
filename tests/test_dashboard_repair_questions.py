@@ -11,7 +11,7 @@ import app as app_module
 
 def test_repair_questions_start_uses_server_selected_repair_intent(monkeypatch):
     monkeypatch.setattr(app_module, "dashboard_user_id", lambda token: "learner" if token == "valid" else None)
-    monkeypatch.setattr(app_module, "build_dashboard", lambda *a, **kw: {"catchup": {"active": True}})
+    monkeypatch.setattr(app_module, "current_user_catchup", lambda *_args: {"active": True})
     calls = []
 
     def fake_start(*args, **kwargs):
@@ -37,7 +37,7 @@ def test_repair_questions_start_uses_server_selected_repair_intent(monkeypatch):
 
 def test_repair_questions_is_fail_closed_on_auth_and_count(monkeypatch):
     monkeypatch.setattr(app_module, "dashboard_user_id", lambda token: "learner" if token == "valid" else None)
-    monkeypatch.setattr(app_module, "build_dashboard", lambda *a, **kw: {"catchup": {"active": True}})
+    monkeypatch.setattr(app_module, "current_user_catchup", lambda *_args: {"active": True})
     monkeypatch.setattr(
         app_module, "create_web_recommendation_session",
         lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("Must not start")),
