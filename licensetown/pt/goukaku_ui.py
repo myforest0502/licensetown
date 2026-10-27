@@ -33,7 +33,7 @@ from pass_readiness import build_pass_readiness
 from learner_readiness_presentation import build_learner_readiness_presentation
 from field_progress_presentation import build_field_progress_presentation_from_calculation
 from overall_progress_presentation import build_overall_progress_presentation
-from licensetown.pt.catchup_mode import get_catchup_status
+from licensetown.pt.catchup_mode import get_catchup_status, unresolved_wrong_question_ids
 from dashboard_settings import (
     get_daily_question_goal,
     get_effective_exam_date,
@@ -429,7 +429,11 @@ def current_user_catchup(user_id, *, raw_attempts=None):
     }
     date = get_effective_exam_date(user_id)
     days = max((date - tokyo_today()).days, 0) if date else None
-    return get_catchup_status(user_id, days, finish)
+    return get_catchup_status(
+        user_id, days, finish,
+        wrong_question_ids=unresolved_wrong_question_ids(formal),
+        record_transition=True,
+    )
 
 
 def build_dashboard(user_id=None, include_learner_navigation=False):
@@ -607,16 +611,27 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
             dashboard["today_progress"],
         )
         if dashboard["overall_progress_preview"] and include_learner_navigation:
+            from licensetown.pt.formal_attempt_evidence import filter_current_formal_evidence
+            dashboard["_wrong_question_ids"] = unresolved_wrong_question_ids(
+                filter_current_formal_evidence(attempts)
+            )
             dashboard["catchup"] = get_catchup_status(
                 user_id, dashboard["days_until_exam"],
                 {**dashboard["overall_progress_preview"], "answer_count": dashboard["total_answers"]},
+                wrong_question_ids=dashboard["_wrong_question_ids"],
             )
             if dashboard["catchup"]["active"]:
                 goal = dashboard["catchup"]["daily_goal"]
+                remaining = dashboard["catchup"]["pending_questions"]
                 dashboard["gensan_comment"] = (
-                    f"いまは修復に集中しよう＾＾ 今日の修復問題の目標は{goal}問だ！ "
-                    "10問ずつ進もう。大事なのは正解の理由を確認すること。"
-                    "焦らず、修復できた知識を増やしていこうな。"
+                    f"いまは間違えた問題の解き直しだ＾＾ 残り{remaining}問！ "
+                    f"今日の目標は{goal}問。正解した問題から修復リストを外すぞ。"
+                    "間違えた問題は残るが、また解けばいい。全部なくなったら通常モードだ！"
+                )
+            elif dashboard["catchup"].get("just_recovered"):
+                dashboard["gensan_comment"] = (
+                    "おお、よくやったな！＾＾ 間違い直しの残りは0問。"
+                    "いったん修復集中モードは卒業だ！通常の勉強に戻ろう！"
                 )
     return dashboard
 
@@ -634,6 +649,7 @@ def home():
             user_id, dashboard["days_until_exam"],
             {**dashboard["overall_progress_preview"], "answer_count": dashboard["total_answers"]},
             record_transition=True,
+            wrong_question_ids=dashboard.get("_wrong_question_ids"),
         )
     navigation = dashboard.get("learner_navigation") or {}
     action = navigation.get("today_action") or {}

@@ -81,6 +81,64 @@ def daily_repair_goal(days_to_exam: int, finish_ratio: float, node_count: int) -
     return min(60, per_day)
 
 
+def unresolved_wrong_question_ids(attempts) -> tuple[str, ...]:
+    """Review queue: one question, one outstanding flag based on LAST attempt.
+
+    Correct clears the question, incorrect or unknown keeps it. This is a
+    short-term retry queue, NOT an override of formal Knowledge Node mastery.
+    Attempts from superseded question-bank versions must be filtered by the
+    caller before reaching this function.
+    """
+    def chronology(row):
+        stamp = row.get("answered_at") or row.get("attempted_at")
+        return (
+            stamp.isoformat() if hasattr(stamp, "isoformat") else str(stamp or ""),
+            str(row.get("event_key") or ""),
+            int(row.get("attempt_position") or 0),
+        )
+
+    latest: dict[str, bool] = {}
+    for item in sorted(attempts, key=chronology):
+        question_id = str(item.get("question_id") or "").strip().upper()
+        if question_id:
+            latest[question_id] = (
+                item.get("is_correct") is not True
+                or item.get("answer_status") == "unknown"
+            )
+    # Retired/missing question IDs are not re-answerable. Do not imprison the
+    # learner in catch-up with a question that the current bank cannot serve.
+    from question_bank import question_ids
+    playable = set(question_ids())
+    return tuple(q for q, pending in latest.items() if pending and q in playable)
+
+
+def select_wrong_question_session(attempts, question_count=10, *, audit_out=None):
+    """Only outstanding previously-wrong Qs; NO novel or Node-proxy questions.
+
+    A last block may contain fewer than 10. Do not strand a learner because a
+    strict spaced or repeat guard prevents answering their own wrong Q.
+    """
+    from question_bank import QuestionAvailabilityError, get_quiz_question, question_ids
+
+    available = set(question_ids())
+    outstanding = [
+        q for q in unresolved_wrong_question_ids(attempts)
+        if q in available
+    ]
+    picked = outstanding[:max(0, int(question_count))]
+    if not picked:
+        raise QuestionAvailabilityError("No pending wrong question remains")
+    if audit_out is not None:
+        audit_out.update({
+            q: {
+                "selection_reason": "last_answer_incorrect",
+                "selection_group": "wrong_question_retry",
+                "repair_evidence_quality": "same_question_retry",
+            } for q in picked
+        })
+    return [get_quiz_question(q) for q in picked]
+
+
 def _latest_transition(user_id: str) -> str | None:
     """Read only two light-weight activity types, not thousands of attempts."""
     import database
@@ -111,6 +169,7 @@ def calculate_catchup_status(
     overall: dict[str, Any] | None,
     *,
     was_active: bool = False,
+    wrong_question_ids=None,
 ) -> dict[str, Any]:
     if not overall or days_to_exam is None:
         return {"active": False, "lag_days": None, "daily_goal": 0, "pending_nodes": 0}
@@ -128,8 +187,28 @@ def calculate_catchup_status(
         overall.get("answer_count") is not None
         and int(overall["answer_count"]) < 100
     )
-    # Persistent catch-up runs through 9..1 days, and releases at 0 days.
-    # Never hide the normal study routes when there is no repair work to serve.
+    if wrong_question_ids is not None:
+        # User-requested retry contract: each correct LAST answer clears one
+        # problem from the backlog; a wrong answer keeps it. Zero unlocks the
+        # normal routes even if the separate conservative pace model lags.
+        remaining = len(set(wrong_question_ids))
+        active = bool(
+            not insufficient_evidence and remaining > 0
+            and (lag >= ENTER_AT_LAG_DAYS or was_active)
+        )
+        # A 14-day planning horizon, recalculated as the retry backlog shrinks.
+        # This target is a number of Qs to ATTEMPT, not an artificial score.
+        goal = (
+            min(200, max(1, math.ceil(remaining / GOAL_HORIZON_DAYS / 10) * 10))
+            if active else 0
+        )
+        return {
+            "active": active, "lag_days": lag, "daily_goal": goal,
+            "pending_questions": remaining, "pending_nodes": pending,
+            "finish_ratio": float(finish), "goal_is_estimate": True,
+            "retry_queue_complete": remaining == 0,
+        }
+    # Legacy pure callers keep historical formal-state behavior.
     active = bool(
         not insufficient_evidence
         and (lag >= ENTER_AT_LAG_DAYS or (was_active and lag > 0))
@@ -152,25 +231,45 @@ def get_catchup_status(
     overall: dict[str, Any] | None,
     *,
     record_transition: bool = False,
+    wrong_question_ids=None,
 ) -> dict[str, Any]:
     """Compute once with the existing formal dashboard progress, optionally persist.
 
     Fail-open on unavailable transition history: never trap a learner in a
     locked study UI without a reliable way to recover.
     """
-    initial = calculate_catchup_status(days_to_exam, overall)
+    initial = calculate_catchup_status(
+        days_to_exam, overall, wrong_question_ids=wrong_question_ids,
+    )
     lag = initial.get("lag_days")
-    was_active = False
-    if user_id and lag is not None and lag < ENTER_AT_LAG_DAYS:
+    latest_transition = None
+    if user_id and lag is not None:
         try:
-            was_active = _latest_transition(user_id) == "catchup_started"
+            latest_transition = _latest_transition(user_id)
         except Exception:
-            was_active = False
-    status = calculate_catchup_status(days_to_exam, overall, was_active=was_active)
+            latest_transition = None
+    was_active = latest_transition == "catchup_started"
+    status = calculate_catchup_status(
+        days_to_exam, overall, was_active=was_active,
+        wrong_question_ids=wrong_question_ids,
+    )
+    status["just_recovered"] = bool(
+        was_active and wrong_question_ids is not None
+        and status.get("pending_questions") == 0 and not status["active"]
+    )
+    # Keep the earned 'wrong-question retry completed' signal visible on later
+    # visits. It is separate from the conservative long-term mastery score.
+    status["recovery_complete"] = bool(
+        wrong_question_ids is not None and status.get("pending_questions") == 0
+        and (was_active or latest_transition == "catchup_recovered")
+    )
     if record_transition and user_id:
+        completed_queue = (
+            wrong_question_ids is not None and status.get("pending_questions") == 0
+        )
         event_type = (
             "catchup_started" if status["active"] and not was_active
-            else "catchup_recovered" if lag == 0 and was_active
+            else "catchup_recovered" if (completed_queue or lag == 0) and was_active
             else None
         )
         if event_type:
