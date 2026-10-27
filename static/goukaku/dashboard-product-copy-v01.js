@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const title = todayCard.querySelector('h2');
     const reason = todayCard.querySelector('p');
     if (title) title.textContent = `修復問題を${catchup.daily_goal}問`;
-    if (reason) reason.textContent = '遅れが0日になるまでは修復を優先。10問ずつ取り組もう。';
+    if (reason) reason.textContent = `間違えた問題が残り${catchup.pending_questions}問。正解した問題から消える。全部0問で通常学習へ。`;
   }
   const overall = routeSnapshot.overall || {};
   const rawDays = routeSnapshot.daysUntilExam;
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     repairCard.hidden = !catchup.active;
     const lagLabel = repairCard.querySelector('[data-repair-lag-label]');
     if (lagLabel && catchup.active) {
-      lagLabel.textContent = `現在約${catchup.lag_days}日遅れ・修復対象${catchup.pending_nodes}項目`;
+      lagLabel.textContent = `間違えた問題：残り${catchup.pending_questions}問`;
     }
   }
 
