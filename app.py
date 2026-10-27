@@ -1042,14 +1042,12 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
             total_question_count = 10
             category_small = None
     if session_kind == "catchup_repair_line":
+        from licensetown.pt.catchup_mode import select_wrong_question_session
         adaptive_selection_audit = {}
-        all_questions = build_node_adaptive_session(
-            attempts, total_question_count,
-            exclude_ids=adaptive_short_term_blocked,
-            audit_out=adaptive_selection_audit,
-            learning_intent="repair",
-            strict_repair=True,
+        all_questions = select_wrong_question_session(
+            attempts, total_question_count, audit_out=adaptive_selection_audit,
         )
+        total_question_count = len(all_questions)
     elif session_kind == "adaptive_daily":
         if is_node_adaptive_recommendation_enabled(
             ENABLE_NODE_ADAPTIVE_RECOMMENDATION,
@@ -1126,11 +1124,15 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
         "current_set": 1,
         "question_count": total_question_count,
         "questions_per_set": QUESTIONS_PER_SET,
-        "total_sets": total_question_count // QUESTIONS_PER_SET,
+        "total_sets": (
+            (total_question_count + QUESTIONS_PER_SET - 1) // QUESTIONS_PER_SET
+            if session_kind == "catchup_repair_line"
+            else total_question_count // QUESTIONS_PER_SET
+        ),
         "questions": questions,
         "all_questions": all_questions,
         "all_answers": {},
-        "expected_numbers": list(range(1, QUESTIONS_PER_SET + 1)),
+        "expected_numbers": list(range(1, len(questions) + 1)),
         "mode": user_modes.get(user_id, "study"),
         "started_at": time.time(),
         "active_started_at": time.time(),
@@ -1213,7 +1215,11 @@ def start_next_quiz(user_id):
             )
     new_questions = current_session["all_questions"][start_index:end_index]
 
-    if len(new_questions) != questions_per_set:
+    if (
+        not new_questions
+        or (len(new_questions) != questions_per_set
+            and current_session.get("session_kind") != "catchup_repair_line")
+    ):
         raise RuntimeError("選出済み問題から次のセットを取得できませんでした。")
 
     current_session["questions"] = new_questions
@@ -1221,7 +1227,7 @@ def start_next_quiz(user_id):
 
     start_number = start_index + 1
     current_session["expected_numbers"] = list(
-        range(start_number, start_number + questions_per_set)
+        range(start_number, start_number + len(new_questions))
     )
 
     return format_quiz_messages(
@@ -2131,7 +2137,7 @@ def record_confirmed_learning_batch(user_id, session):
         user_id=user_id,
         event_key=f'{session["session_id"]}:{current_set}',
         mode=session.get("mode", "study"),
-        answered_count=questions_per_set,
+        answered_count=len(question_results),
         correct_count=correct_count,
         question_results=question_results,
     )
@@ -2473,7 +2479,8 @@ def create_web_recommendation_session(
     with web_recommendation_start_lock:
         for session_id, session in web_recommendation_sessions.items():
             if (
-                session.get("user_id") == user_id
+                session_kind != "dashboard_repair"
+                and session.get("user_id") == user_id
                 and session.get("category_small") == category_small
                 and session.get("question_count") == question_count
                 and session.get("session_kind") == session_kind
@@ -2488,15 +2495,21 @@ def create_web_recommendation_session(
         attempts = filter_current_formal_evidence(raw_attempts)
         from short_term_repeat_guard import recent_short_term_evidence_ids
         selection_audit = {}
-        questions = build_node_adaptive_session(
-            attempts,
-            question_count=question_count,
-            category_small=category_small,
-            exclude_ids=recent_short_term_evidence_ids(raw_attempts),
-            audit_out=selection_audit,
-            learning_intent=learning_intent,
-            **({"strict_repair": True} if session_kind == "dashboard_repair" else {}),
-        )
+        if session_kind == "dashboard_repair":
+            from licensetown.pt.catchup_mode import select_wrong_question_session
+            questions = select_wrong_question_session(
+                attempts, question_count, audit_out=selection_audit,
+            )
+            question_count = len(questions)
+        else:
+            questions = build_node_adaptive_session(
+                attempts,
+                question_count=question_count,
+                category_small=category_small,
+                exclude_ids=recent_short_term_evidence_ids(raw_attempts),
+                audit_out=selection_audit,
+                learning_intent=learning_intent,
+            )
         session_id = secrets.token_urlsafe(24)
         web_recommendation_sessions[session_id] = {
             "user_id": user_id,
