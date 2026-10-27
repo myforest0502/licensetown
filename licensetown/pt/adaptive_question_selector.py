@@ -206,6 +206,7 @@ def select_node_adaptive_questions(
     category_small: int | None = None,
     learning_intent: str | None = None,
     allow_spaced_repeat_fallback: bool = False,
+    strict_repair: bool = False,
 ) -> list[dict[str, Any]]:
     """Return unique recommendation records with balanced repair/exploration."""
     attempts = [dict(item) for item in attempts]
@@ -328,6 +329,13 @@ def select_node_adaptive_questions(
             "editorial_penalty": editorial_penalty,
             "tie": randomizer.random(),
         })
+    # Catch-up repair never silently substitutes checking/exploration questions.
+    # Existing selector behavior is unchanged unless explicitly requested.
+    if strict_repair:
+        candidates = [
+            item for item in candidates
+            if item["state"] in {"repairing", "recheck_due"}
+        ]
     candidates.sort(key=lambda item: (item["priority_score"], item["tie"]), reverse=True)
 
     # An attempted evidence identity is not eligible again until its formal
@@ -449,8 +457,9 @@ def select_node_adaptive_questions(
         spaced_candidates.sort(
             key=lambda item: (
                 item["recent_question_repeat"],
+                0 if (strict_repair and item["strong_repair_confirmation"]) else 1 if strict_repair else 0,
+                -item["priority_score"] if strict_repair else 0,
                 last_attempt_order.get(item["evidence_question_id"], -1),
-                -item["priority_score"],
                 -item["tie"],
             )
         )
@@ -462,7 +471,10 @@ def select_node_adaptive_questions(
                     continue
                 fallback_item = dict(item)
                 fallback_item["priority_reason"] = "spaced_repeat_fallback"
-                fallback_item["priority_group"] = "checking"
+                fallback_item["priority_group"] = (
+                    "repair" if strict_repair and item["state"] == "repairing"
+                    else "checking"
+                )
                 append_item(fallback_item)
             if len(selected) >= question_count:
                 break
@@ -486,6 +498,7 @@ def _provisional_general_evidence_ids() -> set[str]:
 def build_node_adaptive_session(
     attempts, question_count=30, exclude_ids=(), rng=None, *, audit_out=None,
     category_small: int | None = None, learning_intent: str | None = None,
+    strict_repair: bool = False,
 ):
     # Production callers include LINE adaptive study and Web recommendations.
     # The selector already owns formal Node/recheck eligibility.  Add only the
@@ -500,12 +513,15 @@ def build_node_adaptive_session(
     hard_floor_exclude_ids = set(explicit_exclude_ids)
     hard_floor_exclude_ids.update(recent_short_term_evidence_ids(attempts))
     records = []
-    phases = [
-        (category_small, learning_intent),
-        (category_small, None),
-        (None, learning_intent),
-        (None, None),
-    ]
+    phases = (
+        [(category_small, "repair")]
+        if strict_repair else [
+            (category_small, learning_intent),
+            (category_small, None),
+            (None, learning_intent),
+            (None, None),
+        ]
+    )
 
     # provisional_bulk is supplemental supply, not the default learning diet.
     # Fill at least 80% from reviewed/non-provisional evidence when that supply
@@ -538,6 +554,7 @@ def build_node_adaptive_session(
                 rng=rng,
                 category_small=phase_category,
                 learning_intent=phase_intent,
+                strict_repair=strict_repair,
             )
             records.extend(phase_records)
     if len(records) < question_count:
@@ -550,10 +567,11 @@ def build_node_adaptive_session(
             exclude_ids=hard_floor_exclude_ids | selected_evidence,
             rng=rng,
             allow_spaced_repeat_fallback=True,
+            strict_repair=strict_repair,
         )
         records.extend(fallback_records)
 
-    if len(records) < question_count:
+    if len(records) < question_count and not strict_repair:
         selected_evidence = {
             item["evidence_question_id"] for item in records
         }
