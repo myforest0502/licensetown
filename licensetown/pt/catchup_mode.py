@@ -105,7 +105,11 @@ def unresolved_wrong_question_ids(attempts) -> tuple[str, ...]:
                 item.get("is_correct") is not True
                 or item.get("answer_status") == "unknown"
             )
-    return tuple(q for q, pending in latest.items() if pending)
+    # Retired/missing question IDs are not re-answerable. Do not imprison the
+    # learner in catch-up with a question that the current bank cannot serve.
+    from question_bank import question_ids
+    playable = set(question_ids())
+    return tuple(q for q, pending in latest.items() if pending and q in playable)
 
 
 def select_wrong_question_session(attempts, question_count=10, *, audit_out=None):
