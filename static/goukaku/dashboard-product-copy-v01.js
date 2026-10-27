@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const priorityField = text(firstPriority?.querySelector('b')) || '今の優先分野';
   const priorityLabel = text(firstPriority?.querySelector('span')) || '優先して確認';
   const priorityMessage = text(firstPriority?.querySelector('p')) || '学習履歴から、今いちばん効果が高い内容を優先します。';
-  const todayAmount = text(todayCard?.querySelector('h2')) || '今日のおすすめ学習';
+  let todayAmount = text(todayCard?.querySelector('h2')) || '今日のおすすめ学習';
   const todayReason = text(todayCard?.querySelector('p')) || '今日の学習履歴に合わせて内容を選びます。';
   const currentHeadline = text(currentCard?.querySelector('h2')) || '現在地を確認中';
 
@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const routeSnapshot = window.LT_ROUTE_SNAPSHOT || {};
   const catchup = routeSnapshot.catchup || {};
   if (catchup.active && todayCard) {
+    todayAmount = `修復問題を${catchup.daily_goal}問`;
     const title = todayCard.querySelector('h2');
     const reason = todayCard.querySelector('p');
     if (title) title.textContent = `修復問題を${catchup.daily_goal}問`;
