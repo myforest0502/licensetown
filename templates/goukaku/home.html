@@ -53,7 +53,7 @@
     </details>
   </section>
   {% endif %}
-  {% if not read_only %}
+  {% if not read_only and not learner_preview %}
   <section class="card lt-repair-card" data-repair-question-card hidden aria-label="遅れを取り戻すための修復問題">
     <div class="lt-repair-heading"><h2>🔧 修復問題</h2><strong data-repair-lag-label>遅れを取り戻す学習</strong></div>
     <p>まずは修復を優先した10問。間違いの理由を確認し、時間を空けた再確認につなげよう。</p>
