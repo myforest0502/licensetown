@@ -242,12 +242,13 @@ def get_catchup_status(
         days_to_exam, overall, wrong_question_ids=wrong_question_ids,
     )
     lag = initial.get("lag_days")
-    was_active = False
+    latest_transition = None
     if user_id and lag is not None:
         try:
-            was_active = _latest_transition(user_id) == "catchup_started"
+            latest_transition = _latest_transition(user_id)
         except Exception:
-            was_active = False
+            latest_transition = None
+    was_active = latest_transition == "catchup_started"
     status = calculate_catchup_status(
         days_to_exam, overall, was_active=was_active,
         wrong_question_ids=wrong_question_ids,
@@ -255,6 +256,12 @@ def get_catchup_status(
     status["just_recovered"] = bool(
         was_active and wrong_question_ids is not None
         and status.get("pending_questions") == 0 and not status["active"]
+    )
+    # Keep the earned 'wrong-question retry completed' signal visible on later
+    # visits. It is separate from the conservative long-term mastery score.
+    status["recovery_complete"] = bool(
+        wrong_question_ids is not None and status.get("pending_questions") == 0
+        and (was_active or latest_transition == "catchup_recovered")
     )
     if record_transition and user_id:
         completed_queue = (
