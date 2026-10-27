@@ -209,3 +209,75 @@ def test_line_partial_last_repair_batch_keeps_exact_question_count(monkeypatch):
     assert session["expected_numbers"] == [6, 7]
     assert len(session["questions"]) == 2
     app_module.study_sessions.pop(user)
+
+
+def test_recovered_learner_does_not_relock_when_study_resumes_with_one_wrong(monkeypatch):
+    # Formal pace remains 12+ days behind; that MUST NOT erase a genuinely
+    # completed wrong-question backlog on the very next ordinary study error.
+    monkeypatch.setattr(
+        mode, "_latest_transition",
+        lambda _user: {"mode": "catchup_recovered", "lag_days": 13},
+    )
+    back_to_normal = mode.get_catchup_status(
+        "learner", 117, FIXTURE, wrong_question_ids=("Q-new-mistake",),
+    )
+    assert back_to_normal["lag_days"] >= 10
+    assert back_to_normal["active"] is False
+    assert back_to_normal["recovered_normal_mode"] is True
+
+    cleared = mode.get_catchup_status("learner", 117, FIXTURE, wrong_question_ids=())
+    assert cleared["active"] is False
+    assert cleared["recovery_complete"] is True
+    assert cleared["repair_backlog_delay_days"] == 0
+
+
+def test_new_catchup_cycle_needs_ten_additional_days_of_real_setback(monkeypatch):
+    original = mode.pace_lag
+    monkeypatch.setattr(
+        mode, "_latest_transition",
+        lambda _user: {"mode": "catchup_recovered", "lag_days": 12},
+    )
+    monkeypatch.setattr(mode, "pace_lag", lambda *_args: 21)
+    less_than_threshold = mode.get_catchup_status(
+        "learner", 117, FIXTURE, wrong_question_ids=("Q1",),
+    )
+    assert less_than_threshold["active"] is False
+
+    monkeypatch.setattr(mode, "pace_lag", lambda *_args: 22)
+    a_real_new_setback = mode.get_catchup_status(
+        "learner", 117, FIXTURE, wrong_question_ids=("Q1",),
+    )
+    assert a_real_new_setback["active"] is True
+    assert a_real_new_setback["recovered_normal_mode"] is False
+
+
+def test_old_recovery_without_baseline_never_instantly_relocks(monkeypatch):
+    monkeypatch.setattr(mode, "_latest_transition", lambda _user: "catchup_recovered")
+    status = mode.get_catchup_status("learner", 117, FIXTURE, wrong_question_ids=("Q1",))
+    assert status["active"] is False
+    assert status["recovered_normal_mode"] is True
+
+
+def test_wrong_backlog_cannot_recover_just_because_formal_lag_reached_zero(monkeypatch):
+    observed = []
+    monkeypatch.setattr(mode, "_latest_transition", lambda _user: "catchup_started")
+    monkeypatch.setattr(
+        "database.record_activity_event", lambda _u, event, _meta: observed.append(event)
+    )
+    monkeypatch.setattr(mode, "pace_lag", lambda *_args: 0)
+    status = mode.get_catchup_status(
+        "learner", 117, FIXTURE,
+        wrong_question_ids=("Q-still-wrong",), record_transition=True,
+    )
+    assert status["active"] is True
+    assert status["pending_questions"] == 1
+    assert "catchup_recovered" not in observed
+
+
+def test_dashboard_has_non_deceptive_completion_copy():
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    js = (root / "static/goukaku/dashboard-product-copy-v01.js").read_text(encoding="utf-8")
+    assert "修復の遅れ0日" in js
+    assert "catchup.recovered_normal_mode" in js
+    assert "別指標の知識定着" in js
