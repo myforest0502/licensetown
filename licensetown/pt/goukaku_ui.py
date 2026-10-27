@@ -412,14 +412,14 @@ def _phase12_shadow_from_navigation(navigation):
     }
 
 
-def current_user_catchup(user_id):
-    """Cheap-enough fresh server-side gate for starting a Web study session.
+def current_user_catchup(user_id, *, raw_attempts=None):
+    """Fresh formal repair-mode gate shared by Web and LINE session starts.
 
-    Uses only the current formal question evidence and established exam date.
-    Never uses the client-submitted score, pace gap or arbitrary question IDs.
+    Optional already-read raw history avoids an extra DB trip in LINE's quiz
+    start. Never trusts client-submitted progress or question IDs.
     """
     from licensetown.pt.formal_attempt_evidence import filter_current_formal_evidence
-    raw_attempts = get_question_attempts(user_id)
+    raw_attempts = get_question_attempts(user_id) if raw_attempts is None else raw_attempts
     formal = filter_current_formal_evidence(raw_attempts)
     derived = build_field_progress(build_field_evidence(formal))["overall"]
     finish = {
