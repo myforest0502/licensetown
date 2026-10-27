@@ -2702,9 +2702,14 @@ def web_recommendation_learning(session_id):
         return "学習セッションが見つかりません。", 404
     if not session.get("completed"):
         index = int(session.get("current_index") or 0)
-        shown = session.setdefault("_analytics_shown_indices", set())
+        shown = session.setdefault("_analytics_shown_indices", [])
+        # Durable Web sessions are saved as JSON after each answer.
+        # Keep this per-session analytics marker JSON-serializable.
+        if isinstance(shown, set):
+            shown = sorted(shown)
+            session["_analytics_shown_indices"] = shown
         if index not in shown:
-            shown.add(index)
+            shown.append(index)
             base = globals().get('_analytics_session_properties', lambda *_a, **_k: {})(session, surface="web")
             question = session["questions"][index]
             if index > 0:

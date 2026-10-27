@@ -126,3 +126,30 @@ def test_install_is_idempotent():
     install_durable_web_learning_sessions(legacy, database)
     assert legacy.web_recommendation_sessions is first_mapping
     assert legacy.app.view_functions["answer_web_recommendation"] is first_endpoint
+
+
+
+def test_question_shown_marker_is_json_serializable_across_answers():
+    """Regression for production answer 500: Object of type set is not JSON serializable."""
+    import json
+    from pathlib import Path
+
+    code = Path("app.py").read_text(encoding="utf-8")
+    assert 'session.setdefault("_analytics_shown_indices", [])' in code
+    assert "shown.append(index)" in code
+
+    store = WebLearningSessionStore(_database_off())
+    durable = DurableWebLearningSessions({}, store)
+    durable["sid"] = _session()
+    session = durable["sid"]
+    shown = session.setdefault("_analytics_shown_indices", [])
+    shown.append(0)  # GET /learning/<session_id>
+    session["_analytics_batch_shown_at"] = 123.5
+    session["current_index"] = 1  # POST /learning/<session_id>/answer
+    session["correct_count"] = 1
+
+    assert durable.persist("sid") is True
+    rebuilt = DurableWebLearningSessions({}, WebLearningSessionStore(_database_off()))
+    assert rebuilt["sid"]["_analytics_shown_indices"] == [0]
+    assert rebuilt["sid"]["current_index"] == 1
+    assert json.loads(json.dumps(rebuilt["sid"]))["correct_count"] == 1
