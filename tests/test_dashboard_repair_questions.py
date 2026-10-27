@@ -61,7 +61,9 @@ def test_repair_entry_is_visible_only_while_behind_and_uses_normal_web_flow():
     assert 'data-repair-question-card hidden' in template
     assert "scheduleDeltaDays < 0 && pendingRepair > 0" in script
     assert "currentFinish" in script and "overall.progress_raw" in script
-    assert "learner_navigation', 'repair_questions" in client_script
+    assert "const repairQuestions = button.dataset.recommendationSource === 'repair_questions'" in client_script
+    assert "!structuredNavigation && !repairQuestions" in client_script
+    assert "{% if not read_only and not learner_preview %}" in template
     assert "20261027-repair-questions1" in base
     assert "合格確率" not in template.split("lt-repair-card", 1)[1].split("</section>", 1)[0]
 
@@ -73,3 +75,16 @@ def test_repair_session_reuse_isolated_from_normal_recommendation():
     assert '"session_kind": session_kind' in app_source
     assert '"learning_source": "dashboard_recommendation"' in app_source
     assert '"repair_questions_mode": session.get("session_kind") == "dashboard_repair"' in app_source
+
+
+
+def test_repair_only_selector_does_not_pad_with_new_topics():
+    # An untouched learner must not receive exploration Qs mislabeled as repair.
+    import pytest
+    from adaptive_question_selector import build_node_adaptive_session
+    from question_bank import QuestionAvailabilityError
+
+    with pytest.raises(QuestionAvailabilityError):
+        build_node_adaptive_session(
+            [], question_count=10, learning_intent="repair", strict_repair=True,
+        )
