@@ -126,6 +126,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  const repairCard = document.querySelector('[data-repair-question-card]');
+  if (repairCard) {
+    const stateCounts = overall.state_counts || {};
+    const pendingRepair = Number(stateCounts.repairing || 0) + Number(stateCounts.recheck_due || 0);
+    // The strict finish score is the authoritative pace, NOT the balanced 65% gauge.
+    // When caught up, the special catch-up CTA disappears; ordinary study remains.
+    repairCard.hidden = !(scheduleDeltaDays !== null && scheduleDeltaDays < 0 && pendingRepair > 0);
+    const lagLabel = repairCard.querySelector('[data-repair-lag-label]');
+    if (lagLabel && !repairCard.hidden) {
+      lagLabel.textContent = `現在約${Math.abs(scheduleDeltaDays)}日遅れ・修復対象${pendingRepair}項目`;
+    }
+  }
+
   let weeklyLabel = '進み方を確認中';
   let weeklyCopy = '学習履歴が増えるほど、推奨ルートとのズレを細かく確認できるようになります。';
   if (progressDelta !== null && progressDelta > 0.2) {

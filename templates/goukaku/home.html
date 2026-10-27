@@ -53,6 +53,19 @@
     </details>
   </section>
   {% endif %}
+  {% if not read_only and not learner_preview %}
+  <section class="card lt-repair-card" data-repair-question-card hidden aria-label="遅れを取り戻すための修復問題">
+    <div class="lt-repair-heading"><h2>🔧 修復問題</h2><strong data-repair-lag-label>遅れを取り戻す学習</strong></div>
+    <p>まずは修復を優先した10問。間違いの理由を確認し、時間を空けた再確認につなげよう。</p>
+    <button type="button" class="recommend-challenge lt-repair-button"
+      data-recommendation-start-url="{{ url_for('start_dashboard_recommendation') }}"
+      data-dashboard-token="{{ dashboard_token }}"
+      data-recommendation-count="10"
+      data-recommendation-source="repair_questions">修復問題を10問始める</button>
+    <p class="recommend-challenge-status" data-recommendation-status role="status" aria-live="polite"></p>
+    <small>出題できる修復問題が足りないときは確認問題を含みます。正しく修復・定着できた結果のみ進捗へ反映します。</small>
+  </section>
+  {% endif %}
   <section class="date-card">
     <div class="date-list">
       <div><span class="line-icon">▣</span><p><b>今日</b><strong>{{ dashboard.current_date.strftime('%Y/%m/%d') }}</strong></p></div>
