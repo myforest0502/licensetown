@@ -2449,14 +2449,16 @@ def create_web_recommendation_session(
     token,
     attempts=None,
     learning_intent=None,
+    session_kind="dashboard_recommendation",
 ):
-    """正式分野のWeb学習セッションを作成する。LINEセッションとは共有しない。"""
+    """正式問題を使うWeb学習セッション。修復優先も通常学習と同じ採点・保存経路を通る。"""
     with web_recommendation_start_lock:
         for session_id, session in web_recommendation_sessions.items():
             if (
                 session.get("user_id") == user_id
                 and session.get("category_small") == category_small
                 and session.get("question_count") == question_count
+                and session.get("session_kind") == session_kind
                 and not session.get("completed")
             ):
                 return session_id, False
@@ -2489,7 +2491,7 @@ def create_web_recommendation_session(
             "completed": False,
             "started_at": time.time(),
             "session_id": session_id,
-            "session_kind": "dashboard_recommendation",
+            "session_kind": session_kind,
             "mode": "study",
         }
         globals().get('_analytics_capture_session_started', lambda *_a, **_k: None)(
@@ -2521,6 +2523,27 @@ def start_dashboard_recommendation():
     if not user_id:
         return {"ok": False, "message": "合格への道を開き直してください。"}, 403
 
+    source = str(payload.get("source", "")).strip()
+    if source == "repair_questions":
+        # The repair CTA is authenticated by the existing signed dashboard token.
+        # Never accept a client-selected field, unbounded count or arbitrary Q IDs.
+        if payload.get("count") != 10:
+            return {"ok": False, "message": "修復問題は10問ずつ取り組みます。"}, 400
+        try:
+            session_id, started = create_web_recommendation_session(
+                user_id, None, 10, payload.get("token"),
+                learning_intent="repair", session_kind="dashboard_repair",
+            )
+        except QuestionAvailabilityError:
+            return {"ok": False, "message": "直近の同じ問題を避けるため、今は修復問題を準備できません。時間を空けてください。"}, 409
+        except QuestionBankError:
+            logging.exception("Web repair questions session creation failed")
+            return {"ok": False, "message": "修復問題を準備できませんでした。"}, 503
+        return {
+            "ok": True, "already_started": not started,
+            "redirect_url": f"/goukaku-no-michi/learning/{session_id}",
+        }
+
     field_name = str(payload.get("field", "")).strip()
     try:
         question_count = int(payload.get("count"))
@@ -2530,7 +2553,6 @@ def start_dashboard_recommendation():
     if question_count != 10:
         return {"ok": False, "message": "おすすめ問題数を確認できませんでした。"}, 400
 
-    source = str(payload.get("source", "")).strip()
     if source == "learner_navigation":
         timing = RequestTiming()
         response_status = 500
@@ -2701,6 +2723,7 @@ def answer_web_recommendation(session_id):
         "confidence": confidence,
         "answer_status": "unknown" if unknown else "answered",
         "learning_source": "dashboard_recommendation",
+        "repair_questions_mode": session.get("session_kind") == "dashboard_repair",
     }
     result.update(session.get("selection_audit", {}).get(question_id, {}))
     answer_number = session["current_index"] + 1
