@@ -1033,7 +1033,23 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
         short_term_blocked.update(str(value) for value in (exclude_ids or ()))
         adaptive_short_term_blocked = recent_short_term_evidence_ids(raw_attempts)
         adaptive_short_term_blocked.update(str(value) for value in (exclude_ids or ()))
-    if session_kind == "adaptive_daily":
+        # On a fresh LINE study start, exclusive repair mode wins over normal,
+        # field choice and daily/adaptive routes. Existing in-progress sessions,
+        # their pause/resume, scoring and consultation remain unaffected.
+        if current_user_catchup(user_id, raw_attempts=raw_attempts).get("active"):
+            session_kind = "catchup_repair_line"
+            total_question_count = 10
+            category_small = None
+    if session_kind == "catchup_repair_line":
+        adaptive_selection_audit = {}
+        all_questions = build_node_adaptive_session(
+            attempts, total_question_count,
+            exclude_ids=adaptive_short_term_blocked,
+            audit_out=adaptive_selection_audit,
+            learning_intent="repair",
+            strict_repair=True,
+        )
+    elif session_kind == "adaptive_daily":
         if is_node_adaptive_recommendation_enabled(
             ENABLE_NODE_ADAPTIVE_RECOMMENDATION,
             user_id,
