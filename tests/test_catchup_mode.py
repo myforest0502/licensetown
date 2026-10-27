@@ -281,3 +281,21 @@ def test_dashboard_has_non_deceptive_completion_copy():
     assert "修復の遅れ0日" in js
     assert "catchup.recovered_normal_mode" in js
     assert "別指標の知識定着" in js
+
+
+
+def test_catchup_keeps_history_and_consultation_accessible():
+    """Only study-entry controls should disappear in repair focus mode."""
+    from pathlib import Path
+
+    css = Path("static/goukaku/dashboard-product-copy-v01.css").read_text(
+        encoding="utf-8"
+    )
+    assert ".lt-catchup-only .dashboard-grid button:not(.lt-repair-button)" in css
+    assert ':not([data-line-message="ホームに戻る"])' in css
+    assert ':not([data-line-message="相談する"])' in css
+    assert ".lt-catchup-only .dashboard-grid a," not in css
+    assert ".lt-catchup-only .dashboard-grid .mobile-actions," not in css
+    assert ".lt-catchup-only .dashboard-grid .phase12-guidance-preview" in css
+    base = Path("templates/goukaku/base.html").read_text(encoding="utf-8")
+    assert "20261027-repair-questions1-nonstudy-links-v4" in base

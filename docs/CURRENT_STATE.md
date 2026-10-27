@@ -1,5 +1,14 @@
 # LicenseTown Current State
 
+## 2026-10-27 修復集中モード／本番デプロイと検証状態（PR #450後）
+
+- PR #449 は過去誤答の最新回答に基づく問題IDキューへ移行し、PR #450 は残数0での修復完了を保持して通常モードへの即再ロックを防ぐ。両PRは main に統合済み。最新 main は `2c9f09b9ba1dc1a4d42acb61ea599a1aa51e4f1b`。
+- GitHub Actions run `40458482149` は **1645 passed / 6 skipped / 1 deselected / 141 subtests passed**。Render workspace「ライセンスタウン開発」/ service `line-bot-project` は同じSHAの deploy `dep-dbg3rmbrjlhs73cokek0` を **2026-10-27 06:01:45 UTC に live** と報告している。追加の手動deployは不要。
+- Neon production（SELECTのみ）では、主要実学習者の有効回答を問題ID最終正誤で集計して未修復対象が存在することを確認。ただし、**新デプロイ後の回答・catchup_started/catchup_recovered実イベントは未観測**。正式な学習者画面とWeb/LINEの回答→残数減少→最後の1問→復帰は **production acceptance pending**。本番学習履歴・正式Node評価は未変更。
+- 修復集中モード中のUIを調べると、旧CSSは全てのリンクとmobile-actionsを隠し、学習履歴へのリンクと相談導線まで非表示にしていた。本ブランチは **学習開始ボタンの制限を保ちながら、学習履歴・分野リンク・ホーム・相談導線を表示する** 最小変更と回帰テストを追加。これは提案段階で、CIと本番実画面の受入結果を待ってから完了判断する。
+- 「修復の遅れ0日」は厳密なKnowledge Node進捗ではなく、修復集中モード卒業の記録。完了後に新規誤答が出た場合の表示一貫性、今日減った件数の表示、再発条件と目標量の教育的妥当性は、実利用で確認する。修復結果を捏造する修正はしない。
+- 本節はこの文書下部のPR #447時点「公開実機確認待ち／本番未確認」という歴史的記録を更新する。
+
 ## 2026-10-27 修復集中モード・遅れ10日発動→0日解除（PR #447 / mainにマージ済み・公開実機確認待ち）
 
 - Boss requested: strict Knowledge Node finish pace lag >=10 days enters exclusive repair mode. At 9..1 days mode remains active (persisted activity state). At 0 days it releases to ordinary learning. Dashboard study buttons other than 修復問題 are hidden, and the normal Web recommendation-start endpoint blocks bypasses.
