@@ -412,6 +412,25 @@ def _phase12_shadow_from_navigation(navigation):
     }
 
 
+def current_user_catchup(user_id):
+    """Cheap-enough fresh server-side gate for starting a Web study session.
+
+    Uses only the current formal question evidence and established exam date.
+    Never uses the client-submitted score, pace gap or arbitrary question IDs.
+    """
+    from licensetown.pt.formal_attempt_evidence import filter_current_formal_evidence
+    raw_attempts = get_question_attempts(user_id)
+    formal = filter_current_formal_evidence(raw_attempts)
+    derived = build_field_progress(build_field_evidence(formal))["overall"]
+    finish = {
+        "progress_raw": derived["overall_progress_score"],
+        "state_counts": derived["state_counts"],
+    }
+    date = get_effective_exam_date(user_id)
+    days = max((date - tokyo_today()).days, 0) if date else None
+    return get_catchup_status(user_id, days, finish)
+
+
 def build_dashboard(user_id=None, include_learner_navigation=False):
     today = tokyo_today()
     exam_date = get_effective_exam_date(user_id)
