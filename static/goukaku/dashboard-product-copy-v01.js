@@ -23,6 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
     ? Math.round((lastProgress - firstProgress) * 10) / 10 : null;
 
   const routeSnapshot = window.LT_ROUTE_SNAPSHOT || {};
+  const catchup = routeSnapshot.catchup || {};
+  if (catchup.active && todayCard) {
+    const title = todayCard.querySelector('h2');
+    const reason = todayCard.querySelector('p');
+    if (title) title.textContent = `修復問題を${catchup.daily_goal}問`;
+    if (reason) reason.textContent = '遅れが0日になるまでは修復を優先。10問ずつ取り組もう。';
+  }
   const overall = routeSnapshot.overall || {};
   const rawDays = routeSnapshot.daysUntilExam;
   const countdownFromSnapshot = rawDays === null || rawDays === undefined || rawDays === '' || typeof rawDays === 'boolean'
@@ -128,14 +135,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const repairCard = document.querySelector('[data-repair-question-card]');
   if (repairCard) {
-    const stateCounts = overall.state_counts || {};
-    const pendingRepair = Number(stateCounts.repairing || 0) + Number(stateCounts.recheck_due || 0);
-    // The strict finish score is the authoritative pace, NOT the balanced 65% gauge.
-    // When caught up, the special catch-up CTA disappears; ordinary study remains.
-    repairCard.hidden = !(scheduleDeltaDays !== null && scheduleDeltaDays < 0 && pendingRepair > 0);
+    // The server owns entering at >=10, persisting until 0, and the repair goal.
+    repairCard.hidden = !catchup.active;
     const lagLabel = repairCard.querySelector('[data-repair-lag-label]');
-    if (lagLabel && !repairCard.hidden) {
-      lagLabel.textContent = `現在約${Math.abs(scheduleDeltaDays)}日遅れ・修復対象${pendingRepair}項目`;
+    if (lagLabel && catchup.active) {
+      lagLabel.textContent = `現在約${catchup.lag_days}日遅れ・修復対象${catchup.pending_nodes}項目`;
     }
   }
 
