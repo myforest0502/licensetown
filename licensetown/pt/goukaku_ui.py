@@ -425,6 +425,7 @@ def current_user_catchup(user_id):
     finish = {
         "progress_raw": derived["overall_progress_score"],
         "state_counts": derived["state_counts"],
+        "answer_count": len(raw_attempts),
     }
     date = get_effective_exam_date(user_id)
     days = max((date - tokyo_today()).days, 0) if date else None
@@ -607,7 +608,8 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
         )
         if dashboard["overall_progress_preview"] and include_learner_navigation:
             dashboard["catchup"] = get_catchup_status(
-                user_id, dashboard["days_until_exam"], dashboard["overall_progress_preview"]
+                user_id, dashboard["days_until_exam"],
+                {**dashboard["overall_progress_preview"], "answer_count": dashboard["total_answers"]},
             )
             if dashboard["catchup"]["active"]:
                 goal = dashboard["catchup"]["daily_goal"]
@@ -629,7 +631,8 @@ def home():
     # Persist entry/recovery only on the authenticated learner dashboard.
     if dashboard.get("overall_progress_preview") and user_id:
         dashboard["catchup"] = get_catchup_status(
-            user_id, dashboard["days_until_exam"], dashboard["overall_progress_preview"],
+            user_id, dashboard["days_until_exam"],
+            {**dashboard["overall_progress_preview"], "answer_count": dashboard["total_answers"]},
             record_transition=True,
         )
     navigation = dashboard.get("learner_navigation") or {}
