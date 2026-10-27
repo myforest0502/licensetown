@@ -10,9 +10,8 @@
 @media(max-width:720px){.lt-repair-card{padding:14px!important}.lt-repair-heading h2{font-size:17px}.lt-repair-heading strong{font-size:12px}}
 
 /* Only one study entry is offered during the persistent catch-up mode. */
-.lt-catchup-only .dashboard-grid button:not(.lt-repair-button),
-.lt-catchup-only .dashboard-grid a,
-.lt-catchup-only .dashboard-grid .mobile-actions,
+/* Keep read-only history, subjects, Home and consultation available; restrict only study starts. */
+.lt-catchup-only .dashboard-grid button:not(.lt-repair-button):not([data-line-message="ホームに戻る"]):not([data-line-message="相談する"]),
 .lt-catchup-only .dashboard-grid .phase12-guidance-preview {display:none!important}
 .lt-catchup-only .lt-repair-card{display:block!important;border:2px solid #d6aa5f!important;background:#fffaf0!important;min-height:0}
 .lt-catchup-only .lt-repair-card .lt-repair-button{display:block!important;min-height:48px;max-width:480px;width:100%;margin:12px 0;border:0;background:#168e56;color:#fff;font-weight:bold}
