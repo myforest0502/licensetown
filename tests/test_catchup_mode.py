@@ -57,8 +57,8 @@ def test_catchup_transition_is_persisted_without_fake_question_results(monkeypat
 def test_repair_start_is_exclusive_and_normal_resumes_at_zero(monkeypatch):
     monkeypatch.setattr(app_module, "dashboard_user_id",
                         lambda token: "learner" if token == "signed" else None)
-    monkeypatch.setattr(app_module, "build_dashboard",
-                        lambda *args, **kwargs: {"catchup": {"active": True}})
+    monkeypatch.setattr(app_module, "current_user_catchup",
+                        lambda user_id: {"active": True})
     observed = []
     monkeypatch.setattr(app_module, "create_web_recommendation_session",
                         lambda *args, **kwargs: (observed.append((args, kwargs)) or ("test-s", True)))
@@ -75,8 +75,8 @@ def test_repair_start_is_exclusive_and_normal_resumes_at_zero(monkeypatch):
     assert special.status_code == 200
     assert observed[0][1]["session_kind"] == "dashboard_repair"
 
-    monkeypatch.setattr(app_module, "build_dashboard",
-                        lambda *args, **kwargs: {"catchup": {"active": False}})
+    monkeypatch.setattr(app_module, "current_user_catchup",
+                        lambda user_id: {"active": False})
     outdated_repair = client.post("/goukaku-no-michi/recommendation/start", json={
         "token": "signed", "source": "repair_questions", "count": 10,
     })
