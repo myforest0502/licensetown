@@ -554,7 +554,7 @@ def build_node_adaptive_session(
                 rng=rng,
                 category_small=phase_category,
                 learning_intent=phase_intent,
-                strict_repair=strict_repair,
+                **({"strict_repair": True} if strict_repair else {}),
             )
             records.extend(phase_records)
     if len(records) < question_count:
@@ -567,7 +567,7 @@ def build_node_adaptive_session(
             exclude_ids=hard_floor_exclude_ids | selected_evidence,
             rng=rng,
             allow_spaced_repeat_fallback=True,
-            strict_repair=strict_repair,
+            **({"strict_repair": True} if strict_repair else {}),
         )
         records.extend(fallback_records)
 
