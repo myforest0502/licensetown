@@ -71,9 +71,11 @@ document.querySelectorAll('[data-recommendation-start-url]').forEach((button) =>
   button.disabled = true;
   if (status) status.textContent = '学習を準備しています…';
   try {
-    const structuredNavigation = button.dataset.recommendationSource === 'learner_navigation';
-    const repairQuestions = button.dataset.recommendationSource === 'repair_questions';
-    if (!structuredNavigation && !repairQuestions && await liffReady) {
+    const structuredNavigation = (
+      button.dataset.recommendationSource === 'learner_navigation'
+      || button.dataset.recommendationSource === 'repair_questions'
+    );
+    if (!structuredNavigation && await liffReady) {
       await window.liff.sendMessages([{
         type: 'text',
         text: button.dataset.recommendationLineCommand,
