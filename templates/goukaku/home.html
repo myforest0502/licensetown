@@ -2,7 +2,7 @@
 {% block content %}
 {% set remaining_progress = 100 - dashboard.overall_progress %}
 {% set learner_preview = learner_preview|default(false) %}
-{% set catchup_active = dashboard.catchup.active|default(false) and not learner_preview and not read_only %}
+{% set catchup_active = (dashboard.get('catchup') or {}).get('active', false) and not learner_preview and not read_only %}
 <header class="app-header title-only"><h1>{{ dashboard_title|default('合格への道') }}</h1></header>
 <div class="page-content dashboard-grid{% if learner_preview %} learner-preview-mode{% endif %}"{% if learner_preview %} inert{% endif %}>
   {% if learner_preview %}<div class="learner-preview-banner"><b>本人画面プレビュー（操作はできません）</b></div>{% endif %}
