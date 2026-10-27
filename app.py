@@ -1036,7 +1036,8 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
         # On a fresh LINE study start, exclusive repair mode wins over normal,
         # field choice and daily/adaptive routes. Existing in-progress sessions,
         # their pause/resume, scoring and consultation remain unaffected.
-        if current_user_catchup(user_id, raw_attempts=raw_attempts).get("active"):
+        catchup_gate = globals().get("current_user_catchup")
+        if catchup_gate and catchup_gate(user_id, raw_attempts=raw_attempts).get("active"):
             session_kind = "catchup_repair_line"
             total_question_count = 10
             category_small = None
