@@ -248,6 +248,10 @@ def get_catchup_status(
         days_to_exam, overall, was_active=was_active,
         wrong_question_ids=wrong_question_ids,
     )
+    status["just_recovered"] = bool(
+        was_active and wrong_question_ids is not None
+        and status.get("pending_questions") == 0 and not status["active"]
+    )
     if record_transition and user_id:
         completed_queue = (
             wrong_question_ids is not None and status.get("pending_questions") == 0
