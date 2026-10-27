@@ -627,6 +627,11 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
                     f"今日の目標は{goal}問。正解した問題から修復リストを外すぞ。"
                     "間違えた問題は残るが、また解けばいい。全部なくなったら通常モードだ！"
                 )
+            elif dashboard["catchup"].get("just_recovered"):
+                dashboard["gensan_comment"] = (
+                    "おお、よくやったな！＾＾ 間違い直しの残りは0問。"
+                    "いったん修復集中モードは卒業だ！通常の勉強に戻ろう！"
+                )
     return dashboard
 
 
