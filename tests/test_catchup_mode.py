@@ -110,11 +110,95 @@ def test_line_study_start_is_repair_only_during_catchup(monkeypatch):
         selectors.append((question_count, kwargs))
         return [get_quiz_question(f"Q{i}") for i in range(1, 11)]
 
-    monkeypatch.setattr(app_module, "build_node_adaptive_session", repair_selector)
+    monkeypatch.setattr(mode, "select_wrong_question_session", repair_selector)
     app_module.start_quiz("line-catchup-test-user", session_kind="adaptive_daily", question_count=30)
     session = app_module.study_sessions.pop("line-catchup-test-user")
     assert session["question_count"] == 10
     assert session["session_kind"] == "catchup_repair_line"
     assert selectors[0][0] == 10
-    assert selectors[0][1]["learning_intent"] == "repair"
-    assert selectors[0][1]["strict_repair"] is True
+    assert selectors[0][1]["audit_out"] == {}
+
+
+
+def test_wrong_question_retry_queue_clears_one_at_a_time():
+    from datetime import datetime, timezone, timedelta
+    t = datetime(2026, 10, 27, tzinfo=timezone.utc)
+    rows = [
+        {"question_id": "Q1", "is_correct": False, "answered_at": t},
+        {"question_id": "Q2", "is_correct": False, "answered_at": t},
+        {"question_id": "Q3", "is_correct": False, "answered_at": t},
+    ]
+    assert mode.unresolved_wrong_question_ids(rows) == ("Q1", "Q2", "Q3")
+    rows.append({"question_id": "Q2", "is_correct": True, "answered_at": t + timedelta(hours=1)})
+    assert mode.unresolved_wrong_question_ids(rows) == ("Q1", "Q3")
+    rows.append({"question_id": "Q1", "is_correct": False, "answered_at": t + timedelta(hours=2)})
+    assert mode.unresolved_wrong_question_ids(rows) == ("Q1", "Q3")
+    rows.append({"question_id": "Q3", "is_correct": True, "answered_at": t + timedelta(hours=3)})
+    assert mode.unresolved_wrong_question_ids(rows) == ("Q1",)
+    rows.append({"question_id": "Q1", "is_correct": True, "answered_at": t + timedelta(hours=4)})
+    assert mode.unresolved_wrong_question_ids(rows) == ()
+    rows.append({"question_id": "Q1", "is_correct": False, "answered_at": t + timedelta(hours=5)})
+    assert mode.unresolved_wrong_question_ids(rows) == ("Q1",)
+
+
+def test_only_previous_wrong_questions_are_selected_and_final_block_can_be_short():
+    from datetime import datetime, timezone, timedelta
+    t = datetime(2026, 10, 27, tzinfo=timezone.utc)
+    attempts = [
+        {"question_id": "Q1", "is_correct": False, "answered_at": t},
+        {"question_id": "Q2", "is_correct": False, "answered_at": t},
+        {"question_id": "Q3", "is_correct": False, "answered_at": t},
+        {"question_id": "Q4", "is_correct": True, "answered_at": t},
+        {"question_id": "Q2", "is_correct": True, "answered_at": t + timedelta(seconds=2)},
+    ]
+    questions = mode.select_wrong_question_session(attempts, 10)
+    assert [q["id"] for q in questions] == ["Q1", "Q3"]
+    import pytest
+    from question_bank import QuestionAvailabilityError
+    with pytest.raises(QuestionAvailabilityError):
+        mode.select_wrong_question_session(
+            [{"question_id": "Q2", "is_correct": True, "answered_at": t}], 10
+        )
+
+
+def test_zero_backlog_ends_repair_even_if_formal_schedule_still_lags(monkeypatch):
+    from database import record_activity_event
+    current = mode.calculate_catchup_status(117, FIXTURE, wrong_question_ids=("Q1", "Q2"))
+    assert current["active"]
+    assert current["pending_questions"] == 2
+    after_one = mode.calculate_catchup_status(
+        117, FIXTURE, was_active=True, wrong_question_ids=("Q2",)
+    )
+    assert after_one["active"] and after_one["pending_questions"] == 1
+    complete = mode.calculate_catchup_status(117, FIXTURE, was_active=True, wrong_question_ids=())
+    assert complete["lag_days"] >= 10  # formal pace has NOT been manipulated
+    assert not complete["active"]
+    assert complete["pending_questions"] == 0
+    observed = []
+    monkeypatch.setattr(mode, "_latest_transition", lambda _id: "catchup_started")
+    monkeypatch.setattr("database.record_activity_event", lambda u, k, d: observed.append(k))
+    ended = mode.get_catchup_status(
+        "learner", 117, FIXTURE, wrong_question_ids=(), record_transition=True
+    )
+    assert not ended["active"]
+    assert observed == ["catchup_recovered"]
+
+
+def test_line_partial_last_repair_batch_keeps_exact_question_count(monkeypatch):
+    from question_bank import get_quiz_question
+    monkeypatch.setattr(app_module, "get_question_attempts", lambda _user: [])
+    monkeypatch.setattr(app_module, "current_user_catchup", lambda *_args, **_kw: {"active": True})
+    monkeypatch.setattr(
+        mode, "select_wrong_question_session",
+        lambda *_args, **_kwargs: [get_quiz_question(f"Q{i}") for i in range(1, 8)]
+    )
+    user = "line-short-repair-queue"
+    app_module.start_quiz(user, session_kind="adaptive_daily", question_count=30)
+    session = app_module.study_sessions[user]
+    assert session["question_count"] == 7
+    assert session["total_sets"] == 2
+    assert session["expected_numbers"] == [1, 2, 3, 4, 5]
+    app_module.start_next_quiz(user)
+    assert session["expected_numbers"] == [6, 7]
+    assert len(session["questions"]) == 2
+    app_module.study_sessions.pop(user)
