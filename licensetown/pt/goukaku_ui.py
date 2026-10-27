@@ -432,6 +432,7 @@ def current_user_catchup(user_id, *, raw_attempts=None):
     return get_catchup_status(
         user_id, days, finish,
         wrong_question_ids=unresolved_wrong_question_ids(formal),
+        record_transition=True,
     )
 
 
