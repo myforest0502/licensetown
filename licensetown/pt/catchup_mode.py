@@ -122,9 +122,19 @@ def calculate_catchup_status(
         return {"active": False, "lag_days": None, "daily_goal": 0, "pending_nodes": 0}
     states = overall.get("state_counts") or {}
     pending = int(states.get("repairing", 0)) + int(states.get("recheck_due", 0))
+    # A one-question beginner cannot safely be treated as 200 days behind.
+    # The exclusive mode requires enough real learner evidence to evaluate pace.
+    insufficient_evidence = (
+        overall.get("answer_count") is not None
+        and int(overall["answer_count"]) < 100
+    )
     # Persistent catch-up runs through 9..1 days, and releases at 0 days.
     # Never hide the normal study routes when there is no repair work to serve.
-    active = bool((lag >= ENTER_AT_LAG_DAYS or (was_active and lag > 0)) and pending > 0)
+    active = bool(
+        not insufficient_evidence
+        and (lag >= ENTER_AT_LAG_DAYS or (was_active and lag > 0))
+        and pending > 0
+    )
     node_count = int(overall.get("total_unique_canonical_nodes") or sum(
         int(value) for value in states.values()
     ))
