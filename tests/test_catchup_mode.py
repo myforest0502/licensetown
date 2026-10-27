@@ -297,3 +297,5 @@ def test_catchup_keeps_history_and_consultation_accessible():
     assert ".lt-catchup-only .dashboard-grid a," not in css
     assert ".lt-catchup-only .dashboard-grid .mobile-actions," not in css
     assert ".lt-catchup-only .dashboard-grid .phase12-guidance-preview" in css
+    base = Path("templates/goukaku/base.html").read_text(encoding="utf-8")
+    assert "20261027-repair-questions1-nonstudy-links-v4" in base
