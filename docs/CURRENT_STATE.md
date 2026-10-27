@@ -1,5 +1,13 @@
 # LicenseTown Current State
 
+## 2026-10-27 Web修復問題の回答POST 500（本番実利用で確認・緊急修正）
+
+- 2026-10-27 08:49–08:50 UTC、本番 Render `line-bot-project` に /goukaku-no-michi/learning/<session_id>/answer で繰り返し500が発生。traceback確定: `durable_web_learning_session._snapshot()` → `json.dumps(session)` → `TypeError: Object of type set is not JSON serializable`。
+- Root cause: `app.py:web_recommendation_learning()` がanalyticsの表示済み問題インデックスを `session.setdefault("_analytics_shown_indices", set())` で作り、回答後のdurable-session永続化がsetをJSONに変換できず500を返した。これは同一Web学習経路全般で起き得る。本修正は表示済み記録をJSON互換リストに変更し、レガシーsetにも変換対応。学習内容・解答/採点・Node・選択ロジックを変えない。
+- Neon productionのSELECT確認: 該当時間帯に`web-recommendation`回答が08:49/08:50 UTCに各1件（どちらも不正解）正常保存されている。500は **回答DB保存後** に発生したもの。リトライ記録を捏造したり履歴を消してはならない。新規セッションは「合格への道」から作り直すと現時点の正誤から再出題可能。既存URLの再開位置はデプロイ再起動後には古い可能性がある。
+- 追加のOpenAI API 429は08:38 UTCの独立した外部AI応答失敗。Web答え500とは別原因であり、今回の学習回答修正の対象外。追加課金はしない。
+- 対応ブランチ `fix/web-learning-answer-set-serialization-20261027`。回帰テスト・CI・PR・Renderの反映状況を確認し、本番回答経路の実利用受入は別途継続する。
+
 ## 2026-10-27 修復集中モード／本番デプロイと検証状態（PR #450後）
 
 - PR #449 は過去誤答の最新回答に基づく問題IDキューへ移行し、PR #450 は残数0での修復完了を保持して通常モードへの即再ロックを防ぐ。両PRは main に統合済み。最新 main は `2c9f09b9ba1dc1a4d42acb61ea599a1aa51e4f1b`。
