@@ -2525,6 +2525,20 @@ def start_dashboard_recommendation():
         return {"ok": False, "message": "合格への道を開き直してください。"}, 403
 
     source = str(payload.get("source", "")).strip()
+    # Enforce the exclusive study route on the server, not only with hidden buttons.
+    # Use fresh formal dashboard evidence to avoid trusting a stale browser snapshot.
+    current_catchup = build_dashboard(user_id, include_learner_navigation=True).get("catchup") or {}
+    if current_catchup.get("active") and source != "repair_questions":
+        return {
+            "ok": False,
+            "message": "現在は修復集中モードです。合格への道から修復問題を始めてください。",
+        }, 409
+    if source == "repair_questions" and not current_catchup.get("active"):
+        return {
+            "ok": False,
+            "message": "遅れを取り戻したため、通常の学習モードに戻りました。画面を更新してください。",
+        }, 409
+
     if source == "repair_questions":
         # The repair CTA is authenticated by the existing signed dashboard token.
         # Never accept a client-selected field, unbounded count or arbitrary Q IDs.
