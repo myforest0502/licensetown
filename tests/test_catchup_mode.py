@@ -181,6 +181,7 @@ def test_zero_backlog_ends_repair_even_if_formal_schedule_still_lags(monkeypatch
         "learner", 117, FIXTURE, wrong_question_ids=(), record_transition=True
     )
     assert not ended["active"]
+    assert ended["just_recovered"] is True
     assert observed == ["catchup_recovered"]
 
 
