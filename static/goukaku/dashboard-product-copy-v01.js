@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (catchup.active) {
     scheduleLabel = '修復集中モード';
     scheduleDetail = `間違い直し：残り${catchup.pending_questions}問`;
-  } else if (catchup.just_recovered) {
+  } else if (catchup.recovery_complete) {
     scheduleLabel = '間違い直し完了';
     scheduleDetail = '残り0問・通常学習へ復帰';
   }
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="lt-route-pace-panel">
         <div><small>この時点の推奨</small><strong>${recommendedDisplay}</strong><span>LT学習進捗</span><p class="lt-route-pace-note">学習範囲・正答率・知識の仕上がりを合わせた今日の目安です</p></div>
         <div><small>現在</small><strong>${currentDisplay}</strong><span>推奨との差 ${gapDisplay}</span><p class="lt-route-pace-note">これまでの努力と現在の理解・定着を合わせて評価しています</p></div>
-        <div class="lt-route-pace-result"><small>${catchup.active || catchup.just_recovered ? '修復問題の進み具合' : '推奨ルートとの位置'}</small><strong>${scheduleDetail}</strong><span>${scheduleLabel}</span><p class="lt-route-pace-note">推奨ペースと現在地の差を示しています</p></div>
+        <div class="lt-route-pace-result"><small>${catchup.active || catchup.recovery_complete ? '修復問題の進み具合' : '推奨ルートとの位置'}</small><strong>${scheduleDetail}</strong><span>${scheduleLabel}</span><p class="lt-route-pace-note">推奨ペースと現在地の差を示しています</p></div>
       </div>
       <p class="lt-route-evidence">${activityCopy} <b>回答数だけではなく、修復・再確認・定着まで含めて現在地を判定します。</b></p>
       <div class="lt-route-now-grid">
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="is-goal"><i></i><span>試験日</span><b>合格を目指す</b><small>確認済み・定着した知識を本番で使える状態へ</small></div>
       </div>
       <div class="lt-route-judgement"><b>${weeklyLabel}：</b><span>${weeklyCopy}</span></div>
-      <small class="lt-route-disclaimer">${catchup.active || catchup.just_recovered
+      <small class="lt-route-disclaimer">${catchup.active || catchup.recovery_complete
         ? '※ 修復集中モードは最終回答が未正解の問題を数えています。知識の定着や推奨進捗は別指標として保存し、数字を水増ししません。'
         : '※ 数字は学習範囲・正答率・知識の仕上がりを合わせたLT学習進捗です。合格確率ではありません。先行／遅れの判定は厳密な知識の仕上がりを試験日から逆算して行います。'}</small>`;
     stack.appendChild(planCard);
