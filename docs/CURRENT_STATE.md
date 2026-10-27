@@ -1,5 +1,14 @@
 # LicenseTown Current State
 
+## 2026-10-27 修復集中モード・遅れ10日発動→0日解除（PR #447 / 検証中）
+
+- Boss requested: strict Knowledge Node finish pace lag >=10 days enters exclusive repair mode. At 9..1 days mode remains active (persisted activity state). At 0 days it releases to ordinary learning. Dashboard study buttons other than 修復問題 are hidden, and the normal Web recommendation-start endpoint blocks bypasses.
+- The existing strict ROUTE_ANCHORS inverse is mirrored in licensetown/pt/catchup_mode.py for server-side enforcement. Balanced 65% gauge, state weights, Node transitions and learner answer history are untouched.
+- Gen-san's daily catch-up target is a bounded 10-question block count, estimated using the 14-day future strict target and a hypothetical successful repairing -> repaired (+0.60 per Node). This is a workload target, NOT a guarantee of how many days recover. Existing genuine repair / spaced proof remains authoritative. Strict repair selector must not substitute exploration, and insufficient eligible Q supply must be visibly reported.
+- A read-only production-data query found 967 cached repairing Nodes; 525 have >=2 distinct historical question IDs with >=2 eligible old Qs. Cache state is diagnostic, not current formal repair state or guaranteed strong different-Q supply.
+- Code exists: YES on feature/catchup-lock-10-days-20261027. Tests/PR validation: IN PROGRESS. Production deployment: NO. User/device acceptance: NO. No new database columns, no learner attempt edits. Risk: a strict repair-only mode may block learning if eligible repairs are unavailable; handle this before production acceptance, not by manufacturing progress.
+- Scope initially covers 合格への道 Web dashboard + Web recommendation POST. LINE-home learning entrances are not yet proven exclusive; full production completion cannot be claimed until LINE parity is addressed or scope explicitly accepted.
+
 ## 2026-10-07 Recommended route visual rollback + balanced score
 
 - Boss rejected the large time-first hero from PR #437 because it wasted horizontal space and looked worse than the previously approved compact route.
