@@ -58,6 +58,7 @@ from goukaku_ui import (
     create_dashboard_token,
     dashboard_user_id,
     get_learner_navigation_formal_inputs,
+    current_user_catchup,
     learning_strategy_v1_enabled_for_user,
     goukaku_ui,
 )
@@ -2527,7 +2528,7 @@ def start_dashboard_recommendation():
     source = str(payload.get("source", "")).strip()
     # Enforce the exclusive study route on the server, not only with hidden buttons.
     # Use fresh formal dashboard evidence to avoid trusting a stale browser snapshot.
-    current_catchup = build_dashboard(user_id, include_learner_navigation=True).get("catchup") or {}
+    current_catchup = current_user_catchup(user_id)
     if current_catchup.get("active") and source != "repair_questions":
         return {
             "ok": False,
