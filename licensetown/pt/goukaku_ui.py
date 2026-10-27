@@ -33,6 +33,7 @@ from pass_readiness import build_pass_readiness
 from learner_readiness_presentation import build_learner_readiness_presentation
 from field_progress_presentation import build_field_progress_presentation_from_calculation
 from overall_progress_presentation import build_overall_progress_presentation
+from licensetown.pt.catchup_mode import get_catchup_status
 from dashboard_settings import (
     get_daily_question_goal,
     get_effective_exam_date,
@@ -448,6 +449,7 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
         "streak_days": 0,
         **get_reward_progress(0),
         "gensan_comment": "今日はまだ来てねぇな。5問だけやるか？＾＾",
+        "catchup": {"active": False, "lag_days": None, "daily_goal": 0, "pending_nodes": 0},
     }
     if user_id:
         field_preview = field_progress_ui_enabled()
@@ -584,6 +586,17 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
             dashboard["streak_days"],
             dashboard["today_progress"],
         )
+        if dashboard["overall_progress_preview"] and include_learner_navigation:
+            dashboard["catchup"] = get_catchup_status(
+                user_id, dashboard["days_until_exam"], dashboard["overall_progress_preview"]
+            )
+            if dashboard["catchup"]["active"]:
+                goal = dashboard["catchup"]["daily_goal"]
+                dashboard["gensan_comment"] = (
+                    f"いまは修復に集中しよう＾＾ 今日の修復問題の目標は{goal}問だ！ "
+                    "10問ずつ進もう。大事なのは正解の理由を確認すること。"
+                    "焦らず、修復できた知識を増やしていこうな。"
+                )
     return dashboard
 
 
@@ -594,6 +607,12 @@ def home():
     user_id = authorized_dashboard_learner(token)
     with learner_path_perf.measure("dashboard.build"):
         dashboard = build_dashboard(user_id, include_learner_navigation=True)
+    # Persist entry/recovery only on the authenticated learner dashboard.
+    if dashboard.get("overall_progress_preview") and user_id:
+        dashboard["catchup"] = get_catchup_status(
+            user_id, dashboard["days_until_exam"], dashboard["overall_progress_preview"],
+            record_transition=True,
+        )
     navigation = dashboard.get("learner_navigation") or {}
     action = navigation.get("today_action") or {}
     if action.get("field"):
