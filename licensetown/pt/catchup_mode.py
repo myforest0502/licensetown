@@ -139,15 +139,19 @@ def select_wrong_question_session(attempts, question_count=10, *, audit_out=None
     return [get_quiz_question(q) for q in picked]
 
 
-def _latest_transition(user_id: str) -> str | None:
-    """Read only two light-weight activity types, not thousands of attempts."""
+def _latest_transition(user_id: str):
+    """Read latest phase and recovery baseline without querying all attempts.
+
+    Return mapping with mode and lag_days. Older callers/test stubs that return
+    just a mode string remain supported by get_catchup_status().
+    """
     import database
     if database.database_is_available():
         with database.get_db_connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT mode FROM learning_events
+                    SELECT mode, question_results FROM learning_events
                     WHERE user_id = %s AND qualification_id = 'pt'
                       AND mode IN ('catchup_started', 'catchup_recovered')
                     ORDER BY answered_at DESC, event_key DESC LIMIT 1
@@ -155,13 +159,28 @@ def _latest_transition(user_id: str) -> str | None:
                     (user_id,),
                 )
                 row = cur.fetchone()
-                return str(row[0]) if row else None
+                if not row:
+                    return None
+                metadata = row[1] if isinstance(row[1], dict) else {}
+                return {"mode": str(row[0]), "lag_days": metadata.get("lag_days")}
     events = database.get_learning_events(user_id)
     matches = [row for row in events if row.get("mode") in {
         "catchup_started", "catchup_recovered"
     }]
     matches.sort(key=lambda row: str(row.get("answered_at") or ""))
-    return str(matches[-1]["mode"]) if matches else None
+    if not matches:
+        return None
+    latest = matches[-1]
+    metadata = latest.get("question_results") or {}
+    if isinstance(metadata, str):
+        import json
+        try:
+            metadata = json.loads(metadata)
+        except (TypeError, ValueError):
+            metadata = {}
+    if not isinstance(metadata, dict):
+        metadata = {}
+    return {"mode": str(latest["mode"]), "lag_days": metadata.get("lag_days")}
 
 
 def calculate_catchup_status(
@@ -170,6 +189,7 @@ def calculate_catchup_status(
     *,
     was_active: bool = False,
     wrong_question_ids=None,
+    recovered_and_held: bool = False,
 ) -> dict[str, Any]:
     if not overall or days_to_exam is None:
         return {"active": False, "lag_days": None, "daily_goal": 0, "pending_nodes": 0}
@@ -194,6 +214,7 @@ def calculate_catchup_status(
         remaining = len(set(wrong_question_ids))
         active = bool(
             not insufficient_evidence and remaining > 0
+            and not recovered_and_held
             and (lag >= ENTER_AT_LAG_DAYS or was_active)
         )
         # A 14-day planning horizon, recalculated as the retry backlog shrinks.
@@ -243,15 +264,36 @@ def get_catchup_status(
     )
     lag = initial.get("lag_days")
     latest_transition = None
+    recovery_lag = None
     if user_id and lag is not None:
         try:
-            latest_transition = _latest_transition(user_id)
+            record = _latest_transition(user_id)
+            if isinstance(record, dict):
+                latest_transition = record.get("mode")
+                recovery_lag = record.get("lag_days")
+            else:
+                latest_transition = record
         except Exception:
             latest_transition = None
     was_active = latest_transition == "catchup_started"
+    # A completed wrong-answer queue is a real milestone. Re-entering merely
+    # because the independent conservative finish curve still says 12 days
+    # behind would invalidate that achievement. Start another lock only if
+    # the formal lag has worsened by TEN ADDITIONAL days since recovery.
+    # Historical recovery events without a baseline stay unlocked (safe).
+    recovered_and_held = False
+    if wrong_question_ids is not None and latest_transition == "catchup_recovered":
+        try:
+            baseline = int(recovery_lag) if recovery_lag is not None else None
+        except (TypeError, ValueError):
+            baseline = None
+        recovered_and_held = (
+            baseline is None or lag < baseline + ENTER_AT_LAG_DAYS
+        )
     status = calculate_catchup_status(
         days_to_exam, overall, was_active=was_active,
         wrong_question_ids=wrong_question_ids,
+        recovered_and_held=recovered_and_held,
     )
     status["just_recovered"] = bool(
         was_active and wrong_question_ids is not None
@@ -263,13 +305,23 @@ def get_catchup_status(
         wrong_question_ids is not None and status.get("pending_questions") == 0
         and (was_active or latest_transition == "catchup_recovered")
     )
+    status["recovered_normal_mode"] = bool(
+        latest_transition == "catchup_recovered" and recovered_and_held
+    )
+    # Not a change to formal pace: this zero refers ONLY to the repair backlog.
+    status["repair_backlog_delay_days"] = (
+        0 if status["recovery_complete"] else None
+    )
     if record_transition and user_id:
         completed_queue = (
             wrong_question_ids is not None and status.get("pending_questions") == 0
         )
         event_type = (
             "catchup_started" if status["active"] and not was_active
-            else "catchup_recovered" if (completed_queue or lag == 0) and was_active
+            else "catchup_recovered" if (
+                (completed_queue if wrong_question_ids is not None else lag == 0)
+                and was_active
+            )
             else None
         )
         if event_type:
