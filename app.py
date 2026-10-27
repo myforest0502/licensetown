@@ -58,6 +58,7 @@ from goukaku_ui import (
     create_dashboard_token,
     dashboard_user_id,
     get_learner_navigation_formal_inputs,
+    current_user_catchup,
     learning_strategy_v1_enabled_for_user,
     goukaku_ui,
 )
@@ -1032,7 +1033,24 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
         short_term_blocked.update(str(value) for value in (exclude_ids or ()))
         adaptive_short_term_blocked = recent_short_term_evidence_ids(raw_attempts)
         adaptive_short_term_blocked.update(str(value) for value in (exclude_ids or ()))
-    if session_kind == "adaptive_daily":
+        # On a fresh LINE study start, exclusive repair mode wins over normal,
+        # field choice and daily/adaptive routes. Existing in-progress sessions,
+        # their pause/resume, scoring and consultation remain unaffected.
+        catchup_gate = globals().get("current_user_catchup")
+        if catchup_gate and catchup_gate(user_id, raw_attempts=raw_attempts).get("active"):
+            session_kind = "catchup_repair_line"
+            total_question_count = 10
+            category_small = None
+    if session_kind == "catchup_repair_line":
+        adaptive_selection_audit = {}
+        all_questions = build_node_adaptive_session(
+            attempts, total_question_count,
+            exclude_ids=adaptive_short_term_blocked,
+            audit_out=adaptive_selection_audit,
+            learning_intent="repair",
+            strict_repair=True,
+        )
+    elif session_kind == "adaptive_daily":
         if is_node_adaptive_recommendation_enabled(
             ENABLE_NODE_ADAPTIVE_RECOMMENDATION,
             user_id,
@@ -2525,6 +2543,20 @@ def start_dashboard_recommendation():
         return {"ok": False, "message": "合格への道を開き直してください。"}, 403
 
     source = str(payload.get("source", "")).strip()
+    # Enforce the exclusive study route on the server, not only with hidden buttons.
+    # Use fresh formal dashboard evidence to avoid trusting a stale browser snapshot.
+    current_catchup = current_user_catchup(user_id)
+    if current_catchup.get("active") and source != "repair_questions":
+        return {
+            "ok": False,
+            "message": "現在は修復集中モードです。合格への道から修復問題を始めてください。",
+        }, 409
+    if source == "repair_questions" and not current_catchup.get("active"):
+        return {
+            "ok": False,
+            "message": "遅れを取り戻したため、通常の学習モードに戻りました。画面を更新してください。",
+        }, 409
+
     if source == "repair_questions":
         # The repair CTA is authenticated by the existing signed dashboard token.
         # Never accept a client-selected field, unbounded count or arbitrary Q IDs.

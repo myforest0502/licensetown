@@ -64,6 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
   top.prepend(topSplit);
 
   move(topLeft, dateCard);
+  const repairCard = document.querySelector('[data-repair-question-card]');
+  if (repairCard && !repairCard.hidden) {
+    move(top, repairCard);
+  }
   move(topLeft, todayCard);
   move(topRight, overallCard);
   move(top, summaryGrid);

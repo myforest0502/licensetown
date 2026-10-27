@@ -33,6 +33,7 @@ from pass_readiness import build_pass_readiness
 from learner_readiness_presentation import build_learner_readiness_presentation
 from field_progress_presentation import build_field_progress_presentation_from_calculation
 from overall_progress_presentation import build_overall_progress_presentation
+from licensetown.pt.catchup_mode import get_catchup_status
 from dashboard_settings import (
     get_daily_question_goal,
     get_effective_exam_date,
@@ -411,6 +412,26 @@ def _phase12_shadow_from_navigation(navigation):
     }
 
 
+def current_user_catchup(user_id, *, raw_attempts=None):
+    """Fresh formal repair-mode gate shared by Web and LINE session starts.
+
+    Optional already-read raw history avoids an extra DB trip in LINE's quiz
+    start. Never trusts client-submitted progress or question IDs.
+    """
+    from licensetown.pt.formal_attempt_evidence import filter_current_formal_evidence
+    raw_attempts = get_question_attempts(user_id) if raw_attempts is None else raw_attempts
+    formal = filter_current_formal_evidence(raw_attempts)
+    derived = build_field_progress(build_field_evidence(formal))["overall"]
+    finish = {
+        "progress_raw": derived["overall_progress_score"],
+        "state_counts": derived["state_counts"],
+        "answer_count": len(raw_attempts),
+    }
+    date = get_effective_exam_date(user_id)
+    days = max((date - tokyo_today()).days, 0) if date else None
+    return get_catchup_status(user_id, days, finish)
+
+
 def build_dashboard(user_id=None, include_learner_navigation=False):
     today = tokyo_today()
     exam_date = get_effective_exam_date(user_id)
@@ -448,6 +469,7 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
         "streak_days": 0,
         **get_reward_progress(0),
         "gensan_comment": "今日はまだ来てねぇな。5問だけやるか？＾＾",
+        "catchup": {"active": False, "lag_days": None, "daily_goal": 0, "pending_nodes": 0},
     }
     if user_id:
         field_preview = field_progress_ui_enabled()
@@ -584,6 +606,18 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
             dashboard["streak_days"],
             dashboard["today_progress"],
         )
+        if dashboard["overall_progress_preview"] and include_learner_navigation:
+            dashboard["catchup"] = get_catchup_status(
+                user_id, dashboard["days_until_exam"],
+                {**dashboard["overall_progress_preview"], "answer_count": dashboard["total_answers"]},
+            )
+            if dashboard["catchup"]["active"]:
+                goal = dashboard["catchup"]["daily_goal"]
+                dashboard["gensan_comment"] = (
+                    f"いまは修復に集中しよう＾＾ 今日の修復問題の目標は{goal}問だ！ "
+                    "10問ずつ進もう。大事なのは正解の理由を確認すること。"
+                    "焦らず、修復できた知識を増やしていこうな。"
+                )
     return dashboard
 
 
@@ -594,6 +628,13 @@ def home():
     user_id = authorized_dashboard_learner(token)
     with learner_path_perf.measure("dashboard.build"):
         dashboard = build_dashboard(user_id, include_learner_navigation=True)
+    # Persist entry/recovery only on the authenticated learner dashboard.
+    if dashboard.get("overall_progress_preview") and user_id:
+        dashboard["catchup"] = get_catchup_status(
+            user_id, dashboard["days_until_exam"],
+            {**dashboard["overall_progress_preview"], "answer_count": dashboard["total_answers"]},
+            record_transition=True,
+        )
     navigation = dashboard.get("learner_navigation") or {}
     action = navigation.get("today_action") or {}
     if action.get("field"):

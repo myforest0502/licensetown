@@ -2,6 +2,7 @@
 {% block content %}
 {% set remaining_progress = 100 - dashboard.overall_progress %}
 {% set learner_preview = learner_preview|default(false) %}
+{% set catchup_active = (dashboard.get('catchup') or {}).get('active', false) and not learner_preview and not read_only %}
 <header class="app-header title-only"><h1>{{ dashboard_title|default('合格への道') }}</h1></header>
 <div class="page-content dashboard-grid{% if learner_preview %} learner-preview-mode{% endif %}"{% if learner_preview %} inert{% endif %}>
   {% if learner_preview %}<div class="learner-preview-banner"><b>本人画面プレビュー（操作はできません）</b></div>{% endif %}
@@ -54,16 +55,16 @@
   </section>
   {% endif %}
   {% if not read_only and not learner_preview %}
-  <section class="card lt-repair-card" data-repair-question-card hidden aria-label="遅れを取り戻すための修復問題">
-    <div class="lt-repair-heading"><h2>🔧 修復問題</h2><strong data-repair-lag-label>遅れを取り戻す学習</strong></div>
-    <p>まずは修復を優先した10問。間違いの理由を確認し、時間を空けた再確認につなげよう。</p>
+  <section class="card lt-repair-card" data-repair-question-card{% if not catchup_active %} hidden{% endif %} aria-label="遅れを取り戻すための修復問題">
+    <div class="lt-repair-heading"><h2>🔧 修復問題｜集中モード</h2><strong data-repair-lag-label>{% if catchup_active %}現在約{{ dashboard.catchup.lag_days }}日遅れ{% else %}遅れを取り戻す学習{% endif %}</strong></div>
+    <p>遅れが0日になるまで修復問題に集中。今日の目標は<strong>{{ (dashboard.get('catchup') or {}).get('daily_goal', 0) }}</strong>問。10問ずつ進め、間違えた理由と再確認まで取り組もう。</p>
     <button type="button" class="recommend-challenge lt-repair-button"
       data-recommendation-start-url="{{ url_for('start_dashboard_recommendation') }}"
       data-dashboard-token="{{ dashboard_token }}"
       data-recommendation-count="10"
       data-recommendation-source="repair_questions">修復問題を10問始める</button>
     <p class="recommend-challenge-status" data-recommendation-status role="status" aria-live="polite"></p>
-    <small>出題できる修復問題が足りないときは確認問題を含みます。正しく修復・定着できた結果のみ進捗へ反映します。</small>
+    <small>今日の問題数は目安です。問題数だけでは遅れは縮まりません。別問題での修復確認・時間を空けた再確認が必要です。修復対象の問題が不足する場合は、通常問題で水増しせずお知らせします。</small>
   </section>
   {% endif %}
   <section class="date-card">

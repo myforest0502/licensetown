@@ -11,6 +11,7 @@ import app as app_module
 
 def test_repair_questions_start_uses_server_selected_repair_intent(monkeypatch):
     monkeypatch.setattr(app_module, "dashboard_user_id", lambda token: "learner" if token == "valid" else None)
+    monkeypatch.setattr(app_module, "current_user_catchup", lambda *_args: {"active": True})
     calls = []
 
     def fake_start(*args, **kwargs):
@@ -36,6 +37,7 @@ def test_repair_questions_start_uses_server_selected_repair_intent(monkeypatch):
 
 def test_repair_questions_is_fail_closed_on_auth_and_count(monkeypatch):
     monkeypatch.setattr(app_module, "dashboard_user_id", lambda token: "learner" if token == "valid" else None)
+    monkeypatch.setattr(app_module, "current_user_catchup", lambda *_args: {"active": True})
     monkeypatch.setattr(
         app_module, "create_web_recommendation_session",
         lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("Must not start")),
@@ -58,8 +60,9 @@ def test_repair_entry_is_visible_only_while_behind_and_uses_normal_web_flow():
     base = (root / "templates/goukaku/base.html").read_text(encoding="utf-8")
     assert "修復問題を10問始める" in template
     assert 'data-recommendation-source="repair_questions"' in template
-    assert 'data-repair-question-card hidden' in template
-    assert "scheduleDeltaDays < 0 && pendingRepair > 0" in script
+    assert 'data-repair-question-card' in template
+    assert "repairCard.hidden = !catchup.active" in script
+    assert 'data-repair-question-card' in template
     assert "currentFinish" in script and "overall.progress_raw" in script
     assert "button.dataset.recommendationSource === 'repair_questions'" in client_script
     assert "!structuredNavigation && await liffReady" in client_script
