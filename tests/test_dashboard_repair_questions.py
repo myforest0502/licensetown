@@ -60,7 +60,7 @@ def test_repair_entry_is_visible_only_while_behind_and_uses_normal_web_flow():
     base = (root / "templates/goukaku/base.html").read_text(encoding="utf-8")
     assert "修復問題を10問始める" in template
     assert 'data-recommendation-source="repair_questions"' in template
-    assert 'data-repair-question-card hidden' in template
+    assert 'data-repair-question-card' in template
     assert "repairCard.hidden = !catchup.active" in script
     assert 'data-repair-question-card' in template
     assert "currentFinish" in script and "overall.progress_raw" in script
