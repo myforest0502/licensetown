@@ -2581,7 +2581,7 @@ def start_dashboard_recommendation():
                 learning_intent="repair", session_kind="dashboard_repair",
             )
         except QuestionAvailabilityError:
-            return {"ok": False, "message": "直近の同じ問題を避けるため、今は修復問題を準備できません。時間を空けてください。"}, 409
+            return {"ok": False, "message": "間違い直しの対象がなくなった可能性があります。合格への道を更新してください。"}, 409
         except QuestionBankError:
             logging.exception("Web repair questions session creation failed")
             return {"ok": False, "message": "修復問題を準備できませんでした。"}, 503
