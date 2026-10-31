@@ -1,5 +1,13 @@
 # LicenseTown Current State
 
+## 2026-10-31 表示31〜32秒の追加調査／Neon往復削減
+
+- 実測報告: ユーザー計測で「合格への道」が約31〜32秒。PR #453の本番反映後も表示遅延は継続。
+- Render `2026-10-31 03:04〜03:05 UTC` の管理者用学習者プレビュー計測: `dashboard.read_bundle` 約11.1〜11.2秒、`dashboard.field_evidence` 2.4〜3.4秒、`dashboard.real_data_shadow` 約2.5秒、`dashboard.navigation.stage_e` 約4.5〜4.8秒、`dashboard.navigation.readiness` 約1.9〜2.0秒、`dashboard.catchup_status` 約1.6〜1.8秒。**管理者用プレビューと本人ホームのリクエストは異なる**ため総時間の完全な同一視はしない。
+- 現PRは既存の `_summary_with_connection` が別々にDBに要求していたイベント集計と学習時間累積を、同じ接続で**1個のSELECT + scalar subquery**に統合。UTC/JST期間、対象ID、SQL SUM、既存 `_summary_values` の6入力、NULL時0処理を保持。SQL往復を1回だけ削減する限定変更。リスク低減のためフル学習履歴、正式Node、AI戦略、成績算式、DBスキーマを変更しない。
+- 追加で既存 `get_dashboard_read_bundle` の内訳を計測可能にするだけの `dashboard.bundle.*` 無個人情報のPerfログを追加。画面表示結果やキャッシュ・更新時刻には影響を与えない。
+- **今後の本番実測なしに31秒の完全解消とは宣言しない。** DB接続時間/履歴JSON転送/Stage-EのCPU負担を、取得した内訳で優先順位付けする。
+
 ## 2026-10-31 定点監査：修復集中モードは継続稼働・表示遅延を改善対象として確認
 
 - Render本番 latest live はPR #452後の `d9262b2b943dc11fd710e9caa60fc8ba2aac9d92`。10/27 09:05 UTC以降のログにerror/warning/5xxやserver_failed/deploy_failedイベントを確認できず。学習回答の保存は継続している。
