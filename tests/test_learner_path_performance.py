@@ -189,3 +189,24 @@ def test_dashboard_times_existing_build_activity_and_render(monkeypatch, caplog)
         "dashboard.template_render", "dashboard.route_total",
     ):
         assert f"op={operation}" in messages
+
+
+
+def test_dashboard_evaluates_and_records_catchup_once_per_visit(monkeypatch):
+    """Avoid a second Neon transition read without changing the reported status."""
+    token = goukaku_ui.create_dashboard_token("dashboard-one-catchup-read")
+    calls = []
+
+    def fake_catchup(_user_id, _days_to_exam, _overall, **kwargs):
+        calls.append(kwargs)
+        return {"active": False, "lag_days": 0, "daily_goal": 0,
+                "pending_nodes": 0, "pending_questions": 0}
+
+    monkeypatch.setattr(goukaku_ui, "get_catchup_status", fake_catchup)
+    monkeypatch.setattr(goukaku_ui, "record_activity_event", lambda *_args, **_kwargs: None)
+    response = bot_app.app.test_client().get(f"/goukaku-no-michi?token={token}")
+
+    assert response.status_code == 200
+    assert len(calls) == 1
+    assert calls[0]["record_transition"] is True
+    assert "wrong_question_ids" in calls[0]
