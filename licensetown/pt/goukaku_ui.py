@@ -1,7 +1,7 @@
 import os
 from urllib.parse import parse_qs
 
-from flask import Blueprint, abort, has_request_context, redirect, render_template, request, url_for
+from flask import Blueprint, abort, has_request_context, jsonify, redirect, render_template, request, url_for
 from itsdangerous import BadSignature, URLSafeSerializer, URLSafeTimedSerializer
 
 from database import (
@@ -648,6 +648,11 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
 def home():
     token = learner_dashboard_token(request.args)
     user_id = authorized_dashboard_learner(token)
+    if request.args.get("trend_only") == "1":
+        from dashboard_progress_trend import _history_for_user
+        response = jsonify({"overallProgress": _history_for_user(user_id)})
+        response.headers["Cache-Control"] = "no-store"
+        return response
     with learner_path_perf.measure("dashboard.build"):
         # Persist entry/recovery here in the same calculation as the displayed
         # status. Repeating get_catchup_status below issued another Neon query.
