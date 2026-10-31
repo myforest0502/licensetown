@@ -152,7 +152,7 @@ def test_question_result_rows_require_explicit_pt_scope():
 
 def test_summary_reads_only_pt_events_and_pt_time_total():
     calls = []
-    fetches = iter([(5, 4, 3, 2, 1), (600,)])
+    fetches = iter([(5, 4, 3, 2, 1, 600)])
 
     class Cursor:
         def __enter__(self):
@@ -182,8 +182,16 @@ def test_summary_reads_only_pt_events_and_pt_time_total():
     assert "FROM learning_events" in calls[0][0]
     assert "qualification_id = %s" in calls[0][0]
     assert calls[0][1][-2:] == ("learner", "pt")
-    assert "FROM qualification_learning_time_totals" in calls[1][0]
-    assert calls[1][1] == ("learner", "pt")
+    assert "FROM qualification_learning_time_totals" in calls[0][0]
+    assert calls[0][1] == (
+        datetime(2026, 9, 12, tzinfo=timezone.utc) - timedelta(days=7),
+        datetime(2026, 9, 12, tzinfo=timezone.utc) - timedelta(days=7),
+        datetime(2026, 9, 12, tzinfo=timezone.utc).astimezone(
+            __import__("zoneinfo").ZoneInfo("Asia/Tokyo")
+        ).date(),
+        "learner", "pt", "learner", "pt",
+    )
+    assert len(calls) == 1  # No second remote DB round trip
 
 
 def test_activity_aggregates_by_day_and_limits_time_window():
