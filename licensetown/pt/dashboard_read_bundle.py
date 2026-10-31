@@ -11,6 +11,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Any
 from zoneinfo import ZoneInfo
 
+import learner_path_performance as learner_path_perf
 import database
 from recommendation_daily_summary import build_today_recommendation_summary
 from .formal_attempt_evidence import (
@@ -152,23 +153,20 @@ def _summary_with_connection(
                 COALESCE(SUM(correct_count) FILTER (WHERE answered_at >= %s), 0),
                 COALESCE(SUM(answered_count) FILTER (
                     WHERE (answered_at AT TIME ZONE 'Asia/Tokyo')::date = %s
+                ), 0),
+                COALESCE((
+                    SELECT COALESCE(total_seconds, 0)
+                    FROM qualification_learning_time_totals
+                    WHERE user_id = %s AND qualification_id = %s
                 ), 0)
             FROM learning_events
             WHERE user_id = %s AND qualification_id = %s
             """,
-            (seven_days_ago, seven_days_ago, today, user_id, _QUALIFICATION_ID),
+            (seven_days_ago, seven_days_ago, today,
+             user_id, _QUALIFICATION_ID, user_id, _QUALIFICATION_ID),
         )
         values = cur.fetchone()
-        cur.execute(
-            """
-            SELECT COALESCE(total_seconds, 0)
-            FROM qualification_learning_time_totals
-            WHERE user_id = %s AND qualification_id = %s
-            """,
-            (user_id, _QUALIFICATION_ID),
-        )
-        row = cur.fetchone()
-    return database._summary_values(*values, row[0] if row else 0)
+    return database._summary_values(*values)
 
 
 def _activity_with_connection(
@@ -342,47 +340,58 @@ def get_dashboard_read_bundle(
         # learning_events.question_results source used before the performance
         # work.  This deliberately favors numerical continuity over replacing
         # the source with question_attempts.
-        raw_question_rows = _question_result_rows_with_connection(user_id, conn)
+        with learner_path_perf.measure("dashboard.bundle.question_results"):
+            raw_question_rows = _question_result_rows_with_connection(user_id, conn)
         question_rows = _current_formal_question_result_rows(raw_question_rows)
 
-        attempts = (
-            _current_formal_attempts_preserving_identity(
-                _attempts_with_connection(user_id, conn)
+        with learner_path_perf.measure("dashboard.bundle.attempts"):
+            attempts = (
+                _current_formal_attempts_preserving_identity(
+                    _attempts_with_connection(user_id, conn)
+                )
+                if include_attempts else []
             )
-            if include_attempts else []
-        )
-        learning_events = (
-            _learning_events_with_connection(user_id, conn)
-            if include_learning_events else []
-        )
-        activity = _activity_with_connection(user_id, conn)
-        summary = _summary_with_connection(user_id, conn)
-        activity.update(
-            build_today_recommendation_summary(
-                user_id,
-                connection=conn,
-                question_result_rows=question_rows,
+        with learner_path_perf.measure("dashboard.bundle.strategy_events"):
+            learning_events = (
+                _learning_events_with_connection(user_id, conn)
+                if include_learning_events else []
             )
-        )
+        with learner_path_perf.measure("dashboard.bundle.activity"):
+            activity = _activity_with_connection(user_id, conn)
+        with learner_path_perf.measure("dashboard.bundle.summary"):
+            summary = _summary_with_connection(user_id, conn)
+        with learner_path_perf.measure("dashboard.bundle.today_recommendation"):
+            activity.update(
+                build_today_recommendation_summary(
+                    user_id,
+                    connection=conn,
+                    question_result_rows=question_rows,
+                )
+            )
 
+        with learner_path_perf.measure("dashboard.bundle.fields"):
+            fields = database.get_field_learning_summary(
+                user_id,
+                _connection=conn,
+                _question_result_rows=question_rows,
+            )
+        with learner_path_perf.measure("dashboard.bundle.unique_questions"):
+            unique_questions = database.get_unique_answered_question_count(
+                user_id,
+                _connection=conn,
+                _question_result_rows=question_rows,
+            )
         learning_data = {
             "summary": summary,
             "activity": activity,
-            "fields": database.get_field_learning_summary(
-                user_id,
-                _connection=conn,
-                _question_result_rows=question_rows,
-            ),
-            "unique_question_count": database.get_unique_answered_question_count(
-                user_id,
-                _connection=conn,
-                _question_result_rows=question_rows,
-            ),
+            "fields": fields,
+            "unique_question_count": unique_questions,
         }
-        trial100_records = (
-            get_trial100_records(user_id, connection=conn)
-            if include_trial100 else []
-        )
+        with learner_path_perf.measure("dashboard.bundle.trial100"):
+            trial100_records = (
+                get_trial100_records(user_id, connection=conn)
+                if include_trial100 else []
+            )
 
     return {
         "learning_data": learning_data,
