@@ -11,7 +11,7 @@ from __future__ import annotations
 from functools import wraps
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
-from flask import render_template, request, url_for
+from flask import jsonify, render_template, request, url_for
 
 from goukaku_ui import authorized_supporter_learner, build_dashboard
 
@@ -40,6 +40,14 @@ def install_supporter_learner_preview_bridge(app) -> None:
 
     @wraps(original)
     def wrapped_supporter_goukaku_home(*args, **kwargs):
+        if request.args.get("trend_only") == "1":
+            _, learner_id = authorized_supporter_learner(
+                request.args.get("token"), request.args.get("learner_user_id"),
+            )
+            from dashboard_progress_trend import _history_for_user
+            response = jsonify({"overallProgress": _history_for_user(learner_id)})
+            response.headers["Cache-Control"] = "no-store"
+            return response
         if request.args.get(PREVIEW_QUERY_KEY) != PREVIEW_QUERY_VALUE:
             return original(*args, **kwargs)
 
