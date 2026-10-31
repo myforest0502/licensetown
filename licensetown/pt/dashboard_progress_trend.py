@@ -12,6 +12,7 @@ from datetime import datetime, time, timedelta, timezone
 from threading import Lock
 from zoneinfo import ZoneInfo
 
+from flask import has_request_context, request
 from database import get_question_attempts
 from field_evidence import build_field_evidence
 from field_progress import build_field_progress
@@ -108,7 +109,22 @@ def install_dashboard_progress_trend(legacy, goukaku_module) -> None:
         )
         dashboard.setdefault("overall_progress_history_7d", [])
         if user_id and dashboard.get("overall_progress_ui_enabled"):
-            dashboard["overall_progress_history_7d"] = _history_for_user(user_id)
+            # The 7-day curve replays expensive formal state calculations for
+            # each day. Do not block the main authenticated HTML response on it.
+            # Exactly the same _history_for_user() calculation is served by a
+            # second authenticated request on the three supported page routes.
+            async_page = (
+                has_request_context()
+                and request.endpoint in {
+                    "goukaku_ui.home",
+                    "goukaku_ui.supporter_goukaku_home",
+                    "site_ui.internal_learner_preview",
+                }
+            )
+            if async_page and request.args.get("trend_only") != "1":
+                dashboard["overall_progress_history_async"] = True
+            else:
+                dashboard["overall_progress_history_7d"] = _history_for_user(user_id)
         return dashboard
 
     goukaku_module.build_dashboard = build_dashboard

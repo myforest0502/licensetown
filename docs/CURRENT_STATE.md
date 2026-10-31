@@ -1,5 +1,13 @@
 # LicenseTown Current State
 
+## 2026-10-31 画面45.02秒の追加実測／過去7日グラフの非同期化
+
+- 利用者の実測は **45.02秒**（改善前の31〜32秒より悪化）。PR #454後のRenderログ `2026-10-31 03:18 UTC` で管理者の学習者プレビュー画面を約43秒かけて返すケースを観測。前半 `dashboard.read_bundle` 10.63秒、formal evidence 2.71秒、shadow 2.01秒、Stage-E 4.19秒、readiness 1.90秒、catchup 1.67秒。**catchup計測の終了からHTTP 200まで約19.6秒**の未計時処理が残存。
+- `wsgi.py` の `install_dashboard_progress_trend` ラッパーが画面完成後さらに `get_question_attempts` を読み直し、`build_overall_progress_history_7d` で正式Knowledge Node Evidence/Progressを**7日分7回**再計算してから画面を返す同期ブロックを確認。ユーザー数値を変えずに画面を早く返すため、この重い正規計算だけ別の認証済みリクエストに移す。
+- 認証済み本人 `/goukaku-no-michi`、認証済み見守り本人プレビュー `/supporter/goukaku-no-michi`、開発者認証済み `/internal/learner-preview` の3経路でHTMLは先に返し、`trend_only=1` の読取専用JSONをフロントから呼び出して同じ正式な7日データを後からグラフ表示する。`_history_for_user` と `build_overall_progress_history_7d` の判定・期間・算式・キャッシュキーは変更なし。新しい権限は作らず各既存認証を毎回実施。API `Cache-Control: no-store`。
+- 非ページ/テストの `build_dashboard` 直接呼出はこれまでどおり同期データ構築。グラフだけ読み込み中表示・エラー時の案内を行う。問題演習、修復キュー、正式な状態、他の数値/学習履歴、DBスキーマ、Render構成変更なし。
+- 最初のHTML応答はグラフの七重再計算を待たなくなるが、**画面の残る約20〜25秒の計算にはまだ改善余地がある。** 本番反映後の本人/管理者プレビュー実測で必ず検証する。
+
 ## 2026-10-31 表示31〜32秒の追加調査／Neon往復削減
 
 - 実測報告: ユーザー計測で「合格への道」が約31〜32秒。PR #453の本番反映後も表示遅延は継続。

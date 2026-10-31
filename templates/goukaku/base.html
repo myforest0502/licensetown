@@ -37,7 +37,8 @@
         correct: {{ dashboard.weekly_correct|default(0)|int }},
         minutes: {{ dashboard.weekly_study_minutes|default(0)|int }},
         daily: {{ dashboard.daily|default([])|tojson }},
-        overallProgress: {{ dashboard.overall_progress_history_7d|default([])|tojson }}
+        overallProgress: {{ dashboard.overall_progress_history_7d|default([])|tojson }},
+        overallProgressAsync: {{ dashboard.overall_progress_history_async|default(false)|tojson }}
       };
       window.LT_ROUTE_SNAPSHOT = {
         daysUntilExam: {{ dashboard.days_until_exam|default(none)|tojson }},
@@ -59,7 +60,7 @@
   <script src="{{ url_for('static', filename='goukaku/recommendation-daily-summary.js', v='20260905-v02') }}" defer></script>
   <script src="{{ url_for('static', filename='goukaku/dashboard-meaning-cards.js', v='20260907-progress-trend1') }}" defer></script>
   <script src="{{ url_for('static', filename='goukaku/dashboard-layout-v05.js', v='20260909-v08') }}" defer></script>
-  <script src="{{ url_for('static', filename='goukaku/dashboard-progress-trend-v06.js', v='20261007-learning-progress') }}" defer></script>
+  <script src="{{ url_for('static', filename='goukaku/dashboard-progress-trend-v06.js', v='20261031-async-trend1') }}" defer></script>
   <script src="{{ url_for('static', filename='goukaku/dashboard-product-copy-v01.js', v='20261007-balanced-route', repair='20261027-repair-questions1-recovery-milestone-v3') }}" defer></script>
   <script src="{{ url_for('static', filename='goukaku/dashboard-approved-layout-v01.js', v='20261027-catchup-top1') }}" defer></script>
 </body>

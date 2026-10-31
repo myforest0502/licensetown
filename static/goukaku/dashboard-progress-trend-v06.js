@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
   const weekly = window.LT_WEEKLY_LEARNING_SNAPSHOT || {};
-  const points = Array.isArray(weekly.overallProgress) ? weekly.overallProgress : [];
   const card = document.querySelector('.weekly-learning-card');
   const spark = card?.querySelector('.weekly-spark');
-  if (!card || !spark || points.length < 2) return;
+  if (!card || !spark) return;
 
+  function drawExactTrend(points) {
+  if (!Array.isArray(points) || points.length < 2) return;
   const values = points.map((item) => Number(item.progress) || 0);
   const observedMin = Math.min(...values);
   const observedMax = Math.max(...values);
@@ -68,4 +69,39 @@ document.addEventListener('DOMContentLoaded', () => {
   note.className = 'weekly-progress-note';
   note.textContent = '棒はその日の回答数、折れ線はその時点の「知識の仕上がり」です。知識の仕上がりは問題数だけでなく、学習範囲・修復・再確認・定着で動きます。';
   combined.insertAdjacentElement('afterend', note);
+  }
+
+  // The server still calculates the original seven historical Node-state
+  // values. It simply no longer holds the whole dashboard page hostage.
+  if (!weekly.overallProgressAsync) {
+    drawExactTrend(weekly.overallProgress || []);
+    return;
+  }
+
+  const progressStatus = document.createElement('p');
+  progressStatus.className = 'weekly-progress-note';
+  progressStatus.setAttribute('role', 'status');
+  progressStatus.textContent = '知識の仕上がり推移を読み込んでいます…';
+  spark.insertAdjacentElement('beforebegin', progressStatus);
+
+  const url = new URL(window.location.href);
+  url.searchParams.set('trend_only', '1');
+  fetch(url.toString(), {
+    method: 'GET',
+    credentials: 'same-origin',
+    cache: 'no-store',
+    headers: { 'Accept': 'application/json' }
+  }).then((response) => {
+    if (!response.ok) throw new Error('progress history unavailable');
+    return response.json();
+  }).then((data) => {
+    if (!data || !Array.isArray(data.overallProgress)) {
+      throw new Error('invalid progress history');
+    }
+    weekly.overallProgress = data.overallProgress;
+    drawExactTrend(data.overallProgress);
+    progressStatus.remove();
+  }).catch(() => {
+    progressStatus.textContent = '推移グラフを取得できませんでした。再読み込みで確認できます。';
+  });
 });
