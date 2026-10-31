@@ -1,7 +1,7 @@
 import os
 from urllib.parse import parse_qs
 
-from flask import Blueprint, abort, redirect, render_template, request, url_for
+from flask import Blueprint, abort, has_request_context, redirect, render_template, request, url_for
 from itsdangerous import BadSignature, URLSafeSerializer, URLSafeTimedSerializer
 
 from database import (
@@ -615,11 +615,17 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
             dashboard["_wrong_question_ids"] = unresolved_wrong_question_ids(
                 filter_current_formal_evidence(attempts)
             )
-            dashboard["catchup"] = get_catchup_status(
-                user_id, dashboard["days_until_exam"],
-                {**dashboard["overall_progress_preview"], "answer_count": dashboard["total_answers"]},
-                wrong_question_ids=dashboard["_wrong_question_ids"],
-            )
+            with learner_path_perf.measure("dashboard.catchup_status"):
+                dashboard["catchup"] = get_catchup_status(
+                    user_id, dashboard["days_until_exam"],
+                    {**dashboard["overall_progress_preview"], "answer_count": dashboard["total_answers"]},
+                    wrong_question_ids=dashboard["_wrong_question_ids"],
+                    # Only the authenticated learner-home route records milestones.
+                    # Keep the public builder signature unchanged for installed wrappers.
+                    record_transition=(
+                        has_request_context() and request.endpoint == "goukaku_ui.home"
+                    ),
+                )
             if dashboard["catchup"]["active"]:
                 goal = dashboard["catchup"]["daily_goal"]
                 remaining = dashboard["catchup"]["pending_questions"]
@@ -643,15 +649,9 @@ def home():
     token = learner_dashboard_token(request.args)
     user_id = authorized_dashboard_learner(token)
     with learner_path_perf.measure("dashboard.build"):
+        # Persist entry/recovery here in the same calculation as the displayed
+        # status. Repeating get_catchup_status below issued another Neon query.
         dashboard = build_dashboard(user_id, include_learner_navigation=True)
-    # Persist entry/recovery only on the authenticated learner dashboard.
-    if dashboard.get("overall_progress_preview") and user_id:
-        dashboard["catchup"] = get_catchup_status(
-            user_id, dashboard["days_until_exam"],
-            {**dashboard["overall_progress_preview"], "answer_count": dashboard["total_answers"]},
-            record_transition=True,
-            wrong_question_ids=dashboard.get("_wrong_question_ids"),
-        )
     navigation = dashboard.get("learner_navigation") or {}
     action = navigation.get("today_action") or {}
     if action.get("field"):
