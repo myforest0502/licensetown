@@ -1,5 +1,13 @@
 # LicenseTown Current State
 
+## 2026-10-31 定点監査：修復集中モードは継続稼働・表示遅延を改善対象として確認
+
+- Render本番 latest live はPR #452後の `d9262b2b943dc11fd710e9caa60fc8ba2aac9d92`。10/27 09:05 UTC以降のログにerror/warning/5xxやserver_failed/deploy_failedイベントを確認できず。学習回答の保存は継続している。
+- Neon production 読み取り専用で、同一主要実学習者の10/27〜10/31 JST記録を確認。10/27 182問118正、10/28 180問127正、10/29 185問107正、10/30 180問100正、10/31午前時点70問43正。直近の学習回答は `event_key` と `attempt_position` の重複なし。正式な有効Q履歴に基づく最新誤答残数は10/27末810、10/28末683、10/29末576、10/30末476、10/31確認時433で、日別正解数と減算が一致（10/28以降は原則修復リスト問題の再回答）。
+- **性能問題は残存**: Render計測 `dashboard.route_total` の実値が直近16件で約27.4〜49.1秒、LINE修復学習開始約12.5〜15.4秒、回答送信約8〜12秒。健康状態・正誤値と別に、学習体験の障害として優先すべき。
+- このブランチは同一ダッシュボードGETで `get_catchup_status` を**2回呼んでいた重複DBリード**を1回に統一。`record_transition=True` を認証済み本人ダッシュボードでの単一の正式計算に移動し、表示値とDBイベント判定が同一snapshotから決まる。非本人の `build_dashboard` 呼び出しは従来のread-onlyがデフォルト。修復対象/学習記録/Node計算/出題判定/問題データ/DBスキーマには変更なし。回帰テスト追加。
+- 本改善は表示の数十秒遅延全体を解消した証拠ではない。診断用に `dashboard.catchup_status` の計時を追加し、リリース後に実測で効果と残るボトルネックを確認する。未改善の他の動線に無理なキャッシュを入れない。
+
 ## 2026-10-27 Web修復問題の回答POST 500（本番実利用で確認・緊急修正）
 
 - 2026-10-27 08:49–08:50 UTC、本番 Render `line-bot-project` に /goukaku-no-michi/learning/<session_id>/answer で繰り返し500が発生。traceback確定: `durable_web_learning_session._snapshot()` → `json.dumps(session)` → `TypeError: Object of type set is not JSON serializable`。
