@@ -11,7 +11,7 @@ from __future__ import annotations
 import hmac
 import os
 
-from flask import abort, redirect, render_template, request, url_for
+from flask import abort, jsonify, redirect, render_template, request, url_for
 
 from database import get_learning_events, get_question_attempts
 from developer_status import build_developer_system_status
@@ -307,6 +307,11 @@ def register_developer_routes(blueprint) -> None:
         learner_id = request.args.get("learner_user_id", "").strip()
         if not learner_id:
             abort(400)
+        if request.args.get("trend_only") == "1":
+            from dashboard_progress_trend import _history_for_user
+            response = jsonify({"overallProgress": _history_for_user(learner_id)})
+            response.headers["Cache-Control"] = "no-store"
+            return response
         return render_template(
             "goukaku/home.html",
             dashboard=build_dashboard(learner_id),
