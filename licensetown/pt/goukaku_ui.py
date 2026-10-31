@@ -436,7 +436,9 @@ def current_user_catchup(user_id, *, raw_attempts=None):
     )
 
 
-def build_dashboard(user_id=None, include_learner_navigation=False):
+def build_dashboard(
+    user_id=None, include_learner_navigation=False, *, record_catchup_transition=False,
+):
     today = tokyo_today()
     exam_date = get_effective_exam_date(user_id)
     dashboard = {
@@ -615,11 +617,13 @@ def build_dashboard(user_id=None, include_learner_navigation=False):
             dashboard["_wrong_question_ids"] = unresolved_wrong_question_ids(
                 filter_current_formal_evidence(attempts)
             )
-            dashboard["catchup"] = get_catchup_status(
-                user_id, dashboard["days_until_exam"],
-                {**dashboard["overall_progress_preview"], "answer_count": dashboard["total_answers"]},
-                wrong_question_ids=dashboard["_wrong_question_ids"],
-            )
+            with learner_path_perf.measure("dashboard.catchup_status"):
+                dashboard["catchup"] = get_catchup_status(
+                    user_id, dashboard["days_until_exam"],
+                    {**dashboard["overall_progress_preview"], "answer_count": dashboard["total_answers"]},
+                    wrong_question_ids=dashboard["_wrong_question_ids"],
+                    record_transition=record_catchup_transition,
+                )
             if dashboard["catchup"]["active"]:
                 goal = dashboard["catchup"]["daily_goal"]
                 remaining = dashboard["catchup"]["pending_questions"]
@@ -643,14 +647,11 @@ def home():
     token = learner_dashboard_token(request.args)
     user_id = authorized_dashboard_learner(token)
     with learner_path_perf.measure("dashboard.build"):
-        dashboard = build_dashboard(user_id, include_learner_navigation=True)
-    # Persist entry/recovery only on the authenticated learner dashboard.
-    if dashboard.get("overall_progress_preview") and user_id:
-        dashboard["catchup"] = get_catchup_status(
-            user_id, dashboard["days_until_exam"],
-            {**dashboard["overall_progress_preview"], "answer_count": dashboard["total_answers"]},
-            record_transition=True,
-            wrong_question_ids=dashboard.get("_wrong_question_ids"),
+        # Persist entry/recovery here in the same calculation as the displayed
+        # status. Repeating get_catchup_status below issued another Neon query.
+        dashboard = build_dashboard(
+            user_id, include_learner_navigation=True,
+            record_catchup_transition=True,
         )
     navigation = dashboard.get("learner_navigation") or {}
     action = navigation.get("today_action") or {}
