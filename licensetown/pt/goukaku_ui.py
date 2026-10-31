@@ -1,7 +1,7 @@
 import os
 from urllib.parse import parse_qs
 
-from flask import Blueprint, abort, redirect, render_template, request, url_for
+from flask import Blueprint, abort, has_request_context, redirect, render_template, request, url_for
 from itsdangerous import BadSignature, URLSafeSerializer, URLSafeTimedSerializer
 
 from database import (
@@ -436,9 +436,7 @@ def current_user_catchup(user_id, *, raw_attempts=None):
     )
 
 
-def build_dashboard(
-    user_id=None, include_learner_navigation=False, *, record_catchup_transition=False,
-):
+def build_dashboard(user_id=None, include_learner_navigation=False):
     today = tokyo_today()
     exam_date = get_effective_exam_date(user_id)
     dashboard = {
@@ -622,7 +620,11 @@ def build_dashboard(
                     user_id, dashboard["days_until_exam"],
                     {**dashboard["overall_progress_preview"], "answer_count": dashboard["total_answers"]},
                     wrong_question_ids=dashboard["_wrong_question_ids"],
-                    record_transition=record_catchup_transition,
+                    # Only the authenticated learner-home route records milestones.
+                    # Keep the public builder signature unchanged for installed wrappers.
+                    record_transition=(
+                        has_request_context() and request.endpoint == "goukaku_ui.home"
+                    ),
                 )
             if dashboard["catchup"]["active"]:
                 goal = dashboard["catchup"]["daily_goal"]
@@ -649,10 +651,7 @@ def home():
     with learner_path_perf.measure("dashboard.build"):
         # Persist entry/recovery here in the same calculation as the displayed
         # status. Repeating get_catchup_status below issued another Neon query.
-        dashboard = build_dashboard(
-            user_id, include_learner_navigation=True,
-            record_catchup_transition=True,
-        )
+        dashboard = build_dashboard(user_id, include_learner_navigation=True)
     navigation = dashboard.get("learner_navigation") or {}
     action = navigation.get("today_action") or {}
     if action.get("field"):
