@@ -72,7 +72,7 @@ html,body{min-width:0!important;overflow-x:hidden}.container{width:calc(100% - 3
 
   .feature-two{height:auto!important;min-height:0!important;padding:22px 0 0!important}
   .feature-two .two-grid{gap:22px!important}
-  .feature-two .gensan-card,.feature-two .road-card{height:238px!important}
+  .feature-two .gensan-card,.feature-two .road-card{height:auto!important;min-height:320px!important}
   .feature-two .gensan-card>img{width:153px!important;height:200px!important}
   .feature-two .gensan-copy{left:168px!important;right:188px!important;top:22px!important}
   .feature-two .gensan-copy h2,.feature-two .road-copy h2{font-size:22px!important;line-height:1.35!important}
@@ -137,4 +137,131 @@ html,body{min-width:0!important;overflow-x:hidden}.container{width:calc(100% - 3
   .footer .footer-logo b{font-size:20px!important}
   .footer .footer-logo small,.footer>.container>small{font-size:12px!important}
   .footer nav{font-size:13px!important;gap:clamp(12px,1.5vw,24px)!important;flex-wrap:wrap!important}
+}
+
+
+/*
+ * 2026-11-10 PC legibility and clipped-road-CTA fix.
+ * The source road-card used absolute children + overflow:hidden. Enlarged
+ * fonts pushed its "詳しく見る" link below the fixed-height card. Let layout
+ * determine its height instead; only applies to PC screens >=1280px.
+ */
+@media (min-width:1280px){
+  .feature-two .two-grid{align-items:stretch!important}
+  .feature-two .road-card{
+    display:grid!important;
+    grid-template-columns:minmax(0,1.15fr) minmax(110px,.62fr) minmax(152px,.85fr)!important;
+    gap:clamp(10px,1.2vw,22px)!important;
+    box-sizing:border-box!important;
+    padding:26px clamp(16px,1.6vw,28px) 28px!important;
+    height:auto!important;
+    min-height:320px!important;
+    align-items:start!important;
+    overflow:visible!important;
+  }
+  .feature-two .road-card>.road-copy,
+  .feature-two .road-card>.road-score,
+  .feature-two .road-card>.week-task{
+    position:static!important;
+    inset:auto!important;
+    width:auto!important;
+    min-width:0!important;
+    height:auto!important;
+    max-height:none!important;
+    box-sizing:border-box!important;
+  }
+  .feature-two .road-card .road-copy{padding:0!important}
+  .feature-two .road-card .road-copy h2{font-size:24px!important;line-height:1.4!important}
+  .feature-two .road-card .road-copy p{
+    font-size:16px!important;line-height:1.7!important;
+    font-weight:600!important;overflow-wrap:anywhere!important;
+  }
+  .feature-two .road-card .road-copy p br{
+    display:initial!important;content:normal!important;margin:0!important;
+  }
+  .feature-two .road-card .road-copy small{
+    display:block!important;
+    margin-top:12px!important;
+    font-size:12px!important;
+    line-height:1.5!important;
+    font-weight:600!important;
+    white-space:normal!important;
+  }
+  .feature-two .road-card .road-copy a{
+    display:grid!important;
+    place-items:center!important;
+    width:min(180px,100%)!important;
+    min-height:44px!important;
+    height:auto!important;
+    padding:9px 12px!important;
+    margin:17px 0 0!important;
+    font-size:15px!important;
+    line-height:1.45!important;
+    font-weight:800!important;
+    white-space:normal!important;
+    box-sizing:border-box!important;
+  }
+  .feature-two .road-card .road-score{
+    padding:3px 0 6px 13px!important;
+    border-left:1px solid #e8eae8!important;
+  }
+  .feature-two .road-card .road-score h3{font-size:16px!important;line-height:1.4!important;font-weight:750!important}
+  .feature-two .road-card .road-score h3 em{font-size:11px!important;line-height:1.45!important}
+  .feature-two .road-card .road-score small{font-size:13px!important;line-height:1.5!important;font-weight:700!important}
+  .feature-two .road-card .week-task{
+    padding:3px 0 4px 13px!important;
+    border-left:1px solid #e8eae8!important;
+  }
+  .feature-two .road-card .week-task h3{
+    font-size:16px!important;line-height:1.4!important;font-weight:750!important;
+  }
+  .feature-two .road-card .week-task p{
+    height:auto!important;min-height:56px!important;
+    padding:4px 0 15px!important;
+    font-size:13px!important;line-height:1.5!important;font-weight:600!important;
+  }
+  .feature-two .road-card .week-task i{max-width:100%!important;bottom:6px!important}
+  .feature-two .road-card .week-task small{font-size:11px!important;font-weight:700!important}
+
+  /* Source character and trivia cards also gain height to match the road card. */
+  .feature-two .gensan-card{height:auto!important;min-height:320px!important}
+  .feature-two .gensan-card>img{
+    top:55px!important;bottom:auto!important;height:215px!important;
+  }
+  .feature-two .gensan-copy h2{font-size:23px!important}
+  .feature-two .gensan-copy p{
+    font-size:15px!important;line-height:1.65!important;
+    font-weight:600!important;overflow-wrap:anywhere!important;
+  }
+  .feature-two .gensan-card ul{top:34px!important}
+  .feature-two .gensan-card li{height:66px!important;font-size:13px!important;line-height:1.5!important}
+  .feature-two .gensan-copy a{min-height:42px!important;font-size:14px!important;font-weight:800!important}
+
+  /* Small supporting copy: prefer readable 13-16px over cramming 9-11px. */
+  .feature-one .feature-card{height:auto!important;min-height:272px!important}
+  .feature-one .card-copy h2{font-size:21px!important;line-height:1.4!important}
+  .feature-one .card-copy p{font-size:15px!important;line-height:1.7!important;font-weight:600!important}
+  .feature-one .line-visual small,.feature-one .line-visual b{font-size:11px!important;font-weight:700!important}
+  .feature-one .monitor-card .mini-board{height:185px!important}
+  .feature-one .monitor-card .mini-board small{font-size:13px!important;font-weight:700!important}
+  .feature-one .monitor-card .mini-board p{font-size:12px!important;font-weight:600!important}
+  .watch .watch-copy p{font-size:15px!important;line-height:1.7!important;font-weight:600!important}
+  .watch .topics p{font-size:14px!important;line-height:1.6!important;font-weight:600!important}
+  .watch .watch-metric small{font-size:13px!important;font-weight:700!important}
+  .watch .watch-row>.detail{font-size:14px!important;font-weight:800!important}
+  .preview-card{min-height:335px!important}
+  .preview-heading p{font-size:16px!important;line-height:1.7!important}
+  .preview-card>small{font-size:13px!important;line-height:1.5!important;font-weight:600!important}
+  .chat-sample p,.road-detail-sample p{font-size:14px!important;line-height:1.65!important}
+  body .bottom-grid .marketing-brand-copy{font-size:16px!important;font-weight:600!important}
+  body .bottom-grid .marketing-faq-preview-item h3{font-size:15px!important;font-weight:750!important}
+  body .bottom-grid .marketing-faq-preview-item p{
+    display:block!important;
+    font-size:13px!important;
+    line-height:1.6!important;
+    font-weight:600!important;
+    -webkit-line-clamp:unset!important;
+    overflow:visible!important;
+  }
+  body .bottom-grid .marketing-free-copy{font-size:16px!important;font-weight:600!important}
 }
