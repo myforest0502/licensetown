@@ -61,7 +61,7 @@ def test_site_view_routes_return_complete_same_origin_documents():
 
     assert "やれば出来る子を" in pc_html
     assert '<base href="/site/preview-pc/">' in pc_html
-    assert 'href="/site/preview-responsive/middle.css"' in pc_html
+    assert 'href="/site/preview-responsive/middle.css?v=20261110-desktop-readable1"' in pc_html
     assert "LicenseTownでできること" in mobile_html
     assert '<base href="/site/preview-724/">' in mobile_html
     assert 'href="/site/preview-responsive/mobile.css"' in mobile_html
@@ -163,3 +163,30 @@ def test_site_uses_responsive_mobile_frame_and_pc_mobile_switch():
     assert ".faq-panel h2{font-size:18px!important" in middle_css
     assert ".faq-panel p{min-height:24px!important;padding:4px!important;font-size:11px!important" in middle_css
     assert ".faq-panel>a{display:block;margin-top:3px!important;padding-bottom:3px!important;font-size:11px!important" in middle_css
+
+
+def test_public_pc_readability_override_is_desktop_only():
+    """Public PC type/width are enlarged without touching the 724px source."""
+    from pathlib import Path
+
+    client = app.test_client()
+    pc_html = client.get("/site/view/pc").get_data(as_text=True)
+    mobile_html = client.get("/site/view/mobile").get_data(as_text=True)
+    css = client.get("/site/preview-responsive/middle.css").get_data(as_text=True)
+    mobile_css = client.get("/site/preview-responsive/mobile.css").get_data(as_text=True)
+    desktop = css.split("2026-11-10 desktop readability enhancement", 1)[1]
+
+    assert "20261110-desktop-readable1" in pc_html
+    assert "20261110-desktop-readable1" not in mobile_html
+    assert "@media (min-width:1280px)" in desktop
+    assert "max-width:1420px!important" in desktop
+    assert ".feature-one .feature-card{height:220px!important}" in desktop
+    assert ".feature-two .gensan-card,.feature-two .road-card{height:238px!important}" in desktop
+    assert "body .bottom-grid>.marketing-brand-panel" in desktop
+    assert ".footer>.container{flex-wrap:wrap!important" in desktop
+    # Scaling an iframe/bitmap can crop cards and scramble scroll offsets.
+    assert "transform:scale(" not in desktop
+    assert "zoom:" not in desktop
+    assert "2026-11-10 desktop readability enhancement" not in mobile_css
+    assert (PREVIEW_PC_DIR / "styles.css").read_text(encoding="utf-8")
+    assert (PREVIEW_724_DIR / "index.html").read_text(encoding="utf-8")
