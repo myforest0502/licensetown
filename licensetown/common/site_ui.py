@@ -417,7 +417,7 @@ def pc_view():
     return _preview_document(
         PREVIEW_PC_DIR / "index.html",
         "/site/preview-pc/",
-        "/site/preview-responsive/middle.css",
+        "/site/preview-responsive/middle.css?v=20261110-desktop-readable1",
     )
 
 
