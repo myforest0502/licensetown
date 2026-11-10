@@ -265,3 +265,223 @@ html,body{min-width:0!important;overflow-x:hidden}.container{width:calc(100% - 3
   }
   body .bottom-grid .marketing-free-copy{font-size:16px!important;font-weight:600!important}
 }
+
+
+/*
+ * 2026-11-10 desktop lower-section legibility pass.
+ * Preserve the public copy, original card grid, and 724px mobile variant.
+ * The cards stay intrinsic-height so larger text never needs line clamping.
+ */
+@media (min-width:1280px){
+  /* Feature previews: improve 10-13px captions and in-product examples. */
+  .feature-preview .preview-grid{align-items:stretch!important;gap:24px!important}
+  .feature-preview .preview-card{
+    box-sizing:border-box!important;
+    height:auto!important;
+    min-height:385px!important;
+    padding:30px!important;
+    overflow:visible!important;
+  }
+  .feature-preview .preview-heading{padding-right:116px!important}
+  .feature-preview .preview-heading h2{
+    font-size:25px!important;line-height:1.45!important;
+    font-weight:750!important;
+  }
+  .feature-preview .preview-heading>span{
+    font-size:12px!important;line-height:1.35!important;font-weight:800!important;
+  }
+  .feature-preview .preview-heading p{
+    font-size:17px!important;line-height:1.75!important;font-weight:600!important;
+  }
+  .feature-preview .chat-sample{
+    height:auto!important;
+    padding:18px!important;
+  }
+  .feature-preview .chat-sample p{
+    max-width:88%!important;
+    font-size:16px!important;line-height:1.7!important;font-weight:600!important;
+  }
+  .feature-preview .chat-sample .gensan-bubble b{
+    font-size:16px!important;font-weight:800!important;
+  }
+  .feature-preview .road-detail-sample{height:auto!important;padding:17px!important}
+  .feature-preview .road-detail-sample>div b{
+    font-size:16px!important;font-weight:750!important;
+  }
+  .feature-preview .road-detail-sample strong{font-size:29px!important;font-weight:800!important}
+  .feature-preview .road-detail-sample p{
+    grid-template-columns:minmax(110px,140px) minmax(0,1fr)!important;
+    gap:9px!important;
+    height:auto!important;
+    font-size:15px!important;
+    line-height:1.75!important;
+    padding:9px 0!important;
+    font-weight:600!important;
+    overflow-wrap:anywhere!important;
+  }
+  .feature-preview .road-detail-sample p span{font-weight:800!important}
+  .feature-preview .road-detail-sample .today-task{
+    margin-top:9px!important;padding:12px!important;
+  }
+  .feature-preview .preview-card>small{
+    margin-top:12px!important;
+    font-size:14px!important;line-height:1.65!important;font-weight:650!important;
+    color:#435047!important;
+  }
+
+  /* Three marketing cards: use spare vertical space rather than tiny text. */
+  body .bottom{height:auto!important;overflow:visible!important;padding-bottom:28px!important}
+  body .bottom-grid{align-items:stretch!important;gap:20px!important}
+  body .bottom-grid>.marketing-brand-panel,
+  body .bottom-grid>.marketing-faq-panel,
+  body .bottom-grid>.marketing-free-panel{
+    height:auto!important;min-height:420px!important;
+    overflow:visible!important;
+    box-sizing:border-box!important;
+  }
+  body .bottom-grid>.marketing-brand-panel{padding:27px 22px 25px!important}
+  body .bottom-grid>.marketing-brand-panel h2{
+    font-size:23px!important;line-height:1.5!important;font-weight:800!important;
+  }
+  body .bottom-grid .marketing-brand-lead{
+    font-size:16px!important;line-height:1.65!important;font-weight:700!important;
+  }
+  body .bottom-grid .marketing-brand-copy{
+    font-size:17px!important;line-height:1.8!important;font-weight:600!important;
+    overflow-wrap:anywhere!important;
+  }
+  body .bottom-grid .marketing-brand-values{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:10px!important;
+    margin-top:20px!important;
+  }
+  body .bottom-grid .marketing-brand-values span{
+    min-width:0!important;min-height:92px!important;
+    padding:9px 7px!important;gap:6px!important;
+    font-size:23px!important;
+  }
+  body .bottom-grid .marketing-brand-values b{
+    font-size:14px!important;line-height:1.55!important;
+    font-weight:800!important;overflow-wrap:anywhere!important;
+  }
+  body .bottom-grid .marketing-brand-panel small{
+    margin-top:17px!important;
+    font-size:13px!important;line-height:1.6!important;
+    font-weight:650!important;
+  }
+
+  body .bottom-grid>.marketing-faq-panel{padding:26px 23px!important}
+  body .bottom-grid>.marketing-faq-panel h2{
+    font-size:23px!important;line-height:1.4!important;font-weight:800!important;
+  }
+  body .bottom-grid .marketing-faq-preview-item{
+    padding:10px 0!important;
+  }
+  body .bottom-grid .marketing-faq-preview-item h3{
+    font-size:16px!important;line-height:1.5!important;font-weight:800!important;
+  }
+  body .bottom-grid .marketing-faq-preview-item p{
+    height:auto!important;min-height:0!important;
+    display:block!important;
+    font-size:14px!important;line-height:1.7!important;
+    font-weight:650!important;
+    -webkit-line-clamp:unset!important;
+    overflow:visible!important;
+    overflow-wrap:anywhere!important;
+  }
+  body .bottom-grid .marketing-contact-link{
+    margin-top:14px!important;
+    font-size:15px!important;line-height:1.55!important;font-weight:800!important;
+  }
+
+  body .bottom-grid>.marketing-free-panel{padding:27px 22px!important}
+  body .bottom-grid .marketing-free-panel h2{
+    font-size:24px!important;line-height:1.45!important;font-weight:800!important;
+  }
+  body .bottom-grid .marketing-free-copy{
+    max-width:none!important;
+    font-size:17px!important;line-height:1.75!important;font-weight:650!important;
+    overflow-wrap:anywhere!important;
+  }
+  body .bottom-grid .marketing-line-start{
+    gap:14px!important;flex-wrap:wrap!important;
+  }
+  body .bottom-grid .marketing-line-qr{
+    width:108px!important;height:108px!important;max-width:100%!important;
+  }
+  body .bottom-grid .marketing-line-button{
+    max-width:100%!important;
+    min-height:46px!important;
+    font-size:16px!important;line-height:1.5!important;font-weight:800!important;
+    white-space:normal!important;
+  }
+  body .bottom-grid .marketing-qr-help{
+    font-size:14px!important;line-height:1.6!important;font-weight:650!important;
+  }
+  body .bottom-grid .marketing-free-note{
+    font-size:13px!important;line-height:1.65!important;font-weight:650!important;
+  }
+
+  /* Principle + voluntary support: larger body text and easy-to-read footnotes. */
+  .trust-support{padding:36px 0 44px!important}
+  .trust-support-grid{align-items:stretch!important;gap:24px!important}
+  .trust-support-grid .principles-card,
+  .trust-support-grid .support-card{
+    height:auto!important;min-height:430px!important;
+    padding:32px!important;overflow:visible!important;
+    box-sizing:border-box!important;
+  }
+  .trust-support-grid .eyebrow{
+    font-size:14px!important;line-height:1.5!important;font-weight:800!important;
+  }
+  .trust-support-grid .principles-card h2,
+  .trust-support-grid .support-card h2{
+    font-size:26px!important;line-height:1.5!important;font-weight:800!important;
+  }
+  .trust-support-grid .principles-card p,
+  .trust-support-grid .support-card p{
+    font-size:17px!important;line-height:1.85!important;
+    font-weight:600!important;
+    overflow-wrap:anywhere!important;
+  }
+  .trust-support-grid .principles-card .principle-points{
+    gap:10px!important;margin-top:25px!important;
+  }
+  .trust-support-grid .principle-points span{
+    font-size:14px!important;line-height:1.5!important;
+    font-weight:800!important;padding:9px 12px!important;
+  }
+  .trust-support-grid .support-amounts{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:9px!important;
+    margin:22px 0 14px!important;
+  }
+  .trust-support-grid .support-amounts span{
+    height:auto!important;min-height:46px!important;
+    font-size:17px!important;font-weight:800!important;
+    white-space:normal!important;text-align:center!important;
+  }
+  .trust-support-grid .support-card .support-cap{
+    font-size:15px!important;font-weight:750!important;line-height:1.75!important;
+  }
+  .trust-support-grid .support-card>a{
+    width:min(275px,100%)!important;height:auto!important;
+    min-height:44px!important;padding:9px 12px!important;
+    font-size:16px!important;font-weight:800!important;
+    line-height:1.5!important;
+  }
+  .trust-support-grid .support-card>small{
+    font-size:13px!important;line-height:1.65!important;
+    font-weight:650!important;color:#435047!important;
+  }
+}
+
+/* Keep four value labels legible on narrower desktop widths; no clipping. */
+@media (min-width:1280px) and (max-width:1499px){
+  body .bottom-grid .marketing-brand-values{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  body .bottom-grid .marketing-brand-values span{min-height:67px!important}
+  .trust-support-grid .principles-card,
+  .trust-support-grid .support-card{padding:28px!important}
+}
