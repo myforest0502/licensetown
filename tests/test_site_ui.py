@@ -61,7 +61,7 @@ def test_site_view_routes_return_complete_same_origin_documents():
 
     assert "やれば出来る子を" in pc_html
     assert '<base href="/site/preview-pc/">' in pc_html
-    assert 'href="/site/preview-responsive/middle.css?v=20261110-desktop-wide2"' in pc_html
+    assert 'href="/site/preview-responsive/middle.css?v=20261110-pc-legibility3"' in pc_html
     assert "LicenseTownでできること" in mobile_html
     assert '<base href="/site/preview-724/">' in mobile_html
     assert 'href="/site/preview-responsive/mobile.css"' in mobile_html
@@ -176,8 +176,8 @@ def test_public_pc_readability_override_is_desktop_only():
     mobile_css = client.get("/site/preview-responsive/mobile.css").get_data(as_text=True)
     desktop = css.split("2026-11-10 desktop readability enhancement", 1)[1]
 
-    assert "20261110-desktop-wide2" in pc_html
-    assert "20261110-desktop-wide2" not in mobile_html
+    assert "20261110-pc-legibility3" in pc_html
+    assert "20261110-pc-legibility3" not in mobile_html
     assert "@media (min-width:1280px)" in desktop
     assert "max-width:1700px!important" in desktop
     assert "width:calc(100% - 40px)!important" in desktop
@@ -185,7 +185,7 @@ def test_public_pc_readability_override_is_desktop_only():
     # No forced horizontal overflow on smaller laptop/desktop windows.
     assert "min-width:1700px" not in desktop
     assert ".feature-one .feature-card{height:220px!important}" in desktop
-    assert ".feature-two .gensan-card,.feature-two .road-card{height:238px!important}" in desktop
+    assert ".feature-two .gensan-card,.feature-two .road-card{height:auto!important;min-height:320px!important}" in desktop
     assert "body .bottom-grid>.marketing-brand-panel" in desktop
     assert ".footer>.container{flex-wrap:wrap!important" in desktop
     # Scaling an iframe/bitmap can crop cards and scramble scroll offsets.
@@ -194,3 +194,44 @@ def test_public_pc_readability_override_is_desktop_only():
     assert "2026-11-10 desktop readability enhancement" not in mobile_css
     assert (PREVIEW_PC_DIR / "styles.css").read_text(encoding="utf-8")
     assert (PREVIEW_724_DIR / "index.html").read_text(encoding="utf-8")
+
+
+def test_pc_roadmap_button_has_intrinsic_layout_and_large_type():
+    """Roadmap CTA must not be cropped by the old 238px absolute layout."""
+    client = app.test_client()
+    html = client.get("/site/view/pc").get_data(as_text=True)
+    css = client.get("/site/preview-responsive/middle.css").get_data(as_text=True)
+    mobile_html = client.get("/site/view/mobile").get_data(as_text=True)
+    mobile_css = client.get("/site/preview-responsive/mobile.css").get_data(as_text=True)
+    fix = css.split("2026-11-10 PC legibility and clipped-road-CTA fix", 1)[1]
+
+    assert 'class="road-card"' in html
+    assert 'href="#feature-preview">詳しく見る</a>' in html
+    assert "@media (min-width:1280px)" in fix
+    assert ".feature-two .road-card{\n    display:grid!important;" in fix
+    assert "height:auto!important;" in fix
+    assert "min-height:320px!important;" in fix
+    assert "overflow:visible!important;" in fix
+    assert "position:static!important;" in fix
+    assert "font-size:16px!important;line-height:1.7!important;" in fix
+    assert "min-height:44px!important;" in fix
+    assert ".feature-two .road-card .week-task p{\n    height:auto!important;" in fix
+    assert "2026-11-10 PC legibility and clipped-road-CTA fix" not in mobile_css
+    assert "20261110-pc-legibility3" not in mobile_html
+
+
+def test_pc_readability_enlarges_detail_text_without_hiding_faq():
+    css = app.test_client().get("/site/preview-responsive/middle.css").get_data(as_text=True)
+    fix = css.split("2026-11-10 PC legibility and clipped-road-CTA fix", 1)[1]
+
+    assert ".feature-one .card-copy p{font-size:15px!important;" in fix
+    assert ".watch .topics p{font-size:14px!important;" in fix
+    assert ".preview-heading p{font-size:16px!important;" in fix
+    assert "body .bottom-grid .marketing-faq-preview-item p{" in fix
+    assert "-webkit-line-clamp:unset!important;" in fix
+    assert "overflow:visible!important;" in fix
+    assert "font-weight:600!important;" in fix
+    # Frozen source HTML, mobile stylesheet and question data are untouched.
+    assert "max-width:1700px!important" in css
+    assert "transform:scale(" not in fix
+    assert "zoom:" not in fix
