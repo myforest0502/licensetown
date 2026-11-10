@@ -61,7 +61,7 @@ def test_site_view_routes_return_complete_same_origin_documents():
 
     assert "やれば出来る子を" in pc_html
     assert '<base href="/site/preview-pc/">' in pc_html
-    assert 'href="/site/preview-responsive/middle.css?v=20261110-pc-legibility3"' in pc_html
+    assert 'href="/site/preview-responsive/middle.css?v=20261110-pc-lower-readable4"' in pc_html
     assert "LicenseTownでできること" in mobile_html
     assert '<base href="/site/preview-724/">' in mobile_html
     assert 'href="/site/preview-responsive/mobile.css"' in mobile_html
@@ -176,8 +176,8 @@ def test_public_pc_readability_override_is_desktop_only():
     mobile_css = client.get("/site/preview-responsive/mobile.css").get_data(as_text=True)
     desktop = css.split("2026-11-10 desktop readability enhancement", 1)[1]
 
-    assert "20261110-pc-legibility3" in pc_html
-    assert "20261110-pc-legibility3" not in mobile_html
+    assert "20261110-pc-lower-readable4" in pc_html
+    assert "20261110-pc-lower-readable4" not in mobile_html
     assert "@media (min-width:1280px)" in desktop
     assert "max-width:1700px!important" in desktop
     assert "width:calc(100% - 40px)!important" in desktop
@@ -221,7 +221,7 @@ def test_pc_roadmap_button_has_intrinsic_layout_and_large_type():
     assert "min-height:44px!important;" in fix
     assert ".feature-two .road-card .week-task p{\n    height:auto!important;" in fix
     assert "2026-11-10 PC legibility and clipped-road-CTA fix" not in mobile_css
-    assert "20261110-pc-legibility3" not in mobile_html
+    assert "20261110-pc-lower-readable4" not in mobile_html
 
 
 def test_pc_readability_enlarges_detail_text_without_hiding_faq():
@@ -239,3 +239,45 @@ def test_pc_readability_enlarges_detail_text_without_hiding_faq():
     assert "max-width:1700px!important" in css
     assert "transform:scale(" not in fix
     assert "zoom:" not in fix
+
+
+
+def test_pc_lower_section_typography_and_natural_heights():
+    """The lower PC page must enlarge type without clipping content."""
+    client = app.test_client()
+    pc_html = client.get("/site/view/pc").get_data(as_text=True)
+    mobile_html = client.get("/site/view/mobile").get_data(as_text=True)
+    css = client.get("/site/preview-responsive/middle.css").get_data(as_text=True)
+    mobile_css = client.get("/site/preview-responsive/mobile.css").get_data(as_text=True)
+    readable = css.split("2026-11-10 desktop lower-section legibility pass", 1)[1]
+
+    assert "20261110-pc-lower-readable4" in pc_html
+    assert "20261110-pc-lower-readable4" not in mobile_html
+    assert "@media (min-width:1280px)" in readable
+    assert ".feature-preview .preview-card{" in readable
+    assert "height:auto!important;" in readable
+    assert ".feature-preview .preview-heading p{" in readable
+    assert "font-size:17px!important;line-height:1.75!important;" in readable
+    assert ".feature-preview .road-detail-sample p{" in readable
+    assert "grid-template-columns:minmax(110px,140px) minmax(0,1fr)" in readable
+    assert ".trust-support-grid .principles-card p," in readable
+    assert "font-size:17px!important;line-height:1.85!important;" in readable
+    assert ".trust-support-grid .support-card>small{" in readable
+    assert "font-size:13px!important;line-height:1.65!important;" in readable
+    assert "body .bottom-grid>.marketing-brand-panel," in readable
+    assert "body .bottom-grid>.marketing-faq-panel," in readable
+    assert "body .bottom-grid>.marketing-free-panel{" in readable
+    assert "height:auto!important;min-height:420px!important;" in readable
+    assert "overflow:visible!important;" in readable
+    assert "body .bottom-grid .marketing-faq-preview-item p{" in readable
+    assert "font-size:14px!important;line-height:1.7!important;" in readable
+    assert "-webkit-line-clamp:unset!important;" in readable
+    assert "body .bottom-grid .marketing-brand-values b{" in readable
+    assert "font-size:14px!important;line-height:1.55!important;" in readable
+    assert "body .bottom-grid .marketing-qr-help{" in readable
+    assert "font-size:14px!important;line-height:1.6!important;" in readable
+    assert "@media (min-width:1280px) and (max-width:1499px)" in readable
+    assert "grid-template-columns:repeat(2,minmax(0,1fr))" in readable
+    assert "2026-11-10 desktop lower-section legibility pass" not in mobile_css
+    assert "transform:scale(" not in readable
+    assert "zoom:" not in readable
