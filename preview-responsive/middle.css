@@ -61,6 +61,7 @@ html,body{min-width:0!important;overflow-x:hidden}.container{width:calc(100% - 3
   .feature-one .card-copy p{font-size:15px!important;line-height:1.65!important}
   .feature-one .line-visual{top:29px!important;height:162px!important}
   .feature-one .route-visual{top:69px!important}
+  .feature-one .route-card .card-copy{right:150px!important}
   .feature-one .monitor-card .mini-board{top:24px!important;height:169px!important}
   .feature-one .monitor-card .card-copy{width:190px!important}
   .feature-one .monitor-card .card-copy p{width:183px!important}
@@ -71,7 +72,7 @@ html,body{min-width:0!important;overflow-x:hidden}.container{width:calc(100% - 3
   .feature-two .two-grid{gap:22px!important}
   .feature-two .gensan-card,.feature-two .road-card{height:238px!important}
   .feature-two .gensan-card>img{width:153px!important;height:200px!important}
-  .feature-two .gensan-copy{left:168px!important;top:22px!important}
+  .feature-two .gensan-copy{left:168px!important;right:188px!important;top:22px!important}
   .feature-two .gensan-copy h2,.feature-two .road-copy h2{font-size:22px!important;line-height:1.35!important}
   .feature-two .gensan-copy p,.feature-two .road-copy p{font-size:15px!important;line-height:1.65!important}
   .feature-two .gensan-card ul{top:25px!important}
