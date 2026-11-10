@@ -184,7 +184,7 @@ def test_public_pc_readability_override_is_desktop_only():
     assert "max-width:1700px!important" in desktop
     # No forced horizontal overflow on smaller laptop/desktop windows.
     assert "min-width:1700px" not in desktop
-        assert ".feature-one .feature-card{height:220px!important}" in desktop
+    assert ".feature-one .feature-card{height:220px!important}" in desktop
     assert ".feature-two .gensan-card,.feature-two .road-card{height:238px!important}" in desktop
     assert "body .bottom-grid>.marketing-brand-panel" in desktop
     assert ".footer>.container{flex-wrap:wrap!important" in desktop
