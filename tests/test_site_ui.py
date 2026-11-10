@@ -61,7 +61,7 @@ def test_site_view_routes_return_complete_same_origin_documents():
 
     assert "やれば出来る子を" in pc_html
     assert '<base href="/site/preview-pc/">' in pc_html
-    assert 'href="/site/preview-responsive/middle.css?v=20261110-desktop-readable1"' in pc_html
+    assert 'href="/site/preview-responsive/middle.css?v=20261110-desktop-wide2"' in pc_html
     assert "LicenseTownでできること" in mobile_html
     assert '<base href="/site/preview-724/">' in mobile_html
     assert 'href="/site/preview-responsive/mobile.css"' in mobile_html
@@ -176,11 +176,15 @@ def test_public_pc_readability_override_is_desktop_only():
     mobile_css = client.get("/site/preview-responsive/mobile.css").get_data(as_text=True)
     desktop = css.split("2026-11-10 desktop readability enhancement", 1)[1]
 
-    assert "20261110-desktop-readable1" in pc_html
-    assert "20261110-desktop-readable1" not in mobile_html
+    assert "20261110-desktop-wide2" in pc_html
+    assert "20261110-desktop-wide2" not in mobile_html
     assert "@media (min-width:1280px)" in desktop
-    assert "max-width:1420px!important" in desktop
-    assert ".feature-one .feature-card{height:220px!important}" in desktop
+    assert "max-width:1700px!important" in desktop
+    assert "width:calc(100% - 40px)!important" in desktop
+    assert "max-width:1700px!important" in desktop
+    # No forced horizontal overflow on smaller laptop/desktop windows.
+    assert "min-width:1700px" not in desktop
+        assert ".feature-one .feature-card{height:220px!important}" in desktop
     assert ".feature-two .gensan-card,.feature-two .road-card{height:238px!important}" in desktop
     assert "body .bottom-grid>.marketing-brand-panel" in desktop
     assert ".footer>.container{flex-wrap:wrap!important" in desktop
