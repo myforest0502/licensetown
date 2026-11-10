@@ -22,3 +22,116 @@ html,body{min-width:0!important;overflow-x:hidden}.container{width:calc(100% - 3
   .footer nav a{white-space:nowrap}
   .footer>.container>small{flex:0 0 auto;margin-left:0!important;white-space:nowrap}
 }
+
+
+/*
+ * 2026-11-10 desktop readability enhancement, public PC view only.
+ * Keep the frozen preview-pc source, 724px mobile layout and the
+ * 724-1179px adaptive layout unchanged. No viewport zoom/transform.
+ * Give text its own room before increasing typography: several legacy
+ * sections used fixed-height, absolutely positioned cards.
+ */
+@media (min-width:1280px){
+  .container{width:calc(100% - 56px)!important;max-width:1420px!important}
+
+  .header,.header-row{height:74px!important}
+  .header .logo b{font-size:24px!important;line-height:29px!important}
+  .header .logo small{font-size:11px!important;line-height:15px!important}
+  .header .nav{gap:clamp(13px,1.45vw,26px)!important;font-size:14px!important}
+
+  .hero,.hero-inner{height:385px!important}
+  .hero .hero-copy{left:clamp(32px,3vw,62px)!important;top:35px!important;width:calc(100% - 460px)!important;max-width:700px!important}
+  .hero .hero-copy h1{font-size:clamp(43px,3.5vw,51px)!important;line-height:1.24!important}
+  .hero .hero-copy p{font-size:17px!important;line-height:1.7!important;margin:12px 0 12px!important}
+  .hero .hero-list{right:clamp(22px,4vw,64px)!important;top:69px!important;width:345px!important;height:238px!important;padding:22px 26px!important}
+  .hero .hero-list p{font-size:15px!important;height:47px!important;line-height:47px!important}
+  .hero .hero-actions .btn{height:46px!important;font-size:15px!important}
+
+  .stats{height:82px!important}
+  .stats>.container{height:81px!important}
+  .stats span small{font-size:14px!important}
+  .stats span b{font-size:27px!important;line-height:30px!important}
+  .stats span em{font-size:13px!important}
+
+  .feature-one{height:auto!important;padding:22px 0 0!important}
+  .feature-one .three-grid{gap:22px!important}
+  .feature-one .feature-card{height:220px!important}
+  .feature-one .card-copy{top:22px!important;left:21px!important}
+  .feature-one .card-copy h2{font-size:20px!important;line-height:1.35!important;margin-bottom:12px!important}
+  .feature-one .card-copy p{font-size:15px!important;line-height:1.65!important}
+  .feature-one .line-visual{top:29px!important;height:162px!important}
+  .feature-one .route-visual{top:69px!important}
+  .feature-one .monitor-card .mini-board{top:24px!important;height:169px!important}
+  .feature-one .monitor-card .card-copy{width:190px!important}
+  .feature-one .monitor-card .card-copy p{width:183px!important}
+  .feature-one .monitor-card .mini-board small{font-size:12px!important}
+  .feature-one .monitor-card .mini-board p{font-size:11px!important}
+
+  .feature-two{height:auto!important;min-height:0!important;padding:22px 0 0!important}
+  .feature-two .two-grid{gap:22px!important}
+  .feature-two .gensan-card,.feature-two .road-card{height:238px!important}
+  .feature-two .gensan-card>img{width:153px!important;height:200px!important}
+  .feature-two .gensan-copy{left:168px!important;top:22px!important}
+  .feature-two .gensan-copy h2,.feature-two .road-copy h2{font-size:22px!important;line-height:1.35!important}
+  .feature-two .gensan-copy p,.feature-two .road-copy p{font-size:15px!important;line-height:1.65!important}
+  .feature-two .gensan-card ul{top:25px!important}
+  .feature-two .gensan-card li{height:57px!important;padding-top:12px!important;font-size:12px!important;line-height:1.4!important}
+  .feature-two .road-copy{top:22px!important;width:235px!important}
+  .feature-two .road-score{top:21px!important;height:191px!important}
+  .feature-two .road-score h3{font-size:14px!important}
+  .feature-two .road-score small{font-size:12px!important}
+  .feature-two .week-task{top:21px!important;height:191px!important}
+  .feature-two .week-task h3{font-size:14px!important}
+  .feature-two .week-task p{height:42px!important;font-size:12px!important}
+  .feature-two .gensan-copy a,.feature-two .road-copy a{height:37px!important;font-size:13px!important}
+
+  .watch{height:auto!important;min-height:0!important;padding:22px 0 0!important}
+  .watch .watch-row{height:auto!important;min-height:160px!important;padding:18px 16px!important;gap:10px!important;flex-wrap:wrap!important;overflow:visible!important}
+  .watch .family-icon{flex:0 0 84px!important;width:84px!important;font-size:39px!important}
+  .watch .watch-copy{flex:1 1 270px!important;width:auto!important;max-width:365px!important}
+  .watch .watch-copy h2{font-size:21px!important}
+  .watch .watch-copy p{font-size:14px!important;line-height:1.65!important}
+  .watch .watch-row>.detail{flex:0 0 85px!important;width:85px!important;min-height:36px!important;font-size:13px!important}
+  .watch .watch-metric{flex:0 0 110px!important;width:110px!important;height:90px!important;margin:0!important}
+  .watch .watch-metric small{font-size:12px!important}
+  .watch .watch-metric b{font-size:22px!important}
+  .watch .topics{flex:1 1 215px!important;min-width:215px!important;width:auto!important;height:auto!important;min-height:90px!important;margin:0!important}
+  .watch .topics b{font-size:15px!important}
+  .watch .topics p{font-size:13px!important;line-height:1.5!important}
+
+  .feature-preview .preview-card,.preview-card{min-height:315px!important;padding:26px!important}
+  .preview-heading h2{font-size:23px!important}
+  .preview-heading p{font-size:15px!important;line-height:1.7!important}
+  .preview-card>small{font-size:12px!important}
+  .chat-sample p,.road-detail-sample p{font-size:13px!important}
+  .principles-card h2,.support-card h2{font-size:25px!important}
+  .principles-card p,.support-card p{font-size:15px!important;line-height:1.8!important}
+
+  body .bottom{height:auto!important;min-height:0!important;padding:26px 0 0!important;overflow:visible!important}
+  body .bottom-grid{gap:20px!important;align-items:stretch!important}
+  body .bottom-grid>.marketing-brand-panel,
+  body .bottom-grid>.marketing-faq-panel,
+  body .bottom-grid>.marketing-free-panel{height:auto!important;min-height:370px!important}
+  body .bottom-grid>.marketing-brand-panel{padding:28px 23px!important;overflow:visible!important}
+  body .bottom-grid>.marketing-brand-panel h2{font-size:22px!important;line-height:1.5!important;white-space:normal!important}
+  body .bottom-grid .marketing-brand-lead{font-size:15px!important}
+  body .bottom-grid .marketing-brand-copy{font-size:15px!important;line-height:1.75!important}
+  body .bottom-grid .marketing-brand-values span{min-height:86px!important}
+  body .bottom-grid .marketing-brand-values b{font-size:13px!important;line-height:1.55!important}
+  body .bottom-grid>.marketing-faq-panel{padding:24px 22px!important;overflow:visible!important}
+  body .bottom-grid>.marketing-faq-panel h2{font-size:22px!important}
+  body .bottom-grid .marketing-faq-preview-item h3{font-size:14px!important;line-height:1.45!important}
+  body .bottom-grid .marketing-faq-preview-item p{font-size:12px!important;line-height:1.55!important}
+  body .bottom-grid .marketing-contact-link{font-size:13px!important}
+  body .bottom-grid>.marketing-free-panel{padding:26px 20px!important;overflow:visible!important}
+  body .bottom-grid .marketing-free-panel h2{font-size:23px!important}
+  body .bottom-grid .marketing-free-copy{font-size:15px!important;line-height:1.7!important}
+  body .bottom-grid .marketing-qr-help{font-size:12px!important}
+  body .bottom-grid .marketing-free-note{font-size:12px!important;line-height:1.55!important}
+
+  .footer,.footer>.container{height:auto!important;min-height:98px!important}
+  .footer>.container{flex-wrap:wrap!important;gap:14px!important;padding:20px 0!important}
+  .footer .footer-logo b{font-size:20px!important}
+  .footer .footer-logo small,.footer>.container>small{font-size:12px!important}
+  .footer nav{font-size:13px!important;gap:clamp(12px,1.5vw,24px)!important;flex-wrap:wrap!important}
+}
