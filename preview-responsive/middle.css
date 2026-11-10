@@ -32,7 +32,9 @@ html,body{min-width:0!important;overflow-x:hidden}.container{width:calc(100% - 3
  * sections used fixed-height, absolutely positioned cards.
  */
 @media (min-width:1280px){
-  .container{width:calc(100% - 56px)!important;max-width:1420px!important}
+  /* Wider by up to 280 CSS px in desktop view: about 3 cm more on each
+     side at the reported browser scaling. Preserve 20px side gutters. */
+  .container{width:calc(100% - 40px)!important;max-width:1700px!important}
 
   .header,.header-row{height:74px!important}
   .header .logo b{font-size:24px!important;line-height:29px!important}
