@@ -303,14 +303,14 @@ def test_app_off_and_nonpilot_preserve_selector_call_without_event_read(monkeypa
         'LEARNING_STRATEGY_PILOT_USER_IDS':{'a'}}
     exec(compile(ast.Module(body=[fn],type_ignores=[]),'app.py','exec'),ns)
     import database
-    monkeypatch.setattr(database,'get_learning_events',lambda *a:pytest.fail('unexpected new read'))
+    monkeypatch.setattr(database,'get_strategy_learning_events',lambda *a:pytest.fail('unexpected new read'))
     for enabled,user in ((False,'a'),(True,'b')):
         ns['ENABLE_LEARNING_STRATEGY_V1']=enabled
         ns['start_quiz'](user,session_kind='adaptive_daily')
     assert len(calls)==2
     assert all(call[0]==([],30) and set(call[1])=={'exclude_ids','audit_out'} for call in calls)
     observed=[]
-    monkeypatch.setattr(database,'get_learning_events',lambda u:observed.append(u) or [])
+    monkeypatch.setattr(database,'get_strategy_learning_events',lambda u:observed.append(u) or [])
     def broken(*a,**k):
         raise ValueError('unavailable')
     monkeypatch.setattr(pilot,'refine_session',broken)
@@ -733,3 +733,147 @@ def test_other_session_kinds_do_not_enter_strategy_or_add_metadata(monkeypatch, 
     session = ns['study_sessions']['a']
     assert session['all_questions'] == qs
     assert not session.get('adaptive_selection_audit')
+
+
+
+def test_strategy_context_db_read_filters_unneeded_json_without_time_truncation(monkeypatch):
+    """No history deletion, no arbitrary 30-day cutoff, and no loss of PT session order."""
+    import database
+
+    calls = []
+    ts = datetime(2026, 9, 15, tzinfo=timezone.utc)
+    returned = [
+        ("event:1", "learner", "study", 5, 3, ts,
+         [{"question_id": "Q1", "learning_source": "adaptive_daily"}]),
+    ]
+
+    class Cursor:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return False
+
+        def execute(self, sql, params):
+            calls.append((" ".join(sql.split()), params))
+
+        def fetchall(self):
+            return returned
+
+    class Connection:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return False
+
+        def cursor(self):
+            return Cursor()
+
+    monkeypatch.setattr(database, "database_is_available", lambda: True)
+    monkeypatch.setattr(database, "get_db_connection", lambda: Connection())
+    rows = database.get_strategy_learning_events("learner")
+
+    assert rows[0] == {
+        "event_key": "event:1", "user_id": "learner", "mode": "study",
+        "answered_count": 5, "correct_count": 3, "answered_at": ts,
+        "question_results": [{"question_id": "Q1", "learning_source": "adaptive_daily"}],
+    }
+    assert len(calls) == 1
+    sql, params = calls[0]
+    assert params == ("learner", "pt")
+    assert "FROM learning_events" in sql
+    assert "qualification_id = %s" in sql
+    assert "mode = 'recommendation_plan'" in sql
+    assert "event_key LIKE 'web-recommendation:%%'" in sql
+    assert "strategy_shadow_or_authority" in sql
+    assert "learning_source" in sql
+    assert "floor_up_target_field" in sql
+    assert "jsonb_array_elements" in sql
+    assert "jsonb_strip_nulls" in sql
+    assert "ORDER BY item.ordinal" in sql
+    assert "ORDER BY answered_at, event_key" in sql
+    assert "answered_at >=" not in sql   # older days remain eligible
+    assert "LIMIT " not in sql
+    assert "DELETE " not in sql
+    assert "UPDATE " not in sql
+
+
+def test_local_strategy_context_retains_full_history_identity(monkeypatch):
+    import database
+
+    events = [{"event_key": "example", "question_results": [{"unrelated": True}]}]
+    monkeypatch.setattr(database, "database_is_available", lambda: False)
+    monkeypatch.setattr(database, "get_learning_events", lambda user_id: events)
+    assert database.get_strategy_learning_events("learner") is events
+
+
+def test_strategy_projected_fields_preserve_completion_and_floor_up_decisions():
+    """The projected wire format must retain everything both strategy functions use."""
+    now = NOW
+    qids = list(question_ids())[:30]
+    plan = {
+        "event_key": "plan", "mode": "recommendation_plan",
+        "answered_at": now - timedelta(days=5),
+        "question_results": {"field": "生理学", "goal": 30, "other_metadata": "kept"},
+    }
+    web = [
+        {"event_key": f"web-recommendation:x:{i}", "mode": "study",
+         "answered_at": now - timedelta(days=4) + timedelta(minutes=i),
+         "question_results": [{"question_id": qids[i - 1], "unneeded": "x" * 100}]}
+        for i in range(1, 11)
+    ]
+    pilot_events = []
+    for batch in range(6):
+        payload = [
+            {"question_id": q, "strategy_version": pilot.VERSION,
+             "strategy_shadow_or_authority": "soft_pilot",
+             "strategy_recommended_field": 18,
+             "selected_answers": ["A"], "other": {"large": "metadata"}}
+            for q in qids[batch * 5:(batch + 1) * 5]
+        ]
+        pilot_events.append({
+            "event_key": f"pilot:{batch + 1}", "mode": "study",
+            "answered_at": now - timedelta(days=2) + timedelta(minutes=batch),
+            "question_results": payload,
+        })
+    daily = (
+        _adaptive_session_events("today-1", now - timedelta(hours=3))
+        + _adaptive_session_events("today-2", now - timedelta(hours=2))
+    )
+    unrelated = {
+        "event_key": "unrelated", "mode": "study",
+        "answered_at": now - timedelta(days=1),
+        "question_results": [{"question_id": "Q1", "other": "ignored"}],
+    }
+    original = [plan, *web, *pilot_events, *daily, unrelated]
+    preserved_fields = {
+        "question_id", "strategy_version", "strategy_shadow_or_authority",
+        "strategy_recommended_field", "learning_source", "floor_up_mode",
+        "floor_up_target_field",
+    }
+    projected = []
+    for event in original:
+        payload = event["question_results"]
+        relevant = (
+            event["mode"] == "recommendation_plan"
+            or event["event_key"].startswith("web-recommendation:")
+            or isinstance(payload, list) and any(
+                row.get("strategy_shadow_or_authority") == "soft_pilot"
+                or row.get("learning_source") == "adaptive_daily"
+                for row in payload
+            )
+        )
+        if relevant:
+            projected.append({
+                **event,
+                "question_results": (
+                    [{k: v for k, v in row.items() if k in preserved_fields}
+                     for row in payload]
+                    if isinstance(payload, list) else payload
+                ),
+            })
+
+    assert unrelated not in projected
+    assert pilot.completion_context(original, now) == pilot.completion_context(projected, now)
+    assert pilot.daily_floor_up_context(original, now) == pilot.daily_floor_up_context(projected, now)
