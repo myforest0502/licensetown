@@ -1065,7 +1065,7 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
                 # OFF/non-pilot performs exactly the existing selection above.
                 # Keep all new imports/reads behind both explicit gates.
                 try:
-                    from database import get_learning_events
+                    from database import get_strategy_learning_events
                     from dashboard_settings import get_effective_exam_date, tokyo_today
                     from learning_strategy_runtime_pilot import refine_session
                     exam_date = get_effective_exam_date(user_id)
@@ -1075,7 +1075,7 @@ def start_quiz(user_id, session_kind=None, question_count=None, exclude_ids=None
                     )
                     all_questions = refine_session(
                         attempts, all_questions, adaptive_selection_audit,
-                        get_learning_events(user_id),
+                        get_strategy_learning_events(user_id),
                         exclude_ids=adaptive_short_term_blocked,
                         days_to_exam=days_to_exam,
                     )
