@@ -495,3 +495,102 @@ def test_dashboard_with_attempts_preserves_learning_event_fact_source(monkeypatc
 
     assert result["learning_data"]["fields"] == [{"source": "learning_events"}]
     assert result["learning_data"]["unique_question_count"] == 17
+
+
+
+def test_dashboard_json_projection_sql_keeps_history_and_required_fields():
+    calls = []
+
+    class Cursor:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return False
+
+        def execute(self, sql, params):
+            calls.append((" ".join(sql.split()), params))
+
+        def fetchall(self):
+            return []
+
+    class Connection:
+        def cursor(self):
+            return Cursor()
+
+    assert dashboard_read_bundle._question_result_rows_with_connection(
+        "learner", Connection()
+    ) == []
+    sql, params = calls[0]
+    assert params == ("learner", "pt")
+    assert "FROM learning_events" in sql
+    assert "jsonb_array_elements" in sql
+    assert "WITH ORDINALITY" in sql
+    assert "ORDER BY item.ordinal" in sql
+    for field in ("question_id", "is_correct", "learning_source"):
+        assert f"item.value -> '{field}'" in sql
+    assert "ELSE item.value" in sql  # malformed/non-object records are left intact
+    assert "ELSE question_results" in sql  # dictionary metadata is left intact
+    assert "answered_at >=" not in sql  # includes older learning evidence
+    assert "DELETE " not in sql
+    assert "UPDATE " not in sql
+
+
+def test_dashboard_json_projection_preserves_all_three_dashboard_consumers():
+    """Historical results and the projected SQL shape must give identical dashboard facts."""
+    import database
+    from licensetown.common.recommendation_daily_summary import (
+        build_today_recommendation_summary,
+    )
+
+    now = datetime(2026, 11, 21, 4, tzinfo=timezone.utc)
+    before_rewrite = datetime(2026, 9, 1, tzinfo=timezone.utc)
+    today = datetime(2026, 11, 21, 0, tzinfo=timezone.utc)
+    yesterday = datetime(2026, 11, 19, 22, tzinfo=timezone.utc)
+    originals = [
+        ([{"question_id": "Q1", "is_correct": True,
+           "learning_source": "dashboard_recommendation",
+           "selected_answers": ["A"], "strategy_priority_components": {"large": "metadata"}},
+          {"question_id": "Q2", "is_correct": False,
+           "learning_source": "adaptive_daily", "confidence": 1},
+          {"source_question_id": "Q4", "written_feedback": "not a formal answer"},
+          "legacy-non-object"], today),
+        ([{"question_id": "Q2234", "is_correct": True,
+           "learning_source": "adaptive_daily", "unrelated": "before rewrite"}],
+         before_rewrite),
+        ([{"question_id": "Q2", "is_correct": True, "learning_source": "manual",
+           "unrelated": "earlier review"}], yesterday),
+        ({"activity_type": "consultation", "content": "metadata retained"}, today),
+    ]
+    projected_fields = {"question_id", "is_correct", "learning_source"}
+    projected_rows = [
+        (
+            [
+                ({k: v for k, v in result.items() if k in projected_fields}
+                 if isinstance(result, dict) else result)
+                for result in payload
+            ] if isinstance(payload, list) else payload,
+            timestamp,
+        )
+        for payload, timestamp in originals
+    ]
+    assert projected_rows[0][0][-1] == "legacy-non-object"
+    assert projected_rows[-1][0] == originals[-1][0]
+    old_formal = dashboard_read_bundle._current_formal_question_result_rows(originals)
+    lean_formal = dashboard_read_bundle._current_formal_question_result_rows(projected_rows)
+    assert old_formal[1][0] == lean_formal[1][0] == []  # Q2234 pre-rewrite evidence
+    assert database.get_field_learning_summary(
+        "learner", now=now, _question_result_rows=old_formal,
+    ) == database.get_field_learning_summary(
+        "learner", now=now, _question_result_rows=lean_formal,
+    )
+    assert database.get_unique_answered_question_count(
+        "learner", _question_result_rows=old_formal,
+    ) == database.get_unique_answered_question_count(
+        "learner", _question_result_rows=lean_formal,
+    )
+    assert build_today_recommendation_summary(
+        "learner", now=now, question_result_rows=old_formal,
+    ) == build_today_recommendation_summary(
+        "learner", now=now, question_result_rows=lean_formal,
+    )

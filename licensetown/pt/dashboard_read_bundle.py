@@ -86,11 +86,42 @@ def _attempts_with_connection(user_id: str, connection) -> list[dict[str, Any]]:
 
 
 def _question_result_rows_with_connection(user_id: str, connection):
-    """Return only PT learning-event question results on the shared connection."""
+    """Return only PT question facts needed for the dashboard on one connection.
+
+    Field/accuracy, unique formal Q count and today's recommendation tally
+    use question_id, is_correct and learning_source, plus the event timestamp.
+    Keep every historical event, array ordering, non-object array items and
+    non-array payloads; project unused per-answer metadata in Neon so it is
+    not transferred to Flask on each dashboard load.
+    """
     with connection.cursor() as cur:
         cur.execute(
             """
-            SELECT question_results, answered_at
+            SELECT
+                CASE
+                  WHEN jsonb_typeof(question_results) = 'array'
+                  THEN (
+                    SELECT COALESCE(
+                        jsonb_agg(
+                            CASE
+                              WHEN jsonb_typeof(item.value) = 'object'
+                              THEN jsonb_strip_nulls(jsonb_build_object(
+                                  'question_id', item.value -> 'question_id',
+                                  'is_correct', item.value -> 'is_correct',
+                                  'learning_source', item.value -> 'learning_source'
+                              ))
+                              ELSE item.value
+                            END
+                            ORDER BY item.ordinal
+                        ),
+                        '[]'::jsonb
+                    )
+                    FROM jsonb_array_elements(question_results)
+                      WITH ORDINALITY AS item(value, ordinal)
+                  )
+                  ELSE question_results
+                END AS question_results,
+                answered_at
             FROM learning_events
             WHERE user_id = %s
               AND qualification_id = %s
