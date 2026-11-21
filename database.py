@@ -756,6 +756,71 @@ def get_learning_events(
             return [dict(zip(columns, row)) for row in cur.fetchall()]
 
 
+def get_strategy_learning_events(user_id: str) -> list[dict[str, Any]]:
+    """Return only the historical context needed to refine PT daily sessions.
+
+    Preserve all past recommendation plans, Web recommendation batches, pilot
+    blocks and adaptive-daily batches (including sessions spanning midnight).
+    Trim each array element to exactly the fields the two strategy consumers
+    inspect. This reduces Neon-to-app transfer without deleting history,
+    changing persistence, or discarding older learning evidence.
+
+    Non-database/local execution retains the existing full-event behavior.
+    """
+    if not database_is_available():
+        return get_learning_events(user_id)
+
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT event_key, user_id, mode, answered_count, correct_count,
+                       answered_at,
+                       CASE
+                         WHEN jsonb_typeof(question_results) = 'array'
+                         THEN (
+                           SELECT COALESCE(
+                             jsonb_agg(
+                               jsonb_strip_nulls(jsonb_build_object(
+                                 'question_id', item.value -> 'question_id',
+                                 'strategy_version', item.value -> 'strategy_version',
+                                 'strategy_shadow_or_authority',
+                                     item.value -> 'strategy_shadow_or_authority',
+                                 'strategy_recommended_field',
+                                     item.value -> 'strategy_recommended_field',
+                                 'learning_source', item.value -> 'learning_source',
+                                 'floor_up_mode', item.value -> 'floor_up_mode',
+                                 'floor_up_target_field',
+                                     item.value -> 'floor_up_target_field'
+                               ))
+                               ORDER BY item.ordinal
+                             ),
+                             '[]'::jsonb
+                           )
+                           FROM jsonb_array_elements(question_results)
+                             WITH ORDINALITY AS item(value, ordinal)
+                         )
+                         ELSE question_results
+                       END AS question_results
+                FROM learning_events
+                WHERE user_id = %s AND qualification_id = %s
+                  AND (
+                       mode = 'recommendation_plan'
+                    OR event_key LIKE 'web-recommendation:%%'
+                    OR question_results @> '[{"strategy_shadow_or_authority":"soft_pilot"}]'::jsonb
+                    OR question_results @> '[{"learning_source":"adaptive_daily"}]'::jsonb
+                  )
+                ORDER BY answered_at, event_key
+                """,
+                (user_id, "pt"),
+            )
+            columns = (
+                "event_key", "user_id", "mode", "answered_count", "correct_count",
+                "answered_at", "question_results",
+            )
+            return [dict(zip(columns, row)) for row in cur.fetchall()]
+
+
 def get_learning_events_by_event_keys(
     user_id: str,
     event_keys: list[str] | tuple[str, ...] | set[str],
