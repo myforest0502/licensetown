@@ -819,3 +819,56 @@ def test_general_provisional_wrong_does_not_create_repair_priority_but_still_blo
     assert "Q2" in by_id
     assert by_id["Q2"]["priority_group"] == "exploration"
     assert by_id["Q2"]["previous_wrong_count"] == 0
+
+
+
+def test_session_reuses_history_analysis_across_fallback_phases(monkeypatch):
+    """A multi-pass session must not derive the same Node states eight times."""
+    fake_bank(monkeypatch, count=30)
+    monkeypatch.setattr(selector, "get_quiz_question", lambda q: {"id": q})
+    original = selector.derive_all_user_node_states
+    call_count = []
+
+    def measured(*args, **kwargs):
+        call_count.append(1)
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(selector, "derive_all_user_node_states", measured)
+    attempts = [attempt("Q1", "KN0001", False)]
+    original_audit, optimized_audit = {}, {}
+    original_session = selector.build_node_adaptive_session.__wrapped__(
+        attempts, question_count=12, rng=random.Random(77),
+        learning_intent="repair", audit_out=original_audit,
+    )
+    calls_without_reuse = len(call_count)
+    assert calls_without_reuse >= 2
+
+    call_count.clear()
+    optimized_session = selector.build_node_adaptive_session(
+        attempts, question_count=12, rng=random.Random(77),
+        learning_intent="repair", audit_out=optimized_audit,
+    )
+    assert len(call_count) == 1
+    assert [q["id"] for q in original_session] == [q["id"] for q in optimized_session]
+    assert original_audit == optimized_audit
+    assert selector._SESSION_HISTORY.get() is None  # no cross-request/user cache
+
+
+def test_session_history_does_not_cross_user_or_sequential_session(monkeypatch):
+    fake_bank(monkeypatch, count=30)
+    monkeypatch.setattr(selector, "get_quiz_question", lambda q: {"id": q})
+    count = []
+    original = selector.derive_all_user_node_states
+
+    def measured(*args, **kwargs):
+        count.append(1)
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(selector, "derive_all_user_node_states", measured)
+    for name in ("learner-a", "learner-b"):
+        selector.build_node_adaptive_session(
+            [attempt("Q1", "KN0001", False, user=name)],
+            question_count=8, rng=random.Random(5),
+        )
+    assert count == [1, 1]
+    assert selector._SESSION_HISTORY.get() is None

@@ -594,3 +594,64 @@ def test_dashboard_json_projection_preserves_all_three_dashboard_consumers():
     ) == build_today_recommendation_summary(
         "learner", now=now, question_result_rows=lean_formal,
     )
+
+
+
+def test_stage_e_json_projection_keeps_original_row_selection_and_only_needed_keys():
+    calls = []
+
+    class Cursor:
+        def __enter__(self):
+            return self
+        def __exit__(self, *_):
+            return False
+        def execute(self, sql, params):
+            calls.append((" ".join(sql.split()), params))
+        def fetchall(self):
+            return []
+
+    class Connection:
+        def cursor(self):
+            return Cursor()
+
+    assert dashboard_read_bundle._learning_events_with_connection("learner", Connection()) == []
+    sql, params = calls[0]
+    assert params == ("learner", "pt")
+    assert "mode = 'recommendation_plan'" in sql
+    assert "event_key LIKE 'web-recommendation:%%'" in sql
+    assert "strategy_shadow_or_authority" in sql
+    assert "jsonb_array_elements" in sql
+    assert "ORDER BY item.ordinal" in sql
+    assert "ELSE item.value" in sql
+    assert "ELSE question_results" in sql
+    assert "answered_at >=" not in sql
+    for field in ("question_id", "strategy_version", "strategy_shadow_or_authority",
+                  "strategy_recommended_field", "learning_source",
+                  "floor_up_mode", "floor_up_target_field"):
+        assert f"item.value -> '{field}'" in sql
+
+
+def test_parent_report_uses_lean_dashboard_projection(monkeypatch):
+    import supporter_report
+
+    seen = []
+    monkeypatch.setattr(
+        supporter_report, "_question_result_rows_with_connection",
+        lambda user_id, conn: seen.append((user_id, conn)) or [],
+    )
+    monkeypatch.setattr(
+        supporter_report, "_get_question_result_rows",
+        lambda *_: (_ for _ in ()).throw(AssertionError("full JSON must not be fetched")),
+    )
+    monkeypatch.setattr(supporter_report, "get_learning_summary",
+                        lambda *_args, **_kwargs: {"total_answers": 0})
+    monkeypatch.setattr(supporter_report, "get_learning_activity",
+                        lambda *_args, **_kwargs: {})
+    monkeypatch.setattr(supporter_report, "get_field_learning_summary",
+                        lambda *_args, **_kwargs: [])
+    monkeypatch.setattr(supporter_report, "get_unique_answered_question_count",
+                        lambda *_args, **_kwargs: 0)
+    conn = object()
+    report = supporter_report._shared_dashboard_learning_data("learner", conn)
+    assert report["unique_question_count"] == 0
+    assert seen == [("learner", conn)]

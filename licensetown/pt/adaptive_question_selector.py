@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import random
 from collections import Counter, defaultdict
+from contextvars import ContextVar
+from functools import wraps
 from datetime import datetime, timezone
 from typing import Any, Iterable
 
@@ -45,6 +47,24 @@ REPAIR_REASONS = {
 PROVISIONAL_BULK_REPAIR_PENALTY = 80
 PROVISIONAL_BULK_GENERAL_PENALTY = 250
 PROVISIONAL_BULK_GENERAL_SESSION_RATIO = 0.20
+
+
+# Only share immutable/read-only history facts across the fallback phases of ONE
+# session creation. Never cache between learners, requests, or saved answers.
+_SESSION_HISTORY: ContextVar[dict | None] = ContextVar(
+    "pt_adaptive_session_history", default=None
+)
+
+
+def _share_history_during_session(func):
+    @wraps(func)
+    def wrapped(*args, **kwargs):
+        token = _SESSION_HISTORY.set({})
+        try:
+            return func(*args, **kwargs)
+        finally:
+            _SESSION_HISTORY.reset(token)
+    return wrapped
 
 
 def parse_node_adaptive_pilot_user_ids(value: str | None) -> set[str]:
@@ -209,42 +229,71 @@ def select_node_adaptive_questions(
     strict_repair: bool = False,
 ) -> list[dict[str, Any]]:
     """Return unique recommendation records with balanced repair/exploration."""
-    attempts = [dict(item) for item in attempts]
-    user_ids = {str(item.get("user_id") or "") for item in attempts}
-    if len(user_ids) > 1:
-        raise ValueError("attempts must belong to one user")
+    # A 30-question session can retry the same historical analysis across up
+    # to eight editorial/category fallback phases. Reuse those deterministic
+    # facts within this ONE call only; exclusions and random ties still apply
+    # independently in every phase.
+    source_attempts = attempts
+    shared = _SESSION_HISTORY.get()
+    cached = (
+        shared.get("facts")
+        if shared is not None
+        and shared.get("source_attempts") is source_attempts
+        and as_of is None
+        else None
+    )
+    if cached is None:
+        attempts = [dict(item) for item in attempts]
+        user_ids = {str(item.get("user_id") or "") for item in attempts}
+        if len(user_ids) > 1:
+            raise ValueError("attempts must belong to one user")
+        anchor = as_of or datetime.now(timezone.utc)
+        learning_attempts = _trusted_learning_evidence_attempts(attempts)
+        state_records = {
+            item["canonical_node_id"]: item
+            for item in derive_all_user_node_states(learning_attempts, as_of=anchor)
+        }
+        states = {node: item["state"] for node, item in state_records.items()}
+        summaries = _node_attempt_summary(learning_attempts)
+        seen_question_ids = {
+            canonicalize_question_evidence_id(str(item.get("question_id") or ""))
+            for item in attempts
+            if item.get("question_id")
+        }
+        recent_attempts = sorted(attempts, key=_attempt_time, reverse=True)[:30]
+        recent_question_ids = {
+            canonicalize_question_evidence_id(str(item.get("question_id") or ""))
+            for item in recent_attempts
+            if item.get("question_id")
+        }
+        last_attempt_order: dict[str, int] = {}
+        for attempt_index, item in enumerate(sorted(attempts, key=_attempt_time)):
+            raw_question_id = str(item.get("question_id") or "")
+            if raw_question_id:
+                last_attempt_order[
+                    canonicalize_question_evidence_id(raw_question_id)
+                ] = attempt_index
+        field_by_evidence, field_coverage = _field_node_coverage(learning_attempts)
+        facts = (
+            attempts, anchor, state_records, states, summaries,
+            seen_question_ids, recent_question_ids, last_attempt_order,
+            field_by_evidence, field_coverage,
+        )
+        if shared is not None and as_of is None:
+            shared["source_attempts"] = source_attempts
+            shared["facts"] = facts
+    else:
+        facts = cached
+    (
+        attempts, as_of, state_records, states, summaries,
+        seen_question_ids, recent_question_ids, last_attempt_order,
+        field_by_evidence, field_coverage,
+    ) = facts
     randomizer = rng or random.Random()
-    as_of = as_of or datetime.now(timezone.utc)
-    learning_attempts = _trusted_learning_evidence_attempts(attempts)
-    state_records = {
-        item["canonical_node_id"]: item
-        for item in derive_all_user_node_states(learning_attempts, as_of=as_of)
-    }
-    states = {node: item["state"] for node, item in state_records.items()}
-    summaries = _node_attempt_summary(learning_attempts)
-    seen_question_ids = {
-        canonicalize_question_evidence_id(str(item.get("question_id") or ""))
-        for item in attempts
-        if item.get("question_id")
-    }
-    recent_attempts = sorted(attempts, key=_attempt_time, reverse=True)[:30]
-    recent_question_ids = {
-        canonicalize_question_evidence_id(str(item.get("question_id") or ""))
-        for item in recent_attempts
-        if item.get("question_id")
-    }
-    last_attempt_order: dict[str, int] = {}
-    for attempt_index, item in enumerate(sorted(attempts, key=_attempt_time)):
-        raw_question_id = str(item.get("question_id") or "")
-        if raw_question_id:
-            last_attempt_order[
-                canonicalize_question_evidence_id(raw_question_id)
-            ] = attempt_index
     excluded = {
         canonicalize_question_evidence_id(str(value))
         for value in (exclude_ids or ())
     }
-    field_by_evidence, field_coverage = _field_node_coverage(learning_attempts)
     candidates = []
     for question_id in question_ids():
         evidence_question_id = canonicalize_question_evidence_id(question_id)
@@ -495,6 +544,7 @@ def _provisional_general_evidence_ids() -> set[str]:
     return result
 
 
+@_share_history_during_session
 def build_node_adaptive_session(
     attempts, question_count=30, exclude_ids=(), rng=None, *, audit_out=None,
     category_small: int | None = None, learning_intent: str | None = None,

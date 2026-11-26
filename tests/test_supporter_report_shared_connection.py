@@ -89,7 +89,7 @@ def test_shared_supporter_fields_filter_superseded_q2743_results(monkeypatch):
 
     monkeypatch.setattr(
         report_module,
-        "_get_question_result_rows",
+        "_question_result_rows_with_connection",
         lambda learner_user_id, conn: old_rows,
     )
     monkeypatch.setattr(

@@ -138,13 +138,44 @@ def _learning_events_with_connection(user_id: str, connection) -> list[dict[str,
 
     The strategy snapshot ignores ordinary learning events. Filtering those in
     Neon prevents the dashboard from transferring the learner's entire growing
-    JSON history on every page load.
+    JSON history on every page load. For the selected events, project only the
+    seven strategy-context keys used by completion/floor-up calculations;
+    preserve non-array payloads and non-object array elements verbatim.
     """
     with connection.cursor() as cur:
         cur.execute(
             """
             SELECT event_key, user_id, mode, answered_count, correct_count,
-                   answered_at, question_results
+                   answered_at,
+                   CASE
+                     WHEN jsonb_typeof(question_results) = 'array'
+                     THEN (
+                       SELECT COALESCE(
+                         jsonb_agg(
+                           CASE
+                             WHEN jsonb_typeof(item.value) = 'object'
+                             THEN jsonb_strip_nulls(jsonb_build_object(
+                               'question_id', item.value -> 'question_id',
+                               'strategy_version', item.value -> 'strategy_version',
+                               'strategy_shadow_or_authority',
+                                   item.value -> 'strategy_shadow_or_authority',
+                               'strategy_recommended_field',
+                                   item.value -> 'strategy_recommended_field',
+                               'learning_source', item.value -> 'learning_source',
+                               'floor_up_mode', item.value -> 'floor_up_mode',
+                               'floor_up_target_field',
+                                   item.value -> 'floor_up_target_field'
+                             ))
+                             ELSE item.value
+                           END
+                           ORDER BY item.ordinal
+                         ), '[]'::jsonb
+                       )
+                       FROM jsonb_array_elements(question_results)
+                         WITH ORDINALITY AS item(value, ordinal)
+                     )
+                     ELSE question_results
+                   END AS question_results
             FROM learning_events
             WHERE user_id = %s
               AND qualification_id = %s

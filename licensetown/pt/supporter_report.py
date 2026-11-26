@@ -22,7 +22,7 @@ from database import (
     get_learning_summary,
     get_unique_answered_question_count,
 )
-from dashboard_read_bundle import _current_formal_question_result_rows
+from dashboard_read_bundle import _current_formal_question_result_rows, _question_result_rows_with_connection
 from dashboard_settings import get_effective_exam_date, tokyo_today
 from learning_analysis import build_learning_guidance
 from supporter_performance import measure
@@ -267,7 +267,10 @@ def _parent_summary(summary: dict, activity: dict, fields: list[dict], latest: d
 
 
 def _shared_dashboard_learning_data(learner_user_id: str, conn) -> dict:
-    raw_question_rows = _get_question_result_rows(learner_user_id, conn)
+    # The parent view needs only question_id/is_correct/learning_source.
+    # Reuse the learner's lean SQL projection instead of downloading years of
+    # answer-detail JSON on every supporter page open.
+    raw_question_rows = _question_result_rows_with_connection(learner_user_id, conn)
     question_rows = _current_formal_question_result_rows(raw_question_rows)
     return {
         "summary": get_learning_summary(learner_user_id, _connection=conn),
